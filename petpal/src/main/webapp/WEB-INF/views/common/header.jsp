@@ -47,7 +47,7 @@
       </div>
     </nav>
       <div id="collapseOne2" class="collapse bg-dark"  >
-        <div class="card-body container">
+        <div class="card-body container d-none d-lg-block">
           <div class="input-group ">
             <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
             <div class="input-group-append">
