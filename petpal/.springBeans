@@ -1,3 +1,18 @@
+<<<<<<< HEAD
+<?xml version="1.0" encoding="UTF-8"?>
+<beansProjectDescription>
+	<version>1</version>
+	<pluginVersion><![CDATA[2.5.0.201010141000-RC1]]></pluginVersion>
+	<configSuffixes>
+		<configSuffix><![CDATA[xml]]></configSuffix>
+	</configSuffixes>
+	<enableImports><![CDATA[true]]></enableImports>
+	<configs>
+	</configs>
+	<configSets>
+	</configSets>
+</beansProjectDescription>
+=======
 <?xml version="1.0" encoding="UTF-8"?>
 <beansProjectDescription>
 	<version>1</version>
@@ -19,3 +34,4 @@
 	<configSets>
 	</configSets>
 </beansProjectDescription>
+>>>>>>> branch 'develop' of https://github.com/kdyllll/petpal.git
