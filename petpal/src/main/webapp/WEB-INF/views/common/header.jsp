@@ -58,7 +58,7 @@
       </div>
     
       <!--중간사이즈부터 그 아래사이즈들 검색버튼 없애고 인풋검색창 바로 보이게 하기-->
-      <div class=" d-lg-none  bg-dark">
+      <div class=" d-lg-none  bg-dark pb-4">
         <div class="input-group container">
         <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
         <div class="input-group-append">
