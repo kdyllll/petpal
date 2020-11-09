@@ -9,7 +9,7 @@
  <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
 
   <!-- Custom styles for this template -->
-   <link href="${path }/resources/css/login.css" rel="stylesheet">
+   <link href="${path }/resources/css/member/login.css" rel="stylesheet">
  
 </head>
 
