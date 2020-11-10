@@ -6,7 +6,7 @@
 <head>
     
 <header class="fixed-top" >
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark  py-3 ">
       <div class="container">
         <a class="navbar-brand" href="#">로고</a>
         <ul class="nav justify-content-center d-none d-lg-flex">
