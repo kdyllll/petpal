@@ -1,0 +1,13 @@
+package com.project.petpal.member.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class MemberController {
+	
+	@RequestMapping("/member/moveMyPage.do")
+	public String moveMyPage() {
+		return "member/myPageProfile";
+	}
+}

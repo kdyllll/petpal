@@ -11,7 +11,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
   
   <!-- Page Content -->
-  <main role="main" style="height:100vh;">
+  <main role="main" style="min-height:100vh;">
    
   </main>
 
