@@ -10,4 +10,9 @@ public class MemberController {
 	public String moveMyPage() {
 		return "member/myPageProfile";
 	}
+	
+	@RequestMapping("/member/myPageShop.do")
+	public String myPageShop() {
+		return "member/myPageShop";
+	}
 }

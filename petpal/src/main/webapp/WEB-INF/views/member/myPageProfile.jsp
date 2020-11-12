@@ -6,13 +6,8 @@
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 
  <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
- 
- <link rel="stylesheet" href="${path }/resources/css/member/myPageProfile.css">
-</head>
-<body>
-<jsp:include page="/WEB-INF/views/common/header.jsp" />
-  
-  <main role="main" class="container">
+
+  <!-- myPageNav.jsp 연결 -->
   <jsp:include page="/WEB-INF/views/member/myPageNav.jsp" />
   <div class="row py-3 justify-content-between">
     <div class="col-lg-4 rounded shadow-sm" style=" height: 450px;">프로필부분,사진,닉네임,팔로우,팔로잉, 좋아요, 적립금,</div>
