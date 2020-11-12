@@ -128,6 +128,14 @@
 			<version>2.9.1</version>
 
 		</dependency>
+		
+		<!-- aop등록 -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${org.aspectj-version}</version>
+			<scope>runtime</scope>
+		</dependency>
 
 
       <!-- Servlet -->
