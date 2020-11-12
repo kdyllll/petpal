@@ -44,6 +44,9 @@
                 <li class="nav-item">
                   <a class="nav-link text-dark" href="#">로그아웃</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link text-dark" href="#">관리자</a>
+                </li>
               </ul>
             </div>
             
