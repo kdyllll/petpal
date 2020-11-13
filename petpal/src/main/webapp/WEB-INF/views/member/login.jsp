@@ -62,11 +62,7 @@
               비회원 주문조회
             </a>   
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-              <div class="card-body">                  
-                <div class="form-label-group">
-                  <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                  <label for="inputEmail">Email address</label>
-                </div>             
+              <div class="card-body">                             
                 <div class="form-label-group">
                   <input type="text" id="inputPassword" class="form-control" placeholder="주문번호" required>
                   <label for="inputPassword">주문번호</label>
