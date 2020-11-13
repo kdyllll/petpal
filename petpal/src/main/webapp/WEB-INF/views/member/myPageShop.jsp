@@ -9,7 +9,7 @@
  <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
 
 
-  <jsp:include page="/WEB-INF/views/member/myPageNav.jsp" />
+  <jsp:include page="/WEB-INF/views/common/myPageNav.jsp" />
    <div class="row  py-3 mb-3 mt-4  bg-white rounded shadow-sm ">
         <div class="py-2 " style="width: 100%;">
             <a href="#" class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block text-center ">적립금 0 </a>

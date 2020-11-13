@@ -8,7 +8,7 @@
  <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
 
   <!-- myPageNav.jsp 연결 -->
-  <jsp:include page="/WEB-INF/views/member/myPageNav.jsp" />
+  <jsp:include page="/WEB-INF/views/common/myPageNav.jsp" />
   <div class="row py-3 justify-content-between">
     <div class="col-lg-4 rounded shadow-sm" style=" height: 450px;">프로필부분,사진,닉네임,팔로우,팔로잉, 좋아요, 적립금,</div>
     <div class="col-lg-8 pr-0">
