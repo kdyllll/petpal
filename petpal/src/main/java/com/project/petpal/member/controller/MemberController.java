@@ -15,4 +15,9 @@ public class MemberController {
 	public String myPageShop() {
 		return "member/myPageShop";
 	}
+	
+	@RequestMapping("/member/myPageModify.do")
+	public String myPageModify() {
+		return "member/myPageModify";
+	}
 }
