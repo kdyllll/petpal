@@ -10,14 +10,6 @@
 
 
   <jsp:include page="/WEB-INF/views/common/myPageNav.jsp" />
- <div class="row d-flex  py-3 mb-3 mt-5 text-white-50 bg-purple rounded shadow-sm justify-content-center ">
-    <div class="py-2">
-      <a href="#" class="mb-0 text-white lh-100 px-3">프로필</a>
-      <a href="#" class="mb-0 text-white lh-100 px-3">쇼핑</a>
-      <a href="#" class="mb-0 text-white lh-100 px-3">개인정보수정</a>
-      <a href="#" class="mb-0 text-white lh-100 px-3">관심상품</a>
-    </div>
-  </div>
     
   <form class="bg-white rounded shadow-sm p-4 mb-5">
     <h6  class="row py-3 d-block text-center mb-3"><strong>회원정보수정</strong></h6>
