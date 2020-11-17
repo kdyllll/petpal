@@ -12,7 +12,7 @@
   
   <!-- Page Content -->
   <main role="main" style="min-height:100vh;">
-   <section class="container">
+   <section class="container pt-5">
     <div class="my-3 p-3 bg-white rounded shadow-sm">
       <h6 class="border-bottom border-gray pb-2 mb-0">최근 소식</h6>
       <a href="#">
