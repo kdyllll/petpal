@@ -8,6 +8,7 @@
 
 <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
 
+
 <!-- Custom styles for this template -->
 <link href="${path }/resources/css/admin/adminPage.css" rel="stylesheet">
 
@@ -18,9 +19,8 @@
 
 	<div class="container-fluid">
 		<div class="row">
-
 			<jsp:include page="/WEB-INF/views/common/adminNav.jsp" />
-			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-5 "
+			<section role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-5 "
 				style="height: 100vh; overflow-y: auto;">
 				<h2 class="mt-3">상품관리</h2>
 				<div class="row align-items-center">
@@ -81,7 +81,7 @@
 						</a></li>
 					</ul>
 				</nav>
-			</main>
+			</section>
 			<form class="modal fade" id="staticBackdrop" tabindex="-1"
 				method="post" enctype="multipart/form-data"
 				aria-labelledby="exampleModalLabel" data-backdrop="static"
