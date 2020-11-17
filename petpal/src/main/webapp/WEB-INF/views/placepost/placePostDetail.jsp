@@ -4,10 +4,12 @@
     <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
     <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     <c:set var="path" value="${pageContext.request.contextPath }"/>
-    
-<jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param name="title" value="후기디테일"/>
-</jsp:include>
+<jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
+
+</head>
+<body class="bg-white  ">
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
+
 <main role="main" style="min-height:100vh;">
 <section class="mt-5 pt-5">
 	<div class="container">

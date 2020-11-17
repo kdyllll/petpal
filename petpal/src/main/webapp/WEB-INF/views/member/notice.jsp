@@ -4,22 +4,15 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
- <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
-   
+<jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
+
 </head>
+<body class="bg-white">
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
   
   <!-- Page Content -->
   <main role="main" style="min-height:100vh;">
    <section class="container">
-    <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded shadow-sm">
-      <img class="mr-3" src="sea)연어.png" alt="" width="48" height="48">
-      <div class="lh-100">
-        <h6 class="mb-0 text-white lh-100">Bootstrap</h6>
-        <small>Since 2011</small>
-      </div>
-    </div>
-
     <div class="my-3 p-3 bg-white rounded shadow-sm">
       <h6 class="border-bottom border-gray pb-2 mb-0">최근 소식</h6>
       <a href="#">

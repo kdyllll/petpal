@@ -7,7 +7,7 @@
  <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
    
 </head>
-<body>
+<body class="bg-white">
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
   
   <!-- Page Content -->
