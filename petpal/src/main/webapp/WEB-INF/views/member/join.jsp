@@ -8,7 +8,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="title" value="스토어홈"/>
 </jsp:include> 
-
+<main role="main" style="min-height:100vh;" class="mt-5 pt-5">
 <section class="mt-5 pt-5">
  <div class="container-fluid">
 		<div class="container">
@@ -117,6 +117,7 @@
 		</div>
 	</div>
 </section>
+</main>
 <style>
 	#sample3_postcode {
 		width: 50%;
@@ -126,3 +127,5 @@
 
 </style>
  <jsp:include page="/WEB-INF/views/common/footer.jsp"/> 
+ </body>
+ </html>
