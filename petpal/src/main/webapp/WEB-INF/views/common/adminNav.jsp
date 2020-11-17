@@ -17,6 +17,9 @@
 				href="${path}/admin/adminStock.do">
 					재고관리
 			</a></li>
+			<li class="nav-item"><a class="nav-link navName2 " href="#">
+					입출고내역
+			</a></li>
 			<li class="nav-item"><a class="nav-link navName3"  href="#"> 주문내역
 			</a></li>
 			<li class="nav-item"><a class="nav-link navName4" href="#"> 회원관리
