@@ -99,8 +99,7 @@
 								<div class="form-group">
 									<label for="recipient-name" class="col-form-label d-block">-
 										S / 빨강</label> <input type="number" min="0" value="0"
-										class="form-control col-md-4 d-inline align-middle"
-										id="recipient-name">
+										class="form-control col-md-4 d-inline align-middle">
 									<button type="button"
 										class=" d-inline btn btn-outline-secondary align-middle">수정</button>
 									<button type="button"
@@ -111,8 +110,7 @@
 								<div class="form-group">
 									<label for="recipient-name" class="col-form-label d-block">-
 										M / 빨강</label> <input type="number" min="0" value="0"
-										class="form-control col-md-4 d-inline align-middle"
-										id="recipient-name">
+										class="form-control col-md-4 d-inline align-middle">
 									<button type="button"
 										class=" d-inline btn btn-outline-secondary align-middle">수정</button>
 									<button type="button"
@@ -123,8 +121,7 @@
 								<div class="form-group">
 									<label for="recipient-name" class="col-form-label d-block">-
 										S / 파랑</label> <input type="number" min="0" value="0"
-										class="form-control col-md-4 d-inline align-middle"
-										id="recipient-name">
+										class="form-control col-md-4 d-inline align-middle">
 									<button type="button"
 										class=" d-inline btn btn-outline-secondary align-middle">수정</button>
 									<button type="button"
