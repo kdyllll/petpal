@@ -7,7 +7,7 @@
  
  <link rel="stylesheet" href="${path }/resources/css/member/myPageProfile.css">  
 </head>
-<body>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
   
   <!-- Page Content -->

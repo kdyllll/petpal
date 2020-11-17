@@ -20,4 +20,8 @@ public class MemberController {
 	public String myPageModify() {
 		return "member/myPageModify";
 	}
+	@RequestMapping("/member/moveJoin.do")
+	public String moveJoin() {
+		return "member/join";
+	}
 }

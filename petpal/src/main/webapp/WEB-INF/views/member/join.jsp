@@ -4,14 +4,15 @@
     <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
     <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     <c:set var="path" value="${pageContext.request.contextPath }"/>
-    
-<jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param name="title" value="스토어홈"/>
-</jsp:include> 
-<main role="main" style="min-height:100vh;" class="mt-5 pt-5">
-<section class="mt-5 pt-5">
+<jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
+
+</head>
+<body class="bg-white">
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
+<main role="main" style="min-height:100vh;">
+<section>
  <div class="container-fluid">
-		<div class="container">
+		<div class="container pt-5">
 			<h2 class="text-center" id="title">회원가입</h2>
 			<div class="text-center">
 				<a href="#"><img src="naver.PNG" style="width:80px; height: 80px;" alt=""></a>

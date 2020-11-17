@@ -5,9 +5,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
  <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
-   <link rel="stylesheet" href="${path }/resources/css/community/placePostList.css">  
-</head>
 
+</head>
+<body class="bg-white">
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
   
   <!-- Page Content -->
@@ -38,7 +38,7 @@
 	                            <span class="mr-2">작성자</span>
 	                            <span class="mr-2">작성날짜</span>
 	                            <span class="mr-2">댓글수</span>
-	                            <span class="mr-2">카테고리분류</span>
+	                            <span class="mr-2">카테고리</span>
 	                            <p>주소</p>
 	                        </div>
 	                        <div class="col-3">
@@ -63,7 +63,7 @@
 	                            <span class="mr-2">작성자</span>
 	                            <span class="mr-2">작성날짜</span>
 	                            <span class="mr-2">댓글수</span>
-	                            <span class="mr-2">카테고리분류</span>
+	                            <span class="mr-2">카테고리</span>
 	                            <p>주소</p>
 	                        </div>
 	                        <div class="col-3">

@@ -4,9 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
- <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
 
-<body class="bg-white  ">
+
     <header class="fixed-top shadow-sm" >
         <nav class="navbar navbar-expand-lg navbar-light py-3 " style="background-color: white;">
           <div class="container">
@@ -16,7 +15,7 @@
                 <a class="nav-link" href="#">커뮤니티</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">스토어</a>
+                <a class="nav-link" href="${path }/store/moveStoreHome.do">스토어</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">공지사항</a>
@@ -41,7 +40,7 @@
                   <a class="nav-link text-dark" href="#">로그인</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link text-dark" href="#">회원가입</a>
+                  <a class="nav-link text-dark" href="${path }/member/moveJoin.do">회원가입</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link text-dark" href="${path }/member/moveMyPage.do">마이페이지</a>
@@ -82,7 +81,7 @@
               <a class="nav-link" href="#">커뮤니티</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">스토어</a>
+              <a class="nav-link" href="${path }/store/moveStoreHome.do">스토어</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">공지사항</a>
