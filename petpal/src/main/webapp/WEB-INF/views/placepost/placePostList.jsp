@@ -13,7 +13,7 @@
   <!-- Page Content -->
   <main role="main" >
    <section class="mt-5 pt-5">
-	   <div class="container ">
+	   <div class="container mt-2">
 	        <div id="blog" class="row">
 	            <div id="btn">
 	                <button type="button" class="btn btn-secondary btn-sm mr-3">병원</button>
