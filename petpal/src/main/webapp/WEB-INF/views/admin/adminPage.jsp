@@ -8,6 +8,7 @@
 
 <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
 
+
 <!-- Custom styles for this template -->
 <link href="${path }/resources/css/admin/adminPage.css" rel="stylesheet">
 
