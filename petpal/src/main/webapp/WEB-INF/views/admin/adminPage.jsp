@@ -212,6 +212,49 @@
 			</form>
 		</div>
 	</div>
+	<script>
+  $(function() {
+      $("input[name='firstCate']").on("change", e =>{
+        const value = $(e.target).val();
+        $(".secondCateCon").addClass("d-none");
+        if(value=="dog") {
+          $("#dogCate").removeClass("d-none");
+        } else if(value=="cat") {
+          $("#catCate").removeClass("d-none");
+        } else if(value=="smallAni") {
+          $("#smallCate").removeClass("d-none");
+        }
+      });
+
+      $("select[name='secondCate']").on("change", e => {
+        $("#thirdCateCon").removeClass("d-none");
+        $("#pdtNameCon").removeClass("d-none");
+        $("#pdtContentCon").removeClass("d-none");
+        $("#pdtContentCon").removeClass("d-none");
+        $("#optionTitle").removeClass("d-none");
+        $("#pdtOptionChoice").removeClass("d-none");
+        $("#pdtOptionChoiceTwo").removeClass("d-none");
+        $("#pdtOptionChoiceOne").removeClass("d-none");
+        $("#pdtPicturesCon").removeClass("d-none");
+      });
+      $("input[name='pdtColorOption']").on("change", e => {
+        let colorTarget = $(e.target).val();
+        if(colorTarget == "color") {
+          $("#colorInputCon").removeClass("d-none");
+        } else {
+          $("#colorInputCon").addClass("d-none");
+        }
+      });
+      $("input[name='pdtSizeOption']").on("change", e => {
+        let sizeTarget = $(e.target).val();
+        if(sizeTarget == "size") {
+          $("#sizeInputCon").removeClass("d-none");
+        } else {
+          $("#sizeInputCon").addClass("d-none");
+        }
+      });
+  })
+</script>
 </body>
 
 </html>

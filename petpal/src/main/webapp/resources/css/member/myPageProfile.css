@@ -96,17 +96,11 @@ body {
   user-select: none;
 }
 
-main {
-  margin-top: 4rem !important;
-}
+
 
 @media (min-width: 768px) {
   .bd-placeholder-img-lg {
     font-size: 3.5rem;
   }
 }
-@media (max-width: 991px) {
-  main {
-    margin-top: 8rem !important;
-  }
-}
+
