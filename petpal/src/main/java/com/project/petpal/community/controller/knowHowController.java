@@ -1,4 +1,4 @@
-package com.project.petpal.community.knowhow.controller;
+package com.project.petpal.community.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
