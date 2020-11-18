@@ -20,4 +20,9 @@ public class AdminController {
 	public String adminCommunity() {
 		return "admin/adminCommunity";
 	}
+	
+	@RequestMapping("/admin/adminComplain.do")
+	public String adminComplain() {
+		return "admin/adminComplain";
+	}
 }

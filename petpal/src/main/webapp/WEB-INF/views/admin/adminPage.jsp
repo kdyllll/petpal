@@ -20,7 +20,8 @@
 	<div class="container-fluid">
 		<div class="row">
 			<jsp:include page="/WEB-INF/views/common/adminNav.jsp" />
-			<section role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-5 "
+			<section role="main"
+				class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-5 "
 				style="height: 100vh; overflow-y: auto;">
 				<h2 class="mt-3">상품관리</h2>
 				<div class="row align-items-center">

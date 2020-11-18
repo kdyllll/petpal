@@ -26,7 +26,7 @@
 			</a></li> 
 			<li class="nav-item"><a class="nav-link navName5" href="${path }/admin/adminCommunity.do">게시글관리
 			</a></li>
-			<li class="nav-item"><a class="nav-link navName6" href="#"> 신고관리
+			<li class="nav-item"><a class="nav-link navName6" href="${path }/admin/adminComplain.do"> 신고관리
 			</a></li>
 		</ul>
 	</div>

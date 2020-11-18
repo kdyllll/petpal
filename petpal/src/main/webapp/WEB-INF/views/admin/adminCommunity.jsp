@@ -141,7 +141,6 @@
     </div>
     </div>
   </div>
-</div>
 <script>
     $(function(){
         let userEmail = $("#search-userEmail");
