@@ -30,4 +30,9 @@ public class AdminController {
 	public String adminOrder() {
 		return "admin/adminOrder";
 	}
+	
+	@RequestMapping("/admin/adminInOutList.do")
+	public String adminInOutList() {
+		return "admin/adminInOutList";
+	}
 }
