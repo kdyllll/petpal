@@ -25,4 +25,9 @@ public class AdminController {
 	public String adminComplain() {
 		return "admin/adminComplain";
 	}
+	
+	@RequestMapping("/admin/adminOrder.do")
+	public String adminOrder() {
+		return "admin/adminOrder";
+	}
 }

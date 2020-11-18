@@ -20,7 +20,7 @@
 			<li class="nav-item"><a class="nav-link navName2 " href="#">
 					입출고내역
 			</a></li>
-			<li class="nav-item"><a class="nav-link navName3"  href="#"> 주문내역
+			<li class="nav-item"><a class="nav-link navName3"  href="${path }/admin/adminOrder.do"> 주문내역
 			</a></li>
 			<li class="nav-item"><a class="nav-link navName4" href="#"> 회원관리
 			</a></li> 
