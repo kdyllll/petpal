@@ -26,9 +26,9 @@
 			<section role="main"
 				class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-5 "
 				style="height: 100vh; overflow-y: auto;">
-				<h2 class="mt-3">상품관리</h2>
-				<div class="row align-items-center">
-					<div class="input-group mb-3  col-lg-5">
+				<h2 class="my-3">상품관리</h2>
+				<div class="row align-items-center mb-3">
+					<div class="input-group   col-lg-5">
 						<input type="text" class="form-control input-group-sm"
 							placeholder="상품번호를 입력해주세요." aria-label="Recipient's username"
 							aria-describedby="button-addon2">
@@ -38,7 +38,7 @@
 						</div>
 					</div>
 					<button type="button"
-						class="btn btn-outline-secondary mb-3 col-lg-1 mx-3"
+						class="btn btn-outline-secondary col-lg-1 mx-3"
 						data-toggle="modal" data-target="#staticBackdrop">상품등록</button>
 
 				</div>
