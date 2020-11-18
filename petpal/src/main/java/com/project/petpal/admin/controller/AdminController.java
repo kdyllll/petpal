@@ -15,4 +15,19 @@ public class AdminController {
 	public String adminStock() {
 		return "admin/adminStock";
 	}
+	
+	@RequestMapping("/admin/adminCommunity.do")
+	public String adminCommunity() {
+		return "admin/adminCommunity";
+	}
+	
+	@RequestMapping("/admin/adminComplain.do")
+	public String adminComplain() {
+		return "admin/adminComplain";
+	}
+	
+	@RequestMapping("/admin/adminOrder.do")
+	public String adminOrder() {
+		return "admin/adminOrder";
+	}
 }
