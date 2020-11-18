@@ -139,7 +139,7 @@
             </div>
 
             <!-- 오른쪽 -->
-            <div class="col-3 d-sm-none d-lg-block" style="margin-top: 300px;">
+            <div class="col-3 d-none d-lg-block" style="margin-top: 300px;">
               <ul class="nav navbar-nav">
                 <li><button class="btn btn-outline-dark mb-3"><svg width="1em" height="1em" viewBox="0 0 16 16"
                       class="bi bi-heart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -151,7 +151,7 @@
                       <path fill-rule="evenodd"
                         d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
                     </svg></button></li>
-                <li class="d-sm-none d-lg-block">
+                <li>
                   <div>
                     <div>
                       <strong><span>작성자</span></strong>
@@ -166,6 +166,7 @@
                 </li>
               </ul>
             </div>
+            
           </div>
         </div>
 
