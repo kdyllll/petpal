@@ -88,6 +88,7 @@
 						<thead>
 							<tr>
 								<th scope="col" class="text-center align-middle">주문번호</th>
+								<th scope="col" class="text-center align-middle">회원상태</th>
 								<th scope="col" class="text-center align-middle">상품사진</th>
 								<th scope="col" class="text-center align-middle">상품이름</th>
 								<th scope="col" class="text-center align-middle">카테고리</th>
@@ -100,6 +101,7 @@
 						<tbody>
 							<tr>
 								<th scope="row" class="align-middle text-center">1</th>
+								<th scope="row" class="align-middle text-center">비회원</th>
 								<td class="text-center"><img
 									style="width: 100px; height: 100px;"></td>
 								<td class="align-middle text-center">Otto</td>
@@ -117,6 +119,7 @@
 
 							<tr>
 								<th scope="row" class="align-middle text-center">1</th>
+								<th scope="row" class="align-middle text-center">회원</th>
 								<td class="text-center"><img
 									style="width: 100px; height: 100px;"></td>
 								<td class="align-middle text-center">Otto</td>
@@ -134,6 +137,7 @@
 
 							<tr>
 								<th scope="row" class="align-middle text-center">1</th>
+								<th scope="row" class="align-middle text-center">회원</th>
 								<td class="text-center"><img
 									style="width: 100px; height: 100px;"></td>
 								<td class="align-middle text-center">Otto</td>
