@@ -162,12 +162,14 @@
 								<span>상품 <strong>사진</strong>을 추가해주세요(다중선택가능/최대5장).
 								</span> <input multiple="multiple" type="file" maxlength="5"
 									name="pdtPictures[]" class="form-control input-group-sm"
-									id="pdtPictures" style="font-size: 13px;" required>
+									id="pdtPictures" style="font-size: 13px;" accept="image/*" required>
+							</div>
+							<div class="row m-3 d-none" id="imgsContainer">
 							</div>
 							<div class="row m-3 d-none" id="pdtContentCon">
 								<span>상품 <strong>설명사진</strong>을 추가해주세요.
 								</span> <input type="file" class="form-control input-group-sm"
-									name="pdtContent" id="pdtContent" style="font-size: 13px;"
+									name="pdtContent" id="pdtContent" style="font-size: 13px;" accept="image/*"
 									required>
 							</div>
 							<p class="row mx-3 d-none" id="optionTitle">
@@ -240,6 +242,7 @@
         $("#pdtOptionChoiceTwo").removeClass("d-none");
         $("#pdtOptionChoiceOne").removeClass("d-none");
         $("#pdtPicturesCon").removeClass("d-none");
+        $("#imgsContainer").removeClass("d-none");
       });
       $("input[name='pdtColorOption']").on("change", e => {
         let colorTarget = $(e.target).val();
@@ -257,6 +260,18 @@
           $("#sizeInputCon").addClass("d-none");
         }
       });
+      
+      $("#pdtPictures").on("change", (e) => {
+          $("#imgsContainer").html("");
+          $.each(e.target.files, (i, v) => {
+            let reader = new FileReader();
+            reader.onload = (e) => {
+               let img=$("<img>",{src:e.target.result,width:100,height:100});
+               $("#imgsContainer").append(img);
+            };
+            reader.readAsDataURL(v);
+          });
+        });
   })
 </script>
 </body>
