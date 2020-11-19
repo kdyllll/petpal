@@ -19,7 +19,7 @@
 				href="${path}/admin/adminStock.do">
 					재고관리
 			</a></li>
-			<li class="nav-item"><a class="nav-link navName2" href="#">
+			<li class="nav-item"><a class="nav-link navName2 <%=nav.equals("adminInOutList") ? "active" : "" %>" href="${path }/admin/adminInOutList.do">
 					입출고내역
 			</a></li>
 			<li class="nav-item"><a class="nav-link navName3 <%=nav.equals("adminOrder") ? "active" : "" %>"  href="${path }/admin/adminOrder.do"> 주문내역
