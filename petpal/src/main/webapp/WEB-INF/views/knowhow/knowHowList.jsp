@@ -31,6 +31,7 @@
 						<button type="button" class="btn btn-outline-secondary mr-2">건강</button>
 						<button type="button" class="btn btn-outline-secondary mr-2">팁</button>
 						<button type="button" class="btn btn-outline-secondary mr-2">기타</button>
+						
 						<div class="dropdown ml-auto">
 							<button class="btn btn-light dropdown-toggle" type="button"
 								id="dropdownMenuButton" data-toggle="dropdown"
@@ -42,19 +43,19 @@
 								<button class="dropdown-item" >스크랩순</button>
 							</div>
 						</div>
+						<style>
+							.dropdown .dropdown-menu {
+								display: block;
+								opacity: 0;
+								transition: all 700ms ease;
+							}
+							
+							.dropdown:hover .dropdown-menu {
+								display: block;
+								opacity: 1;
+							}
+						</style>
 					</div>
-					<style>
-						.dropdown .dropdown-menu {
-							display: block;
-							opacity: 0;
-							transition: all 850ms ease;
-						}
-						
-						.dropdown:hover .dropdown-menu {
-							display: block;
-							opacity: 1;
-						}
-					</style>
 
 					<div class="col-xl-3 col-lg-4 col-md-6" style="cursor:pointer" id="img" onclick="location.replace('${path}/knowhow/knowHowDetail.do')">
 						<div class="card mb-4 bg-transparent border-0"  >
