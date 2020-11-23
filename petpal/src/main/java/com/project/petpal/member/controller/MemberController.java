@@ -54,6 +54,10 @@ public class MemberController {
 		}
 		return "msg";
 	}
+	@RequestMapping("/member/moveLogin.do")
+	public String moveLogin() {
+		return "member/login";
+	}
 	@RequestMapping("/member/memberLogin.do")
 	public String memberLogin(String email,String password,Model m) {
 		Member login=service.selectMember(email);
