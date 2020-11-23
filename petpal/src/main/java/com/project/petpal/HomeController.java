@@ -34,7 +34,9 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate );
 
 
-		return "search/searchStore";
+
+		return "index";
+
 
 	}
 	

@@ -24,4 +24,8 @@ public class MemberController {
 	public String moveJoin() {
 		return "member/join";
 	}
+	@RequestMapping("/member/myPageFav.do")
+	public String myPageFav() {
+		return "member/myPageFav";
+	}
 }

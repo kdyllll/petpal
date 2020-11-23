@@ -19,12 +19,15 @@
 	<div class="container-fluid">
 		<div class="row">
 
-			<jsp:include page="/WEB-INF/views/common/adminNav.jsp" />
-			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-5 "
+			<jsp:include page="/WEB-INF/views/common/adminNav.jsp">
+				<jsp:param name="nav" value="adminStock" />
+			</jsp:include>
+			<section role="main"
+				class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-5 "
 				style="height: 100vh; overflow-y: auto;">
-				<h2 class="mt-3">재고관리</h2>
-				<div class="row align-items-center">
-					<div class="input-group mb-3  col-lg-5">
+				<h2 class="my-3">재고관리</h2>
+				<div class="row align-items-center mb-3">
+					<div class="input-group   col-lg-5">
 						<input type="text" class="form-control input-group-sm"
 							placeholder="상품번호를 입력해주세요." aria-label="Recipient's username"
 							aria-describedby="button-addon2">
@@ -33,8 +36,6 @@
 								id="button-addon2">Button</button>
 						</div>
 					</div>
-
-
 				</div>
 				<div class="table-responsive" style="min-height: 80vh;">
 					<table class="table mb-5">
@@ -80,7 +81,7 @@
 						</a></li>
 					</ul>
 				</nav>
-			</main>
+			</section>
 			<div class="modal fade" id="staticBackdrop" tabindex="-1"
 				aria-labelledby="exampleModalLabel" data-backdrop="static"
 				aria-hidden="true">
@@ -99,8 +100,7 @@
 								<div class="form-group">
 									<label for="recipient-name" class="col-form-label d-block">-
 										S / 빨강</label> <input type="number" min="0" value="0"
-										class="form-control col-md-4 d-inline align-middle"
-										id="recipient-name">
+										class="form-control col-md-4 d-inline align-middle">
 									<button type="button"
 										class=" d-inline btn btn-outline-secondary align-middle">수정</button>
 									<button type="button"
@@ -111,8 +111,7 @@
 								<div class="form-group">
 									<label for="recipient-name" class="col-form-label d-block">-
 										M / 빨강</label> <input type="number" min="0" value="0"
-										class="form-control col-md-4 d-inline align-middle"
-										id="recipient-name">
+										class="form-control col-md-4 d-inline align-middle">
 									<button type="button"
 										class=" d-inline btn btn-outline-secondary align-middle">수정</button>
 									<button type="button"
@@ -123,8 +122,7 @@
 								<div class="form-group">
 									<label for="recipient-name" class="col-form-label d-block">-
 										S / 파랑</label> <input type="number" min="0" value="0"
-										class="form-control col-md-4 d-inline align-middle"
-										id="recipient-name">
+										class="form-control col-md-4 d-inline align-middle">
 									<button type="button"
 										class=" d-inline btn btn-outline-secondary align-middle">수정</button>
 									<button type="button"
