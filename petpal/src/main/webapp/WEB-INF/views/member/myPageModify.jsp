@@ -24,7 +24,7 @@
       <div class="col-5 col-lg-3"> 
         <input type="password" class="form-control" placeholder="비밀번호 확인" id="oriPassword">
       </div>
-        <button type="button" class="btn btn-outline-secondary"data-toggle="modal" data-target="#passwordModal">비밀번호 확인</button>
+        <button type="button" class="btn btn-outline-secondary" id="passwordUpdate">비밀번호 확인</button>
     </div>
     <!-- 확인누르면 모달창 뜨고 비밀번호 변경하는 로직 -->
 
@@ -109,7 +109,28 @@
 </div>
 </main>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+<script> 
+    $(function() {
+      $("#userPic").on("change", (e) => {
+        $.each(e.target.files,(i,v)=>{           
+            let reader=new FileReader();
+            reader.onload=e=>{
+                $("#imgShow").attr("src",e.target.result);
+            }
+            reader.readAsDataURL(v);
+        });
 
+        });
+
+        $("#passwordUpdate").on("click",function(){
+          $('div.modal').modal();
+        });
+    })
+
+    function fn_clickPic() {
+        $("#userPicLabel").click();
+    }
+</script>
 </body>
 
 </html>
