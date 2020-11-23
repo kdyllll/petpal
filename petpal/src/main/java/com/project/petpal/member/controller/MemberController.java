@@ -61,6 +61,7 @@ public class MemberController {
 	@RequestMapping("/member/memberLogin.do")
 	public String memberLogin(String email,String password,Model m) {
 		Member login=service.selectMember(email);
+//		System.out.println(login);
 //		if(login!=null && pwEncoder.matches(password,login.getPassword())) { 
 		if(login!=null) {
 			m.addAttribute("loginMember",login);
