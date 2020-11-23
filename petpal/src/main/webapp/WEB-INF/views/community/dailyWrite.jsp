@@ -45,9 +45,9 @@
                <textarea class="form-control" rows="5" placeholder="설명을 입력해주세요" style="resize: none;"></textarea>                   
              </div>
              <!--해시태그-->
-             <div id="tagCon" class="mt-3">
-               <div class="tagBox input-group bg-light rounded text-secondary d-inline pl-1 py-1 ml-1 mb-2">                                                      
-                   #<input style="box-sizing: content-box; width: 75px; max-width: calc(100% - 70px);" type="text" class="hashtag border-0 bg-transparent " placeholder="해시태그" aria-label="해시태그" aria-describedby="basic-addon1">
+             <div id="tagCon" class="mt-3 pl-2">
+               <div class="tagBox bg-light rounded text-secondary d-inline-block pl-1 py-1 ml-1 mb-2">                                                      
+                   #<input style="box-sizing: content-box; width: 75px;" onKeypress="javascript:if(event.keyCode==13) {$('.hashtag').focusout()}" type="text" class="hashtag border-0 bg-transparent " placeholder="해시태그" aria-label="해시태그" aria-describedby="basic-addon1">
                    <span class="d-none delete text-secondary ">
                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x pb-1 ml-0" style="font-size: 25px; cursor:pointer;" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                            <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
@@ -130,13 +130,18 @@
 
       //해시태그!
       // 글자 수에 따라 input태그 크기 늘어나기
-      $('.hashtag').on('keydown', function(e){
-        var value = $(e.target).val();
-        $("#tagCon").append('<div id="virtual_dom" style="display: inline-block;">' + value + '</div>'); 
-        var inputWidth =  $('#virtual_dom').width() + 15; 
-        $(e.target).css('width', inputWidth); 
-        $('#virtual_dom').remove();
-      });
+       $('.hashtag').on('keydown', function(e){
+          var value = $(e.target).val();
+          $("#tagCon").append('<div id="virtual_dom" style="display: inline-block;">' + value + '</div>'); 
+          if($('#virtual_dom').width()<$("#tagCon").width()-70){
+          var inputWidth =  $('#virtual_dom').width()+15; 
+          }else{
+            var inputWidth=$("#tagCon").width()-70;
+          }
+          $(e.target).css('width', inputWidth); 
+          $('#virtual_dom').remove();
+        });
+
       // 해시태그 작성 후 새 해시태그 추가
       $('.hashtag').focusout(function(e) {  
         if($(e.target).val().trim().length==0){
@@ -151,7 +156,8 @@
           //x버튼 보이게
           $(e.target).next("span.delete").removeClass("d-none");
           //새 해시태그 입력창 추가
-          $("#tagCon").append(clone);   
+          $("#tagCon").append(clone); 
+          clone.focus();
           $(e.target).removeClass("hashtag");  
         }                                         
       });
