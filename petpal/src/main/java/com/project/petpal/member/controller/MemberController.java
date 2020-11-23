@@ -6,7 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.kh.spring.member.model.service.MemberService;
+import com.project.petpal.member.model.service.MemberService;
+import com.project.petpal.member.model.vo.Member;
 
 @Controller
 public class MemberController {
@@ -15,7 +16,7 @@ public class MemberController {
 	MemberService service;
 	@Autowired
 	BCryptPasswordEncoder pwEncoder;
-
+	
 	@RequestMapping("/member/moveMyPage.do")
 	public String moveMyPage() {
 		return "member/myPageProfile";
@@ -38,6 +39,19 @@ public class MemberController {
 	public String myPageFav() {
 		return "member/myPageFav";
 	}
+	@RequestMapping("/member/insertMember.do")
+	public String insertMember(Model model,Member m) {
+		System.out.println(m);
+		int result=service.insertMember(m);
+		String msg="";
+		String loc="";
+		if(result>0) {
+			msg="가입에 성공하였습니다!";
+		}else {
+			msg="가입에 실패하였습니다!";
+		}
+		return "msg";
+	}
 	@RequestMapping("/member/memberLogin.do")
 	public String memberLogin(String email,String password,Model m) {
 		Member login=service.selectMember(email);
@@ -51,6 +65,5 @@ public class MemberController {
 			return "common/msg";
 		}	
 	}
-	
-	
+
 }
