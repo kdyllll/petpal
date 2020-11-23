@@ -27,7 +27,7 @@
 							<!-- null -->
 						</div>
 						<div class="col-md-6">
-							<form role="form" method="post" action="register.php">
+							<form role="form" method="post" action="${path }/member/insertMember.do">
 								<fieldset>
 									<p class="text-uppercase pull-center">기본정보</p>
 
@@ -44,21 +44,21 @@
 											class="form-control input-lg" placeholder="비밀번호 확인">
 									</div>
 									<div class="form-group">
-										<input type="text" name="username" id="username"
+										<input type="text" name="memberName" id="membername"
 											class="form-control input-lg" placeholder="이름">
 									</div>
 									<div class="form-group">
-										<input type="text" name="nickname" id="nickname"
+										<input type="text" name="nickName" id="nickname"
 											class="form-control input-lg" placeholder="닉네임">
 									</div>
 									<div class="form-group">
-										<input type="text" id="sample3_postcode"
+										<input type="text" id="sample3_postcode" name="address"
 											class="form-control input-lg" placeholder="우편번호"> <input
 											type="button" onclick="sample3_execDaumPostcode()"
 											class="btn btn-primary btn-sm" id="woo" value="우편번호 찾기"><br>
-										<input type="text" class="form-control input-lg"
+										<input type="text" class="form-control input-lg" name="address"
 											id="sample3_address" placeholder="주소"><br> <input
-											type="text" class="form-control input-lg"
+											type="text" class="form-control input-lg" name="address"
 											id="sample3_detailAddress" placeholder="상세주소">
 
 									</div>
