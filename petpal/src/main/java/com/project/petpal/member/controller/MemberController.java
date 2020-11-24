@@ -50,7 +50,7 @@ public class MemberController {
 		}else {
 			msg="가입에 실패하였습니다!";
 		}
-		return "msg";
+		return "common/msg";
 	}
 	@RequestMapping("/member/memberLogin.do")
 	public String memberLogin(String email,String password,Model m) {
