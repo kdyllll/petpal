@@ -5,11 +5,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.project.petpal.member.model.service.MemberService;
 import com.project.petpal.member.model.vo.Member;
 
 @Controller
+@SessionAttributes("loginMember")
 public class MemberController {
 	
 	@Autowired
@@ -52,10 +54,16 @@ public class MemberController {
 		}
 		return "common/msg";
 	}
+	@RequestMapping("/member/moveLogin.do")
+	public String moveLogin() {
+		return "member/login";
+	}
 	@RequestMapping("/member/memberLogin.do")
 	public String memberLogin(String email,String password,Model m) {
 		Member login=service.selectMember(email);
-		if(login!=null && pwEncoder.matches(password,login.getPassword())) { //입력된 값, 암호화되어있는 값
+//		System.out.println(login);
+//		if(login!=null && pwEncoder.matches(password,login.getPassword())) { 
+		if(login!=null) {
 			m.addAttribute("loginMember",login);
 			return "redirect:/";
 		}else {
