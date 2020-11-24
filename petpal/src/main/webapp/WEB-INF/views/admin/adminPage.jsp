@@ -169,8 +169,8 @@
 							<div class="row m-3 d-none" id="pdtContentCon">
 								<span>상품 <strong>설명사진</strong>을 추가해주세요.
 								</span> <input type="file" class="form-control input-group-sm"
-									name="fileName" id="pdtContent" style="font-size: 13px;" accept="image/*"
-									required>
+									name="fName" id="pdtContent" style="font-size: 13px;" accept="image/*"
+									required />
 							</div>
 							<p class="row mx-3 d-none" id="optionTitle">
 								상품<strong> 옵션 </strong> 선택
@@ -249,6 +249,7 @@
         if(colorTarget == "color") {
           $("#colorInputCon").removeClass("d-none");
         } else {
+          $("#colorInput").attr("value", "");
           $("#colorInputCon").addClass("d-none");
         }
       });
@@ -257,6 +258,7 @@
         if(sizeTarget == "size") {
           $("#sizeInputCon").removeClass("d-none");
         } else {
+        	$("#sizeInput").attr("value", "");	
           $("#sizeInputCon").addClass("d-none");
         }
       });
