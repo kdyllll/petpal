@@ -52,7 +52,7 @@ public class MemberController {
 		}else {
 			msg="가입에 실패하였습니다!";
 		}
-		return "msg";
+		return "common/msg";
 	}
 	@RequestMapping("/member/moveLogin.do")
 	public String moveLogin() {
