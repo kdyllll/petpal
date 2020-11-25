@@ -37,7 +37,7 @@
                 </li>
     
                 <li class="nav-item">
-                  <a class="nav-link text-dark" href="#">로그인</a>
+                  <a class="nav-link text-dark" href="${path }/member/moveLogin.do">로그인</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link text-dark" href="${path }/member/moveJoin.do">회원가입</a>
