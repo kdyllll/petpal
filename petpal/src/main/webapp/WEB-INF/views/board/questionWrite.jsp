@@ -6,7 +6,7 @@
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
 
-<script src="http://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
+<!-- <script src="http://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script> -->
 
 <style>
 	#change {
