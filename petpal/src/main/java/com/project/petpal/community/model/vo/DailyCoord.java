@@ -13,7 +13,7 @@ public class DailyCoord {
 
 	private String dailyImgNo;
 	private String productNo;
-	private double xcode;
-	private double ycode;
+	private double xxCode;
+	private double yyCode;
 	private String index;
 }

@@ -38,11 +38,6 @@ public class DailyController {
 	@RequestMapping("/daily/dailyWriteEnd.do")
 	public String insertDaily(HttpServletRequest request,HttpSession session,Model m,String content,
 			@RequestParam(value="pic", required=false) MultipartFile[] pic,
-//			@RequestParam(value="tag0", required=false) String[] tag0,
-//			@RequestParam(value="tag1", required=false) String[] tag1,
-//			@RequestParam(value="tag2", required=false) String[] tag2,
-//			@RequestParam(value="tag3", required=false) String[] tag3,
-//			@RequestParam(value="tag4", required=false) String[] tag4,
 			@RequestParam(value="coord", required=false) String[] coord,
 			@RequestParam(value="hashtag", required=false) String[] hashtag
 			) {
@@ -86,25 +81,10 @@ public class DailyController {
 		//tag0~tag4까지 배열에 하나씩 들어있는데 음 사진번호는 사진 넣고나서 생기니까 트렌젝션을 해야해
 		//하고나서 이 네개를 한번에 묶어서 하나로 보내야 하는건데, 그러면 객체가 들어있는 list인게 편하겠따
 		//순서가 글 인서트 → 글번호 가져오기(객체필요) → 사진 인서트 → 사진번호 가져오기(객체필요) → 좌표들을 사진번호에 맞게 객체에 넣고(객체 필요) → 좌표 인서트
-//		List<DailyCoord> coord0=new ArrayList<DailyCoord>();
-//		List<DailyCoord> coord1=new ArrayList<DailyCoord>();
-//		List<DailyCoord> coord2=new ArrayList<DailyCoord>();
-//		List<DailyCoord> coord3=new ArrayList<DailyCoord>();
-//		List<DailyCoord> coord4=new ArrayList<DailyCoord>();
-//		for(String s:tag0) {
-//			String[] code=s.split(",");
-//			DailyCoord dc=DailyCoord.builder().productNo(code[0]).xcode(Double.parseDouble(code[1])).ycode(Double.parseDouble(code[2])).build();
-//			coord0.add(dc);
-//		}
-//		for(String s:tag1) {
-//			String[] code=s.split(",");
-//			DailyCoord dc=DailyCoord.builder().productNo(code[0]).xcode(Double.parseDouble(code[1])).ycode(Double.parseDouble(code[2])).build();
-//			coord1.add(dc);
-//		}
 		List<DailyCoord> coords=new ArrayList<DailyCoord>();
 		for(String s:coord) {
 			String[] code=s.split(",");
-			DailyCoord dc=DailyCoord.builder().productNo(code[0]).xcode(Double.parseDouble(code[1])).ycode(Double.parseDouble(code[2])).index(code[3]).build();
+			DailyCoord dc=DailyCoord.builder().productNo(code[0]).xxCode(Double.parseDouble(code[1])).yyCode(Double.parseDouble(code[2])).index(code[3]).build();
 			coords.add(dc);
 		}
 		
@@ -112,12 +92,11 @@ public class DailyController {
 		int result=0;
 		try{
 			result=service.insertDaily(d,files,coords);
-		}catch (Exception e) {
-			
+		}catch (Exception e) {			
 		}
 	
-		m.addAttribute("msg","만드는중");
-		m.addAttribute("loc","/community/dailyWrite");
+		m.addAttribute("msg",result>0?"게시글이 작성되었습니다.":"게시글 작성에 실패했습니다.");
+		m.addAttribute("loc","/community/dailyList");
 		return "common/msg";
 	}
 

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "- //mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="daily">
+	<insert id="insertDaily" parameterType="daily">
+		INSERT INTO DAILY VALUES(SEQ_DAILYNO.NEXTVAL,#{memberNo},#{content},SYSDATE)
+		<selectKey keyProperty="dailyNo" resultType="string" order="AFTER">
+			SELECT SEQ_DAILYNO.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+	<insert id="insertDailyImg" parameterType="dailyImg">
+		INSERT INTO DAILYIMG VALUES(SEQ_DAILYIMGNO.NEXTVAL,#{dailyNo},#{dailyImgName})
+		<selectKey keyProperty="dailyImgNo" resultType="string" order="AFTER">
+			SELECT SEQ_DAILYIMGNO.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+	<insert id="insertDailyCoords" parameterType="dailyCoord">
+		INSERT INTO COORD VALUES(#{dailyImgNo},#{productNo},#{xxCode},#{yyCode})
+	</insert>
+</mapper>
