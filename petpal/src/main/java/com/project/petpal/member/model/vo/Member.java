@@ -16,7 +16,7 @@ public class Member {
 	private String password;
 	private String memberName;
 	private String phone;
-	private String address;
+	private String[] address;
 	private int point;
 	private Date enrollDate;
 	private String nickName;

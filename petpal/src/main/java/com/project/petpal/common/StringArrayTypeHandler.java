@@ -23,20 +23,20 @@ public class StringArrayTypeHandler implements TypeHandler<String[]> {
 
 	@Override
 	public String[] getResult(ResultSet rs, String columnName) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		String[] temp=rs.getNString(columnName).split(",");
+		return temp;
 	}
 
 	@Override
 	public String[] getResult(ResultSet rs, int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		String[] temp=rs.getNString(columnIndex).split(",");
+		return temp;
 	}
 
 	@Override
 	public String[] getResult(CallableStatement cs, int columnIndex) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return cs.getNString(columnIndex).split(",");
 	}
 
 }

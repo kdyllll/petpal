@@ -17,9 +17,9 @@ public class MemberServiceImpl implements MemberService{
 	private SqlSession session;
 	
 	@Override
-	public int insertMember(Member m) {
+	public int insertMember(Member member) {
 		// TODO Auto-generated method stub
-		return dao.insertMember(session,m);
+		return dao.insertMember(session,member);
 	}
 
 	@Override
