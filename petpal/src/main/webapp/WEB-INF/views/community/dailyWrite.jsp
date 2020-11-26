@@ -163,44 +163,50 @@
       $('#message-text').trigger('focus');
     });
 
+    var percentX;
+    var percentY;
+    var xx;
+    var yy;
+    var target;
     $(document).on('click','.previewImg',e=>{
-      var target=$(e.target);
+      target=$(e.target);
       var clickX=e.offsetX;//클릭한 위치X좌표
       var clickY=e.offsetY;//클릭한 위치Y좌표
       var x=target.width();//클릭한 이미지의 높이
       var y=target.height();//클릭한 이미지의 넓이
-      var percentX=clickX/x*100;//클릭한 위치의 상대적인 퍼센트X좌표값
-      var percentY=clickY/y*100;//클릭한 위치의 상대적인 퍼센트Y좌표값
-      var xx=percentX-15;
-      var yy=percentY+10;
-      $("#insert").on("click",e=>{//등록버튼 눌렀을때
+      percentX=clickX/x*100;//클릭한 위치의 상대적인 퍼센트X좌표값
+      percentY=clickY/y*100;//클릭한 위치의 상대적인 퍼센트Y좌표값
+      xx=percentX-15;
+      yy=percentY+10;
+    });
+    $("#insert").on("click",e=>{//등록버튼 눌렀을때
+        console.log("좌표등록");
         var product=$("#message-text").val();
         var img=`<div>
-        			<svg class="plusBtn position-absolute" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
-                    style="top:`+percentY+`%; left:`+percentX+`%;">
-                    <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-                </svg>
-                <input type="hidden" class="code" value="`+product+`,`+percentX+`,`+percentY+`"/>
-                <div class="bubble rounded shadow-sm col-4 col-lg-4 position-absolute px-1" style="top:`+yy+`%; left:`+xx+`%;">
-                  <div class="row d-flex flex-wrap">
-                    <img class="col-2 border">
-                    <p class="p-1 mb-0">`+product+`</p>
+                  <svg class="plusBtn position-absolute" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                      style="top:`+percentY+`%; left:`+percentX+`%;">
+                      <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                  </svg>
+                  <input type="hidden" class="code" value="`+product+`,`+percentX+`,`+percentY+`"/>
+                  <div class="bubble rounded shadow-sm col-4 col-lg-4 position-absolute px-1" style="top:`+yy+`%; left:`+xx+`%;">
+                    <div class="row d-flex flex-wrap">
+                      <img class="col-2 border">
+                      <p class="p-1 mb-0">`+product+`</p>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                      <button type="button" class="deleteTag btn p-0 row pr-3">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash text-dark" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                          <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                        </svg>
+                      </button>
+                    </div>
                   </div>
-                  <div class="d-flex justify-content-end">
-                    <button type="button" class="deleteTag btn p-0 row pr-3">
-                      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash text-dark" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
                 </div>
                 `;
         target.parent("div.preview").append(img);
         $(".bubble").hide();
       });
-    });
     
     //+에 마우스 올렸을 때/떠났을 때 말풍선 보이고 숨기기
     $(document).on('mouseenter',".plusBtn",e=>{ 	
@@ -246,10 +252,10 @@
          $(e.target).next("span.delete").removeClass("d-none");
          //새 해시태그 입력창 추가
          $("#tagCon").append(clone);
-        //$("#tagCon").find(".hashtag").last().trigger('focus'); 
-        // clone.trigger('focus');
-        // clone.focus();
          $(e.target).removeClass("hashtag");  
+         if(e.originalEvent==undefined){//엔터키로 눌렀을때
+             $("#tagCon").find(".hashtag").focus();
+         } 
        }                                         
      });
      // 해시태그 x버튼 누르면 삭제
@@ -266,6 +272,7 @@
           //등록 누르면 사진 별 +버튼의 상품 이름 input태그에 몇번째 사진의 좌표인지 name 부여
           var plusCon=$(item).parent("label").next("div.preview");
           plusCon.find("input[type=hidden]").each((j,item2)=>{
+        	console.log(item2);
             let tagName="tag"+i;
             $(item2).attr("name",tagName);
           });          
