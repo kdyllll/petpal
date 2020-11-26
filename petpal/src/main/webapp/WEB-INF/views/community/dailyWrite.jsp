@@ -35,11 +35,11 @@
   
   <main role="main" style="min-height:100vh;" class="pt-5">
     <div class="row mb-5 mb-lg-1">
-        <form class="container mt-5 col-lg-8">
+        <form id="writeFrm" class="container mt-5 col-lg-8" method="post" enctype="multipart/form-data">
             <p class="h2 mb-5 mt-2"><strong>일상 올리기</strong></p>
             <div class="form-group row" id="imgContainer">               
               <label id="uploadLabel" class="btn rounded bg-light ml-1 col-lg-5 col-12" style="height: 300px;">          
-                  <input class="d-none upload" id="upload" type="file" accept="images/*"/>                                    
+                  <input name="pic" class="d-none upload" id="upload" type="file" accept="images/*" required/>                                    
                   <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-camera-fill text-secondary" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="font-size: 60px;">
                       <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
                       <path fill-rule="evenodd" d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>
@@ -55,13 +55,13 @@
             
             <!--설명-->
             <div class="col-12 mt-3 px-0">                        
-              <textarea class="form-control" rows="5" placeholder="설명을 입력해주세요" style="resize: none;"></textarea>                   
+              <textarea class="form-control" name="content" rows="5" placeholder="설명을 입력해주세요" style="resize: none;" required></textarea>                   
             </div>
                        
             <!--해시태그-->
             <div id="tagCon" class="mt-3 pl-2">
               <div class="tagBox bg-light rounded text-secondary d-inline-block pl-1 py-1 ml-1 mb-2">                                                      
-                  #<input style="box-sizing: content-box; width: 75px;" onKeypress="javascript:if(event.keyCode==13) {$('.hashtag').focusout()}" type="text" class="hashtag border-0 bg-transparent " placeholder="해시태그" aria-label="해시태그" aria-describedby="basic-addon1">
+                  #<input name="hashtag" style="box-sizing: content-box; width: 75px;" onKeypress="javascript:if(event.keyCode==13) {$('.hashtag').focusout()}" type="text" class="hashtag border-0 bg-transparent " placeholder="해시태그" aria-label="해시태그" aria-describedby="basic-addon1">
                   <span class="d-none delete text-secondary ">
                       <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x pb-1 ml-0" style="font-size: 25px; cursor:pointer;" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                           <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
@@ -87,7 +87,7 @@
             <form>
               <div class="form-group">
                 <label for="message-text" class="col-form-label">상품명:</label>
-                <textarea class="form-control" id="message-text" placeholder="상품명이나 브랜드를 입력해주세요"></textarea>
+                <input type="text" class="form-control" id="message-text" placeholder="상품명이나 브랜드를 입력해주세요">
               </div>
             </form>
           </div>
@@ -135,7 +135,7 @@
        $("#imgContainer").find(".addPic").hide();
        if($(".preview").length!=5){  
          let label=`<label class="addPic rounded text-center bg-light btn btn-block mt-3 mx-3" style="cursor: pointer; height:50px;">
-                     <input class="d-none upload" type="file" accept="images/*"/>
+                     <input name="pic" class="d-none upload" type="file" accept="images/*"/>
                      <p class="h5 text-secondary align-middle mb-0 mt-1"><strong>추가하기</strong></p>
                    </label>`;
          $("#imgContainer").append(label);
@@ -155,24 +155,7 @@
          $(".addPic").remove();
        };                  
      }); 
-     //등록 누르면 사진 인풋태그에 name 순서대로 부여
-     $("#btn").on("click",e=>{
-     //function fn_picName(){      
-       $("input[type=file]").each((i,item)=>{                     
-         if(item.value.length!=0){         
-           let name="pic"+i;
-           $(item).attr("name",name);
-          //등록 누르면 사진 별 +버튼의 상품 이름 input태그에 몇번째 사진의 좌표인지 name 부여
-          var plusCon=$(item).parent("label").next("div.preview");
-          plusCon.find("input[type=hidden]").each((j,item2)=>{
-            let tagName=i+"tag";
-            $(item2).attr("name",tagName);
-          });          
-         };                     
-       }); 
-       
-     });
-
+     
      //+태그!
     
     $('.modal').on('shown.bs.modal', function(){
@@ -273,6 +256,27 @@
      $(".delete").click(function(e){
        $(e.target).parents(".tagBox").remove();
      });
+     
+     $("#btn").on("click",e=>{ 
+    	 //등록 누르면 사진 인풋태그에 id 순서대로 부여
+       $("input[type=file]").each((i,item)=>{                     
+         if(item.value.length!=0){         
+           let name="pic"+i;
+           $(item).attr("id",name);
+          //등록 누르면 사진 별 +버튼의 상품 이름 input태그에 몇번째 사진의 좌표인지 name 부여
+          var plusCon=$(item).parent("label").next("div.preview");
+          plusCon.find("input[type=hidden]").each((j,item2)=>{
+            let tagName="tag"+i;
+            $(item2).attr("name",tagName);
+          });          
+         };                     
+       }); 
+    	 
+    	 //등록 누르면 form 전송
+    	 $("#writeFrm").attr("action","${path }/daily/dailyWriteEnd.do").submit();
+       
+     });
+
  
  });
 
