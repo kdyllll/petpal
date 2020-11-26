@@ -6,6 +6,6 @@ import com.project.petpal.member.model.vo.Member;
 
 public interface MemberDao {
 
-	int insertMember(SqlSession session,Member m);
+	int insertMember(SqlSession session,Member member);
 	Member selectMember(SqlSession session,String email);
 }

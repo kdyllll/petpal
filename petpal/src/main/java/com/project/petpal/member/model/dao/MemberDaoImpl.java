@@ -9,8 +9,8 @@ import com.project.petpal.member.model.vo.Member;
 public class MemberDaoImpl implements MemberDao {
 
 	@Override
-	public int insertMember(SqlSession session, Member m) {
-		return session.insert("member");
+	public int insertMember(SqlSession session, Member member) {
+		return session.insert("member.insertMember",member);
 	}
 
 	@Override
