@@ -89,7 +89,7 @@
 			<form class="modal fade" id="staticBackdrop" tabindex="-1"
 				method="post" enctype="multipart/form-data"
 				aria-labelledby="exampleModalLabel" data-backdrop="static"
-				aria-hidden="true">
+				aria-hidden="true" action="${path }/admin/productInsertEnd.do">
 				<div
 					class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 					<div class="modal-content">
@@ -119,49 +119,49 @@
 								</div>
 							</div>
 							<div id="dogCate" class="row d-none secondCateCon mx-3">
-								<select name="secondCate" class="custom-select mr-sm-2 col-4 ">
+								<select name="categoryNo" class="custom-select mr-sm-2 col-4 ">
 									<option selected disabled>강아지Category</option>
-									<option value="dogHome">홈/리빙</option>
-									<option value="dogEat">식품</option>
-									<option value="dogCloth">옷</option>
-									<option value="dogAcc">용품</option>
-									<option value="dogBath">목욕/미용</option>
+									<option value="D1">홈/리빙</option>
+									<option value="D2">식품</option>
+									<option value="D3">옷</option>
+									<option value="D4">용품</option>
+									<option value="D5">목욕/미용</option>
 								</select>
 							</div>
 							<div id="catCate" class="row d-none secondCateCon mx-3">
-								<select name="secondCate" class="custom-select mr-sm-2 col-4 ">
+								<select name="categoryNo" class="custom-select mr-sm-2 col-4 ">
 									<option selected disabled>고양이Category</option>
-									<option value="catHome">홈/리빙</option>
-									<option value="catEat">식품</option>
-									<option value="catCloth">옷</option>
-									<option value="catAcc">용품</option>
-									<option value="catBath">목욕/미용</option>
+									<option value="C1">홈/리빙</option>
+									<option value="C2">식품</option>
+									<option value="C3">옷</option>
+									<option value="C4">용품</option>
+									<option value="C5">목욕/미용</option>
 								</select>
 							</div>
 							<div id="smallCate" class="row d-none secondCateCon mx-3">
-								<select name="secondCate" class="custom-select mr-sm-2 col-4">
+								<select name="categoryNo" class="custom-select mr-sm-2 col-4">
 									<option selected disabled>소동물Category</option>
-									<option value="ham">햄스터</option>
-									<option value="rabbit">토끼</option>
-									<option value="fish">물고기</option>
-									<option value="bird">새</option>
+									<option value="S1">햄스터</option>
+									<option value="S2">토끼</option>
+									<option value="S3">물고기</option>
+									<option value="S4">새</option>
 								</select>
 							</div>
 							<div class="row m-3 d-none" id="thirdCateCon">
 								<span>상품 <strong>소분류</strong>를 입력해주세요.
 								</span> <input type="text" class="form-control input-group-sm"
-									name="thirdCate" id="thirdCate" style="font-size: 13px;"
+									name="subCate" id="thirdCate" style="font-size: 13px;"
 									required>
 							</div>
 							<div class="row m-3 d-none" id="pdtNameCon">
 								<span>상품 <strong>이름</strong>을 입력해주세요.
 								</span> <input type="text" class="form-control input-group-sm"
-									name="pdtName" id="pdtName" style="font-size: 13px;" required>
+									name="productName" id="pdtName" style="font-size: 13px;" required>
 							</div>
 							<div class="row m-3 d-none" id="pdtPicturesCon">
 								<span>상품 <strong>사진</strong>을 추가해주세요(다중선택가능/최대5장).
 								</span> <input multiple="multiple" type="file" maxlength="5"
-									name="pdtPictures[]" class="form-control input-group-sm"
+									name="pdtPictures" class="form-control input-group-sm"
 									id="pdtPictures" style="font-size: 13px;" accept="image/*" required>
 							</div>
 							<div class="row m-3 d-none" id="imgsContainer">
@@ -169,8 +169,8 @@
 							<div class="row m-3 d-none" id="pdtContentCon">
 								<span>상품 <strong>설명사진</strong>을 추가해주세요.
 								</span> <input type="file" class="form-control input-group-sm"
-									name="pdtContent" id="pdtContent" style="font-size: 13px;" accept="image/*"
-									required>
+									name="fName" id="pdtContent" style="font-size: 13px;" accept="image/*"
+									required />
 							</div>
 							<p class="row mx-3 d-none" id="optionTitle">
 								상품<strong> 옵션 </strong> 선택
@@ -189,7 +189,7 @@
 							</div>
 							<div class="row mx-3 d-none mb-2" id="sizeInputCon">
 								<input type="text" class="form-control input-group-sm"
-									placeholder="ex) S,M,L " id="sizeInput" name="sizeInput">
+									placeholder="ex) S,M,L " id="sizeInput" name="productSize">
 							</div>
 							<div class="row mb-2 mx-3 d-none" id="pdtOptionChoiceTwo">
 								<div class="custom-control custom-radio custom-control-inline">
@@ -205,7 +205,7 @@
 							</div>
 							<div class="row mx-3 d-none mb-2" id="colorInputCon">
 								<input type="text" class="form-control input-group-sm"
-									placeholder="ex) 빨강,노랑,... " id="colorInput" name="colorInput">
+									placeholder="ex) 빨강,노랑,... " id="colorInput" name="color">
 							</div>
 						</div>
 						<div class="modal-footer ">
@@ -232,7 +232,7 @@
         }
       });
 
-      $("select[name='secondCate']").on("change", e => {
+      $("select[name='categoryNo']").on("change", e => {
         $("#thirdCateCon").removeClass("d-none");
         $("#pdtNameCon").removeClass("d-none");
         $("#pdtContentCon").removeClass("d-none");
@@ -249,6 +249,7 @@
         if(colorTarget == "color") {
           $("#colorInputCon").removeClass("d-none");
         } else {
+          $("#colorInput").attr("value", "");
           $("#colorInputCon").addClass("d-none");
         }
       });
@@ -257,6 +258,7 @@
         if(sizeTarget == "size") {
           $("#sizeInputCon").removeClass("d-none");
         } else {
+        	$("#sizeInput").attr("value", "");	
           $("#sizeInputCon").addClass("d-none");
         }
       });

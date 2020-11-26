@@ -9,4 +9,14 @@ public class PaymentCompleteController {
 	public String paymentComplete() {
 		return "/payment/paymentComplete";
 	}
+	
+	@RequestMapping("/payment/payment.do")
+	public String payment() {
+		return "/payment/payment";
+	}
+
+	@RequestMapping("/payment/myPayment.do")
+	public String mypayment() {
+		return "/payment/myPayment";
+	}
 }

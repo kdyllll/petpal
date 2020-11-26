@@ -215,7 +215,7 @@
 				}
 			</style>
 
-			<div class="d-flex border p-4" style="border: black;">
+			<div class="d-flex border p-4 mb-1" style="border: black;">
 				<div class="form-inline" style="width: 50%">
 					<img src="${path }/resources/images/test.jpg" class="mr-2" style="height: 100px; width: 100px;"> <label>상품명어쩌구저쩌구</label>
 				</div>

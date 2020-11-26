@@ -5,19 +5,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class knowHowController {
-	@RequestMapping("knowhow/knowHowList.do")
+	@RequestMapping("community/knowHowList.do")
 	public String knowHowList() {
-		return "knowhow/knowHowList";
+		return "community/knowHowList";
 	}
 	
-	@RequestMapping("knowhow/knowHowDetail.do")
+	@RequestMapping("community/knowHowDetail.do")
 	public String knowHowDetail() {
-		return "knowhow/knowHowDetail";
+		return "community/knowHowDetail";
 	}
 	
-	@RequestMapping("knowhow/knowHowWrite.do")
+	@RequestMapping("community/knowHowWrite.do")
 	public String knowHowWrite() {
-		return "knowhow/knowHowWrite";
+		return "community/knowHowWrite";
 	}
 	
 }
