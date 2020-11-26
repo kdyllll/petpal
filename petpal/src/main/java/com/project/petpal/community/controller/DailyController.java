@@ -6,8 +6,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class DailyController {
 	
-	@RequestMapping("/community/moveDailyWrite")
+	@RequestMapping("/daily/moveWrite.do")
 	public String moveDailyWrite() {
 		return "community/dailyWrite";
+	}
+	
+	@RequestMapping("/daily/writeEnd.do")
+	public String insertDaily() {
+		
+		return "common/msg";
 	}
 }
