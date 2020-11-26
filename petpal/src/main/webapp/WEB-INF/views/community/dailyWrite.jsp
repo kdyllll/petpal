@@ -148,8 +148,10 @@
        previewDiv.remove();
        picInput.remove();
        if($(".preview").length==4){
+    	   //사진이 5개였던 상태에서 삭제하면 → 사진추가하기 버튼 보이게
          fn_add();
        }else if($(".preview").length==0){
+    	   //사진을 전부 삭제했다면 → 초기의 사진 등록버튼 보이게
          $("#uploadLabel").show();
          $("#upload").val("");
          $(".addPic").remove();
@@ -182,12 +184,18 @@
     $("#insert").on("click",e=>{//등록버튼 눌렀을때
         console.log("좌표등록");
         var product=$("#message-text").val();
+        
+        //여기서 에이작스 처리해야함!!!
+        //input hidden 태그에도 상품번호로 변경하기!!
+        
+        
+        
         var img=`<div>
                   <svg class="plusBtn position-absolute" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
                       style="top:`+percentY+`%; left:`+percentX+`%;">
                       <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
                   </svg>
-                  <input type="hidden" class="code" value="`+product+`,`+percentX+`,`+percentY+`"/>
+                  <input type="hidden" name="coord" value="`+product+`,`+percentX+`,`+percentY+`"/>
                   <div class="bubble rounded shadow-sm col-4 col-lg-4 position-absolute px-1" style="top:`+yy+`%; left:`+xx+`%;">
                     <div class="row d-flex flex-wrap">
                       <img class="col-2 border">
@@ -267,14 +275,15 @@
     	 //등록 누르면 사진 인풋태그에 id 순서대로 부여
        $("input[type=file]").each((i,item)=>{                     
          if(item.value.length!=0){         
-           let name="pic"+i;
-           $(item).attr("id",name);
+           //let name="pic"+i;
+           //$(item).attr("id",name);
+           
           //등록 누르면 사진 별 +버튼의 상품 이름 input태그에 몇번째 사진의 좌표인지 name 부여
           var plusCon=$(item).parent("label").next("div.preview");
           plusCon.find("input[type=hidden]").each((j,item2)=>{
-        	console.log(item2);
-            let tagName="tag"+i;
-            $(item2).attr("name",tagName);
+        	let oriVal=$(item2).val();
+            let newVal=oriVal+","+i;
+            $(item2).val(newVal);
           });          
          };                     
        }); 
