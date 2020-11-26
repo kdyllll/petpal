@@ -4,6 +4,8 @@
 	<typeAliases>
 		<typeAlias type="com.project.petpal.member.model.vo.Member" alias="member"/>
 		<typeAlias type="com.project.petpal.common.StringArrayTypeHandler" alias="strArr"/>
+		<typeAlias type="com.project.petpal.admin.model.vo.Product" alias="product"/>
+		<typeAlias type="com.project.petpal.admin.model.vo.Stock" alias="stock"/>
 	</typeAliases>
 </configuration>
 
