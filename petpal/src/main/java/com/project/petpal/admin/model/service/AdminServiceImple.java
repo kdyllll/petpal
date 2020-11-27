@@ -32,13 +32,24 @@ public class AdminServiceImple implements AdminService {
 				}
 			}
 			if(pImg != null) {
-				for(ProductImg pi : pImg) {
+				for(int i=0; i<pImg.size(); i++) {
+					ProductImg pi = (ProductImg)pImg.get(i);
 					pi.setProductNo(p.getProductNo());
-					result = dao.insertProductImg(session, pi);
+					if(i==0) {
+						result = dao.insertProductMainImg(session, pi);		
+					} else if (i!= 0) {			
+						result = dao.insertProductImg(session, pi);						
+					}
 				}
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public List<Product> selectProductAll() {
+		// TODO Auto-generated method stub
+		return dao.selectProductAll(session);
 	}
 	
 	

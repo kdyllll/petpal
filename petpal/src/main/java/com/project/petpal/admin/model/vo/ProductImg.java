@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class ProductImg {
 	private String productNo;
 	private String imgName;
+	private String type;
 }

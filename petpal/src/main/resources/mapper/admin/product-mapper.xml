@@ -11,6 +11,12 @@
 		INSERT INTO STOCK VALUES(SEQ_STOCKNO.NEXTVAL,#{productNo},#{color , jdbcType=VARCHAR},#{productSize , jdbcType=VARCHAR},0,0,0)
 	</insert>
 	<insert id="insertProductImg" parameterType="pImg">
-		INSERT INTO PRODUCTIMG VALUES(#{productNo},#{imgName})
+		INSERT INTO PRODUCTIMG VALUES(#{productNo},#{imgName},'S')
+	</insert>
+	<select id="selectProductAll" resultType="product">
+		SELECT * FROM PRODUCT ORDER BY ENROLLDATE DESC
+	</select>
+	<insert id="insertProductMainImg" parameterType="pImg">
+		INSERT INTO PRODUCTIMG VALUES(#{productNo},#{imgName},'M')
 	</insert>
 </mapper>

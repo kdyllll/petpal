@@ -8,4 +8,5 @@ import com.project.petpal.admin.model.vo.Stock;
 
 public interface AdminService {
 	int insertProduct(Product p, List<Stock> stockList, List<ProductImg> pImg);
+	List<Product> selectProductAll();
 }

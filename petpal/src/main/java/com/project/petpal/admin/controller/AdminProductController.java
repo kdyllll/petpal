@@ -73,6 +73,7 @@ public class AdminProductController {
 				}
 				ProductImg p2 = ProductImg.builder().imgName(reName2).build();
 				pImg.add(p2);
+				System.out.println(pImg.get(0));
 			}
 		}
 		//사이즈,색구분
