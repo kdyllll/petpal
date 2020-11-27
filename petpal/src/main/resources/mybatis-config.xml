@@ -4,6 +4,11 @@
 	<typeAliases>
 		<typeAlias type="com.project.petpal.member.model.vo.Member" alias="member"/>
 		<typeAlias type="com.project.petpal.common.StringArrayTypeHandler" alias="strArr"/>
+		<typeAlias type="com.project.petpal.admin.model.vo.Product" alias="product"/>
+		<typeAlias type="com.project.petpal.admin.model.vo.Stock" alias="stock"/>
+		<typeAlias type="com.project.petpal.community.model.vo.Daily" alias="daily"/>
+		<typeAlias type="com.project.petpal.community.model.vo.DailyImg" alias="dailyImg"/>
+		<typeAlias type="com.project.petpal.community.model.vo.DailyCoord" alias="dailyCoord"/>
 	</typeAliases>
 </configuration>
 

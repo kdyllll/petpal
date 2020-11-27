@@ -4,7 +4,7 @@ import com.project.petpal.member.model.vo.Member;
 
 public interface MemberService {
 
-	int insertMember(Member m);
+	int insertMember(Member member);
 	Member selectMember(String email);
 	
 }

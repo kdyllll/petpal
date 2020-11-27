@@ -41,16 +41,19 @@ public class MemberController {
 	public String myPageFav() {
 		return "member/myPageFav";
 	}
+	
 	@RequestMapping("/member/insertMember.do")
-	public String insertMember(Model model,Member m) {
+	public String insertMember(Model m,Member member) {
+		
+		String oriPw=member.getPassword();
+		member.setPassword(pwEncoder.encode(oriPw));
 		System.out.println(m);
-		int result=service.insertMember(m);
-		String msg="";
-		String loc="";
+		int result=service.insertMember(member);
 		if(result>0) {
-			msg="가입에 성공하였습니다!";
+			m.addAttribute("msg","가입에 성공하였습니다!");
 		}else {
-			msg="가입에 실패하였습니다!";
+			m.addAttribute("loc","가입에 실패하였습니다!");
+			m.addAttribute("loc","/member/moveJoin.do");	
 		}
 		return "common/msg";
 	}
@@ -62,8 +65,8 @@ public class MemberController {
 	public String memberLogin(String email,String password,Model m) {
 		Member login=service.selectMember(email);
 //		System.out.println(login);
-//		if(login!=null && pwEncoder.matches(password,login.getPassword())) { 
-		if(login!=null) {
+		if(login!=null && pwEncoder.matches(password,login.getPassword())) { 
+//		if(login!=null) {
 			m.addAttribute("loginMember",login);
 			return "redirect:/";
 		}else {

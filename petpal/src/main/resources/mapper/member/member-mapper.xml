@@ -7,4 +7,7 @@
 	<resultMap type="member" id="memberMap">
 		<result column="address" property="address" typeHandler="strArr"/>
     </resultMap>
+    <insert id="insertMember" parameterType="member">
+    	INSERT INTO MEMBER VALUES(SEQ_MEMBERNO.NEXTVAL,#{email},#{password},#{memberName},#{phone},#{address,typeHandler=strArr},DEFAULT,DEFAULT,#{nickName})
+    </insert>
 </mapper>
