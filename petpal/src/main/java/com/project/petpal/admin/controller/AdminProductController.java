@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,7 +30,7 @@ public class AdminProductController {
 	public String productInsert(Product product,Stock stock, 
 			@RequestParam(value="pdtPictures", required=false) MultipartFile[] upFile,
 			@RequestParam(value="fName", required = false) MultipartFile[] fName,
-			 HttpSession session) {
+			 HttpSession session,Model m) {
 		//product 설명파일
 		String path = session.getServletContext().getRealPath("/resources/upload/product/detail");
 		File dir = new File(path);
@@ -73,7 +74,6 @@ public class AdminProductController {
 				}
 				ProductImg p2 = ProductImg.builder().imgName(reName2).build();
 				pImg.add(p2);
-				System.out.println(pImg.get(0));
 			}
 		}
 		//사이즈,색구분
@@ -106,6 +106,13 @@ public class AdminProductController {
 		int result = service.insertProduct(p,stockList, pImg);
 		System.out.println("결과 : "+result);
 		
-		return "admin/adminPage";
+		String loc = "/admin/moveAdminPage.do";
+		String msg= "상품등록실패";
+		if(result>0) {
+			msg="상품등록성공";
+		}
+		m.addAttribute("loc",loc);
+		m.addAttribute("msg",msg);
+		return "common/msg";
 	}
 }

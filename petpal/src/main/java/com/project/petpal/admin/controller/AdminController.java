@@ -1,6 +1,7 @@
 package com.project.petpal.admin.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,13 +18,15 @@ public class AdminController {
 	
 	@RequestMapping("/admin/moveAdminPage.do")
 	public String moveAdminPage(Model m) {
-		List<Product> pList = service.selectProductAll();
-		m.addAttribute(pList);
+		List<Map> pList = service.selectProductAll();
+		m.addAttribute("pList", pList);
 		return "admin/adminPage";
 	}
 	
 	@RequestMapping("/admin/adminStock.do")
-	public String adminStock() {
+	public String adminStock(Model m) {
+		List<Map> pList = service.selectProductAll();
+		m.addAttribute("pList", pList);
 		return "admin/adminStock";
 	}
 	

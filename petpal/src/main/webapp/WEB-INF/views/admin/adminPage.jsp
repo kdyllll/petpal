@@ -55,18 +55,21 @@
 							</tr>
 						</thead>
 						<tbody>
+							<c:if test="${not empty pList }">
+							<c:forEach var="pdt" items="${pList }">
 							<tr>
-								<th scope="row" class="align-middle text-center">1</th>
+								<th scope="row" class="align-middle text-center">${pdt.PRODUCTNO }</th>
 								<td class="text-center"><img
-									style="width: 100px; height: 100px;"></td>
-								<td class="align-middle text-center">Otto</td>
-								<td class="align-middle text-center">@mdo</td>
-								<td class="align-middle text-center">Otto</td>
+									style="width: 100px; height: 100px;" src="${path }/resources/upload/product/detail/${pdt.IMGNAME}"></td>
+								<td class="align-middle text-center">${pdt.PRODUCTNAME }</td>
+								<td class="align-middle text-center">${pdt.CATEGORYNAME }</td>
+								<td class="align-middle text-center">${pdt.ENROLLDATE }</td>
 								<td class="align-middle text-center"><button
 										class="btn btn-outline-danger btn-sm">삭제</button>
 									<button class="btn btn-outline-secondary btn-sm">수정</button></td>
 							</tr>
-
+							</c:forEach>
+							</c:if>
 						</tbody>
 					</table>
 				</div>

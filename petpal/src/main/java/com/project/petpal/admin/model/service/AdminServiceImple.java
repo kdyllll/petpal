@@ -1,6 +1,7 @@
 package com.project.petpal.admin.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +48,15 @@ public class AdminServiceImple implements AdminService {
 	}
 
 	@Override
-	public List<Product> selectProductAll() {
+	public List<Map> selectProductAll() {
 		// TODO Auto-generated method stub
 		return dao.selectProductAll(session);
+	}
+
+	@Override
+	public List<Stock> selectStock(String pdtNo) {
+		// TODO Auto-generated method stub
+		return dao.selectStock(session, pdtNo);
 	}
 	
 	

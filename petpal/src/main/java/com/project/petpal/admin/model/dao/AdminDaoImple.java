@@ -1,6 +1,7 @@
 package com.project.petpal.admin.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -31,7 +32,7 @@ public class AdminDaoImple implements AdminDao {
 	}
 
 	@Override
-	public List<Product> selectProductAll(SqlSession session) {
+	public List<Map> selectProductAll(SqlSession session) {
 		// TODO Auto-generated method stub
 		return session.selectList("product.selectProductAll");
 	}
@@ -40,6 +41,12 @@ public class AdminDaoImple implements AdminDao {
 	public int insertProductMainImg(SqlSession session, ProductImg pi) {
 		// TODO Auto-generated method stub
 		return session.insert("product.insertProductMainImg", pi);
+	}
+
+	@Override
+	public List<Stock> selectStock(SqlSession session, String pdtNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("product.selectStock", pdtNo);
 	}
 
 }

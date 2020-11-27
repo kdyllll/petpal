@@ -1,6 +1,7 @@
 package com.project.petpal.admin.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -13,5 +14,6 @@ public interface AdminDao {
 	int insertStock(SqlSession session, Stock s);
 	int insertProductImg(SqlSession session, ProductImg pi);
 	int insertProductMainImg(SqlSession session, ProductImg pi);
-	List<Product> selectProductAll(SqlSession session);
+	List<Map> selectProductAll(SqlSession session);
+	List<Stock> selectStock(SqlSession session, String pdtNo);
 }
