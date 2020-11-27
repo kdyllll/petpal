@@ -9,6 +9,8 @@
 		<typeAlias type="com.project.petpal.community.model.vo.Daily" alias="daily"/>
 		<typeAlias type="com.project.petpal.community.model.vo.DailyImg" alias="dailyImg"/>
 		<typeAlias type="com.project.petpal.community.model.vo.DailyCoord" alias="dailyCoord"/>
+		<typeAlias type="com.project.petpal.community.model.vo.Tip" alias="tip"/>
+		<typeAlias type="com.project.petpal.community.model.vo.TipImg" alias="tipImg"/>
 	</typeAliases>
 </configuration>
 

@@ -178,7 +178,7 @@
 		                                            + "\" onclick=\"deletePreview(this)\">"
 		                                            + "x" + "</button>"
 		                                     		+ "<img id=\"image_container\" class=\"img\" src=\"" + img.target.result + "\" style=\"width:100%;\"\/>"
-		                                     		+ "<textarea class=\"form-control border-0 mt-2 mb-3\" id=\"ta\" rows=\"3\" placeholder=\"사진에 대한 설명을 작성해주세요\" style=\"resize: none;\"></textarea>"
+		                                     		+ "<textarea class=\"form-control border-0 mt-2 mb-3\" name=\"content\" id=\"ta\" rows=\"3\" placeholder=\"사진에 대한 설명을 작성해주세요\" style=\"resize: none;\"></textarea>"
 		                                     		+ "</div>"
 		                                            );
 		                    files[imgNum] = file;

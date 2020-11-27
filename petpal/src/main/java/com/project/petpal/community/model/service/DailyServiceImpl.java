@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.petpal.community.model.dao.DailyDao;
@@ -11,6 +12,7 @@ import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyCoord;
 import com.project.petpal.community.model.vo.DailyImg;
 
+@Service
 public class DailyServiceImpl implements DailyService {
 
 	@Autowired

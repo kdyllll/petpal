@@ -11,12 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Tip {
+public class TipImg {
+	private String tipImgNo;
 	private String tipNo;
-	private String memberNo;
-	private String category;
-	private Date enrollDate;
-	private String title;
-	private String content1;
-	private String content2;
+	private String content;
+	private String fileName;
 }
