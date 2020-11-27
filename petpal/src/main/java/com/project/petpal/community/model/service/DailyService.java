@@ -8,5 +8,5 @@ import com.project.petpal.community.model.vo.DailyImg;
 
 public interface DailyService {
 
-	int insertDaily(Daily d,List<DailyImg> files,List<DailyCoord> coords) throws Exception;
+	int insertDaily(Daily d,List<DailyImg> files,List<DailyCoord> coords);
 }

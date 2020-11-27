@@ -89,11 +89,8 @@ public class DailyController {
 		}
 		
 		//보내기
-		int result=0;
-		try{
-			result=service.insertDaily(d,files,coords);
-		}catch (Exception e) {			
-		}
+		int result=service.insertDaily(d,files,coords);
+		
 	
 		m.addAttribute("msg",result>0?"게시글이 작성되었습니다.":"게시글 작성에 실패했습니다.");
 		m.addAttribute("loc","/community/dailyList");

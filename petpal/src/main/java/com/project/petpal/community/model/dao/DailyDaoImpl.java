@@ -1,11 +1,13 @@
 package com.project.petpal.community.model.dao;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
 
 import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyCoord;
 import com.project.petpal.community.model.vo.DailyImg;
 
+@Repository
 public class DailyDaoImpl implements DailyDao {
 
 	@Override
