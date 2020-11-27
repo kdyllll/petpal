@@ -10,4 +10,7 @@
 	<insert id="insertStock" parameterType="stock">
 		INSERT INTO STOCK VALUES(SEQ_STOCKNO.NEXTVAL,#{productNo},#{color , jdbcType=VARCHAR},#{productSize , jdbcType=VARCHAR},0,0,0)
 	</insert>
+	<insert id="insertProductImg" parameterType="pImg">
+		INSERT INTO PRODUCTIMG VALUES(#{productNo},#{imgName})
+	</insert>
 </mapper>

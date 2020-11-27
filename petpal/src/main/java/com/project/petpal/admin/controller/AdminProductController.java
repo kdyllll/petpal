@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.project.petpal.admin.model.service.AdminService;
 import com.project.petpal.admin.model.vo.Product;
+import com.project.petpal.admin.model.vo.ProductImg;
 import com.project.petpal.admin.model.vo.Stock;
 
 @Controller
@@ -52,7 +53,28 @@ public class AdminProductController {
 			}
 		}
 		Product p = Product.builder().productName(product.getProductName()).categoryNo(product.getCategoryNo()).fileName(reName).subCate(product.getSubCate()).build();
+		//제품 이미지 사진들
+		List<ProductImg> pImg = new ArrayList();
 		
+		for(MultipartFile up : upFile) {
+			if (!up.isEmpty()) {
+				// 파일명 생성
+				String originalName = up.getOriginalFilename();
+				String ext = originalName.substring(originalName.lastIndexOf(".") + 1);
+
+				// 리네임 규칙
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+				int rndValue = (int) (Math.random() * 10000);
+				String reName2 = sdf.format(System.currentTimeMillis()) + "_" + rndValue + "." + ext;
+				try {
+					up.transferTo(new File(path + "/" + reName2));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				ProductImg p2 = ProductImg.builder().imgName(reName2).build();
+				pImg.add(p2);
+			}
+		}
 		//사이즈,색구분
 		List<Stock> stockList = new ArrayList();
 		String colors[] = stock.getColor().split(",");
@@ -80,7 +102,7 @@ public class AdminProductController {
 			stockList.add(st);
 		}
 		
-		int result = service.insertProduct(p,stockList);
+		int result = service.insertProduct(p,stockList, pImg);
 		System.out.println("결과 : "+result);
 		
 		return "admin/adminPage";

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.petpal.admin.model.dao.AdminDao;
 import com.project.petpal.admin.model.vo.Product;
+import com.project.petpal.admin.model.vo.ProductImg;
 import com.project.petpal.admin.model.vo.Stock;
 
 @Service
@@ -20,7 +21,7 @@ public class AdminServiceImple implements AdminService {
 
 	@Override
 	@Transactional
-	public int insertProduct(Product p,List<Stock> stockList) {
+	public int insertProduct(Product p,List<Stock> stockList,List<ProductImg> pImg) {
 		// TODO Auto-generated method stub
 		int result = dao.insertProduct(session, p);
 		if(result>0) {
@@ -28,6 +29,12 @@ public class AdminServiceImple implements AdminService {
 				for(Stock s : stockList) {
 					s.setProductNo(p.getProductNo());
 					result = dao.insertStock(session, s);
+				}
+			}
+			if(pImg != null) {
+				for(ProductImg pi : pImg) {
+					pi.setProductNo(p.getProductNo());
+					result = dao.insertProductImg(session, pi);
 				}
 			}
 		}
