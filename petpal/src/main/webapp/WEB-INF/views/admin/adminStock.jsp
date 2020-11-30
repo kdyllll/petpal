@@ -50,8 +50,10 @@
 							</tr>
 						</thead>
 						<tbody>
+						
 							<c:if test="${not empty pList }">
 							<c:forEach var="pdt" items="${pList }" varStatus="s">
+							
 							<tr class="productList">
 								<th scope="row" class="align-middle text-center pdtNo"><c:out value="${pdt.PRODUCTNO }" /></th>
 								<td class="text-center"><img
@@ -60,10 +62,13 @@
 								<td class="align-middle text-center"><c:out value="${pdt.CATEGORYNAME }" /></td>
 								<td class="align-middle text-center"><c:out value="${pdt.ENROLLDATE }" /></td>
 								<td class="align-middle text-center">
-									<button type="button" class="btn btn-outline-secondary updatePrice"
+									<button type="button" class="btn btn-outline-secondary btn-sm updatePrice"
 										data-toggle="modal">가격수정</button>
-									<button type="button" class="btn btn-outline-secondary updateStock"
-										data-toggle="modal">재고수정</button>
+									<button type="button" class="btn btn-outline-secondary btn-sm updateStock"
+										data-toggle="modal">재고수정</button>				
+										<button type="button" class="btn btn-outline-danger btn-sm deleteStock"
+										data-toggle="modal">재고삭제</button>
+					
 								</td>
 							</tr>
 							</c:forEach>
@@ -100,6 +105,10 @@
 			$(".updateStock").on("click", e=>{
 				let productNo = $(e.target).parents(".productList").children("th").html();
 				 ajaxModal("${path}/admin/updateStock.do", productNo);
+			})
+			$(".deleteStock").on("click", e=>{
+				let productNo = $(e.target).parents(".productList").children("th").html();
+				 ajaxModal("${path}/admin/deleteStock.do", productNo);
 			})
 		})
 		

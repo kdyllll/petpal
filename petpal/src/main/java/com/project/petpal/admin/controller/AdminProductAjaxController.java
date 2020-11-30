@@ -22,9 +22,6 @@ public class AdminProductAjaxController {
 	public String updatePrice(Product p, Model m) {
 		String productNo = p.getProductNo();
 		List<Stock> sList =  service.selectStock(productNo);
-		for(Stock sm : sList) {
-			System.out.println(sm);
-		}
 		m.addAttribute("sList", sList);
 		return "admin/adminAjax/updatePrice";
 	}
@@ -32,19 +29,17 @@ public class AdminProductAjaxController {
 	public String updatePriceEnd(Stock s, Model m) {
 			String loc = "/admin/adminStock.do"; 
 			String msg= "가격입력 실패"; 
-			System.out.println(s.getStockNo());
+
 			int result=0;
-			/* int ioresult =0; */
 			if(s.getPrice()!=0) {
 				result = service.updatePrice(s);		
-//				ioresult = service.updateIo(s);
 			} else if(s.getPrice()==0) {
 				msg="가격을 입력해주세요.";
 			}
 		  
 		  System.out.println("결과 : "+result);
 		  	  
-		  if(result>0 /*&& ioresult>0*/) {
+		  if(result>0 ) {
 			  msg="가격입력 성공";
 		  } 
 		  
@@ -86,5 +81,12 @@ public class AdminProductAjaxController {
 	  model.addAttribute("loc",loc); 
 	  model.addAttribute("msg",msg); 
 	  return "common/msg";
+	}
+	@RequestMapping("/admin/deleteStock.do")
+	public String DeleteStock(Product p, Model m) {
+		String productNo = p.getProductNo();
+		List<Stock> sList =  service.selectStock(productNo);
+		m.addAttribute("sList", sList);
+		return "admin/adminAjax/deleteStock";
 	}
 }
