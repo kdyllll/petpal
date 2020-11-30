@@ -58,6 +58,18 @@ public class AdminServiceImple implements AdminService {
 		// TODO Auto-generated method stub
 		return dao.selectStock(session, pdtNo);
 	}
+
+	@Override
+	public int updatePrice(Stock s) {
+		// TODO Auto-generated method stub
+		return dao.updatePrice(session, s);
+	}
+
+	@Override
+	public int updateIo(Map m) {
+		// TODO Auto-generated method stub
+		return dao.updateIo(session, m);
+	}
 	
 	
 }

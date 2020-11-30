@@ -19,19 +19,33 @@
 			<div class="modal-body">
 			<c:if test="${not empty sList }">
 			<c:forEach var="s" items="${sList }">
-				<form>
+				<form class="priceFrm" method="post" >
 					<div class="form-group">
 						<label for="recipient-name" class="col-form-label d-block">
-						<c:if test="${s.color ne null && s.productSize ne null}">
-							<c:out value="${s.productSize }/${s.color }" />
-						</c:if>
-						</label> <input type="number" min="0" value="0"
-							class="form-control col-md-4 d-inline align-middle">
-						<button type="button"
-							class=" d-inline btn btn-outline-secondary align-middle">수정</button>
-						<button type="button"
-							class=" d-inline btn btn-outline-danger align-middle">삭제</button>
+						<c:choose>
+							<c:when test="${s.color ne null && s.productSize ne null}">
+								<c:out value="${s.productSize }/${s.color }" />
+							</c:when>
+							<c:otherwise>
+								<c:out value="${s.productSize }${s.color }" />
+							</c:otherwise>
+						</c:choose>
+						</label>
+							 가격<input type="number" min="0"  value="${s.price }"
+							class="form-control col-3 d-inline align-middle" name="price">
+							 세일률<input type="text" min="0"  value="${s.sale }"
+							class="form-control col-3 d-inline align-middle" name="sale">
+							<input type="hidden" name="stockNo" class="stockNo" value="${s.stockNo}">
+						<input type="submit" value="수정"
+							class=" d-inline btn btn-outline-secondary align-middle updatePriceBtn" />
+						<input type="submit" value="삭제"
+							class=" d-inline btn btn-outline-danger align-middle"/>
 					</div>
+					<script>
+						$(".updatePriceBtn").on("click", function() {
+							$(".priceFrm").attr("action","${path}/admin/updatePriceEnd.do").submit();
+						})
+					</script>
 				</form>
 				</c:forEach>
 				</c:if>

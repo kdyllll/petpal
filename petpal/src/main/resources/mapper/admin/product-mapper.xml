@@ -22,4 +22,10 @@
 	<select id="selectStock" resultType="stock" parameterType="string">
 		SELECT * FROM STOCK WHERE PRODUCTNO=#{pdtNo}
 	</select>
+	<update id="updatePrice" parameterType="stock">
+		update stock set price=#{price},sale=#{sale} where stockNo=#{stockNo}
+	</update>
+	<update id="updateIo" parameterType="map">
+		INSERT INTO PRODUCTIO VALUES(SEQ_PRODUCTIONO.NEXTVAL,#{stockNo},SYSDATE,#{stock},#{iostatus})
+	</update>
 </mapper>

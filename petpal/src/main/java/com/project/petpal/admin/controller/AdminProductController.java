@@ -115,4 +115,6 @@ public class AdminProductController {
 		m.addAttribute("msg",msg);
 		return "common/msg";
 	}
+	
+	
 }

@@ -49,4 +49,16 @@ public class AdminDaoImple implements AdminDao {
 		return session.selectList("product.selectStock", pdtNo);
 	}
 
+	@Override
+	public int updatePrice(SqlSession session, Stock s) {
+		// TODO Auto-generated method stub
+		return session.update("product.updatePrice", s);
+	}
+
+	@Override
+	public int updateIo(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.update("product.updateIo",m);
+	}
+
 }

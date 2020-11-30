@@ -11,4 +11,6 @@ public interface AdminService {
 	int insertProduct(Product p, List<Stock> stockList, List<ProductImg> pImg);
 	List<Map> selectProductAll();
 	List<Stock> selectStock(String pdtNo);
+	int updatePrice(Stock s);
+	int updateIo(Map m);
 }

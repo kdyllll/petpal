@@ -60,7 +60,9 @@
 								<td class="align-middle text-center"><c:out value="${pdt.CATEGORYNAME }" /></td>
 								<td class="align-middle text-center"><c:out value="${pdt.ENROLLDATE }" /></td>
 								<td class="align-middle text-center">
-									<button type="button" class="btn btn-outline-secondary modifyStock"
+									<button type="button" class="btn btn-outline-secondary updatePrice"
+										data-toggle="modal">가격수정</button>
+									<button type="button" class="btn btn-outline-secondary updateStock"
 										data-toggle="modal">재고수정</button>
 								</td>
 							</tr>
@@ -90,20 +92,29 @@
 	</div>
 	<script>
 		$(function(){	
-			$(".modifyStock").on("click", e => {
+			$(".updatePrice").on("click", e => {
 				let productNo = $(e.target).parents(".productList").children("th").html();
-				 $.ajax({
-					url:"${path}/admin/stockAjax.do",
-					data:{productNo : productNo },
-					dataType:"html",
-					success:(data) => {
-						console.log(data);
-						$(".pdtModal").html(data);
-		         		$('div.modal').modal(); 
-					}
-				}) ;
+				 ajaxModal("${path}/admin/updatePrice.do", productNo);
 		      });
+			
+			$(".updateStock").on("click", e=>{
+				let productNo = $(e.target).parents(".productList").children("th").html();
+				 ajaxModal("${path}/admin/updateStock.do", productNo);
+			})
 		})
+		
+		function ajaxModal(path, productNo){
+			$.ajax({
+				url: path,
+				data:{productNo : productNo },
+				dataType:"html",
+				success:(data) => {
+					console.log(data);
+					$(".pdtModal").html(data);
+	         		$('div.modal').modal(); 
+				}
+			}) ;
+		}
 	</script>
 </body>
 

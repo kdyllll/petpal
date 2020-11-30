@@ -16,4 +16,6 @@ public interface AdminDao {
 	int insertProductMainImg(SqlSession session, ProductImg pi);
 	List<Map> selectProductAll(SqlSession session);
 	List<Stock> selectStock(SqlSession session, String pdtNo);
+	int updatePrice(SqlSession session, Stock s);
+	int updateIo(SqlSession session, Map m);
 }
