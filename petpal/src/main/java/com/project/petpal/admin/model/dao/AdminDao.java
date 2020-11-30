@@ -18,4 +18,7 @@ public interface AdminDao {
 	List<Stock> selectStock(SqlSession session, String pdtNo);
 	int updatePrice(SqlSession session, Stock s);
 	int updateIo(SqlSession session, Map m);
+	int deleteStockOne(SqlSession session, Stock s);
+	int deleteProductOne(SqlSession session, Stock s);
+
 }

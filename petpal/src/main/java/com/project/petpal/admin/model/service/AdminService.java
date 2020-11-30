@@ -13,4 +13,7 @@ public interface AdminService {
 	List<Stock> selectStock(String pdtNo);
 	int updatePrice(Stock s);
 	int updateIo(Map m);
+	int deleteStockOne(Stock s);
+	int deleteProductOne(Stock s);
+	
 }

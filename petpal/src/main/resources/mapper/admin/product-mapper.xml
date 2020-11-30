@@ -28,4 +28,10 @@
 	<update id="updateIo" parameterType="map">
 		INSERT INTO PRODUCTIO VALUES(SEQ_PRODUCTIONO.NEXTVAL,#{stockNo},SYSDATE,#{stock},#{iostatus})
 	</update>
+	<delete id="deleteStockOne" parameterType="stock">
+		delete from stock where stockNo=#{stockNo}
+	</delete>
+	<delete id="deleteProductOne" parameterType="stock">
+		delete from product where productNo=#{productNo}
+	</delete>
 </mapper>

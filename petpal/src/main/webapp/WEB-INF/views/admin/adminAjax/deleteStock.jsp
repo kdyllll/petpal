@@ -31,12 +31,25 @@
 							</c:otherwise>
 						</c:choose>
 						</label>
-						<input type="submit" value="삭제"
+						<c:choose>
+						<c:when test="${size ne 1 }">
+						<input type="hidden" name="stockNo" class="stockNo" value="${s.stockNo}">
+						<input type="submit" value="재고삭제"
 							class=" d-inline btn btn-outline-danger align-middle deleteStockBtn"/>
+							</c:when>
+							<c:when test="${size eq 1 }">
+							<input type="hidden" name="productNo" class="productNo" value="${s.productNo}">
+							<input type="submit" value="상품삭제"
+							class=" d-inline btn btn-outline-danger align-middle deleteProductBtn"/>
+							</c:when>
+						</c:choose>
 					</div>
 					<script>
 						$(".deleteStockBtn").on("click", function() {
 							$(".priceFrm").attr("action","${path}/admin/deleteStockEnd.do").submit();
+						})
+						$(".deleteProductBtn").on("click", function() {
+							$(".priceFrm").attr("action","${path}/admin/deleteProductEnd.do").submit();
 						})
 					</script>
 				</form>

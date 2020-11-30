@@ -65,10 +65,11 @@
 									<button type="button" class="btn btn-outline-secondary btn-sm updatePrice"
 										data-toggle="modal">가격수정</button>
 									<button type="button" class="btn btn-outline-secondary btn-sm updateStock"
-										data-toggle="modal">재고수정</button>				
+										data-toggle="modal">재고수정</button>	
+
 										<button type="button" class="btn btn-outline-danger btn-sm deleteStock"
 										data-toggle="modal">재고삭제</button>
-					
+										
 								</td>
 							</tr>
 							</c:forEach>

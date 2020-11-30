@@ -61,4 +61,15 @@ public class AdminDaoImple implements AdminDao {
 		return session.update("product.updateIo",m);
 	}
 
+	@Override
+	public int deleteStockOne(SqlSession session, Stock s) {
+		// TODO Auto-generated method stub
+		return session.delete("product.deleteStockOne", s);
+	}
+	@Override
+	public int deleteProductOne(SqlSession session, Stock s) {
+		// TODO Auto-generated method stub
+		return session.delete("product.deleteProductOne", s);
+	}
+
 }

@@ -70,6 +70,20 @@ public class AdminServiceImple implements AdminService {
 		// TODO Auto-generated method stub
 		return dao.updateIo(session, m);
 	}
+
+	@Override
+	public int deleteStockOne(Stock s) {
+		// TODO Auto-generated method stub
+		return dao.deleteStockOne(session, s);
+	}
+
+	@Override
+	public int deleteProductOne(Stock s) {
+		// TODO Auto-generated method stub
+		return dao.deleteProductOne(session, s);
+	}
+
+	
 	
 	
 }
