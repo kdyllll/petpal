@@ -20,5 +20,7 @@ public interface AdminDao {
 	int updateIo(SqlSession session, Map m);
 	int deleteStockOne(SqlSession session, Stock s);
 	int deleteProductOne(SqlSession session, Stock s);
-
+	Map selectProductOne(SqlSession session, Product p);
+	int updateProductEnd(SqlSession session, Product p);
+	List<ProductImg> selectProductImgAll(SqlSession session, Product p); 
 }

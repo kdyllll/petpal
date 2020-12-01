@@ -11,13 +11,13 @@
 		INSERT INTO STOCK VALUES(SEQ_STOCKNO.NEXTVAL,#{productNo},#{color , jdbcType=VARCHAR},#{productSize , jdbcType=VARCHAR},0,0,0)
 	</insert>
 	<insert id="insertProductImg" parameterType="pImg">
-		INSERT INTO PRODUCTIMG VALUES(#{productNo},#{imgName},'S')
+		INSERT INTO PRODUCTIMG VALUES(SEQ_PRODUCTIMGNO.NEXTVAL,#{productNo},#{imgName},'S')
 	</insert>
 	<select id="selectProductAll" resultType="map">
 		select * from product join productImg using(productNo) join category using(categoryNo) where type = 'M' ORDER BY ENROLLDATE DESC 
 	</select>
 	<insert id="insertProductMainImg" parameterType="pImg">
-		INSERT INTO PRODUCTIMG VALUES(#{productNo},#{imgName},'M')
+		INSERT INTO PRODUCTIMG VALUES(SEQ_PRODUCTIMGNO.NEXTVAL,#{productNo},#{imgName},'M')
 	</insert>
 	<select id="selectStock" resultType="stock" parameterType="string">
 		SELECT * FROM STOCK WHERE PRODUCTNO=#{pdtNo}
@@ -34,4 +34,13 @@
 	<delete id="deleteProductOne" parameterType="stock">
 		delete from product where productNo=#{productNo}
 	</delete>
+	<select id="selectProductOne" parameterType="product" resultType="map">
+		select * from product join category using(categoryNo) where productNo=#{productNo}
+	</select>
+	<update id="updateProductEnd" parameterType="product">
+		update product set subcate=#{subCate}, productName=#{productName}
+	</update>
+	<select id="selectProductImgAll" parameterType="product" resultType="pImg">
+		select * from productImg where productNo=#{productNo}
+	</select>
 </mapper>

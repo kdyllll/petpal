@@ -123,7 +123,7 @@
 					$(".pdtModal").html(data);
 	         		$('div.modal').modal(); 
 				}
-			}) ;
+			});
 		}
 	</script>
 </body>

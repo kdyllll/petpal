@@ -72,4 +72,22 @@ public class AdminDaoImple implements AdminDao {
 		return session.delete("product.deleteProductOne", s);
 	}
 
+	@Override
+	public Map selectProductOne(SqlSession session, Product p) {
+		// TODO Auto-generated method stub
+		return session.selectOne("product.selectProductOne", p);
+	}
+
+	@Override
+	public int updateProductEnd(SqlSession session, Product p) {
+		// TODO Auto-generated method stub
+		return session.update("product.updateProductEnd", p);
+	}
+
+	@Override
+	public List<ProductImg> selectProductImgAll(SqlSession session, Product p) {
+		// TODO Auto-generated method stub
+		return session.selectList("product.selectProductImgAll", p);
+	}
+
 }

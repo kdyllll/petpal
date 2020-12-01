@@ -11,9 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.project.petpal.admin.model.service.AdminService;
 import com.project.petpal.admin.model.vo.Product;
+import com.project.petpal.admin.model.vo.ProductImg;
 import com.project.petpal.admin.model.vo.Stock;
 
 @Controller
@@ -114,7 +116,7 @@ public class AdminProductAjaxController {
 	
 	@RequestMapping("/admin/deleteProductEnd.do")
 	public String deleteProductEnd(Stock s, Model m,HttpSession session) {
-		String loc = "/admin/adminPage.do";
+		String loc = "/admin/moveAdminPage.do";
 		String msg = "상품삭제 실패";
 		int result = service.deleteProductOne(s);
 
@@ -124,6 +126,41 @@ public class AdminProductAjaxController {
 
 		m.addAttribute("loc", loc);
 		m.addAttribute("msg", msg);
+		return "common/msg";
+	}
+	
+	@RequestMapping("/admin/updateProduct.do")
+	public String updateProduct(Product p, Model m) {
+		System.out.println(p.getProductNo());
+		Map pdt = service.selectProductOne(p);
+		List<ProductImg> pimg= service.selectProductImgAll(p);
+		m.addAttribute("pdt",pdt);
+		m.addAttribute("pimg",pimg);
+		for(ProductImg pp:pimg) {
+			System.out.println(pp);
+			
+		}
+		System.out.println(pdt);
+		return "admin/adminAjax/updateProduct";
+	}
+	
+	@RequestMapping("/admin/updateProductEnd.do")
+	public String updateProductEnd(Product p,ProductImg pi, Model m, @RequestParam(value="imgNamez", required = false) MultipartFile[] imgNamez) {
+		String loc = "/admin/moveAdminPage.do";
+		String msg = "상품수정 실패";
+//		int result = service.updateProductEnd(p);
+		System.out.println(pi.getProductImgNo());
+		for(MultipartFile mm : imgNamez) {
+			String originalName = mm.getOriginalFilename();
+			System.out.println(originalName);
+		}
+
+//		if (result > 0) {
+//			msg = "상품수정 성공";
+//		}
+//
+//		m.addAttribute("loc", loc);
+//		m.addAttribute("msg", msg);
 		return "common/msg";
 	}
 }

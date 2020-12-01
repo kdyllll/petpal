@@ -83,6 +83,29 @@ public class AdminServiceImple implements AdminService {
 		return dao.deleteProductOne(session, s);
 	}
 
+	@Override
+	public Map selectProductOne(Product p) {
+		// TODO Auto-generated method stub
+		return dao.selectProductOne(session, p);
+	}
+
+	@Override
+	@Transactional
+	public int updateProductEnd(Product p) {
+		// TODO Auto-generated method stub
+//		int result = dao.deleteFile(p);
+//		if(result>0) {
+			int result = dao.updateProductEnd(session,p);
+//		}
+		return result;
+	}
+
+	@Override
+	public List<ProductImg> selectProductImgAll(Product p) {
+		// TODO Auto-generated method stub
+		return dao.selectProductImgAll(session,p);
+	}
+
 	
 	
 	

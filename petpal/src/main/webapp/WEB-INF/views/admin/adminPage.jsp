@@ -68,12 +68,12 @@
 										<td class="align-middle text-center">${pdt.ENROLLDATE }</td>
 										<td class="align-middle text-center"><form method="post"
 												class="pdtFrm mb-0">
-												<input type="hidden" name="productNo"
+												<input type="hidden" class="productNo" name="productNo"
 													value="${pdt.PRODUCTNO }" /> <input type="submit"
 													value="삭제"
 													class="btn btn-outline-danger align-middle btn-sm deleteProductBtn" />
-												<input type="submit"
-													class="btn btn-outline-secondary btn-sm" value="수정" />
+												<button type="button"
+													class="btn btn-outline-secondary btn-sm updateProductBtn" >수정</button>
 											</form></td>
 
 									</tr>
@@ -99,7 +99,7 @@
 					</ul>
 				</nav>
 			</section>
-			<form class="modal fade" id="staticBackdrop" tabindex="-1"
+			<form class="modal fade pdtModal1" id="staticBackdrop" tabindex="-1"
 				method="post" enctype="multipart/form-data"
 				aria-labelledby="exampleModalLabel" data-backdrop="static"
 				aria-hidden="true" action="${path }/admin/productInsertEnd.do">
@@ -289,6 +289,20 @@
         });
       $(".deleteProductBtn").on("click", function() {
 			$(".pdtFrm").attr("action","${path}/admin/deleteProductEnd.do").submit();
+		})
+		
+		$(".updateProductBtn").on("click", e => {
+			let productNo = $(".productNo").val();
+			$.ajax({
+				url: "${path}/admin/updateProduct.do",
+				data:{productNo : productNo },
+				dataType:"html",
+				success:(data) => {
+					console.log(data);
+					$(".pdtModal1").after(data);
+	         		$('div.modalP').modal(); 
+				}
+			}) ;
 		})
   })
 </script>
