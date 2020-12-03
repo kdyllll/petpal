@@ -37,12 +37,10 @@ public class DailyController {
 	
 	@RequestMapping("/daily/moveWrite.do")
 	public String moveDailyWrite(Model m) {
-		
-		
-		List<Product> list=service.selectProductAll();
-		m.addAttribute("pList",list);
-		System.out.println(new Gson().toJson(list));
-		m.addAttribute("productJson",new Gson().toJson(list));
+//		List<Product> list=service.selectProductAll();
+//		m.addAttribute("pList",list);
+//		System.out.println(new Gson().toJson(list));
+//		m.addAttribute("productJson",new Gson().toJson(list));
 		return "community/dailyWrite";
 	}
 	

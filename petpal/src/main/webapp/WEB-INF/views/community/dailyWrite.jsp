@@ -182,23 +182,14 @@
       xx=percentX-15;
       yy=percentY+10;
     });
-    //<c:set var="pList2" value="${pList}"/>;
-    //var pList=<c:out value='${pList2}'/>;
-    var productJson='${productJson}';
+
+    //var productJson='${productJson}';
     $("#insert").on("click",e=>{//등록버튼 눌렀을때
         console.log("좌표등록");
         var name=$("#message-text").val();
         var img="";
         //입력한 상품 이름이 있는 상품이 아니면 등록 못하게 유효성 검사하기
-        var flag=false;
-       	//for(let p in pList){
-       	//	if(pList[p].productName==name){
-       	//		flag=true;
-       	//	}
-       //	}
-       	if(flag){
-       		console.log("상품 ㅇㅇ");
-       	}
+
         //여기서 에이작스 처리해야함!!!
         //input hidden 태그에도 상품번호로 변경하기!!
         
@@ -215,7 +206,7 @@
                 <div class="bubble rounded shadow-sm col-4 col-lg-4 position-absolute px-1" style="top:`+yy+`%; left:`+xx+`%;">
                   <div class="row d-flex flex-wrap">
                     <img class="col-2 border" src="${path }/resources/upload/community/daily/`+data.imgName+`">
-                    <p class="p-1 mb-0">`+product+`</p>
+                    <p class="p-1 mb-0">`+name+`</p>
                   </div>
                   <div class="d-flex justify-content-end">
                     <button type="button" class="deleteTag btn p-0 row pr-3">
@@ -227,10 +218,14 @@
                   </div>
                 </div>
               </div>`;
-			}
+				target.parent("div.preview").append(img);
+		        $(".bubble").hide();
+			},
+			error:(request,status,error)=>{
+                alert("잘못된 상품 정보입니다.");
+            }
 		})
-        target.parent("div.preview").append(img);
-        $(".bubble").hide();
+        
       });
     
     //상품이름 자동완성

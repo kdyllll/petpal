@@ -23,7 +23,7 @@
 		SELECT PRODUCTNO FROM PRODUCT WHERE PRODUCTNAME=#{name}
 	</select>
 	<select id="selectDailyProduct" parameterType="string" resultType="pImg">
-		SELECT * FROM PRODUCTIMG WHERE PRODUCTNO=#{productNo} AND TYPE="M";
+		SELECT * FROM PRODUCTIMG WHERE PRODUCTNO=#{productNo} AND TYPE='M'
 	</select>
 	<select id="selectProductAll" resultType="product">
 		SELECT * FROM PRODUCT
