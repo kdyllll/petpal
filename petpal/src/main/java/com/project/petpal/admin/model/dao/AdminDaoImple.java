@@ -90,4 +90,10 @@ public class AdminDaoImple implements AdminDao {
 		return session.selectList("product.selectProductImgAll", p);
 	}
 
+	@Override
+	public int updateProductImgEnd(SqlSession session, ProductImg p) {
+		// TODO Auto-generated method stub
+		return session.update("product.updateProductImgEnd", p);
+	}
+
 }

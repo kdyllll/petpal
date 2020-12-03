@@ -1,5 +1,10 @@
 package com.project.petpal.admin.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.deser.impl.ExternalTypeHandler.Builder;
 import com.project.petpal.admin.model.service.AdminService;
 import com.project.petpal.admin.model.vo.Product;
 import com.project.petpal.admin.model.vo.ProductImg;
@@ -145,16 +151,54 @@ public class AdminProductAjaxController {
 	}
 	
 	@RequestMapping("/admin/updateProductEnd.do")
-	public String updateProductEnd(Product p,ProductImg pi, Model m, @RequestParam(value="imgNamez", required = false) MultipartFile[] imgNamez) {
+	public String updateProductEnd(Product p,@RequestParam(value="productImgNo",defaultValue="0") String[] productImgNo,HttpSession session, Model m, @RequestParam(value="imgNamez", required = false) MultipartFile[] imgNamez) {
 		String loc = "/admin/moveAdminPage.do";
 		String msg = "상품수정 실패";
-//		int result = service.updateProductEnd(p);
-		System.out.println(pi.getProductImgNo());
-		for(MultipartFile mm : imgNamez) {
-			String originalName = mm.getOriginalFilename();
-			System.out.println(originalName);
-		}
 
+		System.out.println(p);
+//	수정할 파일들. 파일번호 가져오기. 파일이름 가져오기.
+			Arrays.sort(productImgNo);
+			List<String> imgNum = new ArrayList();
+			List<String> fileName = new ArrayList();
+			for(String t : productImgNo) {
+				imgNum.add(t);
+			}
+			String path = session.getServletContext().getRealPath("/resources/upload/product/detail");
+			File dir = new File(path);
+			if(!dir.exists()) dir.mkdirs();
+			String reName = "";
+			
+			for(MultipartFile mm : imgNamez) {
+				if (!mm.isEmpty()) {
+					// 파일명 생성
+					String originalName = mm.getOriginalFilename();
+					String ext = originalName.substring(originalName.lastIndexOf(".") + 1);
+
+					// 리네임 규칙
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+					int rndValue = (int) (Math.random() * 10000);
+					reName = sdf.format(System.currentTimeMillis()) + "_" + rndValue + "." + ext;
+					try {
+						mm.transferTo(new File(path + "/" + reName));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					fileName.add(reName);
+					
+				}
+			}
+			List<ProductImg> pimgList = new ArrayList();
+			for(int i=0; i<fileName.size(); i++) {
+				System.out.println(fileName.get(i));
+				System.out.println(imgNum.get(i));
+				ProductImg pImg = ProductImg.builder().productImgNo((String)imgNum.get(i)).imgName((String)fileName.get(i)).build();
+				pimgList.add(pImg);
+			}
+			
+
+		
+		int result = service.updateProductEnd(p, pimgList);
+		System.out.println("결과 :"+result);
 //		if (result > 0) {
 //			msg = "상품수정 성공";
 //		}

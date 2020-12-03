@@ -38,9 +38,12 @@
 		select * from product join category using(categoryNo) where productNo=#{productNo}
 	</select>
 	<update id="updateProductEnd" parameterType="product">
-		update product set subcate=#{subCate}, productName=#{productName}
+		update product set subCate=#{subCate}, productName=#{productName} where productNo=#{productNo}
 	</update>
 	<select id="selectProductImgAll" parameterType="product" resultType="pImg">
 		select * from productImg where productNo=#{productNo}
 	</select>
+	<update id="updateProductImgEnd" parameterType="pImg">
+		update productImg set imgName=#{imgName} where productImgNo = #{productImgNo}
+	</update>
 </mapper>
