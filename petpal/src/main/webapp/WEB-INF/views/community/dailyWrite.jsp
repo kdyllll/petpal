@@ -38,7 +38,7 @@
         <form id="writeFrm" class="container mt-5 col-lg-8" method="post" enctype="multipart/form-data">
             <p class="h2 mb-5 mt-2"><strong>일상 올리기</strong></p>
             <div class="form-group row" id="imgContainer">               
-              <label id="uploadLabel" class="btn rounded bg-light ml-1 col-lg-5 col-12" style="height: 300px;">          
+              <label id="uploadLabel" class="btn rounded bg-light ml-1 col-lg-5 col-12 d-flex justify-content-center align-items-center" style="height: 300px;">          
                   <input name="pic" class="d-none upload" id="upload" type="file" accept="images/*" required/>                                    
                   <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-camera-fill text-secondary" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="font-size: 60px;">
                       <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
@@ -59,7 +59,7 @@
             </div>
                 
             <!--해시태그-->
-            <div id="tagCon" class="mt-3 pl-2">
+            <div id="tagCon" class="mt-3 pl-2 col-12">
               <div class="tagBox bg-light rounded text-secondary d-inline-block pl-1 py-1 ml-1 mb-2">                                                      
                   #<input name="hashtag" style="box-sizing: content-box; width: 75px;" onKeypress="javascript:if(event.keyCode==13) {$('.hashtag').focusout()}" type="text" class="hashtag border-0 bg-transparent " placeholder="해시태그" aria-label="해시태그" aria-describedby="basic-addon1">
                   <span class="d-none delete text-secondary ">

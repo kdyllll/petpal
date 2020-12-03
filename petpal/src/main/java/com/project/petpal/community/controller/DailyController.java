@@ -37,13 +37,12 @@ public class DailyController {
 	
 	@RequestMapping("/daily/moveWrite.do")
 	public String moveDailyWrite(Model m) {
-//		List<Product> list=service.selectProductAll();
-//		m.addAttribute("pList",list);
-//		System.out.println(new Gson().toJson(list));
-//		m.addAttribute("productJson",new Gson().toJson(list));
 		return "community/dailyWrite";
 	}
 	
+	
+	
+	//글입력
 	@RequestMapping("/daily/dailyWriteEnd.do")
 	public String insertDaily(HttpServletRequest request,HttpSession session,Model m,String content,
 			@RequestParam(value="pic", required=false) MultipartFile[] pic,
@@ -106,20 +105,14 @@ public class DailyController {
 		return "common/msg";
 	}
 	
+	//AJAX
+	
 	//상품이름 자동완성
 	@RequestMapping("/daily/autoCompleteAjax.do")
 	@ResponseBody
 	public List<Product> autoCompleteAjax(HttpServletResponse response, String key) throws IOException{
 	
 		List<Product> list=service.selectProductName(key);
-//		String csv="";
-//		for(int i=0;i<list.size();i++) {
-//			System.out.println(list.get(i));
-//			if(i!=0) csv+=",";
-//			csv+=list.get(i).getProductName();
-//		}
-//		response.setContentType("text/csv;charset=utf-8");
-//		response.getWriter().print(csv);
 		return list;
 	}
 	
