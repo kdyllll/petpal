@@ -11,6 +11,10 @@
 		<typeAlias type="com.project.petpal.community.model.vo.DailyCoord" alias="dailyCoord"/>
 		<typeAlias type="com.project.petpal.community.model.vo.Tip" alias="tip"/>
 		<typeAlias type="com.project.petpal.community.model.vo.TipImg" alias="tipImg"/>
+		<typeAlias type="com.project.petpal.board.model.vo.Notice" alias="notice"/>
+		<typeAlias type="com.project.petpal.board.model.vo.NoticeImg" alias="noticeImg"/>
+		<typeAlias type="com.project.petpal.board.model.vo.Question" alias="question"/>
+		<typeAlias type="com.project.petpal.board.model.vo.QuestionImg" alias="questionImg"/>
 	</typeAliases>
 </configuration>
 
