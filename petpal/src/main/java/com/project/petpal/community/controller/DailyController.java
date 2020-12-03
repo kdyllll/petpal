@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
+import com.project.petpal.admin.model.vo.Product;
+import com.project.petpal.admin.model.vo.ProductImg;
 import com.project.petpal.community.model.service.DailyService;
 import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyCoord;
@@ -31,10 +36,13 @@ public class DailyController {
 	private DailyService service;
 	
 	@RequestMapping("/daily/moveWrite.do")
-	public String moveDailyWrite() {
+	public String moveDailyWrite(Model m) {
 		return "community/dailyWrite";
 	}
 	
+	
+	
+	//글입력
 	@RequestMapping("/daily/dailyWriteEnd.do")
 	public String insertDaily(HttpServletRequest request,HttpSession session,Model m,String content,
 			@RequestParam(value="pic", required=false) MultipartFile[] pic,
@@ -54,7 +62,7 @@ public class DailyController {
 		Daily d=Daily.builder().memberNo(login.getMemberNo()).content(content).build();
 		
 		//사진
-		String path=session.getServletContext().getRealPath("/resources/upload/board");
+		String path=session.getServletContext().getRealPath("/resources/upload/community/daily");
 		File dir=new File(path);
 		if(!dir.exists()) dir.mkdirs(); 
 		List<DailyImg> files=new ArrayList<DailyImg>();
@@ -96,5 +104,30 @@ public class DailyController {
 		m.addAttribute("loc","/community/dailyList");
 		return "common/msg";
 	}
+	
+	//AJAX
+	
+	//상품이름 자동완성
+	@RequestMapping("/daily/autoCompleteAjax.do")
+	@ResponseBody
+	public List<Product> autoCompleteAjax(HttpServletResponse response, String key) throws IOException{
+	
+		List<Product> list=service.selectProductName(key);
+		return list;
+	}
+	
+	//+버튼에 호버하면 상품정보 뜰 수 있도록
+	@RequestMapping("/daily/dailyProduct.do")
+	@ResponseBody
+	public ProductImg dailyProductAjax(String name) {
+		//받아오는건 상품이름 
+		String productNo=service.selectProductNo(name);
+		ProductImg p=service.selectDailyProduct(productNo); //서비스에서 상품이름으로 상품번호 조회한다음에 상품 사진 테이블에서 가져와야함
+		//이미지번호, 상품번호, 이미지이름, 타입(메인M)	
+		System.out.println(p);
+		return p;		
+	}
+	
+	
 
 }

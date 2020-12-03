@@ -38,7 +38,7 @@
         <form id="writeFrm" class="container mt-5 col-lg-8" method="post" enctype="multipart/form-data">
             <p class="h2 mb-5 mt-2"><strong>일상 올리기</strong></p>
             <div class="form-group row" id="imgContainer">               
-              <label id="uploadLabel" class="btn rounded bg-light ml-1 col-lg-5 col-12" style="height: 300px;">          
+              <label id="uploadLabel" class="btn rounded bg-light ml-1 col-lg-5 col-12 d-flex justify-content-center align-items-center" style="height: 300px;">          
                   <input name="pic" class="d-none upload" id="upload" type="file" accept="images/*" required/>                                    
                   <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-camera-fill text-secondary" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="font-size: 60px;">
                       <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
@@ -57,9 +57,9 @@
             <div class="col-12 mt-3 px-0">                        
               <textarea class="form-control" name="content" rows="5" placeholder="설명을 입력해주세요" style="resize: none;" required></textarea>                   
             </div>
-                       
+                
             <!--해시태그-->
-            <div id="tagCon" class="mt-3 pl-2">
+            <div id="tagCon" class="mt-3 pl-2 col-12">
               <div class="tagBox bg-light rounded text-secondary d-inline-block pl-1 py-1 ml-1 mb-2">                                                      
                   #<input name="hashtag" style="box-sizing: content-box; width: 75px;" onKeypress="javascript:if(event.keyCode==13) {$('.hashtag').focusout()}" type="text" class="hashtag border-0 bg-transparent " placeholder="해시태그" aria-label="해시태그" aria-describedby="basic-addon1">
                   <span class="d-none delete text-secondary ">
@@ -87,7 +87,8 @@
             <form>
               <div class="form-group">
                 <label for="message-text" class="col-form-label">상품명:</label>
-                <input type="text" class="form-control" id="message-text" placeholder="상품명이나 브랜드를 입력해주세요">
+                <input type="text" class="form-control" id="message-text" placeholder="상품명이나 브랜드를 입력해주세요" list="productData" autocomplete="off">
+                <datalist id="productData"></datalist>
               </div>
             </form>
           </div>
@@ -181,40 +182,64 @@
       xx=percentX-15;
       yy=percentY+10;
     });
+
+    //var productJson='${productJson}';
     $("#insert").on("click",e=>{//등록버튼 눌렀을때
         console.log("좌표등록");
-        var product=$("#message-text").val();
-        
-        //여기서 에이작스 처리해야함!!!
-        //input hidden 태그에도 상품번호로 변경하기!!
-        
-        
-        
-        var img=`<div>
-                  <svg class="plusBtn position-absolute" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
-                      style="top:`+percentY+`%; left:`+percentX+`%;">
-                      <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-                  </svg>
-                  <input type="hidden" name="coord" value="`+product+`,`+percentX+`,`+percentY+`"/>
-                  <div class="bubble rounded shadow-sm col-4 col-lg-4 position-absolute px-1" style="top:`+yy+`%; left:`+xx+`%;">
-                    <div class="row d-flex flex-wrap">
-                      <img class="col-2 border">
-                      <p class="p-1 mb-0">`+product+`</p>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                      <button type="button" class="deleteTag btn p-0 row pr-3">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash text-dark" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                          <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                        </svg>
-                      </button>
-                    </div>
+        var name=$("#message-text").val();
+        var img="";
+        //입력한 상품 이름이 있는 상품이 아니면 등록 못하게 유효성 검사하기        
+        //태그를 입력하면 +태그와 함께 호버하면 나타나는 상품정보
+        $.ajax({
+			url:"${path}/daily/dailyProduct.do",
+			data:{name:name},
+			success:data => {	
+				img=`<div class="plusTag">
+	                  <svg class="plusBtn position-absolute" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                    style="top:`+percentY+`%; left:`+percentX+`%;">
+                    <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                </svg>
+                <input type="hidden" name="coord" value="`+data.productNo+`,`+percentX+`,`+percentY+`"/>
+                <div class="bubble rounded shadow-sm col-4 col-lg-4 position-absolute px-1" style="top:`+yy+`%; left:`+xx+`%;">
+                  <div class="row d-flex flex-wrap">
+                    <img class="col-2 border" src="${path }/resources/upload/community/daily/`+data.imgName+`">
+                    <p class="p-1 mb-0">`+name+`</p>
+                  </div>
+                  <div class="d-flex justify-content-end">
+                    <button type="button" class="deleteTag btn p-0 row pr-3">
+                      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash text-dark" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                      </svg>
+                    </button>
                   </div>
                 </div>
-                `;
-        target.parent("div.preview").append(img);
-        $(".bubble").hide();
+              </div>`;
+				target.parent("div.preview").append(img);
+		        $(".bubble").hide();
+			},
+			error:(request,status,error)=>{
+                alert("잘못된 상품 정보입니다.");
+            }
+		})
+        
       });
+    
+    //상품이름 자동완성
+    $("#message-text").keyup(e=>{
+    	console.log("작성");
+    	console.log($(e.target).val());
+			$.ajax({
+            url:"${path}/daily/autoCompleteAjax.do",
+            data:{key:$(e.target).val()},
+            success:data => { 
+                $("#productData").html("");
+                for(let d in data){
+                	$("#productData").append($("<option>").html(data[d].productName));
+                }
+            }
+        });
+	});
     
     //+에 마우스 올렸을 때/떠났을 때 말풍선 보이고 숨기기
     $(document).on('mouseenter',".plusBtn",e=>{ 	
@@ -229,6 +254,11 @@
     //모달창 닫힐때 form 초기화
     $('.modal').on('hidden.bs.modal', function (e) {
       $(this).find('form')[0].reset()
+    });
+    
+    //+태그 삭제 기능
+    $(document).on('click',".deleteTag",e=>{
+    	$(e.target).parents(".plusTag").remove();
     });
 
      //해시태그!
@@ -256,6 +286,7 @@
          clone.find(".hashtag").css("width","75px");   
          //태그 수정 불가능하게 막음                     
          $(e.target).attr("readonly",true);
+         $(e.target).css("width",$(e.target).width()-15);
          //x버튼 보이게
          $(e.target).next("span.delete").removeClass("d-none");
          //새 해시태그 입력창 추가
@@ -270,6 +301,8 @@
      $(".delete").click(function(e){
        $(e.target).parents(".tagBox").remove();
      });
+     
+    
      
      $("#btn").on("click",e=>{ 
     	 //등록 누르면 사진 인풋태그에 id 순서대로 부여
@@ -286,7 +319,7 @@
             $(item2).val(newVal);
           });          
          };                     
-       }); 
+       });
     	 
     	 //등록 누르면 form 전송
     	 $("#writeFrm").attr("action","${path }/daily/dailyWriteEnd.do").submit();

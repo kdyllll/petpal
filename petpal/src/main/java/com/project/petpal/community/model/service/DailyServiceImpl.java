@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.petpal.admin.model.vo.Product;
+import com.project.petpal.admin.model.vo.ProductImg;
 import com.project.petpal.community.model.dao.DailyDao;
 import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyCoord;
@@ -55,5 +57,28 @@ public class DailyServiceImpl implements DailyService {
 		
 		return 0;
 	}
+	
+	@Override
+	public List<Product> selectProductName(String key) {
+		return dao.selectProductName(session,key);
+	}
+
+	@Override
+	public String selectProductNo(String name) {		
+		return dao.selectProductNo(session,name);
+	}
+
+	@Override
+	public ProductImg selectDailyProduct(String productNo) {
+		return dao.selectDailyProduct(session,productNo);
+	}
+
+	@Override
+	public List<Product> selectProductAll() {
+		return dao.selectProductAll(session);
+	}
+
+	
+
 
 }
