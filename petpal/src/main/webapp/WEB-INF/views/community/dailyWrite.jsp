@@ -188,16 +188,13 @@
         console.log("좌표등록");
         var name=$("#message-text").val();
         var img="";
-        //입력한 상품 이름이 있는 상품이 아니면 등록 못하게 유효성 검사하기
-
-        //여기서 에이작스 처리해야함!!!
-        //input hidden 태그에도 상품번호로 변경하기!!
-        
+        //입력한 상품 이름이 있는 상품이 아니면 등록 못하게 유효성 검사하기        
+        //태그를 입력하면 +태그와 함께 호버하면 나타나는 상품정보
         $.ajax({
 			url:"${path}/daily/dailyProduct.do",
 			data:{name:name},
 			success:data => {	
-				img=`<div>
+				img=`<div class="plusTag">
 	                  <svg class="plusBtn position-absolute" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
                     style="top:`+percentY+`%; left:`+percentX+`%;">
                     <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
@@ -236,10 +233,8 @@
             url:"${path}/daily/autoCompleteAjax.do",
             data:{key:$(e.target).val()},
             success:data => { 
-            	console.log(data);
                 $("#productData").html("");
                 for(let d in data){
-                	console.log(data[d].productName);
                 	$("#productData").append($("<option>").html(data[d].productName));
                 }
             }
@@ -259,6 +254,11 @@
     //모달창 닫힐때 form 초기화
     $('.modal').on('hidden.bs.modal', function (e) {
       $(this).find('form')[0].reset()
+    });
+    
+    //+태그 삭제 기능
+    $(document).on('click',".deleteTag",e=>{
+    	$(e.target).parents(".plusTag").remove();
     });
 
      //해시태그!
