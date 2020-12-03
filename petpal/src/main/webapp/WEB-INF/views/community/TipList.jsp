@@ -72,6 +72,28 @@
 							</div>
 						</div>
 					</div>
+					
+					<c:forEach items="${list }" var="t">
+						<c:if test="${not empty t.MAINIMG }">
+						<div class="col-xl-3 col-lg-4 col-md-6" style="cursor:pointer" id="img" onclick="location.replace('${path}/community/TipDetail.do?tipNo=${t.TIPNO}')">
+							<div class="card mb-4 bg-transparent border-0"  >
+								<div class="test">
+									<img src="${path}/resources/upload/tip/${t.MAINIMG}"  id="scale" width="100%" height="225">
+								</div>
+								<div class="card-body">
+									<p class="card-text"><c:out value="${t.TITLE }"/></p>
+									<div class="d-flex justify-content-between align-items-center">
+									<small class="text-muted"> <label>조회수 0
+											</label> <label>스크랩 0
+												</label></small>
+									</div>
+								</div>
+							</div>
+						</div>						
+						</c:if>
+					</c:forEach>
+					
+					
 					<style>
 					.test {
 						width:100%;

@@ -1,6 +1,5 @@
 package com.project.petpal.community.model.vo;
 
-import java.sql.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class TipImg {
 	private String tipImgNo;
 	private String tipNo;
+	private String mainImg;
+	private String contentImg;
 	private String content;
-	private String fileName;
 }

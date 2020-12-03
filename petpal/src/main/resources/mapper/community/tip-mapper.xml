@@ -2,15 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="tip">
 	<insert id="insertTip" parameterType="tip">
-		INSERT INTO TIP VALUES(SEQ_TIPNO.NEXTVAL,#{memberNo}, #{category}, #{title}, #{content1}, #{content2}, SYSDATE)
+		INSERT INTO TIP VALUES(SEQ_TIPNO.NEXTVAL, #{memberNo}, #{category}, #{title}, #{content1}, #{content2}, SYSDATE)
 		<selectKey keyProperty="tipNo" resultType="string" order="AFTER">
 			SELECT SEQ_TIPNO.CURRVAL FROM DUAL
 		</selectKey>
 	</insert>
 	<insert id="insertTipImg" parameterType="tipImg">
-		INSERT INTO TIPIMG VALUES(SEQ_TIPIMGNO.NEXTVAL,#{tipNo}, #{content}, #{fileName})
-		<selectKey keyProperty="TIPImgNo" resultType="string" order="AFTER">
-			SELECT SEQ_TIPIMGNO.CURRVAL FROM DUAL
-		</selectKey>
+		INSERT INTO TIPIMG VALUES(SEQ_TIPIMGNO.NEXTVAL, #{tipNo}, #{mainImg, jdbcType=VARCHAR}, #{contentImg, jdbcType=VARCHAR}, #{content, jdbcType=VARCHAR})
 	</insert>
+	<select id="tipList" resultType="map">
+		SELECT * FROM TIP JOIN TIPIMG USING(TIPNO)
+	</select>
+	<select id="tipMainList" resultType="map">
+		SELECT * FROM TIP WHERE TIPNO = #{tipNo}
+	</select>
+	<select id="tipDetail" parameterType="string" resultType="map">
+		SELECT * FROM TIPIMG WHERE TIPNO = #{tipNo}
+	</select>
 </mapper>

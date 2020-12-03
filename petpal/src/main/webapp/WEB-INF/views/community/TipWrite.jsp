@@ -25,7 +25,7 @@
   
   <main role="main" style="min-height:100vh;">
   	<div class="container" style="max-width: 940px;">
-        <form class="needs-validation" name="tipWrite" action="${path }/community/TipWrite.do" method="post" enctype="multipart/form-data">
+        <form class="needs-validation" name="tipWrite" action="${path }/community/TipWriteEnd.do" method="post" enctype="multipart/form-data"  onSubmit="return selectCheck();">
             <div>
                 <div class="row">
                     <div class="col-md-12 mt-5">
@@ -48,7 +48,7 @@
                                     <div class="card-body form-inline">
                                         <label class="mr-3">카테고리</label>
                                         <div class="col-6">
-                                            <select class="form-control" name="category">
+                                            <select id="select" class="form-control" name="category">
                                                     <option value="" selected disabled style="color: #bdbdbd;"><small>선택해주세요</small>
                                                     </option>
                                                     <option>훈련</option>
@@ -72,9 +72,7 @@
 				</button>
 			</div>
 			<div class="float-none" id="image_container" style="display: table; background-color: #F7F7F7; height: 300px; width: 100%; position: relative;" onclick="document.all.file.click()">
-				<form action="upload" name="mainImg" id="uploadForm" method="post" enctype="multipart/form-data">
-					<input type="file" name="file" id="file" style="display: none" onchange="setThumbnail(event);" />
-				</form>
+				<input type="file" name="mainImg" id="file" style="display: none" onchange="setThumbnail(event);">
 				<div class="button text-center" style="display: table-cell; vertical-align: middle;">
 					<button type="button" id="i" class="btn btn-outline-secondary">커버 사진 추가하기</button>
 				</div>
@@ -87,10 +85,10 @@
 
 			<input type="text" class="form-control mt-5 mb-3 border-bottom" name="title" id="name" placeholder="제목을 입력하세요" value="" required style="border: none;">
 			<div class="invalid-feedback">제목을 입력해주세요.</div>
-
-			<textarea class="form-control border-0 mb-5" name="content1" id="ta"  placeholder="내용을입력하세요" style="resize: none; overflow-y:hidden;" onkeyup="xSize(this)"></textarea>
+			
+			<textarea class="form-control border-0 mb-5"  id="ta" name="content1" placeholder="내용을입력하세요" style="resize: none; overflow-y:hidden;" onkeyup="xSize(this)" required></textarea>
 			<div class="invalid-feedback">내용을 입력해주세요.</div>
-			<textarea id="xt" style="display:none; width:300px;height:1px;overflow-y:hidden;position:absolute;top:-9px"></textarea>
+			<textarea id="xt" style="width:300px;height:1px;overflow-y:hidden;position:absolute;top:-9px;opacity:0" disabled></textarea>
 			
 			<!-- 첨부 버튼 -->
 			<div id="attach">
@@ -100,22 +98,22 @@
   						<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
 					</svg>
 				</label>
-				<input id="uploadInputBox" style="display: none" type="file" name="filedata" multiple />
+				<input id="uploadInputBox" name="contentImg" style="display: none" type="file" name="filedata" multiple />
 			</div>
 			
 			<div id="preview" class="content"></div>
 	
 			<!-- multipart 업로드시 영역 -->
-			<form id="uploadForm" name="fileName" style="display: none;"></form>
+			<!-- <form id="uploadForm" name="fileName" style="display: none;" method="post" enctype="multipart/form-data"></form> -->
 
 			
-			<textarea class="form-control border-0 mb-5" name="content2" id="ta2"  placeholder="내용을입력하세요" style="resize: none; overflow-y:hidden;" onkeyup="xSize2(this)"></textarea>
-			<textarea id="xt" style="display:none; width:300px;height:1px;overflow-y:hidden;position:absolute;top:-9px"></textarea>
+			<textarea class="form-control border-0 mb-5"  id="ta2" name="content2" placeholder="내용을입력하세요" style="resize: none; overflow-y:hidden;" onkeyup="xSize2(this)"></textarea>
+			<textarea id="xt" style="width:300px;height:1px;overflow-y:hidden;position:absolute;top:-9px;opacity:0" disabled></textarea>
 
                         <div class="ml-3 mt-5 mb-5">
                             #해시태그
                         </div>
-
+                        
                         <div class="text-center mb-5">
                             <input type="submit" class="btn btn-outline-secondary" value="작성하기">
                         </div>
@@ -177,7 +175,7 @@
 		                                            + imgNum
 		                                            + "\" onclick=\"deletePreview(this)\">"
 		                                            + "x" + "</button>"
-		                                     		+ "<img id=\"image_container\" class=\"img\" src=\"" + img.target.result + "\" style=\"width:100%;\"\/>"
+		                                     		+ "<img id=\"image_container\" name=\"contentImg\" class=\"img\" src=\"" + img.target.result + "\" style=\"width:100%;\"\/>"
 		                                     		+ "<textarea class=\"form-control border-0 mt-2 mb-3\" name=\"content\" id=\"ta\" rows=\"3\" placeholder=\"사진에 대한 설명을 작성해주세요\" style=\"resize: none;\"></textarea>"
 		                                     		+ "</div>"
 		                                            );
@@ -269,7 +267,22 @@
 		            }
 		        }
 		        xSize2(document.getElementById('ta2'));
-		
+		        
+		        function selectCheck(){
+                	var select = document.getElementById("select");
+                	var selected = select.options[select.selectedIndex].value;
+                	var file = $("#file").val();
+                	
+                	if(selected === ""){
+			        	alert("카테고리를 선택해주세요");
+			        	event.preventDefault();
+                	}
+                	if(file === ""){
+			        	alert("커버 사진을 선택해주세요");
+			        	event.preventDefault();
+                	}
+                	
+	        	}
 		</script>
 
 

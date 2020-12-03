@@ -1,5 +1,8 @@
 package com.project.petpal.community.model.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -19,4 +22,18 @@ public class TipDaoImpl implements TipDao {
 		return session.insert("tip.insertTipImg", ti);
 	}
 
+	@Override
+	public List<Map> tipList(SqlSession session) {
+		return session.selectList("tip.tipList");
+	}
+	
+	@Override
+	public List<Map> tipMainList(SqlSession session, String tipNo) {
+		return session.selectList("tip.tipMainList", tipNo);
+	}
+
+	@Override
+	public List<Map> tipDetail(SqlSession session, String tipNo) {
+		return session.selectList("tip.tipDetail", tipNo);
+	}
 }
