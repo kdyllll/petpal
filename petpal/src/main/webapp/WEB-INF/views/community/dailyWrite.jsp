@@ -57,7 +57,7 @@
             <div class="col-12 mt-3 px-0">                        
               <textarea class="form-control" name="content" rows="5" placeholder="설명을 입력해주세요" style="resize: none;" required></textarea>                   
             </div>
-                       
+                
             <!--해시태그-->
             <div id="tagCon" class="mt-3 pl-2">
               <div class="tagBox bg-light rounded text-secondary d-inline-block pl-1 py-1 ml-1 mb-2">                                                      
@@ -182,17 +182,23 @@
       xx=percentX-15;
       yy=percentY+10;
     });
-    <c:set var="pList2" value="${pList}"/>;
-    var pList=<c:out value='${pList2}'/>;
-    var productJson=<c:out value='${productJson}'/>;
-    console.log(pList);
-    console.log(productJson);
+    //<c:set var="pList2" value="${pList}"/>;
+    //var pList=<c:out value='${pList2}'/>;
+    var productJson='${productJson}';
     $("#insert").on("click",e=>{//등록버튼 눌렀을때
         console.log("좌표등록");
         var name=$("#message-text").val();
         var img="";
         //입력한 상품 이름이 있는 상품이 아니면 등록 못하게 유효성 검사하기
-       
+        var flag=false;
+       	//for(let p in pList){
+       	//	if(pList[p].productName==name){
+       	//		flag=true;
+       	//	}
+       //	}
+       	if(flag){
+       		console.log("상품 ㅇㅇ");
+       	}
         //여기서 에이작스 처리해야함!!!
         //input hidden 태그에도 상품번호로 변경하기!!
         

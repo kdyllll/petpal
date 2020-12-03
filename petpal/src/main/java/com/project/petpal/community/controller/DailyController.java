@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
 import com.project.petpal.admin.model.vo.Product;
 import com.project.petpal.admin.model.vo.ProductImg;
 import com.project.petpal.community.model.service.DailyService;
@@ -25,8 +26,6 @@ import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyCoord;
 import com.project.petpal.community.model.vo.DailyImg;
 import com.project.petpal.member.model.vo.Member;
-
-import net.sf.json.JSONArray;
 
 
 
@@ -42,7 +41,8 @@ public class DailyController {
 		
 		List<Product> list=service.selectProductAll();
 		m.addAttribute("pList",list);
-		m.addAttribute("productJson",new JSONArray().fromObject(list));
+		System.out.println(new Gson().toJson(list));
+		m.addAttribute("productJson",new Gson().toJson(list));
 		return "community/dailyWrite";
 	}
 	
