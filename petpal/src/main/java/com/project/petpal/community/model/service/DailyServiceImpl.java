@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.petpal.admin.model.vo.Product;
+import com.project.petpal.admin.model.vo.ProductImg;
 import com.project.petpal.community.model.dao.DailyDao;
 import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyCoord;
@@ -22,7 +24,7 @@ public class DailyServiceImpl implements DailyService {
 	
 	@Override
 	@Transactional
-	public int insertDaily(Daily d, List<DailyImg> files, List<DailyCoord> coords) throws Exception {
+	public int insertDaily(Daily d, List<DailyImg> files, List<DailyCoord> coords){
 		//글 삽입
 		int result=dao.insertDaily(session,d);
 		//사진 삽입
@@ -32,9 +34,7 @@ public class DailyServiceImpl implements DailyService {
 					di.setDailyNo(d.getDailyNo());
 					result=dao.insertDailyImg(session,di);
 					//실패할 경우를 대비해서 result가 0일 때는 분기문으로 강제 exception 처리해야함
-					if(result==0) {
-						throw new Exception();
-					}
+					
 				}
 				//좌표 삽입(사진이 있을 때만 좌표 있음!)
 				if(result>0) {
@@ -48,9 +48,7 @@ public class DailyServiceImpl implements DailyService {
 								case "4":dc.setDailyImgNo(files.get(4).getDailyImgNo());break;
 							}
 							result=dao.insertDailyCoords(session,dc);
-							if(result==0) {
-								throw new Exception();
-							}
+							
 						}
 					}
 				}
@@ -59,5 +57,28 @@ public class DailyServiceImpl implements DailyService {
 		
 		return 0;
 	}
+	
+	@Override
+	public List<Product> selectProductName(String key) {
+		return dao.selectProductName(session,key);
+	}
+
+	@Override
+	public String selectProductNo(String name) {		
+		return dao.selectProductNo(session,name);
+	}
+
+	@Override
+	public ProductImg selectDailyProduct(String productNo) {
+		return dao.selectDailyProduct(session,productNo);
+	}
+
+	@Override
+	public List<Product> selectProductAll() {
+		return dao.selectProductAll(session);
+	}
+
+	
+
 
 }
