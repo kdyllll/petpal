@@ -16,4 +16,16 @@
 	<insert id="insertDailyCoords" parameterType="dailyCoord">
 		INSERT INTO COORD VALUES(#{dailyImgNo},#{productNo},#{xxCode},#{yyCode})
 	</insert>
+	<select id="selectProductName" parameterType="string" resultType="product">
+		SELECT * FROM PRODUCT WHERE PRODUCTNAME LIKE '%${value}%'
+	</select>
+	<select id="selectProductNo" parameterType="string" resultType="string">
+		SELECT PRODUCTNO FROM PRODUCT WHERE PRODUCTNAME=#{name}
+	</select>
+	<select id="selectDailyProduct" parameterType="string" resultType="pImg">
+		SELECT * FROM PRODUCTIMG WHERE PRODUCTNO=#{productNo} AND TYPE="M";
+	</select>
+	<select id="selectProductAll" resultType="product">
+		SELECT * FROM PRODUCT
+	</select>
 </mapper>
