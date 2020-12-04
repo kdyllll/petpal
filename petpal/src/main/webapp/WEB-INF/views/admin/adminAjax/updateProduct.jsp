@@ -34,12 +34,21 @@
 							<label for="exampleFormControlInput1">상품이름</label> <input
 								value="${pdt.PRODUCTNAME }" name="productName" type="text" class="form-control">
 						</div>
-
+						<div class="form-group">
+							<label for="exampleFormControlInput1">상품상세사진(이미지클릭)</label><br />
+							<img src="${path }/resources/upload/product/detail/${pdt.FILENAME}"
+									title="사진변경" class="fileClick"
+									style="cursor: pointer; width: 100px; height: 100px;" />
+							 <input
+							type="file" name="fileNamez" class="d-none fileNamez" />
+						</div>
+					
 					</c:if>
+					<div class="form-group">
+					<label for="exampleFormControlInput1">상품디테일사진(이미지클릭)</label><br />
 					<c:if test="${not empty pimg }">
 						<c:forEach var="pi" items="${pimg }">
 							<div>
-								
 								<input type="hidden"
 									name="type" value="${pi.type }" /> <input type="hidden"
 									name="imgNamez" value="${pi.imgName}" /> 
@@ -53,6 +62,7 @@
 							</div>
 						</c:forEach>
 					</c:if>
+					</div>
 					<div class="imgContainer">
 		
 					</div>
@@ -81,14 +91,23 @@
 				let reader = new FileReader();
 	             reader.onload = (e) => {
 	               $(imgT).attr("src", e.target.result);
-	               let con = $("<input>").attr({"name":"productImgNo", "value" : target.next().val()});
+	               let con = $("<input>").attr({"name":"productImgNo", "value" : target.next().val(),"type":"hidden"});
 	               $(".imgContainer").append(con);
 
 	            };
 		         reader.readAsDataURL($(e.target)[0].files[0]); //파일의 가상경로를 가져옴
 
-			});
-			
+			});			
+		})
+		$(".fileClick").on("click", e => {
+			$(".fileNamez").click();
+			$(".fileNamez").on("change", e => {
+				let reader = new FileReader();
+				reader.onload= e => {
+					$(".fileClick").attr("src", e.target.result);
+				};
+				 reader.readAsDataURL($(e.target)[0].files[0]);
+			})
 			
 		})
 		$(".updateProductEnd").on("click", function() {

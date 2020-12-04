@@ -80,8 +80,6 @@ public class AdminDaoImple implements AdminDao {
 
 	@Override
 	public int updateProductEnd(SqlSession session, Map p) {
-		// TODO Auto-generated method stub
-		System.out.println("dao p :" + p);
 		return session.update("product.updateProductEnd", p);
 	}
 
