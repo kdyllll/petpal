@@ -5,7 +5,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
  <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
-
 </head>
 <body class="bg-white">
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -24,10 +23,14 @@
             </a>
           </div>
         </div>
-
+	
+		<c:forEach items="${imgList }" var="t">
+			<c:if test="${not empty t.MAINIMG}">
         <!-- top 이미지 -->
-        <img src="${path }/resources/images/test.jpg" class="img-fluid" style="max-height: auto; height : 300px; width : 100%;">
-
+        <img src="${path}/resources/upload/tip/${t.MAINIMG}" class="img-fluid" style="max-height: auto; height : 300px; width : 100%;">
+        </c:if>
+		</c:forEach>
+		
         <div class="container">
           <div class="row ">
 
@@ -42,20 +45,41 @@
                 </div>
 
                 <div class="container">
-                  <h1>제목</h1>
+                	<c:forEach items="${mainList }" var="t">
+                  <h1><c:out value="${t.TITLE }"/></h1>
                   <div class="form-inline mt-5 mb-5">
-                    <h5>작성자</h5>
-                    <small class="ml-5">작성일</small>
+                    <h5><c:out value="${t.MEMBERNO }"/></h5>
+                    <small class="ml-5"><c:out value="${t.ENROLLDATE }"/></small>
                     <button class="btn btn-sm btn-outline-secondary ml-auto">팔로우</button>
                     <button class="btn btn-sm btn-outline-secondary ml-3">신고하기</button>
                   </div>
+                  </c:forEach>
                   <div>
-                    <img src="${path }/resources/images/test.jpg" width="100%" height="400px">
-                    <p class="mt-5">
-                      내용
-                    </p>
-
-
+                  <c:forEach items="${mainList }" var="t">
+                    <div class="mt-5 mb-5" style="white-space:pre-line;">
+                    	<c:out value="${t.CONTENT1 }"/>
+                    </div>
+                    </c:forEach>
+					
+					<c:forEach items="${imgList }" var="t">
+					<c:if test="${not empty t.CONTENTIMG }">
+						<div>
+						<img src="${path }/resources/upload/tip/${t.CONTENTIMG}" width="100%" height="400px">
+						</div>
+						<div class="mb-5" style="white-space:pre-line;">
+						<c:out value="${t.CONTENT}"/>
+						</div>
+                    </c:if>
+                    </c:forEach>
+						
+						<c:forEach items="${mainList }" var="t">
+						<c:if test="${not empty t.CONTENT2 }">
+	                    	<div class="mb-5" style="white-space:pre-line;">
+	                    		<c:out value="${t.CONTENT2 }"/>
+	                    	</div>
+	                    </c:if>
+	                    </c:forEach>
+					
                     <div class="nav navbar-nav d-lg-none d-inline">
                       <button class="btn btn-outline-dark mb-3"><svg width="1em" height="1em" viewBox="0 0 16 16"
                             class="bi bi-heart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -169,7 +193,6 @@
             
           </div>
         </div>
-
       </div>
     </div>
   </main>

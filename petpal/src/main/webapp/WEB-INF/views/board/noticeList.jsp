@@ -19,37 +19,24 @@
       			<h2 class="font-weight-bold ml-2">공지사항</h2>
       			<button type="button" class="btn btn-outline-secondary ml-auto" onclick="location.replace('${path}/board/noticeWrite.do')">작성하기</button>
       		</div>
-      		
-      		
-	   		<div class="border-top form-inline pt-4 pb-4">
-	   			<div class="col-sm-10 col-8">
-		   			<a href="${path }/board/noticeDetail.do" style="color:black">
-			   			<h5 class="font-weight-bold">공</h5>
-		   			</a>
-	   			</div>
-	   		</div>
-	   		<div class="border-top form-inline pt-4 pb-4">
-	   			<div class="col-sm-10 col-8">
-		   			<a href="${path }/board/noticeDetail.do" style="color:black">
-			   			<h5 class="font-weight-bold">지</h5>
-		   			</a>
-	   			</div>
-	   		</div>
-	   		<div class="border-top form-inline pt-4 pb-4">
-	   			<div class="col-sm-10 col-8">
-		   			<a href="${path }/board/noticeDetail.do" style="color:black">
-			   			<h5 class="font-weight-bold">사</h5>
-		   			</a>
-	   			</div>
-	   		</div>
-	   		<div class="border-top form-inline pt-4 pb-4">
-	   			<div class="col-sm-10 col-8">
-		   			<a href="${path }/board/noticeDetail.do" style="color:black">
-			   			<h5 class="font-weight-bold">항</h5>
-		   			</a>
-	   			</div>
-	   		</div>
-	   		
+     		
+   			<c:if test="${fn:length(list) == 0}">
+   				<div class="border-top form-inline pt-4 pb-4">
+		   			<div class="col-sm-10 col-8">
+			   			<h6 class="font-weight-bold">공지사항이 없습니다.</h6>
+		   			</div>
+   				</div>	
+   			</c:if>
+   			
+	   		<c:forEach items="${list }" var="n">
+	   			<div class="border-top form-inline pt-4 pb-4">
+		   			<div class="col-sm-10 col-8">
+			   			<a href="${path }/board/noticeDetail.do?noticeNo=${n.NOTICENO}" style="color:black">
+				   			<h6 class="font-weight-bold"><c:out value="${n.TITLE }"/></h6>
+			   			</a>
+		   			</div>
+	   			</div>	
+	   		</c:forEach>
 
 		</div>
   </main>

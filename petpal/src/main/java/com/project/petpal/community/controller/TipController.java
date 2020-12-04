@@ -1,4 +1,4 @@
-package com.project.petpal.board.controller;
+package com.project.petpal.community.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,44 +17,47 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.project.petpal.board.model.service.QuestionService;
-import com.project.petpal.board.model.vo.Question;
-import com.project.petpal.board.model.vo.QuestionImg;
+import com.project.petpal.community.model.service.TipService;
+import com.project.petpal.community.model.vo.Tip;
+import com.project.petpal.community.model.vo.TipImg;
 
 @Controller
-public class QuestionController {
+public class TipController {
 	
 	@Autowired
-	private QuestionService service;
+	private TipService service;
 	
-	@RequestMapping("/board/questionList.do")
-	public ModelAndView questionList(ModelAndView mv) {
-
-		mv.addObject("list", service.questionList());
-		mv.setViewName("board/questionList");
-		return mv;
-	}
-
-	@RequestMapping("/board/questionDetail.do")
-	public ModelAndView questionDetail(HttpServletRequest request, HttpServletResponse response, ModelAndView mv) {
-		String questionNo = request.getParameter("questionNo");
+	@RequestMapping("community/TipList.do")
+	public ModelAndView TipList(ModelAndView mv) {
 		
-		mv.addObject("mainList", service.questionMainList(questionNo));
-		mv.addObject("imgList", service.questionImgList(questionNo));
-		mv.setViewName("/board/questionDetail");
+		mv.addObject("list",service.tipList());
+		mv.setViewName("community/TipList");
+		
 		return mv;
 	}
-
-	@RequestMapping("/board/questionWrite.do")
-	public String questionWrite() {
-		return "/board/questionWrite";
+	
+	@RequestMapping("community/TipDetail.do")
+	public ModelAndView TipDetail(HttpServletRequest request, HttpServletResponse response, ModelAndView mv) {
+		String tipNo = request.getParameter("tipNo");
+		
+		mv.addObject("mainList",service.tipMainList(tipNo));
+		mv.addObject("imgList",service.tipDetail(tipNo));
+		mv.addObject("loc", "/community/TipDetail.do");
+		
+		return mv;
 	}
 	
-	@RequestMapping("/board/questionWriteEnd.do")
+	@RequestMapping("community/TipWrite.do")
+	public String TipWrite() {
+		return "community/TipWrite";
+	}
+	
+	@RequestMapping("community/TipWriteEnd.do")
 	public ModelAndView TipWrite(ModelAndView mv,
 							HttpSession session, HttpServletRequest request, HttpServletResponse response,
 							@RequestParam(value="mainImg", required=false) MultipartFile[] mainImg,
 							@RequestParam(value="contentImg", required=false) MultipartFile[] contentImg,
+							@RequestParam(value="category") String category,
 							@RequestParam(value="title") String title,
 							@RequestParam(value="content1") String content1,
 							@RequestParam(value="content2", defaultValue = "") String content2
@@ -64,16 +67,22 @@ public class QuestionController {
 //		Tip t = Tip.builder().memberNo(login.getMemberNo()).title(title).content1(content1).content2(content2).build();
 		
 		String memberNo = "1";
-		Question q = Question.builder().memberNo(memberNo).title(title).content1(content1).content2(content2).build();
+		Tip t = Tip.builder().memberNo(memberNo).category(category).title(title).content1(content1).content2(content2).build();
 		
 		
-		String path=session.getServletContext().getRealPath("/resources/upload/board/question");
+		String path=session.getServletContext().getRealPath("/resources/upload/tip");
 		File dir=new File(path);
 		if(!dir.exists()) dir.mkdirs(); 
 		
-		List<QuestionImg> files=new ArrayList<QuestionImg>();
+		List<TipImg> files=new ArrayList<TipImg>();
 		
 		String[] content = request.getParameterValues("content");
+//		for(int i=0; i<content.length;i++) {
+//			System.out.println("content" + i + "  " + content[i]);
+//			TipImg img = TipImg.builder().content(content[i]).build();
+//			files.add(img);
+//		}
+		
 		
 		for(MultipartFile f:mainImg) {
 			if(!f.isEmpty()) {
@@ -88,7 +97,7 @@ public class QuestionController {
 				}catch(IOException e) {
 					e.printStackTrace();
 				}
-				QuestionImg img = QuestionImg.builder().mainImg(reName).build();
+				TipImg img = TipImg.builder().mainImg(reName).build();
 				files.add(img);
 			}
 		}
@@ -107,7 +116,7 @@ public class QuestionController {
 				}catch(IOException e) {
 					e.printStackTrace();
 				}
-				QuestionImg img = QuestionImg.builder().contentImg(reName).content(content[i]).build();
+				TipImg img = TipImg.builder().contentImg(reName).content(content[i]).build();
 				files.add(img);
 				i++;
 			}
@@ -115,15 +124,13 @@ public class QuestionController {
 		
 		System.out.println("files : " + files);
 		
-		int result = service.insertQuestion(q, files);
+		int result = service.insertTip(t, files);
 		mv.addObject("msg", result>0?"입력 성공":"입력 실패");
-		mv.addObject("loc", "/board/questionList.do");
+		mv.addObject("loc", "/community/TipList.do");
 		
 		mv.setViewName("common/msg");
 		
 		return mv;
 	}
-	
-	
 	
 }

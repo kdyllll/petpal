@@ -16,10 +16,32 @@
   
    	<div class="container" style="max-width:940px;">
    		<small>질문과 답변</small>
-   		<h3 class="mt-3 mb-5 font-weight-bold">제목</h3>
-   		<p>내용</p>
-   		<img src="${path }/resources/images/test.jpg" style="width:100%">
-
+   		
+   		<c:forEach items="${mainList }" var="q">
+	   		<h3 class="mt-3 mb-5 font-weight-bold"><c:out value="${q.TITLE }"/></h3>
+	   		<p><c:out value="${q.CONTENT1 }"/></p>
+		</c:forEach>
+		
+		<c:forEach items="${imgList }" var="t">
+			<c:if test="${not empty t.CONTENTIMG }">
+				<div>
+					<img src="${path }/resources/upload/board/question/${t.CONTENTIMG}" width="100%" height="400px">
+				</div>
+				<div class="mb-5" style="white-space:pre-line;">
+					<c:out value="${t.CONTENT}"/>
+				</div>
+			</c:if>
+		</c:forEach>
+			
+		<c:forEach items="${mainList }" var="q">
+			<c:if test="${not empty q.CONTENT2 }">
+               	<div class="mb-5" style="white-space:pre-line;">
+               		<c:out value="${q.CONTENT2 }"/>
+               	</div>
+            </c:if>
+        </c:forEach>
+		
+		
 		<!-- 댓글 -->
 		<div class="mt-5 mb-5">
 			<hr>

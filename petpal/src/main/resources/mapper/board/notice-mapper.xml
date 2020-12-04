@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="notice">
+	<insert id="insertNotice" parameterType="notice">
+		INSERT INTO NOTICE VALUES(SEQ_NOTICENO.NEXTVAL, #{memberNo}, #{title}, #{content1}, #{content2}, SYSDATE)
+		<selectKey keyProperty="noticeNo" resultType="string" order="AFTER">
+			SELECT SEQ_NOTICENO.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+	<insert id="insertNoticeImg" parameterType="noticeImg">
+		INSERT INTO NOTICEIMG VALUES(SEQ_NOTICEIMGNO.NEXTVAL, #{noticeNo}, #{content, jdbcType=VARCHAR}, #{contentImg, jdbcType=VARCHAR})
+	</insert>
+	<select id="noticeList" resultType="map">
+		SELECT * FROM NOTICE
+	</select>
+	<select id="noticeMainList" parameterType="string" resultType="map">
+		SELECT * FROM NOTICE WHERE NOTICENO = #{noticeNo}
+	</select>
+	<select id="noticeImgList" parameterType="string" resultType="map">
+		SELECT * FROM NOTICEIMG WHERE NOTICENO = #{noticeNo}
+	</select>
+</mapper>
