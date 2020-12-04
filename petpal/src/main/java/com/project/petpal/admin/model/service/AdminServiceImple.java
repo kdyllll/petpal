@@ -91,9 +91,9 @@ public class AdminServiceImple implements AdminService {
 
 	@Override
 	@Transactional
-	public int updateProductEnd(Product p, List<ProductImg> pimgList) {
+	public int updateProductEnd(Map p, List<ProductImg> pimgList) {
 		// TODO Auto-generated method stub
-
+		System.out.println("p:" + p);
 		int result = dao.updateProductEnd(session,p);
 		if(result>0) {
 			if(pimgList != null) {

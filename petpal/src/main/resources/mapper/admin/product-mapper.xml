@@ -37,8 +37,8 @@
 	<select id="selectProductOne" parameterType="product" resultType="map">
 		select * from product join category using(categoryNo) where productNo=#{productNo}
 	</select>
-	<update id="updateProductEnd" parameterType="product">
-		update product set subCate=#{subCate}, productName=#{productName} where productNo=#{productNo}
+	<update id="updateProductEnd" parameterType="map">
+		update product set SUBCATE=#{subCate}, PRODUCTNAME=#{productName} where PRODUCTNO=#{productNo}
 	</update>
 	<select id="selectProductImgAll" parameterType="product" resultType="pImg">
 		select * from productImg where productNo=#{productNo}

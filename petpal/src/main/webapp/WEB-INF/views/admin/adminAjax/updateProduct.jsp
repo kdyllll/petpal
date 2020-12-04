@@ -21,7 +21,6 @@
 			
 				<div class="modal-body">
 					<c:if test="${not empty pdt }">
-						<input type="hidden" value="${pdt.productNo }" name="productNo">
 						<div class="form-group">
 							<label for="exampleFormControlInput1">카테고리</label> <input
 								readonly value="${pdt.CATEGORYNAME }" type="text"

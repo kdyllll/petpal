@@ -194,10 +194,11 @@ public class AdminProductAjaxController {
 				ProductImg pImg = ProductImg.builder().productImgNo((String)imgNum.get(i)).imgName((String)fileName.get(i)).build();
 				pimgList.add(pImg);
 			}
-			
-
-		
-		int result = service.updateProductEnd(p, pimgList);
+		Map pMap = new HashMap();
+		pMap.put("productNo", p.getProductNo());
+		pMap.put("productName", p.getProductName());
+		pMap.put("subCate", p.getSubCate());
+		int result = service.updateProductEnd(pMap, pimgList);
 		System.out.println("결과 :"+result);
 //		if (result > 0) {
 //			msg = "상품수정 성공";

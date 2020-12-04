@@ -16,6 +16,6 @@ public interface AdminService {
 	int deleteStockOne(Stock s);
 	int deleteProductOne(Stock s);
 	Map selectProductOne(Product p);
-	int updateProductEnd(Product p, List<ProductImg> pimgList);
+	int updateProductEnd(Map p, List<ProductImg> pimgList);
 	List<ProductImg> selectProductImgAll(Product p);
 }
