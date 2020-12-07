@@ -1,5 +1,13 @@
 package com.project.petpal.store.model.service;
 
-public interface StoreService {
+import java.util.List;
 
+import com.project.petpal.store.model.vo.Product;
+import com.project.petpal.store.model.vo.ProductImg;
+import com.project.petpal.store.model.vo.Stock;
+
+public interface StoreService {
+	Product selectProduct(String productNo);
+	List<Stock> selectStockList(String productNo);
+	List<ProductImg> selectImg(String productNo);
 }

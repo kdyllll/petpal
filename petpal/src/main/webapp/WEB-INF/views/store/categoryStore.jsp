@@ -151,7 +151,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-4 col-md-6 mb-4">
-                        <a href="#">
+                        <a href="">
                             <img class="card-img-top" src="sea)연어.png" alt="">
                             <h4 class="text-black" style="color:black;">상품명</h4>
                             <div>
