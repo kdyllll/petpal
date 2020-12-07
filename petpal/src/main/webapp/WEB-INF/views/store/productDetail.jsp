@@ -12,7 +12,7 @@
   
   <!-- Page Content -->
   <main role="main" class="pt-5" style="min-height:100vh;">
-      <div class="container mt-5 productHeader"> 
+      <form class="container mt-5 productHeader"> 
         <nav aria-label="breadcrumb ">
           <ol class="breadcrumb bg-transparent">
             <li class="breadcrumb-item"><a href="#">강아지</a></li>
@@ -49,7 +49,7 @@
           </div>
           <div class="col-lg-6 ">
             <p class="h3">               
-                  강아지 고양이 기절 댕냥쿠션
+                  <c:out value="${product.productName}"/>
             </p>
             <div class="px-3 pb-2 border-bottom">
               <div class="row mb-3 mx-2 d-flex justify-content-between"> 
@@ -61,11 +61,25 @@
               <div class="row mb-3">
                 <span class="h1 col-3 text-right text-info align-middle"><strong>68%</strong></span>
                 <span class="col-9">
-                  <p class="mb-0"><del>79,000원</del></p>
-                  <p class="h1"><strong>24,900원</strong></p>
+                  <p class="mb-0"><del>
+                  	<c:forEach var="i" items="${stock}">
+                  		<c:if test="${i eq 1 }">
+                  			<c:set var="price" value="${i.price }"/>
+                  		</c:if>
+                  		<c:if test="${i.price ge price }">
+                  			<c:remove var="price"/>
+                  			<c:set var="price" value="${i.price }"/>
+                  			<c:set var="sale" value="${i.sale }"/>
+                  		</c:if>
+                  	</c:forEach>
+                  	<c:out value="${price }"/>
+                  </del></p>
+                  <p class="h1"><strong>
+                  	<c:out value="${price * sale }"/>
+                  </strong></p>
                 </span>
               </div>
-              <p class=""><b class="text-info">24p</b> 적립해드립니다.</p>
+              <p class=""><b class="text-info"><c:out value="${price * sale * 0.1}"/>P</b> 적립해드립니다.</p>
             </div>
             <div class="px-3 py-3 border-bottom">
               <p>CJ대한통운<br>
@@ -74,13 +88,16 @@
               </p>              
             </div>
             <div class="py-3 px-3">
-              <select class="form-control mb-1" >
-                <option disabled selected>색상</option>
-                <option value="1">그레이</option>
-                <option value="2">크림</option>
-                <option value="3">베이지</option>
+            
+              <select name="color" class="form-control mb-1" >
+                <option disabled selected>색상</option>         
+                	<option value="i"></option>
+	                <option value="1">그레이</option>
+	                <option value="2">크림</option>
+	                <option value="3">베이지</option>  
               </select>
-              <select class="form-control" >
+              
+              <select name="size" class="form-control" >
                 <option disabled selected>크기</option>
                 <option value="1">s</option>
                 <option value="2">m</option>
@@ -98,7 +115,7 @@
           </div>
         </div>
 
-      </div>
+      </form>
 
      
       <div class="productContainer">
