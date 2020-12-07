@@ -39,7 +39,6 @@
 
                                             <td>
                                                 $180,00
-                                                <s class="small text-muted">$230,00</s>
                                             </td>
                                             <td width="65">
                                                 <input type="text" class="form-control" placeholder="1">
