@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductImg {
+	private String productImgNo;
 	private String productNo;
 	private String imgName;
+	private String type;
 }

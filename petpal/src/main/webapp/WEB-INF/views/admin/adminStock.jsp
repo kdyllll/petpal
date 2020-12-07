@@ -50,19 +50,30 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<th scope="row" class="align-middle text-center">1</th>
+						
+							<c:if test="${not empty pList }">
+							<c:forEach var="pdt" items="${pList }" varStatus="s">
+							
+							<tr class="productList">
+								<th scope="row" class="align-middle text-center pdtNo"><c:out value="${pdt.PRODUCTNO }" /></th>
 								<td class="text-center"><img
-									style="width: 100px; height: 100px;"></td>
-								<td class="align-middle text-center">Otto</td>
-								<td class="align-middle text-center">@mdo</td>
-								<td class="align-middle text-center">Otto</td>
+									style="width: 100px; height: 100px;" src="${path }/resources/upload/product/detail/${pdt.IMGNAME}"></td>
+								<td class="align-middle text-center"><c:out value="${pdt.PRODUCTNAME }" /></td>
+								<td class="align-middle text-center"><c:out value="${pdt.CATEGORYNAME }" /></td>
+								<td class="align-middle text-center"><c:out value="${pdt.ENROLLDATE }" /></td>
 								<td class="align-middle text-center">
-									<button type="button" class="btn btn-outline-secondary"
-										data-toggle="modal" data-target="#staticBackdrop">재고수정</button>
+									<button type="button" class="btn btn-outline-secondary btn-sm updatePrice"
+										data-toggle="modal">가격수정</button>
+									<button type="button" class="btn btn-outline-secondary btn-sm updateStock"
+										data-toggle="modal">재고수정</button>	
+
+										<button type="button" class="btn btn-outline-danger btn-sm deleteStock"
+										data-toggle="modal">재고삭제</button>
+										
 								</td>
 							</tr>
-
+							</c:forEach>
+							</c:if>
 						</tbody>
 					</table>
 				</div>
@@ -82,63 +93,39 @@
 					</ul>
 				</nav>
 			</section>
-			<div class="modal fade" id="staticBackdrop" tabindex="-1"
-				aria-labelledby="exampleModalLabel" data-backdrop="static"
-				aria-hidden="true">
-				<div
-					class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">재고등록</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<form>
-								<div class="form-group">
-									<label for="recipient-name" class="col-form-label d-block">-
-										S / 빨강</label> <input type="number" min="0" value="0"
-										class="form-control col-md-4 d-inline align-middle">
-									<button type="button"
-										class=" d-inline btn btn-outline-secondary align-middle">수정</button>
-									<button type="button"
-										class=" d-inline btn btn-outline-danger align-middle">삭제</button>
-								</div>
-							</form>
-							<form>
-								<div class="form-group">
-									<label for="recipient-name" class="col-form-label d-block">-
-										M / 빨강</label> <input type="number" min="0" value="0"
-										class="form-control col-md-4 d-inline align-middle">
-									<button type="button"
-										class=" d-inline btn btn-outline-secondary align-middle">수정</button>
-									<button type="button"
-										class=" d-inline btn btn-outline-danger align-middle">삭제</button>
-								</div>
-							</form>
-							<form>
-								<div class="form-group">
-									<label for="recipient-name" class="col-form-label d-block">-
-										S / 파랑</label> <input type="number" min="0" value="0"
-										class="form-control col-md-4 d-inline align-middle">
-									<button type="button"
-										class=" d-inline btn btn-outline-secondary align-middle">수정</button>
-									<button type="button"
-										class=" d-inline btn btn-outline-danger align-middle">삭제</button>
-								</div>
-							</form>
-						</div>
-						<div class="modal-footer ">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">Close</button>
-						</div>
-					</div>
-				</div>
-			</div>
+			<div class="pdtModal"></div>
 		</div>
 	</div>
+	<script>
+		$(function(){	
+			$(".updatePrice").on("click", e => {
+				let productNo = $(e.target).parents(".productList").children("th").html();
+				 ajaxModal("${path}/admin/updatePrice.do", productNo);
+		      });
+			
+			$(".updateStock").on("click", e=>{
+				let productNo = $(e.target).parents(".productList").children("th").html();
+				 ajaxModal("${path}/admin/updateStock.do", productNo);
+			})
+			$(".deleteStock").on("click", e=>{
+				let productNo = $(e.target).parents(".productList").children("th").html();
+				 ajaxModal("${path}/admin/deleteStock.do", productNo);
+			})
+		})
+		
+		function ajaxModal(path, productNo){
+			$.ajax({
+				url: path,
+				data:{productNo : productNo },
+				dataType:"html",
+				success:(data) => {
+					console.log(data);
+					$(".pdtModal").html(data);
+	         		$('div.modal').modal(); 
+				}
+			});
+		}
+	</script>
 </body>
 
 </html>

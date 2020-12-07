@@ -20,8 +20,8 @@
 
 	<div class="container-fluid">
 		<div class="row">
-			<jsp:include page="/WEB-INF/views/common/adminNav.jsp" >
-			<jsp:param name="nav" value="adminPage" />
+			<jsp:include page="/WEB-INF/views/common/adminNav.jsp">
+				<jsp:param name="nav" value="adminPage" />
 			</jsp:include>
 			<section role="main"
 				class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-5 "
@@ -55,18 +55,31 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<th scope="row" class="align-middle text-center">1</th>
-								<td class="text-center"><img
-									style="width: 100px; height: 100px;"></td>
-								<td class="align-middle text-center">Otto</td>
-								<td class="align-middle text-center">@mdo</td>
-								<td class="align-middle text-center">Otto</td>
-								<td class="align-middle text-center"><button
-										class="btn btn-outline-danger btn-sm">삭제</button>
-									<button class="btn btn-outline-secondary btn-sm">수정</button></td>
-							</tr>
+							<c:if test="${not empty pList }">
+								<c:forEach var="pdt" items="${pList }">
 
+									<tr>
+										<th scope="row" class="align-middle text-center">${pdt.PRODUCTNO }</th>
+										<td class="text-center"><img
+											style="width: 100px; height: 100px;"
+											src="${path }/resources/upload/product/detail/${pdt.IMGNAME}"></td>
+										<td class="align-middle text-center">${pdt.PRODUCTNAME }</td>
+										<td class="align-middle text-center">${pdt.CATEGORYNAME }</td>
+										<td class="align-middle text-center">${pdt.ENROLLDATE }</td>
+										<td class="align-middle text-center"><form method="post"
+												class="pdtFrm mb-0">
+												<input type="hidden" class="productNo" name="productNo"
+													value="${pdt.PRODUCTNO }" /> <input type="submit"
+													value="삭제"
+													class="btn btn-outline-danger align-middle btn-sm deleteProductBtn" />
+												<button type="button"
+													class="btn btn-outline-secondary btn-sm updateProductBtn" >수정</button>
+											</form></td>
+
+									</tr>
+
+								</c:forEach>
+							</c:if>
 						</tbody>
 					</table>
 				</div>
@@ -86,7 +99,7 @@
 					</ul>
 				</nav>
 			</section>
-			<form class="modal fade" id="staticBackdrop" tabindex="-1"
+			<form class="modal fade pdtModal1" id="staticBackdrop" tabindex="-1"
 				method="post" enctype="multipart/form-data"
 				aria-labelledby="exampleModalLabel" data-backdrop="static"
 				aria-hidden="true" action="${path }/admin/productInsertEnd.do">
@@ -150,27 +163,27 @@
 							<div class="row m-3 d-none" id="thirdCateCon">
 								<span>상품 <strong>소분류</strong>를 입력해주세요.
 								</span> <input type="text" class="form-control input-group-sm"
-									name="subCate" id="thirdCate" style="font-size: 13px;"
-									required>
+									name="subCate" id="thirdCate" style="font-size: 13px;" required>
 							</div>
 							<div class="row m-3 d-none" id="pdtNameCon">
 								<span>상품 <strong>이름</strong>을 입력해주세요.
 								</span> <input type="text" class="form-control input-group-sm"
-									name="productName" id="pdtName" style="font-size: 13px;" required>
+									name="productName" id="pdtName" style="font-size: 13px;"
+									required>
 							</div>
 							<div class="row m-3 d-none" id="pdtPicturesCon">
 								<span>상품 <strong>사진</strong>을 추가해주세요(다중선택가능/최대5장).
 								</span> <input multiple="multiple" type="file" maxlength="5"
 									name="pdtPictures" class="form-control input-group-sm"
-									id="pdtPictures" style="font-size: 13px;" accept="image/*" required>
+									id="pdtPictures" style="font-size: 13px;" accept="image/*"
+									required>
 							</div>
-							<div class="row m-3 d-none" id="imgsContainer">
-							</div>
+							<div class="row m-3 d-none" id="imgsContainer"></div>
 							<div class="row m-3 d-none" id="pdtContentCon">
 								<span>상품 <strong>설명사진</strong>을 추가해주세요.
 								</span> <input type="file" class="form-control input-group-sm"
-									name="fName" id="pdtContent" style="font-size: 13px;" accept="image/*"
-									required />
+									name="fName" id="pdtContent" style="font-size: 13px;"
+									accept="image/*" required />
 							</div>
 							<p class="row mx-3 d-none" id="optionTitle">
 								상품<strong> 옵션 </strong> 선택
@@ -274,6 +287,23 @@
             reader.readAsDataURL(v);
           });
         });
+      $(".deleteProductBtn").on("click", function() {
+			$(".pdtFrm").attr("action","${path}/admin/deleteProductEnd.do").submit();
+		})
+		
+		$(".updateProductBtn").on("click", e => {
+			let productNo = $(".productNo").val();
+			$.ajax({
+				url: "${path}/admin/updateProduct.do",
+				data:{productNo : productNo },
+				dataType:"html",
+				success:(data) => {
+					console.log(data);
+					$(".pdtModal1").after(data);
+	         		$('div.modalP').modal(); 
+				}
+			}) ;
+		})
   })
 </script>
 </body>

@@ -30,7 +30,7 @@
 
                 <div class="form-inline container text-center mb-3">
                     <h3>일상</h3>
-                    <button type="button" class="btn btn-outline-secondary ml-auto" onclick="location.href='${path}/community/moveDailyWrite'">글쓰기</button>
+                    <button type="button" class="btn btn-outline-secondary ml-auto" onclick="location.href='${path}/daily/moveWrite.do'">글쓰기</button>
                 </div>
                 <div class="form-inline container-xl mb-5">
                     <div class="input-group col-lg-6 col-8">

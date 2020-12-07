@@ -65,8 +65,8 @@ public class MemberController {
 	public String memberLogin(String email,String password,Model m) {
 		Member login=service.selectMember(email);
 //		System.out.println(login);
-//		if(login!=null && pwEncoder.matches(password,login.getPassword())) { 
-		if(login!=null) {
+		if(login!=null && pwEncoder.matches(password,login.getPassword())) { 
+//		if(login!=null) {
 			m.addAttribute("loginMember",login);
 			return "redirect:/";
 		}else {
