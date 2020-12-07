@@ -13,13 +13,12 @@
   <!-- Page Content -->
   <main role="main" class="pt-5" style="min-height:100vh;">
       <form class="container mt-5 productHeader"> 
-        <nav aria-label="breadcrumb ">
+        <!-- <nav aria-label="breadcrumb ">
           <ol class="breadcrumb bg-transparent">
             <li class="breadcrumb-item"><a href="#">강아지</a></li>
             <li class="breadcrumb-item"><a href="#">가구</a></li>
-            <li class="breadcrumb-item active" aria-current="page">쿠션</li>
           </ol>
-        </nav>
+        </nav> -->
         <div class="panel-body row">
           
           <div class="col-lg-6">
