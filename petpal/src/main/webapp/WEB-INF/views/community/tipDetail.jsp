@@ -38,10 +38,24 @@
             <div class="col-lg-9 col-sm-12">
               <div class="container" id="title">
                 <div class="form-inline container mt-5 mb-5">
-                  <h5>카테고리</h5>
-                  <small class="ml-3">#해시태그</small>
-                  <small class="ml-3">#해시태그</small>
-                  <small class="ml-3">#해시태그</small>
+                	<h5>카테고리</h5>
+                	<small class="ml-3">#해시태그</small>
+                	<small class="ml-3">#해시태그</small>
+                	<small class="ml-3">#해시태그</small>
+	                		
+                	<div class="dropdown ml-auto">
+                		<div href="#" id="imageDropdown" data-toggle="dropdown">
+                			<svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-three-dots-vertical" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                				<path fill-rule="evenodd" d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+	                		</svg>
+      					</div>
+      					<c:forEach items="${imgList }" var="t">
+						    <div class="dropdown-menu dropdown-menu-right">
+							    <button class="dropdown-item" type="button" onclick="location.replace('${path}/community/TipUpdate.do?tipNo=${t.TIPNO}')">수정하기</button>
+							    <button class="dropdown-item" type="button">삭제하기</button>
+						  	</div>
+					  	</c:forEach>
+    				</div>
                 </div>
 
                 <div class="container">
