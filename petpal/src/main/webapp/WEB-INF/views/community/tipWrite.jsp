@@ -11,7 +11,6 @@
 		position: absolute;
 		bottom: 0px;
 	}
-	
 	#delete {
 		right: auto;
 		float: right;
@@ -29,26 +28,43 @@
             <div>
                 <div class="row">
                     <div class="col-md-12 mt-5">
-						<div class="form-inline mb-5">
-							<label class="mr-3">카테고리</label>
-							<c:forEach items="${mainList }" var="t">
-								<div class="d-col-6">
-									<select id="select" class="form-control" name="category">
-										<option value="" selected disabled style="color: #bdbdbd;"><small><c:out value="${t.CATEGORY }"/></small>
-										</option>
-										<option>훈련</option>
-										<option>수제간식</option>
-										<option>DIY 옷</option>
-										<option>DIY 가구</option>
-										<option>건강</option>
-										<option>팁</option>
-										<option>기타</option>
-									</select>
-								</div>
-							</c:forEach>
-						</div>
+                        
+                        <!-- 기본 정보 입력란 -->
+                        <div class="accordion mb-5" id="accordionExample">
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-light btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                            </svg>&nbsp;&nbsp;기본정보 입력
+                                        </button>
+                                    </h2>
+                                </div>
 
-							<!-- 파일 업로드 부분 -->
+                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                    <div class="card-body form-inline">
+                                        <label class="mr-3">카테고리</label>
+                                        <div class="col-6">
+                                            <select id="select" class="form-control" name="category">
+                                                    <option value="" selected disabled style="color: #bdbdbd;"><small>선택해주세요</small>
+                                                    </option>
+                                                    <option>훈련</option>
+                                                    <option>수제간식</option>
+                                                    <option>DIY 옷</option>
+                                                    <option>DIY 가구</option>
+                                                    <option>건강</option>
+                                                    <option>팁</option>
+                                                    <option>기타</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+
+                        <!-- 파일 업로드 부분 -->
 			<div id="delete">
 				<button type="button" id="d" class="btn btn-light col-auto" onclick="deleteImg(event)">
 					<span>x</span>
@@ -264,6 +280,7 @@
 			        	alert("커버 사진을 선택해주세요");
 			        	event.preventDefault();
                 	}
+                	
 	        	}
 		</script>
 
