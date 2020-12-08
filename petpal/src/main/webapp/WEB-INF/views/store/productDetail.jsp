@@ -12,30 +12,33 @@
   
   <!-- Page Content -->
   <main role="main" class="pt-5" style="min-height:100vh;">
-      <div class="container mt-5 productHeader"> 
-        <nav aria-label="breadcrumb ">
+      <form class="container mt-5 productHeader"> 
+        <!-- <nav aria-label="breadcrumb ">
           <ol class="breadcrumb bg-transparent">
             <li class="breadcrumb-item"><a href="#">강아지</a></li>
             <li class="breadcrumb-item"><a href="#">가구</a></li>
-            <li class="breadcrumb-item active" aria-current="page">쿠션</li>
           </ol>
-        </nav>
+        </nav> -->
         <div class="panel-body row">
           
           <div class="col-lg-6">
             
             <div id="carouselExampleIndicators" class="carousel slide" >
               <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+              	<c:forEach var="i" items="${imgs }" varStatus="vs">
+              		<%-- <c:if test="${vs.first }"> --%>
+	                <li data-target="#carouselExampleIndicators" data-slide-to="${vs.index }"></li>
+	                <%-- </c:if> --%>
+                </c:forEach>
               </ol>
               <div class="carousel-inner rounded">
-                <div class="carousel-item active">
-                  <img src="../final/img/cc.webp" class="d-block w-100 ">
-                </div>
-                <div class="carousel-item">
-                  <img src="../final/img/cc2.webp" class="d-block w-100 ">
-                </div>
+                <c:forEach var="i" items="${imgs }" varStatus="vs">
+              		<%-- <c:if test="${vs.first }"> --%>
+	                <div class="carousel-item">
+                  		<img src="${path }/resources/upload/product/detail/${i.imgName}" class="d-block w-100 ">
+                	</div>
+	                <%-- </c:if> --%>
+                </c:forEach>
               </div>
               <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -49,7 +52,7 @@
           </div>
           <div class="col-lg-6 ">
             <p class="h3">               
-                  강아지 고양이 기절 댕냥쿠션
+                  <c:out value="${product.productName}"/>
             </p>
             <div class="px-3 pb-2 border-bottom">
               <div class="row mb-3 mx-2 d-flex justify-content-between"> 
@@ -61,11 +64,25 @@
               <div class="row mb-3">
                 <span class="h1 col-3 text-right text-info align-middle"><strong>68%</strong></span>
                 <span class="col-9">
-                  <p class="mb-0"><del>79,000원</del></p>
-                  <p class="h1"><strong>24,900원</strong></p>
+                  <p class="mb-0"><del>
+                  	<c:forEach var="i" items="${stockList}" varStatus="vs">
+                  		<c:if test="${vs.first}">
+                  			<c:set var="price" value="${i.price }"/>
+                  		</c:if>
+                  		<c:if test="${i.price ge price }">
+                  			<c:remove var="price"/>
+                  			<c:set var="price" value="${i.price }"/>
+                  			<c:set var="sale" value="${i.sale }"/>
+                  		</c:if>
+                  	</c:forEach>
+                  	<c:out value="${price }"/>
+                  </del></p>
+                  <p class="h1"><strong>
+                  	<c:out value="${price * sale * 0.01 }"/>
+                  </strong></p>
                 </span>
               </div>
-              <p class=""><b class="text-info">24p</b> 적립해드립니다.</p>
+              <p class=""><b class="text-info"><c:out value="${price * sale * 0.01 * 0.1}"/>P</b> 적립해드립니다.</p>
             </div>
             <div class="px-3 py-3 border-bottom">
               <p>CJ대한통운<br>
@@ -74,22 +91,27 @@
               </p>              
             </div>
             <div class="py-3 px-3">
-              <select class="form-control mb-1" >
-                <option disabled selected>색상</option>
-                <option value="1">그레이</option>
-                <option value="2">크림</option>
-                <option value="3">베이지</option>
-              </select>
-              <select class="form-control" >
-                <option disabled selected>크기</option>
-                <option value="1">s</option>
-                <option value="2">m</option>
-                <option value="3">l</option>
-              </select>
+              <c:if test="${not empty colors }">
+	              <select name="color" class="form-control mb-1" >
+	                <option disabled selected>색상</option>  
+	                	<c:forEach var="i" items="${colors}">
+	                		<option value="${i }"><c:out value="${i }"/></option>
+	                	</c:forEach>       
+	              </select>
+              </c:if>
+              <c:if test="${not empty sizes }">
+	              <select name="size" class="form-control" >
+	                <option disabled selected>크기</option>
+	                <c:forEach var="i" items="${sizes }">
+	                <option value="${i }"><c:out value="${i }"/></option>
+	                </c:forEach>
+	              </select>
+              </c:if>
             </div>
+            <div></div>
             <div class="px-4 d-flex justify-content-between">
               <span class="h5"><strong>주문금액</strong></span>
-              <span class="h3"><strong>0 원</strong></span>
+              <span id="totalPrice" class="h3"><strong>0원</strong></span>
             </div>
             <div class="row mx-1 py-3 d-flex justify-content-around">
               <div class="col-6"><button type="button" class="btn btn-outline-primary btn-lg btn-block ">장바구니</button></div>             
@@ -98,7 +120,7 @@
           </div>
         </div>
 
-      </div>
+      </form>
 
      
       <div class="productContainer">
@@ -121,17 +143,6 @@
               </ul>                     
           </nav>
         </div>
-        <!-- <script>
-          var tt=$("div#pInfo").offset();
-          console.log($("div#pInfo").offset());
-          var location = document.querySelector("#pInfo").offsetTop;
-          console.log(location);
-          // console.log($("#review").offset().top);
-          // console.log($("#inquiry").offset().top);
-          // console.log($("#rule").offset().top);
-
-          // window.scrollTo({top:location, behavior:'smooth'});
-        </script> -->
         <div class="sticky-top d-lg-none" style="top:170px; height:20px;">
             <nav class="navbar mt-3 navbar-expand-lg navbar-light bg-light ">
   
@@ -152,20 +163,20 @@
             </nav>
           </div>
 
-        <!--상품 상세창s-->
+        <!--상품 상세창-->
         <div class="container mt-5 col-lg-8 col-10 offset-lg-2"> 
           <div class="mb-5">
             <p class="h5 py-4"><strong>유저들의 스타일링 샷</strong> <span class="text-info">0</span></p>
             <div id="carouselExampleControls" class="carousel slide block col-lg-8 offset-lg-2">
               <div class="carousel-inner rounded ">
                 <div class="carousel-item active">
-                  <img src="./img/cc.webp" class="d-block w-100" alt="...">
+                  <img src="" class="d-block w-100" alt="...">
                 </div>
                 <div class="carousel-item">
-                  <img src="./img/cc2.webp" class="d-block w-100" alt="...">
+                  <img src="" class="d-block w-100" alt="...">
                 </div>
                 <div class="carousel-item">
-                  <img src="./img/cc3.jpg" class="d-block w-100" alt="...">
+                  <img src="" class="d-block w-100" alt="...">
                 </div>
               </div>
               <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -183,7 +194,7 @@
             <!--상품정보-->
             <div id="pInfo">
               <p class="h5 py-4"><strong>상품정보</strong></p>
-              <img src="./img/product.jpg"  class="col-12">
+              <img src="${path }/resources/upload/product/detail/${product.fileName}"  class="col-12">
             </div>
             <p class="h5 py-4"><strong>상품상세정보</strong></p>
             <table class="table ">
@@ -221,7 +232,7 @@
                     <div class="modal-body offset-1 col-10">
                       <form>
                         <div class="form-group row pb-3 border-bottom d-flex align-items-center">
-                          <img src="../final/img/cc.webp" class="rounded d-block w-100 col-4">
+                          <img src="" class="rounded d-block w-100 col-4">
                           <p class="align-middle mb-0">강아지 고양이 기절 댕냥쿠션</p>
                           <input type="hidden" name="productNo"/>
                         </div>
@@ -281,7 +292,7 @@
                             </div>
                           </div>
                           <div class="row bg-light mx-1">
-                            <img src="./img/cc3.jpg" width="150px" class="col-6 offset-3">
+                            <img src="" width="150px" class="col-6 offset-3">
                           </div>                         
                         </div>
                         <div class="form-group">
@@ -339,7 +350,7 @@
                   </div>
                 </div>
                 <div class="my-2"> 옵션 </div>
-                <img src="./img/cc3.jpg" width="150px" class="rounded mb-3">
+                <img src="" width="150px" class="rounded mb-3">
                 <p>똥강아지 너무 좋아하고 좀 큰거 같은데 넘 편해보이고 좋으네요 한번 잘 써보겠습니다</p>
                 <div class="text-right">
                   <a class="text-info text-right pb-2 pr-4"  style="font-size: 12px;" data-toggle="collapse" href="#replyWrite2" role="button" aria-expanded="false" aria-controls="collapseExample">답글 달기(판매자만)</a>
@@ -378,7 +389,7 @@
                     <div class="modal-body offset-1 col-10 pb-0">
                       <form>
                         <div class="form-group row pb-3 border-bottom d-flex align-items-center">
-                          <img src="../final/img/cc.webp" class="rounded d-block w-100 col-4">
+                          <img src="" class="rounded d-block w-100 col-4">
                           <p class="align-middle mb-0">강아지 고양이 기절 댕냥쿠션</p>
                           <input type="hidden" name="productNo"/>
                         </div>

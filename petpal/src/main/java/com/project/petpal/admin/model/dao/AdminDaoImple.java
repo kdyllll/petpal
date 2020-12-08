@@ -79,8 +79,7 @@ public class AdminDaoImple implements AdminDao {
 	}
 
 	@Override
-	public int updateProductEnd(SqlSession session, Product p) {
-		// TODO Auto-generated method stub
+	public int updateProductEnd(SqlSession session, Map p) {
 		return session.update("product.updateProductEnd", p);
 	}
 
@@ -88,6 +87,12 @@ public class AdminDaoImple implements AdminDao {
 	public List<ProductImg> selectProductImgAll(SqlSession session, Product p) {
 		// TODO Auto-generated method stub
 		return session.selectList("product.selectProductImgAll", p);
+	}
+
+	@Override
+	public int updateProductImgEnd(SqlSession session, ProductImg p) {
+		// TODO Auto-generated method stub
+		return session.update("product.updateProductImgEnd", p);
 	}
 
 }
