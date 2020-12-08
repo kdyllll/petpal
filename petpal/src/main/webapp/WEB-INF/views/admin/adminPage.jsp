@@ -68,12 +68,13 @@
 										<td class="align-middle text-center">${pdt.ENROLLDATE }</td>
 										<td class="align-middle text-center"><form method="post"
 												class="pdtFrm mb-0">
-												<input type="hidden" class="productNo" name="productNo"
-													value="${pdt.PRODUCTNO }" /> <input type="submit"
+												<input type="submit"
 													value="삭제"
 													class="btn btn-outline-danger align-middle btn-sm deleteProductBtn" />
 												<button type="button"
 													class="btn btn-outline-secondary btn-sm updateProductBtn" >수정</button>
+													<input type="hidden" class="productNo" name="productNo"
+													value="${pdt.PRODUCTNO }" /> 
 											</form></td>
 
 									</tr>
@@ -229,6 +230,7 @@
 					</div>
 				</div>
 			</form>
+			<div class="pdtModal"></div>
 		</div>
 	</div>
 	<script>
@@ -292,14 +294,14 @@
 		})
 		
 		$(".updateProductBtn").on("click", e => {
-			let productNo = $(".productNo").val();
+			let productNo = $(e.target).next().val();
 			$.ajax({
 				url: "${path}/admin/updateProduct.do",
 				data:{productNo : productNo },
 				dataType:"html",
 				success:(data) => {
 					console.log(data);
-					$(".pdtModal1").after(data);
+					$(".pdtModal").html(data);
 	         		$('div.modalP').modal(); 
 				}
 			}) ;
