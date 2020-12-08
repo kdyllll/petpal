@@ -14,7 +14,6 @@
 		<div class="album py-5 bg-light">
 			<div class="container my-4 mt-lg-0">
 				<div class="row ">
-					
 
 					<div class="form-inline container text-center mb-3">
 						<h3>테마별 노하우</h3>

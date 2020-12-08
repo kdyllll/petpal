@@ -11,7 +11,6 @@
 		position: absolute;
 		bottom: 0px;
 	}
-	
 	#delete {
 		right: auto;
 		float: right;

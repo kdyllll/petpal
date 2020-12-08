@@ -264,7 +264,6 @@
 			        	alert("커버 사진을 선택해주세요");
 			        	event.preventDefault();
                 	}
-                	
 	        	}
 		</script>
 
