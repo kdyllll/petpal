@@ -1,5 +1,7 @@
 package com.project.petpal.member.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -20,7 +22,7 @@ public class MemberController {
 	BCryptPasswordEncoder pwEncoder;
 	
 	@RequestMapping("/member/moveMyPage.do")
-	public String moveMyPage() {
+	public String moveMyPage(HttpSession session, Model m) {
 		return "member/myPageProfile";
 	}
 	
