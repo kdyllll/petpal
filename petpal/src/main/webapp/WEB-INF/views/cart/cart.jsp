@@ -9,7 +9,6 @@
 </head>
 <body class="bg-white">
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
-  
   <main role="main" style="min-height:100vh;">
    	<div class="container">
         <div class="wrapper wrapper-content animated fadeInRight">
@@ -95,7 +94,6 @@
         </div>
     </div>
   </main>
-
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 </body>
