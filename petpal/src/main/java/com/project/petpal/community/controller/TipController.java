@@ -27,32 +27,32 @@ public class TipController {
 	@Autowired
 	private TipService service;
 	
-	@RequestMapping("community/TipList.do")
+	@RequestMapping("community/tipList.do")
 	public ModelAndView TipList(ModelAndView mv) {
 		
 		mv.addObject("list",service.tipList());
-		mv.setViewName("community/TipList");
+		mv.setViewName("community/tipList");
 		
 		return mv;
 	}
 	
-	@RequestMapping("community/TipDetail.do")
+	@RequestMapping("community/tipDetail.do")
 	public ModelAndView TipDetail(HttpServletRequest request, HttpServletResponse response, ModelAndView mv) {
 		String tipNo = request.getParameter("tipNo");
 		
 		mv.addObject("mainList",service.tipMainList(tipNo));
 		mv.addObject("imgList",service.tipDetail(tipNo));
-		mv.addObject("loc", "/community/TipDetail.do");
+		mv.addObject("loc", "/community/tipDetail.do");
 		
 		return mv;
 	}
 	
-	@RequestMapping("community/TipWrite.do")
+	@RequestMapping("community/tipWrite.do")
 	public String TipWrite() {
-		return "community/TipWrite";
+		return "community/tipWrite";
 	}
 	
-	@RequestMapping("community/TipWriteEnd.do")
+	@RequestMapping("community/tipWriteEnd.do")
 	public ModelAndView TipWrite(ModelAndView mv,
 							HttpSession session, HttpServletRequest request, HttpServletResponse response,
 							@RequestParam(value="mainImg", required=false) MultipartFile[] mainImg,
@@ -126,9 +126,20 @@ public class TipController {
 		
 		int result = service.insertTip(t, files);
 		mv.addObject("msg", result>0?"입력 성공":"입력 실패");
-		mv.addObject("loc", "/community/TipList.do");
+		mv.addObject("loc", "/community/tipList.do");
 		
 		mv.setViewName("common/msg");
+		
+		return mv;
+	}
+	
+	@RequestMapping("community/tipUpdate.do")
+	public ModelAndView tipUpdate(HttpServletRequest request, HttpServletResponse response, ModelAndView mv) {
+		String tipNo = request.getParameter("tipNo");
+		
+		mv.addObject("mainList",service.tipMainList(tipNo));
+		mv.addObject("imgList",service.tipDetail(tipNo));
+		mv.addObject("loc", "/community/tipUpdate.do");
 		
 		return mv;
 	}
