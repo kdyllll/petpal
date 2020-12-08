@@ -12,17 +12,16 @@
   
   <!-- Page Content -->
   <main role="main" class="pt-5" style="min-height:100vh;">
-      <form class="container mt-5 productHeader"> 
+      <form class="payFrm container mt-5 productHeader"> 
         <!-- <nav aria-label="breadcrumb ">
           <ol class="breadcrumb bg-transparent">
             <li class="breadcrumb-item"><a href="#">강아지</a></li>
             <li class="breadcrumb-item"><a href="#">가구</a></li>
           </ol>
         </nav> -->
-        <div class="panel-body row">
-          
+        <div class="panel-body row">  
           <div class="col-lg-6">
-            
+            <!-- 상품 사진 -->
             <div id="carouselExampleIndicators" class="carousel slide" >
               <ol class="carousel-indicators">
               	<c:forEach var="i" items="${imgs }" varStatus="vs">
@@ -33,8 +32,7 @@
               			<c:otherwise>
               				<li data-target="#carouselExampleIndicators" data-slide-to="${vs.index }"></li>
               			</c:otherwise>
-              		</c:choose>
-	                
+              		</c:choose>              
                 </c:forEach>
               </ol>
               <div class="carousel-inner rounded">
@@ -51,8 +49,6 @@
 		                	</div>
               			</c:otherwise>
 					</c:choose>
-	                
-
                 </c:forEach>
               </div>
               <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -65,7 +61,9 @@
               </a>
             </div>
           </div>
+          <!-- 상품 정보들 -->
           <div class="col-lg-6 ">
+          	
             <p id="productName" class="h3">               
                   <c:out value="${product.productName}"/>
             </p>
@@ -76,28 +74,29 @@
                   <path fill-rule="evenodd" d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
                 </svg>          
               </div>
+              	<c:forEach var="i" items="${stockList}" varStatus="vs">
+            		<c:if test="${vs.first}">
+            			<c:set var="price" value="${i.price }"/>
+            		</c:if>
+            		<c:if test="${i.price ge price }">
+            			<c:remove var="price"/>
+            			<c:set var="price" value="${i.price }"/>
+            			<c:set var="sale" value="${i.sale }"/>
+            		</c:if>
+            	</c:forEach>
               <div class="row mb-3">
-                <span class="h1 col-3 text-right text-info align-middle"><strong>68%</strong></span>
+                <span class="h1 col-3 text-right text-info align-middle"><strong><c:out value="${sale }"/>%</strong></span>
                 <span class="col-9">
                   <p class="mb-0"><del>
-                  	<c:forEach var="i" items="${stockList}" varStatus="vs">
-                  		<c:if test="${vs.first}">
-                  			<c:set var="price" value="${i.price }"/>
-                  		</c:if>
-                  		<c:if test="${i.price ge price }">
-                  			<c:remove var="price"/>
-                  			<c:set var="price" value="${i.price }"/>
-                  			<c:set var="sale" value="${i.sale }"/>
-                  		</c:if>
-                  	</c:forEach>
+                  	
                   	<c:out value="${price }"/>
                   </del></p>
                   <p class="h1"><strong>
-                  	<c:out value="${price * sale * 0.01 }"/>
+                  	<c:out value="${price * sale * 0.001 }"/>
                   </strong></p>
                 </span>
               </div>
-              <p class=""><b class="text-info"><c:out value="${price * sale * 0.01 * 0.1}"/>P</b> 적립해드립니다.</p>
+              <p class=""><b class="text-info"><c:out value="${price * sale * 0.001 * 0.1}"/>P</b> 적립해드립니다.</p>
             </div>
             <div class="px-3 py-3 border-bottom">
               <p>CJ대한통운<br>
@@ -131,14 +130,13 @@
               <span id="totalPrice" class="h3"><strong>0원</strong></span>
             </div>
             <div class="row mx-1 py-3 d-flex justify-content-around">
-              <div class="col-6"><button type="button" class="btn btn-outline-primary btn-lg btn-block ">장바구니</button></div>             
-              <div class="col-6"><button type="button" class="btn btn-primary btn-lg btn-block">바로구매</button></div>
+              <div class="col-6"><button type="button" id="cartBtn" class="btn btn-outline-primary btn-lg btn-block " data-toggle="modal">장바구니</button></div>             
+              <div class="col-6"><button type="button" id="payBtn" class="btn btn-primary btn-lg btn-block" data-toggle="modal">바로구매</button></div>
             </div>      
           </div>
         </div>
-
       </form>
-
+	
      
       <div class="productContainer">
          <!--스티키-->
@@ -234,96 +232,7 @@
                   <span class="text-info pl-3">0</span>
                   <span class="text-info pl-3">★★★☆☆</span>
                 </p>
-                <button type="button" class="btn btn-link text-info" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><strong>리뷰 쓰기</strong></button>
-              </div>
-              <!--리뷰쓰기 모달-->
-              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title pl-3" id="exampleModalLabel">상품 리뷰</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body offset-1 col-10">
-                      <form>
-                        <div class="form-group row pb-3 border-bottom d-flex align-items-center">
-                          <img src="" class="rounded d-block w-100 col-4">
-                          <p class="align-middle mb-0">강아지 고양이 기절 댕냥쿠션</p>
-                          <input type="hidden" name="productNo"/>
-                        </div>
-                        <div class="form-group">
-                          <label for="recipient-name" class="col-form-label"><strong>별점 평가</strong></label>
-                          <div>
-                            <ul class="d-flex pl-2" style="list-style-type:none;">
-                              <li class="pr-1">
-                                <label>
-                                  <input type="radio" name="1" class="d-none"/>
-                                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill text-black-50" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="font-size: 25px;">
-                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                                  </svg>
-                                </label>
-                              </li>
-                              <li class="pr-1">
-                                <label>
-                                  <input type="radio" name="2" class="d-none"/>
-                                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill text-black-50" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="font-size: 25px;">
-                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                                  </svg>
-                                </label>
-                              </li>
-                              <li class="pr-1">
-                                <label>
-                                  <input type="radio" name="3" class="d-none"/>
-                                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill text-black-50" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="font-size: 25px;">
-                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                                  </svg>
-                                </label>
-                              </li>
-                              <li class="pr-1">
-                                <label>
-                                  <input type="radio" name="4" class="d-none"/>
-                                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill text-black-50" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="font-size: 25px;">
-                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                                  </svg>
-                                </label>
-                              </li>
-                              <li class="pr-1">
-                                <label>
-                                  <input type="radio" name="5" class="d-none"/>
-                                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill text-black-50" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="font-size: 25px;">
-                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                                  </svg>
-                                </label>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label for="message-text" class="col-form-label"><strong>사진 첨부</strong> <span class="text-black-50">최대 한장</span></label>
-                          <div class="input-group mb-3">
-                            <div class="custom-file" id="thumnail">
-                              <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                              <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                            </div>
-                          </div>
-                          <div class="row bg-light mx-1">
-                            <img src="" width="150px" class="col-6 offset-3">
-                          </div>                         
-                        </div>
-                        <div class="form-group">
-                          <label for="message-text" class="col-form-label"><strong>리뷰 작성</strong></label>
-                          <textarea class="form-control" rows="5" id="message-text" style="resize:none;"></textarea>
-                        </div>
-                      </form>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                      <button type="button" class="btn btn-primary">완료</button>
-                    </div>
-                  </div>
-                </div>
+                <button type="button" class="btn btn-link text-info" data-toggle="modal" ><strong>리뷰 쓰기</strong></button>
               </div>
               <!--리뷰창-->
               <article class="px-4 mb-3 pb-3 border-bottom">
@@ -392,53 +301,7 @@
                 <strong>문의</strong> 
                 <span class="text-info pl-3">0</span>               
               </p>
-              <button type="button" class="btn btn-link text-info" data-toggle="modal" data-target="#exampleModal2" data-whatever="@mdo"><strong>문의 하기</strong></button>
-              <!--문의 모달-->
-              <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title pl-3" id="exampleModalLabel">상품 문의</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body offset-1 col-10 pb-0">
-                      <form>
-                        <div class="form-group row pb-3 border-bottom d-flex align-items-center">
-                          <img src="" class="rounded d-block w-100 col-4">
-                          <p class="align-middle mb-0">강아지 고양이 기절 댕냥쿠션</p>
-                          <input type="hidden" name="productNo"/>
-                        </div>
-                        <div class="form-group">
-                          <label for="message-text" class="col-form-label"><strong>문의 분류</strong></label>
-                          <select class="form-control col-3" id="exampleFormControlSelect1">
-                            <option disabled selected>분류</option>
-                            <option>상품</option>
-                            <option>배송</option>
-                            <option>반품</option>
-                            <option>교환</option>
-                            <option>환불</option>
-                            <option>기타</option>                          
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <label for="message-text" class="col-form-label"><strong>문의 내용</strong></label>
-                          <textarea class="form-control" rows="5" id="message-text" style="resize:none;"></textarea>
-                        </div>
-                        <div class="form-group d-flex justify-content-end">
-                        <label class=""><input type="checkbox" class="mr-2"/>비밀글</label>
-                        </div>
-                      </form>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                      <button type="button" class="btn btn-primary">완료</button>
-                    </div>
-                  </div>
-                </div>
-              </div>  
-            </div>
+              <button type="button" class="btn btn-link text-info" data-toggle="modal" ><strong>문의 하기</strong></button>
             <!--문의-->
             <article class="border-bottom py-3">
               <div class="row d-flex justify-content-between pl-2"> 
@@ -556,12 +419,15 @@
           </div>
         </div>
       </div>
+      <div class="pdtModal"></div>
+     
     </main>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 </body>
 <script>
+		let loginMember=${loginMember};
 		//수량 선택
 		//옵션이 없다면 바로 수량체크할 수 있게
 		if($("#color").length==0&&$("#size").length==0){
@@ -580,6 +446,8 @@
 		  let color=$("#color option:selected").val();
 		  let size=$("#size option:selected").val();
 		  let option="";
+		  let price="";
+		  let stockNo="";
 		  let stockList=${jsonStock};
 		  //<%=request.getAttribute("jsonStock")%>;
 		  console.log(stockList);
@@ -614,6 +482,7 @@
 		      for(let s in stockList){
 		    	  if(stockList[s].color==color&&stockList[s].productSize==size){
 		    		  price=stockList[s].price;
+		    		  stockNo=stockList[s].stockNo;
 		    	  }
 		      }
 		    }else{
@@ -621,6 +490,7 @@
 		      for(let s in stockList){
 		    	  if(stockList[s].color==color&&stockList[s].productSize==size){
 		    		  price=stockList[s].price;
+		    		  stockNo=stockList[s].stockNo;
 		    	  }
 		      }
 		    }
@@ -630,11 +500,13 @@
 		      for(let s in stockList){
 		    	  if(stockList[s].color==color&&stockList[s].productSize==size){
 		    		  price=stockList[s].price;
+		    		  stockNo=stockList[s].stockNo;
 		    	  }
 		      }
 		    }else{
 		      option=$("#productName").text().trim();
 		      price=stockList[0].price;
+		      stockNo=stockList[s].stockNo;
 		    }
 		  }
 		
@@ -642,8 +514,7 @@
 		    let optionTag=`<article class="orderBox rounded bg-light m-3 pl-3 pr-1 py-2">
 		              <div class="d-flex justify-content-between align-items-center mb-3">
 		                <p class="m-0">`+option+`</p>
-		                <input type="hidden" class="color" name="color" value="`+color+`"/>
-		                <input type="hidden" class="size" name="size" value="`+size+`"/>
+		                <input type="hidden" class="stockNo" name="stockNo" value="`+stockNo+`"/>
 		                <button type="button" class="delete btn p-0 m-0 ">
 		                  <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 		                    <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
@@ -705,6 +576,47 @@
           $("#totalPrice").text(totalPrice);
         };
 		
+        //장바구니 모달
+        $("#cartBtn").on("click",e=>{
+            if($(".orderBox").length==0){
+              alert("상품을 선택하세요.");
+              return;
+            }else{
+            	//장바구니에 삽입 - 삽입 성공하면 데이터 반환(모달주소)
+              ajaxModal()
+            }
+          });
+        //결제 모달
+        $("#payBtn").on("click",e=>{
+            if($(".orderBox").length==0){
+              alert("상품을 선택하세요.");
+              return;
+            }else{
+            	//로그인 되어 있으면 바로 결제로 넘김
+            	<c:if test="${not empty loginMember}">
+            		
+            	</c:if>
+            	//로그인 안되어 있으면 로그인 모달 띄우기
+              ajaxModal()
+            }
+          });
+        //리뷰 작성 모달
+        
+        //문의 작성 모달
+        
+        function ajaxModal(path, data){
+			$.ajax({
+				url: path,
+				data:{ :  },
+				dataType:"html",
+				success:(data) => {
+					console.log(data);
+					$(".pdtModal").html(data);
+	         		$('div.modal').modal(); 
+				}
+			});
+		}
+        
 </script>
 
 </html>
