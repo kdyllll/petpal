@@ -9,7 +9,7 @@
     <header class="fixed-top shadow-sm" >
         <nav class="navbar navbar-expand-lg navbar-light py-3 " style="background-color: white;">
           <div class="container">
-            <a class="navbar-brand text-dark" href="#">로고</a>
+            <a class="navbar-brand text-dark" href="${path }/">로고</a>
             <ul class="nav justify-content-center d-none d-lg-flex">
               <li class="nav-item">
                 <a class="nav-link" href="#">커뮤니티</a>
@@ -35,22 +35,27 @@
                 <li class="nav-item d-none d-lg-block">
                   <a class="nav-link text-dark" data-toggle="collapse" data-target="#collapseOne2" aria-expanded="true" aria-controls="collapseOne" href="#">검색</a>
                 </li>
-    
+    			<c:if test="${loginMember == null }">
                 <li class="nav-item">
                   <a class="nav-link text-dark" href="${path }/member/moveLogin.do">로그인</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link text-dark" href="${path }/member/moveJoin.do">회원가입</a>
                 </li>
+                </c:if>
+                <c:if test="${loginMember != null }">
                 <li class="nav-item">
                   <a class="nav-link text-dark" href="${path }/member/moveMyPage.do">마이페이지</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link text-dark" href="#">로그아웃</a>
                 </li>
+                </c:if>
+                <c:if test="${loginMember.getEmail().equals('admin')  }">
                 <li class="nav-item">
                   <a class="nav-link text-dark" href="${path }/admin/moveAdminPage.do">관리자</a>
                 </li>
+                </c:if>
               </ul>
             </div>
             
