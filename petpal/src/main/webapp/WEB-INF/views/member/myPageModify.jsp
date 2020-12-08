@@ -13,19 +13,25 @@
 
 <%
 	String[] addr = ((Member) session.getAttribute("loginMember")).getAddress();
-	List<String> list = new ArrayList();
-	String post ="";
-	String addEtc = "";
+List<String> list = new ArrayList();
+String post = "";
+String addEtc1 = "";
+String addEtc2 = "";
 if (addr != null) {
 	list = Arrays.asList(addr);
-	for (int i = 0; i < list.size(); i++) {
-		post = list.get(0);
-		addEtc = list.get(1) + list.get(2);
-		System.out.println(post);
-		System.out.println(addEtc);
-		
+	if (list.size() > 1) {
+		for (int i = 0; i < list.size(); i++) {
+	post = list.get(0);
+	addEtc1 = list.get(1);
+	addEtc2 = list.get(2);
+
+		}
+
 	}
 }
+request.setAttribute("post", post);
+request.setAttribute("addEtc1", addEtc1);
+request.setAttribute("addEtc2", addEtc2);
 %>
 <style>
 #sample6_postcode {
@@ -53,8 +59,9 @@ if (addr != null) {
 		<div class="form-group row ">
 			<label for="oriPassword" class="col-lg-2 col-form-label">비밀번호</label>
 			<div class="col-5 col-lg-3">
-				<input type="password" class="form-control" placeholder="비밀번호 확인"
-					id="oriPassword">
+				<input type="password" name="password" class="form-control"
+					placeholder="비밀번호 확인" id="oriPassword">
+
 			</div>
 			<button type="button" class="btn btn-outline-secondary"
 				id="passwordUpdate">비밀번호 확인</button>
@@ -79,17 +86,21 @@ if (addr != null) {
 			<label for="userAdd" class="col-lg-2 col-form-label">주소</label>
 			<div class="col-lg-8">
 				<input type="text" id="sample6_postcode" name="address"
-					class="form-control input-lg" placeholder="우편번호" readonly>
-				<input type="button" onclick="sample6_execDaumPostcode()"
-					class="btn btn-primary btn-sm" value="우편번호 찾기">
-					<input type="text" class="form-control input-lg" name="address"
-											id="sample6_address" placeholder="주소" readonly>
+					class="form-control input-lg" placeholder="우편번호" value="${post }"
+					readonly> <input type="button"
+					onclick="sample6_execDaumPostcode()" class="btn btn-primary btn-sm"
+					value="우편번호 찾기"> <input type="text"
+					class="form-control input-lg" name="address" value="${addEtc1 }"
+					id="sample6_address" placeholder="주소" readonly> <input
+					type="text" class="form-control input-lg" name="address"
+					value="${addEtc2 }" id="sample6_detailAddress" placeholder="상세주소">
 			</div>
 		</div>
 		<div class="form-group row">
 			<label for="userPhone" class="col-lg-2 col-form-label">전화번호</label>
 			<div class="col-lg-2">
-				<input type="text" class="form-control" id="userPhone">
+				<input type="text" class="form-control" id="phone" name="phone"
+					value="${loginMember.getPhone() }">
 			</div>
 		</div>
 		<div class="form-group row d-flex align-items-center">
@@ -126,26 +137,29 @@ if (addr != null) {
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h3 class="modal-title" id="exampleModalLabel">로그인</h3>
+				<h3 class="modal-title" id="exampleModalLabel">비밀번호변경</h3>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form method="post">
+			<form method="post" id="updatePassword" method="post">
 				<div class="modal-body">
-
-					<input type="password" class="form-control mb-2" name="newPassword"
-						placeholder="비밀번호"> <input type="password"
-						class="form-control mb-2" name="newPasswordConfirm"
+					<input type="hidden" name="memberNo"
+						value="${loginMember.getMemberNo() }"> <input
+						type="password" class="form-control mb-2" name="password"
+						id="newPassword" placeholder="비밀번호"> <input
+						type="password" class="form-control mb-2"
+						name="newPasswordConfirm" id="newPasswordConfirm"
 						placeholder="비밀번호확인">
-					<p class="text-right text-danger" style="font-size: 12px;">비밀번호가
-						일치하지 않습니다.</p>
+					<p class="text-right " id="pwAlert" style="font-size: 12px;">비밀번호를
+						입력해주세요.</p>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-outline-success"
+					<button type="button" class="btn btn-outline-secondary"
 						data-dismiss="modal">취소</button>
-					<button type="submit" class="btn btn-outline-success">변경</button>
+					<button type="button" class="btn btn-outline-success"
+						id="updatePwBtn">변경</button>
 				</div>
 			</form>
 
@@ -166,9 +180,51 @@ if (addr != null) {
         });
 
         });
+      
+      $("#newPasswordConfirm").on("keyup", e => {
+    	  let newP = $("#newPassword").val();
+    	  let newPC = $(e.target).val();
+    	  if(newP.trim()==newPC.trim()) {
+    		  $("#pwAlert").removeClass("text-danger");
+    		  $("#pwAlert").addClass("text-success");  
+    		  $("#pwAlert").html("비밀번호가 일치합니다.");
+    	  } else {
+    		  $("#pwAlert").removeClass("text-success");
+    		  $("#pwAlert").addClass("text-danger");
+    		  $("#pwAlert").html("비밀번호가 틀렸습니다.");
+    		  
+    	  }
+      })
+      
+      $("#updatePwBtn").on("click", function() { 	 
+    	  let pw = $("#newPassword").val();
+    	  let pwCheck = $("#newPasswordConfirm").val();
+    	  if(pw.trim() == pwCheck.trim()) {
+			  $("#updatePassword").attr("action","${path}/member/passwordUpdateEnd.do").submit();
+    	  } else {  
+    		  $("#newPassword").val("");
+    		  $("#newPasswordConfirm").val("");
+    		  alert("비밀번호가 일치하지않습니다.");
+
+    	  }
+	});
+
+      
 
         $("#passwordUpdate").on("click",function(){
-          $('div.modal').modal();
+        	let password = $("#oriPassword").val();
+        	$.ajax({
+        		url:"${path}/member/passwordUpdate.do",
+        		data:{password : password},
+        		success:data => {
+        			if(data == 1) {
+        				$('div.modal').modal();
+        			} else {
+        				alert("비밀번호가 일치하지 않습니다. 비밀번호를 확인해주세요.");
+        			}
+        		}
+        	})
+          
         });
     })
 

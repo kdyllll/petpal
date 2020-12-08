@@ -78,5 +78,11 @@ public class MemberController {
 			return "common/msg";
 		}	
 	}
+	
+	@RequestMapping("/member/passwordUpdateEnd.do")
+	public String passwordUpdateEnd(Member m) {
+		System.out.println(m);
+		return "member/myPageModify";
+	}
 
 }
