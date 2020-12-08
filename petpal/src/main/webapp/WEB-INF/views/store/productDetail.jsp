@@ -26,18 +26,33 @@
             <div id="carouselExampleIndicators" class="carousel slide" >
               <ol class="carousel-indicators">
               	<c:forEach var="i" items="${imgs }" varStatus="vs">
-              		<%-- <c:if test="${vs.first }"> --%>
-	                <li data-target="#carouselExampleIndicators" data-slide-to="${vs.index }"></li>
-	                <%-- </c:if> --%>
+              		<c:choose>
+              			<c:when test=${vs.first }>
+              				<li data-target="#carouselExampleIndicators" data-slide-to="${vs.index }"  class="active"></li>
+              			</c:when>
+              			<c:otherwise>
+              				<li data-target="#carouselExampleIndicators" data-slide-to="${vs.index }"></li>
+              			</c:otherwise>
+              		</c:choose>
+	                
                 </c:forEach>
               </ol>
               <div class="carousel-inner rounded">
                 <c:forEach var="i" items="${imgs }" varStatus="vs">
-              		<%-- <c:if test="${vs.first }"> --%>
-	                <div class="carousel-item">
-                  		<img src="${path }/resources/upload/product/detail/${i.imgName}" class="d-block w-100 ">
-                	</div>
-	                <%-- </c:if> --%>
+					<c:choose>
+						<c:when test=${vs.first }>
+              				<div class="carousel-item active">
+		                  		<img src="${path }/resources/upload/product/detail/${i.imgName}" class="d-block w-100 ">
+		                	</div>
+              			</c:when>
+              			<c:otherwise>
+              				<div class="carousel-item">
+		                  		<img src="${path }/resources/upload/product/detail/${i.imgName}" class="d-block w-100 ">
+		                	</div>
+              			</c:otherwise>
+					</c:choose>
+	                
+
                 </c:forEach>
               </div>
               <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -51,7 +66,7 @@
             </div>
           </div>
           <div class="col-lg-6 ">
-            <p class="h3">               
+            <p id="productName" class="h3">               
                   <c:out value="${product.productName}"/>
             </p>
             <div class="px-3 pb-2 border-bottom">
@@ -92,23 +107,25 @@
             </div>
             <div class="py-3 px-3">
               <c:if test="${not empty colors }">
-	              <select name="color" class="form-control mb-1" >
+	              <select id="color" class="form-control mb-1" >
 	                <option disabled selected>색상</option>  
-	                	<c:forEach var="i" items="${colors}">
-	                		<option value="${i }"><c:out value="${i }"/></option>
-	                	</c:forEach>       
+                	<c:forEach var="i" items="${colors}">
+                		<option value="${i }"><c:out value="${i }"/></option>
+                	</c:forEach>       
 	              </select>
               </c:if>
               <c:if test="${not empty sizes }">
-	              <select name="size" class="form-control" >
+	              <select id="size" class="form-control" >
 	                <option disabled selected>크기</option>
 	                <c:forEach var="i" items="${sizes }">
-	                <option value="${i }"><c:out value="${i }"/></option>
+	                	<option value="${i }"><c:out value="${i }"/></option>
 	                </c:forEach>
 	              </select>
               </c:if>
             </div>
-            <div></div>
+            <div id="orderList" class="">
+              
+            </div>
             <div class="px-4 d-flex justify-content-between">
               <span class="h5"><strong>주문금액</strong></span>
               <span id="totalPrice" class="h3"><strong>0원</strong></span>
@@ -544,5 +561,150 @@
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 </body>
+<script>
+		//수량 선택
+		//옵션이 없다면 바로 수량체크할 수 있게
+		if($("#color").length==0&&$("#size").length==0){
+		  fn_select();
+		  $(".delete").hide();
+		}
+		$(document).on("change","#color",e=>{
+		  fn_select();
+		});
+		$(document).on("change","#size",e=>{
+		  fn_select();
+		});
+		
+		//선택한 옵션 제품 수량 선택박스 && 총금액 계산
+		function fn_select(){
+		  let color=$("#color option:selected").val();
+		  let size=$("#size option:selected").val();
+		  let option="";
+		  let stockList=${jsonStock};
+		  //<%=request.getAttribute("jsonStock")%>;
+		  console.log(stockList);
+		  
+		  let flag=true;
+          //유효성 검사
+          $(".orderBox").each((i,item)=>{
+            if($("#color").length!=0){
+              if(color==$(item).find(".color").val()){
+                if($("#size").length!=0&&size==$(item).find(".size").val()){
+                  alert("이미 선택한 옵션입니다.");     
+                  flag=false;        
+                }else{
+                  alert("이미 선택한 옵션입니다.");
+                  flag=false;  
+                };
+              };
+            }else{
+              if(size==$(item).find(".size").val()){
+                alert("이미 선택한 옵션입니다.");
+                flag=false;  
+              };
+            };
+          });
+          if(flag==false){
+            return;
+          }
+		  //oo ox xo xx
+		  if($("#color").length!=0){
+		    if($("#size").length!=0){
+		      option=color + " / " + size;
+		      for(let s in stockList){
+		    	  if(stockList[s].color==color&&stockList[s].productSize==size){
+		    		  price=stockList[s].price;
+		    	  }
+		      }
+		    }else{
+		      option=color;
+		      for(let s in stockList){
+		    	  if(stockList[s].color==color&&stockList[s].productSize==size){
+		    		  price=stockList[s].price;
+		    	  }
+		      }
+		    }
+		  }else{
+		    if($("#size").length!=0){
+		      option=size;
+		      for(let s in stockList){
+		    	  if(stockList[s].color==color&&stockList[s].productSize==size){
+		    		  price=stockList[s].price;
+		    	  }
+		      }
+		    }else{
+		      option=$("#productName").text().trim();
+		      price=stockList[0].price;
+		    }
+		  }
+		
+		  if(color!="색상" && size!="크기"){
+		    let optionTag=`<article class="orderBox rounded bg-light m-3 pl-3 pr-1 py-2">
+		              <div class="d-flex justify-content-between align-items-center mb-3">
+		                <p class="m-0">`+option+`</p>
+		                <input type="hidden" class="color" name="color" value="`+color+`"/>
+		                <input type="hidden" class="size" name="size" value="`+size+`"/>
+		                <button type="button" class="delete btn p-0 m-0 ">
+		                  <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+		                    <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+		                  </svg>
+		                </button>
+		              </div>
+		              <div class="cntBox row d-flex justify-content-between align-items-center pl-4 pr-5">
+		                <select name="cnt" class="cntSelect form-control col-5">
+		                  <option value="1">1</option>
+		                  <option value="2">2</option>
+		                  <option value="3">3</option>
+		                  <option value="4">4</option>
+		                  <option value="5">5</option>
+		                  <option value="next">6+</option>
+		                </select>
+		                <p class="h5 price">`+price+`원</p>
+		                <p class="d-none eachPrice">`+price+`</p>
+		              </div>
+		            </article>`
+		    $("#orderList").append(optionTag);
+		    fn_total();
+		  };
+		  
+		};
+		//수량 입력하면 금액 바뀌게
+		//수량 6+선택하면 직접입력할 수 있게
+		$(document).on("change","select.cntSelect",e=>{ 
+		  if($(e.target).val()=="next"){
+		    let box=$(e.target).parents(".cntBox")
+		    $(e.target).remove();
+		    let input=`<input type="text" name="cnt" value="1" class="cntSelect form-control col-5"/>`;
+		    box.prepend(input);
+		    box.children(".cntSelect").focus();
+		  }else{
+			  let oriPrice=parseInt($(e.target).siblings(".eachPrice").text());
+              let newPrice=oriPrice * ($(e.target).val());
+              $(e.target).next(".price").text(newPrice+"원");
+              fn_total();
+          };  
+		});
+		$(document).on("focusout","input.cntSelect",e=>{
+			let oriPrice=parseInt($(e.target).siblings(".eachPrice").text());
+            let newPrice=oriPrice * ($(e.target).val());
+            $(e.target).next(".price").text(newPrice+"원");
+            fn_total();
+		});
+		//x누르면 선택박스 사라지게
+		$(document).on("click",".delete",e=>{
+			$(e.target).parents(".orderBox").remove();
+            fn_total();
+		});
+		 //총금액 변경 함수
+        function fn_total(){
+          let totalPrice=0;
+          $(".price").each((i,item)=>{
+            let priceCal=parseInt($(item).text().trim());
+            totalPrice=totalPrice+priceCal;
+          });
+          $("#totalPrice").text(totalPrice);
+        };
+		
+</script>
 
 </html>
