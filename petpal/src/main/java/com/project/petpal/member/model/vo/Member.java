@@ -3,12 +3,15 @@ package com.project.petpal.member.model.vo;
 import java.sql.Date;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 public class Member {
 
 	private String memberNo;

@@ -1,6 +1,7 @@
 package com.project.petpal.store.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,12 @@ public class StoreServiceImpl implements StoreService{
 	public List<ProductImg> selectImg(String productNo) {
 		// TODO Auto-generated method stub
 		return dao.selectImg(session,productNo);
+	}
+
+	@Override
+	public int insertCart(Map m) {
+		// TODO Auto-generated method stub
+		return dao.insertCart(session,m);
 	}
 
 }

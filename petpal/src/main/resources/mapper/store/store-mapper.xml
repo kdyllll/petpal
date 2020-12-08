@@ -10,4 +10,16 @@
 	<select id="selectImg" resultType="storeImg" parameterType="string">
 		SELECT * FROM PRODUCTIMG WHERE PRODUCTNO=#{productNo} 
 	</select>
+	<insert id="insertCart" parameterType="map">
+		INSERT INTO CART VALUES(
+		<choose>
+			<when test="memberNo!=null">
+				#{memberNo},
+			</when>
+			<otherwise>
+				null,
+			</otherwise>
+		</choose>
+		#{stockNo},#{cnt})
+	</insert>
 </mapper>
