@@ -13,12 +13,17 @@
 
 <%
 	String[] addr = ((Member) session.getAttribute("loginMember")).getAddress();
-List<String> list = new ArrayList();
+	List<String> list = new ArrayList();
+	String post ="";
+	String addEtc = "";
 if (addr != null) {
 	list = Arrays.asList(addr);
 	for (int i = 0; i < list.size(); i++) {
-		System.out.println(list.get(i));
-
+		post = list.get(0);
+		addEtc = list.get(1) + list.get(2);
+		System.out.println(post);
+		System.out.println(addEtc);
+		
 	}
 }
 %>
