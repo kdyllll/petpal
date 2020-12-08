@@ -73,7 +73,7 @@ public class MemberController {
 		}else {
 			//로그인실패
 			m.addAttribute("msg","로그인에 실패했습니다.");
-			m.addAttribute("loc","/");
+			m.addAttribute("loc","member/login");
 			return "common/msg";
 		}	
 	}

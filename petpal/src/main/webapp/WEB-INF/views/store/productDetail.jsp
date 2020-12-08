@@ -26,7 +26,7 @@
               <ol class="carousel-indicators">
               	<c:forEach var="i" items="${imgs }" varStatus="vs">
               		<c:choose>
-              			<c:when test=${vs.first }>
+              			<c:when test="${vs.first }">
               				<li data-target="#carouselExampleIndicators" data-slide-to="${vs.index }"  class="active"></li>
               			</c:when>
               			<c:otherwise>
@@ -38,7 +38,7 @@
               <div class="carousel-inner rounded">
                 <c:forEach var="i" items="${imgs }" varStatus="vs">
 					<c:choose>
-						<c:when test=${vs.first }>
+						<c:when test="${vs.first }">
               				<div class="carousel-item active">
 		                  		<img src="${path }/resources/upload/product/detail/${i.imgName}" class="d-block w-100 ">
 		                	</div>
@@ -259,7 +259,7 @@
                 </div>
                 <form class="collapse  mt-2 p-3 pb-0 bg-light rounded text-right" id="replyWrite">
                   <div class="form-group">
-                    <textarea class="form-control" rows="2" id="message-text" style="resize:none;" placeholder="구매해주셔서 감사합니다."></textarea>
+                    <textarea class="form-control" rows="2" style="resize:none;" placeholder="구매해주셔서 감사합니다."></textarea>
                     <button type="button" class="btn btn-primary mt-2">완료</button>
                   </div> 
                 </form>               
@@ -286,7 +286,7 @@
                 </div>
                 <form class="collapse  mt-2 p-3 pb-0 bg-light rounded text-right" id="replyWrite2">
                   <div class="form-group">
-                    <textarea class="form-control" rows="2" id="message-text" style="resize:none;" placeholder=""></textarea>
+                    <textarea class="form-control" rows="2" style="resize:none;" placeholder=""></textarea>
                     <button type="button" class="btn btn-primary mt-2">완료</button>
                   </div> 
                 </form>
@@ -319,7 +319,7 @@
                 <div class="form-group row ml-2">
                   <p class=""><strong class="text-info mr-2">A</strong></p>
                   <div class="col-11"> 
-                    <textarea class="form-control" rows="2" id="message-text" style="resize:none;" placeholder=""></textarea>
+                    <textarea class="form-control" rows="2" style="resize:none;" placeholder=""></textarea>
                     <button type="button" class="btn btn-primary mt-2 offset-10 col-2">완료</button>
                   </div>
                 </div> 
@@ -346,11 +346,11 @@
                 </div>
               </div> 
               
-                <form class="writeFrm d-none" id="replyWrite3">
+                <form class="writeFrm d-none" id="replyWrite4">
                   <div class="form-group row ml-2">
                     <p class=""><strong class="text-info mr-2">A</strong></p>
                     <div class="col-11 mt-2"> 
-                      <textarea class="writeText form-control" rows="3" id="message-text" style="resize:none;" placeholder=""></textarea>
+                      <textarea class="writeText form-control" rows="3" style="resize:none;" placeholder=""></textarea>
                       <button type="button" class="btn btn-primary mt-2 offset-10 col-2">완료</button>
                     </div>
                   </div> 
@@ -427,7 +427,7 @@
 
 </body>
 <script>
-		let loginMember=${loginMember};
+		//let loginMember=${loginMember};
 		//수량 선택
 		//옵션이 없다면 바로 수량체크할 수 있게
 		if($("#color").length==0&&$("#size").length==0){
@@ -449,9 +449,7 @@
 		  let price="";
 		  let stockNo="";
 		  let stockList=${jsonStock};
-		  //<%=request.getAttribute("jsonStock")%>;
-		  console.log(stockList);
-		  
+		 	  
 		  let flag=true;
           //유효성 검사
           $(".orderBox").each((i,item)=>{
@@ -522,7 +520,7 @@
 		                </button>
 		              </div>
 		              <div class="cntBox row d-flex justify-content-between align-items-center pl-4 pr-5">
-		                <select name="cnt" class="cntSelect form-control col-5">
+		                <select name="cnt" class="cnt cntSelect form-control col-5">
 		                  <option value="1">1</option>
 		                  <option value="2">2</option>
 		                  <option value="3">3</option>
@@ -545,7 +543,7 @@
 		  if($(e.target).val()=="next"){
 		    let box=$(e.target).parents(".cntBox")
 		    $(e.target).remove();
-		    let input=`<input type="text" name="cnt" value="1" class="cntSelect form-control col-5"/>`;
+		    let input=`<input type="text" name="cnt" value="1" class="cnt cntSelect form-control col-5"/>`;
 		    box.prepend(input);
 		    box.children(".cntSelect").focus();
 		  }else{
@@ -581,9 +579,33 @@
             if($(".orderBox").length==0){
               alert("상품을 선택하세요.");
               return;
-            }else{
+            }else{       	
             	//장바구니에 삽입 - 삽입 성공하면 데이터 반환(모달주소)
-              ajaxModal()
+            	//재고번호 input name stockNo
+            	//수량 input name cnt
+            	let stockNo=[];
+            	$("input[name=stockNo]").each((i,item)=>{
+            		stockNo.push(item.value);
+            	});
+            	let cnt=[];
+            	$(".cntSelect").each((i,item)=>{
+            		 cnt.push(item.value);
+            	});
+            	$.ajaxSettings.traditional = true;
+            	$.ajax({
+    				url: "${path}/store/insertCart.do",
+    				data:{stockNo:stockNo,cnt:cnt},
+    				dataType:"html",			
+    				success:(data) => {
+    					//console.log(data);					
+    					$(".pdtModal").html(data);	
+    	         		$('div.modal').modal(); 
+    				},
+    				error:(request,status,error)=>{
+                       alert("장바구니에 상품을 담지 못했습니다.");
+                    }
+    			});
+              	
             }
           });
         //결제 모달
@@ -593,21 +615,22 @@
               return;
             }else{
             	//로그인 되어 있으면 바로 결제로 넘김
-            	<c:if test="${not empty loginMember}">
-            		
-            	</c:if>
-            	//로그인 안되어 있으면 로그인 모달 띄우기
-              ajaxModal()
+            	//if(loginMember!=null){
+            		$(".payFrm").attr("action","${path}/payment/payment.do").submit();
+            	//}else{
+		            //로그인 안되어 있으면 로그인 모달 띄우기
+		        //    ajaxModal("${path}/")
+            	//}
             }
           });
         //리뷰 작성 모달
         
         //문의 작성 모달
         
-        function ajaxModal(path, data){
+        function ajaxModal(path, subData){
 			$.ajax({
 				url: path,
-				data:{ :  },
+				data:subData,
 				dataType:"html",
 				success:(data) => {
 					console.log(data);

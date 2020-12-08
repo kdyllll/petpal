@@ -35,7 +35,7 @@
                     <a class="text-dark" href="#">회원가입</a>
                   </div>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>       
+                <button id="loginBtn" class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>       
                 <div class="d-flex justify-content-around my-2">  
                   <button class="btn btn-lg rounded my-1" type="button">
                     <img src="./img/avatar.webp" style="width: 70px; height: 70px;" alt="">
@@ -48,12 +48,29 @@
                   </button>
                 </div>
                 <div class="d-block justify-content-center mb-2" >          
-                  <button type="button" class="btn btn-outline-primary btn-block btn-lg">비회원 주문</button>           
+                  <button id="nonMemberBtn" type="button" class="btn btn-outline-primary btn-block btn-lg">비회원 주문</button>           
                 </div> 
-              </div>
-              
+              </div>              
           </div>      
         </div>
-
     </div>
   </div>  
+  
+  <script>
+  	//로그인
+  	$(document).on("click","loginBtn",e=>{
+  		//로그인 됐는지 확인
+  		//(성공하면 true 반환)
+  		//확인 후 폼 전송
+  		if(data){
+    		$(".payFrm").attr("action","${path}/payment/payment.do").submit();
+    	}else{
+            alert("로그인에 실패했습니다.");
+    	}
+  	});
+  	
+  	//비회원주문
+  	$(document).on("click","nonMemberBtn",e=>{
+  		$(".payFrm").attr("action","${path}/payment/payment.do").submit();
+  	});
+  </script>
