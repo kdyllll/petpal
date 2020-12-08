@@ -77,5 +77,19 @@ public class MemberController {
 			return "common/msg";
 		}	
 	}
+	
+	@RequestMapping("/member/passwordUpdateEnd.do")
+	public String passwordUpdateEnd(Member m, Model model) {
+		String loc="/member/myPageModify.do";
+		String msg="비밀번호 변경에 실패하였습니다.";
+		Member member = Member.builder().memberNo(m.getMemberNo()).password(pwEncoder.encode(m.getPassword())).build();
+		int result = service.updatePassword(member);
+		if(result>0) {
+			msg="비밀번호가 변경되었습니다.";
+		}
+		model.addAttribute("msg",msg);
+		model.addAttribute("loc",loc);
+		return "common/msg";
+	}
 
 }

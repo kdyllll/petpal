@@ -6,5 +6,6 @@ public interface MemberService {
 
 	int insertMember(Member member);
 	Member selectMember(String email);
+	int updatePassword(Member member);
 	
 }

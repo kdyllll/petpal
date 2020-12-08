@@ -51,7 +51,7 @@
                   <a class="nav-link text-dark" href="#">로그아웃</a>
                 </li>
                 </c:if>
-                <c:if test="${loginMember.getEmail().equals('admin')  }">
+                <c:if test="${loginMember.getEmail().equals('admin@naver.com')  }">
                 <li class="nav-item">
                   <a class="nav-link text-dark" href="${path }/admin/moveAdminPage.do">관리자</a>
                 </li>
