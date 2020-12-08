@@ -25,7 +25,7 @@
   
   <main role="main" style="min-height:100vh;">
   	<div class="container" style="max-width: 940px;">
-        <form class="needs-validation" name="tipWrite" action="${path }/community/TipWriteEnd.do" method="post" enctype="multipart/form-data"  onSubmit="return selectCheck();">
+        <form class="needs-validation" name="tipWrite" action="${path }/community/tipUpdate.do?tipNo=${mainList.tipNo}" method="post" enctype="multipart/form-data"  onSubmit="return selectCheck();">
             <div>
                 <div class="row">
                     <div class="col-md-12 mt-5">
@@ -47,24 +47,49 @@
 								</div>
 							</c:forEach>
 						</div>
+			
+			<div id="down" class="float-none" style="display: table; height: 300px; width: 100%; position: relative;">
+				<c:forEach items="${imgList }" var="t">
+					<c:if test="${not empty t.MAINIMG }">
+						<img src="${path}/resources/upload/tip/${t.MAINIMG}" class="img-fluid" style="max-height: auto; height : 300px; width : 100%;">
+						<div id="change">
+						<button type="button" id="imgChange" class="btn btn-dark col-auto" onclick="changeMainImg();">
+							<span class="align-text-bottom">사진 변경하기</span>
+						</button>
+					</div>
+					</c:if>
+				</c:forEach>
+			</div>
+			
 
 							<!-- 파일 업로드 부분 -->
-			<div id="delete">
-				<button type="button" id="d" class="btn btn-light col-auto" onclick="deleteImg(event)">
-					<span>x</span>
-				</button>
-			</div>
-			<div class="float-none" id="image_container" style="display: table; background-color: #F7F7F7; height: 300px; width: 100%; position: relative;" onclick="document.all.file.click()">
-				<input type="file" name="mainImg" id="file" style="display: none" onchange="setThumbnail(event);">
-				<div class="button text-center" style="display: table-cell; vertical-align: middle;">
-					<button type="button" id="i" class="btn btn-outline-secondary">커버 사진 추가하기</button>
-				</div>
-				<div id="change">
-					<button type="button" id="u" class="btn btn-dark col-auto">
-						<span class="align-text-bottom">사진 변경하기</span>
+			<div id="update">
+				<div id="delete">
+					<button type="button" id="d" class="btn btn-light col-auto" onclick="deleteImg(event)">
+						<span>x</span>
 					</button>
 				</div>
+				<div class="float-none" id="image_container" style="display: table; background-color: #F7F7F7; height: 300px; width: 100%; position: relative;" onclick="document.all.file.click()">
+					<input type="file" name="mainImg" id="file" style="display: none" onchange="setThumbnail(event);">
+					<div class="button text-center" style="display: table-cell; vertical-align: middle;">
+						<button type="button" id="i" class="btn btn-outline-secondary">커버 사진 추가하기</button>
+					</div>
+					<div id="change">
+						<button type="button" id="u" class="btn btn-dark col-auto">
+							<span class="align-text-bottom">사진 변경하기</span>
+						</button>
+					</div>
+				</div>
 			</div>
+			
+			<script>
+			$("#update").hide();
+	        function changeMainImg(){
+	        	$("#down").hide();
+	        	$("#update").show();
+	        	$("#i").show();
+	        }
+			</script>
 
 			<input type="text" class="form-control mt-5 mb-3 border-bottom" name="title" id="name" placeholder="제목을 입력하세요" value="" required style="border: none;">
 			<div class="invalid-feedback">제목을 입력해주세요.</div>
@@ -257,14 +282,21 @@
                 	var file = $("#file").val();
                 	
                 	if(selected === ""){
-			        	alert("카테고리를 선택해주세요");
+			        	if(window.confirm("카테고리가 변경되지 않았습니다. 카테고리를 변경하지 않고 수정하시겠습니까?")){
+			        		select.options[select.selectedIndex].value="0";
+			        	}else{
+			        		alert("카테고리를 선택해주세요");
+			        	}
 			        	event.preventDefault();
                 	}
                 	if(file === ""){
 			        	alert("커버 사진을 선택해주세요");
+			        	$("#file").val() = "0";
+			        	alert($("#file").val());
 			        	event.preventDefault();
                 	}
 	        	}
+		        
 		</script>
 
 

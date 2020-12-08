@@ -24,7 +24,7 @@
   
   <main role="main" style="min-height:100vh;">
   	<div class="container" style="max-width: 940px;">
-        <form class="needs-validation" name="tipWrite" action="${path }/community/TipWriteEnd.do" method="post" enctype="multipart/form-data"  onSubmit="return selectCheck();">
+        <form class="needs-validation" name="tipWrite" action="${path }/community/tipWriteEnd.do" method="post" enctype="multipart/form-data"  onSubmit="return selectCheck();">
             <div>
                 <div class="row">
                     <div class="col-md-12 mt-5">

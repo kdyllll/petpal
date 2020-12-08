@@ -47,7 +47,7 @@
       					</div>
       					<c:forEach items="${imgList }" var="t">
 						    <div class="dropdown-menu dropdown-menu-right">
-							    <button class="dropdown-item" type="button" onclick="location.replace('${path}/community/TipUpdate.do?tipNo=${t.TIPNO}')">수정하기</button>
+							    <button class="dropdown-item" type="button" onclick="location.replace('${path}/community/tipUpdate.do?tipNo=${t.TIPNO}')">수정하기</button>
 							    <button class="dropdown-item" type="button">삭제하기</button>
 						  	</div>
 					  	</c:forEach>
