@@ -28,4 +28,10 @@ public class MemberServiceImpl implements MemberService{
 		return dao.selectMember(session,email);
 	}
 
+	@Override
+	public int updatePassword(Member member) {
+		// TODO Auto-generated method stub
+		return dao.updatePassword(session, member);
+	}
+
 }

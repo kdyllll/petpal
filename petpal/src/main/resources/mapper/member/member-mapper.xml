@@ -10,4 +10,7 @@
     <insert id="insertMember" parameterType="member">
     	INSERT INTO MEMBER VALUES('M'||TO_CHAR(SEQ_MEMBERNO.NEXTVAL),#{email},#{password},#{memberName},#{phone},#{address,typeHandler=strArr},DEFAULT,DEFAULT,#{nickName})
     </insert>
+    <update id="updatePassword" parameterType="member">
+    	UPDATE MEMBER SET PASSWORD=#{password} where MEMBERNO=#{memberNo}
+    </update>
 </mapper>

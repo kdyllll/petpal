@@ -145,6 +145,7 @@ request.setAttribute("addEtc2", addEtc2);
 			</div>
 			<form method="post" id="updatePassword" method="post">
 				<div class="modal-body">
+					<p class="text-left"  style="font-size: 12px;">특수문자,영어,숫자, 8~15글자</p>
 					<input type="hidden" name="memberNo"
 						value="${loginMember.getMemberNo() }"> <input
 						type="password" class="form-control mb-2" name="password"
@@ -152,8 +153,7 @@ request.setAttribute("addEtc2", addEtc2);
 						type="password" class="form-control mb-2"
 						name="newPasswordConfirm" id="newPasswordConfirm"
 						placeholder="비밀번호확인">
-					<p class="text-right " id="pwAlert" style="font-size: 12px;">비밀번호를
-						입력해주세요.</p>
+					<p class="text-right" id="pwAlert" style="font-size: 12px;"></p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-outline-secondary"
@@ -196,11 +196,26 @@ request.setAttribute("addEtc2", addEtc2);
     	  }
       })
       
-      $("#updatePwBtn").on("click", function() { 	 
+      $("#updatePwBtn").on("click", function() { 	
+    	  $("#pwAlert").removeClass("text-danger");
+		  $("#pwAlert").removeClass("text-success");  
+		  $("#pwAlert").html("");
     	  let pw = $("#newPassword").val();
     	  let pwCheck = $("#newPasswordConfirm").val();
-    	  if(pw.trim() == pwCheck.trim()) {
-			  $("#updatePassword").attr("action","${path}/member/passwordUpdateEnd.do").submit();
+    	  let regPw = /^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/;
+    	  if(pw == "" || pwCheck =="") {
+    		  $("#newPassword").val("");
+    		  $("#newPasswordConfirm").val("");
+    		  alert("비밀번호를 입력해주세요.");
+    		  return;
+    	  } else if(pw.trim() == pwCheck.trim() ) {
+    		  if(regPw.test(pw)) {
+			   $("#updatePassword").attr("action","${path}/member/passwordUpdateEnd.do").submit();    			  
+    		  } else {
+    			  $("#newPassword").val("");
+        		  $("#newPasswordConfirm").val("");
+    			  alert("특수문자,영어,숫자, 8~15글자");
+    		  }
     	  } else {  
     		  $("#newPassword").val("");
     		  $("#newPasswordConfirm").val("");
@@ -208,8 +223,6 @@ request.setAttribute("addEtc2", addEtc2);
 
     	  }
 	});
-
-      
 
         $("#passwordUpdate").on("click",function(){
         	let password = $("#oriPassword").val();
