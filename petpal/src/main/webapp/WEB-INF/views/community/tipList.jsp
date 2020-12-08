@@ -24,10 +24,8 @@
 						<button type="button" class="btn btn-outline-secondary mr-2">전체</button>
 						<button type="button" class="btn btn-outline-secondary mr-2">훈련</button>
 						<button type="button" class="btn btn-outline-secondary mr-2">수제간식</button>
-						<button type="button" class="btn btn-outline-secondary mr-2">DIY
-							옷</button>
-						<button type="button" class="btn btn-outline-secondary mr-2">DIY
-							가구</button>
+						<button type="button" class="btn btn-outline-secondary mr-2">DIY 옷</button>
+						<button type="button" class="btn btn-outline-secondary mr-2">DIY 가구</button>
 						<button type="button" class="btn btn-outline-secondary mr-2">건강</button>
 						<button type="button" class="btn btn-outline-secondary mr-2">팁</button>
 						<button type="button" class="btn btn-outline-secondary mr-2">기타</button>

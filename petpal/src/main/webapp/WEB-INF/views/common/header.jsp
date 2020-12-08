@@ -18,7 +18,7 @@
                 <a class="nav-link" href="${path }/store/moveStoreHome.do">스토어</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">공지사항</a>
+                <a class="nav-link" href="${path }/board/noticeList.do">공지사항</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">위치찾기</a>
@@ -30,7 +30,7 @@
             <div class="collapse navbar-collapse " id="navbarResponsive">
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                  <a class="nav-link text-dark" href="#">장바구니</a>
+                  <a class="nav-link text-dark" href="${path }/cart/cart.do">장바구니</a>
                 </li>
                 <li class="nav-item d-none d-lg-block">
                   <a class="nav-link text-dark" data-toggle="collapse" data-target="#collapseOne2" aria-expanded="true" aria-controls="collapseOne" href="#">검색</a>
