@@ -1,8 +1,12 @@
+<%@page import="com.project.petpal.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%
+	Member loginMember = (Member) session.getAttribute("loginMember");
+%>
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
  <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
    
@@ -427,7 +431,7 @@
 
 </body>
 <script>
-		//let loginMember=${loginMember};
+		
 		//수량 선택
 		//옵션이 없다면 바로 수량체크할 수 있게
 		if($("#color").length==0&&$("#size").length==0){
@@ -609,18 +613,20 @@
             }
           });
         //결제 모달
+        
+        let loginMember=<%=loginMember%>;
         $("#payBtn").on("click",e=>{
             if($(".orderBox").length==0){
               alert("상품을 선택하세요.");
               return;
             }else{
             	//로그인 되어 있으면 바로 결제로 넘김
-            	//if(loginMember!=null){
+            	if(loginMember!=null){
             		$(".payFrm").attr("action","${path}/payment/payment.do").submit();
-            	//}else{
+            	}else{
 		            //로그인 안되어 있으면 로그인 모달 띄우기
 		        //    ajaxModal("${path}/")
-            	//}
+            	}
             }
           });
         //리뷰 작성 모달
