@@ -109,7 +109,7 @@ request.setAttribute("addEtc2", addEtc2);
 			<div class="col-lg-2">
 				<button type="button" class="btn btn-outline-secondary"
 					onclick="fn_clickPic();">프로필선택</button>
-				<input type="file" name="userPic" id="userPic"
+				<input type="file" name="img" id="userPic"
 					style="display: none;">
 			</div>
 		</div>
