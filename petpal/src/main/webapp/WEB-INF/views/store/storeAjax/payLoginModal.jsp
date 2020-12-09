@@ -58,19 +58,28 @@
   
   <script>
   	//로그인
-  	$(document).on("click","loginBtn",e=>{
+  	$(document).on("click","#loginBtn",e=>{
   		//로그인 됐는지 확인
-  		//(성공하면 true 반환)
-  		//확인 후 폼 전송
-  		if(data){
-    		$(".payFrm").attr("action","${path}/payment/payment.do").submit();
-    	}else{
-            alert("로그인에 실패했습니다.");
-    	}
+  		let email=$("#inputEmail").val();
+  		let password=$("#inputPassword").val();
+  		$.ajax({
+  				url: "${path}/store/payLogin.do",
+  				data:{email:email,password:password},
+  				dataType:"text",
+  				success:(data) => {
+  				//확인 후 폼 전송
+  			  		if(data===true){
+  			    		$(".payFrm").attr("action","${path}/payment/payment.do").submit();
+  			    	}else{
+  			            alert("로그인에 실패했습니다.");
+  			    	};
+  				}
+  			});
+  		
   	});
   	
   	//비회원주문
-  	$(document).on("click","nonMemberBtn",e=>{
+  	$(document).on("click","#nonMemberBtn",e=>{
   		$(".payFrm").attr("action","${path}/payment/payment.do").submit();
   	});
   </script>

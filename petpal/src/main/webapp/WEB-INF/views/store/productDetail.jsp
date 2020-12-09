@@ -431,7 +431,7 @@
 
 </body>
 <script>
-		
+		let loginMember=<%=loginMember%>;
 		//수량 선택
 		//옵션이 없다면 바로 수량체크할 수 있게
 		if($("#color").length==0&&$("#size").length==0){
@@ -578,6 +578,8 @@
           $("#totalPrice").text(totalPrice);
         };
 		
+        
+        //모달즈
         //장바구니 모달
         $("#cartBtn").on("click",e=>{
             if($(".orderBox").length==0){
@@ -613,8 +615,6 @@
             }
           });
         //결제 모달
-        
-        let loginMember=<%=loginMember%>;
         $("#payBtn").on("click",e=>{
             if($(".orderBox").length==0){
               alert("상품을 선택하세요.");
@@ -624,10 +624,18 @@
             	if(loginMember!=null){
             		$(".payFrm").attr("action","${path}/payment/payment.do").submit();
             	}else{
+            		console.log("로그인안됨");
 		            //로그인 안되어 있으면 로그인 모달 띄우기
-		        //    ajaxModal("${path}/")
-            	}
-            }
+            		$.ajax({
+        				url: "${path}/store/movePayLogin.do",
+        				dataType:"html",
+        				success:(data) => {
+        					$(".pdtModal").html(data);	
+        	         		$('div.modal').modal(); 
+        				}
+        			});
+            	};
+            };
           });
         //리뷰 작성 모달
         
