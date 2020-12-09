@@ -8,4 +8,6 @@ public interface MemberDao {
 
 	int insertMember(SqlSession session,Member member);
 	Member selectMember(SqlSession session,String email);
+	int updatePassword(SqlSession session, Member member);
+	int updateMemberEnd(SqlSession session, Member member);
 }

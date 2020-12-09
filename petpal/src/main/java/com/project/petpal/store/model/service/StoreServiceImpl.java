@@ -72,5 +72,10 @@ public class StoreServiceImpl implements StoreService{
 		// TODO Auto-generated method stub
 		return dao.soldOutList(session,cNo);
 	}
+	@Override
+	public int insertCart(Map m) {
+		// TODO Auto-generated method stub
+		return dao.insertCart(session,m);
+	}
 
 }

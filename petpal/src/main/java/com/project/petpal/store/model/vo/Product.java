@@ -3,12 +3,14 @@ package com.project.petpal.store.model.vo;
 import java.sql.Date;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class Product {
 
 	private String productNo;
@@ -20,5 +22,6 @@ public class Product {
 	private int price;
 	private int sale;
 	private int star;
+	
 	
 }

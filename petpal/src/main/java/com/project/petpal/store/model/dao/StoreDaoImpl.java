@@ -66,5 +66,10 @@ public class StoreDaoImpl implements StoreDao{
 		// TODO Auto-generated method stub
 		return session.selectList("store.soldOutList",cNo);
 	}
+	@Override
+	public int insertCart(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.insert("store.insertCart",m);
+	}
 
 }

@@ -35,7 +35,7 @@ public class HomeController {
 
 
 
-		return "store/categoryStore";
+		return "index";
 
 
 	}

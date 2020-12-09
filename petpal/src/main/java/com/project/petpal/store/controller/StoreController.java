@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.google.gson.Gson;
 import com.project.petpal.store.model.service.StoreService;
 import com.project.petpal.store.model.vo.Product;
 import com.project.petpal.store.model.vo.ProductImg;
@@ -60,6 +61,7 @@ public class StoreController {
 		m.addAttribute("product",p);
 		m.addAttribute("imgs",pImg);
 		m.addAttribute("stockList",list);
+		m.addAttribute("jsonStock",new Gson().toJson(list));
 		m.addAttribute("colors",colors);
 		m.addAttribute("sizes",sizes);
 		

@@ -17,4 +17,5 @@ public interface StoreService {
 	List<Product> categoryList(String cNo);
 	List<Map> subCateList(String cNo);
 	List<Product> soldOutList(String cNo);
+	int insertCart(Map m);
 }

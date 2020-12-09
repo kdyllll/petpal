@@ -10,7 +10,13 @@
   <!-- myPageNav.jsp 연결 -->
   <jsp:include page="/WEB-INF/views/common/myPageNav.jsp" />
   <div class="row py-3 justify-content-between">
-    <div class="col-lg-4 rounded shadow-sm" style=" height: 450px;">프로필부분,사진,닉네임,팔로우,팔로잉, 좋아요, 적립금,</div>
+  <c:if test ="${loginMember != null }"> 
+    <div class="col-lg-4 rounded shadow-sm" style=" height: 450px;">프로필부분,사진,닉네임,팔로우,팔로잉, 좋아요, 적립금,
+	    <c:out value="${loginMember.getEmail() }"/>
+	    <c:out value="${loginMember.getNickName() }" />
+	    <c:out value="${loginMember.getPoint() }" />
+    </div>
+     </c:if>
     <div class="col-lg-8 pr-0">
       <div class="mb-3 pb-3 px-3 bg-white rounded shadow-sm">
         <h6 class="border-bottom border-gray pb-2 mb-0">일상0</h6>

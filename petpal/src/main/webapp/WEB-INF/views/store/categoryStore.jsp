@@ -151,7 +151,7 @@ a:hover {
 							<c:if test="${not empty list }">
 							<c:forEach var="p" items="${list }">
 								<div class="col-lg-4 col-md-6 mb-4">
-									<a href="${path }/store/moveDetail.do?productNo=${p.productNo}"> <img class="card-img-top" src="sea)연어.png"
+									<a href="${path }/store/moveDetail.do?productNo=${p.productNo}"> <img class="card-img-top" src="${path }/resources/upload/product/detail/${p.fileName}"
 										alt="">
 										<h4 class="text-black" style="color: black;"><c:out value="${p.productName }"/></h4>
 										<div>
@@ -184,6 +184,7 @@ a:hover {
 									</div>
 								</c:forEach>
 							</c:if>
+
 
 						</div>
 						<!-- /.row -->

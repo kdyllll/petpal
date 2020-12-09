@@ -20,5 +20,5 @@ public interface StoreDao {
 	List<Product> categoryList(SqlSession session,String cNo);
 	List<Map> subCateList(SqlSession session,String cNo);
 	List<Product> soldOutList(SqlSession session,String cNo);
-
+	int insertCart(SqlSession session,Map m);
 }
