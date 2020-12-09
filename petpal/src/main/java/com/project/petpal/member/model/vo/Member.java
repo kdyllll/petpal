@@ -23,5 +23,6 @@ public class Member {
 	private int point;
 	private Date enrollDate;
 	private String nickName;
+	private String img;
 	
 }
