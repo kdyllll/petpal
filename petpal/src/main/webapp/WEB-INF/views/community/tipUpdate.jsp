@@ -25,7 +25,8 @@
   
   <main role="main" style="min-height:100vh;">
   	<div class="container" style="max-width: 940px;">
-        <form class="needs-validation" name="tipWrite" action="${path }/community/TipWriteEnd.do" method="post" enctype="multipart/form-data"  onSubmit="return selectCheck();">
+  	<c:set var="loop_flag" value="false" />
+        <form class="needs-validation" name="tipWrite" action="${path }/community/tipUpdateEnd.do?tipNo=${mainList[0].TIPNO }" method="post" enctype="multipart/form-data"  onSubmit="return selectCheck();">
             <div>
                 <div class="row">
                     <div class="col-md-12 mt-5">
@@ -47,33 +48,80 @@
 								</div>
 							</c:forEach>
 						</div>
+			
+			<div id="down" class="float-none" style="display: table; height: 300px; width: 100%; position: relative;">
+				<c:forEach items="${imgList }" var="t">
+					<c:if test="${not empty t.MAINIMG }">
+						<img src="${path}/resources/upload/tip/${t.MAINIMG}" class="img-fluid" style="max-height: auto; height : 300px; width : 100%;">
+						<div id="change">
+						<button type="button" id="imgChange" class="btn btn-dark col-auto" onclick="changeMainImg();">
+							<span class="align-text-bottom">사진 변경하기</span>
+						</button>
+					</div>
+					</c:if>
+				</c:forEach>
+			</div>
+			
 
 							<!-- 파일 업로드 부분 -->
-			<div id="delete">
-				<button type="button" id="d" class="btn btn-light col-auto" onclick="deleteImg(event)">
-					<span>x</span>
-				</button>
-			</div>
-			<div class="float-none" id="image_container" style="display: table; background-color: #F7F7F7; height: 300px; width: 100%; position: relative;" onclick="document.all.file.click()">
-				<input type="file" name="mainImg" id="file" style="display: none" onchange="setThumbnail(event);">
-				<div class="button text-center" style="display: table-cell; vertical-align: middle;">
-					<button type="button" id="i" class="btn btn-outline-secondary">커버 사진 추가하기</button>
-				</div>
-				<div id="change">
-					<button type="button" id="u" class="btn btn-dark col-auto">
-						<span class="align-text-bottom">사진 변경하기</span>
+			<div id="update">
+				<div id="delete">
+					<button type="button" id="d" class="btn btn-light col-auto" onclick="deleteImg(event)">
+						<span>x</span>
 					</button>
 				</div>
+				<div class="float-none" id="image_container" style="display: table; background-color: #F7F7F7; height: 300px; width: 100%; position: relative;" onclick="document.all.file.click()">
+					<input type="file" name="mainImg" id="file" style="display: none" onchange="setThumbnail(event);">
+					<div class="button text-center" style="display: table-cell; vertical-align: middle;">
+						<button type="button" id="i" class="btn btn-outline-secondary">커버 사진 추가하기</button>
+					</div>
+					<div id="change">
+						<button type="button" id="u" class="btn btn-dark col-auto">
+							<span class="align-text-bottom">사진 변경하기</span>
+						</button>
+					</div>
+				</div>
 			</div>
-
-			<input type="text" class="form-control mt-5 mb-3 border-bottom" name="title" id="name" placeholder="제목을 입력하세요" value="" required style="border: none;">
+			
+			<script>
+			$("#update").hide();
+	        function changeMainImg(){
+	        	$("#down").hide();
+	        	$("#update").show();
+	        	$("#i").show();
+	        }
+			</script>
+			
+			<input type="text" class="form-control mt-5 mb-3 border-bottom" name="title" id="name" value="<c:out value="${mainList[0].TITLE }"/>" required style="border: none;">
 			<div class="invalid-feedback">제목을 입력해주세요.</div>
 			
-			<textarea class="form-control border-0 mb-5"  id="ta" name="content1" placeholder="내용을입력하세요" style="resize: none; overflow-y:hidden;" onkeyup="xSize(this)" required></textarea>
+			<textarea class="form-control border-0 mb-5"  id="ta" name="content1" style="resize: none; overflow-y:hidden;" onkeyup="xSize(this)" required><c:out value="${mainList[0].CONTENT1 }"/></textarea>
 			<div class="invalid-feedback">내용을 입력해주세요.</div>
 			<textarea id="xt" style="width:300px;height:1px;overflow-y:hidden;position:absolute;top:-9px;opacity:0" disabled></textarea>
 			
-			<!-- 첨부 버튼 -->
+				<c:set var="i" value="0"/>
+				<c:forEach items="${imgList }" var="t">
+					<c:if test="${not empty t.CONTENTIMG }">
+						<div id="div">
+							<button type="button" class="btn btn-light  float-right" onclick="dImg(event);">x</button>
+							<img id="img" name="contentImg" src="${path }/resources/upload/tip/${t.CONTENTIMG}" width="100%" height="400px">
+							<div class="mb-5" style="white-space:pre-line;">
+								<textarea class="form-control border-0 mt-2 mb-3" name="content" id="ta" rows="3" style="resize: none;"><c:out value="${t.CONTENT}"/></textarea>
+							</div>
+						</div>
+						<script>
+						function dImg(event){
+                        	if(window.confirm("사진을 지우면 사진에 대한 설명도 같이 지워집니다.")){
+                        		console.log(event.target);
+                        		$(event.target).parent().remove();
+                        	}
+                        }
+						</script>
+                    </c:if>
+                    <c:set var="i" value="${i + 1}"/>
+                </c:forEach>
+                
+                <!-- 첨부 버튼 -->
 			<div id="attach">
 				<label class="ml-3" for="uploadInputBox">
 					사진 추가하기<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -85,14 +133,12 @@
 			</div>
 			
 			<div id="preview" class="content"></div>
-	
-			<!-- multipart 업로드시 영역 -->
-			<!-- <form id="uploadForm" name="fileName" style="display: none;" method="post" enctype="multipart/form-data"></form> -->
-
 			
-			<textarea class="form-control border-0 mb-5"  id="ta2" name="content2" placeholder="내용을입력하세요" style="resize: none; overflow-y:hidden;" onkeyup="xSize2(this)"></textarea>
-			<textarea id="xt" style="width:300px;height:1px;overflow-y:hidden;position:absolute;top:-9px;opacity:0" disabled></textarea>
-
+			<c:if test="${not empty mainList[0].CONTENT2 }">
+				<textarea class="form-control border-0 mb-5"  id="ta2" name="content2" style="resize: none; overflow-y:hidden;" onkeyup="xSize2(this)"><c:out value="${mainList[0].CONTENT2 }"/></textarea>
+				<textarea id="xt" style="width:300px;height:1px;overflow-y:hidden;position:absolute;top:-9px;opacity:0" disabled></textarea>
+			</c:if>
+			
                         <div class="ml-3 mt-5 mb-5">
                             #해시태그
                         </div>
@@ -129,7 +175,6 @@
 			$("#i").show();
 			$("#u").hide();
 			$("#d").hide();
-			$("#ta2").hide();
 			
 			//임의의 file object영역
 		    var files = {};
@@ -163,7 +208,6 @@
 		                                     		+ "</div>"
 		                                            );
 		                    files[imgNum] = file;
-		                    $("#ta2").show();
 		                };
 		                reader.readAsDataURL(file);
 		            }
@@ -254,17 +298,27 @@
 		        function selectCheck(){
                 	var select = document.getElementById("select");
                 	var selected = select.options[select.selectedIndex].value;
+                	var down = $("#down").val();
                 	var file = $("#file").val();
                 	
+                	event.preventDefault();
+                	
                 	if(selected === ""){
-			        	alert("카테고리를 선택해주세요");
-			        	event.preventDefault();
+			        	if(window.confirm("카테고리가 변경되지 않았습니다. 카테고리를 변경하지 않고 수정하시겠습니까?")){
+			        		select.options[select.selectedIndex].value="0";
+			        		event.preventDefault();
+			        	}else{
+			        		alert("카테고리를 선택해주세요");
+				        	event.preventDefault();
+			        	}
                 	}
-                	if(file === ""){
-			        	alert("커버 사진을 선택해주세요");
+                	if(down === ""){
+                		alert("되냐?");
+			        	$("#down") = "0";
 			        	event.preventDefault();
                 	}
 	        	}
+		        
 		</script>
 
 

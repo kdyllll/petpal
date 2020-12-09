@@ -8,7 +8,7 @@
 		<result column="address" property="address" typeHandler="strArr"/>
     </resultMap>
     <insert id="insertMember" parameterType="member">
-    	INSERT INTO MEMBER VALUES('M'||TO_CHAR(SEQ_MEMBERNO.NEXTVAL),#{email},#{password},#{memberName},#{phone},#{address,typeHandler=strArr},DEFAULT,DEFAULT,#{nickName})
+    	INSERT INTO MEMBER VALUES('M'||TO_CHAR(SEQ_MEMBERNO.NEXTVAL),#{email},#{password},#{memberName},#{phone},#{address,typeHandler=strArr},DEFAULT,DEFAULT,#{nickName},#{img},NULL)
     </insert>
     <update id="updatePassword" parameterType="member">
     	UPDATE MEMBER SET PASSWORD=#{password} where MEMBERNO=#{memberNo}

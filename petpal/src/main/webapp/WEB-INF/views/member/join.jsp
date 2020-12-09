@@ -15,7 +15,7 @@
 		<section class="my-5 pt-5">
 			<div class="container-fluid">
 				<div class="container">
-					<h2 class="text-center" id="title">회원가입</h2>
+					<h2 class="text-center font-weight-bold" id="title">회원가입</h2>
 					<div class="text-center">
 						<a href="#"><img src="${path }/resources/images/naver.PNG"
 							style="width: 80px; height: 80px;" alt=""></a> <a href="#"><img
@@ -28,9 +28,10 @@
 					<div class="row">
 
 						<div class="col-md-6 offset-md-3 col-sm-10 offset-sm-1">
-							<form role="form" method="post" action="${path }/member/insertMember.do" id="frm">
+							<form role="form" method="post" enctype="multipart/form-data"
+								action="${path }/member/insertMember.do" id="frm">
 								<fieldset>
-									<p class="text-uppercase pull-center">기본정보</p>
+									<p class="text-uppercase pull-center font-weight-bold">기본정보</p>
 									<div class="input-group mb-4">
 										<input type="text" class="form-control input-lg"
 											placeholder="이메일" name="email" id="email">
@@ -59,22 +60,45 @@
 									</div>
 									<div class="mb-4">
 										<input type="text" id="sample6_postcode" name="address"
-											class="form-control input-lg" placeholder="우편번호" readonly> <input
-											type="button" onclick="sample6_execDaumPostcode()"
+											class="form-control input-lg" placeholder="우편번호" readonly>
+										<input type="button" onclick="sample6_execDaumPostcode()"
 											class="btn btn-primary btn-sm" value="우편번호 찾기">
 									</div>
 									<div class="mb-4">
-										<input type="text" class="form-control input-lg" name="address"
-											id="sample6_address" placeholder="주소" readonly>
+										<input type="text" class="form-control input-lg"
+											name="address" id="sample6_address" placeholder="주소" readonly>
 									</div>
 									<div class="mb-4">
-										<input type="text" class="form-control input-lg" name="address"
-											id="sample6_detailAddress" placeholder="상세주소">
+										<input type="text" class="form-control input-lg"
+											name="address" id="sample6_detailAddress" placeholder="상세주소">
 									</div>
 									<div class="mb-4">
 										<input type="text" name="phone" id="phone"
 											class="form-control input-lg"
 											placeholder="핸드폰번호('-'없이 입력해주세요)">
+									</div>
+									<h5 class="font-weight-bold">프로필 사진</h5>
+									<div class="col-8 mb-3" id="imgContainer">
+										<div id="hide">
+											<label id="uploadLabel"
+												class="btn rounded bg-light col-12 col-lg-10 border d-flex justify-content-center align-items-center"
+												style="height: 206px;"> <input name="f"
+												class="d-none upload" id="upload" type="file"
+												accept="images/*" />
+												<div>
+													<svg width="1em" height="1em" viewBox="0 0 16 16"
+														class="bi bi-camera-fill text-secondary"
+														fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+														style="font-size: 60px;">
+                      <path
+															d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                      <path fill-rule="evenodd"
+															d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z" />
+                  </svg>
+													<br> <span> 사진 올리기(선택) </span>
+												</div>
+										</div>
+										</label>
 									</div>
 									<h5 class="font-weight-bold">이용약관</h5>
 									<div class="mb-1">
@@ -246,6 +270,39 @@ input[type="checkbox"]:checked+svg {
 		$("#email").val($("#email").val().trim());//이메일에 공백못들어가게함
 		
 	}); */
+	//사진!!
+	  //사진 미리보기
+	  $(document).on('change','.upload',function(e){
+		  var f=e.target;
+		$("#hide").hide(); // 사진 등록 창 안보이게
+	        $.each(e.target.files,(i,v)=>{//미리보기 로직     
+	            let reader=new FileReader();
+	            reader.onload=e=>{ 
+	                let img=`<div class="preview position-relative rounded col-10 mb-3" >
+	                          <img src="`+e.target.result+`" class="previewImg rounded px-0" style="width:100%; height:206px;" data-toggle="modal" data-target="#exampleModal"">
+	                          <div class="buttonCon position-absolute rounded" style="bottom:0; left:0; background:linear-gradient(to top,rgba(0, 0, 0, 0.5),rgba(255, 255, 255, 0)); width:100%;">
+	                            <button type="button" class="del btn ml-3">
+	                              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash text-white" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+	                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+	                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+	                              </svg>
+	                            </button>
+	                          </div>
+	                        </div>`;
+	                $("#imgContainer").append(img);
+	               
+	                
+	            }
+	            
+	            reader.readAsDataURL(v);
+	        });              
+	    });
+	//사진 삭제
+    $(document).on('click','.del',function(e){
+    	 let previewDiv=$(e.target).parents(".preview");
+    	previewDiv.remove();//div삭제
+    	$("#hide").show();
+    }); 
 	
 	//주소api
      function sample6_execDaumPostcode() {
