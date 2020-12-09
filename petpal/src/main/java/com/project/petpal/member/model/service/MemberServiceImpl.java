@@ -34,4 +34,10 @@ public class MemberServiceImpl implements MemberService{
 		return dao.updatePassword(session, member);
 	}
 
+	@Override
+	public int updateMemberEnd(Member member) {
+		// TODO Auto-generated method stub
+		return dao.updateMemberEnd(session, member);
+	}
+
 }

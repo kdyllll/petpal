@@ -35,7 +35,6 @@ public class StoreController {
 		Product p=service.selectProduct(productNo);
 		//상품 사진 받기
 		List<ProductImg> pImg=service.selectImg(productNo);
-		System.out.println(pImg);
 		//재고리스트받기
 		List<Stock> list=service.selectStockList(productNo);
 		//색상리스트, 크기리스트 받기

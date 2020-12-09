@@ -12,7 +12,7 @@
 	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <%
-	String[] addr = ((Member) session.getAttribute("loginMember")).getAddress();
+	String[] addr = ((Member) request.getAttribute("member")).getAddress();
 List<String> list = new ArrayList();
 String post = "";
 String addEtc1 = "";
@@ -45,7 +45,7 @@ request.setAttribute("addEtc2", addEtc2);
 <jsp:include page="/WEB-INF/views/common/myPageNav.jsp" />
 
 <c:if test="${loginMember != null }">
-	<form class="bg-white rounded shadow-sm p-4 mb-5">
+	<form id="updateMemberFrm" class="bg-white rounded shadow-sm p-4 mb-5" id="updateMemberFrm" enctype="multipart/form-data" method="post">
 		<h6 class="row py-3 d-block text-center mb-3">
 			<strong>회원정보수정</strong>
 		</h6>
@@ -53,7 +53,7 @@ request.setAttribute("addEtc2", addEtc2);
 			<label for="staticEmail" class="col-lg-2 col-form-label">Email</label>
 			<div class="col-lg-10">
 				<input type="text" readonly class="form-control-plaintext"
-					id="email" name="email" value="${loginMember.getEmail() }">
+					id="email" name="email" value="${member.getEmail() }">
 			</div>
 		</div>
 		<div class="form-group row ">
@@ -72,14 +72,14 @@ request.setAttribute("addEtc2", addEtc2);
 			<label for="userName" class="col-lg-2 col-form-label">이름</label>
 			<div class="col-lg-2">
 				<input type="text" class="form-control" id="memberName"
-					name="memberName" value="${loginMember.getMemberName() }" required>
+					name="memberName" value="${member.getMemberName() }" required>
 			</div>
 		</div>
 		<div class="form-group row">
 			<label for="userNick" class="col-lg-2 col-form-label">닉네임</label>
 			<div class="col-lg-2">
 				<input type="text" class="form-control" id="nickName"
-					name="nickName" value="${loginMember.getNickName() }">
+					name="nickName" value="${member.getNickName() }">
 			</div>
 		</div>
 		<div class="form-group row">
@@ -98,9 +98,9 @@ request.setAttribute("addEtc2", addEtc2);
 		</div>
 		<div class="form-group row">
 			<label for="userPhone" class="col-lg-2 col-form-label">전화번호</label>
-			<div class="col-lg-2">
+			<div class="col-lg-3">
 				<input type="text" class="form-control" id="phone" name="phone"
-					value="${loginMember.getPhone() }">
+					value="${member.getPhone() }">
 			</div>
 		</div>
 		<div class="form-group row d-flex align-items-center">
@@ -109,25 +109,26 @@ request.setAttribute("addEtc2", addEtc2);
 			<div class="col-lg-2">
 				<button type="button" class="btn btn-outline-secondary"
 					onclick="fn_clickPic();">프로필선택</button>
-				<input type="file" name="userPic" id="userPic"
+				<input type="file" name="fileImg" id="userPic" 
 					style="display: none;">
 			</div>
 		</div>
 		<div class="form-group row">
 			<div class="col-lg-2 col-form-label"></div>
 			<div class=" ml-3 imgShowCon" style="width: 200px; height: 200px;">
-				<img id="imgShow" style="width: 100%; height: 100%;" />
+				<img id="imgShow" src="${path }/resources/upload/member/profile/${member.getImg()}" style="width: 100%; height: 100%;" />
 			</div>
 		</div>
 		<div class="form-group row">
 			<label for="userIntro" class="col-lg-2 col-form-label">한줄소개</label>
 			<div class="col-lg-6">
-				<input type="text" class="form-control" id="userIntro">
+				<input type="text" class="form-control" id="userIntro" name="info" value="${member.getInfo() }">
 			</div>
 		</div>
 		<div class="form-group row d-flex justify-content-center mt-5">
+			<input type="hidden" name="memberNo" value="${member.getMemberNo() }">
 			<button class="btn btn-outline-danger mx-2">회원탈퇴</button>
-			<button class="btn btn-outline-secondary mx-2">정보수정</button>
+			<button type="submit" class="btn btn-outline-secondary mx-2" id="updateMember">정보수정</button>
 		</div>
 	</form>
 </c:if>
@@ -223,6 +224,22 @@ request.setAttribute("addEtc2", addEtc2);
 
     	  }
 	});
+      $("#updateMember").on("click", function() {
+    	  	let phone=$("#phone").val();
+    	    let regphone=/^010([0-9]{8})$/;
+    	    if(regphone.test(phone)!=true){
+    			alert("핸드폰번호를 확인해주세요.");
+    			return;
+    		}
+    	    if($("#sample6_postcode").val()==""||$("#sample6_address").val()==""||($("#sample6_detailAddress").val()).trim()==""){
+    			alert("주소를 다시 입력해주세요.");
+    			return;
+    		}
+    	    
+    	    
+    		$("#updateMemberFrm").attr("action","${path }/member/updateMemberEnd.do").submit();
+    		
+      })
 
         $("#passwordUpdate").on("click",function(){
         	let password = $("#oriPassword").val();
@@ -240,7 +257,7 @@ request.setAttribute("addEtc2", addEtc2);
           
         });
     })
-
+	
     function fn_clickPic() {
         $("#userPicLabel").click();
     }
