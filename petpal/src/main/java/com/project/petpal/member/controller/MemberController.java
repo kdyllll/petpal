@@ -38,7 +38,10 @@ public class MemberController {
 	}
 
 	@RequestMapping("/member/myPageModify.do")
-	public String myPageModify() {
+	public String myPageModify(HttpSession session, Model model) {
+		Member m = (Member)session.getAttribute("loginMember");
+		Member member = service.selectMember(m.getEmail());
+		model.addAttribute("member", member);
 		return "member/myPageModify";
 	}
 
@@ -107,31 +110,47 @@ public class MemberController {
 			@RequestParam(value = "fileImg", required = false) MultipartFile fileImg) {
 		
 		String path = session.getServletContext().getRealPath("/resources/upload/member/profile");
+		Member file = (Member)session.getAttribute("loginMember");
 		File dir = new File(path);
 		if (!dir.exists())
 			dir.mkdirs();
 		String reName = "";
-		if (!fileImg.isEmpty()) {
-			// 파일명 생성
-			String originalName = fileImg.getOriginalFilename();
-			String ext = originalName.substring(originalName.lastIndexOf(".") + 1);
+			if (!fileImg.isEmpty()) {
+				// 파일명 생성
+				String originalName = fileImg.getOriginalFilename();
+				String ext = originalName.substring(originalName.lastIndexOf(".") + 1);
 
-			// 리네임 규칙
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
-			int rndValue = (int) (Math.random() * 10000);
-			reName = sdf.format(System.currentTimeMillis()) + "_" + rndValue + "." + ext;
-			try {
-				fileImg.transferTo(new File(path + "/" + reName));
-			} catch (IOException e) {
-				e.printStackTrace();
+				// 리네임 규칙
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+				int rndValue = (int) (Math.random() * 10000);
+				reName = sdf.format(System.currentTimeMillis()) + "_" + rndValue + "." + ext;
+				try {
+					fileImg.transferTo(new File(path + "/" + reName));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
+		Member m = null;
+		if(!fileImg.getOriginalFilename().equals("")) {
+			m = Member.builder().nickName(member.getNickName()).address(member.getAddress())
+					.memberName(member.getMemberName()).phone(member.getPhone()).memberNo(member.getMemberNo()).img(reName).info(member.getInfo())
+					.build();
+		} else {
+			m = Member.builder().nickName(member.getNickName()).address(member.getAddress())
+					.memberName(member.getMemberName()).phone(member.getPhone()).memberNo(member.getMemberNo()).img(file.getImg()).info(member.getInfo())
+					.build();
 		}
-
-		Member m = Member.builder().nickName(member.getNickName()).address(member.getAddress())
-				.memberName(member.getMemberName()).phone(member.getPhone()).memberNo(member.getMemberNo()).img(reName).info(member.getInfo())
-				.build();
+		
 		int result = service.updateMemberEnd(m);
-		return "member/myPageModify";
+		String loc="/member/myPageModify.do";
+		String msg="회원정보수정에 실패하였습니다. 다시시도해주세요.";
+		if(result>0) {
+			msg="회원정보 수정이 완료되었습니다.";
+		}
+		
+		model.addAttribute("loc", loc);
+		model.addAttribute("msg", msg);
+		return "common/msg";
 	}
 
 }

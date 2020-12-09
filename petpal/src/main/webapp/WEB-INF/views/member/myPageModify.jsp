@@ -12,7 +12,7 @@
 	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <%
-	String[] addr = ((Member) session.getAttribute("loginMember")).getAddress();
+	String[] addr = ((Member) request.getAttribute("member")).getAddress();
 List<String> list = new ArrayList();
 String post = "";
 String addEtc1 = "";
@@ -53,7 +53,7 @@ request.setAttribute("addEtc2", addEtc2);
 			<label for="staticEmail" class="col-lg-2 col-form-label">Email</label>
 			<div class="col-lg-10">
 				<input type="text" readonly class="form-control-plaintext"
-					id="email" name="email" value="${loginMember.getEmail() }">
+					id="email" name="email" value="${member.getEmail() }">
 			</div>
 		</div>
 		<div class="form-group row ">
@@ -72,14 +72,14 @@ request.setAttribute("addEtc2", addEtc2);
 			<label for="userName" class="col-lg-2 col-form-label">이름</label>
 			<div class="col-lg-2">
 				<input type="text" class="form-control" id="memberName"
-					name="memberName" value="${loginMember.getMemberName() }" required>
+					name="memberName" value="${member.getMemberName() }" required>
 			</div>
 		</div>
 		<div class="form-group row">
 			<label for="userNick" class="col-lg-2 col-form-label">닉네임</label>
 			<div class="col-lg-2">
 				<input type="text" class="form-control" id="nickName"
-					name="nickName" value="${loginMember.getNickName() }">
+					name="nickName" value="${member.getNickName() }">
 			</div>
 		</div>
 		<div class="form-group row">
@@ -100,7 +100,7 @@ request.setAttribute("addEtc2", addEtc2);
 			<label for="userPhone" class="col-lg-2 col-form-label">전화번호</label>
 			<div class="col-lg-3">
 				<input type="text" class="form-control" id="phone" name="phone"
-					value="${loginMember.getPhone() }">
+					value="${member.getPhone() }">
 			</div>
 		</div>
 		<div class="form-group row d-flex align-items-center">
@@ -116,17 +116,17 @@ request.setAttribute("addEtc2", addEtc2);
 		<div class="form-group row">
 			<div class="col-lg-2 col-form-label"></div>
 			<div class=" ml-3 imgShowCon" style="width: 200px; height: 200px;">
-				<img id="imgShow" src="${path }/resources/upload/member/profile/${loginMember.getImg()}" style="width: 100%; height: 100%;" />
+				<img id="imgShow" src="${path }/resources/upload/member/profile/${member.getImg()}" style="width: 100%; height: 100%;" />
 			</div>
 		</div>
 		<div class="form-group row">
 			<label for="userIntro" class="col-lg-2 col-form-label">한줄소개</label>
 			<div class="col-lg-6">
-				<input type="text" class="form-control" id="userIntro" name="info">
+				<input type="text" class="form-control" id="userIntro" name="info" value="${member.getInfo() }">
 			</div>
 		</div>
 		<div class="form-group row d-flex justify-content-center mt-5">
-			<input type="hidden" name="memberNo" value="${loginMember.getMemberNo() }">
+			<input type="hidden" name="memberNo" value="${member.getMemberNo() }">
 			<button class="btn btn-outline-danger mx-2">회원탈퇴</button>
 			<button type="submit" class="btn btn-outline-secondary mx-2" id="updateMember">정보수정</button>
 		</div>
@@ -225,14 +225,20 @@ request.setAttribute("addEtc2", addEtc2);
     	  }
 	});
       $("#updateMember").on("click", function() {
-    	  	let phone=$("#phone").val();//핸드폰번호값
-    	    let regphone=/^010([0-9]{8})$/;//핸드폰번호 정규표현식
-    	    if(regphone.test(phone)!=true){//핸드폰번호가 형식이 맞지않으면
+    	  	let phone=$("#phone").val();
+    	    let regphone=/^010([0-9]{8})$/;
+    	    if(regphone.test(phone)!=true){
     			alert("핸드폰번호를 확인해주세요.");
     			return;
-    		} else {
-    			$("#updateMemberFrm").attr("action","${path }/member/updateMemberEnd.do").submit();
     		}
+    	    if($("#sample6_postcode").val()==""||$("#sample6_address").val()==""||($("#sample6_detailAddress").val()).trim()==""){
+    			alert("주소를 다시 입력해주세요.");
+    			return;
+    		}
+    	    
+    	    
+    		$("#updateMemberFrm").attr("action","${path }/member/updateMemberEnd.do").submit();
+    		
       })
 
         $("#passwordUpdate").on("click",function(){
