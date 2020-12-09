@@ -23,4 +23,5 @@ public class Product {
 	private int sale;
 	private int star;
 	
+	
 }

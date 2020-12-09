@@ -57,18 +57,43 @@ public class MemberController {
 	}
 
 	@RequestMapping("/member/insertMember.do")
-	public String insertMember(Model m, Member member) {
 
-		String oriPw = member.getPassword();
+	public String insertMember(Model m,Member member,@RequestParam(value="f", required=false)MultipartFile f, HttpSession session) {
+		
+		String oriPw=member.getPassword();
+
 		member.setPassword(pwEncoder.encode(oriPw));
-		System.out.println(m);
-		int result = service.insertMember(member);
-		if (result > 0) {
-			m.addAttribute("msg", "가입에 성공하였습니다!");
-		} else {
-			m.addAttribute("loc", "가입에 실패하였습니다!");
-			m.addAttribute("loc", "/member/moveJoin.do");
+
+		String path=session.getServletContext().getRealPath("/resources/upload/member/profile");
+		
+		File dir=new File(path);
+		if(!dir.exists()) dir.mkdirs();//폴더를 생성
+		if(!f.isEmpty()) {
+			  //파일명생성하기
+			  String originalName=f.getOriginalFilename();
+			  String ext=originalName.substring(originalName.lastIndexOf(".")+1);
+			  //리네임규칙
+			  SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+			  int rndValue=(int)(Math.random()*10000);
+			  String reName=sdf.format(System.currentTimeMillis())+"_"+rndValue+"."+ext;
+			  try {
+				  System.out.println(path+"/"+reName);
+				  f.transferTo(new File(path+"/"+reName));
+			  }catch(IOException e) {
+				  e.printStackTrace();
+				  m.addAttribute("msg","오류가 발생하였습니다.다시 시도해주세요.");
+			  }
+			  member.setImg(reName);
+
 		}
+//		int result=service.insertMember(member);
+//		if(result>0) {
+//			m.addAttribute("msg","가입에 성공하였습니다!"); 
+//		}else {
+//			m.addAttribute("msg","가입에 실패하였습니다!");
+//			m.addAttribute("loc","/member/moveJoin.do");
+//			}
+
 		return "common/msg";
 	}
 
