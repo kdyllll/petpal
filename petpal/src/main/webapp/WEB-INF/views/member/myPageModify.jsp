@@ -45,7 +45,7 @@ request.setAttribute("addEtc2", addEtc2);
 <jsp:include page="/WEB-INF/views/common/myPageNav.jsp" />
 
 <c:if test="${loginMember != null }">
-	<form class="bg-white rounded shadow-sm p-4 mb-5">
+	<form action="${path }/member/updateMemberEnd.do" class="bg-white rounded shadow-sm p-4 mb-5" id="updateMemberFrm" enctype="multipart/form-data" method="post">
 		<h6 class="row py-3 d-block text-center mb-3">
 			<strong>회원정보수정</strong>
 		</h6>
@@ -109,7 +109,7 @@ request.setAttribute("addEtc2", addEtc2);
 			<div class="col-lg-2">
 				<button type="button" class="btn btn-outline-secondary"
 					onclick="fn_clickPic();">프로필선택</button>
-				<input type="file" name="img" id="userPic"
+				<input type="file" name="fileImg" id="userPic"
 					style="display: none;">
 			</div>
 		</div>
@@ -122,12 +122,13 @@ request.setAttribute("addEtc2", addEtc2);
 		<div class="form-group row">
 			<label for="userIntro" class="col-lg-2 col-form-label">한줄소개</label>
 			<div class="col-lg-6">
-				<input type="text" class="form-control" id="userIntro">
+				<input type="text" class="form-control" id="userIntro" name="info">
 			</div>
 		</div>
 		<div class="form-group row d-flex justify-content-center mt-5">
+			<input type="hidden" name="memberNo" value="${loginMember.getMemberNo() }">
 			<button class="btn btn-outline-danger mx-2">회원탈퇴</button>
-			<button class="btn btn-outline-secondary mx-2">정보수정</button>
+			<button type="submit" class="btn btn-outline-secondary mx-2">정보수정</button>
 		</div>
 	</form>
 </c:if>

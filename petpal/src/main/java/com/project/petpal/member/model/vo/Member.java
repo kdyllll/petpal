@@ -24,5 +24,6 @@ public class Member {
 	private Date enrollDate;
 	private String nickName;
 	private String img;
+	private String info;
 	
 }
