@@ -18,4 +18,5 @@ public interface AdminService {
 	Map selectProductOne(Product p);
 	int updateProductEnd(Map p, List<ProductImg> pimgList);
 	List<ProductImg> selectProductImgAll(Product p);
+	List<Map> productIOAll();
 }

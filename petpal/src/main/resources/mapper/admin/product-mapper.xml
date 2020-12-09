@@ -52,4 +52,7 @@
 	<update id="updateProductImgEnd" parameterType="pImg">
 		update productImg set imgName=#{imgName} where productImgNo = #{productImgNo}
 	</update>
+	<select id="productIOAll" resultType="map">
+		select * from productio join stock using(stockNo) join product using(productNo)
+	</select>
 </mapper>

@@ -62,34 +62,19 @@
 							</tr>
 						</thead>
 						<tbody>
+							<c:if test="${list != null }">
+							<c:forEach var="io" items="${list }" >
 							<tr>
-								<th scope="row" class="align-middle text-center">1</th>
-								<td class="align-middle text-center"><a>강아지옷1</a></td>
-								<td class="align-middle text-center">One Color</td>
-								<td class="align-middle text-center">One Size</td>
-								<td class="align-middle text-center">입고</td>
-								<td class="align-middle text-center">5</td>
-								<td class="align-middle text-center">2020/01/20</td>
+								<th scope="row" class="align-middle text-center">${io.STOCKNO }</th>
+								<td class="align-middle text-center"><a>${io.PRODUCTNAME }</a></td>
+								<td class="align-middle text-center">${io.COLOR }</td>
+								<td class="align-middle text-center">${io.SIZE }</td>
+								<td class="align-middle text-center">${io.IOSTATUS }</td>
+								<td class="align-middle text-center">${io.AMOUNT }</td>
+								<td class="align-middle text-center">${io.IODATE }</td>
 							</tr>
-							<tr>
-								<th scope="row" class="align-middle text-center">1</th>
-								<td class="align-middle text-center"><a>강아지옷2</a></td>
-								<td class="align-middle text-center">빨강</td>
-								<td class="align-middle text-center">s</td>
-								<td class="align-middle text-center">출고</td>
-								<td class="align-middle text-center">3</td>
-								<td class="align-middle text-center">2020/01/20</td>
-							</tr>
-							<tr>
-								<th scope="row" class="align-middle text-center">1</th>
-								<td class="align-middle text-center"><a>강아지옷2</a></td>
-								<td class="align-middle text-center">파랑</td>
-								<td class="align-middle text-center">M</td>
-								<td class="align-middle text-center">입고</td>
-								<td class="align-middle text-center">500</td>
-								<td class="align-middle text-center">2020/01/20</td>
-							</tr>
-
+							</c:forEach>
+							</c:if>
 						</tbody>
 					</table>
 				</div>
