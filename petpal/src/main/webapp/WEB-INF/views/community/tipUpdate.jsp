@@ -25,7 +25,8 @@
   
   <main role="main" style="min-height:100vh;">
   	<div class="container" style="max-width: 940px;">
-        <form class="needs-validation" name="tipWrite" action="${path }/community/tipUpdate.do?tipNo=${mainList.tipNo}" method="post" enctype="multipart/form-data"  onSubmit="return selectCheck();">
+  	<c:set var="loop_flag" value="false" />
+        <form class="needs-validation" name="tipWrite" action="${path }/community/tipUpdate.do?tipNo=${mainList[0].TIPNO }" method="post" enctype="multipart/form-data"  onSubmit="return selectCheck();">
             <div>
                 <div class="row">
                     <div class="col-md-12 mt-5">
@@ -90,15 +91,37 @@
 	        	$("#i").show();
 	        }
 			</script>
-
-			<input type="text" class="form-control mt-5 mb-3 border-bottom" name="title" id="name" placeholder="제목을 입력하세요" value="" required style="border: none;">
+			
+			<input type="text" class="form-control mt-5 mb-3 border-bottom" name="title" id="name" value="<c:out value="${mainList[0].TITLE }"/>" required style="border: none;">
 			<div class="invalid-feedback">제목을 입력해주세요.</div>
 			
-			<textarea class="form-control border-0 mb-5"  id="ta" name="content1" placeholder="내용을입력하세요" style="resize: none; overflow-y:hidden;" onkeyup="xSize(this)" required></textarea>
+			<textarea class="form-control border-0 mb-5"  id="ta" name="content1" style="resize: none; overflow-y:hidden;" onkeyup="xSize(this)" required><c:out value="${mainList[0].CONTENT1 }"/></textarea>
 			<div class="invalid-feedback">내용을 입력해주세요.</div>
 			<textarea id="xt" style="width:300px;height:1px;overflow-y:hidden;position:absolute;top:-9px;opacity:0" disabled></textarea>
 			
-			<!-- 첨부 버튼 -->
+				<c:set var="i" value="0"/>
+				<c:forEach items="${imgList }" var="t">
+					<c:if test="${not empty t.CONTENTIMG }">
+						<div id="div">
+							<button type="button" class="btn btn-light  float-right" onclick="dImg(event);">x</button>
+							<img id="img" name="contentImg" src="${path }/resources/upload/tip/${t.CONTENTIMG}" width="100%" height="400px">
+							<div class="mb-5" style="white-space:pre-line;">
+								<textarea class="form-control border-0 mt-2 mb-3" name="content" id="ta" rows="3" style="resize: none;"><c:out value="${t.CONTENT}"/></textarea>
+							</div>
+						</div>
+						<script>
+						function dImg(event){
+                        	if(window.confirm("사진을 지우면 사진에 대한 설명도 같이 지워집니다.")){
+                        		console.log(event.target);
+                        		$(event.target).parent().remove();
+                        	}
+                        }
+						</script>
+                    </c:if>
+                    <c:set var="i" value="${i + 1}"/>
+                </c:forEach>
+                
+                <!-- 첨부 버튼 -->
 			<div id="attach">
 				<label class="ml-3" for="uploadInputBox">
 					사진 추가하기<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -110,14 +133,12 @@
 			</div>
 			
 			<div id="preview" class="content"></div>
-	
-			<!-- multipart 업로드시 영역 -->
-			<!-- <form id="uploadForm" name="fileName" style="display: none;" method="post" enctype="multipart/form-data"></form> -->
-
 			
-			<textarea class="form-control border-0 mb-5"  id="ta2" name="content2" placeholder="내용을입력하세요" style="resize: none; overflow-y:hidden;" onkeyup="xSize2(this)"></textarea>
-			<textarea id="xt" style="width:300px;height:1px;overflow-y:hidden;position:absolute;top:-9px;opacity:0" disabled></textarea>
-
+			<c:if test="${not empty mainList[0].CONTENT2 }">
+				<textarea class="form-control border-0 mb-5"  id="ta2" name="content2" style="resize: none; overflow-y:hidden;" onkeyup="xSize2(this)"><c:out value="${mainList[0].CONTENT2 }"/></textarea>
+				<textarea id="xt" style="width:300px;height:1px;overflow-y:hidden;position:absolute;top:-9px;opacity:0" disabled></textarea>
+			</c:if>
+			
                         <div class="ml-3 mt-5 mb-5">
                             #해시태그
                         </div>
@@ -154,7 +175,6 @@
 			$("#i").show();
 			$("#u").hide();
 			$("#d").hide();
-			$("#ta2").hide();
 			
 			//임의의 file object영역
 		    var files = {};
@@ -188,7 +208,6 @@
 		                                     		+ "</div>"
 		                                            );
 		                    files[imgNum] = file;
-		                    $("#ta2").show();
 		                };
 		                reader.readAsDataURL(file);
 		            }
@@ -290,9 +309,7 @@
 			        	event.preventDefault();
                 	}
                 	if(file === ""){
-			        	alert("커버 사진을 선택해주세요");
 			        	$("#file").val() = "0";
-			        	alert($("#file").val());
 			        	event.preventDefault();
                 	}
 	        	}
