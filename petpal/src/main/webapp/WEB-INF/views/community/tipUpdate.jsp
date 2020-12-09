@@ -26,7 +26,7 @@
   <main role="main" style="min-height:100vh;">
   	<div class="container" style="max-width: 940px;">
   	<c:set var="loop_flag" value="false" />
-        <form class="needs-validation" name="tipWrite" action="${path }/community/tipUpdate.do?tipNo=${mainList[0].TIPNO }" method="post" enctype="multipart/form-data"  onSubmit="return selectCheck();">
+        <form class="needs-validation" name="tipWrite" action="${path }/community/tipUpdateEnd.do?tipNo=${mainList[0].TIPNO }" method="post" enctype="multipart/form-data"  onSubmit="return selectCheck();">
             <div>
                 <div class="row">
                     <div class="col-md-12 mt-5">
@@ -298,18 +298,23 @@
 		        function selectCheck(){
                 	var select = document.getElementById("select");
                 	var selected = select.options[select.selectedIndex].value;
+                	var down = $("#down").val();
                 	var file = $("#file").val();
+                	
+                	event.preventDefault();
                 	
                 	if(selected === ""){
 			        	if(window.confirm("카테고리가 변경되지 않았습니다. 카테고리를 변경하지 않고 수정하시겠습니까?")){
 			        		select.options[select.selectedIndex].value="0";
+			        		event.preventDefault();
 			        	}else{
 			        		alert("카테고리를 선택해주세요");
+				        	event.preventDefault();
 			        	}
-			        	event.preventDefault();
                 	}
-                	if(file === ""){
-			        	$("#file").val() = "0";
+                	if(down === ""){
+                		alert("되냐?");
+			        	$("#down") = "0";
 			        	event.preventDefault();
                 	}
 	        	}

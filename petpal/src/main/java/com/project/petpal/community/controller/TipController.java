@@ -144,4 +144,10 @@ public class TipController {
 		return mv;
 	}
 	
+	@RequestMapping("community/tipUpdateEnd.do")
+	public ModelAndView tipUpdateEnd(HttpServletRequest request, HttpServletResponse response, ModelAndView mv) {
+		System.out.println("여기로 와?");
+		return mv;
+	}
+	
 }
