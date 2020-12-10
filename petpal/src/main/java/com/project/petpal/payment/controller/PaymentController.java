@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class PaymentCompleteController {
+public class PaymentController {
 	@RequestMapping("/payment/paymentComplete.do")
 	public String paymentComplete() {
 		return "/payment/paymentComplete";
