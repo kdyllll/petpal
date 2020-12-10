@@ -19,7 +19,7 @@ input:focus {
 		<section class="mt-5 pt-5">
 			<div class="container">
 				<div class="mb-5 mb-lg-1 ">
-					<form id="writeFrm" class=" mt-5" method="post"
+					<form id="writeFrm" class=" mt-5" method="post" 
 						action="${path }/community/placePostWriteEnd.do"
 						enctype="multipart/form-data">
 						<p class="col-12 h2 mb-5 mt-2">

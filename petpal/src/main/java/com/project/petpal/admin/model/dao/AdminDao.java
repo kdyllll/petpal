@@ -24,4 +24,5 @@ public interface AdminDao {
 	int updateProductEnd(SqlSession session, Map p);
 	List<ProductImg> selectProductImgAll(SqlSession session, Product p); 
 	int updateProductImgEnd(SqlSession session, ProductImg p);
+	List<Map> productIOAll(SqlSession session);
 }

@@ -48,7 +48,7 @@
                   <a class="nav-link text-dark" href="${path }/member/moveMyPage.do">마이페이지</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link text-dark" href="#">로그아웃</a>
+                  <a class="nav-link text-dark" href="${path }/member/logout.do">로그아웃</a>
                 </li>
                 </c:if>
                 <c:if test="${loginMember.getEmail().equals('admin@naver.com')  }">

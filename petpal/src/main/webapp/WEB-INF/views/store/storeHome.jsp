@@ -11,7 +11,7 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 	<style>
 .card-img-top {
-	width: 255px;
+	/* width: 255px; */
 	height: 255px;
 }
 </style>
@@ -39,15 +39,15 @@
 									aria-labelledby="headingOne" data-parent="#accordionExample">
 									<div class="card-body">
 										<ul class="nav flex-column">
-											<li class="nav-item"><a class="nav-link active" href="#">홈/리빙</a>
+											<li class="nav-item"><a class="nav-link active" href="${path }/store/moveCategory.do?cNo=D1">홈/리빙</a>
 											</li>
-											<li class="nav-item"><a class="nav-link" href="#">식품</a>
+											<li class="nav-item"><a class="nav-link" href="${path }/store/moveCategory.do?cNo=D2">식품</a>
 											</li>
-											<li class="nav-item"><a class="nav-link" href="#">옷</a>
+											<li class="nav-item"><a class="nav-link" href="${path }/store/moveCategory.do?cNo=D3">옷</a>
 											</li>
-											<li class="nav-item"><a class="nav-link" href="#">용품</a>
+											<li class="nav-item"><a class="nav-link" href="${path }/store/moveCategory.do?cNo=D4">용품</a>
 											</li>
-											<li class="nav-item"><a class="nav-link" href="#">목욕/미용</a>
+											<li class="nav-item"><a class="nav-link" href="${path }/store/moveCategory.do?cNo=D5">목욕/미용</a>
 											</li>
 										</ul>
 									</div>
@@ -68,15 +68,15 @@
 									aria-labelledby="headingTwo" data-parent="#accordionExample">
 									<div class="card-body">
 										<ul class="nav flex-column">
-											<li class="nav-item"><a class="nav-link active" href="#">홈/리빙</a>
+											<li class="nav-item"><a class="nav-link active" href="${path }/store/moveCategory.do?cNo=C1">홈/리빙</a>
 											</li>
-											<li class="nav-item"><a class="nav-link" href="#">식품</a>
+											<li class="nav-item"><a class="nav-link" href="${path }/store/moveCategory.do?cNo=C2">식품</a>
 											</li>
-											<li class="nav-item"><a class="nav-link" href="#">옷</a>
+											<li class="nav-item"><a class="nav-link" href="${path }/store/moveCategory.do?cNo=C3">옷</a>
 											</li>
-											<li class="nav-item"><a class="nav-link" href="#">용품</a>
+											<li class="nav-item"><a class="nav-link" href="${path }/store/moveCategory.do?cNo=C4">용품</a>
 											</li>
-											<li class="nav-item"><a class="nav-link" href="#">목욕/미용</a>
+											<li class="nav-item"><a class="nav-link" href="${path }/store/moveCategory.do?cNo=C5">목욕/미용</a>
 											</li>
 										</ul>
 									</div>
@@ -97,13 +97,13 @@
 									aria-labelledby="headingThree" data-parent="#accordionExample">
 									<div class="card-body">
 										<ul class="nav flex-column">
-											<li class="nav-item"><a class="nav-link active" href="#">햄스터</a>
+											<li class="nav-item"><a class="nav-link active" href="${path }/store/moveCategory.do?cNo=S1">햄스터</a>
 											</li>
-											<li class="nav-item"><a class="nav-link" href="#">토끼</a>
+											<li class="nav-item"><a class="nav-link" href="${path }/store/moveCategory.do?cNo=S2">토끼</a>
 											</li>
-											<li class="nav-item"><a class="nav-link" href="#">물고기</a>
+											<li class="nav-item"><a class="nav-link" href="${path }/store/moveCategory.do?cNo=S3">물고기</a>
 											</li>
-											<li class="nav-item"><a class="nav-link" href="#">새</a>
+											<li class="nav-item"><a class="nav-link" href="${path }/store/moveCategory.do?cNo=S4">새</a>
 											</li>
 										</ul>
 									</div>
@@ -152,134 +152,89 @@
 						<div class="row">
 							<div class="col-12 category-container mt-5">
 								<h5 style="font-weight: bold;">강아지</h5>
-								<a class="text-info" style="font-weight: bold;" href="#">더보기</a>
+								<a class="text-info" style="font-weight: bold;" href="${path }/store/moveCategory.do?cNo=D1">더보기</a>
 							</div>
+							<c:if test="${empty dList }">
+								<div class="col-12 mb-4 text-center">
+									<p>상품이 없습니다.</p>
+								</div>
+							</c:if>
+							<c:if test="${not empty dList }">
+							<c:forEach var="p" items="${dList }" begin="0" end="2">
 							<div class="col-lg-4 col-md-6 mb-4">
-								<a href="#"> <img class="card-img-top"
-									src="resources/images/common3.jpg" alt="">
-									<h4 class="text-black" style="color: black;">상품명</h4>
+								<a href="${path }/store/moveDetail.do?productNo=${p.productNo}"> <img class="card-img-top"
+									src="resources/upload/product/detail/${p.fileName }" alt="">
+									<h4 class="text-black" style="color: black;"><c:out value="${p.productName }"/></h4>
 									<div>
-										<span style="font-weight: bold; color: #35c5f0;">70%</span> <span
-											style="font-weight: bold; color: black;">59,000~</span>
+										<span style="font-weight: bold; color: #35c5f0;"><c:out value="${p.sale }"/>%</span> 
+										<c:set var="per" value="${p.price-(p.price*p.sale/100) }"/>
+										<span
+											style="font-weight: bold; color: black;"><fmt:formatNumber value="${per+(100-(per%100))%100 }"/>~</span>
 									</div>
 									<div>
 										<small class="text-muted" style="font-weight: bold;">별점&#9733;4.0</small>
 									</div>
 								</a>
 							</div>
-							<div class="col-lg-4 col-md-6 mb-4">
-								<a href="#"> <img class="card-img-top"
-									src="resources/images/common3.jpg" alt="">
-									<h4 class="text-black" style="color: black;">상품명</h4>
-									<div>
-										<span style="font-weight: bold; color: #35c5f0;">70%</span> <span
-											style="font-weight: bold; color: black;">59,000~</span>
-									</div>
-									<div>
-										<small class="text-muted" style="font-weight: bold;">별점&#9733;4.0</small>
-									</div>
-								</a>
-							</div>
-							<div class="col-lg-4 col-md-6 mb-4">
-								<a href="#"> <img class="card-img-top"
-									src="resources/images/common3.jpg" alt="">
-									<h4 class="text-black" style="color: black;">상품명</h4>
-									<div>
-										<span style="font-weight: bold; color: #35c5f0;">70%</span> <span
-											style="font-weight: bold; color: black;">59,000~</span>
-									</div>
-									<div>
-										<small class="text-muted" style="font-weight: bold;">별점&#9733;4.0</small>
-									</div>
-								</a>
-							</div>
+							</c:forEach>
+							</c:if>
+							
 							<div class="col-12 category-container mt-5">
 								<h5 style="font-weight: bold;">고양이</h5>
-								<a class="text-info" style="font-weight: bold;" href="#">더보기</a>
+								<a class="text-info" style="font-weight: bold;" href="${path }/store/moveCategory.do?cNo=C1">더보기</a>
 							</div>
+							<c:if test="${empty cList }">
+								<div class="col-12 mb-4 text-center">
+									<p>상품이 없습니다.</p>
+								</div>
+							</c:if>
+							<c:if test="${not empty cList }">
+							<c:forEach var="p" items="${cList }" begin="0" end="2">
 							<div class="col-lg-4 col-md-6 mb-4">
-								<a href="#"> <img class="card-img-top" src="sea)연어.png"
-									alt="">
-									<h4 class="text-black" style="color: black;">상품명</h4>
+								<a href="${path }/store/moveDetail.do?productNo=${p.productNo}"> <img class="card-img-top"
+									src="resources/upload/product/detail/${p.fileName }" alt="">
+									<h4 class="text-black" style="color: black;"><c:out value="${p.productName }"/></h4>
 									<div>
-										<span style="font-weight: bold; color: #35c5f0;">70%</span> <span
-											style="font-weight: bold; color: black;">59,000~</span>
+										<span style="font-weight: bold; color: #35c5f0;"><c:out value="${p.sale }"/>%</span> 
+										<c:set var="per" value="${p.price-(p.price*p.sale/100) }"/>
+										<span
+											style="font-weight: bold; color: black;"><fmt:formatNumber value="${per+(100-(per%100))%100 }"/>~</span>
 									</div>
 									<div>
 										<small class="text-muted" style="font-weight: bold;">별점&#9733;4.0</small>
 									</div>
 								</a>
 							</div>
-							<div class="col-lg-4 col-md-6 mb-4">
-								<a href="#"> <img class="card-img-top" src="sea)연어.png"
-									alt="">
-									<h4 class="text-black" style="color: black;">상품명</h4>
-									<div>
-										<span style="font-weight: bold; color: #35c5f0;">70%</span> <span
-											style="font-weight: bold; color: black;">59,000~</span>
-									</div>
-									<div>
-										<small class="text-muted" style="font-weight: bold;">별점&#9733;4.0</small>
-									</div>
-								</a>
-							</div>
-							<div class="col-lg-4 col-md-6 mb-4">
-								<a href="#"> <img class="card-img-top" src="sea)연어.png"
-									alt="">
-									<h4 class="text-black" style="color: black;">상품명</h4>
-									<div>
-										<span style="font-weight: bold; color: #35c5f0;">70%</span> <span
-											style="font-weight: bold; color: black;">59,000~</span>
-									</div>
-									<div>
-										<small class="text-muted" style="font-weight: bold;">별점&#9733;4.0</small>
-									</div>
-								</a>
-							</div>
+							</c:forEach>
+							</c:if>
 							<div class="col-12 category-container mt-5">
 								<h5 style="font-weight: bold;">소동물</h5>
-								<a class="text-info" style="font-weight: bold;" href="#">더보기</a>
+								<a class="text-info" style="font-weight: bold;" href="${path }/store/moveCategory.do?cNo=S">더보기</a>
 							</div>
+							<c:if test="${empty sList }">
+								<div class="col-12 mb-4 text-center">
+									<p>상품이 없습니다.</p>
+								</div>
+							</c:if>
+							<c:if test="${not empty sList }">
+							<c:forEach var="p" items="${sList }" begin="0" end="2">
 							<div class="col-lg-4 col-md-6 mb-4">
-								<a href="#"> <img class="card-img-top" src="sea)연어.png"
-									alt="">
-									<h4 class="text-black" style="color: black;">상품명</h4>
+								<a href="${path }/store/moveDetail.do?productNo=${p.productNo}"> <img class="card-img-top"
+									src="resources/upload/product/detail/${p.fileName }" alt="">
+									<h4 class="text-black" style="color: black;"><c:out value="${p.productName }"/></h4>
 									<div>
-										<span style="font-weight: bold; color: #35c5f0;">70%</span> <span
-											style="font-weight: bold; color: black;">59,000~</span>
+										<span style="font-weight: bold; color: #35c5f0;"><c:out value="${p.sale }"/>%</span> 
+										<c:set var="per" value="${p.price-(p.price*p.sale/100) }"/>
+										<span
+											style="font-weight: bold; color: black;"><fmt:formatNumber value="${per+(100-(per%100))%100 }"/>~</span>
 									</div>
 									<div>
 										<small class="text-muted" style="font-weight: bold;">별점&#9733;4.0</small>
 									</div>
 								</a>
 							</div>
-							<div class="col-lg-4 col-md-6 mb-4">
-								<a href="#"> <img class="card-img-top" src="sea)연어.png"
-									alt="">
-									<h4 class="text-black" style="color: black;">상품명</h4>
-									<div>
-										<span style="font-weight: bold; color: #35c5f0;">70%</span> <span
-											style="font-weight: bold; color: black;">59,000~</span>
-									</div>
-									<div>
-										<small class="text-muted" style="font-weight: bold;">별점&#9733;4.0</small>
-									</div>
-								</a>
-							</div>
-							<div class="col-lg-4 col-md-6 mb-4">
-								<a href="#"> <img class="card-img-top" src="sea)연어.png"
-									alt="">
-									<h4 class="text-black" style="color: black;">상품명</h4>
-									<div>
-										<span style="font-weight: bold; color: #35c5f0;">70%</span> <span
-											style="font-weight: bold; color: black;">59,000~</span>
-									</div>
-									<div>
-										<small class="text-muted" style="font-weight: bold;">별점&#9733;4.0</small>
-									</div>
-								</a>
-							</div>
-
+							</c:forEach>
+							</c:if>
 
 						</div>
 						<!-- /.row -->

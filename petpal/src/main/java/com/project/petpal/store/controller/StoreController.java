@@ -3,6 +3,7 @@ package com.project.petpal.store.controller;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,10 +23,14 @@ public class StoreController {
 	private StoreService service;
 	
 	@RequestMapping("/store/moveStoreHome.do")
-	public String moveStoreHome() {
-		/*
-		 * List<Product> dList=service.dogList(); List<Prodcut>
-		 */
+	public String moveStoreHome(Model m) {
+		
+		 List<Product> dList=service.dogList(); 
+		 List<Product> cList=service.catList(); 
+		 List<Product> sList=service.smallList(); 
+		 m.addAttribute("dList",dList);
+		 m.addAttribute("cList",cList);
+		 m.addAttribute("sList",sList);
 		return "store/storeHome";
 	}
 
@@ -61,6 +66,22 @@ public class StoreController {
 		m.addAttribute("sizes",sizes);
 		
 		return "store/productDetail";
+	}
+	@RequestMapping("/store/moveCategory.do")
+	public String moveCategory(String cNo,Model m) {
+		if(cNo.equals("S")) {//소동물 더보기
+			cNo="S1','S2','S3','S4";
+		}else if(!cNo.contains("S")){//소동물 누른게 아니면
+			List<Map> scList=service.subCateList(cNo);//소분류 리스트
+			m.addAttribute("scList",scList);
+		}
+		List<Product> soList=service.soldOutList(cNo);
+		if(soList.size()!=0) {//품절리스트가 0일수도 있음
+			m.addAttribute("soList",soList);
+		}
+		List<Product> list=service.categoryList(cNo);
+		m.addAttribute("list",list);
+		return "store/categoryStore";
 	}
 
 }
