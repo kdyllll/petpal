@@ -1,5 +1,8 @@
 package com.project.petpal.store.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +28,7 @@ public class StoreAjaxController {
 	@RequestMapping("/store/insertCart.do")
 	public String insertCart(HttpSession session,HttpServletResponse response, String[] stockNo,String[] cnt,
 			  				@CookieValue(value="cookieStock", required = false) Cookie cookieStock,
-			  				@CookieValue(value="cookieCnt", required = false) Cookie cookieCnt) {
+			  				@CookieValue(value="cookieCnt", required = false) Cookie cookieCnt) throws UnsupportedEncodingException {
 		Member loginMember=(Member)session.getAttribute("loginMember");
 		String path="store/storeAjax/cartModal";
 		
@@ -46,10 +49,10 @@ public class StoreAjaxController {
 		String stocks="";
 		if(cookieStock!=null) {
 			System.out.println("쿠키존재?");
-			stocks=cookieStock.getValue();
+			stocks=URLDecoder.decode(cookieStock.getValue(),"UTF-8");
 		}
 		if(cookieCnt!=null) {
-			cnts=cookieCnt.getValue();
+			cnts=URLDecoder.decode(cookieCnt.getValue(),"UTF-8");
 		}
 		System.out.println("이미 있는 쿠키");
 		System.out.println(stocks);
@@ -76,10 +79,11 @@ public class StoreAjaxController {
 		}
 		//쿠키에 저장
 
-		Cookie c=new Cookie("stockNo",stocks);
+
+		Cookie c=new Cookie("cookieStock",URLEncoder.encode(stocks, "UTF-8"));
 		c.setMaxAge(60 * 60 * 24); //쿠키 하루 유지
 		response.addCookie(c); //쿠키 추가
-		Cookie c2=new Cookie("cnt",cnts);
+		Cookie c2=new Cookie("cookieCnt",URLEncoder.encode(cnts, "UTF-8"));
 		c2.setMaxAge(60 * 60 * 24);
 		response.addCookie(c2);
 		
