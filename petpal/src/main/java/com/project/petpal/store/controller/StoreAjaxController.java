@@ -54,18 +54,18 @@ public class StoreAjaxController {
 		if(cookieCnt!=null) {
 			cnts=URLDecoder.decode(cookieCnt.getValue(),"UTF-8");
 		}
-		System.out.println("이미 있는 쿠키");
-		System.out.println(stocks);
-		System.out.println(cnts);
+//		System.out.println("이미 있는 쿠키");
+//		System.out.println(stocks);
+//		System.out.println(cnts);
 		
 		//새로 넣는 장바구니 값 배열을 문자열로 변환
 		String stocks2=Arrays.toString(stockNo);
 		stocks2=stocks2.substring(stocks2.indexOf("[")+1,stocks2.indexOf("]"));
 		String cnts2=Arrays.toString(cnt);
 		cnts2=cnts2.substring(cnts2.indexOf("[")+1,cnts2.indexOf("]"));
-		System.out.println("새로넣는 장바구니");
-		System.out.println(stocks2);
-		System.out.println(cnts2);
+//		System.out.println("새로넣는 장바구니");
+//		System.out.println(stocks2);
+//		System.out.println(cnts2);
 		//이미 있던 장바구니 문자열에 문자열 추가
 		if(stocks.equals("")) {
 			stocks=stocks2;
@@ -87,9 +87,9 @@ public class StoreAjaxController {
 		c2.setMaxAge(60 * 60 * 24);
 		response.addCookie(c2);
 		
-		System.out.println("최종쿠키");
-		System.out.println(c.getValue());
-		System.out.println(c2.getValue());
+//		System.out.println("최종쿠키");
+//		System.out.println(c.getValue());
+//		System.out.println(c2.getValue());
 		return path;
 	}
 	
