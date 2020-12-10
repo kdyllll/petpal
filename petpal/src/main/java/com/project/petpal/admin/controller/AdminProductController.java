@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -114,6 +115,14 @@ public class AdminProductController {
 		m.addAttribute("loc",loc);
 		m.addAttribute("msg",msg);
 		return "common/msg";
+	}
+	
+	@RequestMapping("/admin/productSearch.do")
+	public String productSearch(String productName, Model model) {
+		List<Map> pList = service.searchProduct(productName);
+		model.addAttribute("productName",productName);
+		model.addAttribute("pList", pList);
+		return "admin/adminPage";
 	}
 	
 	

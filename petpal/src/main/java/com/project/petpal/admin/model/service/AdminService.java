@@ -19,4 +19,5 @@ public interface AdminService {
 	int updateProductEnd(Map p, List<ProductImg> pimgList);
 	List<ProductImg> selectProductImgAll(Product p);
 	List<Map> productIOAll();
+	List<Map> searchProduct(String productName);
 }

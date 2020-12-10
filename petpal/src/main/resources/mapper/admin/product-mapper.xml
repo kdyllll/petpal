@@ -55,4 +55,7 @@
 	<select id="productIOAll" resultType="map">
 		select * from productio join stock using(stockNo) join product using(productNo)
 	</select>
+	<select id="searchProduct" parameterType="string" resultType="map">
+		select * from product join productImg using(productNo) join category using(categoryNo) where type = 'M' and PRODUCTNAME like '%'|| #{productName}||'%' ORDER BY ENROLLDATE DESC
+	</select>
 </mapper>

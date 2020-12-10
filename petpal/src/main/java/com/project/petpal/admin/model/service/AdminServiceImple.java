@@ -118,6 +118,12 @@ public class AdminServiceImple implements AdminService {
 		return dao.productIOAll(session);
 	}
 
+	@Override
+	public List<Map> searchProduct(String productName) {
+		// TODO Auto-generated method stub
+		return dao.searchProduct(session, productName);
+	}
+
 	
 	
 	
