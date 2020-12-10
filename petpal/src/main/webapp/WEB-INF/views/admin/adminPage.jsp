@@ -57,15 +57,14 @@
 						<tbody>
 							<c:if test="${not empty pList }">
 								<c:forEach var="pdt" items="${pList }">
-
 									<tr>
-										<th scope="row" class="align-middle text-center">${pdt.PRODUCTNO }</th>
+										<th scope="row" class="align-middle text-center"><c:out value="${pdt.PRODUCTNO }"/></th>
 										<td class="text-center"><img
 											style="width: 100px; height: 100px;"
 											src="${path }/resources/upload/product/detail/${pdt.IMGNAME}"></td>
-										<td class="align-middle text-center">${pdt.PRODUCTNAME }</td>
-										<td class="align-middle text-center">${pdt.CATEGORYNAME }</td>
-										<td class="align-middle text-center">${pdt.ENROLLDATE }</td>
+										<td class="align-middle text-center"><c:out value="${pdt.PRODUCTNAME }"/></td>
+										<td class="align-middle text-center"><c:out value="${pdt.CATEGORYNAME }"/></td>
+										<td class="align-middle text-center"><c:out value="${pdt.ENROLLDATE }"/></td>
 										<td class="align-middle text-center"><form method="post"
 												class="pdtFrm mb-0">
 												<input type="submit"
