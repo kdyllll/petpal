@@ -56,7 +56,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:if test="${empty pList }">검색된 조건 [<c:out value="${pName }" />]이 없습니다.</c:if>
+							<c:if test="${empty pList }">검색된 조건 [<c:out value="${pdtName }" />]이 없습니다.</c:if>
 							<c:if test="${not empty pList }">
 								<c:forEach var="pdt" items="${pList }">
 									<tr>
