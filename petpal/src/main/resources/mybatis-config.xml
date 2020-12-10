@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-
 <!DOCTYPE configuration PUBLIC "- //mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
-<configuration></configuration>
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.project.petpal.member.model.vo.Member" alias="member"/>
+		<typeAlias type="com.project.petpal.common.StringArrayTypeHandler" alias="strArr"/>
+		<typeAlias type="com.project.petpal.admin.model.vo.Product" alias="product"/>
+		<typeAlias type="com.project.petpal.admin.model.vo.Stock" alias="stock"/>
+		<typeAlias type="com.project.petpal.community.model.vo.Daily" alias="daily"/>
+		<typeAlias type="com.project.petpal.community.model.vo.DailyImg" alias="dailyImg"/>
+		<typeAlias type="com.project.petpal.community.model.vo.DailyCoord" alias="dailyCoord"/>
+		<typeAlias type="com.project.petpal.community.model.vo.Tip" alias="tip"/>
+		<typeAlias type="com.project.petpal.community.model.vo.TipImg" alias="tipImg"/>
+		<typeAlias type="com.project.petpal.board.model.vo.Notice" alias="notice"/>
+		<typeAlias type="com.project.petpal.board.model.vo.NoticeImg" alias="noticeImg"/>
+		<typeAlias type="com.project.petpal.board.model.vo.Question" alias="question"/>
+		<typeAlias type="com.project.petpal.board.model.vo.QuestionImg" alias="questionImg"/>
+		<typeAlias type="com.project.petpal.admin.model.vo.ProductImg" alias="pImg"/>
+		<typeAlias type="com.project.petpal.store.model.vo.Product" alias="storeProduct"/>
+		<typeAlias type="com.project.petpal.store.model.vo.Stock" alias="storeStock"/>
+		<typeAlias type="com.project.petpal.admin.model.vo.ProductImg" alias="storeImg"/>
+	</typeAliases>
+</configuration>
 
 

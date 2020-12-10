@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "- //mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="product">
+	<insert id="insertProduct" parameterType="product">
+		INSERT INTO PRODUCT VALUES(SEQ_PRODUCTNO.NEXTVAL,#{categoryNo},#{productName},#{fileName},DEFAULT,#{subCate})
+		<selectKey keyProperty="productNo" resultType="string" order="AFTER">
+  		SELECT SEQ_PRODUCTNO.CURRVAL from DUAL 
+  		</selectKey>
+	</insert>
+	<insert id="insertStock" parameterType="stock">
+		INSERT INTO STOCK VALUES(SEQ_STOCKNO.NEXTVAL,#{productNo},#{color , jdbcType=VARCHAR},#{productSize , jdbcType=VARCHAR},0,0,0)
+	</insert>
+	<insert id="insertProductImg" parameterType="pImg">
+		INSERT INTO PRODUCTIMG VALUES(SEQ_PRODUCTIMGNO.NEXTVAL,#{productNo},#{imgName},'S')
+	</insert>
+	<select id="selectProductAll" resultType="map">
+		select * from product join productImg using(productNo) join category using(categoryNo) where type = 'M' ORDER BY ENROLLDATE DESC 
+	</select>
+	<insert id="insertProductMainImg" parameterType="pImg">
+		INSERT INTO PRODUCTIMG VALUES(SEQ_PRODUCTIMGNO.NEXTVAL,#{productNo},#{imgName},'M')
+	</insert>
+	<select id="selectStock" resultType="stock" parameterType="string">
+		SELECT * FROM STOCK WHERE PRODUCTNO=#{pdtNo}
+	</select>
+	<update id="updatePrice" parameterType="stock">
+		update stock set price=#{price},sale=#{sale} where stockNo=#{stockNo}
+	</update>
+	<update id="updateIo" parameterType="map">
+		INSERT INTO PRODUCTIO VALUES(SEQ_PRODUCTIONO.NEXTVAL,#{stockNo},SYSDATE,#{stock},#{iostatus})
+	</update>
+	<delete id="deleteStockOne" parameterType="stock">
+		delete from stock where stockNo=#{stockNo}
+	</delete>
+	<delete id="deleteProductOne" parameterType="stock">
+		delete from product where productNo=#{productNo}
+	</delete>
+	<select id="selectProductOne" parameterType="product" resultType="map">
+		select * from product join category using(categoryNo) where productNo=#{productNo}
+	</select>
+	<update id="updateProductEnd" parameterType="map">
+		update product   
+		<set>
+	        <if test="subCate != null">SUBCATE=#{subCate},</if>
+	        <if test="fileName != null">FILENAME=#{fileName},</if>
+	        <if test="productName != null">PRODUCTNAME=#{productName},</if>
+    	</set>
+    	where PRODUCTNO=#{productNo}
+	</update>
+	<select id="selectProductImgAll" parameterType="product" resultType="pImg">
+		select * from productImg where productNo=#{productNo}
+	</select>
+	<update id="updateProductImgEnd" parameterType="pImg">
+		update productImg set imgName=#{imgName} where productImgNo = #{productImgNo}
+	</update>
+	<select id="productIOAll" resultType="map">
+		select * from productio join stock using(stockNo) join product using(productNo)
+	</select>
+	<select id="searchProduct" parameterType="string" resultType="map">
+		select * from product join productImg using(productNo) join category using(categoryNo) where type = 'M' and PRODUCTNAME like '%'|| #{productName}||'%' ORDER BY ENROLLDATE DESC
+	</select>
+
+</mapper>

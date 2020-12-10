@@ -19,25 +19,26 @@
 	<div class="container-fluid">
 		<div class="row">
 
-			<jsp:include page="/WEB-INF/views/common/adminNav.jsp" >
-			<jsp:param name="nav" value="adminStock" />
+			<jsp:include page="/WEB-INF/views/common/adminNav.jsp">
+				<jsp:param name="nav" value="adminStock" />
 			</jsp:include>
-			<section role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-5 "
+			<section role="main"
+				class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-5 "
 				style="height: 100vh; overflow-y: auto;">
-				<h2 class="mt-3">재고관리</h2>
-				<div class="row align-items-center">
-					<div class="input-group mb-3  col-lg-5">
+				<h2 class="my-3">재고관리</h2>
+				<form id="stockSearchFrm" method="post">
+				<div class="row align-items-center mb-3">
+					<div class="input-group   col-lg-5">
 						<input type="text" class="form-control input-group-sm"
-							placeholder="상품번호를 입력해주세요." aria-label="Recipient's username"
-							aria-describedby="button-addon2">
+							placeholder="상품이름을 입력해주세요." aria-label="Recipient's username"
+							aria-describedby="button-addon2" name="productName">
 						<div class="input-group-append">
 							<button class="btn btn-outline-secondary" type="button"
-								id="button-addon2">Button</button>
+								id="stockSearchBtn">검색</button>
 						</div>
 					</div>
-
-
 				</div>
+				</form>
 				<div class="table-responsive" style="min-height: 80vh;">
 					<table class="table mb-5">
 						<thead>
@@ -51,19 +52,30 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<th scope="row" class="align-middle text-center">1</th>
+							<c:if test="${empty pList }">검색된 조건 [<c:out value="${pdtName }" />]이 없습니다.</c:if>
+							<c:if test="${not empty pList }">
+							<c:forEach var="pdt" items="${pList }" varStatus="s">
+							
+							<tr class="productList">
+								<th scope="row" class="align-middle text-center pdtNo"><c:out value="${pdt.PRODUCTNO }" /></th>
 								<td class="text-center"><img
-									style="width: 100px; height: 100px;"></td>
-								<td class="align-middle text-center">Otto</td>
-								<td class="align-middle text-center">@mdo</td>
-								<td class="align-middle text-center">Otto</td>
+									style="width: 100px; height: 100px;" src="${path }/resources/upload/product/detail/${pdt.IMGNAME}"></td>
+								<td class="align-middle text-center"><c:out value="${pdt.PRODUCTNAME }" /></td>
+								<td class="align-middle text-center"><c:out value="${pdt.CATEGORYNAME }" /></td>
+								<td class="align-middle text-center"><c:out value="${pdt.ENROLLDATE }" /></td>
 								<td class="align-middle text-center">
-									<button type="button" class="btn btn-outline-secondary"
-										data-toggle="modal" data-target="#staticBackdrop">재고수정</button>
+									<button type="button" class="btn btn-outline-secondary btn-sm updatePrice"
+										data-toggle="modal">가격수정</button>
+									<button type="button" class="btn btn-outline-secondary btn-sm updateStock"
+										data-toggle="modal">재고수정</button>	
+
+										<button type="button" class="btn btn-outline-danger btn-sm deleteStock"
+										data-toggle="modal">재고삭제</button>
+										
 								</td>
 							</tr>
-
+							</c:forEach>
+							</c:if>
 						</tbody>
 					</table>
 				</div>
@@ -83,63 +95,44 @@
 					</ul>
 				</nav>
 			</section>
-			<div class="modal fade" id="staticBackdrop" tabindex="-1"
-				aria-labelledby="exampleModalLabel" data-backdrop="static"
-				aria-hidden="true">
-				<div
-					class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">재고등록</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<form>
-								<div class="form-group">
-									<label for="recipient-name" class="col-form-label d-block">-
-										S / 빨강</label> <input type="number" min="0" value="0"
-										class="form-control col-md-4 d-inline align-middle">
-									<button type="button"
-										class=" d-inline btn btn-outline-secondary align-middle">수정</button>
-									<button type="button"
-										class=" d-inline btn btn-outline-danger align-middle">삭제</button>
-								</div>
-							</form>
-							<form>
-								<div class="form-group">
-									<label for="recipient-name" class="col-form-label d-block">-
-										M / 빨강</label> <input type="number" min="0" value="0"
-										class="form-control col-md-4 d-inline align-middle">
-									<button type="button"
-										class=" d-inline btn btn-outline-secondary align-middle">수정</button>
-									<button type="button"
-										class=" d-inline btn btn-outline-danger align-middle">삭제</button>
-								</div>
-							</form>
-							<form>
-								<div class="form-group">
-									<label for="recipient-name" class="col-form-label d-block">-
-										S / 파랑</label> <input type="number" min="0" value="0"
-										class="form-control col-md-4 d-inline align-middle">
-									<button type="button"
-										class=" d-inline btn btn-outline-secondary align-middle">수정</button>
-									<button type="button"
-										class=" d-inline btn btn-outline-danger align-middle">삭제</button>
-								</div>
-							</form>
-						</div>
-						<div class="modal-footer ">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">Close</button>
-						</div>
-					</div>
-				</div>
-			</div>
+			<div class="pdtModal"></div>
 		</div>
 	</div>
+	<script>
+		$(function(){	
+			$(".updatePrice").on("click", e => {
+				let productNo = $(e.target).parents(".productList").children("th").html();
+				 ajaxModal("${path}/admin/updatePrice.do", productNo);
+		      });
+			
+			$(".updateStock").on("click", e=>{
+				let productNo = $(e.target).parents(".productList").children("th").html();
+				 ajaxModal("${path}/admin/updateStock.do", productNo);
+			})
+			$(".deleteStock").on("click", e=>{
+				let productNo = $(e.target).parents(".productList").children("th").html();
+				 ajaxModal("${path}/admin/deleteStock.do", productNo);
+			})
+		})
+		
+		function ajaxModal(path, productNo){
+			$.ajax({
+				url: path,
+				data:{productNo : productNo },
+				dataType:"html",
+				success:(data) => {
+					console.log(data);
+					$(".pdtModal").html(data);
+	         		$('div.modal').modal(); 
+				}
+			});
+		}
+		
+		$("#stockSearchBtn").on("click", function() {
+			$("#stockSearchFrm").attr("action","${path }/admin/stockSearch.do").submit();
+		})
+		
+		</script>
 </body>
 
 </html>

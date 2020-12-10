@@ -13,15 +13,15 @@
       <property name="driverClassName"
          value="oracle.jdbc.driver.OracleDriver" />
       <property name="url"
-         value="jdbc:oracle:thin:@localhost:1521:xe" />
-      <property name="username" value="spring"></property>
-      <property name="password" value="spring"></property>
+         value="jdbc:oracle:thin:@rclass.iptime.org:1521:xe" />
+      <property name="username" value="petpal"></property>
+      <property name="password" value="petpal"></property>
    </bean>
    <bean id="sqlSessionFactoryBean"
       class="org.mybatis.spring.SqlSessionFactoryBean">
       <property name="dataSource" ref="dataSource" /> <!-- 위의 bean 갖다 쓰는 것(ref로 id적으면 됨) -->
-      <!-- <property name="mapperLocations"
-         value="classpath*:mapper/**/*.xml" /> --><!-- mapper파일의 위치 -->
+      <property name="mapperLocations"
+         value="classpath*:mapper/**/*.xml" /> <!-- mapper파일의 위치 -->
       <property name="configLocation"
          value="classpath:mybatis-config.xml"></property>
 
@@ -38,5 +38,9 @@
 	
 	<!-- 트랜잭션 어노테이션 방식 -->
 	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView">
+		<property name="contentType" value="application/json;charset=UTF-8"/>
+	</bean>
 </beans>
 

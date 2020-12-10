@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="question">
+	<insert id="insertQuestion" parameterType="question">
+		INSERT INTO QUESTION VALUES(SEQ_QUESTIONNO.NEXTVAL, #{memberNo}, #{title}, #{content1}, #{content2}, SYSDATE)
+		<selectKey keyProperty="questionNo" resultType="string" order="AFTER">
+			SELECT SEQ_QUESTIONNO.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+	<insert id="insertQuestionImg" parameterType="questionImg">
+		INSERT INTO QUESTIONIMG VALUES(SEQ_QUESTIONIMGNO.NEXTVAL, #{questionNo}, #{mainImg, jdbcType=VARCHAR}, #{content, jdbcType=VARCHAR}, #{contentImg, jdbcType=VARCHAR})
+	</insert>
+	<select id="questionList" resultType="map">
+		SELECT * FROM QUESTION JOIN QUESTIONIMG USING(QUESTIONNO)
+	</select>
+	<select id="questionMainList" parameterType="string" resultType="map">
+		SELECT * FROM QUESTION WHERE QUESTIONNO = #{questionNo}
+	</select>
+	<select id="questionImgList" parameterType="string" resultType="map">
+		SELECT * FROM QUESTIONIMG WHERE QUESTIONNO = #{questionNo}
+	</select>
+</mapper>

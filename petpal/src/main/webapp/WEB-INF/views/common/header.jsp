@@ -9,7 +9,7 @@
     <header class="fixed-top shadow-sm" >
         <nav class="navbar navbar-expand-lg navbar-light py-3 " style="background-color: white;">
           <div class="container">
-            <a class="navbar-brand text-dark" href="#">로고</a>
+            <a class="navbar-brand text-dark" href="${path }/">로고</a>
             <ul class="nav justify-content-center d-none d-lg-flex">
               <li class="nav-item">
                 <a class="nav-link" href="#">커뮤니티</a>
@@ -18,7 +18,7 @@
                 <a class="nav-link" href="${path }/store/moveStoreHome.do">스토어</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">공지사항</a>
+                <a class="nav-link" href="${path }/board/noticeList.do">공지사항</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">위치찾기</a>
@@ -30,27 +30,32 @@
             <div class="collapse navbar-collapse " id="navbarResponsive">
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                  <a class="nav-link text-dark" href="#">장바구니</a>
+                  <a class="nav-link text-dark" href="${path }/cart/cart.do">장바구니</a>
                 </li>
                 <li class="nav-item d-none d-lg-block">
                   <a class="nav-link text-dark" data-toggle="collapse" data-target="#collapseOne2" aria-expanded="true" aria-controls="collapseOne" href="#">검색</a>
                 </li>
-    
+    			<c:if test="${loginMember == null }">
                 <li class="nav-item">
-                  <a class="nav-link text-dark" href="#">로그인</a>
+                  <a class="nav-link text-dark" href="${path }/member/moveLogin.do">로그인</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link text-dark" href="${path }/member/moveJoin.do">회원가입</a>
                 </li>
+                </c:if>
+                <c:if test="${loginMember != null }">
                 <li class="nav-item">
                   <a class="nav-link text-dark" href="${path }/member/moveMyPage.do">마이페이지</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link text-dark" href="#">로그아웃</a>
+                  <a class="nav-link text-dark" href="${path }/member/logout.do">로그아웃</a>
                 </li>
+                </c:if>
+                <c:if test="${loginMember.getEmail().equals('admin@naver.com')  }">
                 <li class="nav-item">
                   <a class="nav-link text-dark" href="${path }/admin/moveAdminPage.do">관리자</a>
                 </li>
+                </c:if>
               </ul>
             </div>
             

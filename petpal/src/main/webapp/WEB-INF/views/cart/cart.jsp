@@ -9,7 +9,6 @@
 </head>
 <body class="bg-white">
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
-  
   <main role="main" style="min-height:100vh;">
    	<div class="container">
         <div class="wrapper wrapper-content animated fadeInRight">
@@ -39,7 +38,6 @@
 
                                             <td>
                                                 $180,00
-                                                <s class="small text-muted">$230,00</s>
                                             </td>
                                             <td width="65">
                                                 <input type="text" class="form-control" placeholder="1">
@@ -96,7 +94,6 @@
         </div>
     </div>
   </main>
-
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 </body>

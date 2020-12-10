@@ -21,7 +21,7 @@
    <main  class="text-center mt-5 mt-lg-0">  
     <div class="container pt-5 pt-lg-0">
       <div class="row pt-5">
-        <form class="form-signin">
+        <form class="form-signin" action="${path }/member/memberLogin.do" method="post">
             <div class="text-center mb-4">
               <!-- <img class="mb-4" src="../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
               <h1 class="h3 mb-3 font-weight-normal">PETPAL</h1>
@@ -29,18 +29,18 @@
             </div>
           
             <div class="form-label-group text-left">
-              <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-              <label for="inputEmail">Email address</label>
+              <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email ID" required autofocus>
+              <label for="inputEmail">Email ID</label>
             </div>
           
             <div class="form-label-group text-left">
-              <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+              <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
               <label for="inputPassword">Password</label>
             </div>
           
             <div class="checkbox mb-3 text-left">
               <label>
-                <input type="checkbox" value="remember-me"> Remember me
+                <input type="checkbox" value="remember-me"> 아이디 기억하기
               </label>
               <div class="mt-3">
                 <a class="mr-5 text-dark" href="#">아이디 찾기</a>
