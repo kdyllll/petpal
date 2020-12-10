@@ -14,4 +14,6 @@ public interface TipDao {
 	List<Map> tipList(SqlSession session);
 	List<Map> tipMainList(SqlSession session, String tipNo);
 	List<Map> tipDetail(SqlSession sessio, String tipNo);
+	int updateTip(SqlSession session, Tip t);
+	int updateTipImg(SqlSession session, TipImg ti);
 }

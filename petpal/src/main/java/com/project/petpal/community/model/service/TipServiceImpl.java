@@ -21,7 +21,6 @@ public class TipServiceImpl implements TipService {
 	private TipDao dao;
 	
 	@Override
-//	public int insertTip(Tip t, TipImg ti, List<TipImg> files) {
 	public int insertTip(Tip t, List<TipImg> files) {
 		int result = dao.insertTip(session, t);
 
@@ -51,6 +50,21 @@ public class TipServiceImpl implements TipService {
 	public List<Map> tipDetail(String tipNo) {
 		return dao.tipDetail(session, tipNo);
 	}
-	
+
+	@Override
+	public int updateTip(Tip t, List<TipImg> files) {
+		int result = dao.updateTip(session, t);
+
+		if(result>0) {
+			if(files!=null) {
+				for(TipImg img: files) {
+					img.setTipNo(t.getTipNo());
+					result = dao.updateTipImg(session, img);
+				}
+			}
+		}
+		
+		return result;
+	}
 
 }
