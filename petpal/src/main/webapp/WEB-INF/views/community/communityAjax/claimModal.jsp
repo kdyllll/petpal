@@ -100,16 +100,16 @@
    
    <script>
  	$("#loginBtn").on("click",e=>{
-  		//로그인 됐는지 확인
+ 	
   		let email=$("#inputEmail").val();
   		let password=$("#inputPassword").val();
   		$.ajax({
   				url: "${path}/login/loginModal.do",
   				data:{email:email,password:password},
-  				dataType:"text",
   				success:(data) => {
-  			  		if(data===true){
+  			  		if(data==true){
   			    		//모달닫고 새로고침
+  			  			location.reload();
   			    	}else{
   			            alert("로그인에 실패했습니다.");
   			    	};
@@ -125,7 +125,12 @@
 			data:$("#claimFrm").serialize(), 
 			success:(data) => {
 				//신고 성공했으면? 성공 알림 띄우고 모달 닫고.. 새로고침?
-						
+				if(data==true){
+					alert("신고");
+					location.reload();
+				}else{
+					alert("신고에 실패");
+				}		
 				
 			}
 		});

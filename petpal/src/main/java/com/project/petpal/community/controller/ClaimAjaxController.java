@@ -28,19 +28,18 @@ public class ClaimAjaxController {
 	
 	@RequestMapping("/claim/claimEnd.do")
 	@ResponseBody
-	public String insertClaim(HttpSession session,String no,String claimCategory, String claimContent) {
+	public boolean insertClaim(HttpSession session,String no,String claimCategory, String claimContent) {
 		Member loginMember=(Member)session.getAttribute("loginMember");
-		
+		System.out.println(loginMember);
 		Map m=new HashMap();
+		
 		m.put("no", no);
 		m.put("category", claimCategory);
 		m.put("content", claimContent);
-		m.put("memberNo",loginMember);
+		m.put("memberNo",loginMember.getMemberNo());
 		int result=service.insertClaim(m);
 		
-		String data=result>0?"true":"false";
-
-		return data;
+		return result>0?true:false;
 	}
 	
 }
