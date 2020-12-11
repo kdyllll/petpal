@@ -620,7 +620,7 @@
               return;
             }else{
             	//로그인 되어 있으면 바로 결제로 넘김
-            	if(loginMember!=null){
+            	if(loginMember!=""){
             		$(".payFrm").attr("action","${path}/payment/payment.do").submit();
             	}else{
             		console.log("로그인안됨");
