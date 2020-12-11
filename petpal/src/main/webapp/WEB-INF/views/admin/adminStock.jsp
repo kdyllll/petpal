@@ -26,17 +26,19 @@
 				class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-5 "
 				style="height: 100vh; overflow-y: auto;">
 				<h2 class="my-3">재고관리</h2>
+				<form id="stockSearchFrm" method="post">
 				<div class="row align-items-center mb-3">
 					<div class="input-group   col-lg-5">
 						<input type="text" class="form-control input-group-sm"
-							placeholder="상품번호를 입력해주세요." aria-label="Recipient's username"
-							aria-describedby="button-addon2">
+							placeholder="상품이름을 입력해주세요." aria-label="Recipient's username"
+							aria-describedby="button-addon2" name="productName">
 						<div class="input-group-append">
 							<button class="btn btn-outline-secondary" type="button"
-								id="button-addon2">Button</button>
+								id="stockSearchBtn">검색</button>
 						</div>
 					</div>
 				</div>
+				</form>
 				<div class="table-responsive" style="min-height: 80vh;">
 					<table class="table mb-5">
 						<thead>
@@ -50,7 +52,7 @@
 							</tr>
 						</thead>
 						<tbody>
-						
+							<c:if test="${empty pList }">검색된 조건 [<c:out value="${pdtName }" />]이 없습니다.</c:if>
 							<c:if test="${not empty pList }">
 							<c:forEach var="pdt" items="${pList }" varStatus="s">
 							
@@ -125,7 +127,12 @@
 				}
 			});
 		}
-	</script>
+		
+		$("#stockSearchBtn").on("click", function() {
+			$("#stockSearchFrm").attr("action","${path }/admin/stockSearch.do").submit();
+		})
+		
+		</script>
 </body>
 
 </html>

@@ -55,4 +55,16 @@
 	<select id="productIOAll" resultType="map">
 		select * from productio join stock using(stockNo) join product using(productNo)
 	</select>
+	<select id="searchProduct" parameterType="string" resultType="map">
+		select * from product join productImg using(productNo) join category using(categoryNo) where type = 'M' and PRODUCTNAME like '%'|| #{productName}||'%' ORDER BY ENROLLDATE DESC
+	</select>
+	<select id="inOutSearch" parameterType="map" resultType="map">
+		select * from productio join stock using(stockNo) join product using(productNo) where 1=1
+		<if test="productName != null">
+			and productName like '%'|| #{productName}||'%'
+		</if>
+		<if test="ioStatus != null">
+			and ioStatus = #{ioStatus}
+		</if>		
+	</select>
 </mapper>
