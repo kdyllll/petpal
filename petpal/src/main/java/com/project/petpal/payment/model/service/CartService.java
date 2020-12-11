@@ -1,5 +1,8 @@
 package com.project.petpal.payment.model.service;
 
-public interface CartService {
+import java.util.List;
+import java.util.Map;
 
+public interface CartService {
+	List<Map> cartList(String memberNo);
 }
