@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,6 +134,23 @@ public class AdminProductController {
 		model.addAttribute("pdtName",productName);
 		model.addAttribute("pList", pList);
 		return "admin/adminStock";
+	}
+	
+	@RequestMapping("/admin/inOutSearch.do")
+	public String inOutSearch(HttpServletRequest request, HttpServletResponse response,Model model ) {
+		String productName = request.getParameter("productName");
+		String ioStatus = request.getParameter("status");
+		System.out.println(ioStatus);
+		if(ioStatus.equals("")) {
+			ioStatus=null;
+		}
+		Map m = new HashMap();
+		m.put("productName", productName);
+		m.put("ioStatus", ioStatus);
+		List<Map> io = service.inOutSearch(m);
+		model.addAttribute("list", io);
+		model.addAttribute("ioStatus", ioStatus);
+		return "admin/adminInOutList";
 	}
 	
 	

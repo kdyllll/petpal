@@ -26,25 +26,30 @@
 				class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-5 "
 				style="height: 100vh; overflow-y: auto;">
 				<h2 class="my-3">입출고리스트</h2>
-				<form class="row align-items-center mb-3">
+				<form id="inOutSearchFrm" class="row align-items-center mb-3">
 					<div class="input-group col-lg-5">
 						<input type="text" class="form-control input-group-sm"
-							placeholder="상품이름을 입력해주세요." aria-label="Recipient's username"
+							placeholder="상품이름을 입력해주세요." name="productName" aria-label="Recipient's username"
 							aria-describedby="button-addon2">
 						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" type="button"
-								id="button-addon2">Button</button>
+							<button class="btn btn-outline-secondary" type="button" 
+								id="inOutSearchBtn">검색</button>
 						</div>
 					</div>
 					<div class="form-check form-check-inline align-middle">
-						<input class="form-check-input" name="InOutRadio" type="radio"
-							id="productIn" value="wareHousing"> <label
+						<input class="form-check-input" name="status" type="radio"
+							id="productIn" value="입고" ${ioStatus != null && ioStatus.equals("입고") ? "checked":""}> <label
 							class="form-check-label" for="productIn">입고</label>
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" name="InOutRadio" type="radio"
-							id="productOut" value="release"> <label
+						<input class="form-check-input" name="status" type="radio"
+							id="productOut" value="출고" ${ioStatus != null && ioStatus.equals("출고") ? "checked":""}> <label
 							class="form-check-label" for="productOut">출고</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" name="status" type="radio"
+							id="productOut" value="" ${ioStatus==null  ? "checked":""}> <label
+							class="form-check-label" for="productOut">전체</label>
 					</div>
 				</form>
 
@@ -65,13 +70,13 @@
 							<c:if test="${list != null }">
 							<c:forEach var="io" items="${list }" >
 							<tr>
-								<th scope="row" class="align-middle text-center">${io.STOCKNO }</th>
-								<td class="align-middle text-center"><a>${io.PRODUCTNAME }</a></td>
-								<td class="align-middle text-center">${io.COLOR }</td>
-								<td class="align-middle text-center">${io.SIZE }</td>
-								<td class="align-middle text-center">${io.IOSTATUS }</td>
-								<td class="align-middle text-center">${io.AMOUNT }</td>
-								<td class="align-middle text-center">${io.IODATE }</td>
+								<th scope="row" class="align-middle text-center"><c:out value="${io.STOCKNO }" /></th>
+								<td class="align-middle text-center"><a><c:out  value="${io.PRODUCTNAME }"/></a></td>
+								<td class="align-middle text-center"><c:out value="${io.COLOR }" /></td>
+								<td class="align-middle text-center"><c:out value="${io.SIZE }" /></td>
+								<td class="align-middle text-center"><c:out value="${io.IOSTATUS }"/></td>
+								<td class="align-middle text-center"><c:out value="${io.AMOUNT }"/></td>
+								<td class="align-middle text-center"><c:out value="${io.IODATE }"/></td>
 							</tr>
 							</c:forEach>
 							</c:if>
@@ -96,6 +101,18 @@
 			</section>
 		</div>
 	</div>
+	<script>
+		$(function() {
+			$("#inOutSearchBtn").on("click", function() {
+				$("#inOutSearchFrm").attr("action", "${path}/admin/inOutSearch.do").submit();
+			})
+			
+			$("input[type=radio]").on("change", e => {
+				$("#inOutSearchFrm").attr("action", "${path}/admin/inOutSearch.do").submit();
+			})
+			
+		})
+	</script>
 </body>
 </html>
 

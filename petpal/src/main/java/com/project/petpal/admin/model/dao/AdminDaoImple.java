@@ -107,6 +107,9 @@ public class AdminDaoImple implements AdminDao {
 		return session.selectList("product.searchProduct", productName);
 	}
 
-
+	@Override
+	public List<Map> inOutSearch(SqlSession session, Map m) {
+		return session.selectList("product.inOutSearch", m);
+	}
 
 }

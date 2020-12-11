@@ -20,5 +20,5 @@ public interface AdminService {
 	List<ProductImg> selectProductImgAll(Product p);
 	List<Map> productIOAll();
 	List<Map> searchProduct(String productName);
-
+	List<Map> inOutSearch(Map m);
 }

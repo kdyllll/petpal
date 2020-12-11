@@ -123,6 +123,11 @@ public class AdminServiceImple implements AdminService {
 		// TODO Auto-generated method stub
 		return dao.searchProduct(session, productName);
 	}
+	
+	@Override
+	public List<Map> inOutSearch(Map m) {
+		return dao.inOutSearch(session, m);
+	}
 
 	
 }
