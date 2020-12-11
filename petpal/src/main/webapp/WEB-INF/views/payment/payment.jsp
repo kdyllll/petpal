@@ -81,7 +81,7 @@
                     <span class="text-muted">장바구니</span>
                     <span class="badge badge-secondary badge-pill">3</span>
                 </h4>
-                <ul class="list-group mb-3">
+                <ul class="list-group mb-3"  style="width:350px;">
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
                             <h6 class="my-0">Product name</h6>
@@ -150,11 +150,11 @@
                             <div class="col-4">
                                 <h3>주문자</h3>
                             </div>
-                            <div class="">
+                            <div class="mr-4">
                                 <input type="checkbox">&nbsp;배송지 정보와 동일
                             </div>
-                            <hr>
                         </div>
+                        <hr>
                         <div class="row">
                             <div class="col-md-12 mb-3">
                                 <label for="firstName">이름</label>
