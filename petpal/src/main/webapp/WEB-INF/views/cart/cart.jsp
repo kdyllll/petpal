@@ -13,7 +13,7 @@
 			var top = $('#adside').offset().top - parseFloat($('#adside').css('marginTop').replace(/auto/, 0));
 			$(window).scroll(function(event) {
 				var y = $(this).scrollTop();
-				if (y > top) {
+				if (y < top) {
 					$('#adside').addClass('fixed');
 				} else {
 					$('#adside').removeClass('fixed');
@@ -152,7 +152,6 @@
 					</div>
 				</div>
 				
-					<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 					<div class="mt-5">
 					</div>
