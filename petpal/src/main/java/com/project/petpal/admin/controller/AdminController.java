@@ -51,4 +51,5 @@ public class AdminController {
 		m.addAttribute("list", list);
 		return "admin/adminInOutList";
 	}
+	
 }
