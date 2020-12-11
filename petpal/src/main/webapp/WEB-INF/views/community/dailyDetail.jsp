@@ -183,5 +183,24 @@
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 </body>
+<script>
 
+	
+	function fn_claimModal() {
+		
+		//로그인 안되어있다면 로그인 모달 호출
+		
+		//로그인 되어있다면 신고하기 모달 호출
+		$.ajax({
+			url: "${path}/claim/moveClaimModal.do",
+			data:{no:"147"},
+			dataType:"html",
+			success:(data) => {
+				console.log(data);
+				$(".pdtModal").html(data);
+         		$('div.modal').modal(); 
+			}
+		});
+	 }
+</script>
 </html>

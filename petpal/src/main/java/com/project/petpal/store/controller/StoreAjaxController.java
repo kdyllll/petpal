@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.petpal.member.model.vo.Member;
 import com.project.petpal.store.model.service.StoreService;
@@ -48,7 +49,6 @@ public class StoreAjaxController {
 		String cnts="";
 		String stocks="";
 		if(cookieStock!=null) {
-			System.out.println("쿠키존재?");
 			stocks=URLDecoder.decode(cookieStock.getValue(),"UTF-8");
 		}
 		if(cookieCnt!=null) {

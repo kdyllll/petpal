@@ -5,10 +5,14 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
 
-  <div class="modal fade" id="payLogin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-header">
+      
+      <!-- 로그인 모달 -->
+      <c:if test="${empty loginMember }">
+      	<div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -17,7 +21,7 @@
           <div class="row d-flex justify-content-center">
             <div class="form-signin">
                 <div class="text-center mb-4">
-                  <h1 class="h3 mb-3 font-weight-normal">PETPAL</h1>                
+                  <h1 class="h3 mb-3 font-weight-normal">로그인이 필요합니다</h1>                
                 </div>
                 <div class="form-label-group text-left">
                   <label for="inputEmail">Email address</label>
@@ -47,18 +51,55 @@
                     <img src="./img/avatar.webp" style="width: 70px; height: 70px;" alt="">
                   </button>
                 </div>
-                <div class="d-block justify-content-center mb-2" >          
-                  <button id="nonMemberBtn" type="button" class="btn btn-outline-primary btn-block btn-lg">비회원 주문</button>           
-                </div> 
               </div>              
           </div>      
+      </c:if>
+      
+      <!-- 신고 모달 -->
+      <c:if test="${not empty loginMember }">
+        <div class="modal-header">
+          <h5 class="modal-title pl-3" id="exampleModalLabel">신고 하기</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-    </div>
-  </div>  
-  
-  <script>
-  	//로그인
-  	$(document).on("click","#loginBtn",e=>{
+        <div class="modal-body offset-1 col-10 pb-0">
+
+          <form id="claimFrm" class="mb-3"> 
+            <div class="form-group mt-3">
+              <input type="hidden" name="no" value="${no }"/>
+              <label for="exampleFormControlSelect1">신고사유</label>
+              <select name="claimCategory" class="form-control col-5" id="exampleFormControlSelect1">
+                <option disabled selected>사유 선택</option>
+                <option value="주제와 맞지 않는 게시물">주제와 맞지 않는 게시물</option>
+                <option value="지나친 광고성 게시물">지나친 광고성 게시물</option>
+                <option value="도배 및 중복 게시물">도배 및 중복 게시물</option>
+                <option value="욕설/비방/외설적인 게시물">욕설/비방/외설적인 게시물</option>
+                <option value="저작권 침해 게시물">저작권 침해 게시물</option>
+                <option value="기타">기타</option>
+              </select>
+            </div>
+            <div class="form-group mb-3">
+              <label for="exampleFormControlTextarea1">신고내용</label>
+              <textarea name="claimContent" class="form-control" id="exampleFormControlTextarea1" rows="5" style="resize:none;"></textarea>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-secondary mb-2 close" data-dismiss="modal" aria-label="Close">취소</button>
+                <button id="claimBtn" type="button" class="btn btn-primary mb-2 ml-3">신고</button>
+            </div>
+          </form>
+        </div>
+	  </c:if>
+
+
+
+
+       </div>
+     </div>
+   </div>  
+   
+   <script>
+ 	$("#loginBtn").on("click",e=>{
   		//로그인 됐는지 확인
   		let email=$("#inputEmail").val();
   		let password=$("#inputPassword").val();
@@ -67,9 +108,8 @@
   				data:{email:email,password:password},
   				dataType:"text",
   				success:(data) => {
-  				//확인 후 폼 전송
   			  		if(data===true){
-  			    		$(".payFrm").attr("action","${path}/payment/payment.do").submit();
+  			    		//모달닫고 새로고침
   			    	}else{
   			            alert("로그인에 실패했습니다.");
   			    	};
@@ -77,9 +117,20 @@
   			});
   		
   	});
-  	
-  	//비회원주문
-  	$(document).on("click","#nonMemberBtn",e=>{
-  		$(".payFrm").attr("action","${path}/payment/payment.do").submit();
-  	});
-  </script>
+   
+	/* 아... 폼 안보내고 에이작스로 폼데이터 보내고 싶다...→ 쌉가능 */
+	$("#claimBtn").on("click",e=>{
+		$.ajax({
+			url: "${path}/claim/claimEnd.do",
+			data:$("#claimFrm").serialize(), 
+			success:(data) => {
+				//신고 성공했으면? 성공 알림 띄우고 모달 닫고.. 새로고침?
+						
+				
+			}
+		});
+		
+		
+	});
+
+   </script>

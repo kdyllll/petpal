@@ -5,11 +5,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
-	Member loginMember = (Member) session.getAttribute("loginMember");
+   Member loginMember = (Member) session.getAttribute("loginMember");
 %>
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
  <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
-   
+
 </head>
 <body class="bg-white">
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -431,7 +431,7 @@
 
 </body>
 <script>
-		let loginMember=<%=loginMember%>;
+		let loginMember=<%=loginMember.getMemberNo()%>;
 		//수량 선택
 		//옵션이 없다면 바로 수량체크할 수 있게
 		if($("#color").length==0&&$("#size").length==0){

@@ -34,15 +34,6 @@ WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK 
 WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK USING(PRODUCTNO) WHERE CATEGORYNO=#{cNo} GROUP BY PRODUCTNO HAVING SUM(STOCK)=0) AND TYPE='M' AND PRICE>0
 	</select>
 	<insert id="insertCart" parameterType="map">
-		INSERT INTO CART VALUES(
-		<choose>
-			<when test="memberNo!=null">
-				#{memberNo},
-			</when>
-			<otherwise>
-				null,
-			</otherwise>
-		</choose>
-		#{stockNo},#{cnt})
+		INSERT INTO CART VALUES(#{memberNo},#{stockNo},#{cnt})
 	</insert>
 </mapper>
