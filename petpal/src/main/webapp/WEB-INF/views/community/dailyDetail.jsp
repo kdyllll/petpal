@@ -74,7 +74,7 @@
                     </div>
                     <div class="d-flex justify-content-end align-items-center my-2 mr-4">
                       <span class="text-secondary">몇분전</span>
-                      <button type="button" class="btn btn-link text-black-50 p-0 ml-2" >신고</button> 
+                      <button type="button" class="btn btn-link text-black-50 p-0 ml-2"  onclick="fn_claimModal('147');">신고</button> 
                     </div>
                   
                   </div>
@@ -168,7 +168,7 @@
                  </div>
                  <div class="d-flex justify-content-end align-items-center">
                    <span class="text-secondary" style="font-size:14px;">몇분전</span>
-                   <button type="button" class="btn btn-link text-secondary" style="font-size: 14px;">신고</button>
+                   <button type="button" class="btn btn-link text-secondary" style="font-size: 14px;" onclick="fn_claimModal('147');">신고</button>
                  </div>
                </div>
          </div>
@@ -178,29 +178,13 @@
 
    </div>
  </div>
+ 
+ <jsp:include page="/WEB-INF/views/community/claim.jsp"/>
+
 </main>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 </body>
-<script>
 
-	
-	function fn_claimModal() {
-		
-		//로그인 안되어있다면 로그인 모달 호출
-		
-		//로그인 되어있다면 신고하기 모달 호출
-		$.ajax({
-			url: "${path}/claim/moveClaimModal.do",
-			data:{no:"147"},
-			dataType:"html",
-			success:(data) => {
-				console.log(data);
-				$(".pdtModal").html(data);
-         		$('div.modal').modal(); 
-			}
-		});
-	 }
-</script>
 </html>

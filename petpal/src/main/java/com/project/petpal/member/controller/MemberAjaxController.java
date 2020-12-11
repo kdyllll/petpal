@@ -34,7 +34,7 @@ public class MemberAjaxController {
 	}
 	
 	//로그인모달Ajax
-	@RequestMapping("/login/loginModal.do.do")
+	@RequestMapping("/login/loginModal.do")
 	@ResponseBody
 	public Boolean payLogin(String email,String password,Model m) {
 		//로그인 하기
