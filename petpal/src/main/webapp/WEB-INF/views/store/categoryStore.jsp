@@ -151,7 +151,7 @@ a:hover {
 							<c:if test="${not empty list }">
 							<c:forEach var="p" items="${list }">
 								<div class="col-lg-4 col-md-6 mb-4">
-									<a href="${path }/store/moveDetail.do?productNo=${p.productNo}"> <img class="card-img-top" src="${path }/resources/upload/product/detail/${p.fileName}"
+									<a href="${path }/store/moveDetail.do?productNo=${p.productNo}"> <img class="card-img-top" src="${path }/resources/upload/product/detail/${p.imgName}"
 										alt="">
 										<h4 class="text-black" style="color: black;"><c:out value="${p.productName }"/></h4>
 										<div>
@@ -170,12 +170,13 @@ a:hover {
 							<c:if test="${not empty soList }">
 								<c:forEach var="p" items="${soList }">
 									<div class="col-lg-4 col-md-6 mb-4">
-										<a href="${path }/store/moveDetail.do?productNo=${p.productNo}"> <img class="card-img-top" src="sea)연어.png"
+										<a href="${path }/store/moveDetail.do?productNo=${p.productNo}"> <img class="card-img-top" src="${path }/resources/upload/product/detail/${p.imgName}"
 											alt="">
 											<h4 class="text-black" style="color: black;"><c:out value="${p.productName }"/></h4>
 											<div>
-												 <span
-													style="font-weight: bold; color: black;">품절</span>
+												<svg height="1.5em" width="2.5em" class="rounded" style="background-color:#CCCCCC">
+												  <text x="4" y="18" class="font-weight-bold">품절</text>
+												</svg>
 											</div>
 											<div>
 												<small class="text-muted" style="font-weight: bold;">별점&#9733;4.0</small>

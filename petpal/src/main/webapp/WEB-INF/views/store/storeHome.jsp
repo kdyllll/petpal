@@ -163,7 +163,7 @@
 							<c:forEach var="p" items="${dList }" begin="0" end="2">
 							<div class="col-lg-4 col-md-6 mb-4">
 								<a href="${path }/store/moveDetail.do?productNo=${p.productNo}"> <img class="card-img-top"
-									src="resources/upload/product/detail/${p.fileName }" alt="">
+									src="${path }/resources/upload/product/detail/${p.imgName}" alt="">
 									<h4 class="text-black" style="color: black;"><c:out value="${p.productName }"/></h4>
 									<div>
 										<span style="font-weight: bold; color: #35c5f0;"><c:out value="${p.sale }"/>%</span> 
@@ -192,7 +192,7 @@
 							<c:forEach var="p" items="${cList }" begin="0" end="2">
 							<div class="col-lg-4 col-md-6 mb-4">
 								<a href="${path }/store/moveDetail.do?productNo=${p.productNo}"> <img class="card-img-top"
-									src="resources/upload/product/detail/${p.fileName }" alt="">
+									src="${path }/resources/upload/product/detail/${p.imgName}" alt="">
 									<h4 class="text-black" style="color: black;"><c:out value="${p.productName }"/></h4>
 									<div>
 										<span style="font-weight: bold; color: #35c5f0;"><c:out value="${p.sale }"/>%</span> 
@@ -220,7 +220,7 @@
 							<c:forEach var="p" items="${sList }" begin="0" end="2">
 							<div class="col-lg-4 col-md-6 mb-4">
 								<a href="${path }/store/moveDetail.do?productNo=${p.productNo}"> <img class="card-img-top"
-									src="resources/upload/product/detail/${p.fileName }" alt="">
+									src="${path }/resources/upload/product/detail/${p.imgName}" alt="">
 									<h4 class="text-black" style="color: black;"><c:out value="${p.productName }"/></h4>
 									<div>
 										<span style="font-weight: bold; color: #35c5f0;"><c:out value="${p.sale }"/>%</span> 
