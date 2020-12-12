@@ -19,4 +19,11 @@
 	<select id="tipDetail" parameterType="string" resultType="map">
 		SELECT * FROM TIPIMG WHERE TIPNO = #{tipNo}
 	</select>
+	<update id="updateTip" parameterType="tip">
+		
+	</update>
+	<update id="updateTipImg" parameterType="tipImg">
+		
+	</update>
+	
 </mapper>

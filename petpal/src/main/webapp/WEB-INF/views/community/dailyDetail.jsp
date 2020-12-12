@@ -74,7 +74,7 @@
                     </div>
                     <div class="d-flex justify-content-end align-items-center my-2 mr-4">
                       <span class="text-secondary">몇분전</span>
-                      <button type="button" class="btn btn-link text-black-50 p-0 ml-2" >신고</button> 
+                      <button type="button" class="btn btn-link text-black-50 p-0 ml-2"  onclick="fn_claimModal('147');">신고</button> 
                     </div>
                   
                   </div>
@@ -168,7 +168,7 @@
                  </div>
                  <div class="d-flex justify-content-end align-items-center">
                    <span class="text-secondary" style="font-size:14px;">몇분전</span>
-                   <button type="button" class="btn btn-link text-secondary" style="font-size: 14px;">신고</button>
+                   <button type="button" class="btn btn-link text-secondary" style="font-size: 14px;" onclick="fn_claimModal('147');">신고</button>
                  </div>
                </div>
          </div>
@@ -178,6 +178,9 @@
 
    </div>
  </div>
+ 
+ <jsp:include page="/WEB-INF/views/community/claim.jsp"/>
+
 </main>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

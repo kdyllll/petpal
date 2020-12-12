@@ -27,21 +27,22 @@
 				class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-5 "
 				style="height: 100vh; overflow-y: auto;">
 				<h2 class="my-3">상품관리</h2>
-				<div class="row align-items-center mb-3">
+				<form method="post" id="productSearchFrm" class="row align-items-center mb-3">
+					<button type="button" class="btn btn-outline-secondary col-lg-1 ml-3" id="searchAll">전체검색</button>
 					<div class="input-group   col-lg-5">
 						<input type="text" class="form-control input-group-sm"
-							placeholder="상품번호를 입력해주세요." aria-label="Recipient's username"
-							aria-describedby="button-addon2">
+							placeholder="상품이름을 입력해주세요." aria-label="Recipient's username"
+							aria-describedby="button-addon2" name="productName">
 						<div class="input-group-append">
 							<button class="btn btn-outline-secondary" type="button"
-								id="button-addon2">Button</button>
+								id="productSearchBtn">검색</button>
 						</div>
 					</div>
 					<button type="button"
 						class="btn btn-outline-secondary col-lg-1 mx-3"
 						data-toggle="modal" data-target="#staticBackdrop">상품등록</button>
 
-				</div>
+				</form>
 				<div class="table-responsive" style="min-height: 80vh;">
 					<table class="table mb-5">
 						<thead>
@@ -55,17 +56,17 @@
 							</tr>
 						</thead>
 						<tbody>
+							<c:if test="${empty pList }">검색된 조건 [<c:out value="${pdtName }" />]이 없습니다.</c:if>
 							<c:if test="${not empty pList }">
 								<c:forEach var="pdt" items="${pList }">
-
 									<tr>
-										<th scope="row" class="align-middle text-center">${pdt.PRODUCTNO }</th>
+										<th scope="row" class="align-middle text-center"><c:out value="${pdt.PRODUCTNO }"/></th>
 										<td class="text-center"><img
 											style="width: 100px; height: 100px;"
 											src="${path }/resources/upload/product/detail/${pdt.IMGNAME}"></td>
-										<td class="align-middle text-center">${pdt.PRODUCTNAME }</td>
-										<td class="align-middle text-center">${pdt.CATEGORYNAME }</td>
-										<td class="align-middle text-center">${pdt.ENROLLDATE }</td>
+										<td class="align-middle text-center"><c:out value="${pdt.PRODUCTNAME }"/></td>
+										<td class="align-middle text-center"><c:out value="${pdt.CATEGORYNAME }"/></td>
+										<td class="align-middle text-center"><fmt:formatDate value="${pdt.ENROLLDATE }" pattern="yyyy년MM월dd일" /></td>
 										<td class="align-middle text-center"><form method="post"
 												class="pdtFrm mb-0">
 												<input type="submit"
@@ -305,6 +306,14 @@
 	         		$('div.modalP').modal(); 
 				}
 			}) ;
+		})
+		
+		$("#productSearchBtn").on("click", function() {
+			$("#productSearchFrm").attr("action", "${path}/admin/productSearch.do").submit();
+		})
+		
+		$("#searchAll").on("click", function() {
+			$("#productSearchFrm").attr("action", "${path}/admin/moveAdminPage.do").submit();
 		})
   })
 </script>

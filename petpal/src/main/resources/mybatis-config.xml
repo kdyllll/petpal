@@ -20,6 +20,7 @@
 		<typeAlias type="com.project.petpal.store.model.vo.Stock" alias="storeStock"/>
 		<typeAlias type="com.project.petpal.admin.model.vo.ProductImg" alias="storeImg"/>
 		<typeAlias type="com.project.petpal.community.model.vo.Place" alias="place"/>
+		<typeAlias type="com.project.petpal.payment.model.vo.Cart" alias="cart"/>
 	</typeAliases>
 </configuration>
 

@@ -63,9 +63,8 @@
   		let email=$("#inputEmail").val();
   		let password=$("#inputPassword").val();
   		$.ajax({
-  				url: "${path}/store/payLogin.do",
+  				url: "${path}/login/loginModal.do",
   				data:{email:email,password:password},
-  				dataType:"text",
   				success:(data) => {
   				//확인 후 폼 전송
   			  		if(data===true){

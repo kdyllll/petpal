@@ -4,18 +4,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%
-	Member loginMember = (Member) session.getAttribute("loginMember");
-%>
+
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
  <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
-   
+
 </head>
 <body class="bg-white">
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
   
   <!-- Page Content -->
   <main role="main" class="pt-5" style="min-height:100vh;">
+  	  <input type="hidden" id="loginMember" value="${loginMember }"/>
       <form class="payFrm container mt-5 productHeader"> 
         <!-- <nav aria-label="breadcrumb ">
           <ol class="breadcrumb bg-transparent">
@@ -431,7 +430,7 @@
 
 </body>
 <script>
-		let loginMember=<%=loginMember%>;
+		let loginMember=$("#loginMember").val();
 		//수량 선택
 		//옵션이 없다면 바로 수량체크할 수 있게
 		if($("#color").length==0&&$("#size").length==0){
@@ -621,7 +620,7 @@
               return;
             }else{
             	//로그인 되어 있으면 바로 결제로 넘김
-            	if(loginMember!=null){
+            	if(loginMember!=""){
             		$(".payFrm").attr("action","${path}/payment/payment.do").submit();
             	}else{
             		console.log("로그인안됨");

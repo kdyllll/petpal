@@ -52,6 +52,7 @@
 			<div id="down" class="float-none" style="display: table; height: 300px; width: 100%; position: relative;">
 				<c:forEach items="${imgList }" var="t">
 					<c:if test="${not empty t.MAINIMG }">
+						<input type="file" name="mainImg" id="prev" style="display: none">
 						<img src="${path}/resources/upload/tip/${t.MAINIMG}" class="img-fluid" style="max-height: auto; height : 300px; width : 100%;">
 						<div id="change">
 						<button type="button" id="imgChange" class="btn btn-dark col-auto" onclick="changeMainImg();">
@@ -298,24 +299,24 @@
 		        function selectCheck(){
                 	var select = document.getElementById("select");
                 	var selected = select.options[select.selectedIndex].value;
-                	var down = $("#down").val();
                 	var file = $("#file").val();
                 	
-                	event.preventDefault();
+                	/* event.preventDefault(); */
                 	
                 	if(selected === ""){
 			        	if(window.confirm("카테고리가 변경되지 않았습니다. 카테고리를 변경하지 않고 수정하시겠습니까?")){
-			        		select.options[select.selectedIndex].value="0";
-			        		event.preventDefault();
 			        	}else{
 			        		alert("카테고리를 선택해주세요");
 				        	event.preventDefault();
 			        	}
                 	}
-                	if(down === ""){
-                		alert("되냐?");
-			        	$("#down") = "0";
-			        	event.preventDefault();
+                	if(file === ""){
+                		if(window.confirm("메인사진이 변경되지 않았습니다. 메인사진을 변경하지 않고 수정하시겠습니까?")){
+                			
+                		}else{
+                			alert("메인사진을 변경해주세요");
+				        	event.preventDefault();
+                		}
                 	}
 	        	}
 		        
