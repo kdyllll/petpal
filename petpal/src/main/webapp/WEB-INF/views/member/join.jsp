@@ -197,6 +197,7 @@ input[type="checkbox"]:checked+svg {
 	});
 	//회원가입버튼 눌렀을때
 	function join(){
+		
 		/* var phone=$("#phone").val();//핸드폰번호값
 		var regphone=/^010([0-9]{8})$/;//핸드폰번호 정규표현식
 		var regPw = /^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/;

@@ -19,9 +19,8 @@ input:focus {
 		<section class="mt-5 pt-5">
 			<div class="container">
 				<div class="mb-5 mb-lg-1 ">
-					<form id="writeFrm" class=" mt-5" method="post" 
-						action="${path }/community/placePostWriteEnd.do"
-						enctype="multipart/form-data">
+					<form id="writeFrm" class=" mt-5" method="post" enctype="multipart/form-data"
+						action="${path }/place/placeWriteEnd.do">
 						<p class="col-12 h2 mb-5 mt-2">
 							<strong>장소 후기 올리기</strong>
 						</p>
@@ -36,7 +35,7 @@ input:focus {
 									style="height: 45px;">
 							</div>
 							<div class="col-12 col-md-4 mb-3">
-								<select class="rounded" id="category"
+								<select class="rounded" id="category" name="category"
 									style="height: 45px; width: 70%; border: 1px solid #ced4da"
 									required>
 									<option value="">카테고리를 선택해주세요</option>
@@ -61,7 +60,7 @@ input:focus {
 									id="sample6_detailAddress" placeholder="상세주소">
 							</div>
 							<div class="mb-4 col-8">
-								<input type="text" placeholder="장소에 대한 설명" class="form-control input-lg">
+								<input type="text" placeholder="장소에 대한 설명" class="form-control input-lg" name="explanation">
 							</div>
 						</div>
 						
@@ -71,7 +70,7 @@ input:focus {
 									<div id="hide">
 										<label id="uploadLabel"
 											class="btn rounded bg-light col-12 col-lg-10 border d-flex justify-content-center align-items-center"
-											style="height: 206px;"> <input name="pic"
+											style="height: 206px;"> <input name="p"
 											class="d-none upload" id="upload" type="file"
 											accept="images/*" />
 											<div>
@@ -132,6 +131,7 @@ input:focus {
 	</div>
 </body>
 <script>
+	
 	 $(function(){
 		
 	 }); 
@@ -185,6 +185,9 @@ input:focus {
 	    };
 	    //사진 삭제
 	    $(document).on('click','.del',function(e){
+	    	console.log($(".upload")[0].files);
+	    	console.log($("input[name=p]").files);
+	    	console.log($("#upload").files);
 	    	 let previewDiv=$(e.target).parents("div.remove");
 	    	previewDiv.remove();//div삭제
 	    	
@@ -269,10 +272,10 @@ input:focus {
 	    $(".delete").click(function(e){
 	      $(e.target).parents(".tagBox").remove();
 	    });
-	    
+	    //작성버튼 눌렀을때
 	    $("#btn").on("click",e=>{ 
 	       //등록 누르면 사진 인풋태그에 id 순서대로 부여
-	      /* if($("#title").val().trim()==""){
+	       if($("#title").val().trim()==""){
 	    	  alert("제목을 입력해주세요");
 	    	  return;
 	      }
@@ -282,14 +285,16 @@ input:focus {
 			} 
 	    	if($("#category").val()==""){
 	    	  alert("카테고리를 선택해주세요");
+	    	  return;
 	      }
 	      if($(".previewImg").length==0){
 	    	  alert("사진을 올려주세요.");
-	      }*/
+	    	  return;
+	      }
 	      
 	    	
 	       //등록 누르면 form 전송
-	       //$("#writeFrm").submit();
+	       $("#writeFrm").submit();
 	      
 	    });
 
