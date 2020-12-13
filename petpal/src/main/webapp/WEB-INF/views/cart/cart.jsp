@@ -153,8 +153,8 @@
 		console.log("총가격함수실행");
 		var total=0;
 		$("input[name=check]:checked").each((i,item)=>{
-			//console.log($(item));
-			//console.log($(item).parents(".proCon").find("span.price").text().trim());
+			console.log($(item));
+			console.log($(item).parents(".proCon").find("span.price").text().trim());
 			total=total+parseInt($(item).parents(".proCon").find("span.price").text().trim());
 		});
 		console.log("총금액"+total);
