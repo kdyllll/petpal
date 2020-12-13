@@ -22,6 +22,6 @@ public class Product {
 	private int price;
 	private int sale;
 	private int star;
-	
+	private String imgName;
 	
 }
