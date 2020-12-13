@@ -35,6 +35,7 @@
 	
 	$( document ).ready( function() {
         $('#all_select').click( function() {
+        	
           $('.ch').prop('checked', this.checked );
           
           totalProduct = 0;
@@ -53,7 +54,9 @@
 	         };
 			
 	         $(".pay").text(c + "개 상품 구매하기").css({"font-weight":"bold"});
-          
+	         
+	       //여기에서 실행-------------------------------------------------------------------------------
+	         fn_checkPrice();
         } );
         
         var objs = document.querySelectorAll(".ch");
@@ -89,6 +92,7 @@
      	
      	
 		$(".count").click(function(){
+			
 			<c:forEach items="${list}" var="c">
 		     	count = $(this).val();
 	     		price = ${c.PRICE};
@@ -105,10 +109,16 @@
 	     	$(".totalProduct").text(totalProduct);
 	     	$(".totalPrice").text(totalProduct+3000);
 	     	
+	     	
+	     	
+	     	
+	     	//여기에서 실행-------------------------------------------------------------------------------
+	     	fn_checkPrice();
 		});
 		
 		
 		$('.ch').click( function() {
+			
 			var objs = document.querySelectorAll(".ch");
 			var c = 0;
 			
@@ -125,16 +135,32 @@
 			}
 			$(".totalProduct").text(totalProduct);
 			$(".totalPrice").text(totalProduct+3000);
+			
+			//여기에서 실행-------------------------------------------------------------------------------
+			fn_checkPrice();
 	     });
-		$('.ch').click( function() {
+		 $('.ch').click( function() {
 			if($(this).prop("checked") === true){
 				totalProduct = totalProduct + parseInt($(this).parent().nextAll().find('.price').text().trim());
 			}
 			$(".totalProduct").text(totalProduct);
 			$(".totalPrice").text(totalProduct+3000);
-	     });
+	     }); 
 		 
  	});
+	
+	function fn_checkPrice(){
+		console.log("총가격함수실행");
+		var total=0;
+		$("input[name=check]:checked").each((i,item)=>{
+			console.log($(item));
+			console.log($(item).parents(".proCon").find("span.price").text().trim());
+			total=total+parseInt($(item).parents(".proCon").find("span.price").text().trim());
+		});
+		console.log("총금액"+total);
+		
+		
+	}
 </script>
 
 
@@ -192,8 +218,8 @@
 									<p>장바구니가 비었습니다.</p>
 								</c:when>
 								<c:otherwise>
-									<div class="p-3 border border-dark rounded mb-4">
-										<div class="mt-2 d-flex align-items-start float-left" >
+									<div class="proCon p-3 border border-dark rounded mb-4">
+										<div class="checkCon mt-2 d-flex align-items-start float-left" >
 											<input type="checkbox" class="ch mr-2" style="width:20px; height: 20px;" name="check" checked>
 										</div>
 										<div class="d-flex mt-2">
@@ -227,7 +253,7 @@
 													<button type="button" class="btn btn-light"><span>x</span></button>
 												</div>
 											</div>
-											<div class="d-flex p-3">
+											<div class="d-flex p-3 priceCon">
 													<div>
 						                                <input class="count" type="number" value="${c.COUNT }" min="1" max="100">
 						                             </div>
