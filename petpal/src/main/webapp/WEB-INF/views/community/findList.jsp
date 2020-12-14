@@ -10,8 +10,8 @@
 <body class="bg-white">
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
-	<main role="main" style="min-height: 100vh;">
-		<div class="album bg-light">
+	<main role="main" class="bg-light" style="min-height: 100vh;">
+		<div class="album ">
 			<div class="container my-4 mt-lg-0">
 				<div class="row ">
 					<div class="col-lg-12 my-5 mt-lg-0 ">
@@ -31,21 +31,15 @@
 						</div>
 					</div>
 					<div class="form-inline container text-center mb-3">
-						<h3>테마별 노하우</h3>
+						<h3>찾아주세요</h3>
 						<button type="button" class="btn btn-outline-secondary ml-auto"
-							onclick="location.replace('${path}/community/tipWrite.do')">글쓰기</button>
+							onclick="location.replace('${path}/community/findWrite.do')">글쓰기</button>
 					</div>
 					<div class="form-inline container-xl mb-5">
 						<button type="button" class="btn btn-outline-secondary mr-2">전체</button>
-						<button type="button" class="btn btn-outline-secondary mr-2">훈련</button>
-						<button type="button" class="btn btn-outline-secondary mr-2">수제간식</button>
-						<button type="button" class="btn btn-outline-secondary mr-2">DIY
-							옷</button>
-						<button type="button" class="btn btn-outline-secondary mr-2">DIY
-							가구</button>
-						<button type="button" class="btn btn-outline-secondary mr-2">건강</button>
-						<button type="button" class="btn btn-outline-secondary mr-2">팁</button>
-						<button type="button" class="btn btn-outline-secondary mr-2">기타</button>
+						<button type="button" class="btn btn-outline-secondary mr-2">강아지</button>
+						<button type="button" class="btn btn-outline-secondary mr-2">고양이</button>
+						<button type="button" class="btn btn-outline-secondary mr-2">소동물</button>
 
 						<div class="dropdown ml-auto">
 							<button class="btn btn-light dropdown-toggle" type="button"
@@ -89,30 +83,6 @@
 							</div>
 						</div>
 					</div>
-
-					<c:forEach items="${list }" var="t">
-						<c:if test="${not empty t.MAINIMG }">
-							<div class="col-xl-3 col-lg-4 col-md-6" style="cursor: pointer"
-								id="img"
-								onclick="location.replace('${path}/community/tipDetail.do?tipNo=${t.TIPNO}')">
-								<div class="card mb-4 bg-transparent border-0">
-									<div class="test">
-										<img src="${path}/resources/upload/tip/${t.MAINIMG}"
-											id="scale" width="100%" height="225">
-									</div>
-									<div class="card-body">
-										<p class="card-text">
-											<c:out value="${t.TITLE }" />
-										</p>
-										<div class="d-flex justify-content-between align-items-center">
-											<small class="text-muted"> <label>조회수 0 </label> <label>스크랩
-													0 </label></small>
-										</div>
-									</div>
-								</div>
-							</div>
-						</c:if>
-					</c:forEach>
 
 
 					<style>
