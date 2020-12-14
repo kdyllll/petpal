@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.project.petpal.store.model.dao.StoreDao;
 import com.project.petpal.store.model.vo.Product;
 import com.project.petpal.store.model.vo.ProductImg;
+import com.project.petpal.store.model.vo.Review;
 import com.project.petpal.store.model.vo.Stock;
 
 @Service
@@ -76,6 +77,18 @@ public class StoreServiceImpl implements StoreService{
 	public int insertCart(Map m) {
 		// TODO Auto-generated method stub
 		return dao.insertCart(session,m);
+	}
+
+	@Override
+	public String payCheck(Map m) {
+		// TODO Auto-generated method stub
+		return dao.payCheck(session,m);
+	}
+
+	@Override
+	public int insertReview(Review r) {
+		// TODO Auto-generated method stub
+		return dao.insertReview(session,r);
 	}
 
 }

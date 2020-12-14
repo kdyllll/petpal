@@ -66,7 +66,7 @@
           </div>
           <!-- 상품 정보들 -->
           <div class="col-lg-6 ">
-          	
+          	<input type="hidden" id="productNo" value="${product.productNo }"/>
             <p id="productName" class="h3">               
                   <c:out value="${product.productName}"/>
             </p>
@@ -235,7 +235,7 @@
                   <span class="text-info pl-3">0</span>
                   <span class="text-info pl-3">★★★☆☆</span>
                 </p>
-                <button type="button" class="btn btn-link text-info" data-toggle="modal" ><strong>리뷰 쓰기</strong></button>
+                <button type="button" class="btn btn-link text-info" data-toggle="modal" id="reviewBtn" ><strong>리뷰 쓰기</strong></button>
               </div>
               <!--리뷰창-->
               <article class="px-4 mb-3 pb-3 border-bottom">
@@ -579,6 +579,7 @@
 		
         
         //모달즈
+        let productNo=$("#productNo").val();
         //장바구니 모달
         $("#cartBtn").on("click",e=>{
             if($(".orderBox").length==0){
@@ -619,31 +620,51 @@
               alert("상품을 선택하세요.");
               return;
             }else{
-            	//로그인 되어 있으면 바로 결제로 넘김
-            	if(loginMember!=""){
+            	if(loginMember!=""){ //로그인 되어 있으면 바로 결제로 넘김
             		$(".payFrm").attr("action","${path}/payment/payment.do").submit();
-            	}else{
-            		console.log("로그인안됨");
-		            //로그인 안되어 있으면 로그인 모달 띄우기
-            		$.ajax({
-        				url: "${path}/store/movePayLogin.do",
-        				dataType:"html",
-        				success:(data) => {
-        					$(".pdtModal").html(data);	
-        	         		$('div.modal').modal(); 
-        				}
-        			});
+            	}else{ //로그인 안되어 있으면 로그인 모달 띄우기	           
+            		function loginModal(){
+            			$.ajax({
+            				url: "${path}/store/movePayLogin.do",
+            				dataType:"html",
+            				success:(data) => {
+            					$(".pdtModal").html(data);	
+            	         		$('div.modal').modal(); 
+            				}
+            			});
+            		};
             	};
             };
           });
         //리뷰 작성 모달
-        
+        $("#reviewBtn").on("click",e=>{                    	
+            	if(loginMember!=""){ //로그인 되어 있으면 바로 리뷰모달로 넘김
+            		//이 물건을 구매한 사용자인지 확인(이것도 에이작스해야할듯)
+ /*            		$.ajax({
+          				url: "${path}/store/payCheck.do",
+          				data:{productNo:productNo},
+          				success:(data) => {
+          			  		if(data==true){//구매내역이 있으면 */
+          			  			ajaxModal("${path}/store/moveReview.do");
+          			 /*    	}else{//구매내역이 없으면
+          			            alert("구매 내역이 없습니다.");
+          			    	};
+          				}
+          			}); */
+            	}else{//로그인 안되어 있으면 로그인 모달 띄우기		            
+            		loginModal();
+            	};
+            
+          });
         //문의 작성 모달
         
-        function ajaxModal(path, subData){
+        
+        
+        function ajaxModal(path){
+        
 			$.ajax({
 				url: path,
-				data:subData,
+				data:{productNo:productNo},
 				dataType:"html",
 				success:(data) => {
 					console.log(data);
@@ -651,7 +672,19 @@
 	         		$('div.modal').modal(); 
 				}
 			});
-		}
+		};
+		
+		//로그인모달
+		function loginModal(){
+			$.ajax({
+				url: "${path}/login/moveLogin.do",
+				dataType:"html",
+				success:(data) => {
+					$(".pdtModal").html(data);	
+	         		$('div.modal').modal(); 
+				}
+			});
+		};
         
 </script>
 

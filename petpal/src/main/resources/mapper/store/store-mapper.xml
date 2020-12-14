@@ -36,4 +36,19 @@ WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK 
 	<insert id="insertCart" parameterType="map">
 		INSERT INTO CART VALUES(#{memberNo},#{stockNo},#{cnt})
 	</insert>
+	<select id="payCheck" resultType="string" parameterType="map">
+		SELECT PAYMENTNO FROM PAYMENT LEFT JOIN PAYDETAIL USING(PAYMENTNO) LEFT JOIN STOCK USING(STOCKNO) WHERE MEMBERNO=#{memberNo} AND PRODUCTNO=#{productNo};
+	</select>
+	<insert id="insertReview" parameterType="review">
+		INSERT INTO REVIEW VALUES(SEQ_REVIEWNO.NEXTVAL,#{productNo},#{memberNo},#{content},SYSDATE,#{star},
+		<choose>
+			<when test="fileName!=null">
+				#{fileName}
+			</when>
+			<otherwise>
+				NULL
+			</otherwise>
+		</choose>
+		,NULL)
+	</insert>
 </mapper>

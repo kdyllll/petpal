@@ -47,4 +47,9 @@ public class MemberAjaxController {
 			return false;
 		}
 	};
+	
+	@RequestMapping("/login/moveLogin.do")
+	public String moveLogin() {
+		return "common/commonAjax/loginModal";
+	}
 }
