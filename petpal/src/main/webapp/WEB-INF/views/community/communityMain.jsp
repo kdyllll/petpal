@@ -11,7 +11,7 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 	<main role="main" style="min-height: 100vh;">
-		<div class="album pb-5 bg-light">
+		<div class="album bg-light">
 			<div class="container my-4 mt-lg-0">
 				<div class="row ">
 					<div class="col-lg-12 my-5 mt-lg-0 ">
