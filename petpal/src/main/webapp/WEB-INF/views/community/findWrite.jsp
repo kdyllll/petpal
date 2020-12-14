@@ -135,7 +135,7 @@
 							</div>
 
 
-
+							<input type="hidden" name="memberNo" value="${loginMember.getMemberNo() }">
 							<div class="d-flex justify-content-end my-5">
 								<button type="submit" id="writeEnd" class="mt-5 btn btn-outline-secondary"> 작성하기 </button>
 							</div>
