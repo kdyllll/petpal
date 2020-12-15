@@ -5,12 +5,42 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
+<style>
+.dropdown .dropdown-menu {
+	display: block;
+	opacity: 0;
+	transition: all 700ms ease;
+}
 
+.dropdown:hover .dropdown-menu {
+	display: block;
+	opacity: 1;
+}
+
+.test {
+	width: 100%;
+	height: 225px;
+	overflow: hidden;
+}
+
+#scale {
+	transition: all 0.5s;
+}
+
+#scale:hover {
+	transform: scale(1.1);
+	-webkit-transform: scale(1.1);
+	-moz-transform: scale(1.1);
+	-ms-transform: scale(1.1);
+	-o-transform: scale(1.1);
+}
+
+</style>
 </head>
 <body class="bg-white">
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
-	<main role="main" class="bg-light" style="min-height: 100vh;">
+	<main role="main" class="bg-white">
 		<div class="album ">
 			<div class="container my-4 mt-lg-0">
 				<div class="row ">
@@ -52,60 +82,22 @@
 								<button class="dropdown-item">스크랩순</button>
 							</div>
 						</div>
-						<style>
-.dropdown .dropdown-menu {
-	display: block;
-	opacity: 0;
-	transition: all 700ms ease;
-}
 
-.dropdown:hover .dropdown-menu {
-	display: block;
-	opacity: 1;
-}
-</style>
 					</div>
 
-					<div class="col-xl-3 col-lg-4 col-md-6" style="cursor: pointer"
-						id="img"
-						onclick="location.replace('${path}/community/tipDetail.do')">
-						<div class="card mb-4 bg-transparent border-0">
-							<div class="test">
-								<img src="${path }/resources/images/test.jpg" id="scale"
-									width="100%" height="225">
-							</div>
+				</div>
+				<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+					<div class="col mb-4">
+						<div class="card h-100 border-0 " style="overflow: hidden;">
+							<span>ddd</span> <a href="${path}/community/findDetail.do"><img
+								src="..." alt="..." style="width: 100%; height: 200px;"></a>
 							<div class="card-body">
-								<p class="card-text">제목</p>
-								<div class="d-flex justify-content-between align-items-center">
-									<small class="text-muted"> <label>조회수 0 </label> <label>스크랩
-											0 </label></small>
-								</div>
+								<h5 class="card-title">제목</h5>
+								<p class="card-text">내용</p>
+								<span class="">장소</span>
 							</div>
 						</div>
 					</div>
-
-
-					<style>
-.test {
-	width: 100%;
-	height: 225px;
-	overflow: hidden;
-}
-
-#scale {
-	transition: all 0.5s;
-}
-
-#scale:hover {
-	transform: scale(1.1);
-	-webkit-transform: scale(1.1);
-	-moz-transform: scale(1.1);
-	-ms-transform: scale(1.1);
-	-o-transform: scale(1.1);
-}
-</style>
-
-
 				</div>
 			</div>
 		</div>

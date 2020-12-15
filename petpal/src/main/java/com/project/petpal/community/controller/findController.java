@@ -87,4 +87,9 @@ public class findController {
 		
 		return "common/msg";
 	}
+	
+	@RequestMapping("/community/findDetail.do")
+	public String findDetail() {
+		return "community/findDetail";
+	}
 }
