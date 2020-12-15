@@ -23,6 +23,7 @@ import com.project.petpal.member.model.vo.Member;
 import com.project.petpal.store.model.service.StoreService;
 import com.project.petpal.store.model.vo.Product;
 import com.project.petpal.store.model.vo.ProductImg;
+import com.project.petpal.store.model.vo.Stock;
 
 @Controller
 public class StoreAjaxController {
@@ -103,23 +104,33 @@ public class StoreAjaxController {
 	}
 	
 	@RequestMapping("/store/moveReview.do")
-	public String moveReview(String productNo,Model m) {
+	public String moveReview(String productNo,String detailNo,Model m) {
 		Product p=service.selectProduct(productNo);
 		List<ProductImg> list=service.selectImg(productNo);
+		Stock s=service.selectStock(detailNo);
 		m.addAttribute("product",p);
 		m.addAttribute("img",list.get(0));
+		m.addAttribute("detailNo",detailNo);
+		m.addAttribute("stock",s);
 		return "store/storeAjax/reviewModal";
 	}
 	
 	@RequestMapping("/store/payCheck.do")
 	@ResponseBody
-	public Boolean payCheck(HttpSession session,String productNo) {
+	public List<String> payCheck(HttpSession session,String productNo) {
+		//2주안에 구매내역이 있는지(몇개인지) -> 그 중 리뷰 안쓴 건 몇개인지 찾기~~
 		Member loginMember=(Member)session.getAttribute("loginMember");
 		Map m=new HashMap();
 		m.put("productNo", productNo);
 		m.put("memberNo",loginMember.getMemberNo());
-		String paymentNo=service.payCheck(m);
-		return paymentNo!=null?true:false;
+		List<String> list=service.payCheck(m); //2주안에 구매한 것 중 리뷰 쓰지 않은 구매내역의 결제상세번호들
+		return list;
+	}
+	
+	@RequestMapping("/store/moveReviewSelect.do")
+	public String moveReviewSelect(HttpSession session,String productNo,Model m) {
+		//
+		return "store/storeAjax/reviewSelectModal";
 	}
 	
 

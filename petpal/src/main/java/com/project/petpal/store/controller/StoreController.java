@@ -67,6 +67,9 @@ public class StoreController {
 		List<String> sizes=new ArrayList(sizeSet);
 		//일상글 가져오기
 		
+		//리뷰 가져오기
+		List<Review> reviews=service.selectReview(productNo);
+		//문의 가져오기
 		
 		m.addAttribute("product",p);
 		m.addAttribute("imgs",pImg);
@@ -74,6 +77,7 @@ public class StoreController {
 		m.addAttribute("jsonStock",new Gson().toJson(list));
 		m.addAttribute("colors",colors);
 		m.addAttribute("sizes",sizes);
+		m.addAttribute("reviewList",reviews);
 		
 		return "store/productDetail";
 	}
@@ -95,15 +99,15 @@ public class StoreController {
 	}
 	
 	@RequestMapping("/store/reviewEnd.do") 
-	public String insertReview(HttpSession session, Model m, String star, String content, String productNo,
+	public String insertReview(HttpSession session, Model m, String star, String content, String productNo, String detailNo,
 			@RequestParam(value="reviewImg", required=false) MultipartFile reviewImg) {
 		Member loginMember=(Member)session.getAttribute("loginMember");
 		
 		Review r=new Review();
+		r.setDetailNo(detailNo);
+		r.setMemberNo(loginMember.getMemberNo());
 		r.setContent(content);
 		r.setStar(Integer.parseInt(star));
-		r.setMemberNo(loginMember.getMemberNo());
-		r.setProductNo(productNo);
 		String path=session.getServletContext().getRealPath("/resources/upload/store/review");		
 		File dir=new File(path);
 		if(!dir.exists()) dir.mkdirs();//폴더를 생성

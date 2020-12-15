@@ -18,8 +18,12 @@
 	      <div>
 	        <div class="form-group row pb-3 border-bottom d-flex align-items-center">
 	          <img src="${path }/resources/upload/product/detail/${img.imgName}" class="rounded d-block w-100 col-4">
-	          <p class="align-middle mb-0"><c:out value="${product.productName }"/></p>
+	          <div class="align-middel">
+		          <p class="mb-0"><c:out value="${product.productName }"/></p>
+		          <p class="mb-0"><c:out value="${stock.color}"/> <c:out value="${stock.productSize}"/></p>
+	          </div>
 	          <input type="hidden" name="productNo" value="${product.productNo }"/>
+	          <input type="hidden" name="detailNo" value="${detailNo }"/>
 	        </div>
 	        <div class="form-group">
 	          <label for="recipient-name" class="col-form-label"><strong>별점 평가</strong></label>

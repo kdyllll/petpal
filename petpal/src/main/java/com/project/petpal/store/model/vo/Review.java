@@ -13,8 +13,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Review {
 	private String reviewNo;
-	private String productNo;
+	private String detailNo;
 	private String memberNo;
+	private String nickName;
+	private String img;
 	private String content;
 	private Date enrollDate;
 	private int star;

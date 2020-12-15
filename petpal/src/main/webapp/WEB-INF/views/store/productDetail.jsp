@@ -238,36 +238,37 @@
                 <button type="button" class="btn btn-link text-info" data-toggle="modal" id="reviewBtn" ><strong>리뷰 쓰기</strong></button>
               </div>
               <!--리뷰창-->
-              <article class="px-4 mb-3 pb-3 border-bottom">
-                <div class="row pl-2">
-                  <a href="" class="rounded-circle pr-3">
-                    <img src="./img/avatar.webp" width="30px;">
-                  </a>                  
-                  <div style="font-size: 12px;">
-                    <p class="my-0">작성자</p>
-                    <div ><span class="text-info">★★★☆☆</span> <span>구매날짜</span></div>
-                  </div>
-                </div>
-                <div class="my-2"> 옵션 </div>
-                <img src=""  width="150px" class="rounded mb-3">
-                <p>똥강아지 너무 좋아하고 좀 큰거 같은데 넘 편해보이고 좋으네요 한번 잘 써보겠습니다</p>
-                <div class="text-right">
-                  <a class="text-info text-right pb-2 pr-4"  style="font-size: 12px;" data-toggle="collapse" href="#replyWrite" role="button" aria-expanded="false" aria-controls="collapseExample">답글 수정(판매자만)</a>
-                  <a class="text-info text-right pb-2"  style="font-size: 12px;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    <strong>판매자 답글</strong>
-                  </a>
-                </div>
-                <div class="collapse py-3 mt-2 pr-3 bg-light rounded text-right" id="collapseExample">
-                  <p class="mb-0">구매해주셔서 감사합니다. </p>
-                </div>
-                <form class="collapse  mt-2 p-3 pb-0 bg-light rounded text-right" id="replyWrite">
-                  <div class="form-group">
-                    <textarea class="form-control" rows="2" style="resize:none;" placeholder="구매해주셔서 감사합니다."></textarea>
-                    <button type="button" class="btn btn-primary mt-2">완료</button>
-                  </div> 
-                </form>               
-              </article>
-
+              <c:forEach var="r" items="${reviewList }"> 
+	              <article class="px-4 mb-3 pb-3 border-bottom">
+	                <div class="row pl-2">
+	                  <a href="" class="rounded-circle pr-3">
+	                    <img src="${path }/resources/upload/member/profile/${r.img}" width="30px;">
+	                  </a>                  
+	                  <div style="font-size: 12px;">
+	                    <p class="my-0"><c:out value="${r.nickName}"/></p>
+	                    <div ><span class="text-info">★★★☆☆</span> <span><c:ouy value=""/></span></div>
+	                  </div>
+	                </div>
+	                <div class="my-2"> 옵션 </div>
+	                <img src="${path }/resources/upload/store/review/${r.fileName}"  width="150px" class="rounded mb-3">
+	                <p><c:out value="${r.content }"/></p>
+	                <div class="text-right">
+	                  <a class="text-info text-right pb-2 pr-4"  style="font-size: 12px;" data-toggle="collapse" href="#replyWrite" role="button" aria-expanded="false" aria-controls="collapseExample">답글 수정(판매자만)</a>
+	                  <a class="text-info text-right pb-2"  style="font-size: 12px;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+	                    <strong>판매자 답글</strong>
+	                  </a>
+	                </div>
+	                <div class="collapse py-3 mt-2 pr-3 bg-light rounded text-right" id="collapseExample">
+	                  <p class="mb-0">구매해주셔서 감사합니다. </p>
+	                </div>
+	                <form class="collapse  mt-2 p-3 pb-0 bg-light rounded text-right" id="replyWrite">
+	                  <div class="form-group">
+	                    <textarea class="form-control" rows="2" style="resize:none;" placeholder="구매해주셔서 감사합니다."></textarea>
+	                    <button type="button" class="btn btn-primary mt-2">완료</button>
+	                  </div> 
+	                </form>               
+	              </article>
+				</c:forEach>
               <article class="px-4 mb-3 pb-3 border-bottom">
                 <div class="row pl-2">
                   <a href="" class="rounded-circle pr-3">
@@ -640,17 +641,43 @@
         $("#reviewBtn").on("click",e=>{                    	
             	if(loginMember!=""){ //로그인 되어 있으면 바로 리뷰모달로 넘김
             		//이 물건을 구매한 사용자인지 확인(이것도 에이작스해야할듯)
- /*            		$.ajax({
+             		$.ajax({
           				url: "${path}/store/payCheck.do",
           				data:{productNo:productNo},
-          				success:(data) => {
-          			  		if(data==true){//구매내역이 있으면 */
-          			  			ajaxModal("${path}/store/moveReview.do");
-          			 /*    	}else{//구매내역이 없으면
+          				success:(data) => {//data는 list임
+          			  		if(data!=null){//2주안에 리뷰를 안 쓴 구매내역이 있으면 
+          			  			if(data.length>1){//구매내역이 여러개라면 
+          			  				//어떤 내역을 쓸건지 선택하는 모달
+	          			  			$.ajax({
+		          						url: "${path}/store/moveReviewSelect.do",
+		          						data:{productNo:productNo},
+		          						dataType:"html",
+		          						success:(data) => {
+		          							console.log(data);
+		          							$(".pdtModal").html(data);
+		          			         		$('div.modal').modal(); 
+		          						}
+		          					});
+          			  			}else{//구매내역이 한개라면
+          			  				//리뷰 작성 모달
+          			  				$.ajaxSettings.traditional = true;
+		          			  		$.ajax({
+		          						url: "${path}/store/moveReview.do",
+		          						data:{productNo:productNo, detailNo:data[0]},
+		          						dataType:"html",
+		          						success:(data) => {
+		          							console.log(data);
+		          							$(".pdtModal").html(data);
+		          			         		$('div.modal').modal(); 
+		          						}
+		          					});
+          			  			}
+          			  			
+          			     	}else{//구매내역이 없으면
           			            alert("구매 내역이 없습니다.");
           			    	};
           				}
-          			}); */
+          			}); 
             	}else{//로그인 안되어 있으면 로그인 모달 띄우기		            
             		loginModal();
             	};

@@ -74,7 +74,7 @@ public class StoreDaoImpl implements StoreDao{
 	}
 
 	@Override
-	public String payCheck(SqlSession session, Map m) {
+	public List<String> payCheck(SqlSession session, Map m) {
 		// TODO Auto-generated method stub
 		return session.selectOne("store.payCheck",m);
 	}
@@ -83,6 +83,18 @@ public class StoreDaoImpl implements StoreDao{
 	public int insertReview(SqlSession session, Review r) {
 		// TODO Auto-generated method stub
 		return session.insert("store.insertReview",r);
+	}
+
+	@Override
+	public List<Review> selectReview(SqlSession session, String productNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("store.selectReview",productNo);
+	}
+
+	@Override
+	public Stock selectStock(SqlSession session, String detailNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("store.selectStock",detailNo);
 	}
 
 }

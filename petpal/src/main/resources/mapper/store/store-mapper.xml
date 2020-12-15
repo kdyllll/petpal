@@ -37,10 +37,12 @@ WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK 
 		INSERT INTO CART VALUES(#{memberNo},#{stockNo},#{cnt})
 	</insert>
 	<select id="payCheck" resultType="string" parameterType="map">
-		SELECT PAYMENTNO FROM PAYMENT LEFT JOIN PAYDETAIL USING(PAYMENTNO) LEFT JOIN STOCK USING(STOCKNO) WHERE MEMBERNO=#{memberNo} AND PRODUCTNO=#{productNo};
+		SELECT DETAILNO FROM PAYMENT LEFT JOIN PAYDETAIL USING(PAYMENTNO) LEFT JOIN STOCK USING(STOCKNO) 
+		WHERE MEMBERNO=#{memberNo} AND PRODUCTNO=#{productNo} AND FLOOR(SYSDATE-PAYDATE)<![CDATA[<]]>14
+		AND DETAILNO IN(SELECT DETAILNO FROM PAYDETAIL LEFT JOIN REVIEW USING(DETAILNO) WHERE REVIEWNO IS NULL)
 	</select>
 	<insert id="insertReview" parameterType="review">
-		INSERT INTO REVIEW VALUES(SEQ_REVIEWNO.NEXTVAL,#{productNo},#{memberNo},#{content},SYSDATE,#{star},
+		INSERT INTO REVIEW VALUES(SEQ_REVIEWNO.NEXTVAL,#{detailNo},#{memberNo},#{content},SYSDATE,#{star},
 		<choose>
 			<when test="fileName!=null">
 				#{fileName}
@@ -51,4 +53,10 @@ WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK 
 		</choose>
 		,NULL)
 	</insert>
+	<select id="selectReview" resultType="review" parameterType="string">
+		SELECT * FROM REVIEW LEFT JOIN MEMBER USING(MEMBERNO) LEFT JOIN PAYDETAIL USING(DETAILNO) LEFT JOIN STOCK USING(STOCKNO) WHERE PRODUCTNO=#{productNo}
+	</select>
+	<select id="selectStock" resultType="storeStock" parameterType="string">
+		SELECT * FROM PAYDETAIL LEFT JOIN STOCK USING(STOCKNO) WHERE DETAILNO=#{detailNo}
+	</select>
 </mapper>

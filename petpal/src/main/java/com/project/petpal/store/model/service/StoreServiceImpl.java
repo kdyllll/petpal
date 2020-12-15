@@ -80,7 +80,7 @@ public class StoreServiceImpl implements StoreService{
 	}
 
 	@Override
-	public String payCheck(Map m) {
+	public List<String> payCheck(Map m) {
 		// TODO Auto-generated method stub
 		return dao.payCheck(session,m);
 	}
@@ -89,6 +89,18 @@ public class StoreServiceImpl implements StoreService{
 	public int insertReview(Review r) {
 		// TODO Auto-generated method stub
 		return dao.insertReview(session,r);
+	}
+
+	@Override
+	public List<Review> selectReview(String productNo) {
+		// TODO Auto-generated method stub
+		return dao.selectReview(session,productNo);
+	}
+
+	@Override
+	public Stock selectStock(String detailNo) {
+		// TODO Auto-generated method stub
+		return dao.selectStock(session,detailNo);
 	}
 
 }

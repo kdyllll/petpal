@@ -19,6 +19,8 @@ public interface StoreService {
 	List<Map> subCateList(String cNo);
 	List<Product> soldOutList(String cNo);
 	int insertCart(Map m);
-	String payCheck(Map m);
+	List<String> payCheck(Map m);
 	int insertReview(Review r);
+	List<Review> selectReview(String productNo);
+	Stock selectStock(String detailNo);
 }
