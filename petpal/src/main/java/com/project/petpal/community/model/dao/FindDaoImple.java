@@ -18,13 +18,13 @@ public class FindDaoImple implements FindDao {
 	@Override
 	public int insertMainPic(SqlSession session, FindImg fi) {
 		// TODO Auto-generated method stub
-		return session.insert("find.insertMainPic",fi);
+		return session.insert("find.insertFindPic",fi);
 	}
 
 	@Override
 	public int insertSubPic(SqlSession session, FindImg sfi) {
 		// TODO Auto-generated method stub
-		return session.insert("find.insertSubPic", sfi);
+		return session.insert("find.insertFindPic", sfi);
 	}
 	
 }

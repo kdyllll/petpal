@@ -24,10 +24,14 @@ public class FindServiceImple implements FindService {
 	public int insertFindWrite(Find f, List<FindImg> lfi, FindImg fi) {
 		// TODO Auto-generated method stub
 		int result = dao.insertFindWrite(session, f);
+		String findNo = "F" + f.getFindNo();
 		if(result>0) {
+			System.out.println(findNo);
+			fi.setFindNo(findNo);
 			result = dao.insertMainPic(session, fi);
 			if(lfi!=null) {
 				for(FindImg sfi : lfi) {
+					sfi.setFindNo(findNo);
 					result = dao.insertSubPic(session, sfi);
 				}
 			}

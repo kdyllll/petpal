@@ -77,8 +77,14 @@ public class findController {
 			}
 		}
 		
-		System.out.println(find);
 		int result = service.insertFindWrite(find,subImgs, fi);
-		return "community/findWrite";
+		String msg = "글입력에 실패하였습니다.";
+		String loc = "/community/findWrite.do";
+		if(result>0) {
+			msg="급 입력이 완료되었습니다.";
+			loc="/community/findList.do"; //나중에 detail로 바꿈
+		}
+		
+		return "common/msg";
 	}
 }
