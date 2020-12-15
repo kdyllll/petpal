@@ -61,7 +61,7 @@
 						</div>
 					</div>
 					<div class="form-inline container text-center mb-3">
-						<h3>찾아주세요</h3>
+						<h3>찾습니다</h3>
 						<button type="button" class="btn btn-outline-secondary ml-auto"
 							onclick="location.replace('${path}/community/findWrite.do')">글쓰기</button>
 					</div>
