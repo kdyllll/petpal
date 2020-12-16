@@ -21,6 +21,8 @@
 		<typeAlias type="com.project.petpal.admin.model.vo.ProductImg" alias="storeImg"/>
 		<typeAlias type="com.project.petpal.community.model.vo.Place" alias="place"/>
 		<typeAlias type="com.project.petpal.payment.model.vo.Cart" alias="cart"/>
+		<typeAlias type="com.project.petpal.payment.model.vo.Payment" alias="payment"/>
+		<typeAlias type="com.project.petpal.payment.model.vo.PayDetail" alias="payDetail"/>
 	</typeAliases>
 </configuration>
 

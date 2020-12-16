@@ -1,20 +1,99 @@
 package com.project.petpal.payment.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.project.petpal.payment.model.service.PaymentService;
+import com.project.petpal.payment.model.vo.Cart;
+import com.project.petpal.payment.model.vo.PayDetail;
+import com.project.petpal.payment.model.vo.Payment;
 
 @Controller
 public class PaymentController {
-	@RequestMapping("/payment/paymentComplete.do")
-	public String paymentComplete() {
-		return "/payment/paymentComplete";
-	}
+	
+	@Autowired
+	private PaymentService service;
 	
 	@RequestMapping("/payment/payment.do")
-	public String payment() {
-		return "/payment/payment";
+	public ModelAndView payment(ModelAndView mv, String memberNo,
+								@RequestParam(value="productName") String[] productName,
+								@RequestParam(value="size") String[] size,
+								@RequestParam(value="color") String[] color,
+								@RequestParam(value="count") int[] count,
+								@RequestParam(value="price") int[] price,
+								@RequestParam(value="stockNo") String[] stockNo) {
+		
+		int totalPrice = 0;
+		for(int i=0;i<price.length;i++) {
+			totalPrice += price[i];
+		}
+		
+		List list = new ArrayList();
+		
+		Cart c = Cart.builder().build();
+		
+		for(int i=0; i<count.length;i++) {
+			c = Cart.builder().productName(productName[i]).productSize(size[i]).color(color[i]).count(count[i]).price(price[i]).totalPrice(totalPrice).stockNo(stockNo[i]).build();
+			list.add(c);
+		}
+	
+		mv.addObject("list", list);
+		
+		return mv;
 	}
 
+	@RequestMapping("/payment/paymentComplete.do")
+	public ModelAndView paymentComplete(ModelAndView mv, HttpServletRequest request, HttpServletResponse response,
+										@RequestParam(value="stockNo") String[] stockNo,
+										@RequestParam(value="totalPrice") int totalPrice,
+										@RequestParam(value="cnt") int[] cnt,
+										@RequestParam(value="receiverName") String receiverName,
+										@RequestParam(value="loc") String loc,
+										@RequestParam(value="receiverTel") String receiverTel,
+										@RequestParam(value="name") String name,
+										@RequestParam(value="email") String email,
+										@RequestParam(value="tel") String tel,
+										@RequestParam(value="payKind") String payKind) {
+		
+		
+		
+		System.out.println(totalPrice);
+		for(int i=0;i<cnt.length;i++) {
+			System.out.println(cnt[i]);
+		}
+		for(int i=0;i<stockNo.length;i++) {
+			System.out.println(stockNo[i]);
+		}
+		System.out.println(receiverName);
+		System.out.println(loc);
+		System.out.println(receiverTel);
+		System.out.println(name);
+		System.out.println(email);
+		System.out.println(tel);
+		System.out.println(payKind);
+		
+		
+		String memberNo = "63";
+		
+		Payment p = Payment.builder().memberNo(memberNo).receiverName(receiverName).loc(loc).receiverTel(receiverTel).name(name).email(email).tel(tel).totalPrice(totalPrice).payKind(payKind).build();
+		
+		mv.addObject("list", service.insertPayment(p, cnt, stockNo));
+		
+		mv.setViewName("payment/paymentComplete");
+		
+		return mv;
+	}
+	
 	@RequestMapping("/payment/myPayment.do")
 	public String mypayment() {
 		return "/payment/myPayment";
