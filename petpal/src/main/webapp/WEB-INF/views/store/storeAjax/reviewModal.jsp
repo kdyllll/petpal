@@ -5,12 +5,12 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="review" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<form id="reviewFrm" action="${path }/store/reviewEnd.do" onsubmit="return fn_complete();" method="post" enctype="multipart/form-data" class="modal-dialog">
 	  <div class="modal-content">
 	    <div class="modal-header">
 	      <h5 class="modal-title pl-3" id="exampleModalLabel">상품 리뷰</h5>
-	      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-backdrop="false">
 	        <span aria-hidden="true">&times;</span>
 	      </button>
 	    </div>
@@ -92,7 +92,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+        <button type="button" class="close btn btn-secondary" data-dismiss="modal" data-backdrop="false">취소</button>
         <button type="submit" class="btn btn-primary">완료</button>
       </div>
     </div>
@@ -183,4 +183,8 @@
         	 return true;
          }
     };
+    
+     $(document).on("click",".close",e=>{
+    	$(".modal").removeClass("fade");
+    }); 
  </script>

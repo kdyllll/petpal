@@ -76,7 +76,7 @@ public class StoreDaoImpl implements StoreDao{
 	@Override
 	public List<String> payCheck(SqlSession session, Map m) {
 		// TODO Auto-generated method stub
-		return session.selectOne("store.payCheck",m);
+		return session.selectList("store.payCheck",m);
 	}
 
 	@Override

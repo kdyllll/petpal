@@ -1,10 +1,15 @@
+<%@page import="org.springframework.ui.Model"%>
+<%@page import="java.util.List"%>
+<%@page import="com.project.petpal.store.model.vo.Review"%>
 <%@page import="com.project.petpal.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<%
+	List<Review> reviewList=(List) request.getAttribute("reviewList");
+%>
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
  <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
 
@@ -238,64 +243,89 @@
                 <button type="button" class="btn btn-link text-info" data-toggle="modal" id="reviewBtn" ><strong>리뷰 쓰기</strong></button>
               </div>
               <!--리뷰창-->
-              <c:forEach var="r" items="${reviewList }"> 
+              <% for(Review r:reviewList) {%>
 	              <article class="px-4 mb-3 pb-3 border-bottom">
 	                <div class="row pl-2">
 	                  <a href="" class="rounded-circle pr-3">
-	                    <img src="${path }/resources/upload/member/profile/${r.img}" width="30px;">
+	                    <img src="${path }/resources/upload/member/profile/<%=r.getImg() %>" width="30px;">
 	                  </a>                  
 	                  <div style="font-size: 12px;">
-	                    <p class="my-0"><c:out value="${r.nickName}"/></p>
-	                    <div ><span class="text-info">★★★☆☆</span> <span><c:ouy value=""/></span></div>
+	                    <p class="my-0"><%=r.getNickName() %></p>
+	                    <div ><span class="text-info">
+	                    		<%
+	                    			int star=r.getStar();
+	                    			for(int i=0;i<5;i++){
+	                    				if(i<star){%>
+	                    					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+											  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+											</svg>              				
+	                    				<%}else{%>
+	                    					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+											  <path fill-rule="evenodd" d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+											</svg>
+	                    				<%}
+	                    			}
+	                    		%>
+	                    	</span> 
+	                    	<span><%=r.getEnrollDate() %></span></div>
 	                  </div>
 	                </div>
-	                <div class="my-2"> 옵션 </div>
-	                <img src="${path }/resources/upload/store/review/${r.fileName}"  width="150px" class="rounded mb-3">
-	                <p><c:out value="${r.content }"/></p>
-	                <div class="text-right">
-	                  <a class="text-info text-right pb-2 pr-4"  style="font-size: 12px;" data-toggle="collapse" href="#replyWrite" role="button" aria-expanded="false" aria-controls="collapseExample">답글 수정(판매자만)</a>
-	                  <a class="text-info text-right pb-2"  style="font-size: 12px;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-	                    <strong>판매자 답글</strong>
-	                  </a>
+	                <div class="my-2"> 
+	                   <%if(r.getColor()!=null ){
+	                		if(r.getProductSize()!=null){%>
+								<%=r.getColor() %> / <%=r.getProductSize() %>
+	                		<%}else{%>
+	                			<%=r.getColor() %>
+	                		<%}
+	                	}else{
+	                		if(r.getProductSize()!=null){%>
+	                			<%=r.getProductSize() %>
+	                		<%}
+	                	}%>	
 	                </div>
-	                <div class="collapse py-3 mt-2 pr-3 bg-light rounded text-right" id="collapseExample">
-	                  <p class="mb-0">구매해주셔서 감사합니다. </p>
-	                </div>
-	                <form class="collapse  mt-2 p-3 pb-0 bg-light rounded text-right" id="replyWrite">
-	                  <div class="form-group">
-	                    <textarea class="form-control" rows="2" style="resize:none;" placeholder="구매해주셔서 감사합니다."></textarea>
-	                    <button type="button" class="btn btn-primary mt-2">완료</button>
-	                  </div> 
-	                </form>               
+	                <%if(r.getFileName()!=null){ %>
+	                	<img src="${path }/resources/upload/store/review/<%=r.getFileName() %>"  width="150px" class="rounded mb-3">
+	                <%} %>
+	                <p><%=r.getContent() %></p>
+	                
+	                  <%if(r.getReviewComment()!=null){ %>
+	                  <div class="text-right">
+		                  <c:if test="${loginMember.memberNo eq 63}">
+			                  <a class="replyEdit text-info text-right pb-2 pr-4"  style="font-size: 12px;" style="cursor: pointer;">
+						                    답글 수정
+						      </a>
+		                  </c:if>
+		                  <a class="replyShow text-info text-right pb-2" style="font-size: 12px;" style="cursor: pointer;">
+		                    <strong>판매자 답글</strong>
+		                  </a>
+		              </div> 
+		                <div class="reply collapse py-3 mt-2 pr-3 bg-light rounded text-right">
+		                  <p class="mb-0"><%=r.getReviewComment() %> </p>
+		                </div>
+		
+		                <form class="replyFrm collapse  mt-2 p-3 pb-0 bg-light rounded text-right">
+		                  <div class="form-group">
+		                    <textarea class="form-control" rows="2" id="message-text" style="resize:none;" placeholder="<%=r.getReviewComment() %>"></textarea>
+		                    <button type="button" class="btn btn-primary mt-2">완료</button>
+		                  </div> 
+		                </form>
+	                  <%}else{ %>
+	                  <div class="text-right">
+		                  <c:if test="${loginMember.memberNo eq 63}">
+		                  	<a class="replyWrite text-info text-right pb-2 pr-4"  style="font-size: 12px;" style="cursor: pointer;">답글 작성</a>
+		                  </c:if>
+		                  <a class="text-black-50 text-right pb-2" style="font-size: 12px;" style="cursor: pointer;"><strong>판매자 답글</strong></a>
+		               </div>
+		               <form class="replyWriteFrm collapse  mt-2 p-3 pb-0 bg-light rounded text-right" >
+		                  <div class="form-group">
+		                    <textarea class="form-control" rows="2" id="message-text" style="resize:none;" placeholder=""></textarea>
+		                    <button type="button" class="btn btn-primary mt-2">완료</button>
+		                  </div> 
+		                </form>
+	                  <%} %>            
 	              </article>
-				</c:forEach>
-              <article class="px-4 mb-3 pb-3 border-bottom">
-                <div class="row pl-2">
-                  <a href="" class="rounded-circle pr-3">
-                    <img src="./img/avatar.webp" width="30px;">
-                  </a>                  
-                  <div style="font-size: 12px;">
-                    <p class="my-0">작성자</p>
-                    <div ><span class="text-info">★★★☆☆</span> <span>구매날짜</span></div>
-                  </div>
-                </div>
-                <div class="my-2"> 옵션 </div>
-                <img src="" width="150px" class="rounded mb-3">
-                <p>똥강아지 너무 좋아하고 좀 큰거 같은데 넘 편해보이고 좋으네요 한번 잘 써보겠습니다</p>
-                <div class="text-right">
-                  <a class="text-info text-right pb-2 pr-4"  style="font-size: 12px;" data-toggle="collapse" href="#replyWrite2" role="button" aria-expanded="false" aria-controls="collapseExample">답글 달기(판매자만)</a>
-                  <a class="text-black-50 text-right pb-2" style="font-size: 12px;" data-toggle="collapse" href="" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    <strong>판매자 답글</strong>
-                  </a>
-                </div>
-                <form class="collapse  mt-2 p-3 pb-0 bg-light rounded text-right" id="replyWrite2">
-                  <div class="form-group">
-                    <textarea class="form-control" rows="2" style="resize:none;" placeholder=""></textarea>
-                    <button type="button" class="btn btn-primary mt-2">완료</button>
-                  </div> 
-                </form>
-                
-              </article>
+				<%};%>
+             
               <div class="mt-3 text-center">페이지바</div>
             </div>
 
@@ -578,6 +608,16 @@
           $("#totalPrice").text(totalPrice);
         };
 		
+        //리뷰 collapse
+        $(".replyEdit").on("click",e=>{
+          $(e.target).parents("article").find('form.replyFrm').collapse('toggle'); 
+        });
+        $(".replyShow").on("click",e=>{
+          $(e.target).parents("article").find('div.reply').collapse('toggle'); 
+        });   
+        $(".replyWrite").on("click",e=>{
+          $(e.target).parents("article").find('form.replyWriteFrm').collapse('toggle');
+        });          
         
         //모달즈
         let productNo=$("#productNo").val();
@@ -648,31 +688,20 @@
           			  		if(data!=null){//2주안에 리뷰를 안 쓴 구매내역이 있으면 
           			  			if(data.length>1){//구매내역이 여러개라면 
           			  				//어떤 내역을 쓸건지 선택하는 모달
+          			  				$.ajaxSettings.traditional = true;
 	          			  			$.ajax({
 		          						url: "${path}/store/moveReviewSelect.do",
-		          						data:{productNo:productNo},
+		          						data:{productNo:productNo,details:JSON.stringify(data)},
 		          						dataType:"html",
 		          						success:(data) => {
-		          							console.log(data);
 		          							$(".pdtModal").html(data);
 		          			         		$('div.modal').modal(); 
 		          						}
 		          					});
           			  			}else{//구매내역이 한개라면
           			  				//리뷰 작성 모달
-          			  				$.ajaxSettings.traditional = true;
-		          			  		$.ajax({
-		          						url: "${path}/store/moveReview.do",
-		          						data:{productNo:productNo, detailNo:data[0]},
-		          						dataType:"html",
-		          						success:(data) => {
-		          							console.log(data);
-		          							$(".pdtModal").html(data);
-		          			         		$('div.modal').modal(); 
-		          						}
-		          					});
-          			  			}
-          			  			
+          			  				fn_reviewWrite(productNo,data[0]);
+          			  			}         			  			
           			     	}else{//구매내역이 없으면
           			            alert("구매 내역이 없습니다.");
           			    	};
@@ -708,6 +737,21 @@
 				dataType:"html",
 				success:(data) => {
 					$(".pdtModal").html(data);	
+	         		$('div.modal').modal(); 
+				}
+			});
+		};
+		
+		//리뷰작성모달
+		function fn_reviewWrite(pNo,dNo){
+			$.ajaxSettings.traditional = true;
+	  		$.ajax({
+				url: "${path}/store/moveReview.do",
+				data:{productNo:pNo, detailNo:dNo},
+				dataType:"html",
+				success:(data) => {
+					$(".pdtModal").html("");
+					$(".pdtModal").html(data);
 	         		$('div.modal').modal(); 
 				}
 			});

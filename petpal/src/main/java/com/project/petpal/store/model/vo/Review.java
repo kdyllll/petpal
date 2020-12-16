@@ -18,6 +18,8 @@ public class Review {
 	private String nickName;
 	private String img;
 	private String content;
+	private String color;
+	private String productSize;
 	private Date enrollDate;
 	private int star;
 	private String fileName;

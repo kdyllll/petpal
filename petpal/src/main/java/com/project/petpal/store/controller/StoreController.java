@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -69,6 +70,7 @@ public class StoreController {
 		
 		//리뷰 가져오기
 		List<Review> reviews=service.selectReview(productNo);
+		
 		//문의 가져오기
 		
 		m.addAttribute("product",p);

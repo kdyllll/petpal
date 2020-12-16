@@ -3,6 +3,7 @@ package com.project.petpal.store.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,8 @@ import com.project.petpal.store.model.service.StoreService;
 import com.project.petpal.store.model.vo.Product;
 import com.project.petpal.store.model.vo.ProductImg;
 import com.project.petpal.store.model.vo.Stock;
+
+import net.sf.json.JSONArray;
 
 @Controller
 public class StoreAjaxController {
@@ -128,8 +131,22 @@ public class StoreAjaxController {
 	}
 	
 	@RequestMapping("/store/moveReviewSelect.do")
-	public String moveReviewSelect(HttpSession session,String productNo,Model m) {
-		//
+	public String moveReviewSelect(HttpSession session,String productNo,String details,Model m) {
+		//상품이름, 구매한 옵션, 이미지
+		
+		Product p=service.selectProduct(productNo);
+		List<ProductImg> list=service.selectImg(productNo);
+		m.addAttribute("product",p);
+		m.addAttribute("img",list.get(0));
+		
+		List<String> detailNoList = JSONArray.fromObject(details);//리뷰안쓴 디테일 번호들
+		List<Stock> stockList=new ArrayList<Stock>();
+		for(String s:detailNoList) {
+			stockList.add(service.selectStock(s));
+		}
+		m.addAttribute("detailNoList",detailNoList);
+		m.addAttribute("stockList",stockList);
+	 
 		return "store/storeAjax/reviewSelectModal";
 	}
 	
