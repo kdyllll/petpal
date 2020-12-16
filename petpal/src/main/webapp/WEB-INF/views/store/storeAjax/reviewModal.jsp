@@ -5,21 +5,25 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
+<div class="modal fade" id="review" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<form id="reviewFrm" action="${path }/store/reviewEnd.do" onsubmit="return fn_complete();" method="post" enctype="multipart/form-data" class="modal-dialog">
 	  <div class="modal-content">
 	    <div class="modal-header">
 	      <h5 class="modal-title pl-3" id="exampleModalLabel">상품 리뷰</h5>
-	      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-backdrop="false">
 	        <span aria-hidden="true">&times;</span>
 	      </button>
 	    </div>
 	    <div class="modal-body offset-1 col-10">
-	      <form>
+	      <div>
 	        <div class="form-group row pb-3 border-bottom d-flex align-items-center">
-	          <img src="../final/img/cc.webp" class="rounded d-block w-100 col-4">
-	          <p class="align-middle mb-0">강아지 고양이 기절 댕냥쿠션</p>
-	          <input type="hidden" name="productNo"/>
+	          <img src="${path }/resources/upload/product/detail/${img.imgName}" class="rounded d-block w-100 col-4">
+	          <div class="align-middel">
+		          <p class="mb-0"><c:out value="${product.productName }"/></p>
+		          <p class="mb-0"><c:out value="${stock.color}"/> <c:out value="${stock.productSize}"/></p>
+	          </div>
+	          <input type="hidden" name="productNo" value="${product.productNo }"/>
+	          <input type="hidden" name="detailNo" value="${detailNo }"/>
 	        </div>
 	        <div class="form-group">
 	          <label for="recipient-name" class="col-form-label"><strong>별점 평가</strong></label>
@@ -72,8 +76,8 @@
 		      <label for="message-text" class="col-form-label"><strong>사진 첨부</strong> <span class="text-black-50">최대 한장</span></label>
 		      <div class="input-group mb-3">
 		        <div class="custom-file" id="thumnail">
-		          <input type="file" class="custom-file-input upload" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-		          <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+		          <input type="file" name="reviewImg" class="custom-file-input upload" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" accept="images/*">
+		          <label class="custom-file-label" id="fileName" for="inputGroupFile01">Choose file</label>
 		        </div>
 		      </div>
 		      <div id="imgContainer" class="row bg-light mx-1 d-none">
@@ -83,16 +87,16 @@
 		    </div>
 		    <div class="form-group">
 		      <label for="message-text" class="col-form-label"><strong>리뷰 작성</strong></label>
-		      <textarea class="form-control" rows="5" id="message-text" style="resize:none;"></textarea>
+		      <textarea name="content" class="form-control" rows="5" id="content" style="resize:none;"></textarea>
           	</div>
-        </form>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-        <button type="button" class="btn btn-primary">완료</button>
+        <button type="button" class="close btn btn-secondary" data-dismiss="modal" data-backdrop="false">취소</button>
+        <button type="submit" class="btn btn-primary">완료</button>
       </div>
     </div>
-  </div>
+  </form>
 </div>
 
  <script>
@@ -154,7 +158,8 @@
 
       //사진 이름
       let filename=$(e.target).prop('files')[0].name;
-      $("#fileName").html(filename);
+       $("#fileName").html(filename);
+        
     });
 	
   //사진 삭제
@@ -165,4 +170,21 @@
       $(".upload").val("");
     };
  	
+    
+    //작성 유효성 검사
+    function fn_complete(){
+    	if($("input[name=star]:checked").length==0){
+            alert("별점을 입력하세요.");   
+            return false;
+         }else if($("#content").val().trim().length==0){
+        	 alert("후기 내용을 입력하세요.");
+         	 return false;
+         }else{
+        	 return true;
+         }
+    };
+    
+     $(document).on("click",".close",e=>{
+    	$(".modal").removeClass("fade");
+    }); 
  </script>

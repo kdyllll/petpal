@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.project.petpal.store.model.vo.Product;
 import com.project.petpal.store.model.vo.ProductImg;
+import com.project.petpal.store.model.vo.Review;
 import com.project.petpal.store.model.vo.Stock;
 
 public interface StoreService {
@@ -18,4 +19,9 @@ public interface StoreService {
 	List<Map> subCateList(String cNo);
 	List<Product> soldOutList(String cNo);
 	int insertCart(Map m);
+	List<String> payCheck(Map m);
+	int insertReview(Review r);
+	List<Review> selectReview(String productNo);
+	Stock selectStock(String detailNo);
+	int deleteReview(String reviewNo);
 }

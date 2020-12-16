@@ -3,8 +3,10 @@ package com.project.petpal.store.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -13,12 +15,18 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.petpal.member.model.vo.Member;
 import com.project.petpal.store.model.service.StoreService;
+import com.project.petpal.store.model.vo.Product;
+import com.project.petpal.store.model.vo.ProductImg;
+import com.project.petpal.store.model.vo.Stock;
+
+import net.sf.json.JSONArray;
 
 @Controller
 public class StoreAjaxController {
@@ -96,6 +104,50 @@ public class StoreAjaxController {
 	@RequestMapping("/store/movePayLogin.do")
 	public String movePayLogin() {
 		return "store/storeAjax/payLoginModal";
+	}
+	
+	@RequestMapping("/store/moveReview.do")
+	public String moveReview(String productNo,String detailNo,Model m) {
+		Product p=service.selectProduct(productNo);
+		List<ProductImg> list=service.selectImg(productNo);
+		Stock s=service.selectStock(detailNo);
+		m.addAttribute("product",p);
+		m.addAttribute("img",list.get(0));
+		m.addAttribute("detailNo",detailNo);
+		m.addAttribute("stock",s);
+		return "store/storeAjax/reviewModal";
+	}
+	
+	@RequestMapping("/store/payCheck.do")
+	@ResponseBody
+	public List<String> payCheck(HttpSession session,String productNo) {
+		//2주안에 구매내역이 있는지(몇개인지) -> 그 중 리뷰 안쓴 건 몇개인지 찾기~~
+		Member loginMember=(Member)session.getAttribute("loginMember");
+		Map m=new HashMap();
+		m.put("productNo", productNo);
+		m.put("memberNo",loginMember.getMemberNo());
+		List<String> list=service.payCheck(m); //2주안에 구매한 것 중 리뷰 쓰지 않은 구매내역의 결제상세번호들
+		return list;
+	}
+	
+	@RequestMapping("/store/moveReviewSelect.do")
+	public String moveReviewSelect(HttpSession session,String productNo,String details,Model m) {
+		//상품이름, 구매한 옵션, 이미지
+		
+		Product p=service.selectProduct(productNo);
+		List<ProductImg> list=service.selectImg(productNo);
+		m.addAttribute("product",p);
+		m.addAttribute("img",list.get(0));
+		
+		List<String> detailNoList = JSONArray.fromObject(details);//리뷰안쓴 디테일 번호들
+		List<Stock> stockList=new ArrayList<Stock>();
+		for(String s:detailNoList) {
+			stockList.add(service.selectStock(s));
+		}
+		m.addAttribute("detailNoList",detailNoList);
+		m.addAttribute("stockList",stockList);
+	 
+		return "store/storeAjax/reviewSelectModal";
 	}
 	
 
