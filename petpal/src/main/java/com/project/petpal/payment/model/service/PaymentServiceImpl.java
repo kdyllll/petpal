@@ -21,10 +21,8 @@ public class PaymentServiceImpl implements PaymentService {
 	public int insertPayment(Payment p, int[] cnt, String[] stockNo) {
 		int result = dao.insertPayment(session, p);
 
-		System.out.println("service" + p.getPaymentNo());
 		if (result > 0) {
 			for (int i = 0; i < cnt.length; i++) {
-				System.out.println("service2" + p.getPaymentNo());
 				PayDetail pd = PayDetail.builder().paymentNo(p.getPaymentNo()).stockNo(stockNo[i]).cnt(cnt[i]).build();
 				result = dao.insertPayDetail(session, pd);
 			}
