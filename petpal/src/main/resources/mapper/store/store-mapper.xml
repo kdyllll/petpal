@@ -59,4 +59,7 @@ WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK 
 	<select id="selectStock" resultType="storeStock" parameterType="string">
 		SELECT * FROM PAYDETAIL LEFT JOIN STOCK USING(STOCKNO) WHERE DETAILNO=#{detailNo}
 	</select>
+	<delete id="deleteReview" parameterType="string">
+		DELETE FROM REVIEW WHERE REVIEWNO=${value}
+	</delete>
 </mapper>

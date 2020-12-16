@@ -136,5 +136,17 @@ public class StoreController {
 		
 		return "common/msg";
 	}
+	
+	@RequestMapping("/store/deleteReview.do")
+	public String deleteReview(String reviewNo,String productNo,Model m) {
+		int result=service.deleteReview(reviewNo);
+		if(result>0) {
+			m.addAttribute("msg","리뷰를 삭제했습니다.");
+		}else {
+			m.addAttribute("msg","리뷰 삭제에 실패했습니다.");
+		}
+		m.addAttribute("loc","/store/moveDetail.do?productNo="+productNo);
+		return "common/msg";
+	};
 
 }

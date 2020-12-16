@@ -23,4 +23,5 @@ public interface StoreService {
 	int insertReview(Review r);
 	List<Review> selectReview(String productNo);
 	Stock selectStock(String detailNo);
+	int deleteReview(String reviewNo);
 }

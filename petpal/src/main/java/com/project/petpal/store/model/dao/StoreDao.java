@@ -26,4 +26,5 @@ public interface StoreDao {
 	int insertReview(SqlSession session,Review r);
 	List<Review> selectReview(SqlSession session,String productNo);
 	Stock selectStock(SqlSession session,String detailNo);
+	int deleteReview(SqlSession session,String reviewNo);
 }
