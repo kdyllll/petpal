@@ -36,7 +36,7 @@ public class MemberAjaxController {
 	//로그인모달Ajax
 	@RequestMapping("/login/loginModal.do")
 	@ResponseBody
-	public Boolean payLogin(String email,String password,Model m) {
+	public Boolean loginModal(String email,String password,Model m) {
 		//로그인 하기
 		Member login = service.selectMember(email);
 		if (login != null && pwEncoder.matches(password, login.getPassword())) {	
@@ -47,4 +47,10 @@ public class MemberAjaxController {
 			return false;
 		}
 	};
+	
+	//로그인 모달 호출
+	@RequestMapping("/login/moveLogin.do")
+	public String moveLogin() {
+		return "common/commonAjax/loginModal";
+	}
 }

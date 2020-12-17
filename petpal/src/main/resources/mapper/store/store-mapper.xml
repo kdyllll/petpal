@@ -36,4 +36,46 @@ WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK 
 	<insert id="insertCart" parameterType="map">
 		INSERT INTO CART VALUES(#{memberNo},#{stockNo},#{cnt})
 	</insert>
+	<select id="payCheck" resultType="string" parameterType="map">
+		SELECT DETAILNO FROM PAYMENT LEFT JOIN PAYDETAIL USING(PAYMENTNO) LEFT JOIN STOCK USING(STOCKNO) 
+		WHERE MEMBERNO=#{memberNo} AND PRODUCTNO=#{productNo} AND FLOOR(SYSDATE-PAYDATE)<![CDATA[<]]>14
+		AND DETAILNO IN(SELECT DETAILNO FROM PAYDETAIL LEFT JOIN REVIEW USING(DETAILNO) WHERE REVIEWNO IS NULL)
+	</select>
+	<insert id="insertReview" parameterType="review">
+		INSERT INTO REVIEW VALUES(SEQ_REVIEWNO.NEXTVAL,#{detailNo},#{memberNo},#{content},SYSDATE,#{star},
+		<choose>
+			<when test="fileName!=null">
+				#{fileName}
+			</when>
+			<otherwise>
+				NULL
+			</otherwise>
+		</choose>
+		,NULL)
+	</insert>
+	<select id="selectReview" resultType="review" parameterType="string">
+		SELECT * FROM REVIEW LEFT JOIN MEMBER USING(MEMBERNO) LEFT JOIN PAYDETAIL USING(DETAILNO) LEFT JOIN STOCK USING(STOCKNO) WHERE PRODUCTNO=#{productNo}
+	</select>
+	<select id="selectStock" resultType="storeStock" parameterType="string">
+		SELECT * FROM PAYDETAIL LEFT JOIN STOCK USING(STOCKNO) WHERE DETAILNO=#{detailNo}
+	</select>
+	<delete id="deleteReview" parameterType="string">
+		DELETE FROM REVIEW WHERE REVIEWNO=${value}
+	</delete>
+	<update id="updateReview" parameterType="review">
+		UPDATE REVIEW
+		<set>
+			<if test="fileName != null">
+				FILENAME =#{fileName},
+			</if>
+			<if test="content != null">
+				CONTENT =#{content},
+			</if>
+			STAR=#{star}
+		</set>
+		WHERE REVIEWNO=#{reviewNo}
+	</update>
+	<select id="selectReviewOne" resultType="review" parameterType="string">
+		SELECT * FROM REVIEW LEFT JOIN PAYDETAIL USING(DETAILNO) LEFT JOIN STOCK USING(STOCKNO) WHERE REVIEWNO=#{reviewNo}
+	</select>
 </mapper>
