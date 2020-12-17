@@ -41,8 +41,6 @@
           totalProduct = 0;
           
           $(".totalProduct").text(totalProduct);
-          $(".totalPrice").text(totalProduct+3000);
-          
           
           var objs = document.querySelectorAll(".ch");
 			var c = 0;
@@ -54,6 +52,9 @@
 	         };
 			
 	         $(".pay").text(c + "개 상품 구매하기").css({"font-weight":"bold"});
+	         
+	         $('.totalProduct').text(totalProduct);
+	         $('.totalPrice').text(totalProduct);
 	         
 	       //여기에서 실행-------------------------------------------------------------------------------
 	         fn_checkPrice();
@@ -87,7 +88,7 @@
      		price = ${c.PRICE};
      		totalProduct += count * price;
      		$('.totalProduct').text(totalProduct);
-     		$(".totalPrice").text(totalProduct+3000);
+     		$('.totalPrice').text(totalProduct);
      	</c:forEach>
      	
      	
@@ -107,9 +108,7 @@
 	            totalProduct=totalProduct+priceCal;
 	          });
 	     	$(".totalProduct").text(totalProduct);
-	     	$(".totalPrice").text(totalProduct+3000);
-	     	
-	     	
+	     	$('.totalPrice').text(totalProduct);
 	     	
 	     	
 	     	//여기에서 실행-------------------------------------------------------------------------------
@@ -134,7 +133,7 @@
 				totalProduct = totalProduct - parseInt($(this).parent().nextAll().find('.price').text().trim());
 			}
 			$(".totalProduct").text(totalProduct);
-			$(".totalPrice").text(totalProduct+3000);
+			$(".totalPrice").text(totalProduct);
 			
 			//여기에서 실행-------------------------------------------------------------------------------
 			fn_checkPrice();
@@ -144,21 +143,22 @@
 				totalProduct = totalProduct + parseInt($(this).parent().nextAll().find('.price').text().trim());
 			}
 			$(".totalProduct").text(totalProduct);
-			$(".totalPrice").text(totalProduct+3000);
+	        $('.totalPrice').text(totalProduct);
 	     }); 
 		 
  	});
+	
 	
 	function fn_checkPrice(){
 		console.log("총가격함수실행");
 		var total=0;
 		$("input[name=check]:checked").each((i,item)=>{
-			//console.log($(item));
-			//console.log($(item).parents(".proCon").find("span.price").text().trim());
+			console.log($(item));
+			console.log($(item).parents(".proCon").find("span.price").text().trim());
 			total=total+parseInt($(item).parents(".proCon").find("span.price").text().trim());
 		});
-		console.log("총금액"+total);
-		
+		$('.totalProduct').text(total);
+		$('.totalPrice').text(total);
 		
 	}
 </script>
@@ -179,6 +179,7 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 		<main role="main" style="min-height: 100vh;">
 			<div class="container">
+				<form class="needs-validation" name="cart" action="${path }/payment/payment.do?memberNo=${list[0].MEMBERNO}" method="post">
 				<div class="row" style="padding-top: 5em;">
 	
 					<div class="order-md-2 ml-3 d-none d-md-block">
@@ -191,7 +192,7 @@
 									</li>
 									<li class="list-group-item d-flex justify-content-between border-bottom-0">
 										<h6>총 배송비</h6>
-										<h6 class="totalFee">3000</h6>
+										<h6 class="totalFee">0</h6>
 									</li>
 									<li class="pt-2 list-group-item d-flex justify-content-between">
 										<h3>결제금액</h3>
@@ -229,6 +230,9 @@
 														<img src="${path }/resources/upload/product/detail/${c.FILENAME}" class="rounded" style="width:100px;height:100px">
 													</div>
 													<div class="ml-3">
+														<input type="hidden" name="stockNo" value="${c.STOCKNO }">
+														
+														<input type="hidden" name="productName" value="${c.PRODUCTNAME }">
 														<h5><c:out value="${c.PRODUCTNAME }"/></h5>
 														<div class="d-flex">
 															<h6>배송 </h6>
@@ -247,6 +251,8 @@
 										<div class="ml-4 mt-3 rounded" style="background-color:rgb(245 245 245);">
 											<div class="d-flex">
 												<div class="mt-3 ml-3" style="width:92%">
+													<input type="hidden" name="color" value="${c.COLOR }">
+													<input type="hidden" name="size" value="${c.PRODUCTSIZE }">
 													<span><c:out value="${c.COLOR }"/> / <c:out value="${c.PRODUCTSIZE }"/></span>
 					                             </div>
 												<div class="d-flex align-items-start">
@@ -255,15 +261,14 @@
 											</div>
 											<div class="d-flex p-3 priceCon">
 													<div>
-						                                <input class="count" type="number" value="${c.COUNT }" min="1" max="100">
+						                                <input class="count" type="number" name="count" value="${c.COUNT }" min="1" max="100">
 						                             </div>
+						                             <input type="hidden" name="price" value="${c.COUNT * c.PRICE}">
 						                             <span class="price ml-auto"><c:out value="${c.COUNT * c.PRICE}"/>원</span>
-						                             
 						                    </div>
 			                    		</div>
 					                    <div class="ml-4 mt-3">
-					                    	<small><span>옵션 변경 / </span></small> <!-- 모달 -->
-					                    	<small><span>바로 구매</span></small>
+					                    	<small><span>옵션 변경</span></small> <!-- 모달 -->
 					                    </div>
 									</div>
 								</c:otherwise>
@@ -278,7 +283,7 @@
 									</li>
 									<li class="list-group-item d-flex justify-content-between border-bottom-0">
 										<h6>총 배송비</h6>
-										<h6 class="totalFee">3000</h6>
+										<h6 class="totalFee">0</h6>
 									</li>
 									<li class="pt-2 list-group-item d-flex justify-content-between">
 										<h3>결제금액</h3>
@@ -291,6 +296,8 @@
 					</div>
 				</div>
 				<br><br><br><br><br><br><br><br>
+				
+				</form>
 			</div>
 		</main>
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
