@@ -82,22 +82,24 @@
 								<button class="dropdown-item">스크랩순</button>
 							</div>
 						</div>
-
 					</div>
-
 				</div>
 				<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
-					<div class="col mb-4">
-						<div class="card h-100 border-0 " style="overflow: hidden;">
-							<span>ddd</span> <a href="${path}/community/findDetail.do"><img
-								src="..." alt="..." style="width: 100%; height: 200px;"></a>
-							<div class="card-body">
-								<h5 class="card-title">제목</h5>
-								<p class="card-text">내용</p>
-								<span class="">장소</span>
+				<c:if test="${not empty list  }">
+					<c:forEach var="l" items="${list }">
+						<div class="col mb-4">
+							<div class="card h-100 border-0 " style="overflow: hidden;">
+								<span><c:out value="${l.EMAIL }"/></span> <a href="${path}/community/findDetail.do"><img
+									src="${path }/resources/upload/find/${l.FILENAME}" alt="..." style="width: 100%; height: 200px;"></a>
+								<div class="card-body">
+									<h5 class="card-title"><c:out value="${l.TITLE }"/></h5>
+									<p class="card-text"><c:out value="${l.CONTENT }"/></p>
+									<span class=""><c:out value="${l.ADDRESS }"/></span>
+								</div>
 							</div>
 						</div>
-					</div>
+					</c:forEach>
+				</c:if>
 				</div>
 			</div>
 		</div>

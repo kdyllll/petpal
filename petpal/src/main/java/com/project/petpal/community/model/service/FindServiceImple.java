@@ -1,6 +1,7 @@
 package com.project.petpal.community.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,11 @@ public class FindServiceImple implements FindService {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public List<Map> selectFindList() {
+		// TODO Auto-generated method stub
+		return dao.selectFindList(session);
 	}
 }

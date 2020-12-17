@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +29,12 @@ public class findController {
 	public FindService service;
 	
 	@RequestMapping("/community/findList.do")
-	public String findList() {
+	public String findList(Model model) {
+		List<Map> list = service.selectFindList();
+		for(Map m : list) {
+			System.out.println(m);
+		}
+		model.addAttribute("list", list);
 		return "community/findList";
 	}
 	@RequestMapping("/community/findWrite.do")
