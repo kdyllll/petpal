@@ -148,5 +148,44 @@ public class StoreController {
 		m.addAttribute("loc","/store/moveDetail.do?productNo="+productNo);
 		return "common/msg";
 	};
+	
+	@RequestMapping("/store/reviewEditEnd.do")
+	public String updateReview(HttpSession session, String reviewNo,String star,
+			@RequestParam(value="reviewImg", required=false) MultipartFile reviewImg,
+			@RequestParam(value="content", required=false) String content,
+			String productNo, Model m) {
+		//리뷰 수정하기 (리뷰 별점, 사진, 내용)
+		
+		Review r=new Review();
+		r.setReviewNo(reviewNo); //리뷰번호
+		r.setStar(Integer.parseInt(star)); //별점
+		if(content!=null) r.setContent(content); //내용
+		//사진
+		String path=session.getServletContext().getRealPath("/resources/upload/store/review");		
+		File dir=new File(path);
+		if(!dir.exists()) dir.mkdirs();//폴더를 생성
+		if(reviewImg!=null&&!reviewImg.isEmpty()) {
+			  //파일명생성하기
+			  String originalName=reviewImg.getOriginalFilename();
+			  String ext=originalName.substring(originalName.lastIndexOf(".")+1);
+			  //리네임규칙
+			  SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+			  int rndValue=(int)(Math.random()*10000);
+			  String reName=sdf.format(System.currentTimeMillis())+"_"+rndValue+"."+ext;
+			  try {
+				  reviewImg.transferTo(new File(path+"/"+reName));
+			  }catch(IOException e) {
+				  e.printStackTrace();
+				  m.addAttribute("msg","오류가 발생하였습니다.다시 시도해주세요.");
+			  }
+			  r.setFileName(reName);
+		}
+		
+		int result=service.updateReview(r);
+		m.addAttribute("loc","/store/moveDetail.do?productNo="+productNo);
+		m.addAttribute("msg",result>0?"리뷰를 수정했습니다.":"리뷰 수정을 실패했습니다.");
+		
+		return "common/msg";
+	}
 
 }

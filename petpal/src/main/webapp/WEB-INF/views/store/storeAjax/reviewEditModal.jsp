@@ -6,10 +6,10 @@
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
 
 <div class="modal fade" id="review" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<form id="reviewFrm" action="${path }/store/reviewEnd.do" onsubmit="return fn_complete();" method="post" enctype="multipart/form-data" class="modal-dialog">
+	<form id="reviewFrm" action="${path }/store/reviewEditEnd.do" onsubmit="return fn_complete();" method="post" enctype="multipart/form-data" class="modal-dialog">
 	  <div class="modal-content">
 	    <div class="modal-header">
-	      <h5 class="modal-title pl-3" id="exampleModalLabel">상품 리뷰</h5>
+	      <h5 class="modal-title pl-3" id="exampleModalLabel">상품 리뷰 수정</h5>
 	      <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-backdrop="false">
 	        <span aria-hidden="true">&times;</span>
 	      </button>
@@ -23,7 +23,7 @@
 		          <p class="mb-0"><c:out value="${stock.color}"/> <c:out value="${stock.productSize}"/></p>
 	          </div>
 	          <input type="hidden" name="productNo" value="${product.productNo }"/>
-	          <input type="hidden" name="detailNo" value="${detailNo }"/>
+	          <input type="hidden" name="reviewNo" value="${review.reviewNo }"/>
 	        </div>
 	        <div class="form-group">
 	          <label for="recipient-name" class="col-form-label"><strong>별점 평가</strong></label>
@@ -34,7 +34,7 @@
                       <svg id="star1" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill text-black-50" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="font-size: 25px;">
                         <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                       </svg>
-                      <input type="radio" name="star" value="1" class="d-none"/>   
+                      <input type="radio" name="star" value="1" class="d-none" ${review.star==1?"checked":""}/>   
                     </label>
                   </li>
                   <li class="pr-1">
@@ -42,7 +42,7 @@
                       <svg id="star2" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill text-black-50" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="font-size: 25px;">
                         <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                       </svg>
-                      <input type="radio" name="star" value="2" class="d-none"/>
+                      <input type="radio" name="star" value="2" class="d-none" ${review.star==2?"checked":""}/>
                     </label>
                   </li>
                   <li class="pr-1">
@@ -50,7 +50,7 @@
                       <svg id="star3"  width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill text-black-50" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="font-size: 25px;">
                         <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                       </svg>
-                      <input type="radio" name="star" value="3" class="d-none"/>
+                      <input type="radio" name="star" value="3" class="d-none" ${review.star==3?"checked":""}/>
                     </label>
                   </li>
                   <li class="pr-1">
@@ -58,7 +58,7 @@
                       <svg id="star4" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill text-black-50" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="font-size: 25px;">
                         <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                       </svg>
-                      <input type="radio" name="star" value="4" class="d-none"/>
+                      <input type="radio" name="star" value="4" class="d-none" ${review.star==4?"checked":""}/>
                     </label>
                   </li>
                   <li class="pr-1">
@@ -66,7 +66,7 @@
                       <svg id="star5" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill text-black-50" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="font-size: 25px;">
                         <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                       </svg>
-                      <input type="radio" name="star" value="5" class="d-none"/>
+                      <input type="radio" name="star" value="5" class="d-none" ${review.star==5?"checked":""}/>
                     </label>
                   </li>
                 </ul>
@@ -76,18 +76,20 @@
 		      <label for="message-text" class="col-form-label"><strong>사진 첨부</strong> <span class="text-black-50">최대 한장</span></label>
 		      <div class="input-group mb-3">
 		        <div class="custom-file" id="thumnail">
-		          <input type="file" name="reviewImg" class="custom-file-input upload" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" accept="images/*">
-		          <label class="custom-file-label" id="fileName" for="inputGroupFile01">Choose file</label>
+		          <input type="file" class="custom-file-input upload" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" accept="images/*">
+		          <label class="custom-file-label" id="fileName" for="inputGroupFile01">${review.fileName }</label>
 		        </div>
 		      </div>
-		      <div id="imgContainer" class="row bg-light mx-1 d-none">
-		        <img id="previewImg" class="col-6 offset-3">
-		        <button type="button" class="btn btn-sm btn-outline-dark align-bottom p-0" onclick="fn_delete();" style="height: 20px;">삭제</button>
-		      </div>                         
+		      <c:if test="${not empty review.fileName }">
+			      <div id="imgContainer" class="row bg-light mx-1 d-none">
+			        <img id="previewImg" class="col-6 offset-3">
+			        <button type="button" class="btn btn-sm btn-outline-dark align-bottom p-0" onclick="fn_delete();" style="height: 20px;">삭제</button>
+			      </div>            
+		      </c:if>             
 		    </div>
 		    <div class="form-group">
 		      <label for="message-text" class="col-form-label"><strong>리뷰 작성</strong></label>
-		      <textarea name="content" class="form-control" rows="5" id="content" style="resize:none;"></textarea>
+		      <textarea class="form-control" rows="5" id="content" style="resize:none;">${review.content }</textarea>
           	</div>
         </div>
       </div>
@@ -100,6 +102,7 @@
 </div>
 
  <script>
+     fn_checked();
  	 //별점 태그 색 바꾸기!
 	 //마우스 호버했을 때 별점 태그 색 바꿔주기
 	 $("svg").hover(function(e){//마우스 올라갔을때
@@ -159,7 +162,9 @@
       //사진 이름
       let filename=$(e.target).prop('files')[0].name;
        $("#fileName").html(filename);
-        
+      
+      //사진 인풋태그에 네임 부여
+      $(e.target).attr("name","reviewImg");
     });
 	
     //사진 삭제
@@ -170,6 +175,11 @@
       $(".upload").val("");
     };
  	
+    
+    //리뷰 내용 변경되면 name부여
+    $("#content").on("change keyup paste", e=> {
+    	$(e.target).attr("name","content");
+    });
     
     //작성 유효성 검사
     function fn_complete(){
@@ -184,7 +194,7 @@
          }
     };
     
-     $(document).on("click",".close",e=>{
+     /* $(document).on("click",".close",e=>{
     	$(".modal").removeClass("fade");
-    }); 
+    });  */
  </script>

@@ -108,5 +108,19 @@ public class StoreServiceImpl implements StoreService{
 		// TODO Auto-generated method stub
 		return dao.deleteReview(session,reviewNo);
 	}
+	
+	@Override
+	public int updateReview(Review r) {
+		// TODO Auto-generated method stub
+		return dao.updateReview(session,r);
+	}
 
+	@Override
+	public Review selectReviewOne(String reviewNo) {
+		// TODO Auto-generated method stub
+		return dao.selectReviewOne(session,reviewNo);
+	}
+
+	
+	
 }

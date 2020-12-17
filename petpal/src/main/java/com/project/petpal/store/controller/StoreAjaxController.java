@@ -24,6 +24,7 @@ import com.project.petpal.member.model.vo.Member;
 import com.project.petpal.store.model.service.StoreService;
 import com.project.petpal.store.model.vo.Product;
 import com.project.petpal.store.model.vo.ProductImg;
+import com.project.petpal.store.model.vo.Review;
 import com.project.petpal.store.model.vo.Stock;
 
 import net.sf.json.JSONArray;
@@ -150,6 +151,21 @@ public class StoreAjaxController {
 		return "store/storeAjax/reviewSelectModal";
 	}
 	
+	@RequestMapping("/store/moveReviewEdit.do")
+	public String moveReviewEdit(String productNo,String reviewNo,Model m) {
+		//리뷰 수정 모달
+		//상품 이미지 이름, 상품 이름, 재고 옵션 이름, 리뷰 객체
+		Product p=service.selectProduct(productNo);
+		List<ProductImg> list=service.selectImg(productNo);
+		
+		//재고 이름(컬러사이즈)포함된 리뷰 객체
+		Review r=service.selectReviewOne(reviewNo);
+		
+		m.addAttribute("product",p);
+		m.addAttribute("img",list.get(0));
+		m.addAttribute("review",r);
+		return "store/storeAjax/reviewEditModal";
+	}
 
 	
 	
