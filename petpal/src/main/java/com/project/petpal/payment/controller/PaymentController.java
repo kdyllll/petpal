@@ -59,31 +59,16 @@ public class PaymentController {
 										@RequestParam(value="cnt") int[] cnt,
 										@RequestParam(value="receiverName") String receiverName,
 										@RequestParam(value="loc") String loc,
+										@RequestParam(value="locDetail") String locDetail,
 										@RequestParam(value="receiverTel") String receiverTel,
 										@RequestParam(value="name") String name,
 										@RequestParam(value="email") String email,
 										@RequestParam(value="tel") String tel,
 										@RequestParam(value="payKind") String payKind) {
 		
-		
-		
-		System.out.println(totalPrice);
-		for(int i=0;i<cnt.length;i++) {
-			System.out.println(cnt[i]);
-		}
-		for(int i=0;i<stockNo.length;i++) {
-			System.out.println(stockNo[i]);
-		}
-		System.out.println(receiverName);
-		System.out.println(loc);
-		System.out.println(receiverTel);
-		System.out.println(name);
-		System.out.println(email);
-		System.out.println(tel);
-		System.out.println(payKind);
-		
-		
 		String memberNo = "63";
+		
+		loc = loc + " " + locDetail;
 		
 		Payment p = Payment.builder().memberNo(memberNo).receiverName(receiverName).loc(loc).receiverTel(receiverTel).name(name).email(email).tel(tel).totalPrice(totalPrice).payKind(payKind).build();
 		
@@ -97,5 +82,10 @@ public class PaymentController {
 	@RequestMapping("/payment/myPayment.do")
 	public String mypayment() {
 		return "/payment/myPayment";
+	}
+	
+	@RequestMapping("/payment/paymentComplete2.do")
+	public String com() {
+		return "/payment/paymentComplete2";
 	}
 }

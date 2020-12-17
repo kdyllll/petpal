@@ -8,15 +8,17 @@
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script>
+	//결제 API 실행 전 유효성 검사
 	function pay(){
 		if($("#name").val()===""){
 			swal("받으실 분의 성함을 입력해주세요", "", "warning");
 			$('#name').focus();
-		}else if($("#address").val()===""){
+		}else if($("#sample6_address").val()===""){
 			swal("배송지 주소를 입력해주세요", "", "warning");
-			$('#address').focus();
+			$('#sample6_address').focus();
 		}else if($("#phone").val()===""){
 			swal("받으실 분의 휴대폰 번호를 입력해주세요", "", "warning");
 			$('#phone').focus();
@@ -31,43 +33,35 @@
 			$('#rphone').focus();
 		}
 		else{
+			//모든 정보가 다 담겨 있으면 결제 API 실행
 			swal("정보 입력 완료", "결제를 진행합니다.", "success");
-			frm.submit();
-		/* var IMP = window.IMP;
-		IMP.init('imp77627307');
-		
-		IMP.request_pay({
-		    pg : 'inicis', // version 1.1.0부터 지원.
-		    pay_method : 'card',
-		    merchant_uid : 'merchant_' + new Date().getTime(),
-		    name : '주문명:결제테스트',
-		    amount : 100,
-		    buyer_email : 'gusngus@naver.com',
-		    buyer_name : '구매자이름',
-		    buyer_tel : '010-1234-5678',
-		    buyer_addr : '서울특별시 강남구 삼성동',
-		    buyer_postcode : '123-456',
-		}, function(rsp) {
-		    if ( rsp.success ) {
-		        var msg = '결제가 완료되었습니다.';
-		        msg += '고유ID : ' + rsp.imp_uid;
-		        msg += '상점 거래ID : ' + rsp.merchant_uid;
-		        msg += '결제 금액 : ' + rsp.paid_amount;
-		        msg += '카드 승인번호 : ' + rsp.apply_num;
-		        alert(msg);
-		        frm.submit();
-		    } else {
-		        var msg = '결제에 실패하였습니다.';
-		        msg += '에러내용 : ' + rsp.error_msg;
-		        alert(msg);    
-		        return false;
-		    }
-		});
-		
-		return false; */
+			var IMP = window.IMP;
+			IMP.init('imp77627307');
+
+			IMP.request_pay({
+			    pg : 'inicis', // version 1.1.0부터 지원.
+			    pay_method : 'card',
+			    merchant_uid : 'merchant_' + new Date().getTime(),
+			    name : '주문명:결제테스트',
+			    amount : 100,
+			}, function(rsp) {
+			    if ( rsp.success ) {
+			    	//결제에 성공하면 form 전송
+			        frm.submit();
+			    } else {
+			    	//결제 실패하면 메세지 띄우고 페이지에 머무름
+			        var msg = '결제에 실패하였습니다.';
+			        msg += '에러내용 : ' + rsp.error_msg;
+			        alert(msg);    
+			        return false;
+			    }
+			});
+ 
+		return false;
 		}
 	}
 	
+	//장바구니 부분 사이드 div 스크롤에 따라 위치 변경
 	$(document).ready(function() {
 		var top = $('#adside').offset().top - parseFloat($('#adside').css('marginTop').replace(/auto/, 0));
 		$(window).scroll(function(event) {
@@ -79,7 +73,78 @@
 			}
 		});
 	});
+	
+	
+	
+	//주소찾기 API
+	function sample6_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    document.getElementById("sample6_extraAddress").value = extraAddr;
+                
+                } else {
+                    document.getElementById("sample6_extraAddress").value = '';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample6_postcode').value = data.zonecode;
+                document.getElementById("sample6_address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("sample6_detailAddress").focus();
+            }
+        }).open();
+    }
+	
+	//우편번호에 문자가 들어가지  않도록 정규표현식으로 체크
+	$(document).on("keyup", ".phoneNumber", function() { 
+		$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); 
+	});
+	
+	//배송지 정보와 동일하게 정보 채우기
+	function fill(){
+		var name = $("#name").val();
+		var phone = $("#phone").val();
+
+		$("#rname").val(name);
+		$("#rphone").val(phone);
+	}
+	
+	//장바구니 버튼 누르면 장바구니 페이지로 이동
+	function cart(){
+		location.replace('/petpal/cart/cart.do');
+	}
 </script>
+
 
 	<c:set var="path" value="${pageContext.request.contextPath }"/> 
 	 <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
@@ -122,6 +187,9 @@
 			                        <strong><c:out value="${list[0].totalPrice }"/></strong>
 			                    </li>
 			                </ul>
+			                <div class="d-flex">
+			                	<button type="button" class="btn btn-dark ml-auto" onclick="cart();">장바구니로</button>
+			                </div>
            				 </div>
             		</div>
             	</div>
@@ -146,17 +214,27 @@
                             	</div>
                         	</div>
 
-                        <div class="mb-3">
-                            <label for="address">우편번호</label>
-                            <input type="text" class="form-control" id="address" name="loc" placeholder="" required>
+                        <label for="address">주소</label>
+                        <div class="d-flex mb-3">
+                            <input type="text" class="mr-2 form-control" id="sample6_postcode" placeholder="우편번호" style="width:20%" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+							<button type="button" class="btn btn-dark" onclick="sample6_execDaumPostcode()">주소찾기</button>
+						</div>
+						<div class="d-flex mb-3">
+							<input type="text" class="form-control" id="sample6_address" name="loc" placeholder="주소를 입력하세요"><br>
+						</div>
+						<div class="d-flex mb-3">
+							<input type="text" class="mr-2 form-control" id="sample6_detailAddress" name="locDetail" placeholder="상세주소" style="width:50%">
+							<input type="text" class="form-control" id="sample6_extraAddress" placeholder="참고항목" style="width:49%">
+                            
+                            
                             <div class="invalid-feedback">
-                                	우편번호를 입력해주세요.
+                                	주소를 입력해주세요.
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="phone">휴대폰번호</label>
-                            <input type="text" class="form-control" name="receiverTel" id="phone" placeholder="010-0000-0000" required>
+                            <input type="text" class="phoneNumber form-control" name="receiverTel" id="phone" placeholder="" required>
                             <div class="invalid-feedback">
                                 	휴대폰번호를 입력해주세요.
                             </div>
@@ -169,7 +247,7 @@
                                 <h3>주문자</h3>
                             </div>
                             <div class="mr-4 d-flex align-items-center ">
-                                <input type="checkbox" style="width: 20px; height: 20px;">&nbsp;배송지 정보와 동일
+                                <button type="button" class="btn btn-dark" onclick="fill()">배송지 정보와 동일</button>
                             </div>
                         </div>
                         <hr>
@@ -193,7 +271,7 @@
 
                         <div class="mb-3">
                             <label for="phone">휴대폰번호</label>
-                            <input type="text" class="form-control" name="tel" id="rphone" placeholder="010-0000-0000" required>
+                            <input type="text" class="phoneNumber form-control" name="tel" id="rphone" placeholder="" required>
                             <div class="invalid-feedback">
                             	휴대폰번호를 입력해주세요.
                             </div>

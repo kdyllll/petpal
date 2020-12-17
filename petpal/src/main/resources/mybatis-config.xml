@@ -21,14 +21,11 @@
 		<typeAlias type="com.project.petpal.admin.model.vo.ProductImg" alias="storeImg"/>
 		<typeAlias type="com.project.petpal.community.model.vo.Place" alias="place"/>
 		<typeAlias type="com.project.petpal.payment.model.vo.Cart" alias="cart"/>
-<<<<<<< HEAD
 		<typeAlias type="com.project.petpal.payment.model.vo.Payment" alias="payment"/>
 		<typeAlias type="com.project.petpal.payment.model.vo.PayDetail" alias="payDetail"/>
-=======
 		<typeAlias type="com.project.petpal.store.model.vo.Review" alias="review"/>
 		<typeAlias type="com.project.petpal.community.model.vo.Find" alias="find"/>
 		<typeAlias type="com.project.petpal.community.model.vo.FindImg" alias="findImg"/>
->>>>>>> branch 'develop' of https://github.com/kdyllll/petpal.git
 	</typeAliases>
 </configuration>
 
