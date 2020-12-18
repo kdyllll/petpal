@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.project.petpal.store.model.vo.Product;
 import com.project.petpal.store.model.vo.ProductImg;
+import com.project.petpal.store.model.vo.Qna;
 import com.project.petpal.store.model.vo.Review;
 import com.project.petpal.store.model.vo.Stock;
 
@@ -119,6 +120,30 @@ public class StoreDaoImpl implements StoreDao{
 	public int reviewComment(SqlSession session, Map map) {
 		// TODO Auto-generated method stub
 		return session.update("store.reviewComment",map);
+	}
+
+	@Override
+	public ProductImg selectMainImg(SqlSession session, String productNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("store.selectMainImg",productNo);
+	}
+
+	@Override
+	public int insertQna(SqlSession session, Qna q) {
+		// TODO Auto-generated method stub
+		return session.insert("store.insertQna",q);
+	}
+
+	@Override
+	public List<Qna> selectQna(SqlSession session, String productNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("store.selectQna", productNo);
+	}
+
+	@Override
+	public int deleteQna(SqlSession session, String qnaNo) {
+		// TODO Auto-generated method stub
+		return session.delete("store.deleteQna",qnaNo);
 	}
 
 	

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.project.petpal.store.model.dao.StoreDao;
 import com.project.petpal.store.model.vo.Product;
 import com.project.petpal.store.model.vo.ProductImg;
+import com.project.petpal.store.model.vo.Qna;
 import com.project.petpal.store.model.vo.Review;
 import com.project.petpal.store.model.vo.Stock;
 
@@ -127,6 +128,31 @@ public class StoreServiceImpl implements StoreService{
 		return dao.reviewComment(session,map);
 	}
 
+	@Override
+	public ProductImg selectMainImg(String productNo) {
+		// TODO Auto-generated method stub
+		return dao.selectMainImg(session,productNo);
+	}
+
+	@Override
+	public int insertQna(Qna q) {
+		// TODO Auto-generated method stub
+		return dao.insertQna(session,q);
+	}
+
+	@Override
+	public List<Qna> selectQna(String productNo) {
+		// TODO Auto-generated method stub
+		return dao.selectQna(session,productNo);
+	}
+
+	@Override
+	public int deleteQna(String qnaNo) {
+		// TODO Auto-generated method stub
+		return dao.deleteQna(session,qnaNo);
+	}
+
+	
 	
 	
 	

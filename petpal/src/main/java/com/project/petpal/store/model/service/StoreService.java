@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.project.petpal.store.model.vo.Product;
 import com.project.petpal.store.model.vo.ProductImg;
+import com.project.petpal.store.model.vo.Qna;
 import com.project.petpal.store.model.vo.Review;
 import com.project.petpal.store.model.vo.Stock;
 
@@ -27,4 +28,8 @@ public interface StoreService {
 	int updateReview(Review r);
 	Review selectReviewOne(String reviewNo);
 	int reviewComment(Map map);
+	ProductImg selectMainImg(String productNo);
+	int insertQna(Qna q);
+	List<Qna> selectQna(String productNo);
+	int deleteQna(String qnaNo);
 }

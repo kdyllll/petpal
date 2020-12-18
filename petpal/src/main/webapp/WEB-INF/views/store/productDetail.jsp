@@ -190,7 +190,7 @@
         <!--상품 상세창-->
         <div class="container mt-5 col-lg-8 col-10 offset-lg-2"> 
           <div class="mb-5">
-            <p class="h5 py-4"><strong>유저들의 스타일링 샷</strong> <span class="text-info">0</span></p>
+            <p class="h5 py-4"><strong>유저들의 스타일링 샷</strong> <span class="text-point">0</span></p>
             <div id="carouselExampleControls" class="carousel slide block col-lg-8 offset-lg-2">
               <div class="carousel-inner rounded ">
                 <div class="carousel-item active">
@@ -238,10 +238,10 @@
               <div class="row d-flex justify-content-between px-3 py-4 mt-5">
                 <p class="h5">
                   <strong>리뷰</strong> 
-                  <span class="text-info pl-3">0</span>
-                  <span class="text-info pl-3">★★★☆☆</span>
+                  <span class="text-point pl-3">0</span>
+                  <span class="text-hgh pl-3">★★★☆☆</span>
                 </p>
-                <button type="button" class="btn btn-link text-info" data-toggle="modal" id="reviewBtn" ><strong>리뷰 쓰기</strong></button>
+                <button type="button" class="btn btn-link text-black-50" data-toggle="modal" id="reviewBtn" ><strong>리뷰 쓰기</strong></button>
               </div>
               <%if(reviewList==null){ %>
               <p>작성된 리뷰가 없습니다</p>
@@ -258,7 +258,7 @@
 		                  <div style="font-size: 12px;">
 		                    <p class="my-0"><%=r.getNickName() %></p>
 		                    <div >
-		                      <span class="text-info">
+		                      <span class="text-hgh">
 		                    		<%
 		                    			int star=r.getStar();
 		                    			for(int i=0;i<5;i++){
@@ -280,8 +280,8 @@
 	                  </div>
 	                  <%if(loginMember!=null&&r.getMemberNo().equals(loginMember.getMemberNo())){ %>
 	                  <div>
-	                  	<button type="button" class="reviewEdit btn btn-link p-0 pr-1 text-info">수정</button>
-	                  	<button type="button" class="reviewDelete btn btn-link p-0 pr-1 text-info">삭제</button>
+	                  	<button type="button" class="reviewEdit btn btn-link p-0 pr-1 text-point">수정</button>
+	                  	<button type="button" class="reviewDelete btn btn-link p-0 pr-1 text-point">삭제</button>
 	                  	<input type="hidden" class="reviewNum" value="<%=r.getReviewNo() %>"/>
 	                  </div>
 	                  <%} %>
@@ -307,11 +307,11 @@
 	                  <%if(r.getReviewComment()!=null){ %>
 	                  <div class="text-right">
 		                  <c:if test="${loginMember.memberNo eq 63}">
-			                  <a class="replyEdit text-info text-right pb-2 pr-4"  style="font-size: 12px;" style="cursor: pointer;">
+			                  <a class="replyEdit text-point text-right pb-2 pr-4"  style="font-size: 12px;" style="cursor: pointer;">
 						                    답글 수정
 						      </a>
 		                  </c:if>
-		                  <a class="replyShow text-info text-right pb-2" style="font-size: 12px;" style="cursor: pointer;">
+		                  <a class="replyShow text-hgh text-right pb-2" style="font-size: 12px;" style="cursor: pointer;">
 		                    <strong>판매자 답글</strong>
 		                  </a>
 		              </div> 
@@ -330,7 +330,7 @@
 	                  <%}else{ %>
 	                  <div class="text-right">
 		                  <c:if test="${loginMember.memberNo eq 63}">
-		                  	<a class="replyWrite text-info text-right pb-2 pr-4"  style="font-size: 12px;" style="cursor: pointer;">답글 작성</a>
+		                  	<a class="replyWrite text-point text-right pb-2 pr-4"  style="font-size: 12px;" style="cursor: pointer;">답글 작성</a>
 		                  </c:if>
 		                  <a class="text-black-50 text-right pb-2" style="font-size: 12px;" style="cursor: pointer;"><strong>판매자 답글</strong></a>
 		               </div>
@@ -350,81 +350,108 @@
               <div class="mt-3 text-center">페이지바</div>
             </div>
 
-            <!--문의-->
-            <div id="inquiry" class="row d-flex justify-content-between px-3 py-4 mt-5" >
+           <!--문의-->
+
+            <div id="qnaCon" class="row d-flex justify-content-between px-3 py-4 mt-5" >
               <p class="h5">
                 <strong>문의</strong> 
-                <span class="text-info pl-3">0</span>               
+                <span class="text-point pl-3">0</span>               
               </p>
-              <button type="button" class="btn btn-link text-info" data-toggle="modal" ><strong>문의 하기</strong></button>
+              <button type="button" id="qnaBtn" class="btn btn-link text-black-50" data-toggle="modal" ><strong>문의 하기</strong></button>
+             
             </div>
-            <!--문의-->
-            <article class="border-bottom py-3">
-              <div class="row d-flex justify-content-between pl-2"> 
-                <p class="mb-0"style="font-size: 14px;">구매 | 배송 | <span class="text-secondary"> 답변전</span></p>
-                <a class="text-info text-right pb-2 pr-4"  style="font-size: 12px;" data-toggle="collapse" href="#replyWrite3" role="button" aria-expanded="false" aria-controls="collapseExample">답글 달기(판매자만)</a>
-              </div>
-              <p class="text-black-50" style="font-size: 12px;">작성자 | <span>작성일</span></p>
-              <div class="row ml-2">
-                <p class="text-info mr-3"><strong>Q</strong></p>
-                <p>11/6 부터 순차발송된다 메세지받았는데
-                  아직 배송정보가 안잡힙니다
-                  언제출고되나요?</p>
-              </div> 
-              <form class="collapse" id="replyWrite3">
-                <div class="form-group row ml-2">
-                  <p class=""><strong class="text-info mr-2">A</strong></p>
-                  <div class="col-11"> 
-                    <textarea class="form-control" rows="2" style="resize:none;" placeholder=""></textarea>
-                    <button type="button" class="btn btn-primary mt-2 offset-10 col-2">완료</button>
-                  </div>
-                </div> 
-              </form>
-              
-            </article>
-            
-            <article class="inquiry border-bottom py-3">
-              <div class="row d-flex justify-content-between pl-2"> 
-                <p class="mb-0"style="font-size: 14px;">구매 | 배송 | <span class="text-info"> 답변완료</span></p>
-                <a class="text-info text-right pb-2 pr-4 updateReply" style="font-size: 12px;">답글 수정(판매자만)</a>
-              </div>
-              <p class="text-black-50" style="font-size: 12px;">작성자 | <span>작성일</span></p>
-              <div class="row ml-2">
-                <p class="text-info mr-3"><strong>Q</strong></p>
-                <p >11/6 부터 순차발송된다 메세지받았는데
-                  아직 배송정보가 안잡힙니다
-                  언제출고되나요?</p>
-              </div> 
-              <div class="oriReply row ml-2">
-                <p class=""><strong class="text-info mr-2">A</strong></p>
-                <div class="col-11"> 
-                  <span class="text-black-50" style="font-size: 12px;">답글작성날짜</span>
-                  <p class="content">안녕하세요 그날 오후 즈음 입고가되서 순차적 배송 작업하다보니 일부출고되고 또나머지는 어제부터 발송 처리중이며 이번주 수목 기준은 예상하시면 될듯합니다. 많이 기다려주셔서 너무나 감사합니다</p>
-                </div>
-              </div> 
-              
-                <form class="writeFrm d-none" id="replyWrite4">
-                  <div class="form-group row ml-2">
-                    <p class=""><strong class="text-info mr-2">A</strong></p>
-                    <div class="col-11 mt-2"> 
-                      <textarea class="writeText form-control" rows="3" style="resize:none;" placeholder=""></textarea>
-                      <button type="button" class="btn btn-primary mt-2 offset-10 col-2">완료</button>
-                    </div>
-                  </div> 
-                </form>
-              
-            </article>
-            <script>
-              $(".updateReply").click(function(e){       
-                var ori=$(e.target).parents(".inquiry").find("div.oriReply");
-                var write=ori.next(".writeFrm");
-                var content=ori.find("p.content").html();
-                //console.log(write);
-                ori.toggleClass("d-none");
-                write.find("textarea.writeText").html(content);
-                write.toggleClass("d-none");
-              });
-            </script>
+            <c:forEach var="q" items="${qnaList }">
+		            <article class="qna border-bottom py-3">
+		              <div class="row d-flex justify-content-between pl-2"> 
+		                <p class="mb-0"style="font-size: 14px;"><c:out value="${q.category }"/> |  
+		                <c:if test="${empty q.qnaComment}">
+		                	<span class="text-black-50" >답변전</span>
+		                </c:if>
+		                <c:if test="${not empty q.qnaComment }">
+		                	<span class="text-hgh"> 답변완료</span>
+		                </c:if>
+		                </p>
+		                <c:if test="${q.memberNo eq loginMember.memberNo }">
+		                 	<div class="text-right mr-4">
+			                  <button type="button" class="qnaEdit btn btn-link p-0 pr-1 text-black-50">수정</button>
+				              <button type="button" class="qnaDelete btn btn-link p-0 pr-1 text-black-50">삭제</button>			
+			                </div>
+		                </c:if>	
+		                <c:if test="${(q.memberNo ne loginMember.memberNo) and (loginMember.memberNo eq '63') }">
+		                	<div class="text-right mr-4">
+				              <button type="button" class="qnaDelete btn btn-link p-0 pr-1 text-black-50">삭제</button>			
+			                </div>
+		                </c:if>	                
+		              </div>
+		              <p class="text-black-50" style="font-size: 12px;"><c:out value="${q.nickName}"/> | <span><c:out value="${q.enrollDate}"/></span></p>
+		              
+		              <c:choose>
+			              <c:when test="${(q.memberNo eq loginMember.memberNo) or (loginMember.memberNo eq '63') or (q.secret eq 'N')}">
+				              <div class="row ml-2">
+				                <p class="text-hgh mr-3"><strong>Q</strong></p>
+				                <pre><c:out value="${q.content}"/></pre>		                  
+				              </div> 
+				              <c:if test="${(empty q.qnaComment) and (loginMember.memberNo eq '63')}">
+					              <a class="answerWrite text-black-50 text-right pb-2 pr-4 mb-1 ml-2" style="font-size: 12px;" role="button" style="cursor: pointer;">답글 달기</a>
+					              <form class="mt-2 answerWriteFrm collapse" >
+					              <input type="hidden" class="qnaNo" name="qnaNo" value="${q.qnaNo }"/>
+					                <div class="form-group row ml-2">
+					                  <p class=""><strong class="text-hgh mr-2">A</strong></p>
+					                  <div class="col-11"> 
+					                    <textarea class="form-control" rows="2" style="resize:none;" placeholder=""></textarea>
+					                    <button type="button" class="btn bg-hgh text-white mt-2 offset-10 col-2">완료</button>
+					                  </div>
+					                </div> 
+					              </form>
+				              </c:if>
+				              <c:if test="${(not empty q.qnaComment)}">
+					              <div class="answer row ml-2">
+					                <p class=""><strong class="text-hgh mr-2">A</strong></p>
+					                <div class="col-11"> 
+					                  <div class="d-flex justify-content-between mb-2">
+					                    <p class="text-black-50 m-0" style="font-size: 12px;">${q.commentDate }</p>
+					                   	  <c:if test="${loginMember.memberNo eq '63' }">
+						                      <div class="row">
+						                        <a class="answerEdit text-black-50 mr-2 updateAnswer" style="font-size: 12px;" role="button" style="cursor: pointer;">답글 수정(판매자만)</a>
+						                        <a class="answerDelete text-black-50 mr-2 updateAnswer" style="font-size: 12px;" role="button" style="cursor: pointer;">답글 삭제(판매자만)</a>
+						                      </div> 
+					                  	  </c:if>
+					                  </div>
+					                  <pre class="content"><c:out value="{q.qnaComment}"/></pre>
+					                </div>
+					              </div> 
+					              
+					                <form class="answerEditFrm collapse" >
+					                  <input type="hidden" class="qnaNo" name="qnaNo" value="${q.qnaNo }"/>
+					                  <div class="form-group row ml-2">
+					                    <p class=""><strong class="text-hgh mr-2">A</strong></p>
+					                    <div class="col-11 mt-2"> 
+					                      <textarea class="writeText form-control" rows="3" style="resize:none;">
+					                        <c:out value="{q.qnaComment}"/>
+					                      </textarea>
+					                      <div class="text-right">
+					                        <button type="button" class="editCancel btn btn-link text-hgh mt-2">취소</button>
+					                        <button type="button" class="btn bg-hgh text-white mt-2">완료</button>
+					                      </div>
+					                    </div>
+					                  </div> 
+					                </form>
+				              </c:if>		              
+			              </c:when>
+			              <c:otherwise>
+			              	 <div class="row ml-2">
+				                <p class="text-hgh mr-3"><strong>Q</strong></p>
+				                <p class="text-black-50"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+				                  <path d="M2.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z"/>
+				                  <path fill-rule="evenodd" d="M4.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
+				                </svg> </p>
+				                <span class="text-black-50 ml-2 pt-1">비밀글 입니다.</span>
+				              </div> 
+			              </c:otherwise>
+		              </c:choose>
+		            </article>
+            </c:forEach>
+          
             <div class="mt-3 text-center">페이지바</div>
             </div>
 
@@ -632,7 +659,8 @@
           });
           $("#totalPrice").text(totalPrice);
         };
-		
+        
+		//리뷰
         //리뷰 collapse 작동
         $(".replyEdit").on("click",e=>{
           $(e.target).parents("article").find('form.replyEditFrm').collapse('toggle'); 
@@ -670,7 +698,25 @@
       		}
 		});
       	
-        
+      	//문의
+      	//문의 collapse 작동
+      	 $(".answerWrite").on("click",e=>{              
+            $(e.target).parents("article").find('form.answerWriteFrm').collapse('toggle'); 
+          });
+          $(".answerEdit").on("click",e=>{
+            $(e.target).parents("article").find("div.answer").toggleClass("d-none");
+            $(e.target).parents("article").find('form.answerEditFrm').collapse('toggle'); 
+          });   
+          $(".editCancel").on("click",e=>{
+            $(e.target).parents("article").find("div.answer").toggleClass("d-none");
+            $(e.target).parents("article").find('form.answerEditFrm').collapse('toggle'); 
+          }); 
+          
+        //문의 삭제
+        $(".qnaDelete").on("click",e=>{
+        	let qnaNo=$(e.target).parents("article.qna").find("input.qnaNo").val();
+        	location.replace("${path}/store/deleteQna.do?productNo="+productNo+"&qnaNo="+qnaNo);
+        });
         
         //모달즈
         
@@ -784,10 +830,16 @@
         
         
         //문의 작성 모달
+        $("#qnaBtn").on("click",e=>{
+        	if(loginMember!=""){//로그인되어있으면 문의 모달 띄우기
+        		qnaModal("${path}/store/moveQna.do");       		
+        	}else{//로그인 안되어있으면 로그인 모달 띄우기
+        		loginModal();
+        	}
+        });
         
         
-        
-        function ajaxModal(path){
+        function qnaModal(path){
         
 			$.ajax({
 				url: path,

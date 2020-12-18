@@ -23,6 +23,7 @@ import com.project.petpal.member.model.vo.Member;
 import com.project.petpal.store.model.service.StoreService;
 import com.project.petpal.store.model.vo.Product;
 import com.project.petpal.store.model.vo.ProductImg;
+import com.project.petpal.store.model.vo.Qna;
 import com.project.petpal.store.model.vo.Review;
 import com.project.petpal.store.model.vo.Stock;
 
@@ -71,6 +72,7 @@ public class StoreController {
 		List<Review> reviews=service.selectReview(productNo);
 		
 		//문의 가져오기
+		List<Qna> qnas=service.selectQna(productNo);
 		
 		m.addAttribute("product",p);
 		m.addAttribute("imgs",pImg);
@@ -79,6 +81,7 @@ public class StoreController {
 		m.addAttribute("colors",colors);
 		m.addAttribute("sizes",sizes);
 		m.addAttribute("reviewList",reviews);
+		m.addAttribute("qnaList",qnas);
 		
 		return "store/productDetail";
 	}
@@ -196,6 +199,35 @@ public class StoreController {
 		int result=service.reviewComment(map);
 		m.addAttribute("loc","/store/moveDetail.do?productNo="+productNo);
 		m.addAttribute("msg",result>0?"답변을 작성했습니다.":"답변 작성을 실패했습니다.");
+		return "common/msg";
+	}
+	
+	//문의 작성
+	@RequestMapping("/store/qnaEnd.do")
+	public String insertQna(HttpSession session,String productNo,String category,String content,
+			@RequestParam(value="secret", required=false) String secret,
+			Model m) {
+		//문의 : 문의 번호, 상품 번호, 작성자 번호, 내용, 댓글, 작성일, 댓글작성일, 카테고리, 비밀글여부(Y/N)
+		Member loginMember=(Member)session.getAttribute("loginMember");
+		Qna q=new Qna();
+		q.setProductNo(productNo);
+		q.setMemberNo(loginMember.getMemberNo());
+		q.setContent(content);
+		q.setCategory(category);
+		q.setSecret(secret);
+		
+		int result=service.insertQna(q);
+		m.addAttribute("msg",result>0?"문의가 작성되었습니다.":"문의 작성에 실패했습니다.");
+		m.addAttribute("loc","/store/moveDetail.do?productNo="+productNo);		
+		return "common/msg";
+	}
+	
+	//문의 삭제
+	@RequestMapping("/store/deleteQna.do")
+	public String deleteQna(String productNo,String qnaNo,Model m) {
+		int result=service.deleteQna(qnaNo);
+		m.addAttribute("msg",result>0?"문의가 삭제되었습니다.":"문의 삭제에 실패했습니다.");
+		m.addAttribute("loc","/store/moveDetail.do?productNo="+productNo);
 		return "common/msg";
 	}
 

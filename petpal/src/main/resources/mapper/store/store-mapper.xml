@@ -79,6 +79,27 @@ WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK 
 		SELECT * FROM REVIEW LEFT JOIN PAYDETAIL USING(DETAILNO) LEFT JOIN STOCK USING(STOCKNO) WHERE REVIEWNO=#{reviewNo}
 	</select>
 	<update id="reviewComment" parameterType="map">
-		UPDATE REVIEW SET REVIEWCOMMENT=#{reviewComment} WHERE REVIEWNO=#{reviewNo}
+		UPDATE REVIEW SET REVIEWCOMMENT=#{reviewComment} WHERE REVIEWNO=#{reviewNo, jdbcType=VARCHAR}
 	</update>
+	<select id="selectMainImg" resultType="storeImg" parameterType="string">
+		SELECT * FROM PRODUCTIMG WHERE PRODUCTNO=#{productNo} AND TYPE='M'
+	</select>
+	<insert id="insertQna" parameterType="qna">
+		INSERT INTO QNA VALUES(SEQ_QNANO.NEXTVAL,#{productNo},#{memberNo},#{content},NULL,SYSDATE,NULL,#{category},
+		<choose>
+			<when test="secret!=null">
+				'Y'
+			</when>
+			<otherwise>
+				DEFAULT
+			</otherwise>
+		</choose>	
+		)
+	</insert>
+	<select id="selectQna" resultType="qna" parameterType="string">
+		SELECT * FROM QNA LEFT JOIN MEMBER USING(MEMBERNO) WHERE PRODUCTNO=#{productNo}
+	</select>
+	<delete id="deleteQna" parameterType="string">
+		DELETE FROM QNA WHERE QNANO=${value}
+	</delete>
 </mapper>

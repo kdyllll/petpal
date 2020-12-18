@@ -110,10 +110,10 @@ public class StoreAjaxController {
 	@RequestMapping("/store/moveReview.do")
 	public String moveReview(String productNo,String detailNo,Model m) {
 		Product p=service.selectProduct(productNo);
-		List<ProductImg> list=service.selectImg(productNo);
+		ProductImg pi=service.selectMainImg(productNo);
 		Stock s=service.selectStock(detailNo);
 		m.addAttribute("product",p);
-		m.addAttribute("img",list.get(0));
+		m.addAttribute("img",pi);
 		m.addAttribute("detailNo",detailNo);
 		m.addAttribute("stock",s);
 		return "store/storeAjax/reviewModal";
@@ -136,9 +136,9 @@ public class StoreAjaxController {
 		//상품이름, 구매한 옵션, 이미지
 		
 		Product p=service.selectProduct(productNo);
-		List<ProductImg> list=service.selectImg(productNo);
+		ProductImg pi=service.selectMainImg(productNo);
 		m.addAttribute("product",p);
-		m.addAttribute("img",list.get(0));
+		m.addAttribute("img",pi);
 		
 		List<String> detailNoList = JSONArray.fromObject(details);//리뷰안쓴 디테일 번호들
 		List<Stock> stockList=new ArrayList<Stock>();
@@ -167,6 +167,16 @@ public class StoreAjaxController {
 		return "store/storeAjax/reviewEditModal";
 	}
 
+	@RequestMapping("/store/moveQna.do")
+	public String moveQna(String productNo,Model m) {
+		//문의 모달로 이동
+		//필요한 것: 상품번호, 상품이름, 상품대표이미지
+		Product p=service.selectProduct(productNo);
+		ProductImg pi=service.selectMainImg(productNo);
+		m.addAttribute("product",p);
+		m.addAttribute("img",pi);
+		return "store/storeAjax/qnaModal";
+	}
 	
 	
 }
