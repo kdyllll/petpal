@@ -31,11 +31,15 @@ public class PaymentController {
 								@RequestParam(value="color") String[] color,
 								@RequestParam(value="count") int[] count,
 								@RequestParam(value="price") int[] price,
-								@RequestParam(value="stockNo") String[] stockNo) {
+								@RequestParam(value="stockNo") String[] stockNo,
+								@RequestParam(value="click") String[] click) {
 		
 		int totalPrice = 0;
+		
 		for(int i=0;i<price.length;i++) {
-			totalPrice += price[i];
+			if(click[i].equals("1")) {
+				totalPrice = totalPrice + (count[i] * price[i]);
+			}
 		}
 		
 		List list = new ArrayList();
@@ -43,8 +47,10 @@ public class PaymentController {
 		Cart c = Cart.builder().build();
 		
 		for(int i=0; i<count.length;i++) {
-			c = Cart.builder().productName(productName[i]).productSize(size[i]).color(color[i]).count(count[i]).price(price[i]).totalPrice(totalPrice).stockNo(stockNo[i]).build();
-			list.add(c);
+			if(click[i].equals("1")) {
+				c = Cart.builder().productName(productName[i]).productSize(size[i]).color(color[i]).count(count[i]).price(count[i] * price[i]).totalPrice(totalPrice).stockNo(stockNo[i]).build();
+				list.add(c);
+			}
 		}
 	
 		mv.addObject("list", list);
