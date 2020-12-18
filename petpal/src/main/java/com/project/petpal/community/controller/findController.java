@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections.map.HashedMap;
@@ -95,7 +97,9 @@ public class findController {
 	}
 	
 	@RequestMapping("/community/findDetail.do")
-	public String findDetail() {
+	public String findDetail(HttpServletRequest request, HttpServletResponse response) {
+		String findNo = request.getParameter("findNo");
+		System.out.println(findNo);
 		return "community/findDetail";
 	}
 }

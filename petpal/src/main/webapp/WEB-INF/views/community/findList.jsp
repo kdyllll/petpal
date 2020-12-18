@@ -89,7 +89,7 @@
 					<c:forEach var="l" items="${list }">
 						<div class="col mb-4">
 							<div class="card h-100 border-0 " style="overflow: hidden;">
-								<span><c:out value="${l.EMAIL }"/></span> <a href="${path}/community/findDetail.do"><img
+								<span><c:out value="${l.EMAIL }"/></span> <a href="${path}/community/findDetail.do?findNo=${l.FINDNO}"><img
 									src="${path }/resources/upload/find/${l.FILENAME}" alt="..." style="width: 100%; height: 200px;"></a>
 								<div class="card-body">
 									<h5 class="card-title"><c:out value="${l.TITLE }"/></h5>

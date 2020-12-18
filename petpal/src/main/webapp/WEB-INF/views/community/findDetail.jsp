@@ -28,11 +28,9 @@
 							type="button"> 찾아주세요 </a>
 					</div>
 				</div>
-				
-
 			</div>
+			<div>dddd</div>
 		</div>
-
 	</main>
 
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
