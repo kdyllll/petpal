@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="place">
-  
+  <resultMap type="place" id="placeMap">
+	<result column="position" property="position" typeHandler="strArr"/>
+</resultMap>
+  <insert id="insertPlace" parameterType="place">
+  	INSERT INTO PLACE VALUES('P'||SEQ_PLACENO.NEXTVAL,#{memberNo},#{title},#{explanation},DEFAULT,#{category},#{position typeHandler=strArr},DEFAULT)
+  	<selectKey keyProperty="placeNo" resultType="string" order="AFTER"><!-- 본쿼리문을 실행하기전이나 후에 특정한값을 가져올때 사용 -->
+  		SELECT 'P'||SEQ_PLACENO.CURRVAL FROM DUAL
+  	</selectKey>
+  </insert>
+  <insert id="insertPlaceImg" parameterType="placeImg">
+  	INSERT INTO PLACEIMG VALUES('PI'||SEQ_PLACEIMGNO.NEXTVAL,#{placeNo},#{content},#{fileName},
+  				<choose>
+			 		<when test="type != null">
+			 			#{type}
+			 		</when>
+			 		<when test="type == null">
+			 			DEFAULT
+			 		</when>
+			 	</choose>)
+  </insert>
+  <insert id="insertHashtag" parameterType="map">
+  	INSERT INTO HASHTAG VALUES(#{postNo},#{hashContent})
+  </insert>
+  <select id="placeList" resultType="place" parameterType="string" resultMap="placeMap">
+  	SELECT * FROM PLACE JOIN PLACEIMG USING(PLACENO) JOIN MEMBER USING(MEMBERNO) WHERE TYPE='M'
+  	 <if test="value !=null">
+  		AND CATEGORY=#{value}
+  	</if> 
+  </select>
+  <select id="selectPlace" resultType="place" parameterType="string" resultMap="placeMap" >
+  	SELECT * FROM PLACE WHERE PLACENO=#{placeNo}
+  </select>
 </mapper>

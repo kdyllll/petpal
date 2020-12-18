@@ -35,7 +35,7 @@ public class HomeController {
 
 
 
-		return "community/placeWrite";
+		return "community/placeDetail";
 
 
 	}

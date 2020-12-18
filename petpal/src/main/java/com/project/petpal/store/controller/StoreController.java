@@ -22,12 +22,12 @@ public class StoreController {
 	@Autowired
 	private StoreService service;
 	
-	@RequestMapping("/store/moveStoreHome.do")
+	@RequestMapping("/store/moveStoreHome.do")//스토어 홈으로 이동하는 서블릿
 	public String moveStoreHome(Model m) {
 		
-		 List<Product> dList=service.dogList(); 
-		 List<Product> cList=service.catList(); 
-		 List<Product> sList=service.smallList(); 
+		 List<Product> dList=service.dogList(); //강아지 상품리스트
+		 List<Product> cList=service.catList(); //고양이 상품리스트
+		 List<Product> sList=service.smallList(); //소동물 상품리스트
 		 m.addAttribute("dList",dList);
 		 m.addAttribute("cList",cList);
 		 m.addAttribute("sList",sList);
