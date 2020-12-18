@@ -62,4 +62,20 @@ WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK 
 	<delete id="deleteReview" parameterType="string">
 		DELETE FROM REVIEW WHERE REVIEWNO=${value}
 	</delete>
+	<update id="updateReview" parameterType="review">
+		UPDATE REVIEW
+		<set>
+			<if test="fileName != null">
+				FILENAME =#{fileName},
+			</if>
+			<if test="content != null">
+				CONTENT =#{content},
+			</if>
+			STAR=#{star}
+		</set>
+		WHERE REVIEWNO=#{reviewNo}
+	</update>
+	<select id="selectReviewOne" resultType="review" parameterType="string">
+		SELECT * FROM REVIEW LEFT JOIN PAYDETAIL USING(DETAILNO) LEFT JOIN STOCK USING(STOCKNO) WHERE REVIEWNO=#{reviewNo}
+	</select>
 </mapper>

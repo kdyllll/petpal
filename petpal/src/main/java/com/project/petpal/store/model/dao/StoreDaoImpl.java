@@ -103,4 +103,20 @@ public class StoreDaoImpl implements StoreDao{
 		return session.delete("store.deleteReview",reviewNo);
 	}
 
+	@Override
+	public int updateReview(SqlSession session, Review r) {
+		// TODO Auto-generated method stub
+		return session.update("store.updateReview",r);
+	}
+	
+	@Override
+	public Review selectReviewOne(SqlSession session, String reviewNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("store.selectReviewOne",reviewNo);
+	}
+
+	
+	
+	
+
 }
