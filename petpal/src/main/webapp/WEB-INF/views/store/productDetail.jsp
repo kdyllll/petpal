@@ -73,12 +73,12 @@
           <!-- 상품 정보들 -->
           <div class="col-lg-6 ">
           	<input type="hidden" id="productNo" value="${product.productNo }"/>
-            <p id="productName" class="h3 text-point">               
+            <p id="productName" class="h3">               
                   <c:out value="${product.productName}"/>
             </p>
             <div class="px-3 pb-2 border-bottom">
               <div class="row mb-3 mx-2 d-flex justify-content-between"> 
-                <a href="#" class="text-point">★★★☆☆ 00개 리뷰</a>
+                <a href="#" class="text-dark">★★★☆☆ 00개 리뷰</a>
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
                 </svg>          
@@ -94,7 +94,7 @@
             		</c:if>
             	</c:forEach>
               <div class="row mb-3">
-                <span class="h1 col-3 text-right text-info align-middle"><strong><c:out value="${sale }"/>%</strong></span>
+                <span class="h1 col-3 text-right  text-hgh align-middle"><strong><c:out value="${sale }"/>%</strong></span>
                 <span class="col-9">
                   <p class="mb-0"><del>
                   	
@@ -105,7 +105,7 @@
                   </strong></p>
                 </span>
               </div>
-              <p class=""><b class="text-info"><c:out value="${price * sale * 0.001 * 0.1}"/>P</b> 적립해드립니다.</p>
+              <p class=""><b class="text-hgh"><c:out value="${price * sale * 0.001 * 0.1}"/>P</b> 적립해드립니다.</p>
             </div>
             <div class="px-3 py-3 border-bottom">
               <p>CJ대한통운<br>

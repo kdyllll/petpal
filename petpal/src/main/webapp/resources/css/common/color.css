@@ -3,6 +3,10 @@
   color:#eae1d8;
 }
 
+.text-hgh{
+  color:#e78382;
+}
+
 .text-tip{
   color:#f7dad9;
 }
@@ -29,6 +33,10 @@
 
 .bg-point{
   background-color:#eae1d8;
+}
+
+.bg-hgh{
+  background-color:#e78382;
 }
 
 .bg-tip{
