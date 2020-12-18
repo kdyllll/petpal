@@ -7,6 +7,7 @@
 <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 	$( document ).ready( function() {
 		var objs = document.querySelectorAll(".ch");
@@ -15,8 +16,8 @@
 		for (var j = 0; j < objs.length; j++) {
             if (objs[j].checked === true) {
               c+=1;
-            };
-         };
+            }
+        }
 		
          $(".pay").text(c + "개 상품 구매하기").css({"font-weight":"bold"});
 	});
@@ -93,26 +94,9 @@
      	
      	
 		$(".count").click(function(){
-			
-			<c:forEach items="${list}" var="c">
-		     	count = $(this).val();
-	     		price = ${c.PRICE};
-     		</c:forEach>
-		     	$(this).parent().next($(".price")).text(price * count).append("원");
-     		
-	     	totalProduct=0;
-	     	
-	        
-	     	$(".price").each((i,item)=>{
-	            let priceCal=parseInt($(item).text().trim());
-	            totalProduct=totalProduct+priceCal;
-	          });
-	     	$(".totalProduct").text(totalProduct);
-	     	$('.totalPrice').text(totalProduct);
-	     	
-	     	
-	     	//여기에서 실행-------------------------------------------------------------------------------
-	     	fn_checkPrice();
+			count = $(this).val();
+			$(this).parent().next().next().text(price * count).append("원");
+			fn_checkPrice();
 		});
 		
 		
@@ -138,9 +122,9 @@
 			//여기에서 실행-------------------------------------------------------------------------------
 			fn_checkPrice();
 	     });
-		 $('.ch').click( function() {
+		$('.ch').click( function() {
 			if($(this).prop("checked") === true){
-				totalProduct = totalProduct + parseInt($(this).parent().nextAll().find('.price').text().trim());
+				totalProduct = $(".totalProduct").html();
 			}
 			$(".totalProduct").text(totalProduct);
 	        $('.totalPrice').text(totalProduct);
@@ -161,6 +145,27 @@
 		$('.totalPrice').text(total);
 		
 	}
+	
+	function submitCheck(){
+		var objs = document.querySelectorAll(".ch");
+		var c = 0;
+		
+		
+		for(var i=0;i<objs.length;i++){
+			if(objs[i].checked===true){
+				c++;
+				$("#preview").append("<input class=\"click\" id=\"click\" type=\"hidden\" name=\"click\" value=\"1\">");
+			}else{
+				$("#preview").append("<input class=\"click\" id=\"click\" type=\"hidden\" name=\"click\" value=\"0\">");
+			}
+		}
+		
+		if(c==0){
+			swal("상품을 선택해주세요", "", "warning");
+		}else{
+			frm.submit();
+		}
+	}
 </script>
 
 
@@ -179,7 +184,7 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 		<main role="main" style="min-height: 100vh;">
 			<div class="container">
-				<form class="needs-validation" name="cart" action="${path }/payment/payment.do?memberNo=${list[0].MEMBERNO}" method="post">
+				<form class="needs-validation" id="frm" name="cart" action="${path }/payment/payment.do?memberNo=${list[0].MEMBERNO}" method="post">
 				<div class="row" style="padding-top: 5em;">
 	
 					<div class="order-md-2 ml-3 d-none d-md-block">
@@ -199,7 +204,7 @@
 										<h3 class="totalPrice">0</h3>
 									</li>
 								</ul>
-									<button type="submit" class="pay mt-1 p-3 btn btn-secondary" style="width:350px;"><b>개 상품 구매하기</b></button>
+								<button type="button" class="pay mt-1 p-3 btn btn-secondary" style="width:350px;" onclick="submitCheck();"><b>개 상품 구매하기</b></button>
 							</div>
 						</div>
 					</div>
@@ -263,8 +268,9 @@
 													<div>
 						                                <input class="count" type="number" name="count" value="${c.COUNT }" min="1" max="100">
 						                             </div>
-						                             <input type="hidden" name="price" value="${c.COUNT * c.PRICE}">
+						                             <input type="hidden" name="price" value="${c.PRICE}">
 						                             <span class="price ml-auto"><c:out value="${c.COUNT * c.PRICE}"/>원</span>
+						                             <div id="preview"></div>
 						                    </div>
 			                    		</div>
 					                    <div class="ml-4 mt-3">
@@ -290,7 +296,7 @@
 										<h3 class="totalPrice">0</h3>
 									</li>
 								</ul>
-								<button type="submit" class="pay mt-1 p-3 btn btn-secondary" style="width:100%;"><b>개 상품 구매하기</b></button>
+								<button type="button" class="pay mt-1 p-3 btn btn-secondary" style="width:100%;" onclick="submitCheck();"><b>개 상품 구매하기</b></button>
 						</div>
 						
 					</div>

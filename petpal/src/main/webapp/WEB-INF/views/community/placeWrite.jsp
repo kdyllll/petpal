@@ -60,7 +60,7 @@ input:focus {
 									id="sample6_detailAddress" placeholder="상세주소">
 							</div>
 							<div class="mb-4 col-8">
-								<input type="text" placeholder="장소에 대한 설명" class="form-control input-lg" name="explanation">
+								<input type="text" id="exp" placeholder="장소에 대한 설명" class="form-control input-lg" name="explanation">
 							</div>
 						</div>
 						
@@ -69,8 +69,8 @@ input:focus {
 								<div class="col-6" id="imgContainer">
 									<div id="hide">
 										<label id="uploadLabel"
-											class="btn rounded bg-light col-12 col-lg-10 border d-flex justify-content-center align-items-center"
-											style="height: 206px;"> <input name="p"
+											class="btn rounded bg-light col-12 col-lg-10 border d-flex justify-content-center align-items-center addPic"
+											style="height: 206px;"> <input name="pic"
 											class="d-none upload" id="upload" type="file"
 											accept="images/*" />
 											<div>
@@ -85,8 +85,9 @@ input:focus {
                   </svg>
 												<br> <span> 사진 올리기 </span>
 											</div>
+											</label>
 									</div>
-									</label>
+									
 								</div>
 
 								<!--설명-->
@@ -122,6 +123,7 @@ input:focus {
 				</div>
 				<div class="mb-5 pb-5" style="height: 30px;"></div>
 			</div>
+			
 		</section>
 	</main>
 	<div class="fixed-bottom py-3 d-flex justify-content-end"
@@ -129,18 +131,15 @@ input:focus {
 		<button type="button" id="btn"
 			class="btn btn-lg btn-primary mr-5 col-2">작성</button>
 	</div>
+	
 </body>
 <script>
-	
-	 $(function(){
-		
-	 }); 
 	  //사진!!
 	  //사진 미리보기
 	  $(document).on('change','.upload',function(e){
 		  var f=e.target;
-		$("#hide").remove(); // 사진 등록 창 안보이게
-	        $.each(e.target.files,(i,v)=>{//미리보기 로직     
+		$("#hide").hide(); // 사진 등록 창 안보이게
+	        $.each(e.target.files,(i,v)=>{//미리보기 로직 
 	            let reader=new FileReader();
 	            reader.onload=e=>{ 
 	                let img=`<div class="preview position-relative rounded col-10 mb-3" >
@@ -154,49 +153,44 @@ input:focus {
 	                            </button>
 	                          </div>
 	                        </div>`;
-					if(f.id!="upload"){ //사진라벨이 아닐떄
+					 if(f.id!="upload"){ //사진라벨이 아닐떄
 					 	let content=`<textarea class="form-control col-12 col-lg-10 mb-3 content" name="content" rows="8"
 							placeholder="설명을 입력해주세요" style="resize: none;"></textarea>`;
 	            		$("#container").append(`<div class="row remove"><div class="col-6">`+img+`</div><div class="col-6">`+content+`</div></div>`);
-		               	 //$("#container").append(content);
-	            	 }else{//사진라벨일때
-	            		
+	            	 }else{//사진라벨일때 
 	                $("#imgContainer").append(img);
 	            	} 
-	                fn_add(); //사진 추가하기 버튼 추가
-	                
+					 fn_add();
 	            }
-	            
 	            reader.readAsDataURL(v);
-	        });              
+	            
+	        });
+	        
 	    });
 	  
 	    //사진 추가하기 버튼 추가하는 로직
 	    function fn_add(){
-	      $("#container").find(".addPic").remove();
+	      $("#container").find(".addPic").hide();
 	      if($(".preview").length!=5){  
 	        let label=`<label class="addPic rounded text-center bg-light btn btn-block mt-3 col-12" style="height:50px;">
 	                    <input name="pic" class="d-none upload" type="file" accept="images/*"/>
 	                    <p class="h5 text-secondary align-middle mb-0 mt-1"><strong>추가하기</strong></p>
 	                  </label>`;
-	                  
+	              
 	        $("#container").append(label);
 	      };
 	    };
 	    //사진 삭제
 	    $(document).on('click','.del',function(e){
-	    	console.log($(".upload")[0].files);
-	    	console.log($("input[name=p]").files);
-	    	console.log($("#upload").files);
 	    	 let previewDiv=$(e.target).parents("div.remove");
+	    	previewDiv.prev(".addPic").remove();//input file태그 삭제
 	    	previewDiv.remove();//div삭제
-	    	
-	    	if($(".remove").length==0){//사진추가한것이 없을때
+	    	  if($(".remove").length==0){//사진추가한것이 없을때
 	    		  let df=`<div class="row remove" id="default">
 					<div class="col-6" id="imgContainer">
 					<div id="hide">
 						<label id="uploadLabel"
-							class="btn rounded bg-light col-12 col-lg-10 border d-flex justify-content-center align-items-center"
+							class="btn rounded bg-light col-12 col-lg-10 border d-flex justify-content-center align-items-center addPic"
 							style="height: 206px;"> <input name="pic"
 							class="d-none upload" id="upload" type="file"
 							accept="images/*"/>
@@ -222,9 +216,11 @@ input:focus {
 						style="resize: none;"></textarea>
 				</div>
 				</div>`;   
-	    		$("#container").append(df);
-	    		$(".addPic").remove();
-	    	} 
+				$(".addPic").remove();
+	    		$("#container").append(df);//다 삭제되면 사진라벨 다시 추가
+	    	}else if($(".remove").length==4){//최대5개였다가 삭제버튼 누르면 추가할수있는 버튼을 다시 만듬
+	    		fn_add();
+	    	}    
 	    }); 
 	    //해시태그!
 	    // 글자 수에 따라 input태그 크기 늘어나기
@@ -272,27 +268,41 @@ input:focus {
 	    $(".delete").click(function(e){
 	      $(e.target).parents(".tagBox").remove();
 	    });
+	    
 	    //작성버튼 눌렀을때
 	    $("#btn").on("click",e=>{ 
 	       //등록 누르면 사진 인풋태그에 id 순서대로 부여
-	       if($("#title").val().trim()==""){
-	    	  alert("제목을 입력해주세요");
+	        /* if($("#title").val().trim()==""){
+	    	  alert("제목을 입력해주세요.");
 	    	  return;
 	      }
 	      if($("#sample6_address").val()==""||($("#sample6_detailAddress").val()).trim()==""){
 				alert("주소를 다시 입력해주세요.");
 				return;
 			} 
+	      if($("#exp").val().trim()==""){
+	    	  alert("장소설명을 입력해주세요.")
+	    	  return;
+	      }
 	    	if($("#category").val()==""){
 	    	  alert("카테고리를 선택해주세요");
 	    	  return;
-	      }
+	      } */
 	      if($(".previewImg").length==0){
 	    	  alert("사진을 올려주세요.");
 	    	  return;
-	      }
+	      }else if($(".previewImg").length!=5&&$(".upload").last().val()==""){//인풋 파일태그 마지막 값 지움
+	    	  $(".addPic").last().remove();
+	      } 
+	     if($("input[name=hashtag]").last().val().trim()==""){//해쉬태그 마지막이 값이없으면 지워버림
+	    	 $("input[name=hashtag]").last().remove()
+	     }
+	     
+	        /* for(var i=0;i<$(".upload").length;i++){
+	    	  console.log($(".upload")[i].files);
+	    	  console.log($(".upload").last().val());
+	      }   */
 	      
-	    	
 	       //등록 누르면 form 전송
 	       $("#writeFrm").submit();
 	      

@@ -174,13 +174,13 @@
 			                </h4>
 			                <ul class="list-group mb-3"  style="width:350px;">
 			                	<c:forEach items="${list }" var="c">
-			                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-			                        <div>
-			                            <h6 class="my-0">${c.productName }</h6>
-			                            <small class="text-muted">${c.productSize } / ${c.color } / ${c.count }</small>
-			                        </div>
-			                        <span class="">${c.price }</span>
-			                    </li>
+				                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+				                        <div>
+				                            <h6 class="my-0">${c.productName }</h6>
+				                            <small class="text-muted">${c.productSize } / ${c.color } / ${c.count }</small>
+				                        </div>
+				                        <span class="">${c.price }</span>
+				                    </li>
 			                    </c:forEach>
 			                    <li class="list-group-item d-flex justify-content-between">
 			                        <span>총 가격</span>

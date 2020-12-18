@@ -97,8 +97,9 @@
                   </svg>
 													<br> <span> 사진 올리기(선택) </span>
 												</div>
+												</label>
 										</div>
-										</label>
+										
 									</div>
 									<h5 class="font-weight-bold">이용약관</h5>
 									<div class="mb-1">
@@ -301,8 +302,8 @@ input[type="checkbox"]:checked+svg {
 	//사진 삭제
     $(document).on('click','.del',function(e){
     	 let previewDiv=$(e.target).parents(".preview");
-    	previewDiv.remove();//div삭제
-    	$("#hide").show();
+    	previewDiv.remove();//미리보기div삭제
+    	$("#hide").show();//미리보기가 삭제되었으니 사진 등록창 보이게
     }); 
 	
 	//주소api
