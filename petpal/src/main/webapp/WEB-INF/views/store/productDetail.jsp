@@ -73,12 +73,12 @@
           <!-- 상품 정보들 -->
           <div class="col-lg-6 ">
           	<input type="hidden" id="productNo" value="${product.productNo }"/>
-            <p id="productName" class="h3">               
+            <p id="productName" class="h3 text-point">               
                   <c:out value="${product.productName}"/>
             </p>
             <div class="px-3 pb-2 border-bottom">
               <div class="row mb-3 mx-2 d-flex justify-content-between"> 
-                <a href="#" class="">★★★☆☆ 00개 리뷰</a>
+                <a href="#" class="text-point">★★★☆☆ 00개 리뷰</a>
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
                 </svg>          
@@ -319,10 +319,12 @@
 		                  <p class="mb-0"><%=r.getReviewComment() %> </p>
 		                </div>
 		
-		                <form class="replyFrm collapse  mt-2 p-3 pb-0 bg-light rounded text-right">
+		                <form class="replyEditFrm collapse  mt-2 p-3 pb-0 bg-light rounded text-right">
 		                  <div class="form-group">
-		                    <textarea class="form-control" rows="2" style="resize:none;" placeholder="<%=r.getReviewComment() %>"></textarea>
-		                    <button type="button" class="btn btn-primary mt-2">완료</button>
+		                    <textarea class="form-control" rows="2" style="resize:none;"><%=r.getReviewComment() %></textarea>
+		                    <button type="button" class="replyEditBtn btn btn-primary mt-2">완료</button>
+		                    <input type="hidden" name="productNo" value="${product.productNo }"/>
+		                    <input type="hidden" name="reviewNo" value="<%=r.getReviewNo() %>"/>
 		                  </div> 
 		                </form>
 	                  <%}else{ %>
@@ -334,8 +336,10 @@
 		               </div>
 		               <form class="replyWriteFrm collapse  mt-2 p-3 pb-0 bg-light rounded text-right" >
 		                  <div class="form-group">
-		                    <textarea class="form-control" rows="2"  style="resize:none;" placeholder=""></textarea>
-		                    <button type="button" class="btn btn-primary mt-2">완료</button>
+		                    <textarea class="form-control" rows="2" style="resize:none;" placeholder=""></textarea>
+		                    <button type="button" class="replyWriteBtn btn btn-primary mt-2">완료</button>
+		                    <input type="hidden" name="productNo" value="${product.productNo }"/>
+		                    <input type="hidden" name="reviewNo" value="<%=r.getReviewNo() %>"/>
 		                  </div> 
 		                </form>
 	                  <%} %>            
@@ -353,6 +357,7 @@
                 <span class="text-info pl-3">0</span>               
               </p>
               <button type="button" class="btn btn-link text-info" data-toggle="modal" ><strong>문의 하기</strong></button>
+            </div>
             <!--문의-->
             <article class="border-bottom py-3">
               <div class="row d-flex justify-content-between pl-2"> 
@@ -630,7 +635,7 @@
 		
         //리뷰 collapse 작동
         $(".replyEdit").on("click",e=>{
-          $(e.target).parents("article").find('form.replyFrm').collapse('toggle'); 
+          $(e.target).parents("article").find('form.replyEditFrm').collapse('toggle'); 
         });
         $(".replyShow").on("click",e=>{
           $(e.target).parents("article").find('div.reply').collapse('toggle'); 
@@ -645,7 +650,26 @@
         	location.replace("${path}/store/deleteReview.do?reviewNo="+reviewNo+"&productNo="+productNo);
         });
         
+        //리뷰 답변 작성
         
+		$(document).on("click",".replyWriteBtn",e=>{
+			if($(e.target).siblings("textarea").val().trim().length==0){
+      			alert("작성할 내용을 작성해주세요.");
+      		}else{
+				$(e.target).siblings("textarea").attr("name","reviewComment");
+				$(e.target).parents(".replyWriteFrm").attr("action","${path}/store/reviewComment.do").submit();
+      		}
+		});   
+      	//리뷰 답변 수정
+      	$(document).on("click",".replyEditBtn",e=>{
+      		if($(e.target).siblings("textarea").val().trim().length==0){
+      			alert("수정할 내용을 작성해주세요.");
+      		}else{
+				$(e.target).siblings("textarea").attr("name","reviewComment");
+				$(e.target).parents(".replyEditFrm").attr("action","${path}/store/reviewComment.do").submit();
+      		}
+		});
+      	
         
         
         //모달즈
@@ -679,10 +703,11 @@
     				error:(request,status,error)=>{
                        alert("장바구니에 상품을 담지 못했습니다.");
                     }
-    			});
-              	
+    			}); 
+    
             }
           });
+        
         //결제 모달
         $("#payBtn").on("click",e=>{
             if($(".orderBox").length==0){
@@ -691,7 +716,7 @@
             }else{
             	if(loginMember!=""){ //로그인 되어 있으면 바로 결제로 넘김
             		$(".payFrm").attr("action","${path}/payment/payment.do").submit();
-            	}else{ //로그인 안되어 있으면 로그인 모달 띄우기	           
+            	}else{ //로그인 안되어 있으면 로그인 모달 띄우기(결제로그인모달)	           
             		function loginModal(){
             			$.ajax({
             				url: "${path}/store/movePayLogin.do",
@@ -755,6 +780,8 @@
 				}
   			});       	
         });        
+        
+        
         
         //문의 작성 모달
         

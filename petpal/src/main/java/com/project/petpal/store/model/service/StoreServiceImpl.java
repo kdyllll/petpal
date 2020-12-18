@@ -121,6 +121,13 @@ public class StoreServiceImpl implements StoreService{
 		return dao.selectReviewOne(session,reviewNo);
 	}
 
+	@Override
+	public int reviewComment(Map map) {
+		// TODO Auto-generated method stub
+		return dao.reviewComment(session,map);
+	}
+
+	
 	
 	
 }

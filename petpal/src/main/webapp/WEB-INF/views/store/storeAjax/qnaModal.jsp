@@ -38,7 +38,7 @@
             <textarea class="form-control" rows="5" id="message-text" style="resize:none;"></textarea>
            </div>
            <div class="form-group d-flex justify-content-end">
-           <label class=""><input type="checkbox" class="mr-2"/>비밀글</label>
+           <label class=""><input type="checkbox" class="mr-2 form-check-input"/>비밀글</label>
            </div>
          </form>
        </div>

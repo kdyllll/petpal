@@ -26,4 +26,5 @@ public interface StoreService {
 	int deleteReview(String reviewNo);
 	int updateReview(Review r);
 	Review selectReviewOne(String reviewNo);
+	int reviewComment(Map map);
 }

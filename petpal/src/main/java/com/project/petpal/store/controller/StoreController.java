@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -11,10 +12,8 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -185,6 +184,18 @@ public class StoreController {
 		m.addAttribute("loc","/store/moveDetail.do?productNo="+productNo);
 		m.addAttribute("msg",result>0?"리뷰를 수정했습니다.":"리뷰 수정을 실패했습니다.");
 		
+		return "common/msg";
+	};
+	
+	//리뷰 답변 업데이트
+	@RequestMapping("/store/reviewComment.do")
+	public String reviewComment(String reviewComment,String productNo,String reviewNo,Model m) {
+		Map map=new HashMap();
+		map.put("reviewComment", reviewComment);
+		map.put("reviewNo", reviewNo);
+		int result=service.reviewComment(map);
+		m.addAttribute("loc","/store/moveDetail.do?productNo="+productNo);
+		m.addAttribute("msg",result>0?"답변을 작성했습니다.":"답변 작성을 실패했습니다.");
 		return "common/msg";
 	}
 

@@ -29,4 +29,5 @@ public interface StoreDao {
 	int deleteReview(SqlSession session,String reviewNo);
 	int updateReview(SqlSession session,Review r);
 	Review selectReviewOne(SqlSession session,String reviewNo);
+	int reviewComment(SqlSession session,Map map);
 }

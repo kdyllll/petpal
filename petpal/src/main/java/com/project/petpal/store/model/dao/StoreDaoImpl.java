@@ -115,6 +115,12 @@ public class StoreDaoImpl implements StoreDao{
 		return session.selectOne("store.selectReviewOne",reviewNo);
 	}
 
+	@Override
+	public int reviewComment(SqlSession session, Map map) {
+		// TODO Auto-generated method stub
+		return session.update("store.reviewComment",map);
+	}
+
 	
 	
 	

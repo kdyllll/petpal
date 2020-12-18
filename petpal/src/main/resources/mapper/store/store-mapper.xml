@@ -78,4 +78,7 @@ WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK 
 	<select id="selectReviewOne" resultType="review" parameterType="string">
 		SELECT * FROM REVIEW LEFT JOIN PAYDETAIL USING(DETAILNO) LEFT JOIN STOCK USING(STOCKNO) WHERE REVIEWNO=#{reviewNo}
 	</select>
+	<update id="reviewComment" parameterType="map">
+		UPDATE REVIEW SET REVIEWCOMMENT=#{reviewComment} WHERE REVIEWNO=#{reviewNo}
+	</update>
 </mapper>
