@@ -2,6 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cart">
 	<select id="cartList" parameterType="string" resultType="map">
-		SELECT PRODUCTNAME, FILENAME, COLOR, COUNT, PRICE, SALE, MEMBERNO, STOCK, PRODUCTSIZE FROM CART C JOIN STOCK S USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) WHERE MEMBERNO = #{memberNo}
+		SELECT PRODUCTNAME, FILENAME, COLOR, COUNT, PRICE, SALE, MEMBERNO, STOCK, STOCKNO, PRODUCTSIZE FROM CART C JOIN STOCK S USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) WHERE MEMBERNO = #{memberNo}
 	</select>
 </mapper>

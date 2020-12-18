@@ -20,4 +20,5 @@ public class Cart {
 	private int stock;
 	private String memberNo;
 	private String stockNo;
+	private int totalPrice;
 }

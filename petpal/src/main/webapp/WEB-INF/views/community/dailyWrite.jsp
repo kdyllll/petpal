@@ -242,12 +242,12 @@
 	});
     
     //+에 마우스 올렸을 때/떠났을 때 말풍선 보이고 숨기기
-    $(document).on('mouseenter',".plusBtn",e=>{ 	
-      //console.log("마우스 들어옴");
+    $(document).on('mouseover',".plusBtn",e=>{  //동적 처리에는 hover를 못씀	
+      //console.log("마우스 들어옴 mouseenter/mouseover");
       $(e.target).siblings(".bubble").show();
     });
     $(document).on('mouseleave',".plusBtn",e=>{
-      //console.log("마우스 떠남");
+      //console.log("마우스 떠남 mouseleave/mouseout");
       $(e.target).siblings(".bubble").hide();
     });
     

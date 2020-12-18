@@ -35,7 +35,8 @@ public class HomeController {
 
 
 
-		return "community/placeDetail";
+
+		return "index";
 
 
 	}
