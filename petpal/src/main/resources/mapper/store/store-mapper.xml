@@ -117,4 +117,13 @@ WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK 
 		</choose>
 		WHERE QNANO=#{qnaNo, jdbcType=VARCHAR}
 	</update>
+	<update id="writeQnaComment" parameterType="map">
+		UPDATE QNA SET QNACOMMENT=#{qnaComment},COMMENTDATE=SYSDATE WHERE QNANO=#{qnaNo}
+	</update>
+	<update id="editQnaComment" parameterType="map">
+		UPDATE QNA SET QNACOMMENT=#{qnaComment} WHERE QNANO=#{qnaNo}
+	</update>
+	<update id="deleteQnaComment" parameterType="string">
+		UPDATE QNA SET QNACOMMENT=NULL,COMMENTDATE=NULL WHERE QNANO=#{value}
+	</update>
 </mapper>

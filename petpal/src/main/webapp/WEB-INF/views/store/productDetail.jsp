@@ -402,15 +402,16 @@
 				              </div> 
 				              <c:if test="${(empty q.qnaComment) and (loginMember.memberNo eq '63')}">
 					              <a class="answerWrite text-black-50 text-right pb-2 pr-4 mb-1 ml-2" style="font-size: 12px;" role="button" style="cursor: pointer;">답글 달기</a>
-					              <form class="mt-2 answerWriteFrm collapse" >
-					              <input type="hidden" class="qnaNo" name="qnaNo" value="${q.qnaNo }"/>
-					                <div class="form-group row ml-2">
-					                  <p class=""><strong class="text-hgh mr-2">A</strong></p>
-					                  <div class="col-11"> 
-					                    <textarea class="form-control" rows="2" style="resize:none;" placeholder=""></textarea>
-					                    <button type="button" class="btn bg-hgh text-white mt-2 offset-10 col-2">완료</button>
-					                  </div>
-					                </div> 
+					              <form class="answerWriteFrm mt-2 collapse" >
+					              	  <input type="hidden" name="productNo" value="${product.productNo }"/>
+						              <input type="hidden" class="qnaNo" name="qnaNo" value="${q.qnaNo }"/>
+						                <div class="form-group row ml-2">
+						                  <p><strong class="text-hgh mr-2">A</strong></p>
+						                  <div class="col-11"> 
+						                    <textarea class="writeText form-control" name="qnaComment" rows="2" style="resize:none;"></textarea>
+						                    <button type="button" class="answerWriteBtn btn bg-hgh text-white mt-2 offset-10 col-2">완료</button>
+						                  </div>
+						                </div> 
 					              </form>
 				              </c:if>
 				              <c:if test="${(not empty q.qnaComment)}">
@@ -418,29 +419,28 @@
 					                <p class=""><strong class="text-hgh mr-2">A</strong></p>
 					                <div class="col-11"> 
 					                  <div class="d-flex justify-content-between mb-2">
-					                    <p class="text-black-50 m-0" style="font-size: 12px;">${q.commentDate }</p>
+					                    <p class="text-black-50 m-0" style="font-size: 12px;"><c:out value="${q.commentDate }"/></p>
 					                   	  <c:if test="${loginMember.memberNo eq '63' }">
 						                      <div class="row">
-						                        <a class="answerEdit text-black-50 mr-2 updateAnswer" style="font-size: 12px;" role="button" style="cursor: pointer;">답글 수정(판매자만)</a>
-						                        <a class="answerDelete text-black-50 mr-2 updateAnswer" style="font-size: 12px;" role="button" style="cursor: pointer;">답글 삭제(판매자만)</a>
+						                        <a class="answerEdit text-black-50 mr-2" style="font-size: 12px;" role="button" style="cursor: pointer;">답글 수정</a>
+						                        <a class="answerDelete text-black-50 mr-2" style="font-size: 12px;" role="button" style="cursor: pointer;">답글 삭제</a>
 						                      </div> 
 					                  	  </c:if>
 					                  </div>
-					                  <pre class="content"><c:out value="{q.qnaComment}"/></pre>
+					                  <pre class="content"><c:out value="${q.qnaComment}"/></pre>
 					                </div>
 					              </div> 
 					              
 					                <form class="answerEditFrm collapse" >
+					                  <input type="hidden" name="productNo" value="${product.productNo }"/>
 					                  <input type="hidden" class="qnaNo" name="qnaNo" value="${q.qnaNo }"/>
 					                  <div class="form-group row ml-2">
 					                    <p class=""><strong class="text-hgh mr-2">A</strong></p>
 					                    <div class="col-11 mt-2"> 
-					                      <textarea class="writeText form-control" rows="3" style="resize:none;">
-					                        <c:out value="{q.qnaComment}"/>
-					                      </textarea>
+					                      <textarea class="writeText form-control" name="qnaComment" rows="3" style="resize:none;"><c:out value="${q.qnaComment}"/></textarea>
 					                      <div class="text-right">
 					                        <button type="button" class="editCancel btn btn-link text-hgh mt-2">취소</button>
-					                        <button type="button" class="btn bg-hgh text-white mt-2">완료</button>
+					                        <button type="button" class="answerEditBtn btn bg-hgh text-white mt-2">완료</button>
 					                      </div>
 					                    </div>
 					                  </div> 
@@ -727,6 +727,30 @@
         	location.replace("${path}/store/deleteQna.do?productNo="+productNo+"&qnaNo="+qnaNo);
         });
         
+        //문의 답변 달기
+		$(".answerWriteBtn").on("click",e=>{
+			if($(e.target).siblings(".writeText").val().trim().length==0){
+				alert("답변 내용을 입력하세요.")
+			}else{
+				$(e.target).parents("form.answerWriteFrm").attr("action","${path}/store/writeQnaComment.do").submit();
+			}	
+		});	
+        
+        //문의 답변 수정
+          $(".answerEditBtn").on("click",e=>{
+        	  let frm=$(e.target).parents(".answerEditFrm");
+        	  if(frm.find(".writeText").val().trim().length==0){
+  				alert("수정할 답변 내용을 입력하세요.")
+  			}else{
+  				frm.attr("action","${path}/store/editQnaComment.do").submit();
+  			}
+          });
+        
+        //문의 답변 삭제
+        $(".answerDelete").on("click",e=>{
+        	let qnaNo=$(e.target).parents("article.qna").find("input.qnaNo").val();
+        	location.replace("${path}/store/deleteQnaComment.do?productNo="+productNo+"&qnaNo="+qnaNo);
+        });
         //모달즈
         
         //장바구니 모달

@@ -158,6 +158,28 @@ public class StoreDaoImpl implements StoreDao{
 		return session.update("store.updateQna",qna);
 	}
 
+	@Override
+	public int writeQnaComment(SqlSession session, Qna qna) {
+		// TODO Auto-generated method stub
+		return session.update("store.writeQnaComment",qna);
+	}
+
+	@Override
+	public int editQnaComment(SqlSession session, Qna qna) {
+		// TODO Auto-generated method stub
+		return session.update("store.editQnaComment",qna);
+	}
+
+	@Override
+	public int deleteQnaComment(SqlSession session, String qnaNo) {
+		// TODO Auto-generated method stub
+		return session.delete("store.deleteQnaComment",qnaNo);
+	}
+	
+	
+	
+	
+
 	
 	
 	

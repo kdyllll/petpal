@@ -37,5 +37,8 @@ public interface StoreDao {
 	int deleteQna(SqlSession session,String qnaNo);
 	Qna selectQnaOne(SqlSession session,String qnaNo);
 	int updateQna(SqlSession session,Qna qna);
+	int writeQnaComment(SqlSession session,Qna qna);
+	int editQnaComment(SqlSession session,Qna qna);
+	int deleteQnaComment(SqlSession session,String qnaNo);
 	
 }

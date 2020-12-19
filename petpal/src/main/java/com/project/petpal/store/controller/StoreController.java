@@ -248,5 +248,41 @@ public class StoreController {
 		return "common/msg";
 		
 	}
+	
+	//문의 답변 작성
+	@RequestMapping("/store/writeQnaComment.do")
+	public String writeQnaComment(String productNo,String qnaNo,String qnaComment,Model m) {
+		Qna qna=new Qna();
+		qna.setQnaNo(qnaNo);
+		qna.setQnaComment(qnaComment);
+		int result=service.writeQnaComment(qna);
+		
+		m.addAttribute("msg",result>0?"답변이 작성되었습니다.":"답변 작성에 실패했습니다.");
+		m.addAttribute("loc","/store/moveDetail.do?productNo="+productNo);
+		return "common/msg";
+	}
+	
+	//문의 답변 수정
+	@RequestMapping("/store/editQnaComment.do")
+	public String editQnaComment(String productNo,String qnaNo,String qnaComment,Model m) {
+		Qna qna=new Qna();
+		qna.setQnaNo(qnaNo);
+		qna.setQnaComment(qnaComment);
+		int result=service.editQnaComment(qna);
+		
+		m.addAttribute("msg",result>0?"답변이 수정되었습니다.":"답변 수정에 실패했습니다.");
+		m.addAttribute("loc","/store/moveDetail.do?productNo="+productNo);
+		return "common/msg";
+	}
+	
+	//문의 삭제
+	@RequestMapping("/store/deleteQnaComment.do")
+	public String deleteQnaComment(String productNo,String qnaNo,Model m) {
+		int result=service.deleteQnaComment(qnaNo);
+		
+		m.addAttribute("msg",result>0?"답변이 삭제되었습니다.":"답변 삭제에 실패했습니다.");
+		m.addAttribute("loc","/store/moveDetail.do?productNo="+productNo);
+		return "common/msg";
+	}
 
 }

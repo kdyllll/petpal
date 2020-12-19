@@ -34,4 +34,7 @@ public interface StoreService {
 	int deleteQna(String qnaNo);
 	Qna selectQnaOne(String qnaNo);
 	int updateQna(Qna qna);
+	int writeQnaComment(Qna qna);
+	int editQnaComment(Qna qna);
+	int deleteQnaComment(String qnaNo);
 }

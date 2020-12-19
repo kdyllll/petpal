@@ -163,6 +163,24 @@ public class StoreServiceImpl implements StoreService{
 		// TODO Auto-generated method stub
 		return dao.updateQna(session,qna);
 	}
+	
+	@Override
+	public int writeQnaComment(Qna qna) {
+		// TODO Auto-generated method stub
+		return dao.writeQnaComment(session,qna);
+	}
+
+	@Override
+	public int editQnaComment(Qna qna) {
+		// TODO Auto-generated method stub
+		return dao.editQnaComment(session,qna);
+	}
+
+	@Override
+	public int deleteQnaComment(String qnaNo) {
+		// TODO Auto-generated method stub
+		return dao.deleteQnaComment(session,qnaNo);
+	}
 
 	
 	
