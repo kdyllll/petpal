@@ -25,6 +25,7 @@ import com.project.petpal.community.model.service.DailyService;
 import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyCoord;
 import com.project.petpal.community.model.vo.DailyImg;
+import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.member.model.vo.Member;
 
 
@@ -35,23 +36,21 @@ public class DailyController {
 	@Autowired
 	private DailyService service;
 	
+	//글 입력으로 이동
 	@RequestMapping("/daily/moveWrite.do")
 	public String moveDailyWrite(Model m) {
 		return "community/dailyWrite";
 	}
 	
-	
-	
 	//글입력
 	@RequestMapping("/daily/dailyWriteEnd.do")
-	public String insertDaily(HttpServletRequest request,HttpSession session,Model m,String content,
+	public String insertDaily(HttpSession session,Model m,String content,
 			@RequestParam(value="pic", required=false) MultipartFile[] pic,
 			@RequestParam(value="coord", required=false) String[] coord,
 			@RequestParam(value="hashtag", required=false) String[] hashtag
 			) {
 		//받아야 하는것
 		//1.글내용 2.작성자(접속자) 3.사진(최대5개) 4.사진 당 상품좌표 5.해시태그
-		
 		//DB 
 		//글 : 글번호, 작성자번호, 내용, 작성일
 		//사진 : 사진번호, 글번호, 파일 이름
@@ -90,16 +89,33 @@ public class DailyController {
 		//하고나서 이 네개를 한번에 묶어서 하나로 보내야 하는건데, 그러면 객체가 들어있는 list인게 편하겠따
 		//순서가 글 인서트 → 글번호 가져오기(객체필요) → 사진 인서트 → 사진번호 가져오기(객체필요) → 좌표들을 사진번호에 맞게 객체에 넣고(객체 필요) → 좌표 인서트
 		List<DailyCoord> coords=new ArrayList<DailyCoord>();
-		for(String s:coord) {
-			String[] code=s.split(",");
-			DailyCoord dc=DailyCoord.builder().productNo(code[0]).xxCode(Double.parseDouble(code[1])).yyCode(Double.parseDouble(code[2])).index(code[3]).build();
-			coords.add(dc);
-		}
+		if(coord!=null) {
+			for(String s:coord) {
+				String[] code=s.split(",");
+				System.out.println(s);
+				System.out.println(code[0]);
+				System.out.println(code[1]);
+				System.out.println(code[2]);
+				System.out.println(code[3]);
+				DailyCoord dc=DailyCoord.builder().productNo(code[0]).xxCode(Double.parseDouble(code[1])).yyCode(Double.parseDouble(code[2])).index(code[3]).build();
+				coords.add(dc);
+				System.out.println(dc);
+			};
+		};
+		
+		//해시태그
+		List<Hashtag> hashList=new ArrayList();
+		for(String hash:hashtag) {
+			Hashtag h=new Hashtag();
+			h.setHashContent(hash);
+			hashList.add(h);
+		};
 		
 		//보내기
-		int result=service.insertDaily(d,files,coords);
+		int result=service.insertDaily(d,files,coords,hashList);
+
 		
-	
+		
 		m.addAttribute("msg",result>0?"게시글이 작성되었습니다.":"게시글 작성에 실패했습니다.");
 		m.addAttribute("loc","/community/dailyList");
 		return "common/msg";
@@ -124,7 +140,6 @@ public class DailyController {
 		String productNo=service.selectProductNo(name);
 		ProductImg p=service.selectDailyProduct(productNo); //서비스에서 상품이름으로 상품번호 조회한다음에 상품 사진 테이블에서 가져와야함
 		//이미지번호, 상품번호, 이미지이름, 타입(메인M)	
-		System.out.println(p);
 		return p;		
 	}
 	

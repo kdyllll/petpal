@@ -10,6 +10,7 @@ import com.project.petpal.admin.model.vo.ProductImg;
 import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyCoord;
 import com.project.petpal.community.model.vo.DailyImg;
+import com.project.petpal.community.model.vo.Hashtag;
 
 @Repository
 public class DailyDaoImpl implements DailyDao {
@@ -47,6 +48,13 @@ public class DailyDaoImpl implements DailyDao {
 	@Override
 	public List<Product> selectProductAll(SqlSession session) {
 		return session.selectList("daily.selectProductAll");
+	}
+
+	@Override
+	public int insertHashtag(SqlSession session, Hashtag h) {
+		// TODO Auto-generated method stub
+		System.out.println("해시다오");
+		return session.insert("store.insertHashtag",h);
 	}
 
 	

@@ -108,14 +108,15 @@
  $(function(){
    //사진!!
    //사진 미리보기
-   $(document).on('change','.upload',function(e){                 
-         $("#uploadLabel").hide(); // 사진 등록 창 안보이게
+   $(document).on('change','.upload',function(e){  
+	     console.log($("label#uploadLabel"));
+         $("label#uploadLabel").hide(); // 사진 등록 창 안보이게
          
          $.each(e.target.files,(i,v)=>{//미리보기 로직         
              let reader=new FileReader();
              reader.onload=e=>{                              
                  let img=`<div class="preview position-relative rounded col-lg-5 ml-lg-5 mt-5 col-12 px-0" >
-                           <img src="`+e.target.result+`" class="previewImg rounded px-0" style="width:100%; height:auto;" data-toggle="modal" data-target="#exampleModal"">
+                           <img src="`+e.target.result+`" class="previewImg rounded px-0" style="width:100%; height:206px;" data-toggle="modal" data-target="#exampleModal"">
                            <div class="buttonCon position-absolute rounded" style="bottom:0; left:0; background:linear-gradient(to top,rgba(0, 0, 0, 0.5),rgba(255, 255, 255, 0)); width:100%;">
                              <button type="button" class="delete btn ml-3">
                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash text-white" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -160,7 +161,7 @@
      }); 
      
      //+태그!
-    
+	//상품 입력    
     $('.modal').on('shown.bs.modal', function(){
       //모달 켜지면 상품입력 태그에 포커스
       $('#message-text').trigger('focus');
@@ -177,15 +178,14 @@
       var clickY=e.offsetY;//클릭한 위치Y좌표
       var x=target.width();//클릭한 이미지의 높이
       var y=target.height();//클릭한 이미지의 넓이
-      percentX=clickX/x*100;//클릭한 위치의 상대적인 퍼센트X좌표값
-      percentY=clickY/y*100;//클릭한 위치의 상대적인 퍼센트Y좌표값
+      percentX=(clickX/x*100).toFixed(1);//클릭한 위치의 상대적인 퍼센트X좌표값(소수점 1자리)
+      percentY=(clickY/y*100).toFixed(1);//클릭한 위치의 상대적인 퍼센트Y좌표값(소수점 1자리)
       xx=percentX-15;
       yy=percentY+10;
     });
 
-    //var productJson='${productJson}';
+    //좌표 등록하기
     $("#insert").on("click",e=>{//등록버튼 눌렀을때
-        console.log("좌표등록");
         var name=$("#message-text").val();
         var img="";
         //입력한 상품 이름이 있는 상품이 아니면 등록 못하게 유효성 검사하기        
@@ -202,7 +202,7 @@
                 <input type="hidden" name="coord" value="`+data.productNo+`,`+percentX+`,`+percentY+`"/>
                 <div class="bubble rounded shadow-sm col-4 col-lg-4 position-absolute px-1" style="top:`+yy+`%; left:`+xx+`%;">
                   <div class="row d-flex flex-wrap">
-                    <img class="col-2 border" src="${path }/resources/upload/community/daily/`+data.imgName+`">
+                    <img class="col-2 border" src="${path }/resources/upload/product/detail/`+data.imgName+`">
                     <p class="p-1 mb-0">`+name+`</p>
                   </div>
                   <div class="d-flex justify-content-end">
@@ -227,8 +227,6 @@
     
     //상품이름 자동완성
     $("#message-text").keyup(e=>{
-    	console.log("작성");
-    	console.log($(e.target).val());
 			$.ajax({
             url:"${path}/daily/autoCompleteAjax.do",
             data:{key:$(e.target).val()},
@@ -277,8 +275,18 @@
 
      // 해시태그 작성 후 새 해시태그 추가
      $('.hashtag').focusout(function(e) {  
+    	 let cnt=0;
+    	 $("input[name=hashtag]").each((i,item)=>{//해시태그 중복 입력 확인
+   			 if($(item).val().trim()==$(e.target).val().trim()){
+   				 cnt++;
+   			 }
+
+    	 });
        if($(e.target).val().trim().length==0){
          //아무일도 일어나지 않음!
+       }else if(cnt>1){//중복되었다면
+    	   alert("해시태그는 중복해서 입력할 수 없습니다.");
+       	   $(e.target).val("");
        }else if($(e.target).hasClass("hashtag") === true){
          //해시태그 작성 태그 복제
          var clone=$(e.target).parents(".tagBox").clone(true);
@@ -315,12 +323,16 @@
           var plusCon=$(item).parent("label").next("div.preview");
           plusCon.find("input[type=hidden]").each((j,item2)=>{
         	let oriVal=$(item2).val();
-            let newVal=oriVal+","+i;
-            $(item2).val(newVal);
+            let newVal=oriVal+","+i;           
+            $(item2).val(newVal);           
           });          
-         };                     
+         };
+         
        });
-    	 
+    	$("input[name=coord]").each((i,item)=>{
+    		console.log($(item).val());
+    	});
+    	 $(".hashtag").attr("name","");
     	 //등록 누르면 form 전송
     	 $("#writeFrm").attr("action","${path }/daily/dailyWriteEnd.do").submit();
        

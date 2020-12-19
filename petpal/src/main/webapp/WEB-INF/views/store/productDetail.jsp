@@ -255,7 +255,7 @@
 		                    <img src="${path }/resources/upload/member/profile/<%=r.getImg() %>" width="30px;">
 		                  </a>                  
 		                  <div style="font-size: 12px;">
-		                    <p class="my-0"><%=r.getNickName() %></p>
+		                    <a class="my-0 text-black"><%=r.getNickName() %></a>
 		                    <div >
 		                      <span class="text-hgh">
 		                    		<%
@@ -280,6 +280,11 @@
 	                  <%if(loginMember!=null&&r.getMemberNo().equals(loginMember.getMemberNo())){ %>
 	                  <div>
 	                  	<button type="button" class="reviewEdit btn btn-link p-0 pr-1 text-point">수정</button>
+	                  	<button type="button" class="reviewDelete btn btn-link p-0 pr-1 text-point">삭제</button>
+	                  	<input type="hidden" class="reviewNum" value="<%=r.getReviewNo() %>"/>
+	                  </div>
+	                  <%}else if(loginMember!=null&&(loginMember.getMemberNo()).equals("63")){%>
+	                  <div>
 	                  	<button type="button" class="reviewDelete btn btn-link p-0 pr-1 text-point">삭제</button>
 	                  	<input type="hidden" class="reviewNum" value="<%=r.getReviewNo() %>"/>
 	                  </div>
@@ -502,7 +507,7 @@
                 둘 중 하나 경과 시 반품/교환 불가</li>
             </ul>
             <header class="py-3" style="font-size: 17px;"><strong>반품/교환 불가능 사유</strong></header>
-            <ul>
+            <ul class="mb-5">
               <li>반품요청기간이 지난 경우</li>
               <li>구매자의 책임 있는 사유로 상품 등이 멸실 또는 훼손된 경우</li>
               <li>포장을 개봉하였으나 포장이 훼손되어 상품가치가 현저히 상실된 경우</li>

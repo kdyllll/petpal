@@ -9,6 +9,7 @@ import com.project.petpal.admin.model.vo.ProductImg;
 import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyCoord;
 import com.project.petpal.community.model.vo.DailyImg;
+import com.project.petpal.community.model.vo.Hashtag;
 
 public interface DailyDao {
 	int insertDaily(SqlSession session, Daily d);
@@ -18,4 +19,5 @@ public interface DailyDao {
 	ProductImg selectDailyProduct(SqlSession session, String productNo);
 	List<Product> selectProductName(SqlSession session,String key);
 	List<Product> selectProductAll(SqlSession session);
+	int insertHashtag(SqlSession session,Hashtag h);
 }

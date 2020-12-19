@@ -28,6 +28,7 @@
 		<typeAlias type="com.project.petpal.community.model.vo.Find" alias="find"/>
 		<typeAlias type="com.project.petpal.community.model.vo.FindImg" alias="findImg"/>
 		<typeAlias type="com.project.petpal.store.model.vo.Qna" alias="qna"/>
+		<typeAlias type="com.project.petpal.community.model.vo.Hashtag" alias="hashtag"/>
 	</typeAliases>
 </configuration>
 
