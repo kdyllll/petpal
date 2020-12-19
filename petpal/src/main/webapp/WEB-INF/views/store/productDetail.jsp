@@ -110,7 +110,6 @@
             <div class="px-3 py-3 border-bottom">
               <p>CJ대한통운<br>
               2,500원 (50,000원 이상 구매시 무료배송) <br>
-                <span class="pl-1 text-muted">도서산간지역 추가금액 발생 가능</span>
               </p>              
             </div>
             <div class="py-3 px-3">
@@ -478,8 +477,8 @@
                   <td>2,500원</td>
                 </tr>
                 <tr>
-                  <td class="border-bottom text-secondary">도서산간지역 추가 배송비</td>
-                  <td class="border-bottom">5,000원</td>
+                  <td class="border-bottom text-secondary">무료 배송</td>
+                  <td class="border-bottom">30,000원 이상 구매시</td>
                 </tr>
               </tbody>
             </table>
