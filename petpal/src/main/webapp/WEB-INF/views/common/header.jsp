@@ -12,7 +12,7 @@
             <a class="navbar-brand text-dark" href="${path }/">로고</a>
             <ul class="nav justify-content-center d-none d-lg-flex">
               <li class="nav-item">
-                <a class="nav-link" href="${path }/daily/moveWrite.do">커뮤니티</a>
+                <a class="nav-link" href="${path }/daily/moveList.do">커뮤니티</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="${path }/store/moveStoreHome.do">스토어</a>

@@ -199,7 +199,10 @@
                     style="top:`+percentY+`%; left:`+percentX+`%;">
                     <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
                 </svg>
-                <input type="hidden" name="coord" value="`+data.productNo+`,`+percentX+`,`+percentY+`"/>
+                <input type="hidden" name="productNo" value="`+data.productNo+`"/>
+                <input type="hidden" name="percentX" value="`+percentX+`"/>
+                <input type="hidden" name="percentY" value="`+percentY+`"/>
+                <input type="hidden" name="index" value=""/>
                 <div class="bubble rounded shadow-sm col-4 col-lg-4 position-absolute px-1" style="top:`+yy+`%; left:`+xx+`%;">
                   <div class="row d-flex flex-wrap">
                     <img class="col-2 border" src="${path }/resources/upload/product/detail/`+data.imgName+`">
@@ -316,22 +319,14 @@
     	 //등록 누르면 사진 인풋태그에 id 순서대로 부여
        $("input[type=file]").each((i,item)=>{                     
          if(item.value.length!=0){         
-           //let name="pic"+i;
-           //$(item).attr("id",name);
-           
           //등록 누르면 사진 별 +버튼의 상품 이름 input태그에 몇번째 사진의 좌표인지 name 부여
           var plusCon=$(item).parent("label").next("div.preview");
-          plusCon.find("input[type=hidden]").each((j,item2)=>{
-        	let oriVal=$(item2).val();
-            let newVal=oriVal+","+i;           
-            $(item2).val(newVal);           
+          plusCon.find("input[name=index]").each((j,item2)=>{        
+            $(item2).val(i);           
           });          
          };
          
        });
-    	$("input[name=coord]").each((i,item)=>{
-    		console.log($(item).val());
-    	});
     	 $(".hashtag").attr("name","");
     	 //등록 누르면 form 전송
     	 $("#writeFrm").attr("action","${path }/daily/dailyWriteEnd.do").submit();

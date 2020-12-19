@@ -30,7 +30,6 @@ public class DailyServiceImpl implements DailyService {
 	public int insertDaily(Daily d, List<DailyImg> files, List<DailyCoord> coords,List<Hashtag> hashList){
 		//글 삽입
 		int result=dao.insertDaily(session,d);
-		System.out.println(result>0?"글삽입":"글실패");
 		//사진 삽입
 		if(result>0) {
 			if(files!=null) {//사진이 있을 때
@@ -38,12 +37,10 @@ public class DailyServiceImpl implements DailyService {
 					di.setDailyNo(d.getDailyNo());
 					result=dao.insertDailyImg(session,di);
 					//실패할 경우를 대비해서 result가 0일 때는 분기문으로 강제 exception 처리해야함	
-					System.out.println(result>0?"사진삽입":"사진실패");
 				}
 				//좌표 삽입(사진이 있을 때만 좌표 있음!)
 				if(result>0) {
 					if(coords!=null) {
-						System.out.println("좌표 있음");
 						for(DailyCoord dc:coords) {
 							switch(dc.getIndex()) {
 								case "0":dc.setDailyImgNo(files.get(0).getDailyImgNo());break;
@@ -53,20 +50,14 @@ public class DailyServiceImpl implements DailyService {
 								case "4":dc.setDailyImgNo(files.get(4).getDailyImgNo());break;
 							}
 							result=dao.insertDailyCoords(session,dc);
-							System.out.println(result>0?"좌표삽입":"좌표실패");
 						}
 					}
 					//해시태그 삽입
 					if(result>0) {
-						System.out.println("해시 시도");
 						if(hashList.size()!=0) {//해시태그가 있으면
-							System.out.println("해시 있음");
-							System.out.println(hashList);
 							for(Hashtag h:hashList) {
 								h.setPostNo(d.getDailyNo());
-								System.out.println(h);
 								result=dao.insertHashtag(session,h);
-								System.out.println(result>0?"해시삽입":"해시실패");
 							}
 						}
 					}
@@ -95,6 +86,24 @@ public class DailyServiceImpl implements DailyService {
 	@Override
 	public List<Product> selectProductAll() {
 		return dao.selectProductAll(session);
+	}
+
+	@Override
+	public List<Map> selectDailyAll() {
+		// TODO Auto-generated method stub
+		return dao.selectDailyAll(session);
+	}
+
+	@Override
+	public List<DailyImg> selectMainImg() {
+		// TODO Auto-generated method stub
+		return dao.selectMainImg(session);
+	}
+
+	@Override
+	public List<Hashtag> selectHashAll() {
+		// TODO Auto-generated method stub
+		return dao.selectHashAll(session);
 	}
 
 	

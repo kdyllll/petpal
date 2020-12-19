@@ -1,6 +1,7 @@
 package com.project.petpal.community.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -53,8 +54,25 @@ public class DailyDaoImpl implements DailyDao {
 	@Override
 	public int insertHashtag(SqlSession session, Hashtag h) {
 		// TODO Auto-generated method stub
-		System.out.println("해시다오");
-		return session.insert("store.insertHashtag",h);
+		return session.insert("daily.insertHashtag",h);
+	}
+
+	@Override
+	public List<Map> selectDailyAll(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectList("daily.selectDailyAll");
+	}
+
+	@Override
+	public List<DailyImg> selectMainImg(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectList("daily.selectMainImg");
+	}
+
+	@Override
+	public List<Hashtag> selectHashAll(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectList("daily.selectHashAll");
 	}
 
 	

@@ -1,6 +1,7 @@
 package com.project.petpal.community.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -20,4 +21,7 @@ public interface DailyDao {
 	List<Product> selectProductName(SqlSession session,String key);
 	List<Product> selectProductAll(SqlSession session);
 	int insertHashtag(SqlSession session,Hashtag h);
+	List<Map> selectDailyAll(SqlSession session);
+	List<DailyImg> selectMainImg(SqlSession session);
+	List<Hashtag> selectHashAll(SqlSession session);
 }
