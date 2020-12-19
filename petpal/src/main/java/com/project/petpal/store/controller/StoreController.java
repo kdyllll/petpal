@@ -230,5 +230,23 @@ public class StoreController {
 		m.addAttribute("loc","/store/moveDetail.do?productNo="+productNo);
 		return "common/msg";
 	}
+	
+	//문의 수정
+	@RequestMapping("/store/qnaEditEnd.do")
+	public String updateQna(String productNo,String qnaNo,String category,String content,
+			@RequestParam(value="secret", required=false) String secret,
+			Model m) {
+		Qna qna=new Qna();
+		qna.setCategory(category);
+		qna.setContent(content);
+		qna.setSecret(secret);
+		qna.setQnaNo(qnaNo);
+		int result=service.updateQna(qna);
+
+		m.addAttribute("msg",result>0?"문의가 수정되었습니다.":"문의 수정에 실패했습니다.");
+		m.addAttribute("loc","/store/moveDetail.do?productNo="+productNo);
+		return "common/msg";
+		
+	}
 
 }

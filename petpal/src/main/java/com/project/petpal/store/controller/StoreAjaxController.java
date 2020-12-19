@@ -24,6 +24,7 @@ import com.project.petpal.member.model.vo.Member;
 import com.project.petpal.store.model.service.StoreService;
 import com.project.petpal.store.model.vo.Product;
 import com.project.petpal.store.model.vo.ProductImg;
+import com.project.petpal.store.model.vo.Qna;
 import com.project.petpal.store.model.vo.Review;
 import com.project.petpal.store.model.vo.Stock;
 
@@ -176,6 +177,19 @@ public class StoreAjaxController {
 		m.addAttribute("product",p);
 		m.addAttribute("img",pi);
 		return "store/storeAjax/qnaModal";
+	}
+	
+	@RequestMapping("/store/moveQnaEdit.do")
+	public String moveQnaEdit(String productNo,String qnaNo,Model m) {
+		//문의 수정 모달로 이동
+		//필요한 것:상품 번호, 상품이름, 상품대표이미지, 문의객체
+		Product p=service.selectProduct(productNo);
+		ProductImg pi=service.selectMainImg(productNo);
+		Qna qna=service.selectQnaOne(qnaNo);
+		m.addAttribute("product",p);
+		m.addAttribute("img",pi);
+		m.addAttribute("qna",qna);
+		return "store/storeAjax/qnaEditModal";
 	}
 	
 	

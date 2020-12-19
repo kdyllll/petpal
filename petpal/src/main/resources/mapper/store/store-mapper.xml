@@ -102,4 +102,19 @@ WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK 
 	<delete id="deleteQna" parameterType="string">
 		DELETE FROM QNA WHERE QNANO=${value}
 	</delete>
+	<select id="selectQnaOne" resultType="qna" parameterType="string">
+		SELECT * FROM QNA WHERE QNANO=#{qnaNo}
+	</select>
+	<update id="updateQna" parameterType="qna">
+		UPDATE QNA SET CATEGORY=#{category},CONTENT=#{content},SECRET= 
+		<choose>
+			<when test="secret!=null">
+				'Y'
+			</when>
+			<otherwise>
+				DEFAULT
+			</otherwise>
+		</choose>
+		WHERE QNANO=#{qnaNo, jdbcType=VARCHAR}
+	</update>
 </mapper>

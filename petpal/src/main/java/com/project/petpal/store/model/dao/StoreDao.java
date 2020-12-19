@@ -35,4 +35,7 @@ public interface StoreDao {
 	int insertQna(SqlSession session,Qna q);
 	List<Qna> selectQna(SqlSession session,String productNo);
 	int deleteQna(SqlSession session,String qnaNo);
+	Qna selectQnaOne(SqlSession session,String qnaNo);
+	int updateQna(SqlSession session,Qna qna);
+	
 }

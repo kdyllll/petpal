@@ -363,6 +363,7 @@
             <c:forEach var="q" items="${qnaList }">
 		            <article class="qna border-bottom py-3">
 		              <div class="row d-flex justify-content-between pl-2"> 
+		              	
 		                <p class="mb-0"style="font-size: 14px;"><c:out value="${q.category }"/> |  
 		                <c:if test="${empty q.qnaComment}">
 		                	<span class="text-black-50" >답변전</span>
@@ -370,18 +371,26 @@
 		                <c:if test="${not empty q.qnaComment }">
 		                	<span class="text-hgh"> 답변완료</span>
 		                </c:if>
+		                <c:if test="${q.secret eq 'Y' }">
+			               	 <span class="text-black-50">
+			               	 	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="mb-1 bi bi-lock-fill" viewBox="0 0 16 16">
+					                  <path d="M2.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z"/>
+					                  <path fill-rule="evenodd" d="M4.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
+					            </svg> 
+					         </span>
+		                </c:if>
 		                </p>
+		                <c:if test="${(q.memberNo ne loginMember.memberNo) and (loginMember.memberNo eq '63') }">
+		                	<div class="text-right mr-4">
+				              <button type="button" class="qnaDelete btn btn-link p-0 pr-1 text-black-50">삭제</button>			
+			                </div>
+		                </c:if>
 		                <c:if test="${q.memberNo eq loginMember.memberNo }">
 		                 	<div class="text-right mr-4">
 			                  <button type="button" class="qnaEdit btn btn-link p-0 pr-1 text-black-50">수정</button>
 				              <button type="button" class="qnaDelete btn btn-link p-0 pr-1 text-black-50">삭제</button>			
 			                </div>
-		                </c:if>	
-		                <c:if test="${(q.memberNo ne loginMember.memberNo) and (loginMember.memberNo eq '63') }">
-		                	<div class="text-right mr-4">
-				              <button type="button" class="qnaDelete btn btn-link p-0 pr-1 text-black-50">삭제</button>			
-			                </div>
-		                </c:if>	                
+		                </c:if>			                	                
 		              </div>
 		              <p class="text-black-50" style="font-size: 12px;"><c:out value="${q.nickName}"/> | <span><c:out value="${q.enrollDate}"/></span></p>
 		              
@@ -831,28 +840,37 @@
         
         //문의 작성 모달
         $("#qnaBtn").on("click",e=>{
-        	if(loginMember!=""){//로그인되어있으면 문의 모달 띄우기
-        		qnaModal("${path}/store/moveQna.do");       		
+        	if(loginMember!=""){//로그인되어있으면 문의 모달 띄우기 
+        		$.ajax({
+    				url: "${path}/store/moveQna.do",
+    				data:{productNo:productNo},
+    				dataType:"html",
+    				success:(data) => {
+    					console.log(data);
+    					$(".pdtModal").html(data);
+    	         		$('div.modal').modal(); 
+    				}
+    			});
         	}else{//로그인 안되어있으면 로그인 모달 띄우기
         		loginModal();
         	}
         });
-        
-        
-        function qnaModal(path){
-        
-			$.ajax({
-				url: path,
-				data:{productNo:productNo},
+        //문의 수정 모달
+        $(".qnaEdit").on("click",e=>{
+        	let qnaNo=$(e.target).parents("article.qna").find("input.qnaNo").val();
+        	$.ajaxSettings.traditional = true;
+	  		$.ajax({
+				url: "${path}/store/moveQnaEdit.do",
+				data:{productNo:productNo, qnaNo:qnaNo},
 				dataType:"html",
 				success:(data) => {
-					console.log(data);
 					$(".pdtModal").html(data);
 	         		$('div.modal').modal(); 
 				}
 			});
-		};
-		
+        });
+        
+
 		//로그인모달
 		function loginModal(){
 			$.ajax({

@@ -146,6 +146,18 @@ public class StoreDaoImpl implements StoreDao{
 		return session.delete("store.deleteQna",qnaNo);
 	}
 
+	@Override
+	public Qna selectQnaOne(SqlSession session, String qnaNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("store.selectQnaOne",qnaNo);
+	}
+
+	@Override
+	public int updateQna(SqlSession session, Qna qna) {
+		// TODO Auto-generated method stub
+		return session.update("store.updateQna",qna);
+	}
+
 	
 	
 	

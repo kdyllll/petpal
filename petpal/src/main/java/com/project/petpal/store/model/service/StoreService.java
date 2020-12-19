@@ -32,4 +32,6 @@ public interface StoreService {
 	int insertQna(Qna q);
 	List<Qna> selectQna(String productNo);
 	int deleteQna(String qnaNo);
+	Qna selectQnaOne(String qnaNo);
+	int updateQna(Qna qna);
 }
