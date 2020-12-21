@@ -5,8 +5,10 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.project.petpal.payment.model.vo.Cart;
 import com.project.petpal.store.model.vo.Product;
 import com.project.petpal.store.model.vo.ProductImg;
+import com.project.petpal.store.model.vo.Qna;
 import com.project.petpal.store.model.vo.Review;
 import com.project.petpal.store.model.vo.Stock;
 
@@ -29,4 +31,16 @@ public interface StoreDao {
 	int deleteReview(SqlSession session,String reviewNo);
 	int updateReview(SqlSession session,Review r);
 	Review selectReviewOne(SqlSession session,String reviewNo);
+	int reviewComment(SqlSession session,Map map);
+	ProductImg selectMainImg(SqlSession session,String productNo);
+	int insertQna(SqlSession session,Qna q);
+	List<Qna> selectQna(SqlSession session,String productNo);
+	int deleteQna(SqlSession session,String qnaNo);
+	Qna selectQnaOne(SqlSession session,String qnaNo);
+	int updateQna(SqlSession session,Qna qna);
+	int writeQnaComment(SqlSession session,Qna qna);
+	int editQnaComment(SqlSession session,Qna qna);
+	int deleteQnaComment(SqlSession session,String qnaNo);
+	Cart selectCartOne(SqlSession session,Map m);
+	int updateCartCnt(SqlSession session,Map m);
 }

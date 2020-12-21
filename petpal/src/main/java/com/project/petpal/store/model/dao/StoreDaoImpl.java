@@ -6,8 +6,10 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.project.petpal.payment.model.vo.Cart;
 import com.project.petpal.store.model.vo.Product;
 import com.project.petpal.store.model.vo.ProductImg;
+import com.project.petpal.store.model.vo.Qna;
 import com.project.petpal.store.model.vo.Review;
 import com.project.petpal.store.model.vo.Stock;
 
@@ -70,7 +72,7 @@ public class StoreDaoImpl implements StoreDao{
 	@Override
 	public int insertCart(SqlSession session, Map m) {
 		// TODO Auto-generated method stub
-		return session.insert("store.insertCart",m);
+		return session.insert("cart.insertCart",m);
 	}
 
 	@Override
@@ -114,6 +116,82 @@ public class StoreDaoImpl implements StoreDao{
 		// TODO Auto-generated method stub
 		return session.selectOne("store.selectReviewOne",reviewNo);
 	}
+
+	@Override
+	public int reviewComment(SqlSession session, Map map) {
+		// TODO Auto-generated method stub
+		return session.update("store.reviewComment",map);
+	}
+
+	@Override
+	public ProductImg selectMainImg(SqlSession session, String productNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("store.selectMainImg",productNo);
+	}
+
+	@Override
+	public int insertQna(SqlSession session, Qna q) {
+		// TODO Auto-generated method stub
+		return session.insert("store.insertQna",q);
+	}
+
+	@Override
+	public List<Qna> selectQna(SqlSession session, String productNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("store.selectQna", productNo);
+	}
+
+	@Override
+	public int deleteQna(SqlSession session, String qnaNo) {
+		// TODO Auto-generated method stub
+		return session.delete("store.deleteQna",qnaNo);
+	}
+
+	@Override
+	public Qna selectQnaOne(SqlSession session, String qnaNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("store.selectQnaOne",qnaNo);
+	}
+
+	@Override
+	public int updateQna(SqlSession session, Qna qna) {
+		// TODO Auto-generated method stub
+		return session.update("store.updateQna",qna);
+	}
+
+	@Override
+	public int writeQnaComment(SqlSession session, Qna qna) {
+		// TODO Auto-generated method stub
+		return session.update("store.writeQnaComment",qna);
+	}
+
+	@Override
+	public int editQnaComment(SqlSession session, Qna qna) {
+		// TODO Auto-generated method stub
+		return session.update("store.editQnaComment",qna);
+	}
+
+	@Override
+	public int deleteQnaComment(SqlSession session, String qnaNo) {
+		// TODO Auto-generated method stub
+		return session.delete("store.deleteQnaComment",qnaNo);
+	}
+
+	@Override
+	public Cart selectCartOne(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.selectOne("cart.selectCartOne",m);
+	}
+
+	@Override
+	public int updateCartCnt(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.update("cart.updateCartCnt",m);
+	}
+	
+	
+	
+	
 
 	
 	

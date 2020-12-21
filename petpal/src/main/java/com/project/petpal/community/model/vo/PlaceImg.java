@@ -13,5 +13,6 @@ public class PlaceImg {
 	private String placeNo;
 	private String content;
 	private String fileName;
+	private String type;
 
 }

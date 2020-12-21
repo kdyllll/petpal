@@ -46,7 +46,7 @@ public class MemberController {
 		return "member/myPageModify";
 	}
 
-	@RequestMapping("/member/moveJoin.do")
+	@RequestMapping("/member/moveJoin.do")//회원가입페이지로 가는 서블릿
 	public String moveJoin() {
 		return "member/join";
 	}
@@ -56,7 +56,7 @@ public class MemberController {
 		return "member/myPageFav";
 	}
 
-	@RequestMapping("/member/insertMember.do")
+	@RequestMapping("/member/insertMember.do")//회원가입창에서 가입버튼눌렀을때 회원가입 요청하는 서블릿
 
 	public String insertMember(Model m,Member member,@RequestParam(value="f", required=false)MultipartFile f, HttpSession session) {
 		
@@ -67,11 +67,11 @@ public class MemberController {
 		String path=session.getServletContext().getRealPath("/resources/upload/member/profile");
 		
 		File dir=new File(path);
-		if(!dir.exists()) dir.mkdirs();//폴더를 생성
+		if(!dir.exists()) dir.mkdirs();//폴더가 없다면 폴더를 생성
 		if(!f.isEmpty()) {
 			  //파일명생성하기
 			  String originalName=f.getOriginalFilename();
-			  String ext=originalName.substring(originalName.lastIndexOf(".")+1);
+			  String ext=originalName.substring(originalName.lastIndexOf(".")+1);//확장자 가져오기
 			  //리네임규칙
 			  SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
 			  int rndValue=(int)(Math.random()*10000);
@@ -86,13 +86,13 @@ public class MemberController {
 			  member.setImg(reName);
 
 		}
-//		int result=service.insertMember(member);
-//		if(result>0) {
-//			m.addAttribute("msg","가입에 성공하였습니다!"); 
-//		}else {
-//			m.addAttribute("msg","가입에 실패하였습니다!");
-//			m.addAttribute("loc","/member/moveJoin.do");
-//			}
+		int result=service.insertMember(member);
+		if(result>0) {
+			m.addAttribute("msg","가입에 성공하였습니다!"); 
+		}else {
+			m.addAttribute("msg","가입에 실패하였습니다!");
+			m.addAttribute("loc","/member/moveJoin.do");
+			}
 
 		return "common/msg";
 	}
