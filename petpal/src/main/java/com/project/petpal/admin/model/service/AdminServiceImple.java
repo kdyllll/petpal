@@ -171,5 +171,11 @@ public class AdminServiceImple implements AdminService {
 		return dao.orderCancelAll(session, paymentNo);
 	}
 
+	@Override
+	public List<Map> selectClaimAll() {
+		// TODO Auto-generated method stub
+		return dao.selectClaimAll(session);
+	}
+
 	
 }

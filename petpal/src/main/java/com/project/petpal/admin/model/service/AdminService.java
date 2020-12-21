@@ -28,4 +28,5 @@ public interface AdminService {
 	List<Map> payDetailStatus(String paymentNo);
 	int updatePaymentStatus(String paymentNo);
 	int orderCancelAll(String paymentNo);
+	List<Map> selectClaimAll();
 }

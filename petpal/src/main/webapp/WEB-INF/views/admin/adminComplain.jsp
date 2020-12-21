@@ -19,8 +19,8 @@
 
 	<div class="container-fluid">
 		<div class="row">
-			<jsp:include page="/WEB-INF/views/common/adminNav.jsp" >
-			<jsp:param name="nav" value="adminComplain" />
+			<jsp:include page="/WEB-INF/views/common/adminNav.jsp">
+				<jsp:param name="nav" value="adminComplain" />
 			</jsp:include>
 			<section role="main"
 				class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-5 "
@@ -77,49 +77,39 @@
 							<tr>
 								<th scope="col" class="text-center align-middle">신고번호</th>
 								<th scope="col" class="text-center align-middle">신고글번호</th>
+								<th scope="col" class="text-center align-middle">신고카테고리</th>
 								<th scope="col" class="text-center align-middle">신고사유</th>
-								<th scope="col" class="text-center align-middle">신고내용</th>
-								<th scope="col" class="text-center align-middle">신고자</th>
+								<th scope="col" class="text-center align-middle">신고상태</th>
+								<th scope="col" class="text-center align-middle">신고자이메일</th>
+								<th scope="col" class="text-center align-middle">신고일</th>
 								<th scope="col" class="text-center align-middle"></th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<th scope="row" class="align-middle text-center">1</th>
-								<td class="align-middle text-center">Otto</td>
-								<td class="align-middle text-center">sdfs155sdgswet21</td>
-								<td class="align-middle text-center">@mdo</td>
-								<td class="align-middle text-center">@mdo</td>
-								<td class="align-middle text-center"><form>
-										<button type="button"
-											class="btn btn-outline-secondary btn-sm mb-1">신고상세보기</button>
-									</form></td>
-							</tr>
-
-							<tr>
-								<th scope="row" class="align-middle text-center">1</th>
-								<td class="align-middle text-center">Otto</td>
-								<td class="align-middle text-center">@mdo</td>
-								<td class="align-middle text-center">@mdo</td>
-								<td class="align-middle text-center">sd5sdgswet21</td>
-								<td class="align-middle text-center"><form>
-										<button type="button"
-											class="btn btn-outline-secondary btn-sm mb-1">신고상세보기</button>
-									</form></td>
-							</tr>
-
-							<tr>
-								<th scope="row" class="align-middle text-center">1</th>
-								<td class="align-middle text-center">Otto</td>
-								<td class="align-middle text-center">Otto</td>
-								<td class="align-middle text-center">Ottdfsdfsdfsdo109@naver.com</td>
-								<td class="align-middle text-center">sdfs155sdgswds124et21</td>
-								<td class="align-middle text-center"><form>
-										<button type="button"
-											class="btn btn-outline-secondary btn-sm mb-1">신고상세보기</button>
-									</form></td>
-							</tr>
-
+							<c:if test="${not empty cList }">
+								<c:forEach var="c" items="${cList }">
+									<tr>
+										<th scope="row" class="align-middle text-center"><c:out
+												value="${c.CLAIMNO }" /></th>
+										<td class="align-middle text-center"><c:out
+												value="${c.POSTNO }" /></td>
+										<td class="align-middle text-center"><c:out
+												value="${c.CATEGORY }" /></td>
+										<td class="align-middle text-center"><c:out
+												value="${c.CONTENT }" /></td>
+										<td class="align-middle text-center"><c:choose>
+												<c:when test="${c.STATUS eq 'N' }">신고대기</c:when>
+												<c:otherwise>신고완료</c:otherwise>
+											</c:choose></td>
+										<td class="align-middle text-center"><c:out
+												value="${c.EMAIL }" /></td>
+										<td class="align-middle text-center"><fmt:formatDate value="${c.CLAIMDATE }" pattern="yyyy년MM월dd일"/></td>
+										<td class="align-middle text-center">
+												<button type="button" class="btn btn-outline-secondary btn-sm mb-1">신고상세보기</button>									
+											</td>	
+									</tr>
+								</c:forEach>
+							</c:if>
 						</tbody>
 					</table>
 				</div>

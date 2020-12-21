@@ -154,4 +154,10 @@ public class AdminDaoImple implements AdminDao {
 		return session.update("pay.orderCancelAll", paymentNo);
 	}
 
+	@Override
+	public List<Map> selectClaimAll(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectList("admin.selectClaimAll");
+	}
+
 }

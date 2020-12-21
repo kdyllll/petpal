@@ -36,7 +36,9 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/admin/adminComplain.do")
-	public String adminComplain() {
+	public String adminComplain(Model m) {
+		List<Map> cList = service.selectClaimAll();
+		m.addAttribute("cList", cList);
 		return "admin/adminComplain";
 	}
 	
