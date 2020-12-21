@@ -89,26 +89,33 @@
 							<tr>
 								<th scope="col" class="text-center align-middle">주문번호</th>
 								<th scope="col" class="text-center align-middle">회원상태</th>
-								<th scope="col" class="text-center align-middle">상품사진</th>
-								<th scope="col" class="text-center align-middle">상품이름</th>
-								<th scope="col" class="text-center align-middle">카테고리</th>
+								<th scope="col" class="text-center align-middle">회원이름</th>
+								<th scope="col" class="text-center align-middle">받는분이름</th>
+								<th scope="col" class="text-center align-middle">전화번호</th>
 								<th scope="col" class="text-center align-middle">주문날짜</th>
 								<th scope="col" class="text-center align-middle">주문자이메일</th>
-								<th scope="col" class="text-center align-middle">주문자번호</th>
+								<th scope="col" class="text-center align-middle">주문번호</th>
+								<th scope="col" class="text-center align-middle">주문상태</th>
+								<th scope="col" class="text-center align-middle">배송상태</th>
 								<th scope="col" class="text-center align-middle"></th>
 							</tr>
 						</thead>
 						<tbody>
+							<c:if test="${empty oList }">주문정보가 없습니다.</c:if>
+							<c:if test="${not empty oList }">
+							<c:forEach var="o" items="${oList }">
 							<tr>
-								<th scope="row" class="align-middle text-center">1</th>
+								<th scope="row" class="align-middle text-center"><c:out value="${o.PAYMENTNO }"/></th>
 								<th scope="row" class="align-middle text-center">비회원</th>
-								<td class="text-center"><img
-									style="width: 100px; height: 100px;"></td>
 								<td class="align-middle text-center">Otto</td>
+								<td class="align-middle text-center">Otto</td>
+
 								<td class="align-middle text-center">@mdo</td>
 								<td class="align-middle text-center">Otto</td>
 								<td class="align-middle text-center">Otto109@naver.com</td>
 								<td class="align-middle text-center">sdfs155sdgswet21</td>
+								<td class="align-middle text-center">주문완료</td>
+								<td class="align-middle text-center">배송준비중</td>
 								<td class="align-middle text-center "><form
 										class="d-flex flex-column">
 										<button type="button"
@@ -116,43 +123,8 @@
 										<button type="button" class="btn  btn-outline-danger btn-sm">주문취소</button>
 									</form></td>
 							</tr>
-
-							<tr>
-								<th scope="row" class="align-middle text-center">1</th>
-								<th scope="row" class="align-middle text-center">회원</th>
-								<td class="text-center"><img
-									style="width: 100px; height: 100px;"></td>
-								<td class="align-middle text-center">Otto</td>
-								<td class="align-middle text-center">@mdo</td>
-								<td class="align-middle text-center">Otto</td>
-								<td class="align-middle text-center">Ottao109@naver.com</td>
-								<td class="align-middle text-center">sd5sdgswet21</td>
-								<td class="align-middle text-center"><form
-										class="d-flex flex-column">
-										<button type="button"
-											class="btn btn-outline-secondary btn-sm mb-1">주문상세보기</button>
-										<button type="button" class="btn  btn-outline-danger btn-sm">주문취소</button>
-									</form></td>
-							</tr>
-
-							<tr>
-								<th scope="row" class="align-middle text-center">1</th>
-								<th scope="row" class="align-middle text-center">회원</th>
-								<td class="text-center"><img
-									style="width: 100px; height: 100px;"></td>
-								<td class="align-middle text-center">Otto</td>
-								<td class="align-middle text-center">@mdo</td>
-								<td class="align-middle text-center">Otto</td>
-								<td class="align-middle text-center">Ottdfsdfsdfsdo109@naver.com</td>
-								<td class="align-middle text-center">sdfs155sdgswds124et21</td>
-								<td class="align-middle text-center"><form
-										class="d-flex flex-column">
-										<button type="button"
-											class="btn btn-outline-secondary btn-sm mb-1">주문상세보기</button>
-										<button type="button" class="btn  btn-outline-danger btn-sm">주문취소</button>
-									</form></td>
-							</tr>
-
+							</c:forEach>
+							</c:if>
 						</tbody>
 					</table>
 				</div>

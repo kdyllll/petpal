@@ -112,4 +112,10 @@ public class AdminDaoImple implements AdminDao {
 		return session.selectList("product.inOutSearch", m);
 	}
 
+	@Override
+	public List<Map> selectOrderList(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectList("pay.selectOrderList");
+	}
+
 }

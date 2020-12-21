@@ -27,4 +27,5 @@ public interface AdminDao {
 	List<Map> productIOAll(SqlSession session);
 	List<Map> searchProduct(SqlSession session, String productName);
 	List<Map> inOutSearch(SqlSession session, Map m);
+	List<Map> selectOrderList(SqlSession session);
 }

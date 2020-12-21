@@ -41,7 +41,9 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/admin/adminOrder.do")
-	public String adminOrder() {
+	public String adminOrder(Model m) {
+		List<Map> oList = service.selectOrderList();
+		m.addAttribute("oList", oList);
 		return "admin/adminOrder";
 	}
 	

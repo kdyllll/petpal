@@ -21,4 +21,5 @@ public interface AdminService {
 	List<Map> productIOAll();
 	List<Map> searchProduct(String productName);
 	List<Map> inOutSearch(Map m);
+	List<Map> selectOrderList();
 }
