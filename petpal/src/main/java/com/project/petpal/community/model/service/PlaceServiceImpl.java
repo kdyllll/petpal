@@ -50,13 +50,23 @@ public class PlaceServiceImpl implements PlaceService{
 		}
 
 	@Override
-	public List<Place> placeList(String category) {
-		return dao.placeList(session,category);
+	public List<Place> placeList(String category,int cPage,int numPerpage) {
+		return dao.placeList(session,category,cPage,numPerpage);
 	}
 
 	@Override
-	public Place selectPlace(String placeNo) {
+	public List<Place> selectPlace(String placeNo) {
 		return dao.selectPlace(session,placeNo);
+	}
+
+	@Override
+	public int selectCount(String category) {
+		return dao.selectCount(session,category);
+	}
+
+	@Override
+	public int commentCount(String placeNo) {
+		return dao.commentCount(session,placeNo);
 	}
 
 }
