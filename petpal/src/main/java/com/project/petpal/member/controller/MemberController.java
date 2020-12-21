@@ -186,5 +186,11 @@ public class MemberController {
 		}
 		return "redirect:/";
 	}
+	
+	@RequestMapping("/user/moveUserInfo")
+	public String moveUserInfo(String memberNo,Model m) {
+		
+		return "member/userInfo";
+	}
 
 }
