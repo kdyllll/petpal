@@ -95,8 +95,7 @@
 								<th scope="col" class="text-center align-middle">주문날짜</th>
 								<th scope="col" class="text-center align-middle">주문자이메일</th>
 								<th scope="col" class="text-center align-middle">주문번호</th>
-								<th scope="col" class="text-center align-middle">주문상태</th>
-								<th scope="col" class="text-center align-middle">배송상태</th>
+								<th scope="col" class="text-center align-middle">결제상태</th>
 								<th scope="col" class="text-center align-middle"></th>
 							</tr>
 						</thead>
@@ -104,27 +103,38 @@
 							<c:if test="${empty oList }">주문정보가 없습니다.</c:if>
 							<c:if test="${not empty oList }">
 							<c:forEach var="o" items="${oList }">
+							
 							<tr>
 								<th scope="row" class="align-middle text-center"><c:out value="${o.PAYMENTNO }"/></th>
-								<th scope="row" class="align-middle text-center">비회원</th>
-								<td class="align-middle text-center">Otto</td>
-								<td class="align-middle text-center">Otto</td>
-
-								<td class="align-middle text-center">@mdo</td>
-								<td class="align-middle text-center">Otto</td>
-								<td class="align-middle text-center">Otto109@naver.com</td>
-								<td class="align-middle text-center">sdfs155sdgswet21</td>
-								<td class="align-middle text-center">주문완료</td>
-								<td class="align-middle text-center">배송준비중</td>
+								<th scope="row" class="align-middle text-center"><c:choose>
+									<c:when test="${not empty o.MEMBERNO }">
+										회원
+									</c:when>
+									<c:otherwise>
+										비회원
+									</c:otherwise>
+								</c:choose></th>
+								<td class="align-middle text-center"><c:out value="${o.NAME }"/></td>
+								<td class="align-middle text-center"><c:out value="${o.RECEIVERNAME }"/></td>
+								<td class="align-middle text-center"><c:out value="${o.TEL }"/></td>
+								<td class="align-middle text-center"><fmt:formatDate value="${o.PAYDATE }" pattern="yyyy년MM월dd일" /></td>
+								<td class="align-middle text-center"><c:out value="${o.EMAIL }"/></td>
+								<td class="align-middle text-center"><c:out value="${o.ORDERNO }" /></td>
+								<td class="align-middle text-center"><c:out value="${o.PAYSTATUS }"/></td>
 								<td class="align-middle text-center "><form
-										class="d-flex flex-column">
+										class="d-flex flex-column" method="post" >
+										
 										<button type="button"
-											class="btn btn-outline-secondary btn-sm mb-1">주문상세보기</button>
-										<button type="button" class="btn  btn-outline-danger btn-sm">주문취소</button>
+											class="orderDetailBtn btn btn-outline-secondary btn-sm mb-1">주문상세보기</button>
+											<input type="hidden" value="${o.PAYMENTNO }" name="paymentNo">
+										
+										<button type="button" class="orderCancel btn  btn-outline-danger btn-sm">주문취소</button>
+								
 									</form></td>
 							</tr>
 							</c:forEach>
 							</c:if>
+							
 						</tbody>
 					</table>
 				</div>
@@ -144,6 +154,7 @@
 					</ul>
 				</nav>
 			</section>
+			<div class="orderModal"></div>
 		</div>
 	</div>
 	<script>
@@ -162,7 +173,30 @@
             $("#search-"+target).removeClass("d-none");
         });
         $("#searchType").change();
+        
+        $(".orderDetailBtn").on("click", e => {
+        	let paymentNo = $(e.target).next().val();
+        	ajaxModal("${path}/admin/paymentDetail.do", paymentNo);
+        })
+        
+        $(".orderCancel").on("click", e=> {
+        	let paymentNo = $(e.target).prev().val();
+        	ajaxModal("${path}/admin/paymentCancel.do", paymentNo);
+        })
     })
+    
+    function ajaxModal(path, paymentNo) {
+    	$.ajax({
+			url: path,
+			data:{paymentNo : paymentNo },
+			dataType:"html",
+			success:(data) => {
+				$(".orderModal").html(data);
+         		$('div.modal').modal(); 
+			}
+		});
+    }
+
 </script>
 </body>
 </html>

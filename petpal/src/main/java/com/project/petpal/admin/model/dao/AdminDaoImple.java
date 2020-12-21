@@ -118,4 +118,40 @@ public class AdminDaoImple implements AdminDao {
 		return session.selectList("pay.selectOrderList");
 	}
 
+	@Override
+	public List<Map> selectPayDetail(SqlSession session, String paymentNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("pay.selectPayDetail", paymentNo);
+	}
+
+	@Override
+	public Map selectPaymentOne(SqlSession session, String paymentNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("pay.selectPaymentOne", paymentNo);
+	}
+
+	@Override
+	public int orderCancelOne(SqlSession session, String detailNo) {
+		// TODO Auto-generated method stub
+		return session.update("pay.orderCancelOne", detailNo);
+	}
+
+	@Override
+	public List<Map> payDetailStatus(SqlSession session, String paymentNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("pay.payDetailStatus", paymentNo);
+	}
+
+	@Override
+	public int updatePaymentStatus(SqlSession session, String paymentNo) {
+		// TODO Auto-generated method stub
+		return session.update("pay.updatePaymentStatus", paymentNo);
+	}
+
+	@Override
+	public int orderCancelAll(SqlSession session, String paymentNo) {
+		// TODO Auto-generated method stub
+		return session.update("pay.orderCancelAll", paymentNo);
+	}
+
 }

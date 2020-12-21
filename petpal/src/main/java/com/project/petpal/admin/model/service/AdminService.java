@@ -22,4 +22,10 @@ public interface AdminService {
 	List<Map> searchProduct(String productName);
 	List<Map> inOutSearch(Map m);
 	List<Map> selectOrderList();
+	List<Map> selectPayDetail(String paymentNo);
+	Map selectPaymentOne(String paymentNo);
+	int orderCancelOne(String detailNo);
+	List<Map> payDetailStatus(String paymentNo);
+	int updatePaymentStatus(String paymentNo);
+	int orderCancelAll(String paymentNo);
 }
