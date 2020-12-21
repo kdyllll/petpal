@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.petpal.member.model.vo.Member;
 import com.project.petpal.payment.model.service.PaymentService;
 import com.project.petpal.payment.model.vo.Cart;
 import com.project.petpal.payment.model.vo.PayDetail;
@@ -35,11 +37,17 @@ public class PaymentController {
 								@RequestParam(value="click") String[] click) {
 		
 		int totalPrice = 0;
+		int fee = 0;
 		
 		for(int i=0;i<price.length;i++) {
 			if(click[i].equals("1")) {
 				totalPrice = totalPrice + (count[i] * price[i]);
 			}
+		}
+		
+		if(totalPrice < 50000) {
+			fee = 2500;
+			totalPrice += 2500;
 		}
 		
 		List list = new ArrayList();
@@ -48,7 +56,7 @@ public class PaymentController {
 		
 		for(int i=0; i<count.length;i++) {
 			if(click[i].equals("1")) {
-				c = Cart.builder().productName(productName[i]).productSize(size[i]).color(color[i]).count(count[i]).price(count[i] * price[i]).totalPrice(totalPrice).stockNo(stockNo[i]).build();
+				c = Cart.builder().productName(productName[i]).productSize(size[i]).color(color[i]).count(count[i]).price(count[i] * price[i]).fee(fee).totalPrice(totalPrice).stockNo(stockNo[i]).build();
 				list.add(c);
 			}
 		}
@@ -59,7 +67,7 @@ public class PaymentController {
 	}
 
 	@RequestMapping("/payment/paymentComplete.do")
-	public ModelAndView paymentComplete(ModelAndView mv, HttpServletRequest request, HttpServletResponse response,
+	public ModelAndView paymentComplete(ModelAndView mv, HttpServletRequest request, HttpServletResponse response, HttpSession session,
 										@RequestParam(value="stockNo") String[] stockNo,
 										@RequestParam(value="totalPrice") int totalPrice,
 										@RequestParam(value="cnt") int[] cnt,
@@ -72,7 +80,9 @@ public class PaymentController {
 										@RequestParam(value="tel") String tel,
 										@RequestParam(value="payKind") String payKind) {
 		
-		String memberNo = "63";
+		Member loginMember=(Member)session.getAttribute("loginMember");
+		
+		String memberNo = loginMember.getMemberNo();
 		
 		loc = loc + " " + locDetail;
 		

@@ -19,6 +19,21 @@
             }
         }
 		
+		var check = 0;
+		
+		for(var i=0;i<objs.length;i++){
+			if(objs[i].checked===true){
+				check++;
+			}
+		}
+		if(check==0){
+			$(".pay").hide();
+			$(".noPay").show();
+		}else{
+			$(".pay").show();
+			$(".noPay").hide();
+		}
+		
          $(".pay").text(c + "개 상품 구매하기").css({"font-weight":"bold"});
 	});
 	
@@ -46,6 +61,22 @@
           var objs = document.querySelectorAll(".ch");
 			var c = 0;
 			
+			var check = 0;
+			
+			for(var i=0;i<objs.length;i++){
+				if(objs[i].checked===true){
+					check++;
+				}
+			}
+			if(check==0){
+				$(".pay").hide();
+				$(".noPay").show();
+			}else{
+				$(".pay").show();
+				$(".noPay").hide();
+			}
+			
+			
 			for (var j = 0; j < objs.length; j++) {
 	            if (objs[j].checked === true) {
 	              c+=1;
@@ -54,8 +85,16 @@
 			
 	         $(".pay").text(c + "개 상품 구매하기").css({"font-weight":"bold"});
 	         
-	         $('.totalProduct').text(totalProduct);
-	         $('.totalPrice').text(totalProduct);
+	         if(totalProduct !=0 && totalProduct<=50000){
+	        	 $(".totalFee").text(2500);
+		         $('.totalProduct').text(totalProduct);
+		         $('.totalPrice').text(Number(totalProduct) + 2500);
+	         }else{
+	        	 $(".totalFee").text(0);
+	        	 $('.totalProduct').text(totalProduct);
+		         $('.totalPrice').text(totalProduct);
+	         }
+	         
 	         
 	       //여기에서 실행-------------------------------------------------------------------------------
 	         fn_checkPrice();
@@ -105,6 +144,23 @@
 			var objs = document.querySelectorAll(".ch");
 			var c = 0;
 			
+			
+			var check = 0;
+			
+			for(var i=0;i<objs.length;i++){
+				if(objs[i].checked===true){
+					check++;
+				}
+			}
+			if(check==0){
+				$(".pay").hide();
+				$(".noPay").show();
+			}else{
+				$(".pay").show();
+				$(".noPay").hide();
+			}
+			
+			
 			for (var j = 0; j < objs.length; j++) {
 	            if (objs[j].checked === true) {
 	              c+=1;
@@ -116,8 +172,15 @@
 	         if($(this).prop("checked") === false){
 				totalProduct = totalProduct - parseInt($(this).parent().nextAll().find('.price').text().trim());
 			}
-			$(".totalProduct").text(totalProduct);
-			$(".totalPrice").text(totalProduct);
+	         if(totalProduct !=0 && totalProduct<=50000){
+	        	 $(".totalFee").text(2500);
+		         $('.totalProduct').text(totalProduct);
+		         $('.totalPrice').text(Number(totalProduct) + 2500);
+	         }else{
+	        	 $(".totalFee").text(0);
+	        	 $('.totalProduct').text(totalProduct);
+		         $('.totalPrice').text(totalProduct);
+	         }
 			
 			//여기에서 실행-------------------------------------------------------------------------------
 			fn_checkPrice();
@@ -126,8 +189,15 @@
 			if($(this).prop("checked") === true){
 				totalProduct = $(".totalProduct").html();
 			}
-			$(".totalProduct").text(totalProduct);
-	        $('.totalPrice').text(totalProduct);
+			if(totalProduct !=0 && totalProduct<=50000){
+	        	 $(".totalFee").text(2500);
+		          $('.totalProduct').text(totalProduct);
+		         $('.totalPrice').text(Number(totalProduct) + 2500);
+	         }else{
+	        	 $(".totalFee").text(0);
+	        	 $('.totalProduct').text(totalProduct);
+		         $('.totalPrice').text(totalProduct);
+	         }
 	     }); 
 		 
  	});
@@ -141,8 +211,16 @@
 			console.log($(item).parents(".proCon").find("span.price").text().trim());
 			total=total+parseInt($(item).parents(".proCon").find("span.price").text().trim());
 		});
-		$('.totalProduct').text(total);
-		$('.totalPrice').text(total);
+		if(total !=0 && total<=50000){
+       	 	$(".totalFee").text(2500);
+       	 	$('.totalProduct').text(total);
+       	 	$('.totalPrice').text(Number(total) + 2500);
+        }else{
+       	 $(".totalFee").text(0);
+       	 $('.totalProduct').text(total);
+	         $('.totalPrice').text(total);
+        }
+		
 		
 	}
 	
@@ -160,11 +238,11 @@
 			}
 		}
 		
-		if(c==0){
-			swal("상품을 선택해주세요", "", "warning");
-		}else{
 			frm.submit();
-		}
+	}
+	
+	function noBuy(){
+		swal("상품을 선택해주세요", "", "warning");
 	}
 </script>
 
@@ -193,18 +271,22 @@
 								<ul class="list-group mb-3" style="width:350px;">
 									<li class="pt-4 list-group-item d-flex justify-content-between border-bottom-0">
 										<h6>총 상품 금액</h6>
-										<h6 class="totalProduct">0</h6>
+										<h6 class="totalProduct ml-auto">0</h6><h6>원</h6>
 									</li>
 									<li class="list-group-item d-flex justify-content-between border-bottom-0">
-										<h6>총 배송비</h6>
-										<h6 class="totalFee">0</h6>
+										<div>
+											<h6>총 배송비</h6>
+											<small>( 5만원 이상 결제 시 무료 )</small>
+										</div>
+										<h6 class="totalFee ml-auto">0</h6><h6>원</h6>
 									</li>
 									<li class="pt-2 list-group-item d-flex justify-content-between">
 										<h3>결제금액</h3>
-										<h3 class="totalPrice">0</h3>
+										<h3 class="totalPrice ml-auto">0</h3><h3>원</h3>
 									</li>
 								</ul>
 								<button type="button" class="pay mt-1 p-3 btn btn-secondary" style="width:350px;" onclick="submitCheck();"><b>개 상품 구매하기</b></button>
+								<button type="button" class="noPay mt-1 p-3 btn btn-secondary" style="width:350px;" onclick="noBuy();"><b>구매하기</b></button>
 							</div>
 						</div>
 					</div>
@@ -285,18 +367,22 @@
 							<ul class="list-group mb-3" style="width:100%;">
 									<li class="pt-4 list-group-item d-flex justify-content-between border-bottom-0">
 										<h6>총 상품 금액</h6>
-										<h6 class="totalProduct">0</h6>
+										<h6 class="totalProduct ml-auto">0</h6><h6>원</h6>
 									</li>
 									<li class="list-group-item d-flex justify-content-between border-bottom-0">
-										<h6>총 배송비</h6>
-										<h6 class="totalFee">0</h6>
+										<div>
+											<h6>총 배송비</h6>
+											<small>( 5만원 이상 결제 시 무료 )</small>
+										</div>
+										<h6 class="totalFee ml-auto">0</h6><h6>원</h6>
 									</li>
 									<li class="pt-2 list-group-item d-flex justify-content-between">
 										<h3>결제금액</h3>
-										<h3 class="totalPrice">0</h3>
+										<h3 class="totalPrice ml-auto">0</h3>원
 									</li>
 								</ul>
-								<button type="button" class="pay mt-1 p-3 btn btn-secondary" style="width:100%;" onclick="submitCheck();"><b>개 상품 구매하기</b></button>
+								<button type="button"class="pay mt-1 p-3 btn btn-secondary" style="width:100%;" onclick="submitCheck();"><b>개 상품 구매하기</b></button>
+								<button type="button" class="noPay mt-1 p-3 btn btn-secondary" style="width:100%;" onclick="noBuy();"><b>구매하기</b></button>
 						</div>
 						
 					</div>

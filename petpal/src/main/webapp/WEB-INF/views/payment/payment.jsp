@@ -32,7 +32,8 @@
 			swal("주문자의 휴대폰 번호를 입력해주세요", "", "warning");
 			$('#rphone').focus();
 		}
-		else{
+		frm.submit();
+		/* else{
 			//모든 정보가 다 담겨 있으면 결제 API 실행
 			swal("정보 입력 완료", "결제를 진행합니다.", "success");
 			var IMP = window.IMP;
@@ -58,7 +59,7 @@
 			});
  
 		return false;
-		}
+		} */
 	}
 	
 	//장바구니 부분 사이드 div 스크롤에 따라 위치 변경
@@ -179,12 +180,16 @@
 				                            <h6 class="my-0">${c.productName }</h6>
 				                            <small class="text-muted">${c.productSize } / ${c.color } / ${c.count }</small>
 				                        </div>
-				                        <span class="">${c.price }</span>
+				                        <span class="">${c.price }원</span>
 				                    </li>
 			                    </c:forEach>
 			                    <li class="list-group-item d-flex justify-content-between">
-			                        <span>총 가격</span>
-			                        <strong><c:out value="${list[0].totalPrice }"/></strong>
+			                        <span>배송비</span>
+			                        <c:out value="${list[0].fee }"/>원
+			                    </li>
+			                    <li class="list-group-item d-flex justify-content-between">
+			                        <strong><span>총 가격</span></strong>
+			                        <strong><c:out value="${list[0].totalPrice }"/>원</strong>
 			                    </li>
 			                </ul>
 			                <div class="d-flex">
