@@ -5,42 +5,53 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
  <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
-   
+ <style>
+     .dropdown .dropdown-menu {
+     display: block;
+     opacity: 0;
+     transition: all 850ms ease;
+     }
+
+     .dropdown:hover .dropdown-menu {
+     display: block;
+     opacity: 1;
+     }
+ </style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
   
   <!-- Page Content -->
   <main role="main" style="min-height:100vh;">
-    <div class="album py-5 bg-light">
+    <div class="album py-5">
         <div class="container my-4 mt-lg-0">
             <div class="row ">
             <input type="hidden" class="loginMember" value="${loginMember.memberNo }"/>
                 <div class="col-lg-12 my-5 mt-lg-0 ">
-						<div class="mt-3 mt-lg-0 d-lg-flex py-3">
-							<a
-								class="d-block d-xl-inline text-left mb-0 border-0 px-0 pr-3 py-3 "
-								type="button"> 홈 </a> <a href="${path }/daily/moveList.do"
-								class="d-block d-xl-inline text-left mb-0 border-0 px-0 pr-3 py-3 "
-								type="button"> 사진 </a> <a
-								class="d-block d-xl-inline text-left collapsed mb-0 border-0 px-0 pr-3 py-3"
-								type="button"> 노하우 </a> <a
-								class="d-block d-xl-inline text-left collapsed mb-0 border-0 px-0 pr-3 py-3"
-								type="button"> 장소 </a> <a href="${path }/community/findList.do"
-								class="d-block d-xl-inline text-left collapsed mb-0 border-0 px-0 py-3"
-								type="button"> 찾아주세요 </a>
+					<div class="mt-3 mt-lg-0 d-lg-flex py-3">
+						<a
+							class="d-block d-xl-inline text-left mb-0 border-0 px-0 pr-3 py-3 "
+							type="button"> 홈 </a> <a href="${path }/daily/moveList.do"
+							class="d-block d-xl-inline text-left mb-0 border-0 px-0 pr-3 py-3 "
+							type="button"> 사진 </a> <a
+							class="d-block d-xl-inline text-left collapsed mb-0 border-0 px-0 pr-3 py-3"
+							type="button"> 노하우 </a> <a
+							class="d-block d-xl-inline text-left collapsed mb-0 border-0 px-0 pr-3 py-3"
+							type="button"> 장소 </a> <a href="${path }/community/findList.do"
+							class="d-block d-xl-inline text-left collapsed mb-0 border-0 px-0 py-3"
+							type="button"> 찾아주세요 </a>
 
-						</div>
 					</div>
+				</div>
                 <div class="form-inline container text-center mb-3">
                     <h3>일상</h3>
                     <button type="button" id="dailyWriteBtn" class="btn btn-outline-secondary ml-auto" >글쓰기</button>
                 </div>
                 <div class="form-inline container-xl mb-5">
-                    <div class="input-group col-lg-6 col-8">
+                    <div class="input-group col-lg-5 col-8">
                         <input type="text" class="form-control " placeholder="검색어를 입력하세요" aria-label="검색어를 입력하세요" aria-describedby="basic-addon2">
                         <div class="input-group-append">
-                            <button type="button" class="input-group-text">검색</button>
+                            <button type="button" id="searchBtn" class="input-group-text">검색</button>
                         </div>
                     </div>
                     <div class="dropdown ml-auto">
@@ -55,18 +66,7 @@
                         </div>
                     </div>
                 </div>
-                <style>
-                    .dropdown .dropdown-menu {
-                    display: block;
-                    opacity: 0;
-                    transition: all 850ms ease;
-                    }
 
-                    .dropdown:hover .dropdown-menu {
-                    display: block;
-                    opacity: 1;
-                    }
-                </style>
 				<c:if test="${empty dailyList }">
 					<div class="mx-auto">
 						<p class="">일상 글이 없습니다.</p>
@@ -92,8 +92,8 @@
 		                        </div>
 		                        <c:forEach var="i" items="${imgList}">
 		                        	<c:if test="${i.dailyNo eq d.DAILYNO}">
-		                        	<a class="d-inline-block border" href="">                        
-	                        			<img src="${path }/resources/upload/community/daily/${i.dailyImgName}" class="rounded" width="100%" height="100%">
+		                        	<a class="d-inline-block border" href="${path }/daily/moveDetail.do?dailyNo=${d.DAILYNO }">                        
+	                        			<img src="${path }/resources/upload/community/daily/${i.dailyImgName}" class="rounded" width="100%" height="250px">
 	                        			<input type="hidden" value="${d.DAILYNO }"/>
 		                        	</a>	
 		                        	</c:if>

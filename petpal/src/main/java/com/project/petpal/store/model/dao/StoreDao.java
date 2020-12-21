@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.project.petpal.payment.model.vo.Cart;
 import com.project.petpal.store.model.vo.Product;
 import com.project.petpal.store.model.vo.ProductImg;
 import com.project.petpal.store.model.vo.Qna;
@@ -40,5 +41,6 @@ public interface StoreDao {
 	int writeQnaComment(SqlSession session,Qna qna);
 	int editQnaComment(SqlSession session,Qna qna);
 	int deleteQnaComment(SqlSession session,String qnaNo);
-	
+	Cart selectCartOne(SqlSession session,Map m);
+	int updateCartCnt(SqlSession session,Map m);
 }

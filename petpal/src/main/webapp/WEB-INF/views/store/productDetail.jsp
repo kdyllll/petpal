@@ -310,7 +310,7 @@
 	                
 	                  <%if(r.getReviewComment()!=null){ %>
 	                  <div class="text-right">
-		                  <c:if test="${loginMember.memberNo eq 63}">
+		                  <c:if test="${loginMember.memberNo eq '63'}">
 			                  <a class="replyEdit text-point text-right pb-2 pr-4"  style="font-size: 12px;" style="cursor: pointer;">
 						                    답글 수정
 						      </a>
@@ -333,7 +333,7 @@
 		                </form>
 	                  <%}else{ %>
 	                  <div class="text-right">
-		                  <c:if test="${loginMember.memberNo eq 63}">
+		                  <c:if test="${loginMember.memberNo eq '63'}">
 		                  	<a class="replyWrite text-point text-right pb-2 pr-4"  style="font-size: 12px;" style="cursor: pointer;">답글 작성</a>
 		                  </c:if>
 		                  <a class="text-black-50 text-right pb-2" style="font-size: 12px;" style="cursor: pointer;"><strong>판매자 답글</strong></a>

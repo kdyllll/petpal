@@ -3,6 +3,7 @@ package com.project.petpal.store.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.project.petpal.payment.model.vo.Cart;
 import com.project.petpal.store.model.vo.Product;
 import com.project.petpal.store.model.vo.ProductImg;
 import com.project.petpal.store.model.vo.Qna;
@@ -37,4 +38,6 @@ public interface StoreService {
 	int writeQnaComment(Qna qna);
 	int editQnaComment(Qna qna);
 	int deleteQnaComment(String qnaNo);
+	Cart selectCartOne(Map m);
+	int updateCartCnt(Map m);
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.project.petpal.payment.model.vo.Cart;
 import com.project.petpal.store.model.vo.Product;
 import com.project.petpal.store.model.vo.ProductImg;
 import com.project.petpal.store.model.vo.Qna;
@@ -71,7 +72,7 @@ public class StoreDaoImpl implements StoreDao{
 	@Override
 	public int insertCart(SqlSession session, Map m) {
 		// TODO Auto-generated method stub
-		return session.insert("store.insertCart",m);
+		return session.insert("cart.insertCart",m);
 	}
 
 	@Override
@@ -174,6 +175,18 @@ public class StoreDaoImpl implements StoreDao{
 	public int deleteQnaComment(SqlSession session, String qnaNo) {
 		// TODO Auto-generated method stub
 		return session.delete("store.deleteQnaComment",qnaNo);
+	}
+
+	@Override
+	public Cart selectCartOne(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.selectOne("cart.selectCartOne",m);
+	}
+
+	@Override
+	public int updateCartCnt(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.update("cart.updateCartCnt",m);
 	}
 	
 	

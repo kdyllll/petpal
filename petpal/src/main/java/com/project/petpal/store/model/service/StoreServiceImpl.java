@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.petpal.payment.model.vo.Cart;
 import com.project.petpal.store.model.dao.StoreDao;
 import com.project.petpal.store.model.vo.Product;
 import com.project.petpal.store.model.vo.ProductImg;
@@ -180,6 +181,18 @@ public class StoreServiceImpl implements StoreService{
 	public int deleteQnaComment(String qnaNo) {
 		// TODO Auto-generated method stub
 		return dao.deleteQnaComment(session,qnaNo);
+	}
+
+	@Override
+	public Cart selectCartOne(Map m) {
+		// TODO Auto-generated method stub
+		return dao.selectCartOne(session,m);
+	}
+
+	@Override
+	public int updateCartCnt(Map m) {
+		// TODO Auto-generated method stub
+		return dao.updateCartCnt(session,m);
 	}
 
 	

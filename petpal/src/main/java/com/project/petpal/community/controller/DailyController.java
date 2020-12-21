@@ -159,6 +159,16 @@ public class DailyController {
 		return "common/msg";
 	}
 	
+	//글 디테일로 이동
+	@RequestMapping("/daily/moveDetail.do")
+	public String moveDetail(String dailyNo,Model m) {
+		//글사진, 글내용, 글좋아요, 
+		return "community/dailyDetail";
+	}
+	
+	
+	
+	
 	//AJAX
 	
 	//상품이름 자동완성
