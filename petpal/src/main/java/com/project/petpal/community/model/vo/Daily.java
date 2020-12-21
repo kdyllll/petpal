@@ -15,5 +15,5 @@ public class Daily {
 	private String dailyNo;
 	private String memberNo;
 	private String content;
-	private Date enrollDate;
+	private Date dailyDate;
 }

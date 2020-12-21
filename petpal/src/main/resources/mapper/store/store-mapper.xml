@@ -11,6 +11,7 @@
 		SELECT * FROM PRODUCTIMG WHERE PRODUCTNO=#{productNo} 
 	</select>
 	<select id="dogList" resultType="storeProduct">
+	<!-- 재고가 있고,가격이 책정되있는 것들중에 제일 가격이 낮고 타입이 'M'인 상품리스트를 중복없이 뽑아냄 -->
 		SELECT DISTINCT PRODUCTNO,PRICE,SALE,PRODUCTNAME,IMGNAME FROM STOCK JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO)
 WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO) WHERE CATEGORYNO IN('D1','D2','D3','D4','D5') AND PRICE>0 AND STOCK>0 GROUP BY PRODUCTNO) AND TYPE='M'
 	</select>
@@ -33,9 +34,6 @@ WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK 
 		SELECT DISTINCT PRODUCTNO,CATEGORYNO,PRICE,SALE,PRODUCTNAME,IMGNAME FROM PRODUCT JOIN STOCK USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO)
 WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK USING(PRODUCTNO) WHERE CATEGORYNO=#{cNo} GROUP BY PRODUCTNO HAVING SUM(STOCK)=0) AND TYPE='M' AND PRICE>0
 	</select>
-	<insert id="insertCart" parameterType="map">
-		INSERT INTO CART VALUES(#{memberNo},#{stockNo},#{cnt})
-	</insert>
 	<select id="payCheck" resultType="string" parameterType="map">
 		SELECT DETAILNO FROM PAYMENT LEFT JOIN PAYDETAIL USING(PAYMENTNO) LEFT JOIN STOCK USING(STOCKNO) 
 		WHERE MEMBERNO=#{memberNo} AND PRODUCTNO=#{productNo} AND FLOOR(SYSDATE-PAYDATE)<![CDATA[<]]>14
@@ -78,4 +76,52 @@ WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK 
 	<select id="selectReviewOne" resultType="review" parameterType="string">
 		SELECT * FROM REVIEW LEFT JOIN PAYDETAIL USING(DETAILNO) LEFT JOIN STOCK USING(STOCKNO) WHERE REVIEWNO=#{reviewNo}
 	</select>
+	<update id="reviewComment" parameterType="map">
+		UPDATE REVIEW SET REVIEWCOMMENT=#{reviewComment} WHERE REVIEWNO=#{reviewNo, jdbcType=VARCHAR}
+	</update>
+	<select id="selectMainImg" resultType="storeImg" parameterType="string">
+		SELECT * FROM PRODUCTIMG WHERE PRODUCTNO=#{productNo} AND TYPE='M'
+	</select>
+	<insert id="insertQna" parameterType="qna">
+		INSERT INTO QNA VALUES(SEQ_QNANO.NEXTVAL,#{productNo},#{memberNo},#{content},NULL,SYSDATE,NULL,#{category},
+		<choose>
+			<when test="secret!=null">
+				'Y'
+			</when>
+			<otherwise>
+				DEFAULT
+			</otherwise>
+		</choose>	
+		)
+	</insert>
+	<select id="selectQna" resultType="qna" parameterType="string">
+		SELECT * FROM QNA LEFT JOIN MEMBER USING(MEMBERNO) WHERE PRODUCTNO=#{productNo}
+	</select>
+	<delete id="deleteQna" parameterType="string">
+		DELETE FROM QNA WHERE QNANO=${value}
+	</delete>
+	<select id="selectQnaOne" resultType="qna" parameterType="string">
+		SELECT * FROM QNA WHERE QNANO=#{qnaNo}
+	</select>
+	<update id="updateQna" parameterType="qna">
+		UPDATE QNA SET CATEGORY=#{category},CONTENT=#{content},SECRET= 
+		<choose>
+			<when test="secret!=null">
+				'Y'
+			</when>
+			<otherwise>
+				DEFAULT
+			</otherwise>
+		</choose>
+		WHERE QNANO=#{qnaNo, jdbcType=VARCHAR}
+	</update>
+	<update id="writeQnaComment" parameterType="map">
+		UPDATE QNA SET QNACOMMENT=#{qnaComment},COMMENTDATE=SYSDATE WHERE QNANO=#{qnaNo}
+	</update>
+	<update id="editQnaComment" parameterType="map">
+		UPDATE QNA SET QNACOMMENT=#{qnaComment} WHERE QNANO=#{qnaNo}
+	</update>
+	<update id="deleteQnaComment" parameterType="string">
+		UPDATE QNA SET QNACOMMENT=NULL,COMMENTDATE=NULL WHERE QNANO=#{value}
+	</update>
 </mapper>

@@ -18,14 +18,18 @@
 		<typeAlias type="com.project.petpal.admin.model.vo.ProductImg" alias="pImg"/>
 		<typeAlias type="com.project.petpal.store.model.vo.Product" alias="storeProduct"/>
 		<typeAlias type="com.project.petpal.store.model.vo.Stock" alias="storeStock"/>
-		<typeAlias type="com.project.petpal.admin.model.vo.ProductImg" alias="storeImg"/>
+		<typeAlias type="com.project.petpal.store.model.vo.ProductImg" alias="storeImg"/>
 		<typeAlias type="com.project.petpal.community.model.vo.Place" alias="place"/>
 		<typeAlias type="com.project.petpal.payment.model.vo.Cart" alias="cart"/>
+		<typeAlias type="com.project.petpal.community.model.vo.PlaceImg" alias="placeImg"/>
 		<typeAlias type="com.project.petpal.payment.model.vo.Payment" alias="payment"/>
 		<typeAlias type="com.project.petpal.payment.model.vo.PayDetail" alias="payDetail"/>
 		<typeAlias type="com.project.petpal.store.model.vo.Review" alias="review"/>
 		<typeAlias type="com.project.petpal.community.model.vo.Find" alias="find"/>
 		<typeAlias type="com.project.petpal.community.model.vo.FindImg" alias="findImg"/>
+		<typeAlias type="com.project.petpal.store.model.vo.Qna" alias="qna"/>
+		<typeAlias type="com.project.petpal.community.model.vo.Hashtag" alias="hashtag"/>
+		<typeAlias type="com.project.petpal.community.model.vo.DailyImg" alias="dailyImg"/>
 	</typeAliases>
 </configuration>
 
