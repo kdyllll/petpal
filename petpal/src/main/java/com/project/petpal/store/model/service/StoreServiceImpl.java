@@ -7,9 +7,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.petpal.payment.model.vo.Cart;
 import com.project.petpal.store.model.dao.StoreDao;
 import com.project.petpal.store.model.vo.Product;
 import com.project.petpal.store.model.vo.ProductImg;
+import com.project.petpal.store.model.vo.Qna;
 import com.project.petpal.store.model.vo.Review;
 import com.project.petpal.store.model.vo.Stock;
 
@@ -121,6 +123,81 @@ public class StoreServiceImpl implements StoreService{
 		return dao.selectReviewOne(session,reviewNo);
 	}
 
+	@Override
+	public int reviewComment(Map map) {
+		// TODO Auto-generated method stub
+		return dao.reviewComment(session,map);
+	}
+
+	@Override
+	public ProductImg selectMainImg(String productNo) {
+		// TODO Auto-generated method stub
+		return dao.selectMainImg(session,productNo);
+	}
+
+	@Override
+	public int insertQna(Qna q) {
+		// TODO Auto-generated method stub
+		return dao.insertQna(session,q);
+	}
+
+	@Override
+	public List<Qna> selectQna(String productNo) {
+		// TODO Auto-generated method stub
+		return dao.selectQna(session,productNo);
+	}
+
+	@Override
+	public int deleteQna(String qnaNo) {
+		// TODO Auto-generated method stub
+		return dao.deleteQna(session,qnaNo);
+	}
+
+	@Override
+	public Qna selectQnaOne(String qnaNo) {
+		// TODO Auto-generated method stub
+		return dao.selectQnaOne(session,qnaNo);
+	}
+
+	@Override
+	public int updateQna(Qna qna) {
+		// TODO Auto-generated method stub
+		return dao.updateQna(session,qna);
+	}
+	
+	@Override
+	public int writeQnaComment(Qna qna) {
+		// TODO Auto-generated method stub
+		return dao.writeQnaComment(session,qna);
+	}
+
+	@Override
+	public int editQnaComment(Qna qna) {
+		// TODO Auto-generated method stub
+		return dao.editQnaComment(session,qna);
+	}
+
+	@Override
+	public int deleteQnaComment(String qnaNo) {
+		// TODO Auto-generated method stub
+		return dao.deleteQnaComment(session,qnaNo);
+	}
+
+	@Override
+	public Cart selectCartOne(Map m) {
+		// TODO Auto-generated method stub
+		return dao.selectCartOne(session,m);
+	}
+
+	@Override
+	public int updateCartCnt(Map m) {
+		// TODO Auto-generated method stub
+		return dao.updateCartCnt(session,m);
+	}
+
+	
+	
+	
 	
 	
 }

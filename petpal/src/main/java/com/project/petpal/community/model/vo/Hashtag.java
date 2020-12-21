@@ -9,11 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DailyImg {
+public class Hashtag {
 
-	private String dailyImgNo;
-	private String dailyNo;
-	private String dailyImgName;
-	private String status;
-	
+	private String postNo;
+	private String hashContent;
 }

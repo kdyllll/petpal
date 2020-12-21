@@ -4,12 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
-
 <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <form class="modal-content" onsubmit="return fn_submit();" action="${path }/store/qnaEnd.do">
+    <form class="modal-content" onsubmit="return fn_submit();" action="${path }/store/qnaEditEnd.do">
       <div class="modal-header">
-        <h5 class="modal-title pl-3" id="exampleModalLabel">상품 문의 수정</h5>
+        <h5 class="modal-title pl-3" id="exampleModalLabel">상품 문의</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -20,25 +19,26 @@
             <img src="${path }/resources/upload/product/detail/${img.imgName}" class="rounded d-block w-100 col-4">
             <p class="align-middle mb-0"><c:out value="${product.productName }"/></p>
             <input type="hidden" name="productNo" value="${product.productNo }"/>
+            <input type="hidden" name="qnaNo" value="${qna.qnaNo }"/>
           </div>
           <div class="form-group">
             <label for="message-text" class="col-form-label"><strong>문의 분류</strong></label>
             <select id="category" name="category" class="category form-control col-3">
               <option disabled selected>분류</option>
-              <option>상품</option>
-              <option>배송</option>
-              <option>반품</option>
-              <option>교환</option>
-              <option>환불</option>
-              <option>기타</option>                          
+              <option ${qna.category eq "상품"?"selected":""}>상품</option>
+              <option ${qna.category eq "배송"?"selected":""}>배송</option>
+              <option ${qna.category eq "반품"?"selected":""}>반품</option>
+              <option ${qna.category eq "교환"?"selected":""}>교환</option>
+              <option ${qna.category eq "환불"?"selected":""}>환불</option>
+              <option ${qna.category eq "기타"?"selected":""}>기타</option>                            
             </select>
           </div>
           <div class="form-group">
             <label class="col-form-label"><strong>문의 내용</strong></label>
-            <textarea id="content" class="content form-control" rows="5" name="content" style="resize:none;"></textarea>
+            <textarea id="content" class="content form-control" rows="5" name="content" style="resize:none;"><c:out value="${qna.content }"/></textarea>
            </div>
            <div class="form-group d-flex justify-content-end">
-           <label class=""><input name="secret" type="checkbox" class="mr-2 form-check-input" value="secret"/>비밀글</label>
+           <label class=""><input name="secret" type="checkbox" class="mr-2 form-check-input" value="secret" ${qna.secret eq "Y"?"checked":""}/>비밀글</label>
            </div>
          </div>
        </div>

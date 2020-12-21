@@ -4,4 +4,13 @@
 	<select id="cartList" parameterType="string" resultType="map">
 		SELECT PRODUCTNAME, FILENAME, COLOR, COUNT, PRICE, SALE, MEMBERNO, STOCK, STOCKNO, PRODUCTSIZE FROM CART C JOIN STOCK S USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) WHERE MEMBERNO = #{memberNo}
 	</select>
+	<insert id="insertCart" parameterType="map">
+		INSERT INTO CART VALUES(#{memberNo},#{stockNo},#{cnt})
+	</insert>
+	<select id="selectCartOne" resultType="cart" parameterType="map">
+		SELECT * FROM CART WHERE MEMBERNO=#{memberNo} AND STOCKNO=#{stockNo}
+	</select>
+	<update id="updateCartCnt" parameterType="map">
+		UPDATE CART SET COUNT=#{cnt} WHERE MEMBERNO=#{memberNo} AND STOCKNO=#{stockNo}
+	</update>
 </mapper>

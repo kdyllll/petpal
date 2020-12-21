@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -11,10 +12,8 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +23,7 @@ import com.project.petpal.member.model.vo.Member;
 import com.project.petpal.store.model.service.StoreService;
 import com.project.petpal.store.model.vo.Product;
 import com.project.petpal.store.model.vo.ProductImg;
+import com.project.petpal.store.model.vo.Qna;
 import com.project.petpal.store.model.vo.Review;
 import com.project.petpal.store.model.vo.Stock;
 
@@ -72,6 +72,7 @@ public class StoreController {
 		List<Review> reviews=service.selectReview(productNo);
 		
 		//문의 가져오기
+		List<Qna> qnas=service.selectQna(productNo);
 		
 		m.addAttribute("product",p);
 		m.addAttribute("imgs",pImg);
@@ -80,6 +81,7 @@ public class StoreController {
 		m.addAttribute("colors",colors);
 		m.addAttribute("sizes",sizes);
 		m.addAttribute("reviewList",reviews);
+		m.addAttribute("qnaList",qnas);
 		
 		return "store/productDetail";
 	}
@@ -185,6 +187,101 @@ public class StoreController {
 		m.addAttribute("loc","/store/moveDetail.do?productNo="+productNo);
 		m.addAttribute("msg",result>0?"리뷰를 수정했습니다.":"리뷰 수정을 실패했습니다.");
 		
+		return "common/msg";
+	};
+	
+	//리뷰 답변 업데이트
+	@RequestMapping("/store/reviewComment.do")
+	public String reviewComment(String reviewComment,String productNo,String reviewNo,Model m) {
+		Map map=new HashMap();
+		map.put("reviewComment", reviewComment);
+		map.put("reviewNo", reviewNo);
+		int result=service.reviewComment(map);
+		m.addAttribute("loc","/store/moveDetail.do?productNo="+productNo);
+		m.addAttribute("msg",result>0?"답변을 작성했습니다.":"답변 작성을 실패했습니다.");
+		return "common/msg";
+	}
+	
+	//문의 작성
+	@RequestMapping("/store/qnaEnd.do")
+	public String insertQna(HttpSession session,String productNo,String category,String content,
+			@RequestParam(value="secret", required=false) String secret,
+			Model m) {
+		//문의 : 문의 번호, 상품 번호, 작성자 번호, 내용, 댓글, 작성일, 댓글작성일, 카테고리, 비밀글여부(Y/N)
+		Member loginMember=(Member)session.getAttribute("loginMember");
+		Qna q=new Qna();
+		q.setProductNo(productNo);
+		q.setMemberNo(loginMember.getMemberNo());
+		q.setContent(content);
+		q.setCategory(category);
+		q.setSecret(secret);
+		
+		int result=service.insertQna(q);
+		m.addAttribute("msg",result>0?"문의가 작성되었습니다.":"문의 작성에 실패했습니다.");
+		m.addAttribute("loc","/store/moveDetail.do?productNo="+productNo);		
+		return "common/msg";
+	}
+	
+	//문의 삭제
+	@RequestMapping("/store/deleteQna.do")
+	public String deleteQna(String productNo,String qnaNo,Model m) {
+		int result=service.deleteQna(qnaNo);
+		m.addAttribute("msg",result>0?"문의가 삭제되었습니다.":"문의 삭제에 실패했습니다.");
+		m.addAttribute("loc","/store/moveDetail.do?productNo="+productNo);
+		return "common/msg";
+	}
+	
+	//문의 수정
+	@RequestMapping("/store/qnaEditEnd.do")
+	public String updateQna(String productNo,String qnaNo,String category,String content,
+			@RequestParam(value="secret", required=false) String secret,
+			Model m) {
+		Qna qna=new Qna();
+		qna.setCategory(category);
+		qna.setContent(content);
+		qna.setSecret(secret);
+		qna.setQnaNo(qnaNo);
+		int result=service.updateQna(qna);
+
+		m.addAttribute("msg",result>0?"문의가 수정되었습니다.":"문의 수정에 실패했습니다.");
+		m.addAttribute("loc","/store/moveDetail.do?productNo="+productNo);
+		return "common/msg";
+		
+	}
+	
+	//문의 답변 작성
+	@RequestMapping("/store/writeQnaComment.do")
+	public String writeQnaComment(String productNo,String qnaNo,String qnaComment,Model m) {
+		Qna qna=new Qna();
+		qna.setQnaNo(qnaNo);
+		qna.setQnaComment(qnaComment);
+		int result=service.writeQnaComment(qna);
+		
+		m.addAttribute("msg",result>0?"답변이 작성되었습니다.":"답변 작성에 실패했습니다.");
+		m.addAttribute("loc","/store/moveDetail.do?productNo="+productNo);
+		return "common/msg";
+	}
+	
+	//문의 답변 수정
+	@RequestMapping("/store/editQnaComment.do")
+	public String editQnaComment(String productNo,String qnaNo,String qnaComment,Model m) {
+		Qna qna=new Qna();
+		qna.setQnaNo(qnaNo);
+		qna.setQnaComment(qnaComment);
+		int result=service.editQnaComment(qna);
+		
+		m.addAttribute("msg",result>0?"답변이 수정되었습니다.":"답변 수정에 실패했습니다.");
+		m.addAttribute("loc","/store/moveDetail.do?productNo="+productNo);
+		return "common/msg";
+	}
+	
+	//문의 삭제
+	@RequestMapping("/store/deleteQnaComment.do")
+	public String deleteQnaComment(String productNo,String qnaNo,Model m) {
+		int result=service.deleteQnaComment(qnaNo);
+		
+		m.addAttribute("msg",result>0?"답변이 삭제되었습니다.":"답변 삭제에 실패했습니다.");
+		m.addAttribute("loc","/store/moveDetail.do?productNo="+productNo);
 		return "common/msg";
 	}
 
