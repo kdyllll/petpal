@@ -47,7 +47,7 @@ input:focus {
 								</select>
 							</div>
 							<div class="mb-3 col-6 pr-0">
-								<input type="text" class="form-control input-lg" name="address"
+								<input type="text" class="form-control input-lg" name="position"
 									id="sample6_address" placeholder="주소" readonly>
 							</div>
 							<div class="mb-3 col-2 pl-0">
@@ -56,7 +56,7 @@ input:focus {
 									class="btn btn-primary btn-sm" value="주소찾기">
 							</div>
 							<div class="mb-3 col-8">
-								<input type="text" class="form-control input-lg" name="address"
+								<input type="text" class="form-control input-lg" name="position"
 									id="sample6_detailAddress" placeholder="상세주소">
 							</div>
 							<div class="mb-4 col-8">

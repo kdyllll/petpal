@@ -15,34 +15,31 @@
 		<section class="mt-5 pt-5">
 			<div class="container mt-2">
 				<div id="blog" class="row">
-					<div id="btn">
-						<a href="${path }/place/movePlaceList.do">리스트</a>
+					<div id="btn" class="mb-5">
 						<button type="button" class="kind btn btn-secondary btn-sm mr-3">병원</button>
 						<button type="button" class="kind btn btn-secondary btn-sm mr-3">미용</button>
 						<button type="button" class="kind btn btn-secondary btn-sm mr-3">호텔링</button>
 						<button type="button" class="kind btn btn-secondary btn-sm mr-3">훈련소</button>
 						<button type="button" class="kind btn btn-secondary btn-sm mr-3">기타</button>
 					</div>
-					<div class="m-3 col-12"></div>
+					<div class="float-end mr-5"><button id="write" class="btn">글쓰기</button></div>
+					
+					
 					<c:if test="${empty list }">
-						<div class="col-12 mb-4 text-center">
+						<div class="col-12 mb-4 text-center mt-5">
 							<p>장소 후기가 없습니다.</p>
 						</div>
 					</c:if>
 					<c:if test="${not empty list }">
 						<c:forEach var="p" items="${list }">
-							<div class="col-10 offset-1 blogShort mb-4 border-bottom">
+							<div class="col-12 col-sm-10 offset-sm-1 blogShort mb-4 border-bottom ">
 								<a href="${path }/place/movePlaceDetail.do?placeNo=${p.placeNo}" class="post-all">
 									<div class="row">
 										<div class="col-9">
 											<div class="decoration">
-												<h3>
-													<c:out value="${ p.title} " />
-												</h3>
+												<h3><c:out value="${p.title}" /></h3>
 												<article>
-													<p>
-														<c:out value="${p.content }" />
-													</p>
+													<p class="content"><c:out value="${p.content}" /></p>
 												</article>
 											</div>
 											<img
@@ -71,7 +68,7 @@
 						</c:forEach>
 					</c:if>
 				</div>
-				<p class="text-center">페이지바</p>
+				 <p class="text-center">${pageBar }</p> 
 			</div>
 		</section>
 	</main>
@@ -80,6 +77,16 @@
 
 </body>
 <script>
+$(function(){//글자길이가 길면 ...표시
+	for(var i=0;i<$(".content").length;i++){
+		var str=$(".content").eq(i).html();
+		if(str.length>95){
+			$(".content").eq(i).html(str.substring(0,95)+"...");
+		}
+	}
+});
+
+
 	$(document).on(
 			'click',
 			'.kind',
@@ -88,6 +95,14 @@
 				location.assign('${path}/place/movePlaceList.do?category='
 						+ e.target.textContent);
 
+			});
+	$(document).on(
+			'click',
+			'#write',
+			function(e) {
+
+				location.assign('${path}/place/movePlaceWrite.do');
+				
 			});
 </script>
 <style>

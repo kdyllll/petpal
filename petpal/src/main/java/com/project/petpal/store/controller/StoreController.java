@@ -83,7 +83,7 @@ public class StoreController {
 		
 		return "store/productDetail";
 	}
-	@RequestMapping("/store/moveCategory.do")
+	@RequestMapping("/store/moveCategory.do")//카테고리별 상품리스트로 이동하는 서블릿
 	public String moveCategory(String cNo,Model m) {
 		if(cNo.equals("S")) {//소동물 더보기
 			cNo="S1','S2','S3','S4";
@@ -91,7 +91,7 @@ public class StoreController {
 			List<Map> scList=service.subCateList(cNo);//소분류 리스트
 			m.addAttribute("scList",scList);
 		}
-		List<Product> soList=service.soldOutList(cNo);
+		List<Product> soList=service.soldOutList(cNo);//품절리스트
 		if(soList.size()!=0) {//품절리스트가 0일수도 있음
 			m.addAttribute("soList",soList);
 		}

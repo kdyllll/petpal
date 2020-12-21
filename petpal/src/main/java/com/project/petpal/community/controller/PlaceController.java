@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.project.petpal.common.PageBarFactory;
 import com.project.petpal.community.model.service.PlaceService;
 import com.project.petpal.community.model.vo.Place;
 import com.project.petpal.community.model.vo.PlaceImg;
@@ -27,18 +28,19 @@ public class PlaceController {
 	@Autowired
 	private PlaceService service;
 	
-	@RequestMapping("/place/movePlaceWrite.do")
-	public String movePlacePostWrite() {
-		
+	@RequestMapping("/place/movePlaceWrite.do")//글쓰기창 이동 서블릿
+	public String movePlacePostWrite(HttpSession session,Model m) {
+		if(session.getAttribute("loginMember")==null){
+			m.addAttribute("msg","로그인 후 사용 가능합니다.");
+			m.addAttribute("loc","/member/moveLogin.do");
+			return "common/msg";
+		}
 		return "community/placeWrite";
 	}
-	@RequestMapping("/place/placeWriteEnd.do")
+	@RequestMapping("/place/placeWriteEnd.do")//글쓰기 작성후 서블릿
 	public String placePostWriteEnd(Place p,@RequestParam(value="content",required=false, defaultValue=" ")String[] content,String[] hashtag,Model m,@RequestParam(value="pic", required=false)MultipartFile[] files,HttpSession session) {
 		p.setMemberNo(((Member)session.getAttribute("loginMember")).getMemberNo());//회원번호 글객체에 저장
 		String path=session.getServletContext().getRealPath("/resources/upload/place");
-		System.out.println(content.length);
-		System.out.println("컨텐트"+content);
-		
 		File dir=new File(path);
 		if(!dir.exists()) dir.mkdirs();//폴더를 생성
 		List<PlaceImg> list = new ArrayList();
@@ -53,12 +55,11 @@ public class PlaceController {
 			  String reName=sdf.format(System.currentTimeMillis())+"_"+rndValue+"."+ext;
 			  try {
 				  files[i].transferTo(new File(path+"/"+reName));
-			  }catch(IOException e) {
+			  }catch(IOException e) {//작성실패시
 				  e.printStackTrace();
 				  m.addAttribute("msg","오류가 발생하였습니다.다시 시도해주세요.");
 			  }
 			  PlaceImg pi=new PlaceImg();
-			  System.out.println(content[i]);
 			  pi.setContent(content[i]);
 			  pi.setFileName(reName);
 			  list.add(pi);
@@ -77,16 +78,17 @@ public class PlaceController {
 		
 		return "common/msg";
 	}
-	@RequestMapping("/place/movePlaceList.do")
-	public String placeList(Model m,String category) {
-		List<Place> list=service.placeList(category);
-		
-		long curTime=System.currentTimeMillis();
+	@RequestMapping("/place/movePlaceList.do")//장소후기 리스트 이동 서블릿
+	public String placeList(Model m,String category,@RequestParam(value="cPage",defaultValue="1") int cPage) {
+		int numPerpage=7;//한페이지의 출력할 개수
+		List<Place> list=service.placeList(category,cPage,numPerpage);//페이징된 리스트
+		int totalData=service.selectCount(category);//장소후기 총개수
+		long curTime=System.currentTimeMillis();//현재날짜
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 		for(Place p:list) {
 			try {
 			Date pd=sdf.parse(p.getPlaceDate());
-			long pTime=pd.getTime();
+			long pTime=pd.getTime();//작성날짜
 			long cha=(curTime-pTime)/1000/60;//분단위
 			String status="";
 			if(cha<60) {//1시간보단 적을경우
@@ -106,13 +108,18 @@ public class PlaceController {
 				e.printStackTrace();
 			}
 		}
+		m.addAttribute("pageBar",PageBarFactory.getPageBar(totalData, cPage, numPerpage,category, "movePlaceList.do"));
 		m.addAttribute("list",list);
 		return "community/placeList";
 	}
 	@RequestMapping("/place/movePlaceDetail.do")
 	public String selectPlace(String placeNo,Model m) {
-		Place p = service.selectPlace(placeNo);
-		System.out.println(p);
+		List<Place> list = service.selectPlace(placeNo);
+		int count=service.commentCount(placeNo);
+		m.addAttribute("count", count);
+		m.addAttribute("list", list);
 		return "community/placeDetail";
 	}
+//	@RequestMapping("/place/placeWriteEnd.do")
+//	public String 
 }
