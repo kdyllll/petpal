@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.petpal.admin.model.vo.Product;
-import com.project.petpal.admin.model.vo.ProductImg;
+import com.project.petpal.store.model.vo.ProductImg;
 import com.project.petpal.community.model.dao.DailyDao;
 import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyCoord;
@@ -39,8 +39,8 @@ public class DailyServiceImpl implements DailyService {
 					//실패할 경우를 대비해서 result가 0일 때는 분기문으로 강제 exception 처리해야함	
 				}
 				//좌표 삽입(사진이 있을 때만 좌표 있음!)
-				if(result>0) {
-					if(coords!=null) {
+				if(result>0) { 
+					if(coords!=null) { 
 						for(DailyCoord dc:coords) {
 							switch(dc.getIndex()) {
 								case "0":dc.setDailyImgNo(files.get(0).getDailyImgNo());break;
@@ -106,6 +106,43 @@ public class DailyServiceImpl implements DailyService {
 		return dao.selectHashAll(session);
 	}
 
+	@Override
+	public Map selectDailyOne(String dailyNo) {
+		// TODO Auto-generated method stub
+		return dao.selectDailyOne(session,dailyNo);
+	}
+
+	@Override
+	public List<DailyImg> selectDailyImg(String dailyNo) {
+		// TODO Auto-generated method stub
+		return dao.selectDailyImg(session,dailyNo);
+	}
+
+	@Override
+	public List<Hashtag> selectHashList(String dailyNo) {
+		// TODO Auto-generated method stub
+		return dao.selectHashList(session,dailyNo);
+	}
+
+	@Override
+	public List<Map> selectCoordList(String dailyNo) {
+		// TODO Auto-generated method stub
+		return dao.selectCoordList(session,dailyNo);
+	}
+
+	@Override
+	public ProductImg selectProductImg(String productNo) {
+		// TODO Auto-generated method stub
+		return dao.selectProductImg(session,productNo);
+	}
+
+	@Override
+	public int deleteDaily(String dailyNo) {
+		// TODO Auto-generated method stub
+		return dao.deleteDaily(session,dailyNo);
+	}
+
+	
 	
 
 

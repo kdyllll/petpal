@@ -40,4 +40,19 @@
 	<select id="selectHashAll" resultType="hashtag">
 		SELECT * FROM HASHTAG WHERE POSTNO LIKE 'D%'
 	</select>
+	<select id="selectDailyOne" resultType="map" parameterType="string">
+		SELECT * FROM DAILY LEFT JOIN MEMBER USING(MEMBERNO) WHERE DAILYNO=#{dailyNo}
+	</select>
+	<select id="selectDailyImg" resultType="dailyImg" parameterType="string">
+		SELECT * FROM DAILYIMG WHERE DAILYNO=#{dailyNo}
+	</select>
+	<select id="selectHashList" resultType="hashtag" parameterType="string">
+		SELECT * FROM HASHTAG WHERE POSTNO=#{dailyNo}
+	</select>
+	<select id="selectCoordList" resultType="map" parameterType="string">
+		SELECT * FROM COORD LEFT JOIN DAILYIMG USING (DAILYIMGNO) LEFT JOIN PRODUCT USING(PRODUCTNO) WHERE DAILYNO=#{dailyNo}
+	</select>
+	<delete id="deleteDaily" parameterType="string">
+		DELETE FROM DAILY WHERE DAILYNO=#{value}
+	</delete>
 </mapper>

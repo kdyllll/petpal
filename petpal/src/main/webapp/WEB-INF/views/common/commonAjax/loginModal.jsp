@@ -6,7 +6,7 @@
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
  <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
       	<div class="modal-header">
@@ -55,7 +55,7 @@
    </div>  
    <script>
  	$("#loginBtn").on("click",e=>{
- 	
+ 	    console.log("로그인시도");
   		let email=$("#inputEmail").val();
   		let password=$("#inputPassword").val();
   		$.ajax({

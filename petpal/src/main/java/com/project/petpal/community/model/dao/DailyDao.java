@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 
 import com.project.petpal.admin.model.vo.Product;
-import com.project.petpal.admin.model.vo.ProductImg;
+import com.project.petpal.store.model.vo.ProductImg;
 import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyCoord;
 import com.project.petpal.community.model.vo.DailyImg;
@@ -24,4 +24,10 @@ public interface DailyDao {
 	List<Map> selectDailyAll(SqlSession session);
 	List<DailyImg> selectMainImg(SqlSession session);
 	List<Hashtag> selectHashAll(SqlSession session);
+	Map selectDailyOne(SqlSession session,String dailyNo);
+	List<DailyImg> selectDailyImg(SqlSession session,String dailyNo);
+	List<Hashtag> selectHashList(SqlSession session,String dailyNo);
+	List<Map> selectCoordList(SqlSession session,String dailyNo);
+	ProductImg selectProductImg(SqlSession session,String productNo);
+	int deleteDaily(SqlSession session,String dailyNo);
 }
