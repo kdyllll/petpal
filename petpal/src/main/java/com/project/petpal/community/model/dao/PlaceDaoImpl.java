@@ -3,6 +3,7 @@ package com.project.petpal.community.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -28,13 +29,23 @@ public class PlaceDaoImpl implements PlaceDao{
 	}
 
 	@Override
-	public List<Place> placeList(SqlSession session,String category) {
-		return session.selectList("place.placeList",category);
+	public List<Place> placeList(SqlSession session,String category,int cPage,int numPerpage) {
+		return session.selectList("place.placeList",category,new RowBounds((cPage-1)*numPerpage,numPerpage));
 	}
 
 	@Override
-	public Place selectPlace(SqlSession session, String placeNo) {
-		return session.selectOne("place.selectPlace",placeNo);
+	public List<Place> selectPlace(SqlSession session, String placeNo) {
+		return session.selectList("place.selectPlace",placeNo);
+	}
+
+	@Override
+	public int selectCount(SqlSession session,String category) {
+		return session.selectOne("place.selectCount");
+	}
+
+	@Override
+	public int commentCount(SqlSession session,String placeNo) {
+		return session.selectOne("place.commentCount");
 	}
 
 }

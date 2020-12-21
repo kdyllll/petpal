@@ -15,18 +15,20 @@
 		<section class="mt-5 pt-5">
 			<div class="container">
 				<div class="row">
-
+				<c:set var="place" value="${list[0] }"/>
 					<div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2">
-						<p style="color: #35c5f0; font-weight: bold;">카테고리</p>
-						<h2 class="font-weight-bold mb-5">제목</h2>
+						<p style="color: #35c5f0; font-weight: bold;"><c:out value="${place.category }"/></p>
+						<h2 class="font-weight-bold mb-5"><c:out value="${place.title }"/></h2>
 						<div class="mb-4 d-sm-flex justify-content-sm-between">
 							<a href="#" class="d-inline-flex">
 								<div>
-									<img src="sea)연어.png" alt="" class="rounded-circle mr-3">
+									<img src="${path }/resources/upload/member/profile/${place.img}" alt="" class="rounded-circle mr-3">
 								</div>
 								<div>
-									<div style="font-weight: bold;">작성자</div>
-									<div>작성일</div>
+									<div style="font-weight: bold;"><c:out value="${place.nickName }"/></div>
+									<!-- String으로 가져온 날짜를 Date형으로 바꿈(parseDate) -->
+									<fmt:parseDate value="${place.placeDate }" var="pd" pattern="yyyy-MM-dd HH:mm"/>
+									<div><fmt:formatDate value="${pd }" pattern="yyyy년MM월dd일 HH:mm"/></div>
 								</div>
 							</a>
 							<div class="d-none d-sm-block">
@@ -42,31 +44,41 @@
 								style="color: white; background-color: turquoise;">좋아요</button>
 							<button type="button" class="btn btn-danger ">신고</button>
 						</div>
-						<p>설명</p>
-						<p>위치</p>
+						<h5 class="font-weight-bold">장소 설명</h5>
+						<p><c:out value="${place.explanation }"/></p>
+						<h5 class="font-weight-bold">위치</h5>
+						<p><c:out value="${place.position[0]}${place.position[1]}"/></p>
 						<!-- 지도 api -->
-						<div id="map" style="width:100%; height: 350px;"></div>
-						<div class="text-center">
-							<img src="sea)연어.png" class="img-fluid">
+						<div id="map" style="width:80%; height:300px;" class="mb-5"></div>
+						<c:forEach var="p" items="${list }">
+						<div>
+							<img src="${path }/resources/upload/place/${p.fileName}" class="img-fluid" style="width:80%;">
 						</div>
-						<p>내용</p>
+						<p style="width:80%;"><c:out value="${p.content }"/></p>
+						</c:forEach>
 						<!-- 댓글 -->
 						<hr>
 						<h4>
-							댓글<span class="su">2</span>
+							댓글<span class="su"><c:out value="count"/></span>
 						</h4>
+						<form method="post" action="">
 						<div class="d-flex mb-3">
 							<div class="input-group mb-3">
-								<input type="text" class="form-control"
+								<input type="hidden" name="commentLevel" value="1">
+								<input type="hidden" name="memberNo" value="${loginMember.memberNo }" id="member">
+								<input type="hidden" name="placeNo" value="${ place.placeNo}">
+								<input type="hidden" name="commentRef" value="0">
+								<input type="text" class="form-control" name="placeComment" id="comment" 
 									placeholder="칭찬과 격려의 댓글은 작성자에게 큰 힘이 됩니다:)"
 									aria-label="Recipient's username"
 									aria-describedby="button-addon2">
 								<div class="input-group-append">
 									<button class="btn btn-outline-secondary" type="button"
-										id="button-addon2">등록</button>
+										id="write">등록</button>
 								</div>
 							</div>
 						</div>
+						</form>
 						<div class="d-flex mb-3">
 							<div>
 								<img src="sea)연어.png" class="rounded-circle mr-3">
@@ -137,6 +149,31 @@ button.click {
 </style>
 	
 	<script>
+	$(function(){//로그인 안되어있을때 댓글창 누르면 손가락표시
+		if($("#member").val()==""){
+			$("#comment").css({"cursor":"pointer"});
+		}
+	});
+	$(document).on(
+			'click',
+			'#comment',
+			function(e) {//댓글창 눌렀을때
+				if($("#member").val()==""){//로그인 안되어있다면
+					location.replace('${path}//member/moveLogin.do');
+				}
+			});
+	$(document).on(
+			'click',
+			'#write',
+			function(e) {//댓글 등록 눌렀을때
+				if($("#member").val()==""){//로그인 안되어있다면
+					location.replace('${path}//member/moveLogin.do');
+				}else if($("#comment").val().trim()==""){
+					alert("내용을 입력해주세요.");
+				}
+			
+			});
+	
 		var maker;
 		var map;
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -154,7 +191,7 @@ button.click {
 
 		//주소로 좌표를 검색합니다
 		geocoder.addressSearch(
-						'제주특별자치도 제주시 첨단로 242',
+						'${place.position[0]}',
 						function(result, status) {
 
 							// 정상적으로 검색이 완료됐으면 

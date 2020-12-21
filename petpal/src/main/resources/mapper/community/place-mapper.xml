@@ -5,7 +5,7 @@
 	<result column="position" property="position" typeHandler="strArr"/>
 </resultMap>
   <insert id="insertPlace" parameterType="place">
-  	INSERT INTO PLACE VALUES('P'||SEQ_PLACENO.NEXTVAL,#{memberNo},#{title},#{explanation},DEFAULT,#{category},#{position typeHandler=strArr},DEFAULT)
+  	INSERT INTO PLACE VALUES('P'||SEQ_PLACENO.NEXTVAL,#{memberNo},#{title},#{explanation},DEFAULT,#{category},#{position,typeHandler=strArr},DEFAULT)
   	<selectKey keyProperty="placeNo" resultType="string" order="AFTER"><!-- 본쿼리문을 실행하기전이나 후에 특정한값을 가져올때 사용 -->
   		SELECT 'P'||SEQ_PLACENO.CURRVAL FROM DUAL
   	</selectKey>
@@ -31,6 +31,15 @@
   	</if> 
   </select>
   <select id="selectPlace" resultType="place" parameterType="string" resultMap="placeMap" >
-  	SELECT * FROM PLACE WHERE PLACENO=#{placeNo}
+  	SELECT * FROM PLACEIMG JOIN PLACE USING(PLACENO) JOIN MEMBER USING(MEMBERNO) WHERE PLACENO=#{placeNo}
+  </select>
+  <select id="selectCount" resultType="_int" parameterType="string">
+  	SELECT COUNT(*) FROM PLACE
+  	 <if test="value !=null">
+  		WHERE CATEGORY=#{value}
+  	</if> 
+  </select>
+  <select id="commentCount" resultType="_int" parameterType="string">
+  	SELECT COUNT(*) FROM PLACECOMMENT WHERE PLACENO=#{placeNo)
   </select>
 </mapper>

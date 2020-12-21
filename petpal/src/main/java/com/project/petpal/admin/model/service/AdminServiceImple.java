@@ -129,5 +129,47 @@ public class AdminServiceImple implements AdminService {
 		return dao.inOutSearch(session, m);
 	}
 
+	@Override
+	public List<Map> selectOrderList() {
+		// TODO Auto-generated method stub
+		return dao.selectOrderList(session);
+	}
+
+	@Override
+	public List<Map> selectPayDetail(String paymentNo) {
+		// TODO Auto-generated method stub
+		return dao.selectPayDetail(session, paymentNo);
+	}
+
+	@Override
+	public Map selectPaymentOne(String paymentNo) {
+		// TODO Auto-generated method stub
+		return dao.selectPaymentOne(session, paymentNo);
+	}
+
+	@Override
+	public int orderCancelOne(String detailNo) {
+		// TODO Auto-generated method stub
+		return dao.orderCancelOne(session, detailNo);
+	}
+
+	@Override
+	public List<Map> payDetailStatus(String paymentNo) {
+		// TODO Auto-generated method stub
+		return dao.payDetailStatus(session, paymentNo);
+	}
+
+	@Override
+	public int updatePaymentStatus(String paymentNo) {
+		// TODO Auto-generated method stub
+		return dao.updatePaymentStatus(session, paymentNo);
+	}
+
+	@Override
+	public int orderCancelAll(String paymentNo) {
+		// TODO Auto-generated method stub
+		return dao.orderCancelAll(session, paymentNo);
+	}
+
 	
 }

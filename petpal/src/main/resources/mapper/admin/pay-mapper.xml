@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "- //mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="pay">
+	<select id="selectOrderList" resultType="map">
+		SELECT * FROM PAYMENT LEFT JOIN MEMBER USING(MEMBERNO)
+	</select>
+	<select id="selectPayDetail" resultType="map" parameterType="string">
+		SELECT * FROM PAYDETAIL JOIN STOCK USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) WHERE PAYMENTNO = #{paymentNo}
+	</select>
+	<select id="selectPaymentOne" resultType="map" parameterType="string">
+		SELECT * FROM PAYMENT WHERE PAYMENTNO = #{paymentNo}
+	</select>
+	<update id="orderCancelOne" parameterType="string">
+		UPDATE PAYDETAIL SET DETAILSTATUS='취소' WHERE DETAILNO=#{detailNo}
+	</update>
+	<select id="payDetailStatus" resultType="map" parameterType="string">
+		SELECT * FROM PAYDETAIL WHERE PAYMENTNO=#{paymentNo} AND DETAILSTATUS='결제'
+	</select>
+	<update id="updatePaymentStatus" parameterType="string">
+		UPDATE PAYMENT SET PAYSTATUS='취소완료' WHERE PAYMENTNO=#{paymentNo}
+	</update>
+	<update id="orderCancelAll" parameterType="string">
+		UPDATE PAYDETAIL SET DETAILSTATUS='취소' WHERE PAYMENTNO=#{paymentNo}
+	</update>
+</mapper>

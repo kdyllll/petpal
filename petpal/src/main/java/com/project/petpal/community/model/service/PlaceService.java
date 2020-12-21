@@ -8,6 +8,9 @@ import com.project.petpal.community.model.vo.PlaceImg;
 public interface PlaceService {
 
 	int insertPlace(Place p,List<PlaceImg> list,String[] hashtag) throws Exception;
-	List<Place> placeList(String category);
-	Place selectPlace(String placeNo);
+	List<Place> placeList(String category,int cPage,int numPerpage);
+	List<Place> selectPlace(String placeNo);
+	int selectCount(String category);
+	int commentCount(String placeNo);
+	
 }
