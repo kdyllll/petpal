@@ -32,8 +32,11 @@
 					<c:out value="${claim.CONTENT }" />
 				</p>
 				<div class="mt-4">
-					<button type="button" class="btn btn-sm btn-outline-danger">삭제하기</button>
-					<button type="button" class="btn btn-sm btn-outline-secondary">신고처리하기</button>
+					<form id="detailFrm">
+					<button type="button" class="claimDeleteBtn btn btn-sm btn-outline-danger">삭제하기</button>
+					<input type="hidden" name="claimNo" value="${claim.CLAIMNO }">
+					<button type="button" class="claimAcceptBtn btn btn-sm btn-outline-secondary">신고처리하기</button>
+					</form>
 				</div>
 			</div>
 			<div class="modal-footer ">
@@ -43,8 +46,15 @@
 	</div>
 </div>
 <script>
-	$(".allCancelBtn").on("click", function() {
-		$("#allPayCancelFrm").submit();
+	$(function(){
+		$(".claimDeleteBtn").on("click", e => {
+			let claimNo = $(e.target).next().val();
+			$("#detailFrm").attr("action", "${path}/admin/claimDelete.do").submit();
+		})
+		$(".claimAcceptBtn").on("click", e => {
+			let claimNo = $(e.target).prev().val();
+			$("#detailFrm").attr("action", "${path}/admin/claimAccept.do").submit();
+		})
 	})
 </script>
 

@@ -31,7 +31,9 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/admin/adminCommunity.do")
-	public String adminCommunity() {
+	public String adminCommunity(Model m) {
+		List<Map> pList = service.selectPlaceList();
+		m.addAttribute("pList", pList);
 		return "admin/adminCommunity";
 	}
 	

@@ -36,4 +36,7 @@ public interface AdminDao {
 	int orderCancelAll(SqlSession session, String paymentNo);
 	List<Map> selectClaimAll(SqlSession session);
 	Map selectClaimOne(SqlSession session, String claimNo);
+	int claimDelete(SqlSession session, String claimNo);
+	int claimAccept(SqlSession session, String claimNo);
+	List<Map> selectPlaceList(SqlSession session);
 }

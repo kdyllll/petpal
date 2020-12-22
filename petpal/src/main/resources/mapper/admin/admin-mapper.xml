@@ -7,4 +7,13 @@
 	<select id="selectClaimOne" parameterType="string" resultType="map">
 		SELECT * FROM CLAIM JOIN MEMBER USING(MEMBERNO) WHERE CLAIMNO=#{claimNo}
 	</select>
+	<delete id="claimDelete" parameterType="string">
+		DELETE FROM CLAIM WHERE CLAIMNO=#{claimNo}
+	</delete>
+	<update id="claimAccept" parameterType="string">
+		UPDATE CLAIM SET STATUS='Y' WHERE CLAIMNO=#{claimNo}
+	</update>
+	<select id="selectPlaceList" resultType="map">
+		select * from place join member using(MEMBERNO)
+	</select>
 </mapper>

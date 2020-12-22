@@ -183,5 +183,23 @@ public class AdminServiceImple implements AdminService {
 		return dao.selectClaimOne(session, claimNo);
 	}
 
+	@Override
+	public int claimDelete(String claimNo) {
+		// TODO Auto-generated method stub
+		return dao.claimDelete(session, claimNo);
+	}
+
+	@Override
+	public int claimAccept(String claimNo) {
+		// TODO Auto-generated method stub
+		return dao.claimAccept(session, claimNo);
+	}
+
+	@Override
+	public List<Map> selectPlaceList() {
+		// TODO Auto-generated method stub
+		return dao.selectPlaceList(session);
+	}
+
 	
 }

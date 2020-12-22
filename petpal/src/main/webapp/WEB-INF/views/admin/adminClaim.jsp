@@ -31,7 +31,6 @@
 						<label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
 						<select class="custom-select mr-sm-2" id="searchType">
 							<option selected value="userEmail">신고자이메일</option>
-							<option value="userName">신고자이름</option>
 							<option value="complainNum">신고번호</option>
 						</select>
 					</div>
@@ -43,18 +42,6 @@
 							<button class="btn btn-outline-secondary" type="button"
 								id="button-addon2">Button</button>
 						</div>
-					</form>
-					<form id="search-userName"
-						class="input-group mb-3  col-lg-5 d-none">
-
-						<input type="hidden" name="searchType" value="userName"> <input
-							type="text" class="form-control input-group-sm"
-							name="searchKeyword" placeholder="신고자이름을 입력해주세요">
-						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" type="button"
-								id="button-addon2">Button</button>
-						</div>
-
 					</form>
 					<form id="search-complainNum"
 						class="input-group mb-3  col-lg-5 d-none">

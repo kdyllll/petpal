@@ -166,4 +166,22 @@ public class AdminDaoImple implements AdminDao {
 		return session.selectOne("admin.selectClaimOne", claimNo);
 	}
 
+	@Override
+	public int claimDelete(SqlSession session, String claimNo) {
+		// TODO Auto-generated method stub
+		return session.delete("admin.claimDelete", claimNo);
+	}
+
+	@Override
+	public int claimAccept(SqlSession session, String claimNo) {
+		// TODO Auto-generated method stub
+		return session.update("admin.claimAccept",claimNo);
+	}
+
+	@Override
+	public List<Map> selectPlaceList(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectList("admin.selectPlaceList");
+	}
+
 }

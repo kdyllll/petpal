@@ -30,4 +30,7 @@ public interface AdminService {
 	int orderCancelAll(String paymentNo);
 	List<Map> selectClaimAll();
 	Map selectClaimOne(String claimNo);
+	int claimDelete(String claimNo);
+	int claimAccept(String claimNo);
+	List<Map> selectPlaceList();
 }
