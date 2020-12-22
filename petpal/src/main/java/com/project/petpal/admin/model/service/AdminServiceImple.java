@@ -201,5 +201,11 @@ public class AdminServiceImple implements AdminService {
 		return dao.selectPlaceList(session);
 	}
 
+	@Override
+	public Map selectPlaceOne(String placeNo) {
+		// TODO Auto-generated method stub
+		return dao.selectPlaceOne(session, placeNo);
+	}
+
 	
 }

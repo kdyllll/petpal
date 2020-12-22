@@ -33,4 +33,5 @@ public interface AdminService {
 	int claimDelete(String claimNo);
 	int claimAccept(String claimNo);
 	List<Map> selectPlaceList();
+	Map selectPlaceOne(String placeNo);
 }

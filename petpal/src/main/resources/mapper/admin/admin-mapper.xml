@@ -16,4 +16,7 @@
 	<select id="selectPlaceList" resultType="map">
 		select * from place join member using(MEMBERNO)
 	</select>
+	<select id="selectPlaceOne" resultType="map" parameterType="string">
+		SELECT * FROM PLACE JOIN MEMBER USING(MEMBERNO) WHERE PLACENO=#{placeNo}
+	</select>
 </mapper>

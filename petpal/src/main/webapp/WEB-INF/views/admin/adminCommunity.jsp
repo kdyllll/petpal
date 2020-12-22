@@ -5,9 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath }" />
 
-
 <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
-
 
 <!-- Custom styles for this template -->
 <link href="${path }/resources/css/admin/adminPage.css" rel="stylesheet">

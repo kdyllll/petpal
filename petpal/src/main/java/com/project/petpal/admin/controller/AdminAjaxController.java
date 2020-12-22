@@ -1,5 +1,6 @@
 package com.project.petpal.admin.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,9 @@ public class AdminAjaxController {
 	}
 	
 	@RequestMapping("/admin/adminPlaceDetail.do")
-	public String adminPlaceDetail() {
+	public String adminPlaceDetail(String placeNo, Model m) {
+		Map place = service.selectPlaceOne(placeNo);
+		m.addAttribute("place", place);
 		return "admin/adminAjax/placeModal";
 	}
 }

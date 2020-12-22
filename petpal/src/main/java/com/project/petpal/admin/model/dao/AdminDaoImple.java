@@ -184,4 +184,10 @@ public class AdminDaoImple implements AdminDao {
 		return session.selectList("admin.selectPlaceList");
 	}
 
+	@Override
+	public Map selectPlaceOne(SqlSession session, String placeNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.selectPlaceOne",placeNo);
+	}
+
 }

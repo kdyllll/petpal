@@ -39,4 +39,5 @@ public interface AdminDao {
 	int claimDelete(SqlSession session, String claimNo);
 	int claimAccept(SqlSession session, String claimNo);
 	List<Map> selectPlaceList(SqlSession session);
+	Map selectPlaceOne(SqlSession session, String placeNo);
 }
