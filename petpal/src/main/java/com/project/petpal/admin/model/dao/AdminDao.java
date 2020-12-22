@@ -35,4 +35,5 @@ public interface AdminDao {
 	int updatePaymentStatus(SqlSession session, String paymentNo);
 	int orderCancelAll(SqlSession session, String paymentNo);
 	List<Map> selectClaimAll(SqlSession session);
+	Map selectClaimOne(SqlSession session, String claimNo);
 }

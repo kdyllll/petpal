@@ -95,8 +95,8 @@
 												value="${c.POSTNO }" /></td>
 										<td class="align-middle text-center"><c:out
 												value="${c.CATEGORY }" /></td>
-										<td class="align-middle text-center"><c:out
-												value="${c.CONTENT }" /></td>
+										<td class="align-middle text-center">
+										<c:out value="${fn:substring(c.CONTENT,0,8) }" /><c:if test="${fn:length(c.CONTENT) > 8 }">...</c:if></td>
 										<td class="align-middle text-center"><c:choose>
 												<c:when test="${c.STATUS eq 'N' }">신고대기</c:when>
 												<c:otherwise>신고완료</c:otherwise>
@@ -105,7 +105,10 @@
 												value="${c.EMAIL }" /></td>
 										<td class="align-middle text-center"><fmt:formatDate value="${c.CLAIMDATE }" pattern="yyyy년MM월dd일"/></td>
 										<td class="align-middle text-center">
-												<button type="button" class="btn btn-outline-secondary btn-sm mb-1">신고상세보기</button>									
+												<form class="claimDetailFrm d-inline">
+												<input type="hidden" name="claimNo" value="${c.CLAIMNO }" />
+												<button type="button" class="claimDetailBtn btn btn-outline-secondary btn-sm mb-1">신고상세보기</button>
+												</form>									
 											</td>	
 									</tr>
 								</c:forEach>
@@ -131,6 +134,7 @@
 			</section>
 		</div>
 	</div>
+	<div class="claimModal"></div>
 	<script>
     $(function(){
         let userEmail = $("#search-userEmail");
@@ -145,6 +149,21 @@
             $("#search-"+target).removeClass("d-none");
         });
         $("#searchType").change();
+        
+        
+        $(".claimDetailBtn").on("click", e => {
+        	let claimNo = $(e.target).prev().val();
+        	$.ajax({
+				url: "${path}/admin/claimDetail.do",
+				data:{claimNo : claimNo },
+				dataType:"html",
+				success:(data) => {
+					console.log(data);
+					$(".claimModal").html(data);
+	         		$('div.modal').modal(); 
+				}
+			});
+        })
     })
 </script>
 </body>

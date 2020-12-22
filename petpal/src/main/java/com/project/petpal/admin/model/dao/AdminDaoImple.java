@@ -160,4 +160,10 @@ public class AdminDaoImple implements AdminDao {
 		return session.selectList("admin.selectClaimAll");
 	}
 
+	@Override
+	public Map selectClaimOne(SqlSession session, String claimNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.selectClaimOne", claimNo);
+	}
+
 }

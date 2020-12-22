@@ -4,4 +4,7 @@
 	<select id="selectClaimAll" resultType="map">
 		SELECT * FROM CLAIM JOIN MEMBER USING(MEMBERNO)
 	</select>
+	<select id="selectClaimOne" parameterType="string" resultType="map">
+		SELECT * FROM CLAIM JOIN MEMBER USING(MEMBERNO) WHERE CLAIMNO=#{claimNo}
+	</select>
 </mapper>

@@ -28,7 +28,7 @@
 			</a></li> 
 			<li class="nav-item"><a class="nav-link navName5 <%=nav.equals("adminCommunity") ? "active" : "" %>" href="${path }/admin/adminCommunity.do">게시글관리
 			</a></li>
-			<li class="nav-item"><a class="nav-link navName6 <%=nav.equals("adminComplain") ? "active" : "" %>" href="${path }/admin/adminComplain.do"> 신고관리
+			<li class="nav-item"><a class="nav-link navName6 <%=nav.equals("adminComplain") ? "active" : "" %>" href="${path }/admin/adminClaim.do"> 신고관리
 			</a></li>
 		</ul>
 	</div>

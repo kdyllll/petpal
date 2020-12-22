@@ -177,5 +177,11 @@ public class AdminServiceImple implements AdminService {
 		return dao.selectClaimAll(session);
 	}
 
+	@Override
+	public Map selectClaimOne(String claimNo) {
+		// TODO Auto-generated method stub
+		return dao.selectClaimOne(session, claimNo);
+	}
+
 	
 }
