@@ -78,10 +78,22 @@
 											<a style="cursor:pointer; color:red;" class="placeDetail" >상세보기</a>
 										</td>
 										<td class="align-middle text-center"><fmt:formatDate value="${c.PLACEDATE }" pattern="yyyy년MM월dd일" /></td>
-										<td class="align-middle text-center">
+										<td class="align-middle text-center"><form class="d-inline placeFrm"  method="post">
+											<c:choose>
+											<c:when test="${c.STATUS eq 'N' }">
 											<button type="button"
-												class="btn btn-outline-secondary btn-sm">수락</button>
-											<button type="button" class="btn  btn-outline-danger btn-sm">거절</button>
+												class="btn btn-outline-secondary btn-sm placeDenyBtn">수락</button>
+												<input type="hidden" name="placeNo" value="${c.PLACENO }">
+											<button type="button" class="btn  btn-outline-danger btn-sm placeAcceptBtn">거절</button>
+											</form>
+											</c:when >
+											<c:when test="${c.STATUS eq 'Y' }">
+												승인완료
+											</c:when>
+											<c:otherwise>
+												승인거절
+											</c:otherwise>
+											</c:choose>
 										</td>
 									</tr>
 								</c:forEach>
@@ -133,6 +145,15 @@
         			$("div.modal").modal();
         		}
         	})
+        })
+        
+        $(".placeDenyBtn").on("click", e => {
+        	let placeNo = $(e.target).next().val();
+        	$(".placeFrm").attr("action", "${path}/admin/placeDeny.do?placeNum="+placeNo).submit();
+        })
+        $(".placeAcceptBtn").on("click", e => {
+        	let placeNo = $(e.target).prev().val();
+        	$(".placeFrm").attr("action", "${path}/admin/placeAccept.do?placeNum="+placeNo).submit();
         })
         
         

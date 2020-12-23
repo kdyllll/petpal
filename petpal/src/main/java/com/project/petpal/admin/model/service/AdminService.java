@@ -34,4 +34,5 @@ public interface AdminService {
 	int claimAccept(String claimNo);
 	List<Map> selectPlaceList();
 	Map selectPlaceOne(String placeNo);
+	int updatePlace(Map m);
 }

@@ -1,5 +1,6 @@
 package com.project.petpal.admin.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,5 +54,37 @@ public class AdminAjaxController {
 		Map place = service.selectPlaceOne(placeNo);
 		m.addAttribute("place", place);
 		return "admin/adminAjax/placeModal";
+	}
+	
+	@RequestMapping("/admin/placeDeny.do")
+	public String placeDeny(String placeNum,Model m) {
+		Map mm = new HashMap();
+		mm.put("placeNo", placeNum);
+		mm.put("status", "M");
+		int result = service.updatePlace(mm);
+		String loc="/admin/adminCommunity.do";
+		String msg = "커뮤니티 장소글 거부 실패";
+		if(result>0) {
+			msg="커뮤니티 장소글 거부 성공";
+		}
+		m.addAttribute("loc",loc);
+		m.addAttribute("msg",msg);
+		return "common/msg";
+	}
+	@RequestMapping("/admin/placeAccept.do")
+	public String placeAccept(String placeNum,Model m) {
+		Map mm = new HashMap();
+		mm.put("placeNo", placeNum);
+		mm.put("status", "Y");
+		int result = service.updatePlace(mm);
+		String loc="/admin/adminCommunity.do";
+		String msg = "커뮤니티 장소글 승인 실패";
+		if(result>0) {
+			msg="커뮤니티 장소글 승인 성공";
+		}
+		m.addAttribute("loc",loc);
+		m.addAttribute("msg",msg);
+		return "common/msg";
+
 	}
 }

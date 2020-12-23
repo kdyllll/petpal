@@ -190,4 +190,10 @@ public class AdminDaoImple implements AdminDao {
 		return session.selectOne("admin.selectPlaceOne",placeNo);
 	}
 
+	@Override
+	public int updatePlace(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.update("admin.updatePlace", m);
+	}
+
 }
