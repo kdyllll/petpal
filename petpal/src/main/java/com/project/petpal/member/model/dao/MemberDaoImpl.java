@@ -1,5 +1,8 @@
 package com.project.petpal.member.model.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -29,6 +32,12 @@ public class MemberDaoImpl implements MemberDao {
 	public int updateMemberEnd(SqlSession session, Member member) {
 		// TODO Auto-generated method stub
 		return session.update("member.updateMemberEnd", member);
+	}
+
+	@Override
+	public List<Map> selectMemberAll(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectList("member.selectMemberAll");
 	}
 
 }

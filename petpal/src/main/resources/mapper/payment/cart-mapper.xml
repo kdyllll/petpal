@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cart">
 	<select id="cartList" parameterType="string" resultType="map">
-		SELECT PRODUCTNAME, FILENAME, COLOR, COUNT, PRICE, SALE, MEMBERNO, STOCK, STOCKNO, PRODUCTSIZE FROM CART C JOIN STOCK S USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) WHERE MEMBERNO = #{memberNo}
+		SELECT PRODUCTNAME, IMGNAME, COLOR, COUNT, PRICE, SALE, MEMBERNO, STOCK, STOCKNO, PRODUCTSIZE FROM CART C JOIN STOCK S USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO) WHERE MEMBERNO = #{memberNo}
 	</select>
 	<insert id="insertCart" parameterType="map">
 		INSERT INTO CART VALUES(#{memberNo},#{stockNo},#{cnt})
@@ -13,4 +13,14 @@
 	<update id="updateCartCnt" parameterType="map">
 		UPDATE CART SET COUNT=#{cnt} WHERE MEMBERNO=#{memberNo} AND STOCKNO=#{stockNo}
 	</update>
+	<select id="cartListNonMember" parameterType="list" resultType="map">
+		SELECT PRODUCTNAME, IMGNAME, COLOR, PRICE, SALE, STOCK, STOCKNO, PRODUCTSIZE FROM STOCK JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO)
+		WHERE 1=1
+		<if test="list != null">
+			AND STOCKNO IN
+			<foreach item="item" index="index" collection="list" separator="," open="(" close=")">
+				#{item}
+			</foreach>
+		</if>
+	</select>
 </mapper>

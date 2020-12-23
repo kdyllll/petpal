@@ -14,4 +14,9 @@ public class CartDaoImpl implements CartDao {
 		return session.selectList("cart.cartList", memberNo);
 	}
 
+	@Override
+	public List<Map> cartListNonMember(SqlSession session, List<String> stockNo) {
+		return session.selectList("cart.cartListNonMember", stockNo);
+	}
+
 }

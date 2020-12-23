@@ -16,8 +16,37 @@
   	<div style="padding-top:5em;"></div>
   	<div class="container">
   			<div class="text-center">
-		  		<p>주문결제가 완료되었습니다.</p>
-		  		<p><i class="fa fa-credit-card" style="font-size:340px; color:gray;"></i></p>
+		  		<p class="mb-5">결제가 완료되었습니다! &nbsp;&nbsp;&nbsp;주문해주셔서 감사합니다.</p>
+		  		
+		  		<c:forEach items="${list }" var="c">
+						<div class="proCon p-3 border border-dark rounded mb-4 d-block" style="width:50%; margin:0px auto;">
+							<div class="d-flex mt-2">
+								<div style="margin:0px auto">
+									<a href="" class="d-flex">
+										<div>
+											<img src="${path }/resources/upload/product/detail/${c.IMGNAME}" class="rounded" style="width:100px;height:100px">
+										</div>
+										<div class="ml-5">
+											<h5><c:out value="${c.PRODUCTNAME }"/></h5>
+											<div class="d-flex">
+												<h6>배송 </h6>
+												<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-slash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+												  <path fill-rule="evenodd" d="M11.354 4.646a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708l6-6a.5.5 0 0 1 .708 0z"/>
+												</svg>
+												<h6>택배</h6>
+											</div>
+										</div>
+									</a>
+										<div class="mt-3">
+											<span class="mr-3"><c:out value="${c.COLOR }"/> / <c:out value="${c.PRODUCTSIZE }"/></span>
+				                            <span><c:out value="${c.TOTALPRICE}"/>원</span>
+										</div>
+								</div>
+							</div>
+						</div>
+						</c:forEach>
+		  		
+		  		
 			  	<button class="btn btn-outline-secondary">주문현황보기</button>
 	  		</div>
   	</div>

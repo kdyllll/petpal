@@ -8,11 +8,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +31,12 @@ public class findController {
 	public FindService service;
 	
 	@RequestMapping("/community/findList.do")
-	public String findList() {
+	public String findList(Model model) {
+		List<Map> list = service.selectFindList();
+		for(Map m : list) {
+			System.out.println(m);
+		}
+		model.addAttribute("list", list);
 		return "community/findList";
 	}
 	@RequestMapping("/community/findWrite.do")
@@ -86,5 +94,12 @@ public class findController {
 		}
 		
 		return "common/msg";
+	}
+	
+	@RequestMapping("/community/findDetail.do")
+	public String findDetail(HttpServletRequest request, HttpServletResponse response) {
+		String findNo = request.getParameter("findNo");
+		System.out.println(findNo);
+		return "community/findDetail";
 	}
 }

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Cart {
 	private String productName;
-	private String fileName;
+	private String imgName;
 	private String color;
 	private String productSize;
 	private int count;
@@ -21,4 +21,5 @@ public class Cart {
 	private String memberNo;
 	private String stockNo;
 	private int totalPrice;
+	private int fee;
 }

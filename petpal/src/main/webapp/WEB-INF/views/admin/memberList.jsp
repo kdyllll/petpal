@@ -20,25 +20,26 @@
 	<div class="container-fluid">
 		<div class="row">
 			<jsp:include page="/WEB-INF/views/common/adminNav.jsp" >
-			<jsp:param name="nav" value="adminComplain" />
+			<jsp:param name="nav" value="memberList" />
 			</jsp:include>
 			<section role="main"
 				class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-5 "
 				style="height: 100vh; overflow-y: auto;">
-				<h2 class="my-3">신고관리</h2>
+				<h2 class="my-3">회원정보</h2>
 				<div class="row align-items-center">
 					<div class="mb-3  col-lg-2">
 						<label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
 						<select class="custom-select mr-sm-2" id="searchType">
-							<option selected value="userEmail">신고자이메일</option>
-							<option value="userName">신고자이름</option>
-							<option value="complainNum">신고번호</option>
+							<option selected value="userEmail">이메일</option>
+							<option value="userName">이름</option>
+							<option value="userPhone">전화번호</option>
+							<option value="userOrderNum">주문번호</option>
 						</select>
 					</div>
 					<form id="search-userEmail" class="input-group mb-3  col-lg-5">
 						<input type="hidden" name="searchType" value="userEmail">
 						<input type="text" class="form-control input-group-sm"
-							name="searchKeyword" placeholder="신고자이메일을 입력해주세요">
+							name="searchKeyword" placeholder="이메일을 입력해주세요">
 						<div class="input-group-append">
 							<button class="btn btn-outline-secondary" type="button"
 								id="button-addon2">Button</button>
@@ -49,77 +50,60 @@
 
 						<input type="hidden" name="searchType" value="userName"> <input
 							type="text" class="form-control input-group-sm"
-							name="searchKeyword" placeholder="신고자이름을 입력해주세요">
+							name="searchKeyword" placeholder="이름을 입력해주세요">
 						<div class="input-group-append">
 							<button class="btn btn-outline-secondary" type="button"
 								id="button-addon2">Button</button>
 						</div>
 
 					</form>
-					<form id="search-complainNum"
+					<form id="search-userPhone"
 						class="input-group mb-3  col-lg-5 d-none">
 
-						<input type="hidden" name="searchType" value="complainNum">
+						<input type="hidden" name="searchType" value="userPhone">
 						<input type="text" class="form-control input-group-sm"
-							name="searchKeyword" placeholder="신고번호를 입력해주세요">
+							name="searchKeyword" placeholder="전화번호를 입력해주세요">
 						<div class="input-group-append">
 							<button class="btn btn-outline-secondary" type="button"
 								id="button-addon2">Button</button>
 						</div>
 
 					</form>
-					-
+					<form id="search-userOrderNum"
+						class="input-group mb-3  col-lg-5 d-none">
+
+						<input type="hidden" name="searchType" value="userOrderNum">
+						<input type="text" class="form-control input-group-sm"
+							name="searchKeyword" placeholder="주문번호를 입력해주세요">
+						<div class="input-group-append">
+							<button class="btn btn-outline-secondary" type="button"
+								id="button-addon2">Button</button>
+						</div>
+
+					</form>
 				</div>
 
 				<div class="table-responsive" style="min-height: 80vh;">
 					<table class="table mb-5">
 						<thead>
 							<tr>
-								<th scope="col" class="text-center align-middle">신고번호</th>
-								<th scope="col" class="text-center align-middle">신고글번호</th>
-								<th scope="col" class="text-center align-middle">신고사유</th>
-								<th scope="col" class="text-center align-middle">신고내용</th>
-								<th scope="col" class="text-center align-middle">신고자</th>
-								<th scope="col" class="text-center align-middle"></th>
+								<th scope="col" class="text-center align-middle">회원이름</th>
+								<th scope="col" class="text-center align-middle">이메일</th>
+								<th scope="col" class="text-center align-middle">전화번호</th>
+								<th scope="col" class="text-center align-middle">주소</th>
+								<th scope="col" class="text-center align-middle">닉네임</th>
+								<th scope="col" class="text-center align-middle">가입일</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody>				
 							<tr>
-								<th scope="row" class="align-middle text-center">1</th>
-								<td class="align-middle text-center">Otto</td>
-								<td class="align-middle text-center">sdfs155sdgswet21</td>
-								<td class="align-middle text-center">@mdo</td>
-								<td class="align-middle text-center">@mdo</td>
-								<td class="align-middle text-center"><form>
-										<button type="button"
-											class="btn btn-outline-secondary btn-sm mb-1">신고상세보기</button>
-									</form></td>
+								<th scope="row" class="align-middle text-center">d</th>
+								<th scope="row" class="align-middle text-center">d</th>
+								<td class="align-middle text-center">d</td>
+								<td class="align-middle text-center">d</td>
+								<td class="align-middle text-center">d</td>
+								<td class="align-middle text-center">d</td>
 							</tr>
-
-							<tr>
-								<th scope="row" class="align-middle text-center">1</th>
-								<td class="align-middle text-center">Otto</td>
-								<td class="align-middle text-center">@mdo</td>
-								<td class="align-middle text-center">@mdo</td>
-								<td class="align-middle text-center">sd5sdgswet21</td>
-								<td class="align-middle text-center"><form>
-										<button type="button"
-											class="btn btn-outline-secondary btn-sm mb-1">신고상세보기</button>
-									</form></td>
-							</tr>
-
-							<tr>
-								<th scope="row" class="align-middle text-center">1</th>
-								<td class="align-middle text-center">Otto</td>
-								<td class="align-middle text-center">Otto</td>
-								<td class="align-middle text-center">Ottdfsdfsdfsdo109@naver.com</td>
-								<td class="align-middle text-center">sdfs155sdgswds124et21</td>
-								<td class="align-middle text-center"><form>
-										<button type="button"
-											class="btn btn-outline-secondary btn-sm mb-1">신고상세보기</button>
-									</form></td>
-							</tr>
-
 						</tbody>
 					</table>
 				</div>
@@ -139,23 +123,29 @@
 					</ul>
 				</nav>
 			</section>
+			<div class="orderModal"></div>
 		</div>
 	</div>
 	<script>
     $(function(){
         let userEmail = $("#search-userEmail");
         let userName = $("#search-userName");
-        let complainNum = $("#search-complainNum");
+        let userPhone = $("#search-userPhone");
+        let userOrderNum = $("#search-userOrderNum");
         $("#searchType").on("change", e => {
             userEmail.addClass("d-none");
             userName.addClass("d-none");
-            complainNum.addClass("d-none");
+            userPhone.addClass("d-none");
+            userOrderNum.addClass("d-none");
 
             let target = $(e.target).val();
             $("#search-"+target).removeClass("d-none");
         });
         $("#searchType").change();
+        
     })
+
+
 </script>
 </body>
 </html>

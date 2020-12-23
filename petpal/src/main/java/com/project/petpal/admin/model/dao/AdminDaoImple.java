@@ -112,4 +112,88 @@ public class AdminDaoImple implements AdminDao {
 		return session.selectList("product.inOutSearch", m);
 	}
 
+	@Override
+	public List<Map> selectOrderList(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectList("pay.selectOrderList");
+	}
+
+	@Override
+	public List<Map> selectPayDetail(SqlSession session, String paymentNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("pay.selectPayDetail", paymentNo);
+	}
+
+	@Override
+	public Map selectPaymentOne(SqlSession session, String paymentNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("pay.selectPaymentOne", paymentNo);
+	}
+
+	@Override
+	public int orderCancelOne(SqlSession session, String detailNo) {
+		// TODO Auto-generated method stub
+		return session.update("pay.orderCancelOne", detailNo);
+	}
+
+	@Override
+	public List<Map> payDetailStatus(SqlSession session, String paymentNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("pay.payDetailStatus", paymentNo);
+	}
+
+	@Override
+	public int updatePaymentStatus(SqlSession session, String paymentNo) {
+		// TODO Auto-generated method stub
+		return session.update("pay.updatePaymentStatus", paymentNo);
+	}
+
+	@Override
+	public int orderCancelAll(SqlSession session, String paymentNo) {
+		// TODO Auto-generated method stub
+		return session.update("pay.orderCancelAll", paymentNo);
+	}
+
+	@Override
+	public List<Map> selectClaimAll(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectList("admin.selectClaimAll");
+	}
+
+	@Override
+	public Map selectClaimOne(SqlSession session, String claimNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.selectClaimOne", claimNo);
+	}
+
+	@Override
+	public int claimDelete(SqlSession session, String claimNo) {
+		// TODO Auto-generated method stub
+		return session.delete("admin.claimDelete", claimNo);
+	}
+
+	@Override
+	public int claimAccept(SqlSession session, String claimNo) {
+		// TODO Auto-generated method stub
+		return session.update("admin.claimAccept",claimNo);
+	}
+
+	@Override
+	public List<Map> selectPlaceList(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectList("admin.selectPlaceList");
+	}
+
+	@Override
+	public Map selectPlaceOne(SqlSession session, String placeNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.selectPlaceOne",placeNo);
+	}
+
+	@Override
+	public int updatePlace(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.update("admin.updatePlace", m);
+	}
+
 }

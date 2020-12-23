@@ -23,4 +23,9 @@ public class CartServiceImpl implements CartService {
 		return dao.cartList(session, memberNo);
 	}
 
+	@Override
+	public List<Map> cartListNonMember(List<String> stockNo) {
+		return dao.cartListNonMember(session, stockNo);
+	}
+
 }
