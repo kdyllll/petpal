@@ -6,7 +6,9 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyImg;
+import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.member.model.vo.Member;
 
 @Repository
@@ -101,6 +103,18 @@ public class MemberDaoImpl implements MemberDao {
       // TODO Auto-generated method stub
       return session.selectList("member.selectFindMain",memberNo);
    }
+
+@Override
+public List<Daily> selectDailyList(SqlSession session, String memberNo) {
+	// TODO Auto-generated method stub
+	return session.selectList("member.selectDailyList",memberNo);
+}
+
+@Override
+public List<Hashtag> selectDailyHash(SqlSession session, String memberNo) {
+	// TODO Auto-generated method stub
+	return session.selectList("member.selectDailyHash",memberNo);
+}
    
    
 
