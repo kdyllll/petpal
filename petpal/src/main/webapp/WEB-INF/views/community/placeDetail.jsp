@@ -16,11 +16,13 @@
 			<div class="container">
 				<div class="row">
 				<c:set var="place" value="${list[0] }"/>
+					<input type="hidden" name="placeNo" value="${ place.placeNo}" id="placeNo">
+					<input type="hidden" name="memberNo" value="${loginMember.memberNo }" id="memberNo">
 					<div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2">
 						<p style="color: #35c5f0; font-weight: bold;"><c:out value="${place.category }"/></p>
 						<h2 class="font-weight-bold mb-5"><c:out value="${place.title }"/></h2>
 						<div class="mb-4 d-sm-flex justify-content-sm-between">
-							<a href="#" class="d-inline-flex">
+							<a href="${path }/user/moveUserInfo.do" class="d-inline-flex">
 								<div>
 									<img src="${path }/resources/upload/member/profile/${place.img}" alt="" class="rounded-circle mr-3">
 								</div>
@@ -59,61 +61,57 @@
 						<!-- 댓글 -->
 						<hr>
 						<h4>
-							댓글<span class="su"><c:out value="count"/></span>
+							댓글<span class="su"><c:out value="${count }"/></span>
 						</h4>
-						<form method="post" action="">
-						<div class="d-flex mb-3">
+						<!-- 댓글등록 -->
+						<div class="d-flex mb-3 editor">
 							<div class="input-group mb-3">
 								<input type="hidden" name="commentLevel" value="1">
-								<input type="hidden" name="memberNo" value="${loginMember.memberNo }" id="member">
-								<input type="hidden" name="placeNo" value="${ place.placeNo}">
-								<input type="hidden" name="commentRef" value="0">
-								<input type="text" class="form-control" name="placeComment" id="comment" 
+								<input type="hidden" name="commentRef" value="" >
+								<input type="text" class="form-control" name="placeComment" 
 									placeholder="칭찬과 격려의 댓글은 작성자에게 큰 힘이 됩니다:)"
 									aria-label="Recipient's username"
 									aria-describedby="button-addon2">
 								<div class="input-group-append">
-									<button class="btn btn-outline-secondary" type="button"
-										id="write">등록</button>
+									<button class="btn btn-outline-secondary write" type="button"
+										>등록</button>
 								</div>
 							</div>
 						</div>
-						</form>
-						<div class="d-flex mb-3">
-							<div>
-								<img src="sea)연어.png" class="rounded-circle mr-3">
-							</div>
-							<div>
+						<div id="commentContainer">
+							<c:forEach items="${cList }" var="c">
+							<div class="d-flex mb-3 comment">
+								<a href="#">
 								<div>
-									<strong><span>작성자</span></strong> <span>내용</span>
+									<img src="${path }/resources/upload/member/profile/${c.img }" class="rounded-circle mr-3">
 								</div>
 								<div>
-									<span style="font-size: 14px; color: gray;">몇분전</span>
-									<button class="click text-black-50" style="font-weight: bold;">답글
-										달기</button>
-									<button class="click" style="color: gray; font-size: 14px;">신고</button>
+									<div>
+										<strong><span><c:out value="${c.nickName }"/></span></strong></a> <span><c:out value="${c.placeComment }"/></span>
+									</div>
+									<div>
+										<span style="font-size: 14px; color: gray;">
+										<c:set var="today" value="<%=new java.util.Date()%>" />
+										<fmt:parseNumber value="${(today.time-c.writeDate.time)/(1000*60) }" var="cha" integerOnly="true"/>
+										 <c:choose>
+										 	<c:when test="${cha<60 }">${cha}분 전</c:when>
+										    <c:when test="${cha>=60&&cha<1440}"><fmt:formatNumber value="${cha/60 }" type="number" maxFractionDigits="0"/>시간 전</c:when>
+										 	<c:when test="${cha>=1440&&cha<43200 }"><fmt:formatNumber value="${cha/60/24 }" type="number" maxFractionDigits="0"/>일 전</c:when>
+										 	<c:otherwise><c:out value="${c.writeDate }"/></c:otherwise>
+										 </c:choose>
+										</span>
+										<button class="reply click text-black-50" style="font-weight: bold;" value="${c.placeCommentNo }">답글
+											달기</button>
+										<button class="click" style="color: gray; font-size: 14px;">신고</button>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="d-flex mb-3">
-							<div>
-								<img src="sea)연어.png" class="rounded-circle mr-3">
-							</div>
-							<div>
-								<div>
-									<strong><span>작성자</span></strong> <span>안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕</span>
-								</div>
-								<div>
-									<span style="font-size: 14px; color: gray;">몇분전</span>
-									<button class="click text-black-50" style="font-weight: bold;">답글
-										달기</button>
-									<button class="click" style="color: gray; font-size: 14px;">신고</button>
-								</div>
-							</div>
+							</c:forEach>	
 						</div>
 					</div>
 				</div>
 			</div>
+			<div class="pdtModal"></div>
 		</section>
 	</main>
 	<style>
@@ -148,30 +146,85 @@ button.click {
 }
 </style>
 	
+	
 	<script>
+	//로그인모달
+     function loginModal(){
+       $.ajax({
+          url: "${path}/login/moveLogin.do",
+          dataType:"html",
+          success:(data) => {
+             $(".pdtModal").html(data);   
+             $('#loginModal').modal(); 
+          }
+       });
+    }; 
 	$(function(){//로그인 안되어있을때 댓글창 누르면 손가락표시
-		if($("#member").val()==""){
-			$("#comment").css({"cursor":"pointer"});
+		if($("#memberNo").val()==""){
+			$("[name=placeComment]").css({"cursor":"pointer"});
 		}
 	});
 	$(document).on(
 			'click',
-			'#comment',
-			function(e) {//댓글창 눌렀을때
-				if($("#member").val()==""){//로그인 안되어있다면
-					location.replace('${path}//member/moveLogin.do');
+			'[name=placeComment]',
+			function(e) {
+				if($("#memberNo").val()==""){
+					loginModal();
 				}
+			
 			});
 	$(document).on(
 			'click',
-			'#write',
-			function(e) {//댓글 등록 눌렀을때
-				if($("#member").val()==""){//로그인 안되어있다면
-					location.replace('${path}//member/moveLogin.do');
-				}else if($("#comment").val().trim()==""){
-					alert("내용을 입력해주세요.");
+			'.reply',
+			function(e) {//답글달기 눌렀을때
+				var comment=$(e.target).parents("div.comment");//답글달기의 댓글
+				
+				if($("div.editor").length==2&&!comment.next().hasClass("editor")){//댓글달기 창이 두개이고 
+					var flag=confirm("다른 댓글에서 작성하고 있던 내용이 유실됩니다. 정말 이 댓글로 전환하시겠습니까?")
+					if(flag==true){//확인 눌렀을때
+						$("#commentContainer").find("div.editor").remove();
+					}else{//취소 눌렀을때 변화없음
+						
+					}
 				}
-			
+				if($("div.editor").length==1){//댓글달기창이 하나일때
+				var editor=$("div.editor").clone();
+				editor.addClass("ml-5");
+				editor.find("[name=commentLevel]").val("2");
+				editor.find("[name=commentRef]").val($(e.target).val());
+				comment.after(editor);//
+				}
+					
+				
+			});
+	
+	$(document).on(
+			'click',
+			'.write',
+			function(e) {//댓글 등록 눌렀을때
+				if($("#memberNo").val()==""){//로그인 안되어있다면
+					loginModal();
+				return;
+				}else if($(e.target).parents("div.editor").find("[name=placeComment]").val().trim()==""){//댓글 내용이 없으면
+					alert("내용을 입력해주세요.");
+					return;
+				}
+				var memberNo=$("#memberNo").val();
+				var placeNo=$("#placeNo").val();
+				var placeComment=$(e.target).parents("div.editor").find("[name=placeComment]").val();
+				var commentLevel=$(e.target).parents("div.editor").find("[name=commentLevel]").val();
+				var commentRef=$(e.target).parents("div.editor").find("[name=commentRef]").val();
+				$.ajax({
+					url:"${path}/place/commentWrite.do",
+					data:{placeComment:placeComment,commentLevel:commentLevel,memberNo:memberNo,placeNo:placeNo,commentRef:commentRef,},
+					success:data=>{
+						$("#commentContainer").children().remove();
+						$("#commentContainer").append(data);
+					},
+					error:function(){
+						alert("댓글 등록에 실패하였습니다.");
+					}
+				})
 			});
 	
 		var maker;

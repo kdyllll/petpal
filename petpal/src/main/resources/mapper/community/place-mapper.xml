@@ -42,4 +42,10 @@
   <select id="commentCount" resultType="_int" parameterType="string">
   	SELECT COUNT(*) FROM PLACECOMMENT WHERE PLACENO=#{placeNo)
   </select>
+  <insert id="insertComment" parameterType="placeComment">
+  	INSERT INTO PLACECOMMENT VALUES('PC'||SEQ_PLACECOMMENTNO.NEXTVAL,#{placeNo},#{memberNo},#{commentLevel},#{placeComment},#{commentRef},default)
+  </insert>
+  <select id="commentList" resultType="placeComment" parameterType="string">
+  	SELECT * FROM PLACECOMMENT JOIN MEMBER USING(MEMBERNO) WHERE PLACENO=#{placeNo}
+  </select>
 </mapper>
