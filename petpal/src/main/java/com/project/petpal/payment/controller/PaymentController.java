@@ -2,7 +2,7 @@ package com.project.petpal.payment.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.project.petpal.member.model.vo.Member;
 import com.project.petpal.payment.model.service.PaymentService;
 import com.project.petpal.payment.model.vo.Cart;
-import com.project.petpal.payment.model.vo.PayDetail;
 import com.project.petpal.payment.model.vo.Payment;
 
 @Controller
@@ -27,7 +26,8 @@ public class PaymentController {
 	private PaymentService service;
 	
 	@RequestMapping("/payment/payment.do")
-	public ModelAndView payment(ModelAndView mv, String memberNo,
+	public ModelAndView payment(ModelAndView mv, HttpServletRequest request, HttpServletResponse response, HttpSession session,
+								String memberNo,
 								@RequestParam(value="productName") String[] productName,
 								@RequestParam(value="size") String[] size,
 								@RequestParam(value="color") String[] color,
@@ -63,6 +63,11 @@ public class PaymentController {
 	
 		mv.addObject("list", list);
 		
+		if((Member)session.getAttribute("loginMember")!=null) {
+			mv.setViewName("payment/payment");
+		}else {
+			mv.setViewName("payment/paymentNonMember");
+		}
 		return mv;
 	}
 
@@ -80,24 +85,56 @@ public class PaymentController {
 										@RequestParam(value="tel") String tel,
 										@RequestParam(value="payKind") String payKind) {
 		
-		Member loginMember=(Member)session.getAttribute("loginMember");
-		
-		String memberNo = loginMember.getMemberNo();
-		
-		loc = loc + " " + locDetail;
-		
-		Payment p = Payment.builder().memberNo(memberNo).receiverName(receiverName).loc(loc).receiverTel(receiverTel).name(name).email(email).tel(tel).totalPrice(totalPrice).payKind(payKind).build();
-		
-		mv.addObject("list", service.insertPayment(p, cnt, stockNo));
-		
+		//8자리 난수 생성
+		Random rand = new Random();
+
+		String orderNo = Integer.toString(rand.nextInt(8) + 1);
+
+		for(int i=0; i < 7; i++){
+			orderNo += Integer.toString(rand.nextInt(9));
+		}
+
+		if((Member)session.getAttribute("loginMember")!=null) {
+			Member loginMember=(Member)session.getAttribute("loginMember");
+			
+			String memberNo = loginMember.getMemberNo();
+			
+			loc = loc + " " + locDetail;
+			
+			Payment p = Payment.builder().memberNo(memberNo).receiverName(receiverName).loc(loc).receiverTel(receiverTel).name(name).email(email).tel(tel).totalPrice(totalPrice).payKind(payKind).orderNo(orderNo).build();
+			
+//			mv.addObject("list", service.insertPayment(p, cnt, stockNo));
+			
+			int result = service.insertPayment(p, cnt, stockNo);
+			mv.addObject("msg", result>0?"입력 성공":"입력 실패");
+			mv.addObject("loc", "/payment/paymentComplete.do");
+			
+			mv.setViewName("common/msg");
+			
+			if(result>0) {
+				mv.addObject("list", service.selectPaymentCompleteList(orderNo));
+			}
+			
+		}else {
+			loc = loc + " " + locDetail;
+			
+			Payment p = Payment.builder().receiverName(receiverName).loc(loc).receiverTel(receiverTel).name(name).email(email).tel(tel).totalPrice(totalPrice).payKind(payKind).orderNo(orderNo).build();
+			
+//			mv.addObject("list", service.insertPayment(p, cnt, stockNo));
+			
+			int result = service.insertPayment(p, cnt, stockNo);
+			mv.addObject("msg", result>0?"입력 성공":"입력 실패");
+			mv.addObject("loc", "/payment/paymentComplete.do");
+			
+			mv.setViewName("common/msg");
+			
+			if(result>0) {
+				mv.addObject("list", service.selectPaymentCompleteList(orderNo));
+			}
+		}
 		mv.setViewName("payment/paymentComplete");
 		
 		return mv;
-	}
-	
-	@RequestMapping("/payment/myPayment.do")
-	public String mypayment() {
-		return "/payment/myPayment";
 	}
 	
 	@RequestMapping("/payment/paymentComplete2.do")

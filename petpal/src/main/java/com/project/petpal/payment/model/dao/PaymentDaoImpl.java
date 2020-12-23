@@ -1,6 +1,7 @@
 package com.project.petpal.payment.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -19,5 +20,10 @@ public class PaymentDaoImpl implements PaymentDao {
 	@Override
 	public int insertPayDetail(SqlSession session, PayDetail pd) {
 		return session.insert("payment.insertPayDetail", pd);
+	}
+
+	@Override
+	public List<Map> selectPaymentCompleteList(SqlSession session, String orderNo) {
+		return session.selectList("payment.selectPaymentCompleteList", orderNo);
 	}
 }
