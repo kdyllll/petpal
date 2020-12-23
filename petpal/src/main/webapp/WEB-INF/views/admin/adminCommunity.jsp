@@ -148,11 +148,11 @@
         })
         
         $(".placeDenyBtn").on("click", e => {
-        	let placeNo = $(e.target).next().val();
+        	let placeNo = $(e.target).prev().val();
         	$(".placeFrm").attr("action", "${path}/admin/placeDeny.do?placeNum="+placeNo).submit();
         })
         $(".placeAcceptBtn").on("click", e => {
-        	let placeNo = $(e.target).prev().val();
+        	let placeNo = $(e.target).next().val();
         	$(".placeFrm").attr("action", "${path}/admin/placeAccept.do?placeNum="+placeNo).submit();
         })
         
