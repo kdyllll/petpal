@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 
 import com.project.petpal.community.model.vo.Place;
+import com.project.petpal.community.model.vo.PlaceComment;
 import com.project.petpal.community.model.vo.PlaceImg;
 
 public interface PlaceDao {
@@ -17,5 +18,7 @@ public interface PlaceDao {
 	List<Place> selectPlace(SqlSession session,String placeNo);
 	int selectCount(SqlSession session,String category);
 	int commentCount(SqlSession session,String placeNo);
+	int insertComment(SqlSession session,PlaceComment pc);
+	List<PlaceComment> commentList(SqlSession session,String placeNo);
 	
 }

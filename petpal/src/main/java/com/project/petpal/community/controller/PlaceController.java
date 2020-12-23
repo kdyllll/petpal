@@ -14,11 +14,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.petpal.common.PageBarFactory;
 import com.project.petpal.community.model.service.PlaceService;
 import com.project.petpal.community.model.vo.Place;
+import com.project.petpal.community.model.vo.PlaceComment;
 import com.project.petpal.community.model.vo.PlaceImg;
 import com.project.petpal.member.model.vo.Member;
 
@@ -115,11 +117,12 @@ public class PlaceController {
 	@RequestMapping("/place/movePlaceDetail.do")
 	public String selectPlace(String placeNo,Model m) {
 		List<Place> list = service.selectPlace(placeNo);
-		int count=service.commentCount(placeNo);
-		m.addAttribute("count", count);
+		List<PlaceComment> cList=service.commentList(placeNo);
+		//int count=service.commentCount(placeNo);
+		//m.addAttribute("count", count);
+		m.addAttribute("cList",cList);
 		m.addAttribute("list", list);
 		return "community/placeDetail";
 	}
-//	@RequestMapping("/place/placeWriteEnd.do")
-//	public String 
+	
 }
