@@ -26,4 +26,5 @@ public class Payment {
 	private String deliveryStatus;
 	private String payStatus;
 	private String email;
+	private String orderNo;
 }
