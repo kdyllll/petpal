@@ -95,15 +95,19 @@
 								<th scope="col" class="text-center align-middle">가입일</th>
 							</tr>
 						</thead>
-						<tbody>				
+						<tbody>
+							<c:if test="${not empty mList }">	
+							<c:forEach var="c" items="${mList }">	
 							<tr>
-								<th scope="row" class="align-middle text-center">d</th>
-								<th scope="row" class="align-middle text-center">d</th>
-								<td class="align-middle text-center">d</td>
-								<td class="align-middle text-center">d</td>
-								<td class="align-middle text-center">d</td>
-								<td class="align-middle text-center">d</td>
+								<th scope="row" class="align-middle text-center"><c:out value="${c.MEMBERNAME }" /></th>
+								<th scope="row" class="align-middle text-center"><a href="#"><c:out value="${c.EMAIL }"/></a></th>
+								<td class="align-middle text-center"><c:out value="${c.PHONE }"/></td>
+								<td class="align-middle text-center"><c:out value="${c.ADDRESS }" /></td>
+								<td class="align-middle text-center"><c:out value="${c.NICKNAME }"/></td>
+								<td class="align-middle text-center"><fmt:formatDate value="${c.ENROLLDATE }" pattern="yyyy년MM월dd일"/></td>
 							</tr>
+							</c:forEach>
+							</c:if>
 						</tbody>
 					</table>
 				</div>
