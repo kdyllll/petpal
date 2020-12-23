@@ -82,9 +82,9 @@
 											<c:choose>
 											<c:when test="${c.STATUS eq 'N' }">
 											<button type="button"
-												class="btn btn-outline-secondary btn-sm placeDenyBtn">수락</button>
+												class="btn btn-outline-secondary btn-sm  placeAcceptBtn">수락</button>
 												<input type="hidden" name="placeNo" value="${c.PLACENO }">
-											<button type="button" class="btn  btn-outline-danger btn-sm placeAcceptBtn">거절</button>
+											<button type="button" class="btn  btn-outline-danger btn-sm  placeDenyBtn">거절</button>
 											</form>
 											</c:when >
 											<c:when test="${c.STATUS eq 'Y' }">
