@@ -3,6 +3,7 @@ package com.project.petpal.member.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -30,6 +31,13 @@ public class MemberController {
 
 	@RequestMapping("/member/moveMyPage.do")
 	public String moveMyPage(HttpSession session, Model m) {
+		Member memNo = (Member)session.getAttribute("loginMember");
+		Map member = service.selectMemberOne(memNo.getMemberNo());
+		int followCnt = service.followCnt(memNo.getMemberNo());
+		int favCnt = service.favCnt(memNo.getMemberNo());
+		m.addAttribute("follow",followCnt);
+		m.addAttribute("fav",favCnt);	
+		m.addAttribute("member", member);
 		return "member/myPageProfile";
 	}
 

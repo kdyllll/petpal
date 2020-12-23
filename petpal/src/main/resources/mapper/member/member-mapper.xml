@@ -28,4 +28,13 @@
     <select id="selectMemberAll" resultType="map">
     	SELECT * FROM MEMBER
     </select>
+	<select id="followCnt" parameterType="string" resultType="int">
+		SELECT COUNT(*) FROM FOLLOW WHERE MEMBERNO=#{memberNo}
+	</select>
+	<select id="favCnt" parameterType="string" resultType="int">
+		SELECT COUNT(*) FROM FAV WHERE MEMBERNO=#{memberNo}
+	</select>
+	<select id="selectMemberOne" parameterType="string" resultType="map">
+		SELECT * FROM MEMBER WHERE MEMBERNO = #{memberNo}
+	</select>
 </mapper>

@@ -10,11 +10,33 @@
   <!-- myPageNav.jsp 연결 -->
   <jsp:include page="/WEB-INF/views/common/myPageNav.jsp" />
   <div class="row py-3 justify-content-between">
-  <c:if test ="${loginMember != null }"> 
-    <div class="col-lg-4 rounded shadow-sm" style=" height: 450px;">프로필부분,사진,닉네임,팔로우,팔로잉, 좋아요, 적립금,
-	    <c:out value="${loginMember.getEmail() }"/>
-	    <c:out value="${loginMember.getNickName() }" />
-	    <c:out value="${loginMember.getPoint() }" />
+  <c:if test ="${member != null }"> 
+    <div class="col-lg-4 rounded shadow-sm py-3" style=" height: 430px;">
+    <!-- 프로필부분,사진,닉네임,팔로우,팔로잉, 좋아요, 적립금, -->
+    	<div class="row d-flex flex-column align-items-center">
+    		<p><c:out value="${member.NICKNAME }" /></p>
+    		<c:choose>
+		    	<c:when test="${not empty member.IMG }"><img src="${path }/resources/upload/member/profile/${member.IMG}" style="width:45%;"></c:when>
+		    	<c:otherwise><img src="${path }/resources/upload/member/profile/avatar.webp"></c:otherwise>
+	    	</c:choose>
+	    	<p class="mt-2"><c:out value="${member.EMAIL }"/></p>
+	    	<c:if test="${not empty member.INFO }">	 
+	    		<p><c:out value="${member.INFO }"/></p>
+	    	</c:if>   
+		    
+    	</div>
+		<div style="width:100%; height:1px; background-color:#ced6e0;" class="my-3"></div>
+    	<div class="row d-flex justify-content-around mt-4">
+    		<div class="d-flex flex-column align-items-center">
+    	 	 	<span>좋아요</span><p><c:out value="${fav }" /></p>
+    	 	 </div >
+    	 	 <div class="d-flex flex-column align-items-center">
+	   		 	<span>팔로우</span><p><c:out value="${follow }" /></p>
+	   		 </div>
+	   		 <div class="d-flex flex-column align-items-center">
+	   		 	<span>포인트</span><p><c:out value="${member.POINT }" /></p>
+	   		 </div>
+    	</div>  
     </div>
      </c:if>
     <div class="col-lg-8 pr-0">

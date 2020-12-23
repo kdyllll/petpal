@@ -49,4 +49,23 @@ public class MemberServiceImpl implements MemberService{
 		return dao.selectMemberAll(session);
 	}
 
+	@Override
+	public int followCnt(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.followCnt(session, memberNo);
+	}
+	@Override
+	public int favCnt(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.favCnt(session, memberNo);
+	}
+
+	@Override
+	public Map selectMemberOne(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectMemberOne(session, memberNo);
+	}
+
+
+
 }

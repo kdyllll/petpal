@@ -12,4 +12,7 @@ public interface MemberService {
 	int updatePassword(Member member);
 	int updateMemberEnd(Member member);
 	List<Map> selectMemberAll();
+	int followCnt(String memberNo);
+	int favCnt(String memberNo);
+	Map selectMemberOne(String memberNo);
 }
