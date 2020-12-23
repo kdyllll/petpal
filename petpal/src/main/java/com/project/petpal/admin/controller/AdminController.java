@@ -51,6 +51,11 @@ public class AdminController {
 		return "admin/adminOrder";
 	}
 	
+	@RequestMapping("/admin/memberList.do")
+	public String memberList() {
+		return "admin/memberList";
+	}
+	
 	@RequestMapping("/admin/adminInOutList.do")
 	public String adminInOutList(Model m) {
 		List<Map> list = service.productIOAll();

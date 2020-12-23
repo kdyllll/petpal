@@ -24,7 +24,7 @@
 			</a></li>
 			<li class="nav-item"><a class="nav-link navName3 <%=nav.equals("adminOrder") ? "active" : "" %>"  href="${path }/admin/adminOrder.do"> 주문내역
 			</a></li>
-			<li class="nav-item"><a class="nav-link navName4 " href="#"> 회원관리
+			<li class="nav-item"><a class="nav-link navName4 <%=nav.equals("memberList") ? "active" : "" %>" href="${path }/admin/memberList.do"> 회원관리
 			</a></li> 
 			<li class="nav-item"><a class="nav-link navName5 <%=nav.equals("adminCommunity") ? "active" : "" %>" href="${path }/admin/adminCommunity.do">게시글관리
 			</a></li>
