@@ -117,18 +117,20 @@
       } );
 	
 	$( document ).ready( function() {
-     	var count = 0;
+     	var amount = 0;
      	var price = 0;
      	var totalProduct = 0;
      	
      	var objs = document.querySelectorAll(".ch");
      	
+     	<c:set var="i" value="0"/>
 		<c:forEach items="${list}" var="c">
-	     	count = ${c.COUNT};
+	     	amount = ${amount[i]}
      		price = ${c.PRICE};
-     		totalProduct += count * price;
+     		totalProduct += amount * price;
      		$('.totalProduct').text(totalProduct);
      		$('.totalPrice').text(totalProduct);
+     		<c:set var="i" value="${i + 1}" />
      	</c:forEach>
      	
      	if(totalProduct !=0 && totalProduct<=50000){
@@ -272,7 +274,8 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 		<main role="main" style="min-height: 100vh;">
 			<div class="container">
-				<form class="needs-validation" id="frm" name="cart" action="${path }/payment/payment.do?memberNo=${list[0].MEMBERNO}" method="post">
+			<!-- 회원번호 없음 -->
+				<form class="needs-validation" id="frm" name="cart" action="${path }/payment/payment.do" method="post">
 				<div class="row" style="padding-top: 5em;">
 	
 					<div class="order-md-2 ml-3 d-none d-md-block">
@@ -309,8 +312,8 @@
 					</div>
 					
 					<div class="col-md-8 order-md-1">
-						
-						<c:forEach items="${list }" var="c">
+						<c:set var="i" value="0"/>
+						<c:forEach items="${list }" var="c" begin="0" end="${list.size()-1 }">
 							<div class="proCon p-3 border border-dark rounded mb-4">
 								<div class="checkCon mt-2 d-flex align-items-start float-left" >
 									<input type="checkbox" class="ch mr-2" style="width:20px; height: 20px;" name="check" checked>
@@ -352,11 +355,12 @@
 										</div>
 									</div>
 									<div class="d-flex p-3 priceCon">
-											<div>
-				                                <input class="count" type="number" name="count" value="${c.COUNT }" min="1" max="100">
+											<div id="count">
+												
+				                                <input class="count" type="number" name="count" value="${amount[i]}" min="1" max="100">
 				                             </div>
 				                             <input type="hidden" name="price" value="${c.PRICE}">
-				                             <span class="price ml-auto"><c:out value="${c.COUNT * c.PRICE}"/>원</span>
+				                             <span class="price ml-auto"><c:out value="${amount[i] * c.PRICE}"/>원</span>
 				                             <div id="preview"></div>
 				                    </div>
 	                    		</div>
@@ -364,6 +368,7 @@
 			                    	<small><span>옵션 변경</span></small> <!-- 모달 -->
 			                    </div>
 							</div>
+	                           <c:set var="i" value="${i + 1}" />
 						</c:forEach>
 						
 						<div class="d-block d-md-none mt-5">
