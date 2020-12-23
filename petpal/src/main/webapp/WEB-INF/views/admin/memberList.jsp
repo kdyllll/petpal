@@ -87,32 +87,22 @@
 					<table class="table mb-5">
 						<thead>
 							<tr>
-								<th scope="col" class="text-center align-middle">주문번호</th>
-								<th scope="col" class="text-center align-middle">회원상태</th>
 								<th scope="col" class="text-center align-middle">회원이름</th>
-								<th scope="col" class="text-center align-middle">받는분이름</th>
+								<th scope="col" class="text-center align-middle">이메일</th>
 								<th scope="col" class="text-center align-middle">전화번호</th>
-								<th scope="col" class="text-center align-middle">주문날짜</th>
-								<th scope="col" class="text-center align-middle">주문자이메일</th>
-								<th scope="col" class="text-center align-middle">주문번호</th>
-								<th scope="col" class="text-center align-middle">결제상태</th>
-								<th scope="col" class="text-center align-middle"></th>
+								<th scope="col" class="text-center align-middle">주소</th>
+								<th scope="col" class="text-center align-middle">닉네임</th>
+								<th scope="col" class="text-center align-middle">가입일</th>
 							</tr>
 						</thead>
-						<tbody>
-							
-							
+						<tbody>				
 							<tr>
-								<th scope="row" class="align-middle text-center"></th>
-								<th scope="row" class="align-middle text-center"></th>
-								<td class="align-middle text-center"></td>
-								<td class="align-middle text-center"></td>
-								<td class="align-middle text-center"></td>
-								<td class="align-middle text-center"></td>
-								<td class="align-middle text-center"></td>
-								<td class="align-middle text-center"></td>
-								<td class="align-middle text-center"></td>
-								<td class="align-middle text-center "></td>
+								<th scope="row" class="align-middle text-center">d</th>
+								<th scope="row" class="align-middle text-center">d</th>
+								<td class="align-middle text-center">d</td>
+								<td class="align-middle text-center">d</td>
+								<td class="align-middle text-center">d</td>
+								<td class="align-middle text-center">d</td>
 							</tr>
 						</tbody>
 					</table>

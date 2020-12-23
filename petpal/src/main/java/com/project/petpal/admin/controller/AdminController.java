@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.project.petpal.admin.model.service.AdminService;
 import com.project.petpal.admin.model.vo.Product;
+import com.project.petpal.member.model.service.MemberService;
 
 @Controller
 public class AdminController {
 	@Autowired
 	public AdminService service;
+	@Autowired
+	public MemberService mservice;
 	
 	@RequestMapping("/admin/moveAdminPage.do")
 	public String moveAdminPage(Model m) {
@@ -52,7 +55,9 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/admin/memberList.do")
-	public String memberList() {
+	public String memberList(Model m) {
+		List<Map> mList = mservice.selectMemberAll();
+		m.addAttribute("mList",mList);
 		return "admin/memberList";
 	}
 	
