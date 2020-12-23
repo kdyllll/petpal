@@ -49,7 +49,7 @@
                 </div>
                 <div class="form-inline container-xl mb-5">
                     <div class="input-group col-lg-5 col-8">
-                        <input type="text" class="form-control " placeholder="검색어를 입력하세요" aria-label="검색어를 입력하세요" aria-describedby="basic-addon2">
+                        <input type="text" class="form-control " placeholder="해시태그 내용을 입력하세요" aria-describedby="basic-addon2">
                         <div class="input-group-append">
                             <button type="button" id="searchBtn" class="input-group-text">검색</button>
                         </div>
@@ -78,15 +78,15 @@
 		                    <div class="card mb-4 bg-transparent border-0">
 		                        <div class="px-3 row mb-2">  
 		                        		<c:if test="${not empty d.IMG }">                
-		                                	<a href="#"><img src="${path }/resources/upload/member/profile/${d.IMG}" class="rounded" style="width:40px; height: 40px;"></a>
+		                                	<a href="${path }/user/moveUserInfo.do?memberNo=${d.MEMBERNO}"><img src="${path }/resources/upload/member/profile/${d.IMG}" class="rounded" style="width:40px; height: 40px;"></a>
 		                                </c:if>
 		                                <c:if test="${ empty d.IMG }">  
-		                                	<a href="#"><img src="${path }/resources/upload/member/profile/avatar.webp" class="rounded" style="width:40px; height: 40px;"></a>
+		                                	<a href="${path }/user/moveUserInfo.do?memberNo=${d.MEMBERNO}"><img src="${path }/resources/upload/member/profile/avatar.webp" class="rounded" style="width:40px; height: 40px;"></a>
 		                                </c:if>
 		                                <div class="ml-1">
-		                                    <a href="#"><span class="text-dark align-top mx-1"><strong><c:out value="${d.NICKNAME }"/></strong></span></a>
+		                                    <a href="${path }/user/moveUserInfo.do?memberNo=${d.MEMBERNO}"><span class="text-dark align-top mx-1"><strong><c:out value="${d.NICKNAME }"/></strong></span></a>
 		                                    <span><strong> · </strong></span>
-		                                    <span><button class="btn btn-link text-info p-0 align-top"><strong> 팔로우</strong></button></span>
+		                                    <span><button class="btn btn-link text-daily p-0 align-top"><strong> 팔로우</strong></button></span>
 		                                    <p class="ml-1" style="font-size: 12px;"><c:out value="${d.INFO }"/></p>  
 		                                </div>                    
 		                        </div>

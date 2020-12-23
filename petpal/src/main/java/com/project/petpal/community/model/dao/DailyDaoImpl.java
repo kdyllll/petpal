@@ -7,7 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.project.petpal.admin.model.vo.Product;
-import com.project.petpal.admin.model.vo.ProductImg;
+import com.project.petpal.store.model.vo.ProductImg;
 import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyCoord;
 import com.project.petpal.community.model.vo.DailyImg;
@@ -74,6 +74,44 @@ public class DailyDaoImpl implements DailyDao {
 		// TODO Auto-generated method stub
 		return session.selectList("daily.selectHashAll");
 	}
+
+	@Override
+	public Map selectDailyOne(SqlSession session, String dailyNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("daily.selectDailyOne",dailyNo);
+	}
+
+	@Override
+	public List<DailyImg> selectDailyImg(SqlSession session, String dailyNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("daily.selectDailyImg",dailyNo);
+	}
+
+	@Override
+	public List<Hashtag> selectHashList(SqlSession session, String dailyNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("daily.selectHashList",dailyNo);
+	}
+
+	@Override
+	public List<Map> selectCoordList(SqlSession session, String dailyNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("daily.selectCoordList",dailyNo);
+	}
+
+	@Override
+	public ProductImg selectProductImg(SqlSession session, String productNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("store.selectMainImg",productNo);
+	}
+
+	@Override
+	public int deleteDaily(SqlSession session, String dailyNo) {
+		// TODO Auto-generated method stub
+		return session.delete("daily.deleteDaily",dailyNo);
+	}
+	
+	
 
 	
 

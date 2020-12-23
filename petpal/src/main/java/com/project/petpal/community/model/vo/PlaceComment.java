@@ -17,5 +17,8 @@ public class PlaceComment {
 	private int commentLevel;
 	private String placeComment;
 	private String commentRef;
-	private String writeDate;
+	private Date writeDate;
+	private String img;
+	private String nickName;
+	
 }
