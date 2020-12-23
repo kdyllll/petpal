@@ -129,5 +129,89 @@ public class AdminServiceImple implements AdminService {
 		return dao.inOutSearch(session, m);
 	}
 
+	@Override
+	public List<Map> selectOrderList() {
+		// TODO Auto-generated method stub
+		return dao.selectOrderList(session);
+	}
+
+	@Override
+	public List<Map> selectPayDetail(String paymentNo) {
+		// TODO Auto-generated method stub
+		return dao.selectPayDetail(session, paymentNo);
+	}
+
+	@Override
+	public Map selectPaymentOne(String paymentNo) {
+		// TODO Auto-generated method stub
+		return dao.selectPaymentOne(session, paymentNo);
+	}
+
+	@Override
+	public int orderCancelOne(String detailNo) {
+		// TODO Auto-generated method stub
+		return dao.orderCancelOne(session, detailNo);
+	}
+
+	@Override
+	public List<Map> payDetailStatus(String paymentNo) {
+		// TODO Auto-generated method stub
+		return dao.payDetailStatus(session, paymentNo);
+	}
+
+	@Override
+	public int updatePaymentStatus(String paymentNo) {
+		// TODO Auto-generated method stub
+		return dao.updatePaymentStatus(session, paymentNo);
+	}
+
+	@Override
+	public int orderCancelAll(String paymentNo) {
+		// TODO Auto-generated method stub
+		return dao.orderCancelAll(session, paymentNo);
+	}
+
+	@Override
+	public List<Map> selectClaimAll() {
+		// TODO Auto-generated method stub
+		return dao.selectClaimAll(session);
+	}
+
+	@Override
+	public Map selectClaimOne(String claimNo) {
+		// TODO Auto-generated method stub
+		return dao.selectClaimOne(session, claimNo);
+	}
+
+	@Override
+	public int claimDelete(String claimNo) {
+		// TODO Auto-generated method stub
+		return dao.claimDelete(session, claimNo);
+	}
+
+	@Override
+	public int claimAccept(String claimNo) {
+		// TODO Auto-generated method stub
+		return dao.claimAccept(session, claimNo);
+	}
+
+	@Override
+	public List<Map> selectPlaceList() {
+		// TODO Auto-generated method stub
+		return dao.selectPlaceList(session);
+	}
+
+	@Override
+	public Map selectPlaceOne(String placeNo) {
+		// TODO Auto-generated method stub
+		return dao.selectPlaceOne(session, placeNo);
+	}
+
+	@Override
+	public int updatePlace(Map m) {
+		// TODO Auto-generated method stub
+		return dao.updatePlace(session, m);
+	}
+
 	
 }

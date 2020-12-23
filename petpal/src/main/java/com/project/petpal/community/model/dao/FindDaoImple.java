@@ -1,5 +1,8 @@
 package com.project.petpal.community.model.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -25,6 +28,12 @@ public class FindDaoImple implements FindDao {
 	public int insertSubPic(SqlSession session, FindImg sfi) {
 		// TODO Auto-generated method stub
 		return session.insert("find.insertFindPic", sfi);
+	}
+
+	@Override
+	public List<Map> selectFindList(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectList("find.selectFindList");
 	}
 	
 }

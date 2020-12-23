@@ -25,4 +25,7 @@
     <update id="updateMemberEnd" parameterType="member">
     	UPDATE MEMBER SET NICKNAME=#{nickName},PHONE=#{phone},MEMBERNAME=#{memberName},address=#{address,typeHandler=strArr}, IMG=#{img}, INFO=#{info} where MEMBERNO=#{memberNo}
     </update>
+    <select id="selectMemberAll" resultType="map">
+    	SELECT * FROM MEMBER
+    </select>
 </mapper>

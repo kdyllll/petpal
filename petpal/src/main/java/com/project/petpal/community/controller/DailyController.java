@@ -151,9 +151,7 @@ public class DailyController {
 		
 		//보내기
 		int result=service.insertDaily(d,files,coords,hashList);
-
-		
-		
+	
 		m.addAttribute("msg",result>0?"게시글이 작성되었습니다.":"게시글 작성에 실패했습니다.");
 		m.addAttribute("loc","/daily/moveList.do");
 		return "common/msg";
@@ -162,7 +160,7 @@ public class DailyController {
 	//글 디테일로 이동
 	@RequestMapping("/daily/moveDetail.do")
 	public String moveDetail(String dailyNo,Model m) {
-		//글사진, 글내용, 글좋아요, 
+		//글사진, 글내용, 글 해시태그, 글 작성시간, 글 번호, 글좋아요, 글댓글, 작성자 사진, 작성자 닉네임, 
 		return "community/dailyDetail";
 	}
 	

@@ -200,7 +200,7 @@
             	</div>
 
            		<div class="col-md-8 order-md-1">
-                	<form class="needs-validation" id="frm" name="payment" action="${path }/payment/paymentComplete.do?memberNo=${list[0].memberNo}" method="post">
+                	<form class="needs-validation" id="frm" name="payment" action="${path }/payment/paymentComplete.do" method="post">
                 		<c:forEach items="${list }" var="c">
                 			<input type="hidden" name="cnt" value="${c.count }">
                 			<input type="hidden" name="stockNo" value="${c.stockNo }">

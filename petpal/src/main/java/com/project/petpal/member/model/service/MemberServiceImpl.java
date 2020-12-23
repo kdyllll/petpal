@@ -1,5 +1,8 @@
 package com.project.petpal.member.model.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +41,12 @@ public class MemberServiceImpl implements MemberService{
 	public int updateMemberEnd(Member member) {
 		// TODO Auto-generated method stub
 		return dao.updateMemberEnd(session, member);
+	}
+
+	@Override
+	public List<Map> selectMemberAll() {
+		// TODO Auto-generated method stub
+		return dao.selectMemberAll(session);
 	}
 
 }

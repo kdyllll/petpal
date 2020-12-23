@@ -7,4 +7,5 @@ import org.apache.ibatis.session.SqlSession;
 
 public interface CartDao {
 	List<Map> cartList(SqlSession session, String memberNo);
+	List<Map> cartListNonMember(SqlSession session, List<String> stockNo);
 }

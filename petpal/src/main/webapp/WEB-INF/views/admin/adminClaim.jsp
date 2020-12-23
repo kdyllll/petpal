@@ -5,7 +5,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath }" />
 
+
 <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
+
 
 <!-- Custom styles for this template -->
 <link href="${path }/resources/css/admin/adminPage.css" rel="stylesheet">
@@ -18,83 +20,83 @@
 	<div class="container-fluid">
 		<div class="row">
 			<jsp:include page="/WEB-INF/views/common/adminNav.jsp">
-				<jsp:param name="nav" value="adminCommunity" />
+				<jsp:param name="nav" value="adminComplain" />
 			</jsp:include>
 			<section role="main"
 				class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-5 "
 				style="height: 100vh; overflow-y: auto;">
-				<h2 class="my-3">게시글관리</h2>
+				<h2 class="my-3">신고관리</h2>
 				<div class="row align-items-center">
 					<div class="mb-3  col-lg-2">
 						<label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
 						<select class="custom-select mr-sm-2" id="searchType">
-							<option selected value="userEmail">작성자이메일</option>
-							<option value="userCommunityNum">게시글번호</option>
+							<option selected value="userEmail">신고자이메일</option>
+							<option value="complainNum">신고번호</option>
 						</select>
 					</div>
 					<form id="search-userEmail" class="input-group mb-3  col-lg-5">
 						<input type="hidden" name="searchType" value="userEmail">
 						<input type="text" class="form-control input-group-sm"
-							name="searchKeyword" placeholder="이메일을 입력해주세요">
+							name="searchKeyword" placeholder="신고자이메일을 입력해주세요">
 						<div class="input-group-append">
 							<button class="btn btn-outline-secondary" type="button"
-								>Button</button>
+								id="button-addon2">Button</button>
 						</div>
 					</form>
-					<form id="search-userCommunityNum"
+					<form id="search-complainNum"
 						class="input-group mb-3  col-lg-5 d-none">
 
-						<input type="hidden" name="searchType" value="userCommunityNum">
+						<input type="hidden" name="searchType" value="complainNum">
 						<input type="text" class="form-control input-group-sm"
-							name="searchKeyword" placeholder="게시글번호를 입력해주세요">
+							name="searchKeyword" placeholder="신고번호를 입력해주세요">
 						<div class="input-group-append">
 							<button class="btn btn-outline-secondary" type="button"
-								>Button</button>
+								id="button-addon2">Button</button>
 						</div>
 
 					</form>
+					-
 				</div>
+
 				<div class="table-responsive" style="min-height: 80vh;">
 					<table class="table mb-5">
 						<thead>
 							<tr>
-								<th scope="col" class="text-center align-middle">글번호</th>
-								<th scope="col" class="text-center align-middle">글제목</th>
-								<th scope="col" class="text-center align-middle">작성자</th>
-								<th scope="col" class="text-center align-middle">상세보기</th>
-								<th scope="col" class="text-center align-middle">요청일</th>
+								<th scope="col" class="text-center align-middle">신고번호</th>
+								<th scope="col" class="text-center align-middle">신고글번호</th>
+								<th scope="col" class="text-center align-middle">신고카테고리</th>
+								<th scope="col" class="text-center align-middle">신고사유</th>
+								<th scope="col" class="text-center align-middle">신고상태</th>
+								<th scope="col" class="text-center align-middle">신고자이메일</th>
+								<th scope="col" class="text-center align-middle">신고일</th>
 								<th scope="col" class="text-center align-middle"></th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:if test="${not empty pList }">
-								<c:forEach var="c" items="${pList }">
+							<c:if test="${not empty cList }">
+								<c:forEach var="c" items="${cList }">
 									<tr>
-										<th scope="row" class=" align-middle text-center"><c:out value="${c.PLACENO }"/></th>
-										<td class="text-center align-middle"><c:out value="${c.TITLE }"/></td>
-										<td class="align-middle text-center"><c:out value="${c.EMAIL }"/></td>
+										<th scope="row" class="align-middle text-center"><c:out
+												value="${c.CLAIMNO }" /></th>
+										<td class="align-middle text-center"><c:out
+												value="${c.POSTNO }" /></td>
+										<td class="align-middle text-center"><c:out
+												value="${c.CATEGORY }" /></td>
 										<td class="align-middle text-center">
-											<input type="hidden"  name="placeNo" value="${c.PLACENO }">
-											<a style="cursor:pointer; color:red;" class="placeDetail" >상세보기</a>
-										</td>
-										<td class="align-middle text-center"><fmt:formatDate value="${c.PLACEDATE }" pattern="yyyy년MM월dd일" /></td>
-										<td class="align-middle text-center"><form class="d-inline placeFrm"  method="post">
-											<c:choose>
-											<c:when test="${c.STATUS eq 'N' }">
-											<button type="button"
-												class="btn btn-outline-secondary btn-sm  placeAcceptBtn">수락</button>
-												<input type="hidden" name="placeNo" value="${c.PLACENO }">
-											<button type="button" class="btn  btn-outline-danger btn-sm  placeDenyBtn">거절</button>
-											</form>
-											</c:when >
-											<c:when test="${c.STATUS eq 'Y' }">
-												승인완료
-											</c:when>
-											<c:otherwise>
-												승인거절
-											</c:otherwise>
-											</c:choose>
-										</td>
+										<c:out value="${fn:substring(c.CONTENT,0,8) }" /><c:if test="${fn:length(c.CONTENT) > 8 }">...</c:if></td>
+										<td class="align-middle text-center"><c:choose>
+												<c:when test="${c.STATUS eq 'N' }">신고대기</c:when>
+												<c:otherwise>신고완료</c:otherwise>
+											</c:choose></td>
+										<td class="align-middle text-center"><c:out
+												value="${c.EMAIL }" /></td>
+										<td class="align-middle text-center"><fmt:formatDate value="${c.CLAIMDATE }" pattern="yyyy년MM월dd일"/></td>
+										<td class="align-middle text-center">
+												<form class="claimDetailFrm d-inline">
+												<input type="hidden" name="claimNo" value="${c.CLAIMNO }" />
+												<button type="button" class="claimDetailBtn btn btn-outline-secondary btn-sm mb-1">신고상세보기</button>
+												</form>									
+											</td>	
 									</tr>
 								</c:forEach>
 							</c:if>
@@ -119,47 +121,37 @@
 			</section>
 		</div>
 	</div>
-	<div class="placeModal"></div>
+	<div class="claimModal"></div>
 	<script>
     $(function(){
         let userEmail = $("#search-userEmail");
-        let userCommunityNum = $("#search-userCommunityNum");
+        let userName = $("#search-userName");
+        let complainNum = $("#search-complainNum");
         $("#searchType").on("change", e => {
             userEmail.addClass("d-none");
-            userCommunityNum.addClass("d-none");
+            userName.addClass("d-none");
+            complainNum.addClass("d-none");
 
             let target = $(e.target).val();
             $("#search-"+target).removeClass("d-none");
         });
         $("#searchType").change();
         
-        $(".placeDetail").on("click", e => {
-        	let placeNo = $(e.target).prev().val();
+        
+        $(".claimDetailBtn").on("click", e => {
+        	let claimNo = $(e.target).prev().val();
         	$.ajax({
-        		url : "${path}/admin/adminPlaceDetail.do",
-        		data : {placeNo : placeNo},
-        		dataType: "html",
-        		success : (data) => {
-        			console.log(data);
-        			$(".placeModal").html(data);
-        			$("div.modal").modal();
-        		}
-        	})
+				url: "${path}/admin/claimDetail.do",
+				data:{claimNo : claimNo },
+				dataType:"html",
+				success:(data) => {
+					console.log(data);
+					$(".claimModal").html(data);
+	         		$('div.modal').modal(); 
+				}
+			});
         })
-        
-        $(".placeDenyBtn").on("click", e => {
-        	let placeNo = $(e.target).prev().val();
-        	$(".placeFrm").attr("action", "${path}/admin/placeDeny.do?placeNum="+placeNo).submit();
-        })
-        $(".placeAcceptBtn").on("click", e => {
-        	let placeNo = $(e.target).next().val();
-        	$(".placeFrm").attr("action", "${path}/admin/placeAccept.do?placeNum="+placeNo).submit();
-        })
-        
-        
     })
-
 </script>
-
 </body>
 </html>

@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.project.petpal.admin.model.service.AdminService;
 import com.project.petpal.admin.model.vo.Product;
+import com.project.petpal.member.model.service.MemberService;
 
 @Controller
 public class AdminController {
 	@Autowired
 	public AdminService service;
+	@Autowired
+	public MemberService mservice;
 	
 	@RequestMapping("/admin/moveAdminPage.do")
 	public String moveAdminPage(Model m) {
@@ -31,18 +34,31 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/admin/adminCommunity.do")
-	public String adminCommunity() {
+	public String adminCommunity(Model m) {
+		List<Map> pList = service.selectPlaceList();
+		m.addAttribute("pList", pList);
 		return "admin/adminCommunity";
 	}
 	
-	@RequestMapping("/admin/adminComplain.do")
-	public String adminComplain() {
-		return "admin/adminComplain";
+	@RequestMapping("/admin/adminClaim.do")
+	public String adminComplain(Model m) {
+		List<Map> cList = service.selectClaimAll();
+		m.addAttribute("cList", cList);
+		return "admin/adminClaim";
 	}
 	
 	@RequestMapping("/admin/adminOrder.do")
-	public String adminOrder() {
+	public String adminOrder(Model m) {
+		List<Map> oList = service.selectOrderList();
+		m.addAttribute("oList", oList);
 		return "admin/adminOrder";
+	}
+	
+	@RequestMapping("/admin/memberList.do")
+	public String memberList(Model m) {
+		List<Map> mList = mservice.selectMemberAll();
+		m.addAttribute("mList",mList);
+		return "admin/memberList";
 	}
 	
 	@RequestMapping("/admin/adminInOutList.do")

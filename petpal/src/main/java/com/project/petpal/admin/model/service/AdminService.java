@@ -21,4 +21,18 @@ public interface AdminService {
 	List<Map> productIOAll();
 	List<Map> searchProduct(String productName);
 	List<Map> inOutSearch(Map m);
+	List<Map> selectOrderList();
+	List<Map> selectPayDetail(String paymentNo);
+	Map selectPaymentOne(String paymentNo);
+	int orderCancelOne(String detailNo);
+	List<Map> payDetailStatus(String paymentNo);
+	int updatePaymentStatus(String paymentNo);
+	int orderCancelAll(String paymentNo);
+	List<Map> selectClaimAll();
+	Map selectClaimOne(String claimNo);
+	int claimDelete(String claimNo);
+	int claimAccept(String claimNo);
+	List<Map> selectPlaceList();
+	Map selectPlaceOne(String placeNo);
+	int updatePlace(Map m);
 }
