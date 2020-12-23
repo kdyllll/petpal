@@ -821,7 +821,8 @@
           				url: "${path}/store/payCheck.do",
           				data:{productNo:productNo},
           				success:(data) => {//data는 list임
-          			  		if(data!=null){//2주안에 리뷰를 안 쓴 구매내역이 있으면 
+          					console.log(data);
+          			  		if(data.length!=0){//2주안에 리뷰를 안 쓴 구매내역이 있으면 
           			  			if(data.length>1){//구매내역이 여러개라면 
           			  				//어떤 내역을 쓸건지 선택하는 모달
           			  				$.ajaxSettings.traditional = true;
@@ -874,7 +875,6 @@
     				data:{productNo:productNo},
     				dataType:"html",
     				success:(data) => {
-    					console.log(data);
     					$(".pdtModal").html(data);
     	         		$('div.modal').modal(); 
     				}
