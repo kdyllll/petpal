@@ -290,7 +290,6 @@
    			 if($(item).val().trim()==$(e.target).val().trim()){
    				 cnt++;
    			 }
-
     	 });
        if($(e.target).val().trim().length==0){
          //아무일도 일어나지 않음!

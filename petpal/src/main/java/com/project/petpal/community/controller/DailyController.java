@@ -179,6 +179,36 @@ public class DailyController {
 		return "common/msg";
 	}
 	
+	//글수정
+	@RequestMapping("/daily/moveUpdate.do")
+	public String moveUpdate(String dailyNo,Model m) {
+		
+		//글 + 멤버 
+		Map daily=service.selectDailyOne(dailyNo);
+		//글 사진
+		List<DailyImg> imgList=service.selectDailyImg(dailyNo);
+		//상품 태그
+		List<Map> coordList=service.selectCoordList(dailyNo);
+		//상품 이미지
+		List<ProductImg> pImgList=new ArrayList<ProductImg>();
+		for(Map mc:coordList) {
+			String productNo=(String)mc.get("PRODUCTNO");
+			pImgList.add(service.selectProductImg(productNo));
+		}
+		//같은 상품의 사진이 있다면 중복 제거
+		HashSet temp=new HashSet(pImgList);
+		pImgList=new ArrayList(temp);
+		//해시태그
+		List<Hashtag> hashList=service.selectHashList(dailyNo);
+		
+		m.addAttribute("daily",daily);
+		m.addAttribute("imgList",imgList);
+		m.addAttribute("coordList",coordList);
+		m.addAttribute("pImgList",pImgList);
+		m.addAttribute("hashList",hashList);
+		
+		return "community/dailyUpdate";
+	}
 	
 	
 	//AJAX
