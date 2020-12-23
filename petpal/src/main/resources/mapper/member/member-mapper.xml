@@ -28,4 +28,26 @@
     <select id="selectMemberAll">
     	SELECT * FROM MEMBER
     </select>
+    <select id="selectMemberOne" resultType="member" parameterType="string">
+    	SELECT * FROM MEMBER WHERE MEMBERNO=#{memberNo}
+    </select>
+    <select id="countFollowing" resultType="int" parameterType="string">
+    	SELECT COUNT(*) FROM FOLLOW WHERE MEMBERNO=#{memberNo}
+    </select>
+    <select id="countFollower" resultType="int" parameterType="string">
+    	SELECT COUNT(*) FROM FOLLOW WHERE WRITERNO=#{memberNo}
+    </select>
+    <select id="selectDailyMain" resultType="dailyImg" parameterType="string">
+    	SELECT * FROM DAILYIMG LEFT JOIN DAILY USING(DAILYNO) WHERE MEMBERNO=#{memberNo} AND STATUS='M'
+    </select>
+    <select id="selectTipMain" resultType="map" parameterType="string">
+    	SELECT * FROM TIPIMG LEFT JOIN TIP USING(TIPNO) WHERE MEMBERNO=#{memberNo} AND MAINIMG IS NOT NULL
+    </select>
+    <select id="selectPlaceMain" resultType="map" parameterType="string">
+    	SELECT * FROM PLACEIMG LEFT JOIN PLACE USING(PLACENO) WHERE MEMBERNO=#{memberNo} AND TYPE='M'
+    </select>
+    <select id="selectFindMain" resultType="map" parameterType="string">
+    	SELECT * FROM FINDIMG LEFT JOIN FIND USING(FINDNO) WHERE MEMBERNO=#{memberNo} AND IMGSTATUS='M'
+    </select>
+   
 </mapper>

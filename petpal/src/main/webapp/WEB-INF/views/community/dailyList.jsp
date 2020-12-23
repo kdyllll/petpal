@@ -78,13 +78,13 @@
 		                    <div class="card mb-4 bg-transparent border-0">
 		                        <div class="px-3 row mb-2">  
 		                        		<c:if test="${not empty d.IMG }">                
-		                                	<a href="#"><img src="${path }/resources/upload/member/profile/${d.IMG}" class="rounded" style="width:40px; height: 40px;"></a>
+		                                	<a href="${path }/user/moveUserInfo.do?memberNo=${d.MEMBERNO}"><img src="${path }/resources/upload/member/profile/${d.IMG}" class="rounded" style="width:40px; height: 40px;"></a>
 		                                </c:if>
 		                                <c:if test="${ empty d.IMG }">  
-		                                	<a href="#"><img src="${path }/resources/upload/member/profile/avatar.webp" class="rounded" style="width:40px; height: 40px;"></a>
+		                                	<a href="${path }/user/moveUserInfo.do?memberNo=${d.MEMBERNO}"><img src="${path }/resources/upload/member/profile/avatar.webp" class="rounded" style="width:40px; height: 40px;"></a>
 		                                </c:if>
 		                                <div class="ml-1">
-		                                    <a href="#"><span class="text-dark align-top mx-1"><strong><c:out value="${d.NICKNAME }"/></strong></span></a>
+		                                    <a href="${path }/user/moveUserInfo.do?memberNo=${d.MEMBERNO}"><span class="text-dark align-top mx-1"><strong><c:out value="${d.NICKNAME }"/></strong></span></a>
 		                                    <span><strong> · </strong></span>
 		                                    <span><button class="btn btn-link text-daily p-0 align-top"><strong> 팔로우</strong></button></span>
 		                                    <p class="ml-1" style="font-size: 12px;"><c:out value="${d.INFO }"/></p>  

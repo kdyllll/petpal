@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.petpal.community.model.vo.DailyImg;
 import com.project.petpal.member.model.dao.MemberDao;
 import com.project.petpal.member.model.vo.Member;
 
@@ -48,5 +49,49 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return dao.selectMemberAll(session);
 	}
+
+	@Override
+	public Member selectMemberOne(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectMemberOne(session,memberNo);
+	}
+
+	@Override
+	public int countFollowing(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.countFollowing(session,memberNo);
+	}
+
+	@Override
+	public int countFollower(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.countFollower(session,memberNo);
+	}
+
+	@Override
+	public List<DailyImg> selectDailyMain(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectDailyMain(session,memberNo);
+	}
+
+	@Override
+	public List<Map> selectTipMain(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectTipMain(session,memberNo);
+	}
+
+	@Override
+	public List<Map> selectPlaceMain(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectPlaceMain(session,memberNo);
+	}
+
+	@Override
+	public List<Map> selectFindMain(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectFindMain(session,memberNo);
+	}
+	
+	
 
 }

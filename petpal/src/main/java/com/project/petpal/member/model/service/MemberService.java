@@ -3,6 +3,7 @@ package com.project.petpal.member.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.project.petpal.community.model.vo.DailyImg;
 import com.project.petpal.member.model.vo.Member;
 
 public interface MemberService {
@@ -12,4 +13,11 @@ public interface MemberService {
 	int updatePassword(Member member);
 	int updateMemberEnd(Member member);
 	List<Map> selectMemberAll();
+	Member selectMemberOne(String memberNo);
+	int countFollowing(String memberNo);
+	int countFollower(String memberNo);
+	List<DailyImg> selectDailyMain(String memberNo);
+	List<Map> selectTipMain(String memberNo);
+	List<Map> selectPlaceMain(String memberNo);
+	List<Map> selectFindMain(String memberNo);
 }
