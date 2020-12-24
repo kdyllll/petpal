@@ -28,10 +28,10 @@
 		<div style="width:100%; height:1px; background-color:#ced6e0;" class="my-3"></div>
     	<div class="row d-flex justify-content-around mt-4">
     		<div class="d-flex flex-column align-items-center">
-    	 	 	<span>좋아요</span><p><c:out value="${fav }" /></p>
+    	 	 	<a href="#">좋아요</a><p><c:out value="${fav }" /></p>
     	 	 </div >
     	 	 <div class="d-flex flex-column align-items-center">
-	   		 	<span>팔로우</span><p><c:out value="${follow }" /></p>
+	   		 	<a href="#">팔로우</a><p><c:out value="${follow }" /></p>
 	   		 </div>
 	   		 <div class="d-flex flex-column align-items-center">
 	   		 	<span>포인트</span><p><c:out value="${member.POINT }" /></p>
