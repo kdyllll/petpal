@@ -37,20 +37,18 @@
     <div class="row mb-5 mb-lg-1">
         <form id="writeFrm" class="container mt-5 col-lg-8" method="post" enctype="multipart/form-data">
             <p class="h2 mb-5 mt-2"><strong>일상 올리기</strong></p>
-            <div class="form-group row" id="imgContainer">               
-              <label id="uploadLabel" class="btn rounded bg-light ml-1 col-lg-5 col-12 d-flex justify-content-center align-items-center" style="height: 300px;">          
-                  <input name="pic" class="d-none upload" id="upload" type="file" accept="images/*" required/>                                    
-                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-camera-fill text-secondary" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="font-size: 60px;">
-                      <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
-                      <path fill-rule="evenodd" d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>
-                  </svg>
-                  <br>
-                  <span>
-                      사진 올리기
-                      <br>
-                      *최대 5장까지
-                  </span>
-              </label>                                    
+            <div class="form-group row" id="imgContainer">  
+             <!-- 업로드 버튼 -->
+            	<div id="uploadLabel" class="col-12 m-0">                              
+                   <label class="btn d-flex justify-content-center align-items-center addPic rounded text-center bg-light btn-block mt-3" style="cursor: pointer; height:50px;">
+                     <input name="pic" class="d-none upload" id="upload" type="file" accept="images/*" required/>
+                     <svg width="40px" height="40px" viewBox="0 0 16 16" class="bi bi-camera-fill text-secondary" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="font-size: 60px;">
+	                      <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+	                      <path fill-rule="evenodd" d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>
+	                  </svg>
+                     <span class="h5 text-secondary align-middle mb-0 ml-3"><strong>추가하기</strong></span><span class="text-secondary ml-1">*최대 5장</span>
+                   </label>     
+                 </div>                       
             </div>
             
             <!--설명-->
@@ -109,14 +107,14 @@
    //사진!!
    //사진 미리보기
    $(document).on('change','.upload',function(e){  
-	     console.log($("label#uploadLabel"));
-         $("label#uploadLabel").hide(); // 사진 등록 창 안보이게
+	     console.log($("#uploadLabel"));
+         $("#uploadLabel").hide(); // 사진 등록 창 안보이게
          
          $.each(e.target.files,(i,v)=>{//미리보기 로직         
              let reader=new FileReader();
              reader.onload=e=>{                              
-                 let img=`<div class="preview position-relative rounded col-lg-5 ml-lg-5 mt-5 col-12 px-0" >
-                           <img src="`+e.target.result+`" class="previewImg rounded px-0" style="width:100%; height:206px;" data-toggle="modal" data-target="#exampleModal"">
+                 let img=`<div class="preview position-relative rounded offset-1 col-10 mt-5 px-0" >
+                           <img src="`+e.target.result+`" class="previewImg rounded px-0" style="width:100%" data-toggle="modal" data-target="#exampleModal"">
                            <div class="buttonCon position-absolute rounded" style="bottom:0; left:0; background:linear-gradient(to top,rgba(0, 0, 0, 0.5),rgba(255, 255, 255, 0)); width:100%;">
                              <button type="button" class="delete btn ml-3">
                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash text-white" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -154,6 +152,8 @@
          fn_add();
        }else if($(".preview").length==0){
     	   //사진을 전부 삭제했다면 → 초기의 사진 등록버튼 보이게
+    	  console.log("사진 전부 삭제");
+    	  console.log($("#uploadLabel"))
          $("#uploadLabel").show();
          $("#upload").val("");
          $(".addPic").remove();
@@ -178,10 +178,17 @@
       var clickY=e.offsetY;//클릭한 위치Y좌표
       var x=target.width();//클릭한 이미지의 높이
       var y=target.height();//클릭한 이미지의 넓이
-      percentX=(clickX/x*100).toFixed(1);//클릭한 위치의 상대적인 퍼센트X좌표값(소수점 1자리)
-      percentY=(clickY/y*100).toFixed(1);//클릭한 위치의 상대적인 퍼센트Y좌표값(소수점 1자리)
+      
+      percentX=clickX/x*100;//클릭한 위치의 상대적인 퍼센트X좌표값
+      percentY=clickY/y*100;//클릭한 위치의 상대적인 퍼센트Y좌표값
       xx=percentX-15;
       yy=percentY+10;
+      console.log(clickX);
+      console.log(clickY);
+      console.log(x);
+      console.log(y);
+      console.log(percentX);
+      console.log(percentY);
     });
 
     //좌표 등록하기
@@ -196,28 +203,28 @@
 			success:data => {	
 				img=`<div class="plusTag">
 	                  <svg class="plusBtn position-absolute" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
-                    style="top:`+percentY+`%; left:`+percentX+`%;">
-                    <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-                </svg>
-                <input type="hidden" name="productNo" value="`+data.productNo+`"/>
-                <input type="hidden" name="percentX" value="`+percentX+`"/>
-                <input type="hidden" name="percentY" value="`+percentY+`"/>
-                <input type="hidden" name="index" value=""/>
-                <div class="bubble rounded shadow-sm col-4 col-lg-4 position-absolute px-1" style="top:`+yy+`%; left:`+xx+`%;">
-                  <div class="row d-flex flex-wrap">
-                    <img class="col-2 border" src="${path }/resources/upload/product/detail/`+data.imgName+`">
-                    <p class="p-1 mb-0">`+name+`</p>
-                  </div>
-                  <div class="d-flex justify-content-end">
-                    <button type="button" class="deleteTag btn p-0 row pr-3">
-                      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash text-dark" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>`;
+		                    style="top:`+percentY+`%; left:`+percentX+`%;">
+		                    <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+		                </svg>
+		                <input type="hidden" name="productNo" value="`+data.productNo+`"/>
+		                <input type="hidden" name="percentX" value="`+percentX+`"/>
+		                <input type="hidden" name="percentY" value="`+percentY+`"/>
+		                <input type="hidden" name="index" value=""/>
+		                <div class="bubble rounded shadow-sm col-4 col-lg-4 position-absolute px-1" style="top:`+yy+`%; left:`+xx+`%;">
+		                  <div class="row d-flex flex-wrap">
+		                    <img class="col-2 border" src="${path }/resources/upload/product/detail/`+data.imgName+`">
+		                    <p class="p-1 mb-0">`+name+`</p>
+		                  </div>
+		                  <div class="d-flex justify-content-end">
+		                    <button type="button" class="deleteTag btn p-0 row pr-3">
+		                      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash text-dark" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+		                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+		                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+		                      </svg>
+		                    </button>
+		                  </div>
+		                </div>
+		              </div>`;
 				target.parent("div.preview").append(img);
 		        $(".bubble").hide();
 			},
@@ -283,7 +290,6 @@
    			 if($(item).val().trim()==$(e.target).val().trim()){
    				 cnt++;
    			 }
-
     	 });
        if($(e.target).val().trim().length==0){
          //아무일도 일어나지 않음!

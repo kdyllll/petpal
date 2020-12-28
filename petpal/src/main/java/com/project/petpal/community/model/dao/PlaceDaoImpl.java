@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.project.petpal.community.model.vo.Place;
+import com.project.petpal.community.model.vo.PlaceComment;
 import com.project.petpal.community.model.vo.PlaceImg;
 
 @Repository
@@ -46,6 +47,16 @@ public class PlaceDaoImpl implements PlaceDao{
 	@Override
 	public int commentCount(SqlSession session,String placeNo) {
 		return session.selectOne("place.commentCount");
+	}
+
+	@Override
+	public int insertComment(SqlSession session, PlaceComment pc) {
+		return session.insert("place.insertComment",pc);
+	}
+
+	@Override
+	public List<PlaceComment> commentList(SqlSession session, String placeNo) {
+		return session.selectList("place.commentList",placeNo);
 	}
 
 }

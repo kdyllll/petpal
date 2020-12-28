@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.petpal.community.model.dao.PlaceDao;
 import com.project.petpal.community.model.vo.Place;
+import com.project.petpal.community.model.vo.PlaceComment;
 import com.project.petpal.community.model.vo.PlaceImg;
 
 @Service
@@ -67,6 +68,16 @@ public class PlaceServiceImpl implements PlaceService{
 	@Override
 	public int commentCount(String placeNo) {
 		return dao.commentCount(session,placeNo);
+	}
+
+	@Override
+	public int insertComment(PlaceComment pc) {
+		return dao.insertComment(session,pc);
+	}
+
+	@Override
+	public List<PlaceComment> commentList(String placeNo) {
+		return dao.commentList(session,placeNo);
 	}
 
 }
