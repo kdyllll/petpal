@@ -154,7 +154,7 @@
       <div class="productContainer">
          <!--스티키-->
         <div class="sticky-top d-none d-lg-block" style="top:70px; height:20px;">
-          <nav class="navbar mt-3 navbar-expand-lg navbar-light bg-light ">
+          <nav class="navbar mt-3 navbar-expand-lg navbar-light bg-point ">
               <ul class="nav container justify-content-around  d-flex ">
                 <li class="nav-item ">
                   <a class="nav-link text-dark" href="#pInfo">상품정보</a>
@@ -172,7 +172,7 @@
           </nav>
         </div>
         <div class="sticky-top d-lg-none" style="top:170px; height:20px;">
-            <nav class="navbar mt-3 navbar-expand-lg navbar-light bg-light ">
+            <nav class="navbar mt-3 navbar-expand-lg navbar-light bg-point ">
   
                 <ul class="nav container justify-content-around  d-flex ">
                   <li class="nav-item ">
@@ -532,8 +532,11 @@
 <script>
 		let productNo=$("#productNo").val();
 		let loginMember=$("#loginMember").val();
+		let stockList=${jsonStock};
 		//수량 선택
-		fn_select();
+		if(stockList.length<2){
+			fn_select();
+		}
 		$("#option").on("change",e=>{
 			fn_select();
 		});
@@ -542,10 +545,9 @@
 		function fn_select(){
 		  let stockNo=$("#option option:selected").val();
 		  let option="";
-		  let price="";
-		  let stockList=${jsonStock};
+		  let price="";		  
 		  let stock="";
- 
+ 		  let display="";
 		  let flag=true;
           //유효성 검사
           $(".orderBox").each((i,item)=>{
@@ -573,6 +575,7 @@
      		 option=$("#productName").text()+"  /  (재고 "+stockList[0].stock+"개)";
      		 stock=stockList[0].stock;
      		 stockNo=stockList[0].stockNo;
+     		 display="d-none";
 		  }
 		  /*상품선택박스에 옵션 표시 */
 		    let orderBox=`<article class="orderBox rounded bg-light m-3 pl-3 pr-1 py-2">
@@ -580,7 +583,7 @@
 		                <p class="m-0">`+option+`</p>
 		                <input type="hidden" class="stockNo" name="stockNo" value="`+stockNo+`"/>
 		                <input type="hidden" class="stockCnt" value="`+stock+`"/>
-		                <button type="button" class="delete btn p-0 m-0 ">
+		                <button type="button" class="delete btn p-0 m-0 `+display+`">
 		                  <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 		                    <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
 		                  </svg>
