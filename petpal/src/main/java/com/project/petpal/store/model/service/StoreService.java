@@ -23,7 +23,7 @@ public interface StoreService {
 	int insertCart(Map m);
 	List<String> payCheck(Map m);
 	int insertReview(Review r);
-	List<Review> selectReview(String productNo);
+	List<Review> selectReview(String productNo,int cPage,int numPerPage);
 	Stock selectStock(String detailNo);
 	int deleteReview(String reviewNo);
 	int updateReview(Review r);
@@ -31,7 +31,7 @@ public interface StoreService {
 	int reviewComment(Map map);
 	ProductImg selectMainImg(String productNo);
 	int insertQna(Qna q);
-	List<Qna> selectQna(String productNo);
+	List<Qna> selectQna(String productNo,int cPage,int numPerPage);
 	int deleteQna(String qnaNo);
 	Qna selectQnaOne(String qnaNo);
 	int updateQna(Qna qna);

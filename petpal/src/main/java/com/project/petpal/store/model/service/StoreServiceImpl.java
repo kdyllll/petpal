@@ -94,9 +94,9 @@ public class StoreServiceImpl implements StoreService{
 	}
 
 	@Override
-	public List<Review> selectReview(String productNo) {
+	public List<Review> selectReview(String productNo,int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return dao.selectReview(session,productNo);
+		return dao.selectReview(session,productNo,cPage,numPerPage);
 	}
 
 	@Override
@@ -142,9 +142,9 @@ public class StoreServiceImpl implements StoreService{
 	}
 
 	@Override
-	public List<Qna> selectQna(String productNo) {
+	public List<Qna> selectQna(String productNo,int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return dao.selectQna(session,productNo);
+		return dao.selectQna(session,productNo,cPage,numPerPage);
 	}
 
 	@Override

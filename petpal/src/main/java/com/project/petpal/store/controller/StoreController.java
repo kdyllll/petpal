@@ -63,10 +63,10 @@ public class StoreController {
 		//일상글 가져오기
 		
 		//리뷰 가져오기
-		List<Review> reviews=service.selectReview(productNo);
+		List<Review> reviews=service.selectReview(productNo,1,3);
 		
 		//문의 가져오기
-		List<Qna> qnas=service.selectQna(productNo);
+		List<Qna> qnas=service.selectQna(productNo,1,3);
 		
 		m.addAttribute("product",p);
 		m.addAttribute("imgs",pImg);

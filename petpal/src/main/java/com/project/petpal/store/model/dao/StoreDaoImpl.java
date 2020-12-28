@@ -3,6 +3,7 @@ package com.project.petpal.store.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -88,9 +89,10 @@ public class StoreDaoImpl implements StoreDao{
 	}
 
 	@Override
-	public List<Review> selectReview(SqlSession session, String productNo) {
+	public List<Review> selectReview(SqlSession session, String productNo,int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return session.selectList("store.selectReview",productNo);
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("store.selectReview",productNo,rb);
 	}
 
 	@Override
@@ -136,9 +138,10 @@ public class StoreDaoImpl implements StoreDao{
 	}
 
 	@Override
-	public List<Qna> selectQna(SqlSession session, String productNo) {
+	public List<Qna> selectQna(SqlSession session, String productNo,int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return session.selectList("store.selectQna", productNo);
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("store.selectQna", productNo,rb);
 	}
 
 	@Override
