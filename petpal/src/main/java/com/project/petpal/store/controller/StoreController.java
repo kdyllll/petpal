@@ -53,19 +53,13 @@ public class StoreController {
 		List<ProductImg> pImg=service.selectImg(productNo);
 		//재고리스트받기
 		List<Stock> list=service.selectStockList(productNo);
-		//색상리스트, 크기리스트 받기
-		HashSet<String> colorSet=new HashSet<String>();
-		HashSet<String> sizeSet=new HashSet<String>();
+		List<Stock> stockList=new ArrayList<Stock>();
 		for(Stock s:list) {
-			if(s.getColor()!=null) {
-				colorSet.add(s.getColor());
-			}
-			if(s.getProductSize()!=null) {
-				sizeSet.add(s.getProductSize());
+			if(s.getPrice()>0) {
+				stockList.add(s);
 			}
 		}
-		List<String> colors=new ArrayList(colorSet);
-		List<String> sizes=new ArrayList(sizeSet);
+
 		//일상글 가져오기
 		
 		//리뷰 가져오기
@@ -76,10 +70,8 @@ public class StoreController {
 		
 		m.addAttribute("product",p);
 		m.addAttribute("imgs",pImg);
-		m.addAttribute("stockList",list);
-		m.addAttribute("jsonStock",new Gson().toJson(list));
-		m.addAttribute("colors",colors);
-		m.addAttribute("sizes",sizes);
+		m.addAttribute("stockList",stockList);
+		m.addAttribute("jsonStock",new Gson().toJson(stockList));
 		m.addAttribute("reviewList",reviews);
 		m.addAttribute("qnaList",qnas);
 		

@@ -7,7 +7,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyImg;
+import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.member.model.dao.MemberDao;
 import com.project.petpal.member.model.vo.Member;
 
@@ -49,6 +51,7 @@ public class MemberServiceImpl implements MemberService{
       // TODO Auto-generated method stub
       return dao.selectMemberAll(session);
    }
+
 
    @Override
 
@@ -110,7 +113,19 @@ public class MemberServiceImpl implements MemberService{
       // TODO Auto-generated method stub
       return dao.selectFindMain(session,memberNo);
    }
-   
+
+	@Override
+	public List<Daily> selectDailyList(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectDailyList(session,memberNo);
+	}
+	
+	@Override
+	public List<Hashtag> selectDailyHash(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectDailyHash(session,memberNo);
+	}
+	   
 
 
 }

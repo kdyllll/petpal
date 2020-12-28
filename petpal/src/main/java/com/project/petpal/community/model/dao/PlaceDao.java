@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.community.model.vo.Place;
 import com.project.petpal.community.model.vo.PlaceComment;
 import com.project.petpal.community.model.vo.PlaceImg;
@@ -19,6 +20,7 @@ public interface PlaceDao {
 	int selectCount(SqlSession session,String category);
 	int commentCount(SqlSession session,String placeNo);
 	int insertComment(SqlSession session,PlaceComment pc);
-	List<PlaceComment> commentList(SqlSession session,String placeNo);
+	List<PlaceComment> commentList(SqlSession session,String placeNo,int cPage,int numPerpage);
+	List<Hashtag> hashList(SqlSession session,String placeNo);
 	
 }

@@ -5,7 +5,9 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyImg;
+import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.member.model.vo.Member;
 
 public interface MemberDao {
@@ -25,5 +27,7 @@ public interface MemberDao {
    List<Map> selectTipMain(SqlSession session, String memberNo);
    List<Map> selectPlaceMain(SqlSession session, String memberNo);
    List<Map> selectFindMain(SqlSession session, String memberNo);
+   List<Daily> selectDailyList(SqlSession session, String memberNo);
+   List<Hashtag> selectDailyHash(SqlSession session, String memberNo);
 
 }

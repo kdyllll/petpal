@@ -14,14 +14,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.petpal.common.PageBarFactory;
 import com.project.petpal.community.model.service.PlaceService;
+import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.community.model.vo.Place;
 import com.project.petpal.community.model.vo.PlaceComment;
 import com.project.petpal.community.model.vo.PlaceImg;
+import com.project.petpal.member.model.service.MemberService;
 import com.project.petpal.member.model.vo.Member;
 
 @Controller
@@ -110,16 +111,23 @@ public class PlaceController {
 				e.printStackTrace();
 			}
 		}
-		m.addAttribute("pageBar",PageBarFactory.getPageBar(totalData, cPage, numPerpage,category, "movePlaceList.do"));
+		m.addAttribute("pageBar",PageBarFactory.getPageBar(totalData, cPage, numPerpage,category,null, "movePlaceList.do"));
 		m.addAttribute("list",list);
 		return "community/placeList";
 	}
+	@Autowired
+	private MemberService mService;
 	@RequestMapping("/place/movePlaceDetail.do")
-	public String selectPlace(String placeNo,Model m) {
-		List<Place> list = service.selectPlace(placeNo);
-		List<PlaceComment> cList=service.commentList(placeNo);
-		//int count=service.commentCount(placeNo);
-		//m.addAttribute("count", count);
+	public String selectPlace(String placeNo,Model m,@RequestParam(value="cPage",defaultValue="1") int cPage) {
+		System.out.println(placeNo);
+		int numPerpage=5;
+		List<Place> list = service.selectPlace(placeNo);//장소후기리스트 (사진과내용이 여러개라서 리스트)
+		List<PlaceComment> cList=service.commentList(placeNo,cPage,numPerpage);//댓글리스트
+		int count=service.commentCount(placeNo);//댓글개수
+		List<Hashtag> hList=service.hashList(placeNo);//해쉬태그리스트
+		m.addAttribute("pageBar",PageBarFactory.getPageBar(count, cPage, numPerpage,null,placeNo, "movePlaceDetail.do"));
+		m.addAttribute("count", count);
+		m.addAttribute("hList",hList);
 		m.addAttribute("cList",cList);
 		m.addAttribute("list", list);
 		return "community/placeDetail";

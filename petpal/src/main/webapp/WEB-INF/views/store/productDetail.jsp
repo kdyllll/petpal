@@ -22,12 +22,7 @@
   <main role="main" class="pt-5" style="min-height:100vh;">
   	  <input type="hidden" id="loginMember" value="${loginMember }"/>
       <form class="payFrm container mt-5 productHeader"> 
-        <!-- <nav aria-label="breadcrumb ">
-          <ol class="breadcrumb bg-transparent">
-            <li class="breadcrumb-item"><a href="#">강아지</a></li>
-            <li class="breadcrumb-item"><a href="#">가구</a></li>
-          </ol>
-        </nav> -->
+ 
         <div class="panel-body row">  
           <div class="col-lg-6">
             <!-- 상품 사진 -->
@@ -94,18 +89,23 @@
             		</c:if>
             	</c:forEach>
               <div class="row mb-3">
-                <span class="h1 col-3 text-right  text-hgh align-middle"><strong><c:out value="${sale }"/>%</strong></span>
+                <span class="h1 col-3 text-right  text-hgh align-middle"><strong>
+                	<c:out value="${sale }"/>%
+                </strong></span>
                 <span class="col-9">
                   <p class="mb-0"><del>
-                  	
-                  	<c:out value="${price }"/>
+                  	<fmt:formatNumber value="${price }" pattern="###,###,###"/>원
                   </del></p>
                   <p class="h1"><strong>
-                  	<c:out value="${price * sale * 0.001 }"/>
+                  	<fmt:formatNumber value="${price * (100 - sale) / 100  }" pattern="###,###,###"/>원
                   </strong></p>
                 </span>
               </div>
-              <p class=""><b class="text-hgh"><c:out value="${price * sale * 0.001 * 0.1}"/>P</b> 적립해드립니다.</p>
+              <p class="">
+              		<b class="text-hgh">
+              			<fmt:formatNumber value="${price * (100 - sale) / 1000  }" pattern="###,###,###"/>P
+              		</b> 적립해드립니다.
+              </p>
             </div>
             <div class="px-3 py-3 border-bottom">
               <p>CJ대한통운<br>
@@ -113,22 +113,27 @@
               </p>              
             </div>
             <div class="py-3 px-3">
-              <c:if test="${not empty colors }">
-	              <select id="color" class="form-control mb-1" >
-	                <option disabled selected>색상</option>  
-                	<c:forEach var="i" items="${colors}">
-                		<option value="${i }"><c:out value="${i }"/></option>
+              <c:if test="${fn:length(stockList) > 1 }">
+	              <select id="option" class="form-control mb-1" >
+	                <option value="default" disabled selected>옵션 선택</option> 	                 
+                	<c:forEach var="s" items="${stockList}">
+                		<option value="${s.stockNo }" ${s.stock>0?"":"disabled" }>
+                			<c:out value="${s.color }"/> 	
+                			&nbsp;
+                			<c:out value="${s.productSize }"/> 
+							&nbsp;&nbsp; / &nbsp;&nbsp;
+                			<c:if test="${s.stock > 0 }">
+                				<c:out value="${s.stock }"/>개
+                			</c:if>
+                			<c:if test="${s.stock < 1 }">
+                				(품절)
+                			</c:if>
+                		</option>
                 	</c:forEach>       
+                	
 	              </select>
               </c:if>
-              <c:if test="${not empty sizes }">
-	              <select id="size" class="form-control" >
-	                <option disabled selected>크기</option>
-	                <c:forEach var="i" items="${sizes }">
-	                	<option value="${i }"><c:out value="${i }"/></option>
-	                </c:forEach>
-	              </select>
-              </c:if>
+
             </div>
             <div id="orderList" class="">
               
@@ -149,7 +154,7 @@
       <div class="productContainer">
          <!--스티키-->
         <div class="sticky-top d-none d-lg-block" style="top:70px; height:20px;">
-          <nav class="navbar mt-3 navbar-expand-lg navbar-light bg-light ">
+          <nav class="navbar mt-3 navbar-expand-lg navbar-light bg-point ">
               <ul class="nav container justify-content-around  d-flex ">
                 <li class="nav-item ">
                   <a class="nav-link text-dark" href="#pInfo">상품정보</a>
@@ -167,7 +172,7 @@
           </nav>
         </div>
         <div class="sticky-top d-lg-none" style="top:170px; height:20px;">
-            <nav class="navbar mt-3 navbar-expand-lg navbar-light bg-light ">
+            <nav class="navbar mt-3 navbar-expand-lg navbar-light bg-point ">
   
                 <ul class="nav container justify-content-around  d-flex ">
                   <li class="nav-item ">
@@ -255,7 +260,7 @@
 		                    <img src="${path }/resources/upload/member/profile/<%=r.getImg() %>" width="30px;">
 		                  </a>                  
 		                  <div style="font-size: 12px;">
-		                    <a class="my-0 text-black"><%=r.getNickName() %></a>
+		                    <a href="${path }/user/moveUserInfo.do?memberNo="+<%=r.getMemberNo() %> class="my-0 text-black"><%=r.getNickName() %></a>
 		                    <div >
 		                      <span class="text-hgh">
 		                    		<%
@@ -527,92 +532,58 @@
 <script>
 		let productNo=$("#productNo").val();
 		let loginMember=$("#loginMember").val();
+		let stockList=${jsonStock};
 		//수량 선택
-		//옵션이 없다면 바로 수량체크할 수 있게
-		if($("#color").length==0&&$("#size").length==0){
-		  fn_select();
-		  $(".delete").hide();
+		if(stockList.length<2){
+			fn_select();
 		}
-		$(document).on("change","#color",e=>{
-		  fn_select();
+		$("#option").on("change",e=>{
+			fn_select();
 		});
-		$(document).on("change","#size",e=>{
-		  fn_select();
-		});
-		
+	
 		//선택한 옵션 제품 수량 선택박스 && 총금액 계산
 		function fn_select(){
-		  let color=$("#color option:selected").val();
-		  let size=$("#size option:selected").val();
+		  let stockNo=$("#option option:selected").val();
 		  let option="";
-		  let price="";
-		  let stockNo="";
-		  let stockList=${jsonStock};
-		 	  
+		  let price="";		  
+		  let stock="";
+ 		  let display="";
 		  let flag=true;
           //유효성 검사
           $(".orderBox").each((i,item)=>{
-            if($("#color").length!=0){
-              if(color==$(item).find(".color").val()){
-                if($("#size").length!=0&&size==$(item).find(".size").val()){
-                  alert("이미 선택한 옵션입니다.");     
-                  flag=false;        
-                }else{
-                  alert("이미 선택한 옵션입니다.");
-                  flag=false;  
-                };
-              };
-            }else{
-              if(size==$(item).find(".size").val()){
-                alert("이미 선택한 옵션입니다.");
-                flag=false;  
-              };
-            };
+        	  if($("#option").val()==$(item).find(".stockNo").val()){
+        		  alert("이미 선택한 옵션입니다.");
+        		  flag=false;
+        	  }
           });
           if(flag==false){
-            return;
+        	  return;
           }
 		  //oo ox xo xx(옵션(컬러/사이즈)가 존재하는지에 따라 출력할 방식 조절)
-		  if($("#color").length!=0){
-		    if($("#size").length!=0){
-		      option=color + " / " + size;
-		      for(let s in stockList){
-		    	  if(stockList[s].color==color&&stockList[s].productSize==size){
-		    		  price=stockList[s].price;
-		    		  stockNo=stockList[s].stockNo;
-		    	  }
-		      }
-		    }else{
-		      option=color;
-		      for(let s in stockList){
-		    	  if(stockList[s].color==color&&stockList[s].productSize==size){
-		    		  price=stockList[s].price;
-		    		  stockNo=stockList[s].stockNo;
-		    	  }
-		      }
-		    }
+		  //옵션이름, 재고번호, 금액 넣기	
+		  if(stockList.length>1){
+	         for(let s in stockList){
+	        	 if(stockList[s].stockNo==stockNo){
+	        		 price=stockList[s].price * (100-stockList[s].sale) / 100;
+	        		 option=stockList[s].color+" "+stockList[s].productSize;
+	        		 stock=stockList[s].stock;
+	        		 
+	        	 }
+	         }
 		  }else{
-		    if($("#size").length!=0){
-		      option=size;
-		      for(let s in stockList){
-		    	  if(stockList[s].color==color&&stockList[s].productSize==size){
-		    		  price=stockList[s].price;
-		    		  stockNo=stockList[s].stockNo;
-		    	  }
-		      }
-		    }else{
-		      option=$("#productName").text().trim();
-		      price=stockList[0].price;
-		      stockNo=stockList[s].stockNo;
-		    }
+			 price=stockList[0].price * (100-stockList[0].sale) / 100;
+     		 option=$("#productName").text()+"  /  (재고 "+stockList[0].stock+"개)";
+     		 stock=stockList[0].stock;
+     		 stockNo=stockList[0].stockNo;
+     		 display="d-none";
 		  }
-		  /* 옵션이 있다면 상품선택박스에 옵션 표시 */
-		  if(color!="색상" && size!="크기"){
-		    let optionTag=`<article class="orderBox rounded bg-light m-3 pl-3 pr-1 py-2">
+		  /*상품선택박스에 옵션 표시 */
+		    let orderBox=`<article class="orderBox rounded bg-light m-3 pl-3 pr-1 py-2">
 		              <div class="d-flex justify-content-between align-items-center mb-3">
 		                <p class="m-0">`+option+`</p>
 		                <input type="hidden" class="stockNo" name="stockNo" value="`+stockNo+`"/>
-		                <button type="button" class="delete btn p-0 m-0 ">
+		                <input type="hidden" class="stockCnt" value="`+stock+`"/>
+		                <button type="button" class="delete btn p-0 m-0 `+display+`">
 		                  <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 		                    <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
 		                  </svg>
@@ -631,32 +602,67 @@
 		                <p class="d-none eachPrice">`+price+`</p>
 		              </div>
 		            </article>`
-		    $("#orderList").append(optionTag);
+		    $("#orderList").append(orderBox);
 		    fn_total();
 		  };
 		  
-		};
+
 		//수량 입력하면 금액 바뀌게
 		//수량 6+선택하면 직접입력할 수 있게
+		//셀렉트일때
 		$(document).on("change","select.cntSelect",e=>{ 
-		  if($(e.target).val()=="next"){
-		    let box=$(e.target).parents(".cntBox")
-		    $(e.target).remove();
-		    let input=`<input type="text" name="cnt" value="1" class="cnt cntSelect form-control col-5"/>`;
-		    box.prepend(input);
-		    box.children(".cntSelect").focus();
-		  }else{
-			  let oriPrice=parseInt($(e.target).siblings(".eachPrice").text());
-              let newPrice=oriPrice * ($(e.target).val());
-              $(e.target).next(".price").text(newPrice+"원");
-              fn_total();
-          };  
+			let stockCnt=parseInt($(e.target).parents(".orderBox").find(".stockCnt").val()); //재고 개수
+			let cnt=parseInt($(e.target).val()); //선택한 개수
+			if($(e.target).val()!="next"&&cnt>stockCnt){ //재고보다 많은 양을 선택하면
+				alert("재고가 부족합니다.");
+				$(e.target).val('1').prop("selected",true);
+		        fn_total();
+				return; 
+				let oriPrice=parseInt($(e.target).siblings(".eachPrice").text());
+	              let newPrice=oriPrice * ($(e.target).val());
+	              $(e.target).next(".price").text(newPrice+"원");
+	              fn_total();
+			}			  
+			  if($(e.target).val()=="next"){//6+를 선택하면
+				    if(stockCnt<6){//재고가 6보다 작으면 
+				        alert("재고가 부족합니다.");
+				        $(e.target).val('1').prop("selected",true);
+				        fn_total();
+				    }else{//많으면 인풋태그로 변환해주기
+					    let box=$(e.target).parents(".cntBox")
+					    $(e.target).remove();
+					    let input=`<input type="text" name="cnt" value="1" class="cnt cntSelect form-control col-5"/>`;
+					    box.prepend(input);
+					    box.children(".cntSelect").focus();
+				    }
+			  }else{//다른 개수를 선택하면
+				  let oriPrice=parseInt($(e.target).siblings(".eachPrice").text());
+	              let newPrice=oriPrice * ($(e.target).val());
+	              $(e.target).next(".price").text(newPrice+"원");
+	              fn_total();
+	          };  
 		});
+		//인풋일때
 		$(document).on("focusout","input.cntSelect",e=>{
-			let oriPrice=parseInt($(e.target).siblings(".eachPrice").text());
-            let newPrice=oriPrice * ($(e.target).val());
-            $(e.target).next(".price").text(newPrice+"원");
-            fn_total();
+			let stockCnt=parseInt($(e.target).parents(".orderBox").find(".stockCnt").val());//재고 개수
+			let oriPrice=parseInt($(e.target).siblings(".eachPrice").text());//개당 가격
+			let cnt=parseInt($(e.target).val());//선택한 개수
+			if($(e.target).val()==""){//아무것도 입력하지 않으면 1로 돌리기
+				$(e.target).val(1);
+				$(e.target).next(".price").text(oriPrice+"원");
+				fn_total(); 
+			}else{		
+	            if(cnt>stockCnt){//재고보다 많이 입력하면 alert 띄우고 1로 돌리기
+					alert("재고가 부족합니다.");
+					$(e.target).val(1);
+					$(e.target).next(".price").text(oriPrice+"원");
+					fn_total(); 
+				}else{	//다른 개수를 입력하면 금액 계산해서 써주기
+		            let newPrice=oriPrice * (cnt);
+		            $(e.target).next(".price").text(newPrice+"원");
+		            fn_total(); 
+				}
+			}        
 		});
 		//x누르면 선택박스 사라지게
 		$(document).on("click",".delete",e=>{
@@ -755,6 +761,39 @@
         	let qnaNo=$(e.target).parents("article.qna").find("input.qnaNo").val();
         	location.replace("${path}/store/deleteQnaComment.do?productNo="+productNo+"&qnaNo="+qnaNo);
         });
+        
+        //재고 개수 동적으로 처리하기
+        function fn_stock(){
+        	let stockNo=[];
+        	$("input[name=stockNo]").each((i,item)=>{
+        		stockNo.push(item.value);
+        	});
+        	let cnt=[];
+        	$(".cntSelect").each((i,item)=>{
+        		 cnt.push(item.value);
+        	});
+        	let flag=true;
+        	$.ajaxSettings.traditional = true;
+        	$.ajax({
+				url: "${path}/store/stockCheck.do",
+				async: false,  //에이작스의 실행을 기다렸다가 결과를 리턴하도록 비동기식으로 설정
+				data:{productNo:productNo,stockNo:stockNo,cnt:cnt},
+				dataType:"json",			
+				success:(data) => {	//재고수량보다 많이 선택한 상품의 옵션 이름 list
+					if(data.length>0){//더 많이 선택한 것이 있다면
+						flag=false;
+						let msg="";
+						for(let i in data){
+							msg=msg+data[i]+"의 재고가 부족합니다. \n";							
+						}
+						alert(msg);					
+					}
+				}
+			});
+        	return flag;
+        }
+        
+        
         //모달즈
         
         //장바구니 모달
@@ -774,19 +813,24 @@
             	$(".cntSelect").each((i,item)=>{
             		 cnt.push(item.value);
             	});
-            	$.ajaxSettings.traditional = true;
-            	$.ajax({
-    				url: "${path}/store/insertCart.do",
-    				data:{stockNo:stockNo,cnt:cnt},
-    				dataType:"html",			
-    				success:(data) => {				
-    					$(".pdtModal").html(data);	
-    	         		$('div.modal').modal(); 
-    				},
-    				error:(request,status,error)=>{
-                       alert("장바구니에 상품을 담지 못했습니다.");
-                    }
-    			}); 
+            	//동적으로 재고 개수 확인하기
+            	let flag=fn_stock();
+            	if(flag==true){
+            		//삽입하기
+	            	$.ajaxSettings.traditional = true;
+	            	$.ajax({
+	    				url: "${path}/store/insertCart.do",
+	    				data:{stockNo:stockNo,cnt:cnt},
+	    				dataType:"html",			
+	    				success:(data) => {				
+	    					$(".pdtModal").html(data);	
+	    	         		$('div.modal').modal(); 
+	    				},
+	    				error:(request,status,error)=>{
+	                       alert("장바구니에 상품을 담지 못했습니다.");
+	                    }
+	    			}); 
+            	}  
     
             }
           });
@@ -797,8 +841,14 @@
               alert("상품을 선택하세요.");
               return;
             }else{
-            	if(loginMember!=""){ //로그인 되어 있으면 바로 결제로 넘김
-            		$(".payFrm").attr("action","${path}/payment/payment.do").submit();
+            	if(loginMember!=""){ //로그인 되어 있다면
+            		//재고 개수 동적으로 처리하기
+		            	//재고번호 input name stockNo
+		            	//수량 input name cnt
+		            	let flag=fn_stock();
+		        		if(flag==true){    	
+            				$(".payFrm").attr("action","${path}/payment/payment.do").submit();
+		        		} 
             	}else{ //로그인 안되어 있으면 로그인 모달 띄우기(결제로그인모달)	           
             		function loginModal(){
             			$.ajax({
@@ -821,7 +871,6 @@
           				url: "${path}/store/payCheck.do",
           				data:{productNo:productNo},
           				success:(data) => {//data는 list임
-          					console.log(data);
           			  		if(data.length!=0){//2주안에 리뷰를 안 쓴 구매내역이 있으면 
           			  			if(data.length>1){//구매내역이 여러개라면 
           			  				//어떤 내역을 쓸건지 선택하는 모달
