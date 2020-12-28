@@ -40,13 +40,17 @@
   	</if> 
   </select>
   <select id="commentCount" resultType="_int" parameterType="string">
-  	SELECT COUNT(*) FROM PLACECOMMENT WHERE PLACENO=#{placeNo)
+  	SELECT COUNT(*) FROM PLACECOMMENT WHERE PLACENO=#{placeNo}
   </select>
   <insert id="insertComment" parameterType="placeComment">
   	INSERT INTO PLACECOMMENT VALUES('PC'||SEQ_PLACECOMMENTNO.NEXTVAL,#{placeNo},#{memberNo},#{commentLevel},#{placeComment},#{commentRef},default)
   </insert>
   <select id="commentList" resultType="placeComment" parameterType="string">
-  	SELECT * FROM PLACECOMMENT JOIN MEMBER USING(MEMBERNO) WHERE PLACENO=#{placeNo}
+SELECT PLACECOMMENTNO,COMMENTLEVEL,IMG,NICKNAME,PLACECOMMENT,WRITEDATE FROM PLACECOMMENT JOIN MEMBER USING(MEMBERNO) WHERE PLACENO=#{placeNo} START WITH COMMENTLEVEL=1
+CONNECT BY PRIOR PLACECOMMENTNO=COMMENTREF  ORDER SIBLINGS BY WRITEDATE DESC
+  </select>
+  <select id="hashList" resultType="hashtag" parameterType="string">
+  	SELECT * FROM HASHTAG WHERE POSTNO=#{placeNo}
   </select>
   <select id="selectPlaceListOne" resultType="map" parameterType="string">
   	select * from member join place using(memberNo) join placeImg using(placeNo) where memberNo=#{memberNo} and type ='M'

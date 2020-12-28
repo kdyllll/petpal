@@ -232,29 +232,16 @@ public class MemberController {
    
    @RequestMapping("/user/moveUserInfo.do")
    public String moveUserInfo(String memberNo,Model m) {
-      //닉네임, 팔로잉팔로워 수, 설명, 이미지, 작성한 글(일상,노하우,장소후기,찾아주세요)-글 제목, 글 사진
+      //닉네임, 팔로잉팔로워 수, 설명
       Member member=service.selectMemberOne(memberNo);      
       //팔로잉
       int following=service.countFollowing(memberNo);
       //팔로워
       int follower=service.countFollower(memberNo);
       
-      //일상 메인 사진
-      List<DailyImg> dailyList=service.selectDailyMain(memberNo);
-      //노하우 작성 글+메인 사진
-      List<Map> tipList=service.selectTipMain(memberNo);
-      //장소후기 작성 글+메인사진
-      List<Map> placeList=service.selectPlaceMain(memberNo);
-      //찾아주세요 작성 글+메인 사진
-      List<Map> findList=service.selectFindMain(memberNo);
-      
       m.addAttribute("member",member);
       m.addAttribute("following",following);
       m.addAttribute("follower",follower);
-      m.addAttribute("dailyList",dailyList);
-      m.addAttribute("tipList",tipList);
-      m.addAttribute("placeList",placeList);
-      m.addAttribute("findList",findList);
       return "member/userInfo";
    }
 

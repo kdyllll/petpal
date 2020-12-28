@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.project.petpal.common.PageBarFactory;
 import com.project.petpal.community.model.service.PlaceService;
 import com.project.petpal.community.model.vo.PlaceComment;
 
@@ -18,8 +19,12 @@ public class PlaceAjaxController {
 	
 	@RequestMapping("/place/commentWrite.do")
 	public String commentWrite(PlaceComment pc,Model m) {
+		int numPerpage=5;
 		int result=service.insertComment(pc);
-		List<PlaceComment> cList=service.commentList(pc.getPlaceNo());
+		List<PlaceComment> cList=service.commentList(pc.getPlaceNo(),1,numPerpage);
+		int count=service.commentCount(pc.getPlaceNo());//댓글개수
+		m.addAttribute("count",count);
+		m.addAttribute("pageBar",PageBarFactory.getPageBar(count, 1, numPerpage,null,pc.getPlaceNo(), "movePlaceDetail.do"));
 		m.addAttribute("cList",cList);
 		return "community/communityAjax/placeComment";
 	}

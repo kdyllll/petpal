@@ -256,6 +256,78 @@
 	function noBuy(){
 		swal("상품을 선택해주세요", "", "warning");
 	}
+	
+	function cartDelete(){
+		//alert로 진짜 지울건지 물어보고 안 지우면 그냥 창 닫고 지우면 
+		//체크 되어 있는 애의 재고번호를 받아서( ?stockNo 이런걸로 해서  ) 컨트롤러로 넘기고
+		//컨트롤러에서 해당 재고번호의 상품을 지우고 지운 후의 리스트를 다시 쏴주고
+		swal({
+			title:'장바구니에서 삭제하시겠습니까?',
+			icon : 'warning',
+			closeOnClickOutside: false,
+			buttons : {
+				cancle : {
+					text : '취소',
+					value : false,
+				},
+				confirm : {
+					text : '삭제',
+					value : true,
+				}
+			}
+		}).then((result) => {
+			if(result){
+				/* let stockNo=[]; */
+				
+				var objs = document.querySelectorAll(".ch");
+				
+				for(var i=0;i<objs.length;i++){
+					if(objs[i].checked===true){
+						/* alert($("#stockNo").val()); */
+					}else{
+						alert($("input[name=size]").val());
+					}
+				}
+				
+				/* 선택된 애의 stockNo를 어떻게 가져오지? 음..
+				
+				
+				    $.ajax({
+				        type:"POST",
+				        url:"${path}/cart/deleteCart.do",
+				        data : {stockNo:stockNo},
+				        dataType : "xml",
+				        success: function(){
+				        	swal('상품이 삭제되었습니다.', '', 'success');
+				        },
+				        error: function() {
+				        	swal('실패', '', 'warning');
+				        }  
+				    });
+				
+				input hidden value로 표시 */
+				
+			}
+		})
+	}
+	
+	/* $("#checkDelete").click(function(){
+	    $.ajax({
+	        type:"POST",
+	        url:"./book.jsp",
+	        data : {name : "홍길동"},
+	        dataType : "xml",
+	        success: function(xml){
+	            console.log(xml);
+	        },
+	        error: function(xhr, status, error) {
+	            alert(error);
+	        }  
+	    });
+	}); */
+
+	
+	
 </script>
 
 
@@ -307,7 +379,7 @@
 					<div class="col-md-8 order-md-1">
 						<div class="d-flex align-items-center ml-3 mb-3" style="width:96%;">
 							<input type="checkbox" style="width: 20px; height: 20px;" id="all_select" checked>&nbsp;&nbsp;모두선택
-							<button type="button" class="ml-auto btn btn-light">선택삭제</button>					
+							<button type="button" class="ml-auto btn btn-light" id="checkDelete" onclick="cartDelete();">선택삭제</button>					
 						</div>
 					</div>
 					
@@ -356,7 +428,6 @@
 									</div>
 									<div class="d-flex p-3 priceCon">
 											<div id="count">
-												
 				                                <input class="count" type="number" name="count" value="${amount[i]}" min="1" max="100">
 				                             </div>
 				                             <input type="hidden" name="price" value="${c.PRICE}">

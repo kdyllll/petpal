@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.community.model.vo.Place;
 import com.project.petpal.community.model.vo.PlaceComment;
 import com.project.petpal.community.model.vo.PlaceImg;
@@ -46,7 +47,7 @@ public class PlaceDaoImpl implements PlaceDao{
 
 	@Override
 	public int commentCount(SqlSession session,String placeNo) {
-		return session.selectOne("place.commentCount");
+		return session.selectOne("place.commentCount",placeNo);
 	}
 
 	@Override
@@ -55,8 +56,13 @@ public class PlaceDaoImpl implements PlaceDao{
 	}
 
 	@Override
-	public List<PlaceComment> commentList(SqlSession session, String placeNo) {
-		return session.selectList("place.commentList",placeNo);
+	public List<PlaceComment> commentList(SqlSession session, String placeNo,int cPage,int numPerpage) {
+		return session.selectList("place.commentList",placeNo,new RowBounds((cPage-1)*numPerpage,numPerpage));
+	}
+
+	@Override
+	public List<Hashtag> hashList(SqlSession session, String placeNo) {
+		return session.selectList("place.hashList",placeNo);
 	}
 
 	@Override
