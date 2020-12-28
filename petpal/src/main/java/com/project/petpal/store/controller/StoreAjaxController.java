@@ -103,9 +103,11 @@ public class StoreAjaxController {
 	
 			Cookie c=new Cookie("cookieStock",URLEncoder.encode(stocks, "UTF-8"));
 			c.setMaxAge(60 * 60 * 24); //쿠키 하루 유지
+			c.setPath("/");
 			response.addCookie(c); //쿠키 추가
 			Cookie c2=new Cookie("cookieCnt",URLEncoder.encode(cnts, "UTF-8"));
 			c2.setMaxAge(60 * 60 * 24);
+			c2.setPath("/");
 			response.addCookie(c2);
 		}
 //		System.out.println("최종쿠키");
