@@ -114,6 +114,7 @@ public class MemberServiceImpl implements MemberService{
       return dao.selectFindMain(session,memberNo);
    }
 
+
 	@Override
 	public List<Daily> selectDailyList(String memberNo) {
 		// TODO Auto-generated method stub
@@ -126,6 +127,7 @@ public class MemberServiceImpl implements MemberService{
 		return dao.selectDailyHash(session,memberNo);
 	}
 	   
+
 
 
 }

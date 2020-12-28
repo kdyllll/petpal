@@ -26,4 +26,6 @@ public interface DailyService {
 	List<Map> selectCoordList(String dailyNo);
 	ProductImg selectProductImg(String productNo);
 	int deleteDaily(String dailyNo);
+	List<Map> selectDailyListOne(String memberNo);
+	int dailyCnt(String memberNo);
 }

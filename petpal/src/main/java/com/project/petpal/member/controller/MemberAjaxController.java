@@ -1,6 +1,8 @@
 package com.project.petpal.member.controller;
 
+
 import java.util.List;
+
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -23,17 +25,18 @@ import com.project.petpal.member.model.vo.Member;
 @SessionAttributes("loginMember")
 public class MemberAjaxController {
 	@Autowired
-	MemberService service;
+	private MemberService service;
 	@Autowired
-	BCryptPasswordEncoder pwEncoder;
+	private BCryptPasswordEncoder pwEncoder;
 	
 	@RequestMapping("/member/passwordUpdate.do")
 	@ResponseBody
 	public int passwordUpdate(String password,HttpSession session) throws Exception {
 
 		Member m = (Member)session.getAttribute("loginMember");
+		Member memberOne = service.selectMemberOne(m.getMemberNo());
 		int flag = 0;
-		if(pwEncoder.matches(password, m.getPassword())) {
+		if(pwEncoder.matches(password, memberOne.getPassword())) {
 			flag=1;
 		} 	 
 		return flag;

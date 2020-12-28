@@ -111,7 +111,16 @@ public class DailyDaoImpl implements DailyDao {
 		return session.delete("daily.deleteDaily",dailyNo);
 	}
 	
-	
+	@Override
+	public List<Map> selectDailyListOne(SqlSession session, String memberNo) {
+		return session.selectList("daily.selectDailyListOne", memberNo);
+	}
+
+	@Override
+	public int dailyCnt(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("daily.dailyCnt", memberNo);
+	}
 
 	
 

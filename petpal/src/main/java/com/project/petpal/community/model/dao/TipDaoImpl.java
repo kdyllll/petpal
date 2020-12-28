@@ -46,4 +46,16 @@ public class TipDaoImpl implements TipDao {
 	public int updateTipImg(SqlSession session, TipImg ti) {
 		return session.update("tip.updateTipImg", ti);
 	}
+
+	@Override
+	public List<Map> selectTipListOne(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("tip.selectTipListOne", memberNo);
+	}
+
+	@Override
+	public int tipCnt(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("tip.tipCnt", memberNo);
+	}
 }

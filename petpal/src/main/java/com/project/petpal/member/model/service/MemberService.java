@@ -25,7 +25,9 @@ public interface MemberService {
    List<Map> selectTipMain(String memberNo);
    List<Map> selectPlaceMain(String memberNo);
    List<Map> selectFindMain(String memberNo);
+
    List<Daily> selectDailyList(String memberNo);
    List<Hashtag> selectDailyHash(String memberNo);
+
 
 }

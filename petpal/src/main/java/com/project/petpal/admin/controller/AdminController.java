@@ -15,9 +15,9 @@ import com.project.petpal.member.model.service.MemberService;
 @Controller
 public class AdminController {
 	@Autowired
-	public AdminService service;
+	private AdminService service;
 	@Autowired
-	public MemberService mservice;
+	private MemberService mservice;
 	
 	@RequestMapping("/admin/moveAdminPage.do")
 	public String moveAdminPage(Model m) {
