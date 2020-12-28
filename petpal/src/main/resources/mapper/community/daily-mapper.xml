@@ -55,4 +55,10 @@
 	<delete id="deleteDaily" parameterType="string">
 		DELETE FROM DAILY WHERE DAILYNO=#{value}
 	</delete>
+	<select id="selectDailyListOne" parameterType="string" resultType="map">
+		select * from member join daily using(memberno) join dailyimg using(dailyno) where memberNo = #{memberNo} and status='M'
+	</select>
+	<select id="dailyCnt" parameterType="string" resultType="int">
+		select count(*) from member join daily using(memberNo) where memberNo = #{memberNo}
+	</select>
 </mapper>

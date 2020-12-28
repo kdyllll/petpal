@@ -104,6 +104,7 @@ public class MemberDaoImpl implements MemberDao {
       return session.selectList("member.selectFindMain",memberNo);
    }
 
+
 @Override
 public List<Daily> selectDailyList(SqlSession session, String memberNo) {
 	// TODO Auto-generated method stub
@@ -115,6 +116,7 @@ public List<Hashtag> selectDailyHash(SqlSession session, String memberNo) {
 	// TODO Auto-generated method stub
 	return session.selectList("member.selectDailyHash",memberNo);
 }
+
    
    
 

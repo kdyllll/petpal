@@ -13,7 +13,7 @@ import com.project.petpal.admin.model.service.AdminService;
 @Controller
 public class AdminPayAjaxController {
 	@Autowired
-	public AdminService service;
+	private AdminService service;
 	
 	@RequestMapping("/admin/paymentDetail.do")
 	public String paymentDetail(String paymentNo, Model m) {

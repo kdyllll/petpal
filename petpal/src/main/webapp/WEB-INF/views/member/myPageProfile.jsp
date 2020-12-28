@@ -41,114 +41,112 @@
      </c:if>
     <div class="col-lg-8 pr-0">
       <div class="mb-3 pb-3 px-3 bg-white rounded shadow-sm">
-        <h6 class="border-bottom border-gray pb-2 mb-0">일상0</h6>
+        <h6 class="border-bottom border-gray pb-2 mb-0">일상 <c:out default="0" value="${dailyCnt }"/></h6>
+        <c:choose>
+         <c:when test="${not empty dList}">
+        <c:forEach var="d" items="${dList }">      
         <div class="media text-muted pt-3">
-          <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+          <a href="#"><img class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="${path }/resources/upload/daily/${d.FILENAME}" /></a>
           <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <div class="d-flex justify-content-between align-items-center w-100">
-              <strong class="text-gray-dark">Full Name</strong>
+              <strong class="text-gray-dark"><c:out value="${d.CONTENT }"/></strong>
               <a href="#">Follow</a>
             </div>
-            <span class="d-block">@username</span>
+            <span class="d-block"><fmt:formatDate value="${d.DAILYDATE }" pattern="yyyy/MM/dd"/></span>
           </div>
         </div>
-        <div class="media text-muted pt-3">
-          <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
-          <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <div class="d-flex justify-content-between align-items-center w-100">
-              <strong class="text-gray-dark">Full Name</strong>
-              <a href="#">Follow</a>
-            </div>
-            <span class="d-block">@username</span>
-          </div>
-        </div>
-        <div class="media text-muted pt-3">
-          <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
-          <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <div class="d-flex justify-content-between align-items-center w-100">
-              <strong class="text-gray-dark">Full Name</strong>
-              <a href="#">Follow</a>
-            </div>
-            <span class="d-block">@username</span>
-          </div>
-        </div>
+        
+        </c:forEach>
         <small class="d-block text-right mt-3">
           <a href="#">더보기</a>
         </small>
+         </c:when>
+         <c:otherwise >
+         	<a href="#" class="d-block text-center mt-5 mb-4 text-muted ">글작성하기</a>
+         </c:otherwise>
+         </c:choose>
       </div>
       <div class="mb-3 pb-3 px-3 bg-white rounded shadow-sm">
-        <h6 class="border-bottom border-gray pb-2 mb-0">노하우0</h6>
+        <h6 class="border-bottom border-gray pb-2 mb-0">노하우 <c:out default="0" value="${tipCnt }"/></h6>
+       <c:choose>
+         <c:when test="${not empty tList}">
+        <c:forEach var="t" items="${tList }">      
         <div class="media text-muted pt-3">
-          <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+          <a href="#"><img class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="${path }/resources/upload/tip/${t.MAINIMG}" /></a>
           <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <div class="d-flex justify-content-between align-items-center w-100">
-              <strong class="text-gray-dark">Full Name</strong>
+              <strong class="text-gray-dark"><c:out value="${t.TITLE }"/></strong>
               <a href="#">Follow</a>
             </div>
-            <span class="d-block">@username</span>
+            <span class="d-block"><c:out value="${t.CONTENT }"/></span>
           </div>
         </div>
-        <div class="media text-muted pt-3">
-          <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
-          <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <div class="d-flex justify-content-between align-items-center w-100">
-              <strong class="text-gray-dark">Full Name</strong>
-              <a href="#">Follow</a>
-            </div>
-            <span class="d-block">@username</span>
-          </div>
-        </div>
-        <div class="media text-muted pt-3">
-          <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
-          <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <div class="d-flex justify-content-between align-items-center w-100">
-              <strong class="text-gray-dark">Full Name</strong>
-              <a href="#">Follow</a>
-            </div>
-            <span class="d-block">@username</span>
-          </div>
-        </div>
+        
+        </c:forEach>
         <small class="d-block text-right mt-3">
           <a href="#">더보기</a>
         </small>
+         </c:when>
+         <c:otherwise >
+         	<a href="#" class="d-block text-center mt-5 mb-4 text-muted ">글작성하기</a>
+         </c:otherwise>
+         </c:choose>
+      </div>
+      <div class="mb-3 pb-3 px-3 bg-white rounded shadow-sm">
+        <h6 class="border-bottom border-gray pb-2 mb-0">후기 <c:out default="0" value="${placeCnt }"/></h6>
+        <c:choose>
+         <c:when test="${not empty pList}">
+        <c:forEach var="p" items="${pList }">      
+        <div class="media text-muted pt-3">
+          <a href="#"><img class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="${path }/resources/upload/place/${p.FILENAME}" /></a>
+          <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+            <div class="d-flex justify-content-between align-items-center w-100">
+              <strong class="text-gray-dark"><c:out value="${p.TITLE }"/></strong>
+              <a href="#">Follow</a>
+            </div>
+            <span class="d-block"><c:out value="${p.CONTENT }"/></span>
+          </div>
+        </div>
+        
+        </c:forEach>
+        <small class="d-block text-right mt-3">
+          <a href="#">더보기</a>
+        </small>
+         </c:when>
+         <c:otherwise >
+         	<a href="#" class="d-block text-center mt-5 mb-4 text-muted ">글작성하기</a>
+         </c:otherwise>
+         </c:choose>
       </div>
 
+	
       <div class="mb-3 pb-3 px-3 bg-white rounded shadow-sm">
-        <h6 class="border-bottom border-gray pb-2 mb-0">후기0</h6>
+        <h6 class="border-bottom border-gray pb-2 mb-0">찾아주세요 <c:out default="0" value="${findCnt }"/></h6>
+        <c:choose>
+         <c:when test="${not empty fList}">
+        <c:forEach var="f" items="${fList }">      
         <div class="media text-muted pt-3">
-          <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+          <a href="#"><img class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="${path }/resources/upload/find/${f.FILENAME}" /></a>
           <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <div class="d-flex justify-content-between align-items-center w-100">
-              <strong class="text-gray-dark">Full Name</strong>
+              <strong class="text-gray-dark"><c:out value="${f.TITLE }"/></strong>
               <a href="#">Follow</a>
             </div>
-            <span class="d-block">@username</span>
+            <span class="d-block"><c:out value="${f.CONTENT }"/></span>
           </div>
         </div>
-        <div class="media text-muted pt-3">
-          <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
-          <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <div class="d-flex justify-content-between align-items-center w-100">
-              <strong class="text-gray-dark">Full Name</strong>
-              <a href="#">Follow</a>
-            </div>
-            <span class="d-block">@username</span>
-          </div>
-        </div>
-        <div class="media text-muted pt-3">
-          <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
-          <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <div class="d-flex justify-content-between align-items-center w-100">
-              <strong class="text-gray-dark">Full Name</strong>
-              <a href="#">Follow</a>
-            </div>
-            <span class="d-block">@username</span>
-          </div>
-        </div>
+        
+        </c:forEach>
         <small class="d-block text-right mt-3">
           <a href="#">더보기</a>
         </small>
+         </c:when>
+         <c:otherwise >
+         	<a href="#" class="d-block text-center mt-5 mb-4 text-muted ">글작성하기</a>
+         </c:otherwise>
+         </c:choose>
       </div>
+     
   </div>
 </div>
 </main>
