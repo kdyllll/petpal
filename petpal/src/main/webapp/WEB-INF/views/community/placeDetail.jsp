@@ -58,8 +58,18 @@
 						</div>
 						<p style="width:80%;"><c:out value="${p.content }"/></p>
 						</c:forEach>
+						<!-- 해쉬태그 -->
+						<div id="hashtagContainer">
+							<ul >
+								<c:forEach items="${hList }" var="h">
+								<li class="d-inline-flex mr-3 hashtag rounded">#<a href="#"><c:out value="${h.hashContent }"/></a></li>
+								</c:forEach>
+							</ul>
+						</div>	
 						<!-- 댓글 -->
-						<hr>
+						<hr class="my-5">
+						
+						<div id="commentContainer">
 						<h4>
 							댓글<span class="su"><c:out value="${count }"/></span>
 						</h4>
@@ -68,7 +78,7 @@
 							<div class="input-group mb-3">
 								<input type="hidden" name="commentLevel" value="1">
 								<input type="hidden" name="commentRef" value="" >
-								<input type="text" class="form-control" name="placeComment" 
+								<input type="text" class="form-control rounded" name="placeComment" 
 									placeholder="칭찬과 격려의 댓글은 작성자에게 큰 힘이 됩니다:)"
 									aria-label="Recipient's username"
 									aria-describedby="button-addon2">
@@ -78,9 +88,9 @@
 								</div>
 							</div>
 						</div>
-						<div id="commentContainer">
 							<c:forEach items="${cList }" var="c">
-							<div class="d-flex mb-3 comment">
+								<c:if test="${c.commentLevel eq 1 }">
+							<div class="d-flex mb-3 comment level1">
 								<a href="#">
 								<div>
 									<img src="${path }/resources/upload/member/profile/${c.img }" class="rounded-circle mr-3">
@@ -106,7 +116,37 @@
 									</div>
 								</div>
 							</div>
-							</c:forEach>	
+							</c:if>
+							
+							
+							<c:if test="${c.commentLevel eq 2 }">
+							<div class="d-flex mb-3 comment level2 ml-5 rounded">
+								<a href="#">
+								<div>
+									<img src="${path }/resources/upload/member/profile/${c.img }" class="rounded-circle mr-3">
+								</div>
+								<div>
+									<div>
+										<strong><span><c:out value="${c.nickName }"/></span></strong></a> <span><c:out value="${c.placeComment }"/></span>
+									</div>
+									<div>
+										<span style="font-size: 14px; color: gray;">
+										<c:set var="today" value="<%=new java.util.Date()%>" />
+										<fmt:parseNumber value="${(today.time-c.writeDate.time)/(1000*60) }" var="cha" integerOnly="true"/>
+										 <c:choose>
+										 	<c:when test="${cha<60 }">${cha}분 전</c:when>
+										    <c:when test="${cha>=60&&cha<1440}"><fmt:formatNumber value="${cha/60 }" type="number" maxFractionDigits="0"/>시간 전</c:when>
+										 	<c:when test="${cha>=1440&&cha<43200 }"><fmt:formatNumber value="${cha/60/24 }" type="number" maxFractionDigits="0"/>일 전</c:when>
+										 	<c:otherwise><c:out value="${c.writeDate }"/></c:otherwise>
+										 </c:choose>
+										</span>
+										<button class="click" style="color: gray; font-size: 14px;">신고</button>
+									</div>
+								</div>
+							</div>
+							</c:if>
+							</c:forEach>
+							<div>${pageBar }</div>
 						</div>
 					</div>
 				</div>
@@ -124,12 +164,13 @@
 	width: 100%;
 }
 
-a {
+ a {
 	color: black;
-}
+} 
 
 a:hover {
 	text-decoration: none;
+	color:black;
 }
 
 .su {
@@ -144,6 +185,15 @@ button.click {
 	background-color: white;
 	border: none;
 }
+ul li{
+	list-style-type:none;
+}
+.hashtag:hover{
+	background-color:#e2e2e2;
+}
+.hashtag{
+	color:gray;
+}
 </style>
 	
 	
@@ -155,7 +205,7 @@ button.click {
           dataType:"html",
           success:(data) => {
              $(".pdtModal").html(data);   
-             $('#loginModal').modal(); 
+             $('div.modal').modal(); 
           }
        });
     }; 
@@ -164,7 +214,7 @@ button.click {
 			$("[name=placeComment]").css({"cursor":"pointer"});
 		}
 	});
-	$(document).on(
+	$(document).on(//댓글창 눌렀을떄
 			'click',
 			'[name=placeComment]',
 			function(e) {
@@ -177,12 +227,16 @@ button.click {
 			'click',
 			'.reply',
 			function(e) {//답글달기 눌렀을때
+				if($("#memberNo").val()==""){
+					loginModal();
+					return;
+				}
 				var comment=$(e.target).parents("div.comment");//답글달기의 댓글
 				
 				if($("div.editor").length==2&&!comment.next().hasClass("editor")){//댓글달기 창이 두개이고 
 					var flag=confirm("다른 댓글에서 작성하고 있던 내용이 유실됩니다. 정말 이 댓글로 전환하시겠습니까?")
 					if(flag==true){//확인 눌렀을때
-						$("#commentContainer").find("div.editor").remove();
+						$("#commentContainer").find("div.subComment").remove();
 					}else{//취소 눌렀을때 변화없음
 						
 					}
@@ -190,7 +244,9 @@ button.click {
 				if($("div.editor").length==1){//댓글달기창이 하나일때
 				var editor=$("div.editor").clone();
 				editor.addClass("ml-5");
+				editor.addClass("subComment");
 				editor.find("[name=commentLevel]").val("2");
+				editor.find("[name=placeComment]").val("");
 				editor.find("[name=commentRef]").val($(e.target).val());
 				comment.after(editor);//
 				}
@@ -201,7 +257,7 @@ button.click {
 	$(document).on(
 			'click',
 			'.write',
-			function(e) {//댓글 등록 눌렀을때
+			function(e) {//댓글 등록 버튼 눌렀을때
 				if($("#memberNo").val()==""){//로그인 안되어있다면
 					loginModal();
 				return;

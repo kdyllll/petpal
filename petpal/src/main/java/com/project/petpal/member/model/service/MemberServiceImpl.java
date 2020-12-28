@@ -52,6 +52,7 @@ public class MemberServiceImpl implements MemberService{
       return dao.selectMemberAll(session);
    }
 
+
    @Override
 
    public int followCnt(String memberNo) {

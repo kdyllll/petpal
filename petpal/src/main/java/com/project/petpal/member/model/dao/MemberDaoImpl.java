@@ -43,8 +43,8 @@ public class MemberDaoImpl implements MemberDao {
       return session.selectList("member.selectMemberAll");
    }
 
-   @Override
 
+   @Override
    public int followCnt(SqlSession session, String memberNo) {
       // TODO Auto-generated method stub
       return session.selectOne("member.followCnt", memberNo);
