@@ -64,9 +64,9 @@
           <div id="collapseOne2" class="collapse bg-white"  >
             <div class="card-body container d-none d-lg-block">
               <div class="input-group ">
-                <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <input type="text" class="form-control" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="button-addon2">
                 <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+                  <button class="btn btn-outline-secondary" type="button" id="search">검색</button>
                 </div>
               </div>
             </div>
@@ -75,9 +75,9 @@
           <!--중간사이즈부터 그 아래사이즈들 검색버튼 없애고 인풋검색창 바로 보이게 하기-->
           <div class=" d-lg-none bg-white pb-4 shadow-sm">
             <div class="input-group container">
-            <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <input type="text" class="form-control" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="button-addon2">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+              <button class="btn btn-outline-secondary" type="button" id="search">검색</button>
             </div>
           </div>
           </div>
@@ -96,3 +96,12 @@
             </li>
           </ul>
       </header>
+      <script>
+      $(document).on(
+  			'click',
+  			'#search',
+  			function(e) {
+  				location.assign('${path}/place/movePlaceList.do?category='
+						+ e.target.textContent);
+  			});
+      </script>

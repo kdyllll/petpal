@@ -49,4 +49,5 @@ public class MemberServiceImpl implements MemberService{
 		return dao.selectMemberAll(session);
 	}
 
+
 }

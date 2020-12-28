@@ -40,4 +40,5 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectList("member.selectMemberAll");
 	}
 
+
 }

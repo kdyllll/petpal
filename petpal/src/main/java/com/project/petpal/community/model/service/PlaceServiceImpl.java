@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.petpal.community.model.dao.PlaceDao;
+import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.community.model.vo.Place;
 import com.project.petpal.community.model.vo.PlaceComment;
 import com.project.petpal.community.model.vo.PlaceImg;
@@ -71,13 +72,18 @@ public class PlaceServiceImpl implements PlaceService{
 	}
 
 	@Override
-	public int insertComment(PlaceComment pc) {
+	public int insertComment(PlaceComment pc){
 		return dao.insertComment(session,pc);
 	}
 
 	@Override
-	public List<PlaceComment> commentList(String placeNo) {
-		return dao.commentList(session,placeNo);
+	public List<PlaceComment> commentList(String placeNo,int cPage,int numPerpage) {
+		return dao.commentList(session,placeNo,cPage,numPerpage);
+	}
+
+	@Override
+	public List<Hashtag> hashList(String placeNo){
+		return dao.hashList(session,placeNo);
 	}
 
 }
