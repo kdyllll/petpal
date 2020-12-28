@@ -2,7 +2,7 @@ package com.project.petpal.member.controller;
 
 
 import java.util.List;
->>>>>>> branch 'develop' of https://github.com/kdyllll/petpal.git
+
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
