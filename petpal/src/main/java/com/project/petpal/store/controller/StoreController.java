@@ -62,15 +62,19 @@ public class StoreController {
 
 		//일상글 가져오기
 		List<DailyImg> dailyList=service.selectDailyImg(productNo);
-
+		
+		//리뷰, 문의 갯수, 총 별점
+		int reviewCount=service.totalReviewCount(productNo);
+		int qnaCount=service.totalQnaCount(productNo);
 		
 		m.addAttribute("product",p);
 		m.addAttribute("imgs",pImg);
 		m.addAttribute("stockList",stockList);
 		m.addAttribute("jsonStock",new Gson().toJson(stockList));
 		m.addAttribute("dailyList",dailyList);
-
-		
+		m.addAttribute("reviewCount",reviewCount);
+		m.addAttribute("qnaCount",qnaCount);
+	
 		return "store/productDetail";
 	}
 	@RequestMapping("/store/moveCategory.do")//카테고리별 상품리스트로 이동하는 서블릿

@@ -73,7 +73,7 @@
             </p>
             <div class="px-3 pb-2 border-bottom">
               <div class="row mb-3 mx-2 d-flex justify-content-between"> 
-                <a href="#" class="text-dark">★★★☆☆ 00개 리뷰</a>
+                <a href="#" class="text-dark">★★★☆☆ <c:out value="${reviewCount }"/>개 리뷰</a>
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
                 </svg>          
@@ -160,10 +160,10 @@
                   <a class="nav-link text-dark" href="#pInfo">상품정보</a>
                 </li>
                 <li class="nav-item ">
-                  <a class="nav-link text-dark" href="#review">리뷰(00개)</a>
+                  <a class="nav-link text-dark" href="#review">리뷰(<c:out value="${reviewCount }"/>개)</a>
                 </li>
                 <li class="nav-item ">
-                  <a class="nav-link text-dark" href="#inquiry">문의(00개)</a>
+                  <a class="nav-link text-dark" href="#inquiry">문의(<c:out value="${qnaCount }"/>개)</a>
                 </li>
                 <li class="nav-item ">
                   <a class="nav-link text-dark" href="#rule">배송/환불</a>
@@ -179,10 +179,10 @@
                     <a class="nav-link text-dark" href="#">상품정보</a>
                   </li>
                   <li class="nav-item ">
-                    <a class="nav-link text-dark" href="#">리뷰(00개)</a>
+                    <a class="nav-link text-dark" href="#">리뷰(<c:out value="${reviewCount }"/>개)</a>
                   </li>
                   <li class="nav-item ">
-                    <a class="nav-link text-dark" href="#">문의(00개)</a>
+                    <a class="nav-link text-dark" href="#">문의(<c:out value="${qnaCount }"/>개)</a>
                   </li>
                   <li class="nav-item ">
                     <a class="nav-link text-dark" href="#">배송/환불</a>
@@ -195,13 +195,13 @@
         <div class="container mt-5 col-lg-8 col-10 offset-lg-2">     
           <div class="mb-5">
             <c:if test="${not empty dailyList }">
-	            <p class="h5 py-4"><strong>유저들의 스타일링 샷</strong> <span class="text-point">0</span></p>
+	            <p class="h5 py-4"><strong>유저들의 스타일링 샷</strong> <span class="text-point"><c:out value="${fn:length(dailyList)}"/></span></p>
 	            <div id="carouselExampleControls" class="carousel slide block col-lg-8 offset-lg-2">
 	              <div class="carousel-inner rounded ">
 	                <c:forEach var="d" items="${dailyList }">
-	                	<div class="carousel-item active">
-		                  <img src="${path }/resources/upload/community/daily/${i.dailyImgName}" class="d-block w-100">
-		                </div>
+	                	<a href="${path }/daily/moveDetail.do?dailyNo=${d.dailyNo}" class="carousel-item active">
+		                  <img src="${path }/resources/upload/community/daily/${d.dailyImgName}" class="d-block w-100">
+		                </a>
 	                </c:forEach>               
 	              </div>
 	              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -240,7 +240,7 @@
               <div class="row d-flex justify-content-between px-3 py-4 mt-5">
                 <p class="h5">
                   <strong>리뷰</strong> 
-                  <span class="text-point pl-3">0</span>
+                  <span class="text-point pl-3"><c:out value="${reviewCount }"/></span>
                   <span class="text-hgh pl-3">★★★☆☆</span>
                 </p>
                 <button type="button" class="btn btn-link text-black-50" data-toggle="modal" id="reviewBtn" ><strong>리뷰 쓰기</strong></button>
@@ -258,7 +258,7 @@
 	           <div class="row d-flex justify-content-between px-3 py-4 mt-5" >
 	              <p class="h5">
 	                <strong>문의</strong> 
-	                <span class="text-point pl-3">0</span>               
+	                <span class="text-point pl-3"><c:out value="${qnaCount }"/></span>               
 	              </p>
 	              <button type="button" id="qnaBtn" class="btn btn-link text-black-50" data-toggle="modal" ><strong>문의 하기</strong></button>
 	             
@@ -701,17 +701,6 @@
 			});
 		}
 		
-		/* function test(){
-			$.ajaxSettings.traditional = true;
-			$.ajax({
-				url: "${path}/가고싶은 주소",				
-				data:{productNo:productNo, cPage:cPage},
-				dataType:"html",
-				success:(data)=>{
-					$("#reviewCon").html(data);
-				}
-			})
-		} */
         
 </script>
 
