@@ -77,7 +77,10 @@ public class MemberController {
    }
 
    @RequestMapping("/member/myPageShop.do")
-   public String myPageShop() {
+   public String myPageShop(Model m,HttpSession session) {
+	  Member mem = (Member)session.getAttribute("loginMember");
+	  Member member = service.selectMemberOne(mem.getMemberNo());
+	  m.addAttribute("member",member);
       return "member/myPageShop";
    }
 
