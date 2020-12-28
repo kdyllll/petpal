@@ -277,38 +277,31 @@
 			}
 		}).then((result) => {
 			if(result){
-				/* let stockNo=[]; */
+				let deleteCart=[];
 				
 				var objs = document.querySelectorAll(".ch");
 				
 				for(var i=0;i<objs.length;i++){
 					if(objs[i].checked===true){
-						/* alert($("#stockNo").val()); */
+						deleteCart.push("1");
 					}else{
-						alert($("input[name=size]").val());
+						deleteCart.push("0");
 					}
 				}
-				
-				/* 선택된 애의 stockNo를 어떻게 가져오지? 음..
-				
-				
-				    $.ajax({
-				        type:"POST",
-				        url:"${path}/cart/deleteCart.do",
-				        data : {stockNo:stockNo},
-				        dataType : "xml",
-				        success: function(){
-				        	swal('상품이 삭제되었습니다.', '', 'success');
-				        },
-				        error: function() {
-				        	swal('실패', '', 'warning');
-				        }  
-				    });
-				
-				input hidden value로 표시 */
+				$.ajaxSettings.traditional = true;
+			    $.ajax({
+			        url:"${path}/cart/deleteCart.do",
+			        data : {deleteCart:deleteCart},
+			        success: function(){
+			        	swal('상품이 삭제되었습니다.', '', 'success');
+			        },
+			        error: function() {
+			        	swal('실패', '', 'warning');
+			        }  
+			    });
 				
 			}
-		})
+		});
 	}
 	
 	/* $("#checkDelete").click(function(){
@@ -432,6 +425,7 @@
 				                             </div>
 				                             <input type="hidden" name="price" value="${c.PRICE}">
 				                             <span class="price ml-auto"><c:out value="${amount[i] * c.PRICE}"/>원</span>
+				                             <input id="stockNo" type="hidden" value="${c.STOCKNO }">
 				                             <div id="preview"></div>
 				                    </div>
 	                    		</div>

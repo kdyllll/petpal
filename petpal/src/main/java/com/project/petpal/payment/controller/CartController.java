@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.petpal.member.model.vo.Member;
@@ -77,13 +79,25 @@ public class CartController {
 				for(int i=0;i<stockNo.size();i++) {
 					mv.addObject("list", service.cartListNonMember(stockNo));
 					mv.addObject("amount", amount);
-					System.out.println(service.cartListNonMember(stockNo));
 				}
 				mv.setViewName("cart/cartNonMember");
 			}else {
 				mv.setViewName("cart/cartEmpty");
 			}
 		}
+		return mv;
+	}
+	
+	@RequestMapping("cart/deleteCart.do")
+	@ResponseBody
+	public ModelAndView deleteCart(ModelAndView mv, HttpServletRequest request, HttpSession session, HttpServletResponse response,
+									String[] deleteCart) {
+		
+		System.out.println(deleteCart.length);
+		for(int i=0;i<deleteCart.length;i++) {
+			System.out.println(deleteCart[i]);
+		}
+		
 		return mv;
 	}
 
