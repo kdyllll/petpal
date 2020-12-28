@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.project.petpal.admin.model.vo.Product;
-import com.project.petpal.admin.model.vo.ProductImg;
+import com.project.petpal.store.model.vo.ProductImg;
 import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyCoord;
 import com.project.petpal.community.model.vo.DailyImg;
@@ -20,4 +20,10 @@ public interface DailyService {
 	List<Map> selectDailyAll();
 	List<DailyImg> selectMainImg();
 	List<Hashtag> selectHashAll();
+	Map selectDailyOne(String dailyNo);
+	List<DailyImg> selectDailyImg(String dailyNo);
+	List<Hashtag> selectHashList(String dailyNo);
+	List<Map> selectCoordList(String dailyNo);
+	ProductImg selectProductImg(String productNo);
+	int deleteDaily(String dailyNo);
 }

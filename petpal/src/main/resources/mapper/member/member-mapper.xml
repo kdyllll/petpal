@@ -1,31 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "- //mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="member">
-	<select id="selectMember" parameterType="string" resultMap="memberMap">
-		SELECT * FROM MEMBER WHERE EMAIL = #{email}
-	</select>
-	<resultMap type="member" id="memberMap">
-		<result column="address" property="address" typeHandler="strArr"/>
+   <select id="selectMember" parameterType="string" resultMap="memberMap">
+      SELECT * FROM MEMBER WHERE EMAIL = #{email}
+   </select>
+   <resultMap type="member" id="memberMap">
+      <result column="address" property="address" typeHandler="strArr"/>
     </resultMap>
     <insert id="insertMember" parameterType="member">
-    	INSERT INTO MEMBER VALUES('M'||TO_CHAR(SEQ_MEMBERNO.NEXTVAL),#{email},#{password},#{memberName},#{phone},#{address,typeHandler=strArr},DEFAULT,DEFAULT,#{nickName},
-    	<choose>
-			 		<when test="img != null">
-			 			#{img}
-			 		</when>
-			 		<when test="img == null">
-			 			DEFAULT
-			 		</when>
-			 	</choose>
-    	,NULL)
+       INSERT INTO MEMBER VALUES('M'||TO_CHAR(SEQ_MEMBERNO.NEXTVAL),#{email},#{password},#{memberName},#{phone},#{address,typeHandler=strArr},DEFAULT,DEFAULT,#{nickName},
+       <choose>
+                <when test="img != null">
+                   #{img}
+                </when>
+                <when test="img == null">
+                   DEFAULT
+                </when>
+             </choose>
+       ,NULL)
     </insert>
     <update id="updatePassword" parameterType="member">
-    	UPDATE MEMBER SET PASSWORD=#{password} where MEMBERNO=#{memberNo}
+       UPDATE MEMBER SET PASSWORD=#{password} where MEMBERNO=#{memberNo}
     </update>
     <update id="updateMemberEnd" parameterType="member">
-    	UPDATE MEMBER SET NICKNAME=#{nickName},PHONE=#{phone},MEMBERNAME=#{memberName},address=#{address,typeHandler=strArr}, IMG=#{img}, INFO=#{info} where MEMBERNO=#{memberNo}
+       UPDATE MEMBER SET NICKNAME=#{nickName},PHONE=#{phone},MEMBERNAME=#{memberName},address=#{address,typeHandler=strArr}, IMG=#{img}, INFO=#{info} where MEMBERNO=#{memberNo}
     </update>
     <select id="selectMemberAll" resultType="map">
-    	SELECT * FROM MEMBER
+       SELECT * FROM MEMBER
     </select>
+
+   <select id="followCnt" parameterType="string" resultType="int">
+      SELECT COUNT(*) FROM FOLLOW WHERE MEMBERNO=#{memberNo}
+   </select>
+   <select id="favCnt" parameterType="string" resultType="int">
+      SELECT COUNT(*) FROM FAV WHERE MEMBERNO=#{memberNo}
+   </select>
+   <select id="selectMemberOnee" parameterType="string" resultType="map">
+      SELECT * FROM MEMBER WHERE MEMBERNO = #{memberNo}
+   </select>
+
+    <select id="selectMemberOne" resultType="member" parameterType="string">
+       SELECT * FROM MEMBER WHERE MEMBERNO=#{memberNo}
+    </select>
+    <select id="countFollowing" resultType="int" parameterType="string">
+       SELECT COUNT(*) FROM FOLLOW WHERE MEMBERNO=#{memberNo}
+    </select>
+    <select id="countFollower" resultType="int" parameterType="string">
+       SELECT COUNT(*) FROM FOLLOW WHERE WRITERNO=#{memberNo}
+    </select>
+    <select id="selectDailyMain" resultType="dailyImg" parameterType="string">
+       SELECT * FROM DAILYIMG LEFT JOIN DAILY USING(DAILYNO) WHERE MEMBERNO=#{memberNo} AND STATUS='M'
+    </select>
+    <select id="selectTipMain" resultType="map" parameterType="string">
+       SELECT * FROM TIPIMG LEFT JOIN TIP USING(TIPNO) WHERE MEMBERNO=#{memberNo} AND MAINIMG IS NOT NULL
+    </select>
+    <select id="selectPlaceMain" resultType="map" parameterType="string">
+       SELECT * FROM PLACEIMG LEFT JOIN PLACE USING(PLACENO) WHERE MEMBERNO=#{memberNo} AND TYPE='M'
+    </select>
+    <select id="selectFindMain" resultType="map" parameterType="string">
+       SELECT * FROM FINDIMG LEFT JOIN FIND USING(FINDNO) WHERE MEMBERNO=#{memberNo} AND IMGSTATUS='M'
+    </select>
+   
+
 </mapper>

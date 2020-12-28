@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.petpal.admin.model.vo.Product;
-import com.project.petpal.admin.model.vo.ProductImg;
+import com.project.petpal.store.model.vo.ProductImg;
 import com.project.petpal.community.model.service.DailyService;
 import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyCoord;
@@ -47,12 +48,6 @@ public class DailyController {
 		List<Map> dailyList=service.selectDailyAll();
 		List<DailyImg> imgList=service.selectMainImg();
 		List<Hashtag> hashList=service.selectHashAll();
-		for(Map map:dailyList) {
-			for(Object o:map.keySet()) {
-				System.out.println(o);
-				System.out.println(map.get(o));
-			}
-		}
 		
 		//좋아요 수
 		//댓글 수 보내야 함
@@ -66,10 +61,10 @@ public class DailyController {
 	@RequestMapping("/daily/dailyWriteEnd.do")
 	public String insertDaily(HttpSession session,Model m,String content,
 			@RequestParam(value="pic", required=false) MultipartFile[] pic,
-			@RequestParam(value="coord", required=false) String[] productNo,
-			@RequestParam(value="coord", required=false) String[] percentX,
-			@RequestParam(value="coord", required=false) String[] percentY,
-			@RequestParam(value="coord", required=false) String[] index,
+			@RequestParam(value="productNo", required=false) String[] productNo,
+			@RequestParam(value="percentX", required=false) String[] percentX,
+			@RequestParam(value="percentY", required=false) String[] percentY,
+			@RequestParam(value="index", required=false) String[] index,
 			@RequestParam(value="hashtag", required=false) String[] hashtag
 			) {
 		//받아야 하는것
@@ -120,27 +115,13 @@ public class DailyController {
 		//순서가 글 인서트 → 글번호 가져오기(객체필요) → 사진 인서트 → 사진번호 가져오기(객체필요) → 좌표들을 사진번호에 맞게 객체에 넣고(객체 필요) → 좌표 인서트
 		List<DailyCoord> coords=new ArrayList<DailyCoord>();
 		if(productNo!=null&&percentX!=null&&percentY!=null&&index!=null) {
-//			for(String s:coord) {
-//				String[] code=s.split(",");
-//				System.out.println(s);
-//				System.out.println(code[0]);
-//				System.out.println(code[1]);
-//				System.out.println(code[2]);
-//				System.out.println(code[3]);
-//				DailyCoord dc=DailyCoord.builder().productNo(code[0]).xxCode(Double.parseDouble(code[1])).yyCode(Double.parseDouble(code[2])).index(code[3]).build();
-//				coords.add(dc);
-//				System.out.println(dc);
-//			};
 			for(int i=0;i<productNo.length;i++) {
-				DailyCoord dc=DailyCoord.builder().productNo(productNo[i]).xxCode(Double.parseDouble(percentX[i])).
-						yyCode(Double.parseDouble(percentY[i])).index(index[i]).build();
+				DailyCoord dc=DailyCoord.builder().productNo(productNo[i].trim()).xxCode(Double.parseDouble(percentX[i].trim())).
+						yyCode(Double.parseDouble(percentY[i].trim())).index(index[i].trim()).build();
 				coords.add(dc);
 			}
 		};
-		for(DailyCoord dc2:coords) {
-			System.out.println(dc2);
-		}
-		
+
 		//해시태그
 		List<Hashtag> hashList=new ArrayList();
 		for(String hash:hashtag) {
@@ -160,11 +141,74 @@ public class DailyController {
 	//글 디테일로 이동
 	@RequestMapping("/daily/moveDetail.do")
 	public String moveDetail(String dailyNo,Model m) {
-		//글사진, 글내용, 글 해시태그, 글 작성시간, 글 번호, 글좋아요, 글댓글, 작성자 사진, 작성자 닉네임, 
+		//글사진, 상품 태그, 글내용, 글 해시태그, 글 작성시간, 글 번호, 글좋아요, 글댓글, 작성자 사진, 작성자 닉네임, 
+		
+		//글 + 멤버 
+		Map daily=service.selectDailyOne(dailyNo);
+		//글 사진
+		List<DailyImg> imgList=service.selectDailyImg(dailyNo);
+		//상품 태그
+		List<Map> coordList=service.selectCoordList(dailyNo);
+		//상품 이미지
+		List<ProductImg> pImgList=new ArrayList<ProductImg>();
+		for(Map mc:coordList) {
+			String productNo=(String)mc.get("PRODUCTNO");
+			pImgList.add(service.selectProductImg(productNo));
+		}
+		//같은 상품의 사진이 있다면 중복 제거
+		HashSet temp=new HashSet(pImgList);
+		pImgList=new ArrayList(temp);
+		//해시태그
+		List<Hashtag> hashList=service.selectHashList(dailyNo);
+		//좋아요
+		
+		m.addAttribute("daily",daily);
+		m.addAttribute("imgList",imgList);
+		m.addAttribute("coordList",coordList);
+		m.addAttribute("pImgList",pImgList);
+		m.addAttribute("hashList",hashList);
 		return "community/dailyDetail";
 	}
 	
+	//글삭제
+	@RequestMapping("/daily/deleteDaily.do")
+	public String deleteDaily(String dailyNo,Model m) {
+		int result=service.deleteDaily(dailyNo);
+		m.addAttribute("msg",result>0?"글을 삭제했습니다.":"글 삭제에 실패했습니다.");
+		m.addAttribute("loc","/daily/moveList.do");		
+		return "common/msg";
+	}
 	
+	//글수정
+	@RequestMapping("/daily/moveUpdate.do")
+	public String moveUpdate(String dailyNo,Model m) {
+		
+		//글 + 멤버 
+		Map daily=service.selectDailyOne(dailyNo);
+		//글 사진
+		List<DailyImg> imgList=service.selectDailyImg(dailyNo);
+		//상품 태그
+		List<Map> coordList=service.selectCoordList(dailyNo);
+		//상품 이미지
+		List<ProductImg> pImgList=new ArrayList<ProductImg>();
+		for(Map mc:coordList) {
+			String productNo=(String)mc.get("PRODUCTNO");
+			pImgList.add(service.selectProductImg(productNo));
+		}
+		//같은 상품의 사진이 있다면 중복 제거
+		HashSet temp=new HashSet(pImgList);
+		pImgList=new ArrayList(temp);
+		//해시태그
+		List<Hashtag> hashList=service.selectHashList(dailyNo);
+		
+		m.addAttribute("daily",daily);
+		m.addAttribute("imgList",imgList);
+		m.addAttribute("coordList",coordList);
+		m.addAttribute("pImgList",pImgList);
+		m.addAttribute("hashList",hashList);
+		
+		return "community/dailyUpdate";
+	}
 	
 	
 	//AJAX
@@ -188,6 +232,7 @@ public class DailyController {
 		//이미지번호, 상품번호, 이미지이름, 타입(메인M)	
 		return p;		
 	}
+
 	
 	
 

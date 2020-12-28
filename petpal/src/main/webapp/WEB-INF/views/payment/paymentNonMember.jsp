@@ -204,6 +204,7 @@
                 		<c:forEach items="${list }" var="c">
                 			<input type="hidden" name="cnt" value="${c.count }">
                 			<input type="hidden" name="stockNo" value="${c.stockNo }">
+                			<input type="hidden" name="price" value="${c.price }">
                 		</c:forEach>
                 		<input type="hidden" name="totalPrice" value="${list[0].totalPrice }">
                     	<div>
