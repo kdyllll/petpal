@@ -67,4 +67,16 @@ public class TipServiceImpl implements TipService {
 		return result;
 	}
 
+	@Override
+	public List<Map> selectTipListOne(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectTipListOne(session, memberNo);
+	}
+
+	@Override
+	public int tipCnt(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.tipCnt(session, memberNo);
+	}
+
 }

@@ -28,7 +28,7 @@ import com.project.petpal.community.model.vo.FindImg;
 public class findController {
 	
 	@Autowired
-	public FindService service;
+	private FindService service;
 	
 	@RequestMapping("/community/findList.do")
 	public String findList(Model model) {

@@ -142,6 +142,18 @@ public class DailyServiceImpl implements DailyService {
 		return dao.deleteDaily(session,dailyNo);
 	}
 
+	@Override
+	public List<Map> selectDailyListOne(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectDailyListOne(session, memberNo);
+	}
+
+	@Override
+	public int dailyCnt(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.dailyCnt(session, memberNo);
+	}
+
 	
 	
 

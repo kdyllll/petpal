@@ -80,4 +80,16 @@ public class PlaceServiceImpl implements PlaceService{
 		return dao.commentList(session,placeNo);
 	}
 
+	@Override
+	public List<Map> selectPlaceListOne(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectPlaceListOne(session, memberNo);
+	}
+
+	@Override
+	public int placeCnt(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.placeCnt(session, memberNo);
+	}
+
 }

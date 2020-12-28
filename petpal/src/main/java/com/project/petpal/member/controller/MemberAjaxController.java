@@ -19,9 +19,9 @@ import com.project.petpal.member.model.vo.Member;
 @SessionAttributes("loginMember")
 public class MemberAjaxController {
 	@Autowired
-	MemberService service;
+	private MemberService service;
 	@Autowired
-	BCryptPasswordEncoder pwEncoder;
+	private BCryptPasswordEncoder pwEncoder;
 	
 	@RequestMapping("/member/passwordUpdate.do")
 	@ResponseBody

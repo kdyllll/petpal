@@ -25,5 +25,5 @@ public interface MemberDao {
    List<Map> selectTipMain(SqlSession session, String memberNo);
    List<Map> selectPlaceMain(SqlSession session, String memberNo);
    List<Map> selectFindMain(SqlSession session, String memberNo);
-
+   
 }

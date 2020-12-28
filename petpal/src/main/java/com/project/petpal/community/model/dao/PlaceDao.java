@@ -20,5 +20,6 @@ public interface PlaceDao {
 	int commentCount(SqlSession session,String placeNo);
 	int insertComment(SqlSession session,PlaceComment pc);
 	List<PlaceComment> commentList(SqlSession session,String placeNo);
-	
+	List<Map> selectPlaceListOne(SqlSession session, String memberNo);
+	int placeCnt(SqlSession session, String memberNo);
 }

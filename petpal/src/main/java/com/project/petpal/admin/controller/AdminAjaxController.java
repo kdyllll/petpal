@@ -14,7 +14,7 @@ import com.project.petpal.admin.model.service.AdminService;
 @Controller
 public class AdminAjaxController {
 	@Autowired
-	public AdminService service;
+	private AdminService service;
 	
 	@RequestMapping("/admin/claimDetail.do")
 	public String claimDetail(String claimNo, Model m) {

@@ -59,4 +59,16 @@ public class PlaceDaoImpl implements PlaceDao{
 		return session.selectList("place.commentList",placeNo);
 	}
 
+	@Override
+	public List<Map> selectPlaceListOne(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("place.selectPlaceListOne",memberNo);
+	}
+
+	@Override
+	public int placeCnt(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("place.placeCnt", memberNo);
+	}
+
 }

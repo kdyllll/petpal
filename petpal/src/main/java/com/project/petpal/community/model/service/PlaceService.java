@@ -1,6 +1,7 @@
 package com.project.petpal.community.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.project.petpal.community.model.vo.Place;
 import com.project.petpal.community.model.vo.PlaceComment;
@@ -15,5 +16,7 @@ public interface PlaceService {
 	int commentCount(String placeNo);
 	int insertComment(PlaceComment pc);
 	List<PlaceComment> commentList(String placeNo);
+	List<Map> selectPlaceListOne(String memberNo);
+	int placeCnt(String memberNo);
 	
 }

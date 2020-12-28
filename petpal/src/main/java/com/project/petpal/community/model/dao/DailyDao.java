@@ -30,4 +30,6 @@ public interface DailyDao {
 	List<Map> selectCoordList(SqlSession session,String dailyNo);
 	ProductImg selectProductImg(SqlSession session,String productNo);
 	int deleteDaily(SqlSession session,String dailyNo);
+	List<Map> selectDailyListOne(SqlSession session, String memberNo);
+	int dailyCnt(SqlSession session, String memberNo);
 }

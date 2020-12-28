@@ -25,5 +25,11 @@
 	<update id="updateTipImg" parameterType="tipImg">
 		
 	</update>
+	<select id="selectTipListOne" parameterType="string" resultType="map">
+		select * from member join tip using(memberNo) join tipImg using(tipNo) where memberNo=#{memberNo} and mainImg is not null
+	</select>
+	<select id="tipCnt" resultType="_int" parameterType="string">
+		select count(*) from member join tip using(memberNo) where memberNo = #{memberNo}
+	</select>
 	
 </mapper>

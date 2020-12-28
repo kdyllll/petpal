@@ -23,5 +23,5 @@ public interface MemberService {
    List<Map> selectTipMain(String memberNo);
    List<Map> selectPlaceMain(String memberNo);
    List<Map> selectFindMain(String memberNo);
-
+   
 }

@@ -48,4 +48,10 @@
   <select id="commentList" resultType="placeComment" parameterType="string">
   	SELECT * FROM PLACECOMMENT JOIN MEMBER USING(MEMBERNO) WHERE PLACENO=#{placeNo}
   </select>
+  <select id="selectPlaceListOne" resultType="map" parameterType="string">
+  	select * from member join place using(memberNo) join placeImg using(placeNo) where memberNo=#{memberNo} and type ='M'
+  </select>
+  <select id="placeCnt" resultType="_int" parameterType="string">
+  	select count(*) from member join place using(memberNo) where memberNo = #{memberNo}
+  </select>
 </mapper>

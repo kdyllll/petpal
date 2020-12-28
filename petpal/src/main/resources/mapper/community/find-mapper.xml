@@ -13,5 +13,12 @@
 	<select id="selectFindList" resultType="map">
 		SELECT * FROM FIND JOIN FINDIMG USING(FINDNO) JOIN MEMBER USING(MEMBERNO) WHERE IMGSTATUS = 'M' AND STATUS='N' 
 	</select>
+	
+	   <select id="selectFindListOne" parameterType="string" resultType="map" >
+   		select * from member join find using(memberNo) join findImg using(findNo) where memberNo = #{memberNo} and imgStatus='M'
+   </select>
+	<select id="findCnt" parameterType="string" resultType="int">
+		select count(*) from member join find using(memberNo) where memberNo = #{memberNo}		
+	</select>
 
 </mapper>

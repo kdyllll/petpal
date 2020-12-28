@@ -60,6 +60,5 @@
     <select id="selectFindMain" resultType="map" parameterType="string">
        SELECT * FROM FINDIMG LEFT JOIN FIND USING(FINDNO) WHERE MEMBERNO=#{memberNo} AND IMGSTATUS='M'
     </select>
-   
 
 </mapper>
