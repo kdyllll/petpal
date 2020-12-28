@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
+import com.project.petpal.community.model.vo.DailyImg;
 import com.project.petpal.member.model.vo.Member;
 import com.project.petpal.store.model.service.StoreService;
 import com.project.petpal.store.model.vo.Product;
@@ -61,19 +61,15 @@ public class StoreController {
 		}
 
 		//일상글 가져오기
-		
-		//리뷰 가져오기
-		List<Review> reviews=service.selectReview(productNo,1,3);
-		
-		//문의 가져오기
-		List<Qna> qnas=service.selectQna(productNo,1,3);
+		List<DailyImg> dailyList=service.selectDailyImg(productNo);
+
 		
 		m.addAttribute("product",p);
 		m.addAttribute("imgs",pImg);
 		m.addAttribute("stockList",stockList);
 		m.addAttribute("jsonStock",new Gson().toJson(stockList));
-		m.addAttribute("reviewList",reviews);
-		m.addAttribute("qnaList",qnas);
+		m.addAttribute("dailyList",dailyList);
+
 		
 		return "store/productDetail";
 	}

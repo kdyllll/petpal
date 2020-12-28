@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.petpal.community.model.vo.DailyImg;
 import com.project.petpal.payment.model.vo.Cart;
 import com.project.petpal.store.model.dao.StoreDao;
 import com.project.petpal.store.model.vo.Product;
@@ -193,6 +194,24 @@ public class StoreServiceImpl implements StoreService{
 	public int updateCartCnt(Map m) {
 		// TODO Auto-generated method stub
 		return dao.updateCartCnt(session,m);
+	}
+
+	@Override
+	public int totalReviewCount(String productNo) {
+		// TODO Auto-generated method stub
+		return dao.totalReviewCount(session,productNo);
+	}
+
+	@Override
+	public int totalQnaCount(String productNo) {
+		// TODO Auto-generated method stub
+		return dao.totalQnaCount(session,productNo);
+	}
+
+	@Override
+	public List<DailyImg> selectDailyImg(String productNo) {
+		// TODO Auto-generated method stub
+		return dao.selectDailyImg(session,productNo);
 	}
 
 	

@@ -192,33 +192,29 @@
           </div>
 
         <!--상품 상세창-->
-        <div class="container mt-5 col-lg-8 col-10 offset-lg-2"> 
+        <div class="container mt-5 col-lg-8 col-10 offset-lg-2">     
           <div class="mb-5">
-            <p class="h5 py-4"><strong>유저들의 스타일링 샷</strong> <span class="text-point">0</span></p>
-            <div id="carouselExampleControls" class="carousel slide block col-lg-8 offset-lg-2">
-              <div class="carousel-inner rounded ">
-                <div class="carousel-item active">
-                  <img src="" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                  <img src="" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                  <img src="" class="d-block w-100" alt="...">
-                </div>
-              </div>
-              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-              </a>
-            </div>
-            <!-- <div id="pInfo" style="height:150px;">
+            <c:if test="${not empty dailyList }">
+	            <p class="h5 py-4"><strong>유저들의 스타일링 샷</strong> <span class="text-point">0</span></p>
+	            <div id="carouselExampleControls" class="carousel slide block col-lg-8 offset-lg-2">
+	              <div class="carousel-inner rounded ">
+	                <c:forEach var="d" items="${dailyList }">
+	                	<div class="carousel-item active">
+		                  <img src="${path }/resources/upload/community/daily/${i.dailyImgName}" class="d-block w-100">
+		                </div>
+	                </c:forEach>               
+	              </div>
+	              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+	                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+	                <span class="sr-only">Previous</span>
+	              </a>
+	              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+	                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+	                <span class="sr-only">Next</span>
+	              </a>
+	            </div>
+			 </c:if>
 
-            </div> -->
             <!--상품정보-->
             <div id="pInfo">
               <p class="h5 py-4"><strong>상품정보</strong></p>
@@ -237,6 +233,8 @@
                 </tr>
               </tbody>
             </table>
+            
+            
             <!--리뷰-->
             <div id="review">
               <div class="row d-flex justify-content-between px-3 py-4 mt-5">
@@ -247,230 +245,27 @@
                 </p>
                 <button type="button" class="btn btn-link text-black-50" data-toggle="modal" id="reviewBtn" ><strong>리뷰 쓰기</strong></button>
               </div>
-              <%if(reviewList==null){ %>
-              <p>작성된 리뷰가 없습니다</p>
-              <!--리뷰창-->
-              <%}else{
-            	  for(Review r:reviewList) {%>
-              
-	              <article class="px-4 mb-3 pb-3 border-bottom">
-	                <div class="pl-2 d-flex justify-content-between">
-	                 <div class="row">
-		                  <a href="" class="rounded-circle pr-3">
-		                    <img src="${path }/resources/upload/member/profile/<%=r.getImg() %>" width="30px;">
-		                  </a>                  
-		                  <div style="font-size: 12px;">
-		                    <a href="${path }/user/moveUserInfo.do?memberNo="+<%=r.getMemberNo() %> class="my-0 text-black"><%=r.getNickName() %></a>
-		                    <div >
-		                      <span class="text-hgh">
-		                    		<%
-		                    			int star=r.getStar();
-		                    			for(int i=0;i<5;i++){
-		                    				if(i<star){%>
-		                    					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-												  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-												</svg>              				
-		                    				<%}else{%>
-		                    					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-												  <path fill-rule="evenodd" d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
-												</svg>
-		                    				<%}
-		                    			}
-		                    		%>
-		                    	</span> 
-		                    	<span><%=r.getEnrollDate() %></span>
-		                    </div>
-		                  </div>
-	                  </div>
-	                  <%if(loginMember!=null&&r.getMemberNo().equals(loginMember.getMemberNo())){ %>
-	                  <div>
-	                  	<button type="button" class="reviewEdit btn btn-link p-0 pr-1 text-point">수정</button>
-	                  	<button type="button" class="reviewDelete btn btn-link p-0 pr-1 text-point">삭제</button>
-	                  	<input type="hidden" class="reviewNum" value="<%=r.getReviewNo() %>"/>
-	                  </div>
-	                  <%}else if(loginMember!=null&&(loginMember.getMemberNo()).equals("63")){%>
-	                  <div>
-	                  	<button type="button" class="reviewDelete btn btn-link p-0 pr-1 text-point">삭제</button>
-	                  	<input type="hidden" class="reviewNum" value="<%=r.getReviewNo() %>"/>
-	                  </div>
-	                  <%} %>
-	                </div>
-	                <div class="my-2"> 
-	                   <%if(r.getColor()!=null ){
-	                		if(r.getProductSize()!=null){%>
-								<%=r.getColor() %> / <%=r.getProductSize() %>
-	                		<%}else{%>
-	                			<%=r.getColor() %>
-	                		<%}
-	                	}else{
-	                		if(r.getProductSize()!=null){%>
-	                			<%=r.getProductSize() %>
-	                		<%}
-	                	}%>	
-	                </div>
-	                <%if(r.getFileName()!=null){ %>
-	                	<img src="${path }/resources/upload/store/review/<%=r.getFileName() %>"  width="150px" class="rounded mb-3">
-	                <%} %>
-	                <p><%=r.getContent() %></p>
-	                
-	                  <%if(r.getReviewComment()!=null){ %>
-	                  <div class="text-right">
-		                  <c:if test="${loginMember.memberNo eq '63'}">
-			                  <a class="replyEdit text-point text-right pb-2 pr-4"  style="font-size: 12px;" style="cursor: pointer;">
-						                    답글 수정
-						      </a>
-		                  </c:if>
-		                  <a class="replyShow text-hgh text-right pb-2" style="font-size: 12px;" style="cursor: pointer;">
-		                    <strong>판매자 답글</strong>
-		                  </a>
-		              </div> 
-		                <div class="reply collapse py-3 mt-2 pr-3 bg-light rounded text-right">
-		                  <p class="mb-0"><%=r.getReviewComment() %> </p>
-		                </div>
-		
-		                <form class="replyEditFrm collapse  mt-2 p-3 pb-0 bg-light rounded text-right">
-		                  <div class="form-group">
-		                    <textarea class="form-control" rows="2" style="resize:none;"><%=r.getReviewComment() %></textarea>
-		                    <button type="button" class="replyEditBtn btn btn-primary mt-2">완료</button>
-		                    <input type="hidden" name="productNo" value="${product.productNo }"/>
-		                    <input type="hidden" name="reviewNo" value="<%=r.getReviewNo() %>"/>
-		                  </div> 
-		                </form>
-	                  <%}else{ %>
-	                  <div class="text-right">
-		                  <c:if test="${loginMember.memberNo eq '63'}">
-		                  	<a class="replyWrite text-point text-right pb-2 pr-4"  style="font-size: 12px;" style="cursor: pointer;">답글 작성</a>
-		                  </c:if>
-		                  <a class="text-black-50 text-right pb-2" style="font-size: 12px;" style="cursor: pointer;"><strong>판매자 답글</strong></a>
-		               </div>
-		               <form class="replyWriteFrm collapse  mt-2 p-3 pb-0 bg-light rounded text-right" >
-		                  <div class="form-group">
-		                    <textarea class="form-control" rows="2" style="resize:none;" placeholder=""></textarea>
-		                    <button type="button" class="replyWriteBtn btn btn-primary mt-2">완료</button>
-		                    <input type="hidden" name="productNo" value="${product.productNo }"/>
-		                    <input type="hidden" name="reviewNo" value="<%=r.getReviewNo() %>"/>
-		                  </div> 
-		                </form>
-	                  <%} %>            
-	              </article>
-				<%}
-               };%>
-             
-              <div class="mt-3 text-center">페이지바</div>
+              <div id="reviewCon">
+            
+              </div>
+
             </div>
+
+
 
            <!--문의-->
-
-            <div id="qnaCon" class="row d-flex justify-content-between px-3 py-4 mt-5" >
-              <p class="h5">
-                <strong>문의</strong> 
-                <span class="text-point pl-3">0</span>               
-              </p>
-              <button type="button" id="qnaBtn" class="btn btn-link text-black-50" data-toggle="modal" ><strong>문의 하기</strong></button>
-             
-            </div>
-            <c:forEach var="q" items="${qnaList }">
-		            <article class="qna border-bottom py-3">
-		              <div class="row d-flex justify-content-between pl-2"> 
-		              	
-		                <p class="mb-0"style="font-size: 14px;"><c:out value="${q.category }"/> |  
-		                <c:if test="${empty q.qnaComment}">
-		                	<span class="text-black-50" >답변전</span>
-		                </c:if>
-		                <c:if test="${not empty q.qnaComment }">
-		                	<span class="text-hgh"> 답변완료</span>
-		                </c:if>
-		                <c:if test="${q.secret eq 'Y' }">
-			               	 <span class="text-black-50">
-			               	 	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="mb-1 bi bi-lock-fill" viewBox="0 0 16 16">
-					                  <path d="M2.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z"/>
-					                  <path fill-rule="evenodd" d="M4.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
-					            </svg> 
-					         </span>
-		                </c:if>
-		                </p>
-		                <c:if test="${(q.memberNo ne loginMember.memberNo) and (loginMember.memberNo eq '63') }">
-		                	<div class="text-right mr-4">
-				              <button type="button" class="qnaDelete btn btn-link p-0 pr-1 text-black-50">삭제</button>			
-			                </div>
-		                </c:if>
-		                <c:if test="${q.memberNo eq loginMember.memberNo }">
-		                 	<div class="text-right mr-4">
-			                  <button type="button" class="qnaEdit btn btn-link p-0 pr-1 text-black-50">수정</button>
-				              <button type="button" class="qnaDelete btn btn-link p-0 pr-1 text-black-50">삭제</button>			
-			                </div>
-		                </c:if>			                	                
-		              </div>
-		              <p class="text-black-50" style="font-size: 12px;"><c:out value="${q.nickName}"/> | <span><c:out value="${q.enrollDate}"/></span></p>
-		              
-		              <c:choose>
-			              <c:when test="${(q.memberNo eq loginMember.memberNo) or (loginMember.memberNo eq '63') or (q.secret eq 'N')}">
-				              <div class="row ml-2">
-				                <p class="text-hgh mr-3"><strong>Q</strong></p>
-				                <pre><c:out value="${q.content}"/></pre>		                  
-				              </div> 
-				              <c:if test="${(empty q.qnaComment) and (loginMember.memberNo eq '63')}">
-					              <a class="answerWrite text-black-50 text-right pb-2 pr-4 mb-1 ml-2" style="font-size: 12px;" role="button" style="cursor: pointer;">답글 달기</a>
-					              <form class="answerWriteFrm mt-2 collapse" >
-					              	  <input type="hidden" name="productNo" value="${product.productNo }"/>
-						              <input type="hidden" class="qnaNo" name="qnaNo" value="${q.qnaNo }"/>
-						                <div class="form-group row ml-2">
-						                  <p><strong class="text-hgh mr-2">A</strong></p>
-						                  <div class="col-11"> 
-						                    <textarea class="writeText form-control" name="qnaComment" rows="2" style="resize:none;"></textarea>
-						                    <button type="button" class="answerWriteBtn btn bg-hgh text-white mt-2 offset-10 col-2">완료</button>
-						                  </div>
-						                </div> 
-					              </form>
-				              </c:if>
-				              <c:if test="${(not empty q.qnaComment)}">
-					              <div class="answer row ml-2">
-					                <p class=""><strong class="text-hgh mr-2">A</strong></p>
-					                <div class="col-11"> 
-					                  <div class="d-flex justify-content-between mb-2">
-					                    <p class="text-black-50 m-0" style="font-size: 12px;"><c:out value="${q.commentDate }"/></p>
-					                   	  <c:if test="${loginMember.memberNo eq '63' }">
-						                      <div class="row">
-						                        <a class="answerEdit text-black-50 mr-2" style="font-size: 12px;" role="button" style="cursor: pointer;">답글 수정</a>
-						                        <a class="answerDelete text-black-50 mr-2" style="font-size: 12px;" role="button" style="cursor: pointer;">답글 삭제</a>
-						                      </div> 
-					                  	  </c:if>
-					                  </div>
-					                  <pre class="content"><c:out value="${q.qnaComment}"/></pre>
-					                </div>
-					              </div> 
-					              
-					                <form class="answerEditFrm collapse" >
-					                  <input type="hidden" name="productNo" value="${product.productNo }"/>
-					                  <input type="hidden" class="qnaNo" name="qnaNo" value="${q.qnaNo }"/>
-					                  <div class="form-group row ml-2">
-					                    <p class=""><strong class="text-hgh mr-2">A</strong></p>
-					                    <div class="col-11 mt-2"> 
-					                      <textarea class="writeText form-control" name="qnaComment" rows="3" style="resize:none;"><c:out value="${q.qnaComment}"/></textarea>
-					                      <div class="text-right">
-					                        <button type="button" class="editCancel btn btn-link text-hgh mt-2">취소</button>
-					                        <button type="button" class="answerEditBtn btn bg-hgh text-white mt-2">완료</button>
-					                      </div>
-					                    </div>
-					                  </div> 
-					                </form>
-				              </c:if>		              
-			              </c:when>
-			              <c:otherwise>
-			              	 <div class="row ml-2">
-				                <p class="text-hgh mr-3"><strong>Q</strong></p>
-				                <p class="text-black-50"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
-				                  <path d="M2.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z"/>
-				                  <path fill-rule="evenodd" d="M4.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
-				                </svg> </p>
-				                <span class="text-black-50 ml-2 pt-1">비밀글 입니다.</span>
-				              </div> 
-			              </c:otherwise>
-		              </c:choose>
-		            </article>
-            </c:forEach>
-          
-            <div class="mt-3 text-center">페이지바</div>
+			<div id="qna">
+	           <div class="row d-flex justify-content-between px-3 py-4 mt-5" >
+	              <p class="h5">
+	                <strong>문의</strong> 
+	                <span class="text-point pl-3">0</span>               
+	              </p>
+	              <button type="button" id="qnaBtn" class="btn btn-link text-black-50" data-toggle="modal" ><strong>문의 하기</strong></button>
+	             
+	            </div>
+	            <div id="qnaCon">
+	            
+	            </div>	            
             </div>
 
             <!--배송교환환불-->
@@ -533,6 +328,8 @@
 		let productNo=$("#productNo").val();
 		let loginMember=$("#loginMember").val();
 		let stockList=${jsonStock};
+		reviewCall();//리뷰 리스트
+		qnaCall();//문의 리스트
 		//수량 선택
 		if(stockList.length<2){
 			fn_select();
@@ -678,89 +475,7 @@
           });
           $("#totalPrice").text(totalPrice);
         };
-        
-		//리뷰
-        //리뷰 collapse 작동
-        $(".replyEdit").on("click",e=>{
-          $(e.target).parents("article").find('form.replyEditFrm').collapse('toggle'); 
-        });
-        $(".replyShow").on("click",e=>{
-          $(e.target).parents("article").find('div.reply').collapse('toggle'); 
-        });   
-        $(".replyWrite").on("click",e=>{
-          $(e.target).parents("article").find('form.replyWriteFrm').collapse('toggle');
-        });     
-        
-        //리뷰 삭제
-        $(".reviewDelete").on("click",e=>{
-        	let reviewNo=$(e.target).siblings(".reviewNum").val();
-        	location.replace("${path}/store/deleteReview.do?reviewNo="+reviewNo+"&productNo="+productNo);
-        });
-        
-        //리뷰 답변 작성
-        
-		$(document).on("click",".replyWriteBtn",e=>{
-			if($(e.target).siblings("textarea").val().trim().length==0){
-      			alert("작성할 내용을 작성해주세요.");
-      		}else{
-				$(e.target).siblings("textarea").attr("name","reviewComment");
-				$(e.target).parents(".replyWriteFrm").attr("action","${path}/store/reviewComment.do").submit();
-      		}
-		});   
-      	//리뷰 답변 수정
-      	$(document).on("click",".replyEditBtn",e=>{
-      		if($(e.target).siblings("textarea").val().trim().length==0){
-      			alert("수정할 내용을 작성해주세요.");
-      		}else{
-				$(e.target).siblings("textarea").attr("name","reviewComment");
-				$(e.target).parents(".replyEditFrm").attr("action","${path}/store/reviewComment.do").submit();
-      		}
-		});
-      	
-      	//문의
-      	//문의 collapse 작동
-      	 $(".answerWrite").on("click",e=>{              
-            $(e.target).parents("article").find('form.answerWriteFrm').collapse('toggle'); 
-          });
-          $(".answerEdit").on("click",e=>{
-            $(e.target).parents("article").find("div.answer").toggleClass("d-none");
-            $(e.target).parents("article").find('form.answerEditFrm').collapse('toggle'); 
-          });   
-          $(".editCancel").on("click",e=>{
-            $(e.target).parents("article").find("div.answer").toggleClass("d-none");
-            $(e.target).parents("article").find('form.answerEditFrm').collapse('toggle'); 
-          }); 
-          
-        //문의 삭제
-        $(".qnaDelete").on("click",e=>{
-        	let qnaNo=$(e.target).parents("article.qna").find("input.qnaNo").val();
-        	location.replace("${path}/store/deleteQna.do?productNo="+productNo+"&qnaNo="+qnaNo);
-        });
-        
-        //문의 답변 달기
-		$(".answerWriteBtn").on("click",e=>{
-			if($(e.target).siblings(".writeText").val().trim().length==0){
-				alert("답변 내용을 입력하세요.")
-			}else{
-				$(e.target).parents("form.answerWriteFrm").attr("action","${path}/store/writeQnaComment.do").submit();
-			}	
-		});	
-        
-        //문의 답변 수정
-          $(".answerEditBtn").on("click",e=>{
-        	  let frm=$(e.target).parents(".answerEditFrm");
-        	  if(frm.find(".writeText").val().trim().length==0){
-  				alert("수정할 답변 내용을 입력하세요.")
-  			}else{
-  				frm.attr("action","${path}/store/editQnaComment.do").submit();
-  			}
-          });
-        
-        //문의 답변 삭제
-        $(".answerDelete").on("click",e=>{
-        	let qnaNo=$(e.target).parents("article.qna").find("input.qnaNo").val();
-        	location.replace("${path}/store/deleteQnaComment.do?productNo="+productNo+"&qnaNo="+qnaNo);
-        });
+         	
         
         //재고 개수 동적으로 처리하기
         function fn_stock(){
@@ -899,20 +614,7 @@
             
           });
         
-        //리뷰 수정 모달
-        $(".reviewEdit").on("click",e=>{
-        	let reviewNo=$(e.target).siblings(".reviewNum").val(); 
-			$.ajaxSettings.traditional = true;
-  			$.ajax({
-				url: "${path}/store/moveReviewEdit.do",
-				data:{productNo:productNo,reviewNo:reviewNo},
-				dataType:"html",
-				success:(data) => {
-					$(".pdtModal").html(data);
-	         		$('div.modal').modal(); 
-				}
-  			});       	
-        });        
+             
         
         
         
@@ -974,6 +676,42 @@
 				}
 			});
 		};
+		
+		//리뷰 부르기 Ajax
+		function reviewCall(){
+			$.ajax({
+				url: "${path}/store/reviewList.do",
+				data:{productNo:productNo},
+				dataType:"html",
+				success:(data) => {
+					$("#reviewCon").html(data);
+				}
+			});
+		}
+		
+		//문의 부르기 Ajax
+		function qnaCall(){
+			$.ajax({
+				url: "${path}/store/qnaList.do",
+				data:{productNo:productNo},
+				dataType:"html",
+				success:(data) => {
+					$("#qnaCon").html(data);
+				}
+			});
+		}
+		
+		/* function test(){
+			$.ajaxSettings.traditional = true;
+			$.ajax({
+				url: "${path}/가고싶은 주소",				
+				data:{productNo:productNo, cPage:cPage},
+				dataType:"html",
+				success:(data)=>{
+					$("#reviewCon").html(data);
+				}
+			})
+		} */
         
 </script>
 
