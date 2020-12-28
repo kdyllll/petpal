@@ -6,7 +6,7 @@
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
 	<section>
           <div class="d-flex justify-content-between mb-1">
-            <p class="h5">일상 <strong><c:out value="${fn:length(dailyList) }"/></strong></p>
+            <p class="h5">일상 <strong class="text-point"><c:out value="${fn:length(dailyList) }"/></strong></p>
             <a href='javascript:void(0);' onclick="fn_Daily();">전체보기</a>
           </div>
           <div class="row">                    
@@ -21,7 +21,7 @@
         <!-- 노하우 -->
         <section class="mt-5">
           <div class="d-flex justify-content-between mb-1">
-            <p class="h5">노하우 <strong><c:out value="${fn:length(tipList) }"/></strong></p>
+            <p class="h5">노하우 <strong class="text-point"><c:out value="${fn:length(tipList) }"/></strong></p>
             <a href='javascript:void(0);' onclick="fn_Tip();">전체보기</a>
           </div>
           <div class="row">
@@ -37,7 +37,7 @@
         <!-- 장소후기 -->
         <section class="mt-5">
           <div class="d-flex justify-content-between mb-1">
-            <p class="h5">후기 <strong><c:out value="${fn:length(placeList) }"/></strong></p>
+            <p class="h5">후기 <strong class="text-point"><c:out value="${fn:length(placeList) }"/></strong></p>
             <a href='javascript:void(0);' onclick="fn_Place();">전체보기</a>
           </div>
           <div class="row">
@@ -53,7 +53,7 @@
         <!-- 찾아주세요 -->
         <section class="my-5">
           <div class="d-flex justify-content-between">
-            <p class="h5">찾아주세요 <strong><c:out value="${fn:length(findList) }"/></strong></p>
+            <p class="h5">찾아주세요 <strong class="text-point"><c:out value="${fn:length(findList) }"/></strong></p>
             <a href='javascript:void(0);' onclick="fn_Find();">전체보기</a>
           </div>
           <div class="row">

@@ -209,5 +209,37 @@ public class StoreAjaxController {
 		return "store/storeAjax/qnaEditModal";
 	}
 	
+	@RequestMapping("/store/stockCheck.do")
+	@ResponseBody
+	public List<String> stockCheck(String productNo,String[] stockNo,String[] cnt) {
+		//동적으로 재고 갯수 확인하기
+		List<String> stockList=new ArrayList<String>();
+		List<Stock> list=service.selectStockList(productNo);
+		for(Stock s:list) {
+			for(int i=0;i<stockNo.length;i++) {
+				if(s.getStockNo().equals(stockNo[i])) {//같은 재고번호의 상품일때
+					if(Integer.parseInt(cnt[i])>s.getStock()) {//선택한 개수가 재고개수보다 많으면
+						String option="상품";
+						if(s.getColor()!=null) {
+							if(s.getProductSize()!=null) {//색과 사이즈가 있으면
+								option=s.getColor()+" "+s.getProductSize();
+							}else {//색만 있으면
+								option=s.getColor();
+							}
+						}else {
+							if(s.getProductSize()!=null) {//사이즈만 있으면
+								option=s.getProductSize();
+							}
+						}
+								
+						stockList.add(option); //옵션 명을 리스트에 넣기
+					};
+				};
+			};
+		};
+		
+		return stockList;
+		
+	}
 	
 }
