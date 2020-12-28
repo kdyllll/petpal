@@ -1,5 +1,7 @@
 package com.project.petpal.member.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +28,9 @@ public class MemberAjaxController {
 	public int passwordUpdate(String password,HttpSession session) throws Exception {
 
 		Member m = (Member)session.getAttribute("loginMember");
+		Member memberOne = service.selectMemberOne(m.getMemberNo());
 		int flag = 0;
-		if(pwEncoder.matches(password, m.getPassword())) {
+		if(pwEncoder.matches(password, memberOne.getPassword())) {
 			flag=1;
 		} 	 
 		return flag;
