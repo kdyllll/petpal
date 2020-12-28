@@ -5,6 +5,6 @@ import java.util.List;
 import com.project.petpal.store.model.vo.Product;
 
 public interface SearchService {
-	List<Product> searchKeyword(String keyword);
+	List<Product> searchProduct(String keyword);
 
 }
