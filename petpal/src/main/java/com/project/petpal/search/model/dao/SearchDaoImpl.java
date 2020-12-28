@@ -11,8 +11,8 @@ import com.project.petpal.store.model.vo.Product;
 public class SearchDaoImpl implements SearchDao{
 
 	@Override
-	public List<Product> searchKeyword(SqlSession session, String keyword) {
-		return session.selectList("search.searchKeyword",keyword);
+	public List<Product> searchProduct(SqlSession session, String keyword) {
+		return session.selectList("store.searchProduct",keyword);
 	}
 
 }
