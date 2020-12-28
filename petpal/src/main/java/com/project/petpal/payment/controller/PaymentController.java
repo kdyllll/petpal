@@ -141,4 +141,10 @@ public class PaymentController {
 	public String com() {
 		return "/payment/paymentComplete2";
 	}
+	
+	@RequestMapping("/payment/test.do")
+	public String test() {
+		return "/payment/test";
+	}
+	
 }
