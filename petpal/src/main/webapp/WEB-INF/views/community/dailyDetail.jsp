@@ -92,7 +92,7 @@
 						                  <div class="d-lg-none mt-5">
 						                    <div class="row d-flex justify-content-between">
 						                      <div class="row ml-3 d-flex align-items-center">
-							                      <a href="${path }/user/moveUserInfo.do" class="p-0 d-flex align-items-center ml-2">
+							                      <a href="${path }/user/moveUserInfo.do?memberNo=${daily.MEMBERNO}" class="p-0 d-flex align-items-center ml-2">
 								                      <div class="col-5 p-0">
 								                        <c:if test="${not empty daily.IMG }">                
 						                                	<img src="${path }/resources/upload/member/profile/${daily.IMG}" class="rounded" style="width:40px; height: 40px;">
@@ -218,7 +218,7 @@
 		                </button>
 		               <div>
 		                 <div class="row d-flex justify-content-between mb-2"> 
-		                    <a href="${path }/user/moveUserInfo.do" class="col-7 p-0 d-flex align-items-center ml-2">
+		                    <a href="${path }/user/moveUserInfo.do?memberNo=${daily.MEMBERNO}" class="col-7 p-0 d-flex align-items-center ml-2">
 		                      <div class="col-3 p-0">
 			                        <c:if test="${not empty daily.IMG }">                
 	                                	<img src="${path }/resources/upload/member/profile/${daily.IMG}" class="rounded" style="width:40px; height: 40px;">

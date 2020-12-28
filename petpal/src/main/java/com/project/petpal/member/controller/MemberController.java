@@ -20,6 +20,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.project.petpal.community.model.service.DailyService;
+import com.project.petpal.community.model.service.FindService;
+import com.project.petpal.community.model.service.PlaceService;
+import com.project.petpal.community.model.service.TipService;
+import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyImg;
 import com.project.petpal.member.model.service.MemberService;
 import com.project.petpal.member.model.vo.Member;
@@ -29,19 +34,45 @@ import com.project.petpal.member.model.vo.Member;
 public class MemberController {
 
    @Autowired
-   MemberService service;
+   private MemberService service;
    @Autowired
-   BCryptPasswordEncoder pwEncoder;
+   private BCryptPasswordEncoder pwEncoder;
+   @Autowired
+   private FindService fService;
+   @Autowired
+   private TipService tService;
+   @Autowired
+   private PlaceService pService;
+   @Autowired
+   private DailyService dService;
+   
 
    @RequestMapping("/member/moveMyPage.do")
    public String moveMyPage(HttpSession session, Model m) {
       Member memNo = (Member)session.getAttribute("loginMember");
-      Map member = service.selectMemberOnee(memNo.getMemberNo());
-      int followCnt = service.followCnt(memNo.getMemberNo());
-      int favCnt = service.favCnt(memNo.getMemberNo());
+      String memberNo = memNo.getMemberNo();
+      Map member = service.selectMemberOnee(memberNo);
+      int followCnt = service.followCnt(memberNo);
+      int favCnt = service.favCnt(memberNo);
+      List<Map> findList = fService.selectFindListOne(memberNo);
+      int findCnt = fService.findCnt(memberNo);
+      List<Map> dList = dService.selectDailyListOne(memberNo);
+      int dailyCnt = dService.dailyCnt(memberNo);
+      List<Map> tList = tService.selectTipListOne(memberNo);
+      int tipCnt = tService.tipCnt(memberNo);
+      List<Map> pList = pService.selectPlaceListOne(memberNo);
+      int placeCnt = pService.placeCnt(memberNo);
       m.addAttribute("follow",followCnt);
       m.addAttribute("fav",favCnt);   
       m.addAttribute("member", member);
+      m.addAttribute("findCnt" ,findCnt);
+      m.addAttribute("fList", findList);
+      m.addAttribute("dList", dList);
+      m.addAttribute("dailyCnt", dailyCnt);
+      m.addAttribute("tList",tList);
+      m.addAttribute("tipCnt",tipCnt);
+      m.addAttribute("pList",pList);
+      m.addAttribute("placeCnt",placeCnt);
       return "member/myPageProfile";
    }
 
@@ -201,29 +232,16 @@ public class MemberController {
    
    @RequestMapping("/user/moveUserInfo.do")
    public String moveUserInfo(String memberNo,Model m) {
-      //닉네임, 팔로잉팔로워 수, 설명, 이미지, 작성한 글(일상,노하우,장소후기,찾아주세요)-글 제목, 글 사진
+      //닉네임, 팔로잉팔로워 수, 설명
       Member member=service.selectMemberOne(memberNo);      
       //팔로잉
       int following=service.countFollowing(memberNo);
       //팔로워
       int follower=service.countFollower(memberNo);
       
-      //일상 메인 사진
-      List<DailyImg> dailyList=service.selectDailyMain(memberNo);
-      //노하우 작성 글+메인 사진
-      List<Map> tipList=service.selectTipMain(memberNo);
-      //장소후기 작성 글+메인사진
-      List<Map> placeList=service.selectPlaceMain(memberNo);
-      //찾아주세요 작성 글+메인 사진
-      List<Map> findList=service.selectFindMain(memberNo);
-      
       m.addAttribute("member",member);
       m.addAttribute("following",following);
       m.addAttribute("follower",follower);
-      m.addAttribute("dailyList",dailyList);
-      m.addAttribute("tipList",tipList);
-      m.addAttribute("placeList",placeList);
-      m.addAttribute("findList",findList);
       return "member/userInfo";
    }
 

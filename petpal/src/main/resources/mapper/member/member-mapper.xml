@@ -60,6 +60,14 @@
     <select id="selectFindMain" resultType="map" parameterType="string">
        SELECT * FROM FINDIMG LEFT JOIN FIND USING(FINDNO) WHERE MEMBERNO=#{memberNo} AND IMGSTATUS='M'
     </select>
+
+    <select id="selectDailyList" resultType="daily" parameterType="string">
+    	SELECT * FROM DAILY WHERE MEMBERNO=#{memberNo}
+    </select>
+    <select id="selectDailyHash" resultType="hashtag" parameterType="string">
+    	SELECT * FROM HASHTAG LEFT JOIN DAILY ON POSTNO=DAILYNO WHERE POSTNO LIKE 'D%' AND MEMBERNO=#{memberNo}
+    </select>
    
+
 
 </mapper>

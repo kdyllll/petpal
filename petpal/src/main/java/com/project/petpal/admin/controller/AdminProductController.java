@@ -28,7 +28,7 @@ import com.project.petpal.admin.model.vo.Stock;
 public class AdminProductController {
 	
 	@Autowired
-	public AdminService service;
+	private AdminService service;
 	
 	@RequestMapping("/admin/productInsertEnd.do")
 	public String productInsert(Product product,Stock stock, 

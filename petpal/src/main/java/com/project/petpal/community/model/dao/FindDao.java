@@ -13,4 +13,7 @@ public interface FindDao {
 	int insertMainPic(SqlSession session, FindImg fi);
 	int insertSubPic(SqlSession session, FindImg sfi);
 	List<Map> selectFindList(SqlSession session);
+	List<Map> selectFindListOne(SqlSession session, String memberNo);
+	int findCnt(SqlSession session, String memberNo);
+	
 }

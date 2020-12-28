@@ -20,6 +20,10 @@ public interface PlaceDao {
 	int selectCount(SqlSession session,String category);
 	int commentCount(SqlSession session,String placeNo);
 	int insertComment(SqlSession session,PlaceComment pc);
+
+	List<Map> selectPlaceListOne(SqlSession session, String memberNo);
+	int placeCnt(SqlSession session, String memberNo);
+
 	List<PlaceComment> commentList(SqlSession session,String placeNo,int cPage,int numPerpage);
 	List<Hashtag> hashList(SqlSession session,String placeNo);
 	

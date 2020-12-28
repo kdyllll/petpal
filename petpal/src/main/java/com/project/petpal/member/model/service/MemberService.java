@@ -3,7 +3,9 @@ package com.project.petpal.member.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyImg;
+import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.member.model.vo.Member;
 
 public interface MemberService {
@@ -23,5 +25,9 @@ public interface MemberService {
    List<Map> selectTipMain(String memberNo);
    List<Map> selectPlaceMain(String memberNo);
    List<Map> selectFindMain(String memberNo);
+
+   List<Daily> selectDailyList(String memberNo);
+   List<Hashtag> selectDailyHash(String memberNo);
+
 
 }

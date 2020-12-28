@@ -45,4 +45,16 @@ public class FindServiceImple implements FindService {
 		// TODO Auto-generated method stub
 		return dao.selectFindList(session);
 	}
+	
+	@Override
+	public List<Map> selectFindListOne(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectFindListOne(session, memberNo);
+	}
+
+	@Override
+	public int findCnt(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.findCnt(session, memberNo);
+	}
 }

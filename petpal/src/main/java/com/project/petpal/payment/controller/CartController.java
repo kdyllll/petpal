@@ -77,6 +77,7 @@ public class CartController {
 				for(int i=0;i<stockNo.size();i++) {
 					mv.addObject("list", service.cartListNonMember(stockNo));
 					mv.addObject("amount", amount);
+					System.out.println(service.cartListNonMember(stockNo));
 				}
 				mv.setViewName("cart/cartNonMember");
 			}else {
