@@ -12,9 +12,10 @@
 
 	<!-- Page Content -->
 	<main role="main">
-		<section class="mt-5 pt-5">
+		<section class="mt-5">
 			<div class="container mt-2">
 				<div id="blog" class="row">
+					<jsp:include page="/WEB-INF/views/common/communityNav.jsp" />
 					<div id="btn" class="mb-5">
 						<button type="button" class="kind btn btn-secondary btn-sm mr-3">병원</button>
 						<button type="button" class="kind btn btn-secondary btn-sm mr-3">미용</button>

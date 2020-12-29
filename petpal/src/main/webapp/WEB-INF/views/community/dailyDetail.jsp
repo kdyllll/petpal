@@ -36,25 +36,14 @@
   <main role="main" style="min-height:100vh;">
   <input type="hidden" class="loginMember" value="${loginMember.memberNo }"/>
   <input type="hidden" class="dailyNo" value="${daily.DAILYNO }"/>
-   <div class="album py-5">
+   <div class="album ">
+	   <div class="container my-4 mt-lg-0">
+			<div class="row ">
+				<jsp:include page="/WEB-INF/views/common/communityNav.jsp" />
+			</div>
+		</div>
 	   <div class="my-4 mt-lg-0">
 	    	<div class="container">
-	    	 <div class="col-lg-12 my-5 mt-lg-0 ">
-					<div class="mt-3 mt-lg-0 d-lg-flex py-3">
-						<a
-							class="d-block d-xl-inline text-left mb-0 border-0 px-0 pr-3 py-3 "
-							type="button"> 홈 </a> <a href="${path }/daily/moveList.do"
-							class="d-block d-xl-inline text-left mb-0 border-0 px-0 pr-3 py-3 "
-							type="button"> 사진 </a> <a
-							class="d-block d-xl-inline text-left collapsed mb-0 border-0 px-0 pr-3 py-3"
-							type="button"> 노하우 </a> <a
-							class="d-block d-xl-inline text-left collapsed mb-0 border-0 px-0 pr-3 py-3"
-							type="button"> 장소 </a> <a href="${path }/community/findList.do"
-							class="d-block d-xl-inline text-left collapsed mb-0 border-0 px-0 py-3"
-							type="button"> 찾아주세요 </a>
-
-					</div>
-				</div>
 	        	<div class="row ">
 			         <!-- 왼쪽 -->
 			         <div class="col-lg-9 col-sm-12">

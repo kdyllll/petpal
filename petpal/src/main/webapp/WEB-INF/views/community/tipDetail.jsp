@@ -10,15 +10,15 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
   
   <main role="main" style="min-height:100vh;">
-   	<div class="album py-5 bg-light">
+   	<div class="album  bg-light">
+   	<div class="container my-4 mt-lg-0">
+		<div class="row ">
+			<jsp:include page="/WEB-INF/views/common/communityNav.jsp" />
+		</div>
+	</div>
       <div class="my-4 mt-lg-0">
 
-        <div class="col-lg-12 my-5 mt-lg-0 ">
-          <div class="container mt-4 mt-lg-0 d-lg-flex  ">
-            <a class="d-block d-xl-inline text-left mb-0 border-0 px-0 pr-3 py-3 " type="button">사진</a>
-            <a class="d-block d-xl-inline text-left collapsed mb-0 border-0 px-0 py-3" type="button">노하우</a>
-          </div>
-        </div>
+       
 	
 		<c:forEach items="${imgList }" var="t">
 			<c:if test="${not empty t.MAINIMG}">
