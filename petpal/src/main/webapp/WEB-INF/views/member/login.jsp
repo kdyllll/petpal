@@ -18,7 +18,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
   
   <!-- Page Content -->
-   <main  class="text-center mt-5 mt-lg-0">  
+   <main  class="text-center mt-5 mt-lg-0 bg-white">  
     <div class="container pt-5 pt-lg-0">
       <div class="row pt-5">
         <form class="form-signin" action="${path }/member/memberLogin.do" method="post">
