@@ -35,4 +35,4 @@
 		</div>
 	</c:forEach>
 </c:if>
-<div class="mx-auto">페이지바</div>
+<div class="mx-auto">${pageBar }</div>

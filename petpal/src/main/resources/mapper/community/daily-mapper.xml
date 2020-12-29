@@ -58,7 +58,10 @@
 	<select id="selectDailyListOne" parameterType="string" resultType="map">
 		select * from member join daily using(memberno) join dailyimg using(dailyno) where memberNo = #{memberNo} and status='M'
 	</select>
-	<select id="dailyCnt" parameterType="string" resultType="int">
+	<select id="dailyCnt" parameterType="string" resultType="_int">
 		select count(*) from member join daily using(memberNo) where memberNo = #{memberNo}
+	</select>
+	<select id="totalDailyCount" resultType="_int">
+		SELECT COUNT(*) FROM DAILY
 	</select>
 </mapper>

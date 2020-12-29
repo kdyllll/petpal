@@ -3,6 +3,7 @@ package com.project.petpal.member.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -87,36 +88,64 @@ public class MemberDaoImpl implements MemberDao {
    }
 
    @Override
-   public List<Map> selectTipMain(SqlSession session, String memberNo) {
+   public List<Map> selectTipMain(SqlSession session, String memberNo,int cPage,int numPerPage) {
       // TODO Auto-generated method stub
-      return session.selectList("member.selectTipMain",memberNo);
+	   RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+      return session.selectList("member.selectTipMain",memberNo,rb);
    }
 
    @Override
-   public List<Map> selectPlaceMain(SqlSession session, String memberNo) {
+   public List<Map> selectPlaceMain(SqlSession session, String memberNo,int cPage,int numPerPage) {
       // TODO Auto-generated method stub
-      return session.selectList("member.selectPlaceMain",memberNo);
+	   RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+      return session.selectList("member.selectPlaceMain",memberNo,rb);
    }
 
    @Override
-   public List<Map> selectFindMain(SqlSession session, String memberNo) {
+   public List<Map> selectFindMain(SqlSession session, String memberNo,int cPage,int numPerPage) {
       // TODO Auto-generated method stub
-      return session.selectList("member.selectFindMain",memberNo);
+	   RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+      return session.selectList("member.selectFindMain",memberNo,rb);
    }
+	
+	@Override
+	public List<Daily> selectDailyList(SqlSession session, String memberNo,int cPage,int numPerPage) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("member.selectDailyList",memberNo,rb);
+	}
+	
+	@Override
+	public List<Hashtag> selectDailyHash(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("member.selectDailyHash",memberNo);
+	}
 
+	@Override
+	public int dailyCount(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("daily.dailyCnt",memberNo);
+	}
 
-@Override
-public List<Daily> selectDailyList(SqlSession session, String memberNo) {
-	// TODO Auto-generated method stub
-	return session.selectList("member.selectDailyList",memberNo);
-}
+	@Override
+	public int tipCount(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("tip.tipCnt",memberNo);
+	}
 
-@Override
-public List<Hashtag> selectDailyHash(SqlSession session, String memberNo) {
-	// TODO Auto-generated method stub
-	return session.selectList("member.selectDailyHash",memberNo);
-}
+	@Override
+	public int placeCount(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("place.placeCnt",memberNo);
+	}
 
+	@Override
+	public int findCount(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("find.findCnt",memberNo);
+	}
+
+	
    
    
 

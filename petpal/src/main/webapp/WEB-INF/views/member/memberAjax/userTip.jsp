@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
 <c:if test="${empty tipList }">
-	<div class="mx-auto">
+	<div class="col-12 mb-4 text-center mt-5">
 		<p class="">노하우 글이 없습니다.</p>
 	</div>
 </c:if>
@@ -30,4 +30,4 @@
 		</c:if>
 	</c:forEach>
 </c:if>
-<div class="mx-auto">페이지바</div>
+<div class="mx-auto">${pageBar }</div>
