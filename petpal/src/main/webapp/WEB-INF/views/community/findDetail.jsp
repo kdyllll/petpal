@@ -15,7 +15,9 @@
 	<main role="main" style="min-height: 100vh;">
 		<div class="container my-4 mt-lg-0">
 			<div class="row ">
-				<jsp:include page="/WEB-INF/views/common/communityNav.jsp" />
+				<jsp:include page="/WEB-INF/views/common/communityNav.jsp" >
+					<jsp:param value="findDetail" name="comNav"/>
+				</jsp:include>
 			</div>
 
 			<div class="row mx-3 mb-5">

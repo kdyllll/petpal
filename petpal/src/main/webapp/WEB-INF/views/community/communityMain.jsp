@@ -14,7 +14,9 @@
 		<div class="album bg-light">
 			<div class="container my-4 mt-lg-0">
 				<div class="row ">
-					<jsp:include page="/WEB-INF/views/common/communityNav.jsp" />
+					<jsp:include page="/WEB-INF/views/common/communityNav.jsp" >
+						<jsp:param value="comHome" name="comNav"/>
+					</jsp:include>
 					<div class="form-inline container text-center mb-3">
 						<h3>커뮤니티 메인 리스트</h3>
 					</div>

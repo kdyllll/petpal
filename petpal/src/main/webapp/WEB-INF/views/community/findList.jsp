@@ -44,7 +44,9 @@
 		<div class="album ">
 			<div class="container my-4 mt-lg-0">
 				<div class="row ">
-					<jsp:include page="/WEB-INF/views/common/communityNav.jsp" />
+					<jsp:include page="/WEB-INF/views/common/communityNav.jsp" >
+						<jsp:param value="findList" name="comNav"/>
+					</jsp:include>
 					<div class="form-inline container text-center mb-3">
 						<h3>찾습니다</h3>
 						<button type="button" class="btn btn-outline-secondary ml-auto"
