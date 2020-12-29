@@ -27,16 +27,16 @@ public class TipController {
 	@Autowired
 	private TipService service;
 	
-	@RequestMapping("community/tipList.do")
+	@RequestMapping("/community/tipList.do")
 	public ModelAndView TipList(ModelAndView mv) {
 		
 		mv.addObject("list",service.tipList());
-		mv.setViewName("community/tipList");
+		mv.setViewName("/community/tipList");
 		
 		return mv;
 	}
 	
-	@RequestMapping("community/tipDetail.do")
+	@RequestMapping("/community/tipDetail.do")
 	public ModelAndView TipDetail(HttpServletRequest request, HttpServletResponse response, ModelAndView mv) {
 		String tipNo = request.getParameter("tipNo");
 		
@@ -47,12 +47,12 @@ public class TipController {
 		return mv;
 	}
 	
-	@RequestMapping("community/tipWrite.do")
+	@RequestMapping("/community/tipWrite.do")
 	public String TipWrite() {
 		return "community/tipWrite";
 	}
 	
-	@RequestMapping("community/tipWriteEnd.do")
+	@RequestMapping("/community/tipWriteEnd.do")
 	public ModelAndView TipWrite(ModelAndView mv,
 							HttpSession session, HttpServletRequest request, HttpServletResponse response,
 							@RequestParam(value="mainImg", required=false) MultipartFile[] mainImg,
@@ -133,7 +133,7 @@ public class TipController {
 		return mv;
 	}
 	
-	@RequestMapping("community/tipUpdate.do")
+	@RequestMapping("/community/tipUpdate.do")
 	public ModelAndView tipUpdate(HttpServletRequest request, HttpServletResponse response, ModelAndView mv) {
 		String tipNo = request.getParameter("tipNo");
 		
@@ -144,7 +144,7 @@ public class TipController {
 		return mv;
 	}
 	
-	@RequestMapping("community/tipUpdateEnd.do")
+	@RequestMapping("/community/tipUpdateEnd.do")
 	public ModelAndView tipUpdateEnd(ModelAndView mv,
 			HttpSession session, HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value="mainImg", required=false) MultipartFile[] mainImg,
