@@ -274,9 +274,40 @@
 			}
 		}).then((result) => {
 			if(result){
-				//ajax 포기.. div 숨기고 해당 div에 value 주고 장바구니 다시 갈 때 다시 쏴주자...
+				var objs = document.querySelectorAll(".ch");
+				let deleteCart=[];
+				
+				for(var i=0;i<objs.length;i++){
+					if(objs[i].checked===true){
+						deleteCart.push($(objs[i]).next().val());
+					}else{
+					}
+				}
+				
+				$.ajaxSettings.traditional = true;
+	        	$.ajax({
+					url: "${path}/cart/deleteCart.do",
+					async: false,  //에이작스의 실행을 기다렸다가 결과를 리턴하도록 비동기식으로 설정
+					data:{deleteCart:deleteCart},
+					success:(result) => {
+						if(result==1){
+							//swal("삭제 완료", "해당 상품이 삭제되었습니다.", "success");
+							swal({
+								title: "삭제 완료",
+								text: "해당 상품이 삭제되었습니다.",
+								icon: "success",
+								buttons: '확인'
+							}).then((value) => {
+								if(value){
+									location.reload();
+								}
+							})
+						}
+					}
+				});
 			}
 		});
+	
 	}
 	
 </script>
@@ -336,10 +367,11 @@
 					
 					<div class="col-md-8 order-md-1">
 						<c:set var="i" value="0"/>
-						<c:forEach items="${list }" var="c" begin="0" end="${list.size()-1 }">
+						<c:forEach items="${list }" var="c">
 							<div class="proCon p-3 border border-dark rounded mb-4">
 								<div class="checkCon mt-2 d-flex align-items-start float-left" >
 									<input type="checkbox" class="ch mr-2" style="width:20px; height: 20px;" name="check" checked>
+									<input type="hidden" id="stockNo" name="stockNo" value="${c.STOCKNO }">
 								</div>
 								<div class="d-flex mt-2">
 									<div style="width:94%">
@@ -348,8 +380,6 @@
 												<img src="${path }/resources/upload/product/detail/${c.IMGNAME}" class="rounded" style="width:100px;height:100px">
 											</div>
 											<div class="ml-3">
-												<input type="hidden" name="stockNo" value="${c.STOCKNO }">
-												
 												<input type="hidden" name="productName" value="${c.PRODUCTNAME }">
 												<h5><c:out value="${c.PRODUCTNAME }"/></h5>
 												<div class="d-flex">
