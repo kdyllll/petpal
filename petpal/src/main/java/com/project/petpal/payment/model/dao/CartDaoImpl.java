@@ -19,4 +19,9 @@ public class CartDaoImpl implements CartDao {
 		return session.selectList("cart.cartListNonMember", stockNo);
 	}
 
+	@Override
+	public int deleteCart(SqlSession session, String[] stockNo) {
+		return session.delete("cart.deleteCart", stockNo);
+	}
+
 }

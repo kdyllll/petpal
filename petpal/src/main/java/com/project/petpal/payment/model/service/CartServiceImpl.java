@@ -28,4 +28,9 @@ public class CartServiceImpl implements CartService {
 		return dao.cartListNonMember(session, stockNo);
 	}
 
+	@Override
+	public int deleteCart(String[] stockNo) {
+		return dao.deleteCart(session, stockNo);
+	}
+
 }

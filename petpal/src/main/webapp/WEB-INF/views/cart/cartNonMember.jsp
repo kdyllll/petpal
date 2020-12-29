@@ -258,9 +258,6 @@
 	}
 	
 	function cartDelete(){
-		//alert로 진짜 지울건지 물어보고 안 지우면 그냥 창 닫고 지우면 
-		//체크 되어 있는 애의 재고번호를 받아서( ?stockNo 이런걸로 해서  ) 컨트롤러로 넘기고
-		//컨트롤러에서 해당 재고번호의 상품을 지우고 지운 후의 리스트를 다시 쏴주고
 		swal({
 			title:'장바구니에서 삭제하시겠습니까?',
 			icon : 'warning',
@@ -277,49 +274,10 @@
 			}
 		}).then((result) => {
 			if(result){
-				let deleteCart=[];
-				
-				var objs = document.querySelectorAll(".ch");
-				
-				for(var i=0;i<objs.length;i++){
-					if(objs[i].checked===true){
-						deleteCart.push("1");
-					}else{
-						deleteCart.push("0");
-					}
-				}
-				$.ajaxSettings.traditional = true;
-			    $.ajax({
-			        url:"${path}/cart/deleteCart.do",
-			        data : {deleteCart:deleteCart},
-			        success: function(){
-			        	swal('상품이 삭제되었습니다.', '', 'success');
-			        },
-			        error: function() {
-			        	swal('실패', '', 'warning');
-			        }  
-			    });
-				
+				//ajax 포기.. div 숨기고 해당 div에 value 주고 장바구니 다시 갈 때 다시 쏴주자...
 			}
 		});
 	}
-	
-	/* $("#checkDelete").click(function(){
-	    $.ajax({
-	        type:"POST",
-	        url:"./book.jsp",
-	        data : {name : "홍길동"},
-	        dataType : "xml",
-	        success: function(xml){
-	            console.log(xml);
-	        },
-	        error: function(xhr, status, error) {
-	            alert(error);
-	        }  
-	    });
-	}); */
-
-	
 	
 </script>
 
@@ -425,7 +383,6 @@
 				                             </div>
 				                             <input type="hidden" name="price" value="${c.PRICE}">
 				                             <span class="price ml-auto"><c:out value="${amount[i] * c.PRICE}"/>원</span>
-				                             <input id="stockNo" type="hidden" value="${c.STOCKNO }">
 				                             <div id="preview"></div>
 				                    </div>
 	                    		</div>
