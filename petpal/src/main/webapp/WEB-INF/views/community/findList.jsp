@@ -44,22 +44,7 @@
 		<div class="album ">
 			<div class="container my-4 mt-lg-0">
 				<div class="row ">
-					<div class="col-lg-12 my-5 mt-lg-0 ">
-						<div class="mt-3 mt-lg-0 d-lg-flex py-3">
-							<a
-								class="d-block d-xl-inline text-left mb-0 border-0 px-0 pr-3 py-3 "
-								type="button"> 홈 </a> <a href="${path }/daily/moveList.do"
-								class="d-block d-xl-inline text-left mb-0 border-0 px-0 pr-3 py-3 "
-								type="button"> 사진 </a> <a
-								class="d-block d-xl-inline text-left collapsed mb-0 border-0 px-0 pr-3 py-3"
-								type="button"> 노하우 </a> <a
-								class="d-block d-xl-inline text-left collapsed mb-0 border-0 px-0 pr-3 py-3"
-								type="button"> 장소 </a> <a href="${path }/community/findList.do"
-								class="d-block d-xl-inline text-left collapsed mb-0 border-0 px-0 py-3"
-								type="button"> 찾아주세요 </a>
-
-						</div>
-					</div>
+					<jsp:include page="/WEB-INF/views/common/communityNav.jsp" />
 					<div class="form-inline container text-center mb-3">
 						<h3>찾습니다</h3>
 						<button type="button" class="btn btn-outline-secondary ml-auto"

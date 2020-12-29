@@ -12,6 +12,11 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 	<main role="main" style="min-height: 100vh;">
+		<div class="container my-4 mt-lg-0">
+			<div class="row ">
+				<jsp:include page="/WEB-INF/views/common/communityNav.jsp" />
+			</div>
+		</div>
 		<section class="mt-5 pt-5">
 			<div class="container">
 				<div class="row">

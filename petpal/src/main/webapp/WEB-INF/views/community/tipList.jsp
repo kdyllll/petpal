@@ -11,10 +11,10 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 	<main role="main" style="min-height: 100vh;">
-		<div class="album py-5 bg-light">
+		<div class="album bg-light">
 			<div class="container my-4 mt-lg-0">
 				<div class="row ">
-
+					<jsp:include page="/WEB-INF/views/common/communityNav.jsp" />
 					<div class="form-inline container text-center mb-3">
 						<h3>테마별 노하우</h3>
 						<button type="button" class="btn btn-outline-secondary ml-auto" onclick="location.replace('${path}/community/tipWrite.do')">글쓰기</button>

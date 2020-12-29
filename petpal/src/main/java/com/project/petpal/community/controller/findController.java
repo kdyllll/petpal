@@ -106,4 +106,9 @@ public class findController {
 		model.addAttribute("findPics", findPics);
 		return "community/findDetail";
 	}
+	
+	@RequestMapping("/find/updateFind.do")
+	public String updateFind() {
+		return "community/findUpdate";
+	}
 }
