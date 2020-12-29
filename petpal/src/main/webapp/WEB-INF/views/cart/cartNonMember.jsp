@@ -35,6 +35,7 @@
 		}
 		
          $(".pay").text(c + "개 상품 구매하기").css({"font-weight":"bold"});
+         
 	});
 	
 	$(document).ready(function() {
@@ -159,6 +160,7 @@
 			
 			var check = 0;
 			
+			
 			for(var i=0;i<objs.length;i++){
 				if(objs[i].checked===true){
 					check++;
@@ -210,6 +212,8 @@
 	        	 $('.totalProduct').text(totalProduct);
 		         $('.totalPrice').text(totalProduct);
 	         }
+			
+			fn_checkPrice();
 	     }); 
 		 
  	});
@@ -258,56 +262,66 @@
 	}
 	
 	function cartDelete(){
-		swal({
-			title:'장바구니에서 삭제하시겠습니까?',
-			icon : 'warning',
-			closeOnClickOutside: false,
-			buttons : {
-				cancle : {
-					text : '취소',
-					value : false,
-				},
-				confirm : {
-					text : '삭제',
-					value : true,
-				}
+		var objs = document.querySelectorAll(".ch");
+		var c = 0;
+		
+		for(var i=0;i<objs.length;i++){
+			if(objs[i].checked===true){
+				c++;
 			}
-		}).then((result) => {
-			if(result){
-				var objs = document.querySelectorAll(".ch");
-				let deleteCart=[];
-				
-				for(var i=0;i<objs.length;i++){
-					if(objs[i].checked===true){
-						deleteCart.push($(objs[i]).next().val());
-					}else{
+		}
+		if(c == 0){
+			swal("상품을 선택해주세요", "", "warning");
+		}else{
+			swal({
+				title:'장바구니에서 삭제하시겠습니까?',
+				icon : 'warning',
+				closeOnClickOutside: false,
+				buttons : {
+					cancle : {
+						text : '취소',
+						value : false,
+					},
+					confirm : {
+						text : '삭제',
+						value : true,
 					}
 				}
-				
-				$.ajaxSettings.traditional = true;
-	        	$.ajax({
-					url: "${path}/cart/deleteCart.do",
-					async: false,  //에이작스의 실행을 기다렸다가 결과를 리턴하도록 비동기식으로 설정
-					data:{deleteCart:deleteCart},
-					success:(result) => {
-						if(result==1){
-							//swal("삭제 완료", "해당 상품이 삭제되었습니다.", "success");
-							swal({
-								title: "삭제 완료",
-								text: "해당 상품이 삭제되었습니다.",
-								icon: "success",
-								buttons: '확인'
-							}).then((value) => {
-								if(value){
-									location.reload();
-								}
-							})
+			}).then((result) => {
+				if(result){
+					let deleteCart=[];
+					
+					for(var i=0;i<objs.length;i++){
+						if(objs[i].checked===true){
+							deleteCart.push($(objs[i]).next().val());
+						}else{
 						}
 					}
-				});
-			}
-		});
-	
+					
+					$.ajaxSettings.traditional = true;
+		        	$.ajax({
+						url: "${path}/cart/deleteCart.do",
+						async: false,
+						data:{deleteCart:deleteCart},
+						success:(result) => {
+							if(result==1){
+								//swal("삭제 완료", "해당 상품이 삭제되었습니다.", "success");
+								swal({
+									title: "삭제 완료",
+									text: "해당 상품이 삭제되었습니다.",
+									icon: "success",
+									buttons: '확인'
+								}).then((value) => {
+									if(value){
+										location.reload();
+									}
+								})
+							}
+						}
+					});
+				}
+			});
+		}
 	}
 	
 </script>
@@ -361,7 +375,7 @@
 					<div class="col-md-8 order-md-1">
 						<div class="d-flex align-items-center ml-3 mb-3" style="width:96%;">
 							<input type="checkbox" style="width: 20px; height: 20px;" id="all_select" checked>&nbsp;&nbsp;모두선택
-							<button type="button" class="ml-auto btn btn-light" id="checkDelete" onclick="cartDelete();">선택삭제</button>					
+							<button type="button" class="ml-auto btn btn-light" id="checkDelete" onclick="cartDelete();">선택삭제</button>			
 						</div>
 					</div>
 					
@@ -392,20 +406,28 @@
 											</div>
 										</a>
 									</div>
-									<div class="d-flex align-items-start">
+									<!-- <div class="d-flex align-items-start">
 										<button type="button" class="btn btn-light">x</button>
-									</div>
+									</div> -->
 								</div>
 								<div class="ml-4 mt-3 rounded" style="background-color:rgb(245 245 245);">
 									<div class="d-flex">
 										<div class="mt-3 ml-3" style="width:92%">
 											<input type="hidden" name="color" value="${c.COLOR }">
 											<input type="hidden" name="size" value="${c.PRODUCTSIZE }">
-											<span><c:out value="${c.COLOR }"/> / <c:out value="${c.PRODUCTSIZE }"/></span>
+											<c:if test="${!empty c.COLOR && !empty c.PRODUCTSIZE}">
+												<span><c:out value="${c.COLOR }"/> / <c:out value="${c.PRODUCTSIZE }"/></span>
+											</c:if>
+											<c:if test="${!empty c.COLOR && empty c.PRODUCTSIZE}">
+												<span><c:out value="${c.COLOR }"/></span>
+											</c:if>
+											<c:if test="${empty c.COLOR && !empty c.PRODUCTSIZE}">
+												<span><c:out value="${c.PRODUCTSIZE }"/></span>
+											</c:if>
 			                             </div>
-										<div class="d-flex align-items-start">
+										<!-- <div class="d-flex align-items-start">
 											<button type="button" class="btn btn-light"><span>x</span></button>
-										</div>
+										</div> -->
 									</div>
 									<div class="d-flex p-3 priceCon">
 											<div id="count">

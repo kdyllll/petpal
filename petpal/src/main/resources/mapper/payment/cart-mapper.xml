@@ -21,10 +21,10 @@
 			<foreach item="item" index="index" collection="list" separator="," open="(" close=")">
 				#{item}
 			</foreach>
-			 AND TYPE='M'
+			 AND TYPE='M' ORDER BY ROWNUM DESC
 		</if>
 	</select>
-	<delete id="deleteCart" parameterType="string">
-		DELETE FROM CART WHERE STOCKNO = #{stockNo}
+	<delete id="deleteCart" parameterType="hashMap">
+		DELETE FROM CART WHERE STOCKNO = #{stockNo} AND MEMBERNO = #{memberNo}
 	</delete>
 </mapper>

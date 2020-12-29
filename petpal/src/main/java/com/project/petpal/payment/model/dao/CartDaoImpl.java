@@ -1,5 +1,6 @@
 package com.project.petpal.payment.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,8 +21,12 @@ public class CartDaoImpl implements CartDao {
 	}
 
 	@Override
-	public int deleteCart(SqlSession session, String[] stockNo) {
-		return session.delete("cart.deleteCart", stockNo);
+	public int deleteCart(SqlSession session, String stockNo, String memberNo) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("stockNo", stockNo);
+		map.put("memberNo", memberNo);
+		
+		return session.delete("cart.deleteCart", map);
 	}
 
 }

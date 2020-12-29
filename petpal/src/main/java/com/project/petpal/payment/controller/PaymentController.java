@@ -137,14 +137,4 @@ public class PaymentController {
 		return mv;
 	}
 	
-	@RequestMapping("/payment/paymentComplete2.do")
-	public String com() {
-		return "/payment/paymentComplete2";
-	}
-	
-	@RequestMapping("/payment/test.do")
-	public String test() {
-		return "/payment/test";
-	}
-	
 }
