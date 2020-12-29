@@ -253,7 +253,7 @@ public class StoreAjaxController {
 		int totalReview=service.totalReviewCount(productNo);
 
 		//페이징
-		String pageBar=new AjaxPageBarFactory().getPageBar(totalReview, cPage, numPerPage, "reviewList.do",productNo,"#reviewCon");
+		String pageBar=new AjaxPageBarFactory().getPageBar(totalReview, cPage, numPerPage, "reviewList.do",productNo,"#reviewCon",null);
 		
 		m.addAttribute("reviewList",reviews);
 		m.addAttribute("reviewPageBar",pageBar);
@@ -271,7 +271,7 @@ public class StoreAjaxController {
 		int totalQna=service.totalQnaCount(productNo);
 		
 		//페이징
-		String pageBar=new AjaxPageBarFactory().getPageBar(totalQna, cPage, numPerPage, "qnaList.do",productNo,"#qnaCon");		
+		String pageBar=new AjaxPageBarFactory().getPageBar(totalQna, cPage, numPerPage, "qnaList.do",productNo,"#qnaCon",null);		
 		m.addAttribute("qnaList",qnas);
 		m.addAttribute("qnaPageBar",pageBar);
 		return "store/storeAjax/qnaList";

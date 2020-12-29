@@ -97,28 +97,28 @@ public class MemberServiceImpl implements MemberService{
    }
 
    @Override
-   public List<Map> selectTipMain(String memberNo) {
+   public List<Map> selectTipMain(String memberNo,int cPage,int numPerPage) {
       // TODO Auto-generated method stub
-      return dao.selectTipMain(session,memberNo);
+      return dao.selectTipMain(session,memberNo,cPage,numPerPage);
    }
 
    @Override
-   public List<Map> selectPlaceMain(String memberNo) {
+   public List<Map> selectPlaceMain(String memberNo,int cPage,int numPerPage) {
       // TODO Auto-generated method stub
-      return dao.selectPlaceMain(session,memberNo);
+      return dao.selectPlaceMain(session,memberNo,cPage,numPerPage);
    }
 
    @Override
-   public List<Map> selectFindMain(String memberNo) {
+   public List<Map> selectFindMain(String memberNo,int cPage,int numPerPage) {
       // TODO Auto-generated method stub
-      return dao.selectFindMain(session,memberNo);
+      return dao.selectFindMain(session,memberNo,cPage,numPerPage);
    }
 
 
 	@Override
-	public List<Daily> selectDailyList(String memberNo) {
+	public List<Daily> selectDailyList(String memberNo,int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return dao.selectDailyList(session,memberNo);
+		return dao.selectDailyList(session,memberNo,cPage,numPerPage);
 	}
 	
 	@Override
@@ -126,8 +126,32 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return dao.selectDailyHash(session,memberNo);
 	}
-	   
 
+	@Override
+	public int dailyCount(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.dailyCount(session,memberNo);
+	}
+
+	@Override
+	public int tipCount(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.tipCount(session,memberNo);
+	}
+
+	@Override
+	public int placeCount(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.placeCount(session,memberNo);
+	}
+
+	@Override
+	public int findCount(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.findCount(session,memberNo);
+	}
+	   
+	
 
 
 }
