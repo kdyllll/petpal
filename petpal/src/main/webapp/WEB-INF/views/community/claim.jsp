@@ -11,15 +11,26 @@
 	//스크립트 문은 메인화면에서 불러서 실행됨
 	function fn_claimModal(no) {
 		if(loginMember!=""){ //로그인 되어 있으면 신고
-			$.ajax({
-				url: "${path}/claim/moveClaimModal.do",
+			$.ajax({//같은 글에 대한 신고 내역이 있는지 확인하기
+				url:"${path}/claim/claimCheck.do",
 				data:{no:no},
-				dataType:"html",
-				success:(data) => {
-					$(".pdtModal").html(data);
-	         		$('div.modal').modal(); 
-				}
+				success:(data)=>{
+					if(data==true){//신고 내역이 없으면 신고 모달 띄우기
+						$.ajax({
+							url: "${path}/claim/moveClaimModal.do",
+							data:{no:no},
+							dataType:"html",
+							success:(data) => {
+								$(".pdtModal").html(data);
+				         		$('div.modal').modal(); 
+							}
+						});
+					}else{
+						alert("이미 신고한 게시글입니다.");
+					}
+				}			
 			});
+			
 		}else{ //로그인 안되어 있으면 로그인 모달 띄우기           
 			loginModal();
 		};

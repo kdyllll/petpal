@@ -585,22 +585,17 @@
           				data:{productNo:productNo},
           				success:(data) => {//data는 list임
           			  		if(data.length!=0){//2주안에 리뷰를 안 쓴 구매내역이 있으면 
-          			  			if(data.length>1){//구매내역이 여러개라면 
-          			  				//어떤 내역을 쓸건지 선택하는 모달
+          			  				//리뷰 작성 모달
           			  				$.ajaxSettings.traditional = true;
 	          			  			$.ajax({
-		          						url: "${path}/store/moveReviewSelect.do",
+		          						url: "${path}/store/moveReview.do",
 		          						data:{productNo:productNo,details:JSON.stringify(data)},
 		          						dataType:"html",
 		          						success:(data) => {
 		          							$(".pdtModal").html(data);
 		          			         		$('div.modal').modal(); 
 		          						}
-		          					});
-          			  			}else{//구매내역이 한개라면
-          			  				//리뷰 작성 모달
-          			  				fn_reviewWrite(productNo,data[0]);
-          			  			}         			  			
+		          					});  			  			
           			     	}else{//구매내역이 없으면
           			            alert("구매 내역이 없습니다.");
           			    	};
