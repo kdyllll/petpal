@@ -92,8 +92,8 @@
 		                        </div>
 		                        <c:forEach var="i" items="${imgList}">
 		                        	<c:if test="${i.dailyNo eq d.DAILYNO}">
-		                        	<a class="d-inline-block border" href="${path }/daily/moveDetail.do?dailyNo=${d.DAILYNO }">                        
-	                        			<img src="${path }/resources/upload/community/daily/${i.dailyImgName}" class="rounded" width="100%" height="250px">
+		                        	<a class="d-inline-block" href="${path }/daily/moveDetail.do?dailyNo=${d.DAILYNO }">                        
+	                        			<img src="${path }/resources/upload/community/daily/${i.dailyImgName}" class="rounded" width="100%">
 	                        			<input type="hidden" value="${d.DAILYNO }"/>
 		                        	</a>	
 		                        	</c:if>
