@@ -17,8 +17,8 @@
 			             
 			              <c:forEach var="i" items="${imgList}">
 			              	<c:if test="${i.dailyNo eq d.dailyNo}">
-			              	<a class="d-inline-block border" href="${path }/daily/moveDetail.do?dailyNo=${d.dailyNo }">                        
-			             			<img src="${path }/resources/upload/community/daily/${i.dailyImgName}" class="rounded" style="width:100%; height:100%;">
+			              	<a class="d-inline-block" href="${path }/daily/moveDetail.do?dailyNo=${d.dailyNo }">                        
+			             			<img src="${path }/resources/upload/community/daily/${i.dailyImgName}" class="rounded" style="width:100%;">
 			             			<input type="hidden" value="${d.dailyNo }"/>
 			              	</a>	
 			              	</c:if>
@@ -54,4 +54,4 @@
 			      </address>
 			</c:forEach>
 	</c:if>
-	<div class="mx-auto">페이지바</div>
+	<div class="mx-auto">${pageBar }</div>

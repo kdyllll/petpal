@@ -98,7 +98,8 @@ public class MemberAjaxController {
 		
 		m.addAttribute("dailyList",dailyList);
 		m.addAttribute("imgList",imgList);
-		m.addAttribute("hashList",hashList);			
+		m.addAttribute("hashList",hashList);		
+		m.addAttribute("pageBar",pageBar);
 		return "member/memberAjax/userDaily";
 	}
 	
@@ -113,6 +114,7 @@ public class MemberAjaxController {
 	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveTip.do", null, ".postCon", memberNo);
 	    
 	    m.addAttribute("tipList",tipList);
+	    m.addAttribute("pageBar",pageBar);
 		return "member/memberAjax/userTip";
 	}
 	
@@ -127,6 +129,7 @@ public class MemberAjaxController {
 	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "movePlace.do", null, ".postCon", memberNo);
 	    
 	    m.addAttribute("placeList",placeList);
+	    m.addAttribute("pageBar",pageBar);
 		return "member/memberAjax/userPlace";
 	}
 	
@@ -141,6 +144,7 @@ public class MemberAjaxController {
 	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveFind.do", null, ".postCon", memberNo);
 	    
 	    m.addAttribute("findList",findList);
+	    m.addAttribute("pageBar",pageBar);
 		return "member/memberAjax/userFind";
 	}
 }
