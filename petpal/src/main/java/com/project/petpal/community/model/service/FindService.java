@@ -11,4 +11,6 @@ public interface FindService {
 	List<Map> selectFindList();
 	List<Map> selectFindListOne(String memberNo);
 	int findCnt(String memberNo);
+	Map detailOne(String findNo);
+	List<Map> findSubPic(String findNo);
 }

@@ -11,7 +11,8 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 	<main role="main" style="min-height: 100vh;">
-		<div class="container my-4 mt-lg-0">
+		<div class="container my-4 mt-lg-0" style="height:2000px;">
+		
 			<div class="row ">
 				<div class="col-lg-12 my-5 mt-lg-0 ">
 					<div class="mt-3 mt-lg-0 d-lg-flex py-3">
@@ -32,21 +33,15 @@
 			<div class="row">
 				<!-- 왼쪽 -->
 				<div class="col-lg-9 col-sm-12">
-					<div class="container" id="title">
-
+					<div id="title">
 						<div class="imgCon" >
-							<c:forEach var="i" items="${imgList }" varStatus="vs">
-								<div  class="position-relative rounded m-1 col-12">
-									<img
-										src="${path }/resources/upload/community/daily/${i.dailyImgName}"
-										class="col-12 mb-1 p-0 rounded">									
-								</div>
-								
-							</c:forEach>
+							<div  class="position-relative rounded">
+								<img src="${path }/resources/upload/find/${fDetail.FILENAME}" class="col-12 mb-1 p-0 rounded"  >									
+							</div>
 						</div>
-						
+					</div>				
 				</div>
-						         <!-- 오른쪽 스티키-->
+				<!-- 오른쪽 스티키-->
 		        <div class="col-3 d-none d-lg-block sticky-top" style="top:100px; height:100px;">
 		               <button type="button" class="btn btn-link mb-3">
 		                  <svg width="1em" height="1em" viewBox="0 0 16 16"

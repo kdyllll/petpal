@@ -20,5 +20,10 @@
 	<select id="findCnt" parameterType="string" resultType="int">
 		select count(*) from member join find using(memberNo) where memberNo = #{memberNo}		
 	</select>
-
+	<select id="detailOne" parameterType="string" resultType="map">
+		select * from find join member using(memberNo) join findImg using(findNo) where findNo = #{findNo} and imgStatus = 'M'
+	</select>
+	<select id="findSubPic" resultType="map" parameterType="string">
+		select * from find join findImg using(findNo) where findNo = #{findNo} and imgStatus='S'
+	</select>
 </mapper>
