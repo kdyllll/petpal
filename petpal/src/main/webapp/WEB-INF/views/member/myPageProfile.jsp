@@ -8,7 +8,9 @@
  <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
 
   <!-- myPageNav.jsp 연결 -->
-  <jsp:include page="/WEB-INF/views/common/myPageNav.jsp" />
+  <jsp:include page="/WEB-INF/views/common/myPageNav.jsp" >
+  	<jsp:param name="mpNav" value="profile"/>
+  </jsp:include>
   <div class="row py-3 justify-content-between">
   <c:if test ="${member != null }"> 
     <div class="col-lg-4 rounded shadow-sm py-3" style=" height: 430px;">
@@ -57,14 +59,14 @@
         </div>
         
         </c:forEach>
-        <small class="d-block text-right mt-3">
-          <a href="#">더보기</a>
-        </small>
+
          </c:when>
+         
          <c:otherwise >
-         	<a href="#" class="d-block text-center mt-5 mb-4 text-muted ">글작성하기</a>
+         	<a href="${path }/daily/moveWrite.do" class="d-block text-center mt-5 mb-4 text-muted ">글작성하기</a>
          </c:otherwise>
          </c:choose>
+         
       </div>
       <div class="mb-3 pb-3 px-3 bg-white rounded shadow-sm">
         <h6 class="border-bottom border-gray pb-2 mb-0">노하우 <c:out default="0" value="${tipCnt }"/></h6>
@@ -83,14 +85,13 @@
         </div>
         
         </c:forEach>
-        <small class="d-block text-right mt-3">
-          <a href="#">더보기</a>
-        </small>
+
          </c:when>
          <c:otherwise >
-         	<a href="#" class="d-block text-center mt-5 mb-4 text-muted ">글작성하기</a>
+         	<a href="${path }/community/tipWrite.do" class="d-block text-center mt-5 mb-4 text-muted ">글작성하기</a>
          </c:otherwise>
          </c:choose>
+         
       </div>
       <div class="mb-3 pb-3 px-3 bg-white rounded shadow-sm">
         <h6 class="border-bottom border-gray pb-2 mb-0">후기 <c:out default="0" value="${placeCnt }"/></h6>
@@ -109,14 +110,13 @@
         </div>
         
         </c:forEach>
-        <small class="d-block text-right mt-3">
-          <a href="#">더보기</a>
-        </small>
+
          </c:when>
          <c:otherwise >
-         	<a href="#" class="d-block text-center mt-5 mb-4 text-muted ">글작성하기</a>
+         	<a href="${path }/place/movePlaceWrite.do" class="d-block text-center mt-5 mb-4 text-muted ">글작성하기</a>
          </c:otherwise>
          </c:choose>
+        
       </div>
 
 	
@@ -137,14 +137,15 @@
         </div>
         
         </c:forEach>
-        <small class="d-block text-right mt-3">
+        <!-- <small class="d-block text-right mt-3">
           <a href="#">더보기</a>
-        </small>
+        </small> -->
          </c:when>
          <c:otherwise >
-         	<a href="#" class="d-block text-center mt-5 mb-4 text-muted ">글작성하기</a>
+         	<a href="${path }/community/findWrite.do" class="d-block text-center mt-5 mb-4 text-muted ">글작성하기</a>
          </c:otherwise>
          </c:choose>
+         
       </div>
      
   </div>

@@ -9,10 +9,12 @@
  <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
 
 
-  <jsp:include page="/WEB-INF/views/common/myPageNav.jsp" />
+  <jsp:include page="/WEB-INF/views/common/myPageNav.jsp" >
+  	<jsp:param name="mpNav" value="shop"/>
+  </jsp:include>
    <div class="row  py-3 mb-3 mt-4  bg-white rounded shadow-sm ">
         <div class="py-2 " style="width: 100%;">
-            <a href="#" class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block text-center ">적립금 0 </a>
+            <a href="#" class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block text-center ">적립금 <c:out value="${member.point}"/>원 </a>
         </div>
     </div>
     <div class="row">
@@ -43,8 +45,7 @@
     </div>
     <div class="row  py-3 mb-3 mt-5  bg-white rounded shadow-sm ">
         <div class="py-2 d-flex justify-content-around align-items-center" style="width: 100%;">
-            <a href="#" class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block "><strong>입금완료 0 </strong></a>
-            <svg class="bi bi-chevron-right" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z"/></svg>
+            
             <a href="#" class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block "><strong>결제완료 0</strong></a>
             <svg class="bi bi-chevron-right" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z"/></svg>
             <a href="#" class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block "><strong>배송준비 0</strong></a>

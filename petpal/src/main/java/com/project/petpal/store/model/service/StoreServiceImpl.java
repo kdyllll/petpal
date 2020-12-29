@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.petpal.community.model.vo.DailyImg;
 import com.project.petpal.payment.model.vo.Cart;
 import com.project.petpal.store.model.dao.StoreDao;
 import com.project.petpal.store.model.vo.Product;
@@ -94,9 +95,9 @@ public class StoreServiceImpl implements StoreService{
 	}
 
 	@Override
-	public List<Review> selectReview(String productNo) {
+	public List<Review> selectReview(String productNo,int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return dao.selectReview(session,productNo);
+		return dao.selectReview(session,productNo,cPage,numPerPage);
 	}
 
 	@Override
@@ -142,9 +143,9 @@ public class StoreServiceImpl implements StoreService{
 	}
 
 	@Override
-	public List<Qna> selectQna(String productNo) {
+	public List<Qna> selectQna(String productNo,int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return dao.selectQna(session,productNo);
+		return dao.selectQna(session,productNo,cPage,numPerPage);
 	}
 
 	@Override
@@ -193,6 +194,24 @@ public class StoreServiceImpl implements StoreService{
 	public int updateCartCnt(Map m) {
 		// TODO Auto-generated method stub
 		return dao.updateCartCnt(session,m);
+	}
+
+	@Override
+	public int totalReviewCount(String productNo) {
+		// TODO Auto-generated method stub
+		return dao.totalReviewCount(session,productNo);
+	}
+
+	@Override
+	public int totalQnaCount(String productNo) {
+		// TODO Auto-generated method stub
+		return dao.totalQnaCount(session,productNo);
+	}
+
+	@Override
+	public List<DailyImg> selectDailyImg(String productNo) {
+		// TODO Auto-generated method stub
+		return dao.selectDailyImg(session,productNo);
 	}
 
 	

@@ -9,7 +9,9 @@
 <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
 
 
-<jsp:include page="/WEB-INF/views/common/myPageNav.jsp" />
+<jsp:include page="/WEB-INF/views/common/myPageNav.jsp" >
+	<jsp:param name="mpNav" value="fav"/>
+</jsp:include>
 
 <div class="row py-3 justify-content-between">
 	<div class="col-xl-3 col-md-4 col-sm-6">

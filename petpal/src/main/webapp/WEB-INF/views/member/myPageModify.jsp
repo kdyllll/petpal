@@ -42,7 +42,9 @@ request.setAttribute("addEtc2", addEtc2);
 <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
 
 
-<jsp:include page="/WEB-INF/views/common/myPageNav.jsp" />
+<jsp:include page="/WEB-INF/views/common/myPageNav.jsp" >
+	<jsp:param name="mpNav" value="modify" />
+</jsp:include>
 
 <c:if test="${loginMember != null }">
 	<form id="updateMemberFrm" class="bg-white rounded shadow-sm p-4 mb-5" id="updateMemberFrm" enctype="multipart/form-data" method="post">

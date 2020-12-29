@@ -57,4 +57,16 @@ public class FindServiceImple implements FindService {
 		// TODO Auto-generated method stub
 		return dao.findCnt(session, memberNo);
 	}
+
+	@Override
+	public Map detailOne(String findNo) {
+		// TODO Auto-generated method stub
+		return dao.detailOne(session, findNo);
+	}
+
+	@Override
+	public List<Map> findSubPic(String findNo) {
+		// TODO Auto-generated method stub
+		return dao.findSubPic(session, findNo);
+	}
 }

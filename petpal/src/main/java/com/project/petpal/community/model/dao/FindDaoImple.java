@@ -48,6 +48,18 @@ public class FindDaoImple implements FindDao {
 		return session.selectOne("find.findCnt", memberNo);
 	}
 
+	@Override
+	public Map detailOne(SqlSession session, String findNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("find.detailOne", findNo);
+	}
+
+	@Override
+	public List<Map> findSubPic(SqlSession session, String findNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("find.findSubPic", findNo);
+	}
+
 
 	
 }

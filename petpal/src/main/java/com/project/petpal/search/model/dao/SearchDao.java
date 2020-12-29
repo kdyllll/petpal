@@ -7,6 +7,6 @@ import org.apache.ibatis.session.SqlSession;
 import com.project.petpal.store.model.vo.Product;
 
 public interface SearchDao {
-	List<Product> searchKeyword(SqlSession session,String keyword);
+	List<Product> searchProduct(SqlSession session,String keyword);
 
 }

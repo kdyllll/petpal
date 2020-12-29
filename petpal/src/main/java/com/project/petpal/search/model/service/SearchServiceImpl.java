@@ -19,7 +19,7 @@ public class SearchServiceImpl implements SearchService {
 	private SqlSession session;
 
 	@Override
-	public List<Product> searchKeyword(String keyword) {
-		return dao.searchKeyword(session,keyword);
+	public List<Product> searchProduct(String keyword) {
+		return dao.searchProduct(session,keyword);
 	}
 }
