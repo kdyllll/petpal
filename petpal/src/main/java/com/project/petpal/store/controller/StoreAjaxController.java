@@ -18,8 +18,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.project.petpal.common.AjaxPageBarFactory;
 import com.project.petpal.member.model.vo.Member;
 import com.project.petpal.payment.model.vo.Cart;
 import com.project.petpal.store.model.service.StoreService;
@@ -103,9 +105,11 @@ public class StoreAjaxController {
 	
 			Cookie c=new Cookie("cookieStock",URLEncoder.encode(stocks, "UTF-8"));
 			c.setMaxAge(60 * 60 * 24); //쿠키 하루 유지
+			c.setPath("/");
 			response.addCookie(c); //쿠키 추가
 			Cookie c2=new Cookie("cookieCnt",URLEncoder.encode(cnts, "UTF-8"));
 			c2.setMaxAge(60 * 60 * 24);
+			c2.setPath("/");
 			response.addCookie(c2);
 		}
 //		System.out.println("최종쿠키");
@@ -119,6 +123,7 @@ public class StoreAjaxController {
 		return "store/storeAjax/payLoginModal";
 	}
 	
+	//리뷰 작성 모달 호출
 	@RequestMapping("/store/moveReview.do")
 	public String moveReview(String productNo,String detailNo,Model m) {
 		Product p=service.selectProduct(productNo);
@@ -143,6 +148,7 @@ public class StoreAjaxController {
 		return list;
 	}
 	
+	//어떤 구매내역에 대해 리뷰 적을건지 선택하는 모달 호출
 	@RequestMapping("/store/moveReviewSelect.do")
 	public String moveReviewSelect(HttpSession session,String productNo,String details,Model m) {
 		//상품이름, 구매한 옵션, 이미지
@@ -235,5 +241,43 @@ public class StoreAjaxController {
 		return stockList;
 		
 	}
+	
+	@RequestMapping("/store/reviewList.do")
+	public String reviewList(String productNo,
+			@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerPage",defaultValue="3") int numPerPage,
+			Model m) {
+		//리뷰 리스트 호출
+		//리뷰 가져오기
+		List<Review> reviews=service.selectReview(productNo,cPage,numPerPage);
+		int totalReview=service.totalReviewCount(productNo);
+
+		//페이징
+		String pageBar=new AjaxPageBarFactory().getPageBar(totalReview, cPage, numPerPage, "reviewList.do",productNo,"#reviewCon");
+		
+		m.addAttribute("reviewList",reviews);
+		m.addAttribute("reviewPageBar",pageBar);
+		return "store/storeAjax/reviewList";
+	}
+	
+	@RequestMapping("/store/qnaList.do")
+	public String qnaList(String productNo,
+			@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerPage",defaultValue="3") int numPerPage,
+			Model m) {
+		//문의 리스트 호출
+		//문의 가져오기
+		List<Qna> qnas=service.selectQna(productNo,cPage,numPerPage);
+		int totalQna=service.totalQnaCount(productNo);
+		
+		//페이징
+		String pageBar=new AjaxPageBarFactory().getPageBar(totalQna, cPage, numPerPage, "qnaList.do",productNo,"#qnaCon");		
+		m.addAttribute("qnaList",qnas);
+		m.addAttribute("qnaPageBar",pageBar);
+		return "store/storeAjax/qnaList";
+		
+	}
+	
+	
 	
 }
