@@ -9,7 +9,8 @@
 </head>
 <body class="bg-white">
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
-
+	<input type="hidden" class="loginMember" value="${loginMember.memberNo }"/>
+  	<input type="hidden" class="findNo" value="${fDetail.FINDNO }"/>
 	<main role="main" style="min-height: 100vh;">
 		<div class="container my-4 mt-lg-0" style="height:2000px;">
 		
@@ -30,19 +31,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			
+			
+			
+			<div class="row mx-3">
 				<!-- 왼쪽 -->
-				<div class="col-lg-9 col-sm-12">
-					<div id="title">
+				<div class="col-lg-9 pr-5 col-sm-12">
+					<p style="font-size:22px;">
+						<c:if test="${fDetail.STATUS eq 'N' }">[찾는중]</c:if>
+					<strong><c:out value="${fDetail.TITLE }"/></strong></p>
 						<div class="imgCon" >
 							<div  class="position-relative rounded">
-								<img src="${path }/resources/upload/find/${fDetail.FILENAME}" class="col-12 mb-1 p-0 rounded"  >									
+								<img src="${path }/resources/upload/find/${fDetail.FILENAME}" class="col-12 mb-1 p-0 rounded" >									
 							</div>
 						</div>
-					</div>				
+						<p><c:out value="${fDetail.CONTENT }" /></p>
+						<p class="pb-5" style="border-bottom:1px solid #dfe6e9; ">잃어버린 장소 : <c:out value="${fDetail.ADDRESS }" /></p>
+								
 				</div>
 				<!-- 오른쪽 스티키-->
-		        <div class="col-3 d-none d-lg-block sticky-top" style="top:100px; height:100px;">
+		        <div class="col-3 d-none d-lg-block sticky-top py-0" style="top:250px;height:200px; ">
 		               <button type="button" class="btn btn-link mb-3">
 		                  <svg width="1em" height="1em" viewBox="0 0 16 16"
 		                   class="bi bi-heart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -58,41 +66,37 @@
 		                </button>
 		               <div>
 		                 <div class="row d-flex justify-content-between mb-2"> 
-		                    <a href="${path }/user/moveUserInfo.do" class="col-7 p-0 d-flex align-items-center ml-2">
+		                    <a href="${path }/user/moveUserInfo.do?memberNo=${fDetail.MEMBERNO}" class="col-7 p-0 d-flex align-items-center ml-2">
 		                      <div class="col-3 p-0">
-			                        <c:if test="${not empty daily.IMG }">                
-	                                	<img src="${path }/resources/upload/member/profile/${daily.IMG}" class="rounded" style="width:40px; height: 40px;">
+			                        <c:if test="${not empty fDetail.IMG }">                
+	                                	<img src="${path }/resources/upload/member/profile/${fDetail.IMG}" class="rounded" style="width:40px; height: 40px; border-radius:50%;">
 	                                </c:if>
-	                                <c:if test="${ empty daily.IMG }">  
+	                                <c:if test="${ empty fDetail.IMG }">  
 	                                	<img src="${path }/resources/upload/member/profile/avatar.webp" class="rounded" style="width:40px; height: 40px;">
 	                                </c:if>
 		                      </div>
-		                      <strong><span class="col-3 p-0 ml-2 align-middle"><c:out value="${daily.NICKNAME }"/></span></strong>
+		                      <strong><span class="col-3 p-0 ml-2 align-middle"><c:out value="${fDetail.NICKNAME }"/></span></strong>
 		                    </a>
 		                    <button type="button" class="followBtn btn btn-sm bg-daily col-4 col-xl-3 mr-2">팔로우</button>
 		                 </div>
 		                 <div class="mt-2">
-		                   <p><c:out value="${daily.CONTENT }"/></p>
-		                   <div>
-		                     <c:forEach var="h" items="${hashList}">
-                           		<a href="#">#<c:out value="${h.hashContent }"/></a>				                                    	
-                             </c:forEach>
-		                   </div>
+		                   <p><c:out value="${fDetail.CONTENT }"/></p>
+
 		                 </div>
 		                 <div class="d-flex justify-content-end align-items-center">
-		                   <span class="text-secondary" style="font-size:14px;"><c:out value="${daily.ENROLLDATE }"/></span>
-		                   <button type="button" class="btn btn-link text-secondary" style="font-size: 14px;" onclick="fn_claimModal('${daily.DAILYNO}');">신고</button>
+		                   <span class="text-secondary" style="font-size:14px;"><c:out value="${fDetail.ENROLLDATE }"/></span>
+		                   <button type="button" class="btn btn-link text-secondary" style="font-size: 14px;" onclick="fn_claimModal('<c:out value="${fDetail.FINDNO}" />');">신고</button>
 		                 </div>
 		               </div>
-		               <c:if test="${(loginMember.memberNo eq daily.MEMBERNO) or (loginMember.memberNo eq '63') }">
+		               <c:if test="${(loginMember.memberNo eq fDetail.MEMBERNO) or (loginMember.memberNo eq '63') }">
 			               <div class="d-flex justify-content-end mr-1">
-			               		<c:if test="${loginMember.memberNo eq daily.MEMBERNO }">
-			                  		<button type="button" onclick="location.href'${path}/daily/updateDaily.do?dailyNo=${daily.DAILYNO }';" class="dailyEdit btn btn-link btn-outline-secondary px-2 py-0 mr-2 text-black-50">수정</button>
+			               		<c:if test="${loginMember.memberNo eq fDetail.MEMBERNO }">
+			                  		<button type="button" onclick="location.href'${path}/daily/updateDaily.do?findNo=${daily.DAILYNO }';" class="dailyEdit btn btn-link btn-outline-secondary px-2 py-0 mr-2 text-black-50">수정</button>
 			                  	</c:if>
-			                  	<button type="button" onclick="location.replace('${path}/daily/deleteDaily.do?dailyNo=${daily.DAILYNO }');" class="dailyDelete btn btn-link btn-outline-secondary px-2 py-0 text-black-50">삭제</button>
+			                  	<button type="button" onclick="location.replace('${path}/daily/deleteDaily.do?findNo=${daily.DAILYNO }');" class="dailyDelete btn btn-link btn-outline-secondary px-2 py-0 text-black-50">삭제</button>
 			               </div>
 		               </c:if>
-		         </div><!-- 스티키 -->
+		         </div>
 			</div>
 		</div>
 		</div>
@@ -101,7 +105,7 @@
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 <script>
 let loginMember=$(".loginMember").val();
-let dailyNo=$(".dailyNo").val();
+let findNo=$(".findNo").val();
 
 
 //팔로우 버튼 누르면
