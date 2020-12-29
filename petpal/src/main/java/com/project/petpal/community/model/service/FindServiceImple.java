@@ -69,4 +69,10 @@ public class FindServiceImple implements FindService {
 		// TODO Auto-generated method stub
 		return dao.findSubPic(session, findNo);
 	}
+
+	@Override
+	public int updateMainImg(FindImg fi) {
+		// TODO Auto-generated method stub
+		return dao.updateMainImg(session, fi);
+	}
 }

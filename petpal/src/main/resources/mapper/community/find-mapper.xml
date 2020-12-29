@@ -26,4 +26,7 @@
 	<select id="findSubPic" resultType="map" parameterType="string">
 		select * from find join findImg using(findNo) where findNo = #{findNo} and imgStatus='S'
 	</select>
+	<update id="updateMainImg" parameterType="findImg">
+		UPDATE FINDIMG SET FILENAME=#{fileName} WHERE FINDNO=#{findNo} AND IMGSTATUS = 'M'
+	</update>
 </mapper>

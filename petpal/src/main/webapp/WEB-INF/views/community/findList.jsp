@@ -49,8 +49,9 @@
 					</jsp:include>
 					<div class="form-inline container text-center mb-3">
 						<h3>찾습니다</h3>
-						<button type="button" class="btn btn-outline-secondary ml-auto"
-							onclick="location.replace('${path}/community/findWrite.do')">글쓰기</button>
+						<input type="hidden" class="loginMember" value="${loginMember.memberNo }" />
+						<button type="button" class="btn btn-outline-secondary ml-auto writeBtn" >글쓰기</button>
+						
 					</div>
 					<div class="form-inline container-xl mb-5">
 						<button type="button" class="btn btn-outline-secondary mr-2">전체</button>
@@ -90,11 +91,37 @@
 				</div>
 			</div>
 		</div>
-
+		<div class="loginModal"></div>
 	</main>
 
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+	<script>
+	let loginMember=$(".loginMember").val();
 
+	//팔로우 버튼 누르면
+	$(".writeBtn").on("click",e=>{
+		if(loginMember!=""){ //로그인 되어 있으면 팔로우
+			location.href="${pageContext.request.contextPath}/community/findWrite.do";
+		}else{ //로그인 안되어 있으면 로그인 모달 띄우기           
+			loginModal();
+		};
+	});
+
+
+	//로그인 모달
+	function loginModal(){
+		console.log("실행");
+		$.ajax({
+			url: "${path}/login/moveLogin.do",
+			dataType:"html",
+			success:(data) => {
+				$(".loginModal").html(data);	
+	        	$('#loginModal').modal(); 
+			}
+		});
+	};
+	
+	</script>
 </body>
 
 </html>

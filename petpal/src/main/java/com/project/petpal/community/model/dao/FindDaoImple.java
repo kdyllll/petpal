@@ -60,6 +60,12 @@ public class FindDaoImple implements FindDao {
 		return session.selectList("find.findSubPic", findNo);
 	}
 
+	@Override
+	public int updateMainImg(SqlSession session, FindImg fi) {
+		// TODO Auto-generated method stub
+		return session.update("find.updateMainImg", fi);
+	}
+
 
 	
 }

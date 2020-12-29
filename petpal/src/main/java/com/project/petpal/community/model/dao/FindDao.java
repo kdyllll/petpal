@@ -17,4 +17,5 @@ public interface FindDao {
 	int findCnt(SqlSession session, String memberNo);
 	Map detailOne(SqlSession session, String findNo);
 	List<Map> findSubPic(SqlSession session, String findNo);
+	int updateMainImg(SqlSession session, FindImg fi);
 }

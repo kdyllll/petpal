@@ -24,13 +24,12 @@
 	margin-bottom: 30px;
 }
 
-.attach > label {
-	cursor:pointer;
+.attach>label {
+	cursor: pointer;
 }
 </style>
 <%
-	Map fd = (Map)request.getAttribute("findOne");
-
+	Map fd = (Map) request.getAttribute("findOne");
 %>
 </head>
 <body class="bg-white">
@@ -38,9 +37,8 @@
 
 	<main role="main" style="min-height: 100vh;">
 		<div class="container" style="max-width: 940px;">
-			<form class="needs-validation" name="findWrite"
-				id="findWrite" method="post"
-				enctype="multipart/form-data" >
+			<form class="needs-validation" name="findUpdateEnd" id="findUpdateEnd"
+				method="post" enctype="multipart/form-data">
 				<div>
 					<div class="row">
 						<div class="col-md-12 mt-5">
@@ -73,12 +71,16 @@
 										<div class="card-body form-inline">
 											<label class="mr-3">카테고리</label>
 											<div class="col-6">
-												<select id="select" class="form-control" name="category" required>
+												<select id="select" class="form-control" name="category"
+													required>
 													<option value="" selected disabled style="color: #bdbdbd;"><small>선택해주세요</small>
 													</option>
-													<option value="dog" <%=fd.get("CATE").equals("dog") ? "selected" : "" %> >강아지</option>
-													<option value="cat" <%=fd.get("CATE").equals("cat") ? "selected" : "" %>>고양이</option>
-													<option value="small" <%=fd.get("CATE").equals("small") ? "selected" : "" %>>소동물</option>
+													<option value="dog"
+														<%=fd.get("CATE").equals("dog") ? "selected" : ""%>>강아지</option>
+													<option value="cat"
+														<%=fd.get("CATE").equals("cat") ? "selected" : ""%>>고양이</option>
+													<option value="small"
+														<%=fd.get("CATE").equals("small") ? "selected" : ""%>>소동물</option>
 												</select>
 											</div>
 										</div>
@@ -86,7 +88,7 @@
 								</div>
 							</div>
 
-							<!-- 파일 업로드 부분 -->
+							<!-- 메인 파일 업로드 부분 -->
 							<div id="delete">
 								<button type="button" id="d" class="btn btn-light col-auto"
 									onclick="deleteImg(event)">
@@ -96,10 +98,10 @@
 							<div class="float-none" id="image_container"
 								style="display: table; background-color: #F7F7F7; height: 300px; width: 100%; position: relative;"
 								onclick="document.all.file.click()">
-								
+
 								<input type="file" name="mainImg" id="file"
 									style="display: none" onchange="setThumbnail(event);" required>
-								
+
 								<div class="button text-center"
 									style="display: table-cell; vertical-align: middle;">
 									<button type="button" id="i" class="btn btn-outline-secondary">메인
@@ -110,36 +112,60 @@
 										<span class="align-text-bottom">사진 변경하기</span>
 									</button>
 								</div>
-								<img src="${path }/resources/upload/find/${findOne.FILENAME}" style="width:100%; height:300px;">
+								<img src="${path }/resources/upload/find/${findOne.FILENAME}"
+									style="width: 100%; height: 300px;">
 							</div>
 
 							<input type="text" class="form-control mt-5 mb-3 border-bottom"
-								name="title" id="name" placeholder="제목을 입력하세요" value="${findOne.TITLE }" required
-								style="border: none;">
+								name="title" id="name" placeholder="제목을 입력하세요"
+								value="${findOne.TITLE }" required style="border: none;">
 							<div class="invalid-feedback">제목을 입력해주세요.</div>
 							<textarea class="form-control border-0 mb-3" id="findPlace"
-								name="address" placeholder="장소를입력하세요" 
-								style="resize: none; overflow-y: hidden;" required><c:out value="${findOne.ADDRESS }"/></textarea>
+								name="address" placeholder="장소를입력하세요"
+								style="resize: none; overflow-y: hidden;" required><c:out
+									value="${findOne.ADDRESS }" /></textarea>
 
 							<textarea class="form-control border-0 mb-3" id="ta"
-								name="content" placeholder="반려동물의 특징을 입력하세요" 
-								style="resize: none; min-height:100px;"  required><c:out value="${findOne.CONTENT }"/></textarea>
+								name="content" placeholder="반려동물의 특징을 입력하세요"
+								style="resize: none; min-height: 100px;" required><c:out
+									value="${findOne.CONTENT }" /></textarea>
 
 
 							<!-- 첨부 버튼 -->
-							<div class="ori d-flex justify-content-center mb-3 position-relative">
-								<c:if test = "${not empty findPics }">
-									<c:forEach var="fp" items="${findPics}">
-										<img style="width:400px; height:400px;" src="${path }/resources/upload/find/${fp.FILENAME}">
-										<label class="ml-3 changePic position-absolute p-2" style="cursor:pointer; background-color:black; opacity:0.7; top:20px; color:white; border-radius:5px;"> 사진 변경하기 </label> 
-										<input class="changeInputBox" style="display: none" type="file" name="contentImg" />
+							<!-- 기존사진 -->
+								<c:if test="${not empty findPics }">
+									<c:forEach var="fp" items="${findPics}">	
+									<div class="oriPicOne">				
+										<div class="mb-2 d-flex justify-content-center ">
+											<div>
+												<label class="ml-3 changePic p-2"
+													style="cursor: pointer; background-color: black; opacity: 0.7; color: white; border-radius: 5px; height:40px;">
+													사진 변경하기 </label> <input class="changeInputBox d-none" type="file"
+													name="oriImg" value="${fp.FILENAME }"/>
+													 <input type="hidden" class="oriImgNo" name="oriImgNo" value="${fp.FINDIMGNO }"> 
+
+											</div>
+											<button type="button" style="height:40px;"
+												class="btn btn-outline-secondary btn-sm col-auto delPic ml-3">
+												삭제</button>
+										</div>
+										<div class="ori d-flex justify-content-center mb-3">
+											<img style="width: 400px; height: 400px;" class="oriImg"
+												src="${path }/resources/upload/find/${fp.FILENAME}">
+										</div>
+									</div>
 									</c:forEach>
 								</c:if>
-							</div>
-							<div class="attach d-flex justify-content-center">
 								
-								<label class="ml-3 fileTarget"> 사진 추가하기 <svg width="1em"
-										height="1em" viewBox="0 0 16 16"
+								<!-- 변경된 이미지 번호 컨테이너 -->
+								<div class="oriImgNoCon">
+								
+								</div>
+							<!-- 새로운사진 추가 -->
+							<div class="attach d-flex justify-content-center">
+
+								<label class="ml-3 fileTarget">새로운 사진 추가하기 <svg
+										width="1em" height="1em" viewBox="0 0 16 16"
 										class="bi bi-plus-circle ml-2" fill="currentColor"
 										xmlns="http://www.w3.org/2000/svg">
 		  								<path fill-rule="evenodd"
@@ -148,16 +174,17 @@
 											d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 									</svg>
 								</label> <input class="uploadInputBox" style="display: none" type="file"
-									name="contentImg" />
-								<div class="preview d-flex flex-column content">
-										
-								</div>
+									name="newImg" />
+								<div class="preview d-flex flex-column content"></div>
 							</div>
 
 
-							<input type="hidden" name="memberNo" value="${loginMember.getMemberNo() }">
+							<input type="hidden" name="memberNo"
+								value="${loginMember.getMemberNo() }">
+								<input type="hidden" name="findNo" value="${findOne.FINDNO }">
 							<div class="d-flex justify-content-end my-5">
-								<button type="submit" id="writeEnd" class="mt-5 btn btn-outline-secondary"> 작성하기 </button>
+								<button type="submit" id="updateEnd"
+									class="mt-5 btn btn-outline-secondary">수정하기</button>
 							</div>
 						</div>
 					</div>
@@ -169,6 +196,29 @@
 
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 	<script>
+	
+	$(function() {
+ 
+		$(".changePic").on("click", e => {
+			let fileTarget = $(e.target).next();			
+			fileTarget.click();
+			let a ="";
+			fileTarget.on("change" , e1 => {
+				let reader = new FileReader();
+				reader.onload = event => {
+					let img = $(e.target).parent().parent().next().children();
+					img.attr("src", event.target.result);
+
+				};
+				reader.readAsDataURL($(e1.target)[0].files[0]);
+			})
+			
+		})
+		
+		$(".delPic").on("click", e => {
+			$(e.target).parent().parent().remove();
+		})
+	})
 	$("#i").hide();
 	$("#u").show();
 	$("#d").hide();
@@ -202,7 +252,7 @@
 		
 		
 		let ht = ` <div class="attach d-flex justify-content-center">
-		<label class="ml-3 fileTarget" > 사진 추가하기
+		<label class="ml-3 fileTarget" > 새로운 사진 추가하기
 			<svg width="1em" height="1em" viewBox="0 0 16 16"
 					class="bi bi-plus-circle ml-2" fill="currentColor"
 					xmlns="http://www.w3.org/2000/svg">
@@ -210,9 +260,10 @@
 						<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 			</svg>
 		</label> 
-		<input class="uploadInputBox" style="display: none" type="file" name="contentImg" />
+		<input class="uploadInputBox" style="display: none" type="file" name="newImg" />
 			<div class="preview d-flex flex-column content"></div>
 	</div>`;
+	
 		let i = 0;
 		$(function() {
 			$(document).on("click",".fileTarget",e=>{
@@ -248,14 +299,8 @@
 				$(e.target).parents(".attach").remove();
 			})
 			
-			$("#writeEnd").on("click", e => {
-				let file = document.getElementById("file").value;
-				if(file.trim()=="") {
-					alert("메인사진을 선택해주세요");
-					return;
-				}
-				
-				$("#findWrite").attr("action", "${path }/community/findWriteEnd.do").submit();
+			$("#updateEnd").on("click", e => {
+				$("#findUpdateEnd").attr("action", "${path }/find/findUpdateEnd.do").submit();
 			})
 		})
 	</script>
