@@ -258,9 +258,6 @@
 	}
 	
 	function cartDelete(){
-		//alert로 진짜 지울건지 물어보고 안 지우면 그냥 창 닫고 지우면 
-		//체크 되어 있는 애의 재고번호를 받아서( ?stockNo 이런걸로 해서  ) 컨트롤러로 넘기고
-		//컨트롤러에서 해당 재고번호의 상품을 지우고 지운 후의 리스트를 다시 쏴주고
 		swal({
 			title:'장바구니에서 삭제하시겠습니까?',
 			icon : 'warning',
@@ -277,56 +274,10 @@
 			}
 		}).then((result) => {
 			if(result){
-				/* let stockNo=[]; */
-				
-				var objs = document.querySelectorAll(".ch");
-				
-				for(var i=0;i<objs.length;i++){
-					if(objs[i].checked===true){
-						/* alert($("#stockNo").val()); */
-					}else{
-						alert($("input[name=size]").val());
-					}
-				}
-				
-				/* 선택된 애의 stockNo를 어떻게 가져오지? 음..
-				
-				
-				    $.ajax({
-				        type:"POST",
-				        url:"${path}/cart/deleteCart.do",
-				        data : {stockNo:stockNo},
-				        dataType : "xml",
-				        success: function(){
-				        	swal('상품이 삭제되었습니다.', '', 'success');
-				        },
-				        error: function() {
-				        	swal('실패', '', 'warning');
-				        }  
-				    });
-				
-				input hidden value로 표시 */
-				
+				//ajax 포기.. div 숨기고 해당 div에 value 주고 장바구니 다시 갈 때 다시 쏴주자...
 			}
-		})
+		});
 	}
-	
-	/* $("#checkDelete").click(function(){
-	    $.ajax({
-	        type:"POST",
-	        url:"./book.jsp",
-	        data : {name : "홍길동"},
-	        dataType : "xml",
-	        success: function(xml){
-	            console.log(xml);
-	        },
-	        error: function(xhr, status, error) {
-	            alert(error);
-	        }  
-	    });
-	}); */
-
-	
 	
 </script>
 

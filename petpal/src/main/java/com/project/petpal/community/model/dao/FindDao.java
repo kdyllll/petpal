@@ -15,5 +15,6 @@ public interface FindDao {
 	List<Map> selectFindList(SqlSession session);
 	List<Map> selectFindListOne(SqlSession session, String memberNo);
 	int findCnt(SqlSession session, String memberNo);
-	
+	Map detailOne(SqlSession session, String findNo);
+	List<Map> findSubPic(SqlSession session, String findNo);
 }

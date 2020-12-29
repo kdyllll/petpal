@@ -2,6 +2,7 @@ package com.project.petpal.payment.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -14,11 +15,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.petpal.member.model.vo.Member;
 import com.project.petpal.payment.model.service.CartService;
-import com.project.petpal.payment.model.vo.Cart;
 
 @Controller
 public class CartController {
@@ -77,7 +78,6 @@ public class CartController {
 				for(int i=0;i<stockNo.size();i++) {
 					mv.addObject("list", service.cartListNonMember(stockNo));
 					mv.addObject("amount", amount);
-					System.out.println(service.cartListNonMember(stockNo));
 				}
 				mv.setViewName("cart/cartNonMember");
 			}else {

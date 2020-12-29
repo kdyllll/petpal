@@ -97,9 +97,13 @@ public class findController {
 	}
 	
 	@RequestMapping("/community/findDetail.do")
-	public String findDetail(HttpServletRequest request, HttpServletResponse response) {
+	public String findDetail(HttpServletRequest request, HttpServletResponse response,Model model) {
 		String findNo = request.getParameter("findNo");
-		System.out.println(findNo);
+		Map fDetail = service.detailOne(findNo);
+		List<Map> findPics = service.findSubPic(findNo);
+
+		model.addAttribute("fDetail", fDetail);
+		model.addAttribute("findPics", findPics);
 		return "community/findDetail";
 	}
 }
