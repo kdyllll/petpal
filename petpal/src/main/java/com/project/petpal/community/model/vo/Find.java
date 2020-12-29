@@ -17,4 +17,5 @@ public class Find {
 	public String content;
 	public String title;
 	public String enrollDate;
+	public String cate;
 }

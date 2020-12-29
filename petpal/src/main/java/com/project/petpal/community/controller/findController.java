@@ -89,7 +89,7 @@ public class findController {
 		String msg = "글입력에 실패하였습니다.";
 		String loc = "/community/findWrite.do";
 		if(result>0) {
-			msg="급 입력이 완료되었습니다.";
+			msg="글 입력이 완료되었습니다.";
 			loc="/community/findList.do"; //나중에 detail로 바꿈
 		}
 		
@@ -107,8 +107,13 @@ public class findController {
 		return "community/findDetail";
 	}
 	
-	@RequestMapping("/find/updateFind.do")
-	public String updateFind() {
+	@RequestMapping("/find/findUpdate.do")
+	public String findUpdate(String findNo,Model model) {
+		System.out.println(findNo);
+		Map findOne = service.detailOne(findNo);
+		List<Map> findPics = service.findSubPic(findNo);
+		model.addAttribute("findOne", findOne);
+		model.addAttribute("findPics", findPics);
 		return "community/findUpdate";
 	}
 }

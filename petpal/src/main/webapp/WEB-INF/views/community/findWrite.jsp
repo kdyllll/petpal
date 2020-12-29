@@ -68,7 +68,7 @@
 										<div class="card-body form-inline">
 											<label class="mr-3">카테고리</label>
 											<div class="col-6">
-												<select id="select" class="form-control" name="category" required>
+												<select id="select" class="form-control" name="cate" required>
 													<option value="" selected disabled style="color: #bdbdbd;"><small>선택해주세요</small>
 													</option>
 													<option value="dog">강아지</option>

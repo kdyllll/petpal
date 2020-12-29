@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "- //mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="find">
 	<insert id="insertFindWrite" parameterType="find">
-		INSERT INTO FIND VALUES('F'||SEQ_FINDNO.NEXTVAL,#{memberNo},'N',#{address},#{content},#{title},default)
+		INSERT INTO FIND VALUES('F'||SEQ_FINDNO.NEXTVAL,#{memberNo},'N',#{address},#{content},#{title},default,#{cate})
 		<selectKey keyProperty="findNo" resultType="string" order="AFTER">
   		SELECT SEQ_FINDNO.CURRVAL from DUAL 
   		</selectKey>
