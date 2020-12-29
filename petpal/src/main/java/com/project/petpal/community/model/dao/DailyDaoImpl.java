@@ -3,6 +3,7 @@ package com.project.petpal.community.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -58,9 +59,10 @@ public class DailyDaoImpl implements DailyDao {
 	}
 
 	@Override
-	public List<Map> selectDailyAll(SqlSession session) {
+	public List<Map> selectDailyAll(SqlSession session,int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return session.selectList("daily.selectDailyAll");
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("daily.selectDailyAll",null,rb);
 	}
 
 	@Override
@@ -122,6 +124,13 @@ public class DailyDaoImpl implements DailyDao {
 		return session.selectOne("daily.dailyCnt", memberNo);
 	}
 
+	@Override
+	public int totalDailyCount(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectOne("daily.totalDailyCount");
+	}
+
+	
 	
 
 }

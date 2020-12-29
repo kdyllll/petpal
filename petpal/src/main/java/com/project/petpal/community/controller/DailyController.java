@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.petpal.admin.model.vo.Product;
+import com.project.petpal.common.PageBarFactory;
 import com.project.petpal.store.model.vo.ProductImg;
 import com.project.petpal.community.model.service.DailyService;
 import com.project.petpal.community.model.vo.Daily;
@@ -44,16 +45,22 @@ public class DailyController {
 	
 	//글 목록으로 이동
 	@RequestMapping("/daily/moveList.do")
-	public String moveDailyList(Model m) {
-		List<Map> dailyList=service.selectDailyAll();
+	public String moveDailyList(Model m,
+			@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerPage",defaultValue="12") int numPerPage) {
+		List<Map> dailyList=service.selectDailyAll(cPage,numPerPage);
 		List<DailyImg> imgList=service.selectMainImg();
 		List<Hashtag> hashList=service.selectHashAll();
+		int totalCount=service.totalDailyCount();
+		String pageBar=new PageBarFactory().getPageBar(totalCount, cPage, numPerPage, null, null, "moveList.do");
 		
 		//좋아요 수
 		//댓글 수 보내야 함
+		
 		m.addAttribute("dailyList",dailyList);
 		m.addAttribute("imgList",imgList);
 		m.addAttribute("hashList",hashList);
+		m.addAttribute("pageBar",pageBar);
 		return "community/dailyList";
 	}
 	

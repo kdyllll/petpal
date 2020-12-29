@@ -132,7 +132,7 @@
 
             </div>
         </div>
-        <div class="text-center">페이지바</div>
+        <div class="text-center">${pageBar }</div>
     </div>
     <div class="pdtModal"></div>
   </main>

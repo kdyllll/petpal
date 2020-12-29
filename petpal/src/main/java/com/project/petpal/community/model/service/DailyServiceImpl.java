@@ -89,9 +89,9 @@ public class DailyServiceImpl implements DailyService {
 	}
 
 	@Override
-	public List<Map> selectDailyAll() {
+	public List<Map> selectDailyAll(int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return dao.selectDailyAll(session);
+		return dao.selectDailyAll(session,cPage,numPerPage);
 	}
 
 	@Override
@@ -152,6 +152,12 @@ public class DailyServiceImpl implements DailyService {
 	public int dailyCnt(String memberNo) {
 		// TODO Auto-generated method stub
 		return dao.dailyCnt(session, memberNo);
+	}
+
+	@Override
+	public int totalDailyCount() {
+		// TODO Auto-generated method stub
+		return dao.totalDailyCount(session);
 	}
 
 	
