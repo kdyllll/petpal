@@ -10,7 +10,7 @@
         <nav class="navbar navbar-expand-lg navbar-light py-3 pl-0" style="background-color: white;">
           <div class="container">
             <a class="navbar-brand text-dark py-0 m-0" href="${path}">
-            	<img src="${path }/resources/images/logo1.png" style="height:40px;">
+            	<img src="${path }/resources/images/logoGray.png" style="height:40px;">
             </a>
             <ul class="nav justify-content-center d-none d-lg-flex">
               <li class="nav-item">

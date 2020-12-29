@@ -125,17 +125,17 @@
 							</ol>
 							<div class="carousel-inner" role="listbox">
 								<div class="carousel-item active">
-									<img class="d-block img-fluid" src="sea)연어.png"
-										alt="First slide" style="height: 350px; width: 100%">
+									<img class="d-block img-fluid" src="${path }/resources/images/banner.jpg"
+										alt="First slide" style=" width: 100%">
 								</div>
 								<div class="carousel-item">
-									<img class="d-block img-fluid" src="sea)연어.png"
-										alt="Second slide" style="height: 350px; width: 100%">
+									<img class="d-block img-fluid" src="${path }/resources/images/banner2.jpg"
+										alt="Second slide" style="width: 100%">
 								</div>
-								<div class="carousel-item">
+								<!-- <div class="carousel-item">
 									<img class="d-block img-fluid" src="sea)연어.png"
 										alt="Third slide" style="height: 350px; width: 100%">
-								</div>
+								</div> -->
 							</div>
 							<a class="carousel-control-prev"
 								href="#carouselExampleIndicators" role="button"
