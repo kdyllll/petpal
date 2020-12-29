@@ -6,7 +6,7 @@
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
 
 	<c:if test="${empty dailyList }">
-		<div class="mx-auto">
+		<div class="col-12 mb-4 text-center mt-5">
 			<p class="">일상 글이 없습니다.</p>
 		</div>
 	</c:if>
