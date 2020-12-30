@@ -52,7 +52,7 @@
           <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <div class="d-flex justify-content-between align-items-center w-100">
               <strong class="text-gray-dark"><c:out value="${d.CONTENT }"/></strong>
-              <a href="#">Follow</a>
+   				<span><fmt:formatDate value="${d.ENROLLDATE }" pattern="yyyy/MM/dd"/></span>
             </div>
             <span class="d-block"><fmt:formatDate value="${d.DAILYDATE }" pattern="yyyy/MM/dd"/></span>
           </div>
@@ -78,7 +78,7 @@
           <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <div class="d-flex justify-content-between align-items-center w-100">
               <strong class="text-gray-dark"><c:out value="${t.TITLE }"/></strong>
-              <a href="#">Follow</a>
+			<span><fmt:formatDate value="${t.ENROLLDATE }" pattern="yyyy/MM/dd"/></span>
             </div>
             <span class="d-block"><c:out value="${t.CONTENT }"/></span>
           </div>
@@ -95,6 +95,7 @@
       </div>
       <div class="mb-3 pb-3 px-3 bg-white rounded shadow-sm">
         <h6 class="border-bottom border-gray pb-2 mb-0">후기 <c:out default="0" value="${placeCnt }"/></h6>
+        
         <c:choose>
          <c:when test="${not empty pList}">
         <c:forEach var="p" items="${pList }">      
@@ -103,7 +104,7 @@
           <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <div class="d-flex justify-content-between align-items-center w-100">
               <strong class="text-gray-dark"><c:out value="${p.TITLE }"/></strong>
-              <a href="#">Follow</a>
+			<span><fmt:formatDate value="${p.ENROLLDATE }" pattern="yyyy/MM/dd"/></span>
             </div>
             <span class="d-block"><c:out value="${p.CONTENT }"/></span>
           </div>
@@ -121,16 +122,19 @@
 
 	
       <div class="mb-3 pb-3 px-3 bg-white rounded shadow-sm">
-        <h6 class="border-bottom border-gray pb-2 mb-0">찾아주세요 <c:out default="0" value="${findCnt }"/></h6>
+      	<div class="border-bottom border-gray pb-2 pt-3 mb-0 d-flex justify-content-between align-items-center" >
+        <span >찾아주세요 <c:out default="0" value="${findCnt }"/></span>
+        <a href="${path }/daily/moveWrite.do" class="text-muted">글작성하기</a>
+        </div>
         <c:choose>
          <c:when test="${not empty fList}">
         <c:forEach var="f" items="${fList }">      
         <div class="media text-muted pt-3">
-          <a href="#"><img class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="${path }/resources/upload/find/${f.FILENAME}" /></a>
+          <a href="${path }/community/findDetail.do?findNo=${f.FINDNO}"><img class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="${path }/resources/upload/find/${f.FILENAME}" /></a>
           <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <div class="d-flex justify-content-between align-items-center w-100">
               <strong class="text-gray-dark"><c:out value="${f.TITLE }"/></strong>
-              <a href="#">Follow</a>
+       			<span><fmt:formatDate value="${f.ENROLLDATE }" pattern="yyyy/MM/dd"/></span>
             </div>
             <span class="d-block"><c:out value="${f.CONTENT }"/></span>
           </div>
