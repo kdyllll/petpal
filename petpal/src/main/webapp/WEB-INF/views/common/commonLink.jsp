@@ -22,8 +22,13 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
  <link rel="stylesheet" href="${path }/resources/css/common/main.css"> 
  <link rel="stylesheet" href="${path }/resources/css/common/color.css"> 
+
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css">
+
  <style>
   body, header {
     padding-right: 0!important;
+    font-family: 'NanumSquare', sans-serif !important;
   }
+
 </style>
