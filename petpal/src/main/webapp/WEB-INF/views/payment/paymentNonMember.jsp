@@ -268,10 +268,10 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="email">이메일</label>
+                            <label for="email">이메일</label><small class="ml-3">주문번호가 발송될 예정입니다. 정확한 이메일을 입력해주세요</small>
                             <input type="text" class="form-control" name="email" id="email" placeholder="" required>
                             <div class="invalid-feedback">
-                               	 이메일 입력해주세요.
+                               	 이메일을 입력해주세요.
                             </div>
                         </div>
 

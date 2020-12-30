@@ -34,7 +34,12 @@
 		}
 		else{
 			frm.submit();
-			//모든 정보가 다 담겨 있으면 결제 API 실행
+			//모든 정보가 다 담겨 있고 결제수단이 신용카드면 결제 API 실행
+			//아니면 그냥 submit
+			
+			
+			
+			
 			swal("정보 입력 완료", "결제를 진행합니다.", "success");
 			/* 	var IMP = window.IMP;
 			IMP.init('imp77627307');
@@ -268,10 +273,10 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="email">이메일</label>
+                            <label for="email">이메일</label><small>정확한 이메일을 입력해주세요</small>
                             <input type="text" class="form-control" name="email" id="email" placeholder="" required>
                             <div class="invalid-feedback">
-                               	 이메일 입력해주세요.
+                               	 이메일을 입력해주세요.
                             </div>
                         </div>
 

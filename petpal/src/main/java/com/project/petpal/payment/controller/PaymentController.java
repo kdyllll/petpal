@@ -106,10 +106,6 @@ public class PaymentController {
 //			mv.addObject("list", service.insertPayment(p, cnt, stockNo));
 			
 			int result = service.insertPayment(p, cnt, stockNo);
-			mv.addObject("msg", result>0?"입력 성공":"입력 실패");
-			mv.addObject("loc", "/payment/paymentComplete.do");
-			
-			mv.setViewName("common/msg");
 			
 			if(result>0) {
 				mv.addObject("list", service.selectPaymentCompleteList(orderNo));
@@ -123,17 +119,18 @@ public class PaymentController {
 //			mv.addObject("list", service.insertPayment(p, cnt, stockNo));
 			
 			int result = service.insertPayment(p, cnt, stockNo);
-			mv.addObject("msg", result>0?"입력 성공":"입력 실패");
-			mv.addObject("loc", "/payment/paymentComplete.do");
-			
-			mv.setViewName("common/msg");
 			
 			if(result>0) {
 				mv.addObject("list", service.selectPaymentCompleteList(orderNo));
 			}
 		}
-		mv.setViewName("payment/paymentComplete");
 		
+		System.out.println(payKind);
+		if(payKind.equals("신용카드")) {
+			mv.setViewName("payment/paymentCompleteCredit");
+		}else {
+			mv.setViewName("payment/paymentCompleteCash");
+		}
 		return mv;
 	}
 	
