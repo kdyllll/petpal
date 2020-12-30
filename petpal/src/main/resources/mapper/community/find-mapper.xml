@@ -29,4 +29,10 @@
 	<update id="updateMainImg" parameterType="findImg">
 		UPDATE FINDIMG SET FILENAME=#{fileName} WHERE FINDNO=#{findNo} AND IMGSTATUS = 'M'
 	</update>
+	<delete id="deleteFindImg" parameterType="findImg">
+		DELETE FROM FINDIMG WHERE FINDIMGNO = #{findImgNo}
+	</delete>
+	<update id="updateOtherFind" parameterType="map">
+		UPDATE FIND SET CATE=#{cate}, TITLE=#{title}, CONTENT=#{content}, ADDRESS=#{address} WHERE FINDNO = #{findNo}
+	</update>
 </mapper>

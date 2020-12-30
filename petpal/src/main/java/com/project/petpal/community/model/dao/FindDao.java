@@ -18,4 +18,7 @@ public interface FindDao {
 	Map detailOne(SqlSession session, String findNo);
 	List<Map> findSubPic(SqlSession session, String findNo);
 	int updateMainImg(SqlSession session, FindImg fi);
+	int deleteFindImg(SqlSession session, FindImg fin);
+	int insertSubImgs(SqlSession session, FindImg fin);
+	int updateOtherFind(SqlSession session, Map m);
 }

@@ -71,7 +71,7 @@
 										<div class="card-body form-inline">
 											<label class="mr-3">카테고리</label>
 											<div class="col-6">
-												<select id="select" class="form-control" name="category"
+												<select id="select" class="form-control" name="cate"
 													required>
 													<option value="" selected disabled style="color: #bdbdbd;"><small>선택해주세요</small>
 													</option>
@@ -138,11 +138,7 @@
 									<div class="oriPicOne">				
 										<div class="mb-2 d-flex justify-content-center ">
 											<div>
-												<label class="ml-3 changePic p-2"
-													style="cursor: pointer; background-color: black; opacity: 0.7; color: white; border-radius: 5px; height:40px;">
-													사진 변경하기 </label> <input class="changeInputBox d-none" type="file"
-													name="oriImg" value="${fp.FILENAME }"/>
-													 <input type="hidden" class="oriImgNo" name="oriImgNo" value="${fp.FINDIMGNO }"> 
+													 <input type="hidden" class="oriImgNo" name="oriImgNos" value="${fp.FINDIMGNO }"> 
 
 											</div>
 											<button type="button" style="height:40px;"
@@ -199,25 +195,15 @@
 	
 	$(function() {
  
-		$(".changePic").on("click", e => {
-			let fileTarget = $(e.target).next();			
-			fileTarget.click();
-			let a ="";
-			fileTarget.on("change" , e1 => {
-				let reader = new FileReader();
-				reader.onload = event => {
-					let img = $(e.target).parent().parent().next().children();
-					img.attr("src", event.target.result);
-
-				};
-				reader.readAsDataURL($(e1.target)[0].files[0]);
-			})
+		$(".delPic").on("click", e => {
+			let target = $(e.target).prev().children().val();
+			console.log(target);
+			let input = $("<input>").attr({"type":"hidden", "value" : target, "name":"oriImgNo"});
+			$(".oriImgNoCon").append(input);
+			$(e.target).parent().parent().remove();
 			
 		})
-		
-		$(".delPic").on("click", e => {
-			$(e.target).parent().parent().remove();
-		})
+	
 	})
 	$("#i").hide();
 	$("#u").show();

@@ -66,6 +66,24 @@ public class FindDaoImple implements FindDao {
 		return session.update("find.updateMainImg", fi);
 	}
 
+	@Override
+	public int deleteFindImg(SqlSession session, FindImg fin) {
+		// TODO Auto-generated method stub
+		return session.delete("find.deleteFindImg", fin);
+	}
+
+	@Override
+	public int insertSubImgs(SqlSession session, FindImg fin) {
+		// TODO Auto-generated method stub
+		return session.insert("find.insertFindPic", fin);
+	}
+
+	@Override
+	public int updateOtherFind(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.update("find.updateOtherFind", m);
+	}
+
 
 	
 }

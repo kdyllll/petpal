@@ -14,4 +14,7 @@ public interface FindService {
 	Map detailOne(String findNo);
 	List<Map> findSubPic(String findNo);
 	int updateMainImg(FindImg fi);
+	int deleteFindImg(List<FindImg> fin);
+	int insertSubImgs(List<FindImg> fin);
+	int updateOtherFind(Map m);
 }

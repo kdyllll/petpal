@@ -123,15 +123,18 @@ public class findController {
 	
 	@RequestMapping("/find/findUpdateEnd.do")
 	public String findUpdateEnd(String findNo,HttpSession session,
-			@RequestParam(value = "mainImg") MultipartFile[] main ,Model model, @RequestParam(value="oriImg") MultipartFile[] oriImg,@RequestParam(value = "oriImgNo", defaultValue = "0") String[] oriImgNo) {
-		System.out.println(findNo);
+			@RequestParam(value = "mainImg") MultipartFile[] main ,Model model,
+			@RequestParam(value="fileINo", defaultValue = "0") String[] fileINo,
+			@RequestParam(value = "oriImgNo", defaultValue = "0") String[] oriImgNo,
+			@RequestParam(value="newImg") MultipartFile[] newImg,
+			String cate, String title, String address, String content) {
 		int mResult = 0;
 //		파일 저장경로
 		String path = session.getServletContext().getRealPath("/resources/upload/find");
 		File dir = new File(path);
 		if(!dir.exists()) dir.mkdirs();
 //		main이미지		
-		/*for(MultipartFile mf: main) {
+		for(MultipartFile mf: main) {
 //			main이미지 안바꿀경우 update안함
 			if(mf.isEmpty()) {
 				System.out.println("메인사진 update 안함");
@@ -150,19 +153,61 @@ public class findController {
 				
 				FindImg fi = FindImg.builder().fileName(reName).findNo(findNo).build();
 				mResult = service.updateMainImg(fi);
-				System.out.println(mResult);
-			}
-		}*/
-		for(MultipartFile t : oriImg) {
-			if(t.isEmpty()) {
-				System.out.println("서브사진 update 안함");
-			} else {
-				System.out.println(t.getOriginalFilename());
 				
 			}
 		}
+		System.out.println("메인변경(0이면 변경안됨 1이면 변경됨):"+ mResult);
+
+//		기존 이미지 삭제		
+		List<FindImg> delNo = new ArrayList();
+		for(String s : oriImgNo) {
+			if(!s.equals("0")) {
+				FindImg fin = FindImg.builder().findImgNo(s).build();
+				delNo.add(fin);
+			} 
+		}
+		int dResult = 0;
+		if(!delNo.isEmpty()) {
+			dResult=service.deleteFindImg(delNo);
+		}
+		System.out.println("기존사진 삭제(0이면 삭제안됨, 1이면 삭제됨)"+dResult);
+
+		//새로운 사진추가하기
+		List<FindImg> subImgs = new ArrayList();
+		for(MultipartFile subImg : newImg) {
+			if(!subImg.isEmpty()) {
+				String originalName = subImg.getOriginalFilename();
+				String ext = originalName.substring(originalName.lastIndexOf(".") + 1);
+				// 리네임 규칙
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+				int rndValue = (int) (Math.random() * 10000);
+				String reName = sdf.format(System.currentTimeMillis()) + "_" + rndValue + "." + ext;
+				try {
+					subImg.transferTo(new File(path + "/" + reName));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				FindImg cfi = FindImg.builder().fileName(reName).imgStatus("S").findNo(findNo).build();
+				subImgs.add(cfi);
+			}
+		}
+		
+		int sResult = service.insertSubImgs(subImgs);
+		System.out.println("새 이미지 추가 :" + sResult);
+		
+//		카테고리, 제목, 내용, 주소 수정
+		Map m = new HashMap();
+		m.put("cate", cate);
+		m.put("title", title);
+		m.put("content", content);
+		m.put("address", address);
+		m.put("findNo", findNo);
+		int oResult = service.updateOtherFind(m);
+		
+		System.out.println(oResult);
+		
 		String loc = "/community/findDetail.do?findNo="+findNo;
-		String msg = "test중";
+		String msg = "수정성공";
 		model.addAttribute("loc", loc);
 		model.addAttribute("msg", msg);
 		return "common/msg";
