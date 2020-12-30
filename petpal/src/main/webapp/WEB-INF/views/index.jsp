@@ -6,6 +6,29 @@
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
 
+<style>
+.homeContainer {
+	padding: 0 130px;
+}
+
+@media screen and (min-width:1025px) and (max-width:1024px) {
+	.homeContainer {
+		padding: 0 50px;
+	}
+}
+
+@media screen and (min-width:769px) and (max-width:1024px) {
+	.homeContainer {
+		padding: 0 50px;
+	}
+}
+
+@media screen and (min-width:480px) and (max-width:768px) {
+	.homeContainer {
+		padding: 0 30px;
+	}
+}
+</style>
 </head>
 <body class="bg-white">
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -42,7 +65,7 @@
 				class="sr-only">Next</span>
 			</a>
 		</div>
-		<div class="container mt-3">
+		<div class="homeContainer mt-3">
 			<p class="text-center">PETPAL 고객님을 위한 혜택</p>
 			<div id="carouselExampleDark"
 				class="carousel carousel-dark slide my-5" data-ride="carousel">
@@ -61,16 +84,15 @@
 			<!-- 올리에서 베스트 아이템 -->
 			<p class="text-center">PETPAL BEST 아이템</p>
 			<div
-				class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+				class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 g-4">
 
 				<div class="col mb-4">
 					<div class="card h-100 border-0 " style="overflow: hidden;">
 						<span><strong>BEST</strong></span>
-						<div class="position-relative"
-							style="width: 100%; height: 200px; background-color: #f4eeed;">
-							<a href="#" style="width: 100%; height: 100%;"> <img src=""
-								alt="..." style="width: 100%; height: 100%;">
-
+						<div class="position-relative" style="background-color: #f4eeed;">
+							<a href="#" style="width: 100%;"> <img
+								src="${path }/resources/images/test2.jpg" alt="..."
+								class="card-img-top">
 							</a>
 							<div class="position-absolute" style="bottom: 0; left: 5px;">
 								<p>제목</p>
@@ -86,11 +108,10 @@
 				<div class="col mb-4">
 					<div class="card h-100 border-0 " style="overflow: hidden;">
 						<span><strong>BEST</strong></span>
-						<div class="position-relative"
-							style="width: 100%; height: 200px; background-color: #f4eeed;">
-							<a href="#" style="width: 100%; height: 100%;"> <img src=""
-								alt="..." style="width: 100%; height: 100%;">
-
+						<div class="position-relative" style="background-color: #f4eeed;">
+							<a href="#" style="width: 100%;"> <img
+								src="${path }/resources/images/test2.jpg" alt="..."
+								class="card-img-top">
 							</a>
 							<div class="position-absolute" style="bottom: 0; left: 5px;">
 								<p>제목</p>
@@ -106,11 +127,10 @@
 				<div class="col mb-4">
 					<div class="card h-100 border-0 " style="overflow: hidden;">
 						<span><strong>BEST</strong></span>
-						<div class="position-relative"
-							style="width: 100%; height: 200px; background-color: #f4eeed;">
-							<a href="#" style="width: 100%; height: 100%;"> <img src=""
-								alt="..." style="width: 100%; height: 100%;">
-
+						<div class="position-relative" style="background-color: #f4eeed;">
+							<a href="#" style="width: 100%;"> <img
+								src="${path }/resources/images/test2.jpg" alt="..."
+								class="card-img-top">
 							</a>
 							<div class="position-absolute" style="bottom: 0; left: 5px;">
 								<p>제목</p>
@@ -126,11 +146,10 @@
 				<div class="col mb-4">
 					<div class="card h-100 border-0 " style="overflow: hidden;">
 						<span><strong>BEST</strong></span>
-						<div class="position-relative"
-							style="width: 100%; height: 200px; background-color: #f4eeed;">
-							<a href="#" style="width: 100%; height: 100%;"> <img src=""
-								alt="..." style="width: 100%; height: 100%;">
-
+						<div class="position-relative" style="background-color: #f4eeed;">
+							<a href="#" style="width: 100%;"> <img
+								src="${path }/resources/images/test2.jpg" alt="..."
+								class="card-img-top">
 							</a>
 							<div class="position-absolute" style="bottom: 0; left: 5px;">
 								<p>제목</p>
@@ -150,71 +169,75 @@
 				<p class="text-center" style="font-size: 25px;">
 					<strong>베스트 리뷰상품</strong>
 				</p>
-				<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+				<div
+					class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 g-4">
 					<div class="col mb-4">
 						<div class="card h-100 border-0 " style="overflow: hidden;">
-							<a href="#" style="width: 100%; height: 200px;"> <img src=""
-								alt="..." style="width: 100%; height: 100%;">
+							<a href="#"> <img src="${path }/resources/images/test2.jpg"
+								alt="..." class="card-img-top">
 							</a>
 							<div class="card-body">
-								<p  class="card-text " style="font-size:12px;">안그래도 귀여운 울애기 옷 입혀놓으니 더 귀여워졌어요 장모종은 엄청난
-									추위 아닌 이상 옷이 딱히 필요 없다고 했는데 아직 아기기도...</p>
-								<span  style="font-size:12px;">day***</span><span  style="font-size:12px;">2020/02/02</span>
-								<div style="height:1px; width:100%;" class="bg-light my-3"></div>
+								<p class="card-text " style="font-size: 12px;">안그래도 귀여운 울애기
+									옷 입혀놓으니 더 귀여워졌어요 장모종은 엄청난 추위 아닌 이상 옷이 딱히 필요 없다고 했는데 아직 아기기도...</p>
+								<span style="font-size: 12px;">day***</span><span
+									style="font-size: 12px;">2020/02/02</span>
+								<div style="height: 1px; width: 100%;" class="bg-light my-3"></div>
 								<div class="d-flex justify-content-between">
-									<p  style="font-size:12px;" class="">...보러가기</p>
-									<p  style="font-size:12px;">></p>
+									<p style="font-size: 12px;" class="">...보러가기</p>
+									<p style="font-size: 12px;">></p>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="col mb-4">
 						<div class="card h-100 border-0 " style="overflow: hidden;">
-							<a href="#" style="width: 100%; height: 200px;"> <img src=""
-								alt="..." style="width: 100%; height: 100%;">
+							<a href="#"> <img src="${path }/resources/images/test2.jpg"
+								alt="..." class="card-img-top">
 							</a>
 							<div class="card-body">
-								<p  class="card-text " style="font-size:12px;">안그래도 귀여운 울애기 옷 입혀놓으니 더 귀여워졌어요 장모종은 엄청난
-									추위 아닌 이상 옷이 딱히 필요 없다고 했는데 아직 아기기도...</p>
-								<span  style="font-size:12px;">day***</span><span  style="font-size:12px;">2020/02/02</span>
-								<div style="height:1px; width:100%;" class="bg-light my-3"></div>
+								<p class="card-text " style="font-size: 12px;">안그래도 귀여운 울애기
+									옷 입혀놓으니 더 귀여워졌어요 장모종은 엄청난 추위 아닌 이상 옷이 딱히 필요 없다고 했는데 아직 아기기도...</p>
+								<span style="font-size: 12px;">day***</span><span
+									style="font-size: 12px;">2020/02/02</span>
+								<div style="height: 1px; width: 100%;" class="bg-light my-3"></div>
 								<div class="d-flex justify-content-between">
-									<p  style="font-size:12px;" class="">...보러가기</p>
-									<p  style="font-size:12px;">></p>
+									<p style="font-size: 12px;" class="">...보러가기</p>
+									<p style="font-size: 12px;">></p>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="col mb-4">
 						<div class="card h-100 border-0 " style="overflow: hidden;">
-							<a href="#" style="width: 100%; height: 200px;"> <img src=""
-								alt="..." style="width: 100%; height: 100%;">
+							<a href="#"> <img src="${path }/resources/images/test2.jpg"
+								alt="..." class="card-img-top">
 							</a>
 							<div class="card-body">
-								<p  class="card-text " style="font-size:12px;">안그래도 귀여운 울애기 옷 입혀놓으니 더 귀여워졌어요 장모종은 엄청난
-									추위 아닌 이상 옷이 딱히 필요 없다고 했는데 아직 아기기도...</p>
-								<span  style="font-size:12px;">day***</span><span  style="font-size:12px;">2020/02/02</span>
-								<div style="height:1px; width:100%;" class="bg-light my-3"></div>
+								<p class="card-text " style="font-size: 12px;">안그래도 귀여운 울애기
+									옷 입혀놓으니 더 귀여워졌어요 장모종은 엄청난 추위 아닌 이상 옷이 딱히 필요 없다고 했는데 아직 아기기도...</p>
+								<span style="font-size: 12px;">day***</span><span
+									style="font-size: 12px;">2020/02/02</span>
+								<div style="height: 1px; width: 100%;" class="bg-light my-3"></div>
 								<div class="d-flex justify-content-between">
-									<p  style="font-size:12px;" class="">...보러가기</p>
-									<p  style="font-size:12px;">></p>
+									<p style="font-size: 12px;" class="">...보러가기</p>
+									<p style="font-size: 12px;">></p>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="col mb-4">
 						<div class="card h-100 border-0 " style="overflow: hidden;">
-							<a href="#" style="width: 100%; height: 200px;"> <img src=""
-								alt="..." style="width: 100%; height: 100%;">
-							</a>
+							<a href="#"><img src="${path }/resources/images/test2.jpg"
+								alt="..." class="card-img-top"> </a>
 							<div class="card-body">
-								<p  class="card-text " style="font-size:12px;">안그래도 귀여운 울애기 옷 입혀놓으니 더 귀여워졌어요 장모종은 엄청난
-									추위 아닌 이상 옷이 딱히 필요 없다고 했는데 아직 아기기도...</p>
-								<span  style="font-size:12px;">day***</span><span  style="font-size:12px;">2020/02/02</span>
-								<div style="height:1px; width:100%;" class="bg-light my-3"></div>
+								<p class="card-text " style="font-size: 12px;">안그래도 귀여운 울애기
+									옷 입혀놓으니 더 귀여워졌어요 장모종은 엄청난 추위 아닌 이상 옷이 딱히 필요 없다고 했는데 아직 아기기도...</p>
+								<span style="font-size: 12px;">day***</span><span
+									style="font-size: 12px;">2020/02/02</span>
+								<div style="height: 1px; width: 100%;" class="bg-light my-3"></div>
 								<div class="d-flex justify-content-between">
-									<p  style="font-size:12px;" class="">...보러가기</p>
-									<p  style="font-size:12px;">></p>
+									<p style="font-size: 12px;" class="">...보러가기</p>
+									<p style="font-size: 12px;">></p>
 								</div>
 							</div>
 						</div>
