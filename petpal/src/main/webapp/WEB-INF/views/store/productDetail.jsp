@@ -143,8 +143,8 @@
               <span id="totalPrice" class="h3"><strong>0원</strong></span>
             </div>
             <div class="row mx-1 py-3 d-flex justify-content-around">
-              <div class="col-6"><button type="button" id="cartBtn" class="btn btn-outline-primary btn-lg btn-block " data-toggle="modal">장바구니</button></div>             
-              <div class="col-6"><button type="button" id="payBtn" class="btn btn-primary btn-lg btn-block" data-toggle="modal">바로구매</button></div>
+              <div class="col-6"><button type="button" id="cartBtn" class="btn bg-light btn-lg btn-block " data-toggle="modal">장바구니</button></div>             
+              <div class="col-6"><button type="button" id="payBtn" class="btn bg-point btn-lg btn-block" data-toggle="modal">바로구매</button></div>
             </div>      
           </div>
         </div>
@@ -163,7 +163,7 @@
                   <a class="nav-link text-dark" href="#review">리뷰(<c:out value="${reviewCount }"/>개)</a>
                 </li>
                 <li class="nav-item ">
-                  <a class="nav-link text-dark" href="#inquiry">문의(<c:out value="${qnaCount }"/>개)</a>
+                  <a class="nav-link text-dark" href="#qna">문의(<c:out value="${qnaCount }"/>개)</a>
                 </li>
                 <li class="nav-item ">
                   <a class="nav-link text-dark" href="#rule">배송/환불</a>
@@ -551,9 +551,9 @@
           });
         
         //결제 모달
-        $("#payBtn").on("click",e=>{
+        $(document).on("click","#payBtn",e=>{
+        	console.log("클릭");
             if($(".orderBox").length==0){
-              alert("상품을 선택하세요.");
               return;
             }else{
             	if(loginMember!=""){ //로그인 되어 있다면
@@ -564,8 +564,7 @@
 		        		if(flag==true){    	
             				$(".payFrm").attr("action","${path}/payment/payment.do").submit();
 		        		} 
-            	}else{ //로그인 안되어 있으면 로그인 모달 띄우기(결제로그인모달)	           
-            		function loginModal(){
+            	}else{ //로그인 안되어 있으면 로그인 모달 띄우기(결제로그인모달)        	
             			$.ajax({
             				url: "${path}/store/movePayLogin.do",
             				dataType:"html",
@@ -573,8 +572,7 @@
             					$(".pdtModal").html(data);	
             	         		$('div.modal').modal(); 
             				}
-            			});
-            		};
+            			});          		
             	};
             };
           });
@@ -587,22 +585,17 @@
           				data:{productNo:productNo},
           				success:(data) => {//data는 list임
           			  		if(data.length!=0){//2주안에 리뷰를 안 쓴 구매내역이 있으면 
-          			  			if(data.length>1){//구매내역이 여러개라면 
-          			  				//어떤 내역을 쓸건지 선택하는 모달
+          			  				//리뷰 작성 모달
           			  				$.ajaxSettings.traditional = true;
 	          			  			$.ajax({
-		          						url: "${path}/store/moveReviewSelect.do",
+		          						url: "${path}/store/moveReview.do",
 		          						data:{productNo:productNo,details:JSON.stringify(data)},
 		          						dataType:"html",
 		          						success:(data) => {
 		          							$(".pdtModal").html(data);
 		          			         		$('div.modal').modal(); 
 		          						}
-		          					});
-          			  			}else{//구매내역이 한개라면
-          			  				//리뷰 작성 모달
-          			  				fn_reviewWrite(productNo,data[0]);
-          			  			}         			  			
+		          					});  			  			
           			     	}else{//구매내역이 없으면
           			            alert("구매 내역이 없습니다.");
           			    	};

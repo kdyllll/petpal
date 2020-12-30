@@ -43,19 +43,19 @@
                   			}
                   		%>
                   	</span> 
-                  	<span><%=r.getEnrollDate() %></span>
+                  	<span><%=r.getReviewDate() %></span>
                   </div>
                 </div>
                </div>
                <%if(loginMember!=null&&r.getMemberNo().equals(loginMember.getMemberNo())){ %>
                <div>
-               	<button type="button" class="reviewEdit btn btn-link p-0 pr-1 text-point">수정</button>
-               	<button type="button" class="reviewDelete btn btn-link p-0 pr-1 text-point">삭제</button>
+               	<button type="button" class="reviewEdit btn btn-link p-0 pr-1 text-black-50">수정</button>
+               	<button type="button" class="reviewDelete btn btn-link p-0 pr-1 text-black-50">삭제</button>
                	<input type="hidden" class="reviewNum" value="<%=r.getReviewNo() %>"/>
                </div>
                <%}else if(loginMember!=null&&(loginMember.getMemberNo()).equals("63")){%>
                <div>
-               	<button type="button" class="reviewDelete btn btn-link p-0 pr-1 text-point">삭제</button>
+               	<button type="button" class="reviewDelete btn btn-link p-0 pr-1 text-black-50">삭제</button>
                	<input type="hidden" class="reviewNum" value="<%=r.getReviewNo() %>"/>
                </div>
                <%} %>
@@ -81,7 +81,7 @@
                <%if(r.getReviewComment()!=null){ %>
                <div class="text-right">
                 <c:if test="${loginMember.memberNo eq '63'}">
-                 <a class="replyEdit text-point text-right pb-2 pr-4"  style="font-size: 12px;" style="cursor: pointer;">
+                 <a class="replyEdit text-black-50 text-right pb-2 pr-4"  style="font-size: 12px;" style="cursor: pointer;">
 		                    답글 수정
 		      </a>
                 </c:if>
@@ -104,7 +104,7 @@
                <%}else{ %>
                <div class="text-right">
                 <c:if test="${loginMember.memberNo eq '63'}">
-                	<a class="replyWrite text-point text-right pb-2 pr-4"  style="font-size: 12px;" style="cursor: pointer;">답글 작성</a>
+                	<a class="replyWrite text-black-50 text-right pb-2 pr-4"  style="font-size: 12px;" style="cursor: pointer;">답글 작성</a>
                 </c:if>
                 <a class="text-black-50 text-right pb-2" style="font-size: 12px;" style="cursor: pointer;"><strong>판매자 답글</strong></a>
              </div>

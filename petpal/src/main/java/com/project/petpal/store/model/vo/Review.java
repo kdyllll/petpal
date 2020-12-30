@@ -20,7 +20,7 @@ public class Review {
 	private String content;
 	private String color;
 	private String productSize;
-	private Date enrollDate;
+	private Date reviewDate;
 	private int star;
 	private String fileName;
 	private String reviewComment;

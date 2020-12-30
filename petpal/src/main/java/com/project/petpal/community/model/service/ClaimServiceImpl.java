@@ -17,6 +17,12 @@ public class ClaimServiceImpl implements ClaimService {
 	private ClaimDao dao;
 	
 	@Override
+	public int claimCheck(Map m) {
+		// TODO Auto-generated method stub
+		return dao.claimCheck(session,m);
+	}
+
+	@Override
 	public int insertClaim(Map m) {
 		// TODO Auto-generated method stub
 		return dao.insertClaim(session,m);

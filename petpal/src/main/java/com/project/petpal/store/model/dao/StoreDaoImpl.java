@@ -97,7 +97,7 @@ public class StoreDaoImpl implements StoreDao{
 	}
 
 	@Override
-	public Stock selectStock(SqlSession session, String detailNo) {
+	public Map selectStock(SqlSession session, String detailNo) {
 		// TODO Auto-generated method stub
 		return session.selectOne("store.selectStock",detailNo);
 	}
