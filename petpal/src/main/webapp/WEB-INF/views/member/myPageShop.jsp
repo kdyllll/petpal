@@ -68,24 +68,10 @@
                 색상 사이즈 수량
             </p> 
             <!-- 배송전인 상태의 상품만 주문취소가능하게 -->
-            <button type="button" class="btn btn-outline-secondary btn-sm" style="font-size: 12px;">주문취소</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm mr-2" style="font-size: 12px;">주문취소</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" style="font-size: 12px;">환불신청</button>
             </div>
-            <div class="media text-muted pt-3 border-bottom border-gray">
-            <div style="width: 45px;height: 45px; border: 1px solid;">사진</div>
-            <p class="media-body pb-3 mb-0 small lh-125  ml-2">
-                <strong class="d-block text-gray-dark">(상품주문상태)</strong>
-                제목<br />
-                색상 사이즈 수량
-            </p>     
-            </div>
-            <div class="media text-muted pt-3 border-bottom border-gray">
-            <div style="width: 45px;height: 45px; border: 1px solid;">사진</div>
-            <p class="media-body pb-3 mb-0 small lh-125  ml-2">
-                <strong class="d-block text-gray-dark">(상품주문상태)</strong>
-                제목<br />
-                색상 사이즈 수량
-            </p>
-            </div>
+
 
         </div>
     </div>
