@@ -37,6 +37,9 @@
   	
     <div class="row mb-5 mb-lg-1">
         <form id="writeFrm" class="container mt-5 col-lg-8" method="post" enctype="multipart/form-data">
+        	<c:forEach var="i" items="${imgList }" varStatus="vs">
+        		<input type="hidden" name="${vs }" value="none"/>
+        	</c:forEach>
             <p class="h2 mb-5 mt-2"><strong>일상 수정하기</strong></p>
             <div class="form-group row" id="imgContainer">  
 	             	<!-- 업로드 버튼 -->
@@ -54,7 +57,7 @@
 	            
 	            <!-- 사진 미리보기 들 -->
 	            <c:forEach var="i" items="${imgList }" varStatus="vs">
-	            <div class="position-relative rounded m-1 col-12">                		
+	            <div class="imgBox position-relative rounded m-1 col-12">                		
 	                <img src="${path }/resources/upload/community/daily/${i.dailyImgName}" class="col-12 mb-1 p-0 rounded">	
 	                <!-- 사진 수정, 삭제버튼 -->
 	                <div class="buttonCon position-absolute rounded" style="bottom:0; left:0; background:linear-gradient(to top,rgba(0, 0, 0, 0.5),rgba(255, 255, 255, 0)); width:100%;">
