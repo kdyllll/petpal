@@ -13,7 +13,7 @@
       background: rgba(255, 255, 255, 0.8);
       z-index: 500;
     }
-    .bubble:after {
+/*     .bubble:after {
       bottom: 100%;
       left: 50%;
       border: solid transparent;
@@ -26,7 +26,7 @@
       border-bottom-color:rgba(255, 255, 255, 0.8);
       border-width: 5px;
       margin-left: -5px;
-    }
+    } */
       
 </style>
 </head>
@@ -38,12 +38,12 @@
     <div class="row mb-5 mb-lg-1">
         <form id="writeFrm" class="container mt-5 col-lg-8" method="post" enctype="multipart/form-data">
         	<c:forEach var="i" items="${imgList }" varStatus="vs">
-        		<input type="hidden" name="${vs }" value="none"/>
+        		<input type="hidden" class="change" name="${vs.index }" value="none"/>
         	</c:forEach>
             <p class="h2 mb-5 mt-2"><strong>일상 수정하기</strong></p>
-            <div class="form-group row" id="imgContainer">  
+            <div class="form-group row px-3" id="imgContainer">  
 	             	<!-- 업로드 버튼 -->
-	            	<div id="uploadLabel" class="col-12 m-0">                              
+	            	<div id="uploadLabel" class="col-12 m-0 d-none">                              
 	                   <label class="btn d-flex justify-content-center align-items-center addPic rounded text-center bg-light btn-block mt-3" style="cursor: pointer; height:50px;">
 	                     <input name="pic" class="d-none upload" id="upload" type="file" accept="images/*" required/>
 	                     <svg width="40px" height="40px" viewBox="0 0 16 16" class="bi bi-camera-fill text-secondary" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="font-size: 60px;">
@@ -57,8 +57,9 @@
 	            
 	            <!-- 사진 미리보기 들 -->
 	            <c:forEach var="i" items="${imgList }" varStatus="vs">
-	            <div class="imgBox position-relative rounded m-1 col-12">                		
-	                <img src="${path }/resources/upload/community/daily/${i.dailyImgName}" class="col-12 mb-1 p-0 rounded">	
+	            <div class="imgBox position-relative rounded col-12 p-0">    
+	            	<input type="hidden" class="picNum" value="${vs.index }"/>            		
+	                <img src="${path }/resources/upload/community/daily/${i.dailyImgName}" class="col-12 p-0 rounded" style="width:100%;">	
 	                <!-- 사진 수정, 삭제버튼 -->
 	                <div class="buttonCon position-absolute rounded" style="bottom:0; left:0; background:linear-gradient(to top,rgba(0, 0, 0, 0.5),rgba(255, 255, 255, 0)); width:100%;">
 	                     <button type="button" class="delete btn ml-3">
@@ -67,39 +68,75 @@
 	                         <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
 	                       </svg>
 	                     </button>
-	                     <button type="button" class="update btn ml-3">
-	                     	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
-							  <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
-							  <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
-							</svg>
-	                     </button>
+	                     <label>
+		                     <input name="update" class="d-none updatePic" type="file" accept="images/*" required/>
+		                     <button type="button" class="update btn ml-3">
+		                     	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise text-white" viewBox="0 0 16 16">
+								  <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+								  <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+								</svg>
+		                     </button>
+	                     </label>
 	                </div>
+	                <script>
+	                	$(document).on("click","button.delete",e=>{
+	                		var num=$(e.target).parents(".imgBox").find(".picNum").val();
+	                		$(".change").each((i,item)=>{
+	                			if($(item).attr("name")==num){
+	                				$(item).val("delete");
+	                			}
+	                		});
+	                		$(e.target).parents(".imgBox").remove();
+	                	});
+	                	$(document).on("click","button.update",e=>{
+	                		var num=$(e.target).parents(".imgBox").find(".picNum").val();
+	                		$(".change").each((i,item)=>{
+	                			if($(item).attr("name")==num){
+	                				$(item).val("update");
+	                			}
+	                		});
+	                	});
+	                	$(".updatePic").on("change",e=>{
+	                		 $.each(e.target.files,(i,v)=>{
+	                			 let reader=new FileReader();
+	                             reader.onload=e=>{                              
+	                                 $(e.target).parents(".imgBox").find("img").attr("src",e.target.result);
+	                             }
+	                             reader.readAsDataURL(v);
+	                		 };
+	                		 }
+	                	});
+	                
+	                </script>
 	                
 	                <!-- 이미지와 연결된 상품태그들 -->				                 
 					 <c:forEach var="c" items="${coordList }"> 
 					 	<c:if test="${c.DAILYIMGNO eq i.dailyImgNo }">       
-					 		<c:set var="yy" value="${c.YCODE +5 }"/>   
+					 		<c:set var="yy" value="${c.YCODE +5 }"/>  
+					 		<c:set var="xx" value="${c.XCODE -15 }"/> 
 							<div class="plusTag">
 				                <svg class="plusBtn position-absolute" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
 				                    style="top:${c.YCODE}%; left:${c.XCODE }%;">
 				                    <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
 				                </svg>
-				                <div class="bubble rounded shadow-sm col-4 col-lg-4 position-absolute px-1" style="top:${yy}%; left:${c.XCODE }%;">
-				                  <div class="row d-flex flex-wrap">
+				                <div class="bubble rounded shadow-sm col-4 col-lg-4 position-absolute px-1" style="top:${yy}%; left:${xx }%;">
+				                  <div class="row d-flex flex-wrap m-0 py-2" style="width:100%;">
 				                  	<c:forEach var="pi" items="${pImgList }">
 					                  	<c:if test="${pi.productNo eq c.PRODUCTNO }">
-					                    	<img class="col-2 border" src="${path }/resources/upload/product/detail/${pi.imgName}">
+					                    	<img class="col-4 border p-0 m-0 ml-1" src="${path }/resources/upload/product/detail/${pi.imgName}">
 					                    </c:if>
 				                    </c:forEach>
-				                    <p class="p-1 mb-0"><c:out value="${c.PRODUCTNAME }"/></p>
-				                  </div>
-				                  <div class="d-flex justify-content-end">
-				                    <button type="button" class="deleteTag btn p-0 row pr-3">
-				                      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash text-dark" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-				                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-				                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-				                      </svg>
-				                    </button>
+				                    <div class="p-1 ml-2 mb-0 col-7">
+				                    	<p class=""><c:out value="${c.PRODUCTNAME }"/></p>
+				                    	<div class="d-flex justify-content-end">
+					                    	<button type="button" class="deleteTag btn p-0 row pr-3">
+						                      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash text-dark" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+						                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+						                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+						                      </svg>
+						                    </button>
+					                    </div>
+				                    </div>
 				                  </div>
 				                </div>
 				             </div>
@@ -107,7 +144,13 @@
 	                </c:forEach>
 	               </div><!-- relative -->
 	              </c:forEach>
-              </div>
+	              
+	              <label class="addPic rounded text-center bg-light btn btn-block mt-3" style="cursor: pointer; height:50px;">
+                     <input name="pic" class="d-none upload" type="file" accept="images/*"/>
+                     <p class="h5 text-secondary align-middle mb-0 mt-1"><strong>추가하기</strong></p>
+                   </label>
+              </div><!-- imgContainer -->
+              
               
             <!--설명-->
             <div class="col-12 mt-3 px-0">                        
@@ -174,7 +217,7 @@
 
 </body>
 <script>
-
+$(".bubble").hide();
 
 //해시태그!
 // 글자 수에 따라 input태그 크기 늘어나기
@@ -226,6 +269,17 @@ $(".delete").click(function(e){
   $(e.target).parents(".tagBox").remove();
 });
 
+
+//말풍선 호버
+    //+에 마우스 올렸을 때/떠났을 때 말풍선 보이고 숨기기
+    $(document).on('mouseenter',".plusBtn",e=>{  //동적 처리에는 hover를 못씀	
+      //console.log("마우스 들어옴 mouseenter/mouseover");
+      $(e.target).siblings(".bubble").show();
+    });
+    $(document).on('mouseleave',".plusBtn",e=>{
+      //console.log("마우스 떠남 mouseleave/mouseout");
+      $(e.target).siblings(".bubble").hide();
+    });
 
 </script>
 </html>
