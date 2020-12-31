@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -107,6 +108,7 @@ public class DailyController {
 				if(cnt==0) {
 					DailyImg img=DailyImg.builder().dailyImgName(reName).status("M").build();
 					files.add(img);
+					cnt++;
 				}else {
 					DailyImg img=DailyImg.builder().dailyImgName(reName).status("S").build();
 					files.add(img);
@@ -154,6 +156,9 @@ public class DailyController {
 		Map daily=service.selectDailyOne(dailyNo);
 		//글 사진
 		List<DailyImg> imgList=service.selectDailyImg(dailyNo);
+		for(DailyImg d:imgList) {
+			System.out.println(d);
+		}
 		//상품 태그
 		List<Map> coordList=service.selectCoordList(dailyNo);
 		//상품 이미지
@@ -186,7 +191,7 @@ public class DailyController {
 		return "common/msg";
 	}
 	
-	//글수정
+	//글수정으로 이동
 	@RequestMapping("/daily/moveUpdate.do")
 	public String moveUpdate(String dailyNo,Model m) {
 		
@@ -215,6 +220,113 @@ public class DailyController {
 		m.addAttribute("hashList",hashList);
 		
 		return "community/dailyUpdate";
+	}
+	
+	@RequestMapping("/daily/dailyUpdateEnd.do")
+	public String updateDaily(HttpSession session,Model m,String dailyNo,String content,
+			@RequestParam(value="update", required=false) MultipartFile[] update,
+			@RequestParam(value="pic", required=false) MultipartFile[] pic,
+			@RequestParam(value="change", required=false) String[] change,
+			@RequestParam(value="productNo", required=false) String[] productNo,
+			@RequestParam(value="percentX", required=false) String[] percentX,
+			@RequestParam(value="percentY", required=false) String[] percentY,
+			@RequestParam(value="index", required=false) String[] index,
+			@RequestParam(value="hashtag", required=false) String[] hashtag) {
+		//받아야 하는것
+		//1.기존사진의 상태change(none/delete/update) 2.업데이트사진update 3.새사진pic
+		//1.글내용content 2.작성자(접속자) 4.사진 당 상품좌표 5.해시태그
+		//DB 
+		//글 : 글번호, 작성자번호, 내용, 작성일
+		//사진 : 사진번호, 글번호, 파일 이름
+		//좌표 : 사진번호, 상품번호, x좌표, y좌표
+		
+		//글,해시태그,상품좌표는 전부 삭제하고 다시 
+		Member login=(Member)session.getAttribute("loginMember");
+		//글
+		Daily d=Daily.builder().dailyNo(dailyNo).memberNo(login.getMemberNo()).content(content).build();
+		//해시태그
+		List<Hashtag> hashList=new ArrayList();
+		for(String hash:hashtag) {
+			Hashtag h=new Hashtag();
+			h.setPostNo(dailyNo);
+			h.setHashContent(hash);
+			hashList.add(h);
+		};
+		//좌표
+		//좌표
+		//사진번호, 상품번호, x좌표, y좌표
+		//tag0~tag4까지 배열에 하나씩 들어있는데 음 사진번호는 사진 넣고나서 생기니까 트렌젝션을 해야해
+		//하고나서 이 네개를 한번에 묶어서 하나로 보내야 하는건데, 그러면 객체가 들어있는 list인게 편하겠따
+		//사진 인서트 → 사진번호 가져오기(객체필요) → 좌표들을 사진번호에 맞게 객체에 넣고(객체 필요) → 좌표 인서트
+		List<DailyCoord> coords=new ArrayList<DailyCoord>();
+		if(productNo!=null&&percentX!=null&&percentY!=null&&index!=null) {
+			for(int i=0;i<productNo.length;i++) {
+				DailyCoord dc=DailyCoord.builder().productNo(productNo[i].trim()).xxCode(Double.parseDouble(percentX[i].trim())).
+						yyCode(Double.parseDouble(percentY[i].trim())).index(index[i].trim()).build();
+				coords.add(dc);
+			}
+		};
+
+		//사진 변경에 대해서는 서비스에서 트랜젝션으로 처리해야함 일단 정리를 해서 보내기
+		//사진 받아오기
+		List<DailyImg> imgList=service.selectDailyImg(dailyNo);
+		//change []
+		//Map에 넣어서 보내기 (넣을 항목: 사진번호, 상태(none,delete,update), 파일이름)
+		List<Map> fileList=new ArrayList<Map>();
+		//1. delete 
+		//2. update(사진 객체가 들어간 리스트들)
+		String path=session.getServletContext().getRealPath("/resources/upload/community/daily");
+		File dir=new File(path);
+		if(!dir.exists()) dir.mkdirs(); 
+		List<DailyImg> updateFile=new ArrayList<DailyImg>();
+		for(MultipartFile f:update) {
+			if(!f.isEmpty()) {
+				String originalName=f.getOriginalFilename();
+				String ext=originalName.substring(originalName.lastIndexOf(".")+1);
+				
+				SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+				int rndValue=(int)(Math.random()*10000);
+				String reName=sdf.format(System.currentTimeMillis())+"_"+rndValue+"."+ext;
+				try {
+					f.transferTo(new File(path+"/"+reName));
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
+				DailyImg img=DailyImg.builder().dailyNo(dailyNo).dailyImgName(reName).status("S").build();
+				updateFile.add(img);
+				
+			}
+		}
+		for(int i=0;i<change.length;i++) {
+			Map map=new HashMap();
+			map.put("dailyImgNo", imgList.get(i).getDailyImgNo());
+			map.put("change", change[i]);
+			fileList.add(map);
+		}
+		//3. 추가
+		List<DailyImg> newFile=new ArrayList<DailyImg>();
+		for(MultipartFile f:pic) {
+			if(!f.isEmpty()) {
+				String originalName=f.getOriginalFilename();
+				String ext=originalName.substring(originalName.lastIndexOf(".")+1);
+				
+				SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+				int rndValue=(int)(Math.random()*10000);
+				String reName=sdf.format(System.currentTimeMillis())+"_"+rndValue+"."+ext;
+				try {
+					f.transferTo(new File(path+"/"+reName));
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
+				DailyImg img=DailyImg.builder().dailyNo(dailyNo).dailyImgName(reName).status("S").build();
+				newFile.add(img);			
+			}
+		}
+		int result=service.updateDaily(d,hashList,coords,fileList,updateFile,newFile);
+		
+		m.addAttribute("msg",result>0?"게시글이 수정되었습니다.":"게시글 수정에 실패했습니다.");
+		m.addAttribute("loc","/daily/moveDetail.do?dailyNo="+dailyNo);
+		return "common/msg";
 	}
 	
 	

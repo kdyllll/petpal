@@ -130,6 +130,42 @@ public class DailyDaoImpl implements DailyDao {
 		return session.selectOne("daily.totalDailyCount");
 	}
 
+	@Override
+	public int deleteDailyImg(SqlSession session, String dailyImgNo) {
+		// TODO Auto-generated method stub
+		return session.delete("daily.deleteDailyImg",dailyImgNo);
+	}
+
+	@Override
+	public int updateDailyImg(SqlSession session, DailyImg di) {
+		// TODO Auto-generated method stub
+		return session.update("daily.updateDailyImg",di);
+	}
+
+	@Override
+	public int updateImgStatus(SqlSession session, DailyImg di) {
+		// TODO Auto-generated method stub
+		return session.update("daily.updateImgStatus",di);
+	}
+
+	@Override
+	public int deleteAllCoords(SqlSession session, String dailyImgNo) {
+		// TODO Auto-generated method stub
+		return session.delete("daily.deleteAllCoords",dailyImgNo);
+	}
+
+	@Override
+	public int deleteAllHash(SqlSession session, String dailyNo) {
+		// TODO Auto-generated method stub
+		return session.delete("daily.deleteAllHash",dailyNo);
+	}
+
+	@Override
+	public int updateDailyContent(SqlSession session, Daily d) {
+		// TODO Auto-generated method stub
+		return session.update("daily.updateDailyContent",d);
+	}
+
 	
 	
 

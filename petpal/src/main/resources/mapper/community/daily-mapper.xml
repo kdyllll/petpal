@@ -44,7 +44,7 @@
 		SELECT * FROM DAILY LEFT JOIN MEMBER USING(MEMBERNO) WHERE DAILYNO=#{dailyNo}
 	</select>
 	<select id="selectDailyImg" resultType="dailyImg" parameterType="string">
-		SELECT * FROM DAILYIMG WHERE DAILYNO=#{dailyNo}
+		SELECT * FROM DAILYIMG WHERE DAILYNO=#{dailyNo} ORDER BY DAILYIMGNO
 	</select>
 	<select id="selectHashList" resultType="hashtag" parameterType="string">
 		SELECT * FROM HASHTAG WHERE POSTNO=#{dailyNo}
@@ -64,4 +64,23 @@
 	<select id="totalDailyCount" resultType="_int">
 		SELECT COUNT(*) FROM DAILY
 	</select>
+	<delete id="deleteDailyImg" parameterType="string">
+		DELETE FROM DAILYIMG WHERE DAILYIMGNO=#{value}
+	</delete>
+	<update id="updateDailyImg" parameterType="dailyImg">
+		UPDATE DAILYIMG SET DAILYIMGNAME=#{dailyImgName} WHERE DAILYIMGNO=#{dailyImgNo} 
+	</update>
+	<update id="updateImgStatus" parameterType="dailyImg">
+		UPDATE DAILYIMG SET STATUS='M' WHERE DAILYIMGNO=${dailyImgNo}
+	</update>
+	<delete id="deleteAllCoords" parameterType="string">
+		DELETE FROM COORD WHERE DAILYIMGNO=#{value}
+	</delete>
+	<delete id="deleteAllHash" parameterType="string">
+		DELETE FROM HASHTAG WHERE POSTNO=#{value}
+	</delete>
+	<update id="updateDailyContent" parameterType="daily">
+		UPDATE DAILY SET CONTENT=#{content} WHERE DAILYNO=#{dailyNo}
+	</update>
+	
 </mapper>
