@@ -35,7 +35,7 @@
 
 
 	<main role="main" style="min-height: 100vh;">
-		<div id="carouselExampleIndicators"
+		<article id="carouselExampleIndicators"
 			class="carousel slide carousel-fade my-5" data-ride="carousel">
 			<ol class="carousel-indicators ">
 				<li data-target="#carouselExampleIndicators" data-slide-to="0"
@@ -64,10 +64,10 @@
 				class="carousel-control-next-icon" aria-hidden="true"></span> <span
 				class="sr-only">Next</span>
 			</a>
-		</div>
-		<div class="homeContainer mt-3">
+		</article>
+		<article class="homeContainer mt-3">
 			<p class="text-center">PETPAL 고객님을 위한 혜택</p>
-			<div id="carouselExampleDark"
+			<aside id="carouselExampleDark"
 				class="carousel carousel-dark slide my-5" data-ride="carousel">
 
 				<div class="carousel-inner border border-1" role="listbox">
@@ -80,10 +80,12 @@
 						<p>
 					</div>
 				</div>
-			</div>
+			</aside>
 			<!-- 올리에서 베스트 아이템 -->
-			<p class="text-center">PETPAL BEST 아이템</p>
-			<div
+			<p class="text-center mb-5" style="font-size: 25px;">
+				<strong>PETPAL BEST 아이템</strong>
+			</p>
+			<aside
 				class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 g-4">
 
 				<div class="col mb-4">
@@ -163,10 +165,10 @@
 					</div>
 				</div>
 
-			</div>
+			</aside>
 			<!-- 올리에서 best리뷰상품 / 우리는 커뮤니티로 바꿀예정 -->
-			<div class="bg-light py-5 px-3 my-5" style="width: 100%;">
-				<p class="text-center" style="font-size: 25px;">
+			<aside class="bg-light py-5 px-3 my-5" style="width: 100%;">
+				<p class="text-center mb-5" style="font-size: 25px;">
 					<strong>베스트 리뷰상품</strong>
 				</p>
 				<div
@@ -243,8 +245,123 @@
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
+				<div class="mt-5 px-3">
+					<div class="row border px-3 py-4 bg-white">
+						<div class="col-12">
+							<div class="row align-items-center">
+								<div class="col-4 col-md-2 d-flex justify-content-start">
+									<img src="${path }/resources/images/test2.jpg"
+										style="width: 100px; border-radius: 20%;">
+								</div>
+								<div class="col-8 col-md-8 ">
+									<p class="mb-0" style="font-size: 14px;">전에 사용하던게 찌그러져서 다른
+										디자인으로 사봤는데 좋네요 3단이 있었으면 좀 더 좋았겠지만 물건은 탄탄해요</p>
+									<span class="pt-3" style="font-size: 14px;">고양이캣타워 스크레쳐
+										DIY</span> <span>></span>
+								</div>
+								<div class="col-md-2 d-flex justify-content-end"
+									style="font-size: 14px;">2020/12/13</div>
+							</div>
+						</div>
+
+						<!-- Force next columns to break to new line -->
+						<div class="w-100 my-4"
+							style="height: 1px; width: 100%; background: #dfe6e9;"></div>
+
+						<div class="col-12">
+							<div class="row align-items-center">
+								<div class="col-4 col-md-2 d-flex justify-content-start">
+									<img src="${path }/resources/images/test2.jpg"
+										style="width: 100px; border-radius: 20%;">
+								</div>
+								<div class="col-8 col-md-8 ">
+									<p class="mb-0" style="font-size: 14px;">전에 사용하던게 찌그러져서 다른
+										디자인으로 사봤는데 좋네요 3단이 있었으면 좀 더 좋았겠지만 물건은 탄탄해요</p>
+									<span class="pt-3" style="font-size: 14px;">고양이캣타워 스크레쳐
+										DIY</span> <span>></span>
+								</div>
+								<div class="col-md-2 d-flex justify-content-end"
+									style="font-size: 14px;">2020/12/13</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</aside>
+			<aside class="my-5">
+				<p class="text-center mb-5" style="font-size: 25px;">
+					<strong>쇼핑스토리</strong>
+				</p>
+				<div class="row border-top border-bottom px-3 py-5 bg-white">
+					<div class="col-12">
+						<div class="row align-items-center">
+							<div class="col-4  d-flex justify-content-start">
+								<img src="${path }/resources/images/test2.jpg"
+									style="width: 100%; height:200px;">
+							</div>
+							<div class="col-8  ">
+								<p class="mb-0 mb-2" ><strong>title</strong></p>
+								<p class="mb-0" style="font-size: 14px;">전에 사용하던게 찌그러져서 다른
+									디자인으로 사봤는데 좋네요 3단이 있었으면 좀 더 좋았겠지만 물건은 탄탄해요전에 사용하던게 찌그러져서 다른
+									디자인으로 사봤는데 좋네요 3단이 있었으면 좀 더 좋았겠지만 물건은 탄탄해요</p>
+								<span class="pt-3 text-muted mr-3" style="font-size: 13px;">2020.12.25</span> <span class="pt-3 text-muted" style="font-size: 13px;">daye***</span>
+								<div class="row mt-3">
+									<div class="col-4 ">
+										<img src="${path }/resources/images/test2.jpg"
+									style="width: 50px; border-radius:50%;">
+										<span class="mr-2" style="font-size: 14px;">강아지패딩</span>
+										<span class="text-danger" style="font-size: 13px;">9,700원</span>
+									</div>
+									<div class="col-4 ">
+										<img src="${path }/resources/images/test2.jpg"
+									style="width: 50px; border-radius:50%;">
+										<span class="mr-2" style="font-size: 14px;">강아지패딩</span>
+										<span class="text-danger" style="font-size: 13px;">9,700원</span>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<!-- Force next columns to break to new line -->
+					<div class="w-100 my-5"
+						style="height: 1px; width: 100%; background: #dfe6e9;"></div>
+
+					<div class="col-12">
+						<div class="row align-items-center">
+							<div class="col-4  d-flex justify-content-start">
+								<img src="${path }/resources/images/test2.jpg"
+									style="width: 100%; height:200px;">
+							</div>
+							<div class="col-8  ">
+								<p class="mb-0 mb-2" ><strong>title</strong></p>
+								<p class="mb-0" style="font-size: 14px;">전에 사용하던게 찌그러져서 다른
+									디자인으로 사봤는데 좋네요 3단이 있었으면 좀 더 좋았겠지만 물건은 탄탄해요전에 사용하던게 찌그러져서 다른
+									디자인으로 사봤는데 좋네요 3단이 있었으면 좀 더 좋았겠지만 물건은 탄탄해요</p>
+								<span class="pt-3 text-muted mr-3" style="font-size: 13px;">2020.12.25</span> <span class="pt-3 text-muted" style="font-size: 13px;">daye***</span>
+								<div class="row mt-3">
+									<div class="col-4 ">
+										<img src="${path }/resources/images/test2.jpg"
+									style="width: 50px; border-radius:50%;">
+										<span class="mr-2" style="font-size: 14px;">강아지패딩</span>
+										<span class="text-danger" style="font-size: 13px;">9,700원</span>
+									</div>
+									<div class="col-4 ">
+										<img src="${path }/resources/images/test2.jpg"
+									style="width: 50px; border-radius:50%;">
+										<span class="mr-2" style="font-size: 14px;">강아지패딩</span>
+										<span class="text-danger" style="font-size: 13px;">9,700원</span>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</aside>
+		</article>
 	</main>
 
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />

@@ -21,6 +21,7 @@
   <!-- Page Content -->
   <main role="main" class="pt-5" style="min-height:100vh;">
   	  <input type="hidden" id="loginMember" value="${loginMember }"/>
+  	  <input type="hidden" id="memberNo" value="${loginMember.memberNo }"/>
       <form class="payFrm container mt-5 productHeader"> 
  
         <div class="panel-body row">  
@@ -74,9 +75,11 @@
             <div class="px-3 pb-2 border-bottom">
               <div class="row mb-3 mx-2 d-flex justify-content-between"> 
                 <a href="#" class="text-dark">★★★☆☆ <c:out value="${reviewCount }"/>개 리뷰</a>
-                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <button type="button" class="badge bg-light border-0" id="heart">
+                <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-heart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                </svg>          
+                </svg>     
+                </button>     
               </div>
               	<c:forEach var="i" items="${stockList}" varStatus="vs">
             		<c:if test="${vs.first}">
@@ -322,7 +325,11 @@
     </main>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
-
+<style>
+	#heart:focus{
+		outline:none;
+	}
+</style>
 </body>
 <script>
 		let productNo=$("#productNo").val();
@@ -693,7 +700,28 @@
 				}
 			});
 		}
-		
+		$(document).on("click","#heart",e=>{ 
+			if(loginMember==""){
+				alert("로그인 후 관싱상품을 담을 수 있습니다.");
+				return;
+			}else{
+				var memberNo=$("#memberNo").val();
+			$.ajax({
+				url:"${path}/store/insertFav.do",
+				data:{productNo:productNo,memberNo:memberNo},
+				success:(data) => {
+					if(data==1){
+						alert('관심상품을 담았습니다.')
+					}else{
+						alert("관심상품을 삭제하였습니다.")
+					}
+				},
+				error:(request,status,error)=>{
+                    alert("관심상품을 담지 못하였습니다.다시 시도해주세요.");
+                 }
+			})
+			}
+		});
         
 </script>
 

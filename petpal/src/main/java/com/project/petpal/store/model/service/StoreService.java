@@ -44,4 +44,8 @@ public interface StoreService {
 	int totalReviewCount(String productNo);
 	int totalQnaCount(String productNo);
 	List<DailyImg> selectDailyImg(String productNo);
+	int insertFav(Map fav);
+	List<Product> favList(String memberNo);
+	int deleteFav(Map fav);
+	List<Product> starList();
 } 
