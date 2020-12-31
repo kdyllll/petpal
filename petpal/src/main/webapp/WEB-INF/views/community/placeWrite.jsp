@@ -164,7 +164,6 @@ input:focus {
 	            reader.readAsDataURL(v);
 	            
 	        });
-	        
 	    });
 	  
 	    //사진 추가하기 버튼 추가하는 로직

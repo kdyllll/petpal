@@ -132,5 +132,10 @@ public class PlaceController {
 		m.addAttribute("list", list);
 		return "community/placeDetail";
 	}
+	@RequestMapping("/place/movePlaceUpdate.do")
+	public String movePlaceUpdate(String placeNo,Model m) {
+		
+		return "community/placeUpdate";
+	}
 	
 }
