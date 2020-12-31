@@ -34,10 +34,10 @@
 					</c:if>
 					<c:if test="${not empty list }">
 						<c:forEach var="p" items="${list }">
-							<div class="col-12 col-sm-10 offset-sm-1 blogShort mb-4 border-bottom ">
+							<div class="col-2 col-sm-10 offset-sm-1 blogShort mb-4 border-bottom ">
 								<a href="${path }/place/movePlaceDetail.do?placeNo=${p.placeNo}" class="post-all row ">
 									
-										<div class="col-9">
+										<div class="col-3 col-sm-9">
 											<div class="decoration">
 												<h3><c:out value="${p.title}" /></h3>
 												<article>
@@ -62,7 +62,7 @@
 												<c:out value="${p.position[1] }" />
 											</p>
 										</div>
-										<div class="col-3 ">
+										<div class="col-1 col-sm-3 ">
 											<img src="${path }/resources/upload/place/${p.fileName}"
 												alt="post img" class="rounded float-right" style="width:75%;">
 										</div>	

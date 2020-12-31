@@ -2,11 +2,8 @@ package com.project.petpal.member.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-
 import java.util.List;
-
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -28,10 +25,10 @@ import com.project.petpal.community.model.service.DailyService;
 import com.project.petpal.community.model.service.FindService;
 import com.project.petpal.community.model.service.PlaceService;
 import com.project.petpal.community.model.service.TipService;
-import com.project.petpal.community.model.vo.Daily;
-import com.project.petpal.community.model.vo.DailyImg;
 import com.project.petpal.member.model.service.MemberService;
 import com.project.petpal.member.model.vo.Member;
+import com.project.petpal.store.model.service.StoreService;
+import com.project.petpal.store.model.vo.Product;
 
 @Controller
 @SessionAttributes("loginMember")
@@ -49,6 +46,8 @@ public class MemberController {
    private PlaceService pService;
    @Autowired
    private DailyService dService;
+   @Autowired
+   private StoreService storeService;
    
 
    @RequestMapping("/member/moveMyPage.do")
@@ -102,7 +101,9 @@ public class MemberController {
    }
 
    @RequestMapping("/member/myPageFav.do")
-   public String myPageFav() {
+   public String myPageFav(String memberNo,Model m) {
+	  List<Product> list=storeService.favList(memberNo);
+	  m.addAttribute("list",list);
       return "member/myPageFav";
    }
 

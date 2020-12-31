@@ -214,6 +214,30 @@ public class StoreServiceImpl implements StoreService{
 		return dao.selectDailyImg(session,productNo);
 	}
 
+	@Override
+	public int insertFav(Map fav) {
+		// TODO Auto-generated method stub
+		return dao.insertFav(session,fav);
+	}
+
+	@Override
+	public List<Product> favList(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.favList(session,memberNo);
+	}
+
+	@Override
+	public int deleteFav(Map fav) {
+		// TODO Auto-generated method stub
+		return dao.deleteFav(session,fav);
+	}
+
+	@Override
+	public List<Product> starList() {
+		// TODO Auto-generated method stub
+		return dao.starList(session);
+	}
+
 	
 	
 	

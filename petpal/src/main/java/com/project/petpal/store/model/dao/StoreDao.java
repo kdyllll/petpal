@@ -47,5 +47,9 @@ public interface StoreDao {
 	int totalReviewCount(SqlSession session,String productNo);
 	int totalQnaCount(SqlSession session,String productNo);
 	List<DailyImg> selectDailyImg(SqlSession session,String productNo);
+	int insertFav(SqlSession session,Map fav);
+	List<Product> favList(SqlSession session,String memberNo);
+	int deleteFav(SqlSession session,Map fav);
+	List<Product> starList(SqlSession session);
 	
 }

@@ -277,6 +277,32 @@ public class StoreAjaxController {
 		return "store/storeAjax/qnaList";
 		
 	}
+	@RequestMapping("/store/insertFav.do")
+	@ResponseBody
+	public int insertFav(@RequestParam Map fav) {//관심상품등록(하트버튼 눌렀을떄)
+		String memberNo=(String)fav.get("memberNo");
+		String productNo=(String)fav.get("productNo");
+		List<Product> list=service.favList(memberNo);
+		int result=0;
+		for(Product p:list) {
+			if(p.getProductNo().equals(productNo)) {//상품이 등록되어있으면 삭제
+				service.deleteFav(fav);
+				result=2;
+				return result;
+			}
+		}
+		service.insertFav(fav);
+		result=1;
+		return result;
+	}
+	@RequestMapping("/store/deleteFav.do")
+	public String deleteFav(@RequestParam Map fav,Model m) {//마이페이지에서 삭제버튼 눌렀을떄
+		String memberNo=(String)fav.get("memberNo");
+		service.deleteFav(fav);
+		List<Product> list=service.favList(memberNo);
+		m.addAttribute("list",list);
+		return "member/memberAjax/memberFavAjax";
+	}
 	
 	
 	
