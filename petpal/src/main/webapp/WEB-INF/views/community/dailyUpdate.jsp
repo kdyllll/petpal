@@ -32,6 +32,7 @@
             <div class="form-group row px-3" id="imgContainer">               
 	            
 	            <!-- 사진 미리보기 들 -->
+	            <c:out value="${fn:length(imgList) }"/>
 	            <c:forEach var="i" items="${imgList }" varStatus="vs">
 	            <div class="imgBox position-relative rounded col-12 p-0 mt-5">    
 	            	<input type="hidden" class="picNum" value="${vs.index }"/>            		
@@ -231,7 +232,7 @@ $("#btn").on("click",e=>{
     
 	 $(".hashtag").attr("name","");//아무것도 안적힌 해시태그는 안넘어가도록 name 뺏기
 	 //등록 누르면 form 전송
-	 $("#writeFrm").attr("action","${path }/daily/dailyUpdateEnd.do").submit();
+	 //$("#writeFrm").attr("action","${path }/daily/dailyUpdateEnd.do").submit();
   
 });
 

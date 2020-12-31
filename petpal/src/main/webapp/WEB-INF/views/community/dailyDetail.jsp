@@ -34,11 +34,10 @@
 	    	<div class="container">
 	        	<div class="row ">
 			         <!-- 왼쪽 -->
-			         <div class="col-lg-9 col-sm-12">
+			         <div class="col-lg-8 col-12">
 			           <div class="container" id="title">	
              
 			                <div class="imgCon">
-			                <c:out value="${fn:length(imgList)}"/>
 			                	<c:forEach var="i" items="${imgList }" varStatus="vs">			
 			                		<div class="position-relative rounded m-1 col-12">                		
 					                 <img src="${path }/resources/upload/community/daily/${i.dailyImgName}" class="col-12 mb-1 p-0 rounded">					                 
@@ -107,25 +106,32 @@
 				                                    </c:forEach>
 							                      </div>
 				                    		 </div>
-				                    		<c:choose>
-					                    		<c:when test="${(loginMember.memberNo eq daily.MEMBERNO) or (loginMember.memberNo eq '63') }">
-							                     <div class="d-flex justify-content-between align-items-center my-2 mx-4">
-								                     	<div>
-								                     		<c:if test="${loginMember.memberNo eq daily.MEMBERNO }">
-										                  		<button type="button" onclick="location.replace('${path}/daily/moveUpdate.do?dailyNo=${daily.DAILYNO }');" class="dailyEdit btn btn-link btn-outline-secondary px-2 py-0 mr-2 text-black-50">수정</button>
-										                  	</c:if>
-										                  	<button type="button" onclick="location.replace('${path}/daily/deleteDaily.do?dailyNo=${daily.DAILYNO }');" class="dailyDelete btn btn-link btn-outline-secondary px-2 py-0 text-black-50">삭제</button>
-										                </div>
-										        </c:when>
-										        <c:otherwise>
-										        	<div class="d-flex justify-content-end align-items-center my-2 mx-4">
-										        </c:otherwise>
-									        </c:choose>
-						                     	<div>
-							                      <span class="text-secondary"><c:out value="${daily.ENROLLDATE }"/></span>
-							                      <button type="button" class="btn btn-link text-black-50 p-0 ml-2"  onclick="fn_claimModal('${daily.DAILYNO}');">신고</button> 
-						                     	</div>
-						                     </div>
+					                    		<c:choose>
+						                    		<c:when test="${(loginMember.memberNo eq daily.MEMBERNO) or (loginMember.memberNo eq '63') }">
+								                     <div class="d-flex justify-content-between align-items-center my-2 mx-4">
+									                     	<div>
+									                     		<c:if test="${loginMember.memberNo eq daily.MEMBERNO }">
+											                  		<button type="button" onclick="location.replace('${path}/daily/moveUpdate.do?dailyNo=${daily.DAILYNO }');" class="dailyEdit btn btn-link btn-outline-secondary px-2 py-0 mr-2 text-black-50">수정</button>
+											                  	</c:if>
+											                  	<button type="button" onclick="location.replace('${path}/daily/deleteDaily.do?dailyNo=${daily.DAILYNO }');" class="dailyDelete btn btn-link btn-outline-secondary px-2 py-0 text-black-50">삭제</button>
+											          		</div>
+														    <div>
+										                      <span class="text-secondary"><c:out value="${daily.ENROLLDATE }"/></span>
+										                      <button type="button" class="btn btn-link text-black-50 p-0 ml-2"  onclick="fn_claimModal('${daily.DAILYNO}');">신고</button> 
+									                     	</div>
+									                   </div>
+											        </c:when>
+											        <c:otherwise>
+											        	<div class="d-flex justify-content-end align-items-center my-2 mx-4">
+												        	<div>
+										                      <span class="text-secondary"><c:out value="${daily.ENROLLDATE }"/></span>
+										                      <button type="button" class="btn btn-link text-black-50 p-0 ml-2"  onclick="fn_claimModal('${daily.DAILYNO}');">신고</button> 
+									                     	</div>
+									                     </div>
+											        </c:otherwise>
+									        	</c:choose>
+						                     	<!--  -->
+						                     </div><!-- d-lg-none mt-5 -->
 						                    
 					                     </c:if>				              
 								</c:forEach>
@@ -175,7 +181,7 @@
 					                  </div>   
 		                		</div>
 		                		<div class="d-flex justify-content-center">댓글페이징바</div>
-	               			</div><!-- col-lg-9 -->
+	               			
 
 	        		</div><!-- container title -->
 	         	</div><!-- col-lg-9 sm-12 -->

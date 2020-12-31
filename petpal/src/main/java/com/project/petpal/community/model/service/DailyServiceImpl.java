@@ -172,18 +172,19 @@ public class DailyServiceImpl implements DailyService {
 		for(Map m:fileList) {
 			String status=(String) m.get("change");
 			String imgNo=(String) m.get("dailyImgNo");
+			System.out.println("사진번호"+imgNo);
 			if(status.equals("delete")) {//사진 상태가 삭제면 행삭제
-				System.out.println("사진 삭제");
 				result=dao.deleteDailyImg(session,imgNo);
+				System.out.println("기존사진삭제"+result);
 			}else if(status.equals("update")) {//사진 상태가 업데이트면 파일명 업데이트
-				System.out.println("사진 업데이트");
 				updateFile.get(updateCnt).setDailyImgNo(imgNo);
 				result=dao.updateDailyImg(session,updateFile.get(updateCnt));
+				System.out.println("기존사진수정"+result);
 				updateCnt++;
 			}//변화없으면 아무것도 X	
 			
 			//사진에 얽힌 모든 좌표 지우기
-			result=dao.deleteAllCoords(session,imgNo);
+			dao.deleteAllCoords(session,imgNo);
 		}
 		//새로운 사진 삽입
 		if(result>0) {
@@ -191,6 +192,7 @@ public class DailyServiceImpl implements DailyService {
 				System.out.println("사진 삽입");
 				for(DailyImg di:newFile) {
 				result=dao.insertDailyImg(session, di);
+				System.out.println("사진삽입"+result);
 				}
 			}
 		}
@@ -200,13 +202,16 @@ public class DailyServiceImpl implements DailyService {
 		String status=(String) fileList.get(0).get("change");
 		if(result>0&&status.equals("delete")) {//메인사진이 지워진상태라면
 			result=dao.updateImgStatus(session,imgList.get(0));
+			System.out.println("메인사진"+result);
 		}
 		//내용, 해시, 좌표는 다 삭제하고 새로 삽입	
 		if(result>0) { 
 			//좌표 삽입
 			if(result>0) {
 				if(coords!=null) { 
+					System.out.println("좌표 등록");
 					for(DailyCoord dc:coords) {
+						System.out.println(dc);
 						switch(dc.getIndex()) {
 							case "0":dc.setDailyImgNo(imgList.get(0).getDailyImgNo());break;
 							case "1":dc.setDailyImgNo(imgList.get(1).getDailyImgNo());break;
@@ -215,23 +220,27 @@ public class DailyServiceImpl implements DailyService {
 							case "4":dc.setDailyImgNo(imgList.get(4).getDailyImgNo());break;
 						}
 						result=dao.insertDailyCoords(session,dc);
+						System.out.println("좌표등록"+result);
 					}
 				}
 			}
 			//해시태그 삭제
-			result=dao.deleteAllHash(session,d.getDailyNo());
+			dao.deleteAllHash(session,d.getDailyNo());
+
 			//해시태그 삽입
 			if(result>0) {
 				if(hashList.size()!=0) {//해시태그가 있으면
 					for(Hashtag h:hashList) {
 						h.setPostNo(d.getDailyNo());
 						result=dao.insertHashtag(session,h);
+						System.out.println("해시삽입"+result);
 					}
 				}
 			}
 			//글 내용 수정
 			if(result>0) {
 				result=dao.updateDailyContent(session,d);
+				System.out.println("글내용수정"+result);
 			}
 		}
 		

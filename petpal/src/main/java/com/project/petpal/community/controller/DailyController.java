@@ -133,10 +133,12 @@ public class DailyController {
 
 		//해시태그
 		List<Hashtag> hashList=new ArrayList();
-		for(String hash:hashtag) {
-			Hashtag h=new Hashtag();
-			h.setHashContent(hash);
-			hashList.add(h);
+		if(hashtag!=null) {
+			for(String hash:hashtag) {
+				Hashtag h=new Hashtag();
+				h.setHashContent(hash);
+				hashList.add(h);
+			};
 		};
 		
 		//보내기
@@ -156,9 +158,6 @@ public class DailyController {
 		Map daily=service.selectDailyOne(dailyNo);
 		//글 사진
 		List<DailyImg> imgList=service.selectDailyImg(dailyNo);
-		for(DailyImg d:imgList) {
-			System.out.println(d);
-		}
 		//상품 태그
 		List<Map> coordList=service.selectCoordList(dailyNo);
 		//상품 이미지
@@ -246,12 +245,14 @@ public class DailyController {
 		Daily d=Daily.builder().dailyNo(dailyNo).memberNo(login.getMemberNo()).content(content).build();
 		//해시태그
 		List<Hashtag> hashList=new ArrayList();
-		for(String hash:hashtag) {
-			Hashtag h=new Hashtag();
-			h.setPostNo(dailyNo);
-			h.setHashContent(hash);
-			hashList.add(h);
-		};
+		if(hashtag!=null) {
+			for(String hash:hashtag) {
+				Hashtag h=new Hashtag();
+				h.setPostNo(dailyNo);
+				h.setHashContent(hash);
+				hashList.add(h);
+			};
+		}
 		//좌표
 		//좌표
 		//사진번호, 상품번호, x좌표, y좌표
@@ -270,6 +271,9 @@ public class DailyController {
 		//사진 변경에 대해서는 서비스에서 트랜젝션으로 처리해야함 일단 정리를 해서 보내기
 		//사진 받아오기
 		List<DailyImg> imgList=service.selectDailyImg(dailyNo);
+		for(DailyImg ddi:imgList) {
+			System.out.println(ddi);
+		}
 		//change []
 		//Map에 넣어서 보내기 (넣을 항목: 사진번호, 상태(none,delete,update), 파일이름)
 		List<Map> fileList=new ArrayList<Map>();
@@ -299,6 +303,7 @@ public class DailyController {
 		}
 		for(int i=0;i<change.length;i++) {
 			Map map=new HashMap();
+			System.out.println("맵에 넣는 이미지번호"+imgList.get(i).getDailyImgNo());
 			map.put("dailyImgNo", imgList.get(i).getDailyImgNo());
 			map.put("change", change[i]);
 			fileList.add(map);
