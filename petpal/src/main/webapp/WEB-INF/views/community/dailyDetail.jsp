@@ -124,7 +124,7 @@
 							                     <div class="d-flex justify-content-between align-items-center my-2 mx-4">
 								                     	<div>
 								                     		<c:if test="${loginMember.memberNo eq daily.MEMBERNO }">
-										                  		<button type="button" onclick="location.href'${path}/daily/updateDaily.do?dailyNo=${daily.DAILYNO }';" class="dailyEdit btn btn-link btn-outline-secondary px-2 py-0 mr-2 text-black-50">수정</button>
+										                  		<button type="button" onclick="location.replace('${path}/daily/moveUpdate.do?dailyNo=${daily.DAILYNO }');" class="dailyEdit btn btn-link btn-outline-secondary px-2 py-0 mr-2 text-black-50">수정</button>
 										                  	</c:if>
 										                  	<button type="button" onclick="location.replace('${path}/daily/deleteDaily.do?dailyNo=${daily.DAILYNO }');" class="dailyDelete btn btn-link btn-outline-secondary px-2 py-0 text-black-50">삭제</button>
 										                </div>
@@ -238,7 +238,7 @@
 		               <c:if test="${(loginMember.memberNo eq daily.MEMBERNO) or (loginMember.memberNo eq '63') }">
 			               <div class="d-flex justify-content-end mr-1">
 			               		<c:if test="${loginMember.memberNo eq daily.MEMBERNO }">
-			                  		<button type="button" onclick="location.href'${path}/daily/updateDaily.do?dailyNo=${daily.DAILYNO }';" class="dailyEdit btn btn-link btn-outline-secondary px-2 py-0 mr-2 text-black-50">수정</button>
+			                  		<button type="button" onclick="location.replace('${path}/daily/moveUpdate.do?dailyNo=${daily.DAILYNO }');" class="dailyEdit btn btn-link btn-outline-secondary px-2 py-0 mr-2 text-black-50">수정</button>
 			                  	</c:if>
 			                  	<button type="button" onclick="location.replace('${path}/daily/deleteDaily.do?dailyNo=${daily.DAILYNO }');" class="dailyDelete btn btn-link btn-outline-secondary px-2 py-0 text-black-50">삭제</button>
 			               </div>

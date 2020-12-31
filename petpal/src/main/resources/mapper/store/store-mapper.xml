@@ -8,7 +8,7 @@
 		SELECT * FROM STOCK WHERE PRODUCTNO=#{productNo}
 	</select>
 	<select id="selectImg" resultType="storeImg" parameterType="string">
-		SELECT * FROM PRODUCTIMG WHERE PRODUCTNO=#{productNo} 
+		SELECT * FROM PRODUCTIMG WHERE PRODUCTNO=#{productNo} ORDER BY PRODUCTIMGNO
 	</select>
 	<select id="dogList" resultType="storeProduct">
 	<!-- 재고가 있고,가격이 책정되있는 것들중에 제일 가격이 낮고 타입이 'M'인 상품리스트를 중복없이 뽑아냄 -->
