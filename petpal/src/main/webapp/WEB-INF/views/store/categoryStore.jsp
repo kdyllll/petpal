@@ -137,8 +137,7 @@ a:hover {
 								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 									<button class="dropdown-item" href="#">최신순</button>
 									<button class="dropdown-item" href="#">인기순</button>
-									<button class="dropdown-item" href="#">팔로워순</button>
-									<button class="dropdown-item" href="#">스크랩순</button>
+									<button class="dropdown-item" href="#">리뷰평점순</button>
 								</div>
 							</div>
 						</div>
