@@ -15,7 +15,9 @@
 	<main role="main" style="min-height: 100vh;">
 		<div class="container my-4 mt-lg-0">
 			<div class="row ">
-				<jsp:include page="/WEB-INF/views/common/communityNav.jsp" />
+				<jsp:include page="/WEB-INF/views/common/communityNav.jsp" >
+					<jsp:param value="findDetail" name="comNav"/>
+				</jsp:include>
 			</div>
 
 			<div class="row mx-3 mb-5">
@@ -118,16 +120,16 @@
 					</div>
 					<c:if
 						test="${(loginMember.memberNo eq fDetail.MEMBERNO) or (loginMember.memberNo eq '63') }">
-						<div class="d-flex justify-content-end mr-1">
+						<form id="findDetailFrm" class="d-flex justify-content-end mr-1" method="post">
 							<c:if test="${loginMember.memberNo eq fDetail.MEMBERNO }">
+								
 								<button type="button"
-									onclick="location.href'${path}/find/updateFind.do?findNo=${fDetail.FINDNO }';"
-									class="dailyEdit btn btn-link btn-outline-secondary px-2 py-0 mr-2 text-black-50">수정</button>
-							</c:if>
+									class="findEdit btn btn-link btn-outline-secondary px-2 py-0 mr-2 text-black-50">수정</button>
+									<input type="hidden" class="findNo" name="findNo" value="${fDetail.FINDNO }" />
 							<button type="button"
-								onclick="location.replace('${path}/find/deleteFind.do?findNo=${fDetail.FINDNO }');"
-								class="dailyDelete btn btn-link btn-outline-secondary px-2 py-0 text-black-50">삭제</button>
-						</div>
+								class="findDelete btn btn-link btn-outline-secondary px-2 py-0 text-black-50">삭제</button>
+							</c:if>
+						</form>
 					</c:if>
 				</div>
 			</div>
@@ -181,16 +183,18 @@
 					<button type="button" class="btn btn-link text-secondary"
 						style="font-size: 14px;"
 						onclick="fn_claimModal('<c:out value="${fDetail.FINDNO}" />');">신고하기</button>
-					<c:if test="${(loginMember.memberNo eq fDetail.MEMBERNO) or (loginMember.memberNo eq '63') }">
-						
+					<c:if
+						test="${(loginMember.memberNo eq fDetail.MEMBERNO) or (loginMember.memberNo eq '63') }">
+						<form id="findDetailFrm" class="d-flex justify-content-end mr-1" method="post">
 							<c:if test="${loginMember.memberNo eq fDetail.MEMBERNO }">
+								
 								<button type="button"
-									onclick="location.href'${path}/find/updateFind.do?findNo=${fDetail.FINDNO }';"
-									class="dailyEdit btn btn-link btn-outline-secondary px-2 py-0 mr-2 text-black-50">수정</button>
-							</c:if>
+									class="findEdit btn btn-link btn-outline-secondary px-2 py-0 mr-2 text-black-50">수정</button>
+									<input type="hidden" class="findNo" name="findNo" value="${fDetail.FINDNO }" />
 							<button type="button"
-								onclick="location.replace('${path}/find/deleteFind.do?findNo=${fDetail.FINDNO }');"
-								class="dailyDelete btn btn-link btn-outline-secondary px-2 py-0 text-black-50">삭제</button>
+								class="findDelete btn btn-link btn-outline-secondary px-2 py-0 text-black-50">삭제</button>
+							</c:if>
+						</form>
 					</c:if>
 				</div>
 			</div>
@@ -228,6 +232,13 @@ function loginModal(){
 	});
 };
  
+$(".findEdit").on("click", e => {
+	$("#findDetailFrm").attr("action","${path}/find/findUpdate.do").submit();
+})
+$(".findDelete").on("click", e => {
+	$("#findDetailFrm").attr("action","${path}/find/findDelete.do").submit();
+})
+
 </script>
 </body>
 

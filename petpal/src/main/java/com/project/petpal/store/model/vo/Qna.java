@@ -18,7 +18,7 @@ public class Qna {
 	private String memberNo;
 	private String content;
 	private String qnaComment;
-	private Date enrollDate;
+	private Date qnaDate;
 	private Date commentDate;
 	private String category;
 	private String secret;

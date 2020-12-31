@@ -27,7 +27,9 @@
         <div class="container my-4 mt-lg-0">
             <div class="row ">
             <input type="hidden" class="loginMember" value="${loginMember.memberNo }"/>
-                <jsp:include page="/WEB-INF/views/common/communityNav.jsp" />
+                <jsp:include page="/WEB-INF/views/common/communityNav.jsp" >
+                	<jsp:param value="dailyList" name="comNav"/>
+                </jsp:include>
                 <div class="form-inline container text-center mb-3">
                     <h3>일상</h3>
                     <button type="button" id="dailyWriteBtn" class="btn btn-outline-secondary ml-auto" >글쓰기</button>
@@ -36,7 +38,7 @@
                     <div class="input-group col-lg-5 col-8">
                         <input type="text" class="form-control " placeholder="해시태그 내용을 입력하세요" aria-describedby="basic-addon2">
                         <div class="input-group-append">
-                            <button type="button" id="searchBtn" class="input-group-text">검색</button>
+                            <button type="button" id="searchBtn" class="input-group-text bg-point">검색</button>
                         </div>
                     </div>
                     <div class="dropdown ml-auto">
@@ -71,7 +73,7 @@
 		                                <div class="ml-1">
 		                                    <a href="${path }/user/moveUserInfo.do?memberNo=${d.MEMBERNO}"><span class="text-dark align-top mx-1"><strong><c:out value="${d.NICKNAME }"/></strong></span></a>
 		                                    <span><strong> · </strong></span>
-		                                    <span><button class="btn btn-link text-daily p-0 align-top"><strong> 팔로우</strong></button></span>
+		                                    <span><button class="btn btn-link text-point p-0 align-top"><strong> 팔로우</strong></button></span>
 		                                    <p class="ml-1" style="font-size: 12px;"><c:out value="${d.INFO }"/></p>  
 		                                </div>                    
 		                        </div>

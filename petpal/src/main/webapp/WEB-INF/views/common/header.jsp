@@ -7,9 +7,11 @@
 
 
     <header class="fixed-top shadow-sm" >
-        <nav class="navbar navbar-expand-lg navbar-light py-3 " style="background-color: white;">
+        <nav class="navbar navbar-expand-lg navbar-light py-3 pl-0" style="background-color: white;">
           <div class="container">
-            <a class="navbar-brand text-dark" href="${path }/">로고</a>
+            <a class="navbar-brand text-dark py-0 m-0" href="${path}">
+            	<img src="${path }/resources/images/logoGray.png" style="height:40px;">
+            </a>
             <ul class="nav justify-content-center d-none d-lg-flex">
               <li class="nav-item">
                 <a class="nav-link" href="${path }/community/communityList.do">커뮤니티</a>
@@ -30,10 +32,18 @@
             <div class="collapse navbar-collapse " id="navbarResponsive">
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                  <a class="nav-link text-dark" href="${path }/cart/cart.do">장바구니</a>
+                  <a class="nav-link text-dark" href="${path }/cart/cart.do">
+                  	<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart2 text-black-50" viewBox="0 0 16 16">
+					  <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
+					</svg>
+                  </a>
                 </li>
-                <li class="nav-item d-none d-lg-block">
-                  <a class="nav-link text-dark" data-toggle="collapse" data-target="#collapseOne2" aria-expanded="true" aria-controls="collapseOne" href="#">검색</a>
+                <li class="nav-item d-none d-lg-block align-middle">
+                  <a class="nav-link text-dark" data-toggle="collapse" data-target="#collapseOne2" aria-expanded="true" aria-controls="collapseOne" href="#">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-search text-black-50" viewBox="0 0 16 16">
+					  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+					</svg>
+                  </a>
                 </li>
     			<c:if test="${loginMember == null }">
                 <li class="nav-item">
@@ -45,7 +55,11 @@
                 </c:if>
                 <c:if test="${loginMember != null }">
                 <li class="nav-item">
-                  <a class="nav-link text-dark" href="${path }/member/moveMyPage.do">마이페이지</a>
+                  <a class="nav-link text-dark" href="${path }/member/moveMyPage.do">
+	                  <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-person-fill text-black-50" viewBox="0 0 16 16">
+						  <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+						</svg>
+				  </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link text-dark" href="${path }/member/logout.do">로그아웃</a>

@@ -16,15 +16,18 @@
 	    </div>
 	    <div class="modal-body offset-1 col-10">
 	      <div>
-	        <div class="form-group row pb-3 border-bottom d-flex align-items-center">
-	          <img src="${path }/resources/upload/product/detail/${img.imgName}" class="rounded d-block w-100 col-4">
-	          <div class="align-middel">
-		          <p class="mb-0"><c:out value="${product.productName }"/></p>
-		          <p class="mb-0"><c:out value="${stock.color}"/> <c:out value="${stock.productSize}"/></p>
-	          </div>
-	          <input type="hidden" name="productNo" value="${product.productNo }"/>
-	          <input type="hidden" name="detailNo" value="${detailNo }"/>
+	        <div class="form-group pb-3 border-bottom ">
+	          
+	          <label for="exampleFormControlSelect1">내역 선택</label>
+              <select class="form-control col-12" >
+                <option disabled selected>구매 내역 선택</option>
+                <c:forEach var="s" items="${stockList }">
+                	<option value="${s.DETAILNO }">${s.COLOR } ${s.PRODUCTSIZE }  &nbsp;&nbsp;&nbsp; / &nbsp;&nbsp;&nbsp;  <fmt:formatDate value="${s.PAYDATE }" pattern="yy.MM.dd 구매"/></option>
+                </c:forEach>
+              </select>
+              <input type="hidden" name="productNo" value="${product.productNo }"/>
 	        </div>
+	        
 	        <div class="form-group">
 	          <label for="recipient-name" class="col-form-label"><strong>별점 평가</strong></label>
 	          <div>
@@ -72,6 +75,7 @@
                 </ul>
 		      </div>
 		    </div>
+		    
 		    <div class="form-group">
 		      <label for="message-text" class="col-form-label"><strong>사진 첨부</strong> <span class="text-black-50">최대 한장</span></label>
 		      <div class="input-group mb-3">
@@ -85,17 +89,19 @@
 		        <button type="button" class="btn btn-sm btn-outline-dark align-bottom p-0" onclick="fn_delete();" style="height: 20px;">삭제</button>
 		      </div>                         
 		    </div>
+		    
 		    <div class="form-group">
 		      <label for="message-text" class="col-form-label"><strong>리뷰 작성</strong></label>
 		      <textarea name="content" class="form-control" rows="5" id="content" style="resize:none;"></textarea>
           	</div>
+          	
         </div>
-      </div>
+      </div><!-- modal-body -->
       <div class="modal-footer">
         <button type="button" class="close btn btn-secondary" data-dismiss="modal" data-backdrop="false">취소</button>
         <button type="submit" class="btn btn-primary">완료</button>
       </div>
-    </div>
+    </div><!-- modal-content -->
   </form>
 </div>
 

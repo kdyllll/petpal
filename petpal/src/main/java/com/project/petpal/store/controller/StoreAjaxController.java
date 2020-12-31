@@ -76,18 +76,12 @@ public class StoreAjaxController {
 			if(cookieCnt!=null) {
 				cnts=URLDecoder.decode(cookieCnt.getValue(),"UTF-8");
 			}
-//			System.out.println("이미 있는 쿠키");
-//			System.out.println(stocks);
-//			System.out.println(cnts);
 			
 			//새로 넣는 장바구니 값 배열을 문자열로 변환
 			String stocks2=Arrays.toString(stockNo);
 			stocks2=stocks2.substring(stocks2.indexOf("[")+1,stocks2.indexOf("]"));
 			String cnts2=Arrays.toString(cnt);
 			cnts2=cnts2.substring(cnts2.indexOf("[")+1,cnts2.indexOf("]"));
-//			System.out.println("새로넣는 장바구니");
-//			System.out.println(stocks2);
-//			System.out.println(cnts2);
 			//이미 있던 장바구니 문자열에 문자열 추가
 			if(stocks.equals("")) {
 				stocks=stocks2;
@@ -112,28 +106,12 @@ public class StoreAjaxController {
 			c2.setPath("/");
 			response.addCookie(c2);
 		}
-//		System.out.println("최종쿠키");
-//		System.out.println(URLDecoder.decode(c.getValue(),"UTF-8"));
-//		System.out.println(URLDecoder.decode(c2.getValue(),"UTF-8"));
 		return path;
 	}
 	
 	@RequestMapping("/store/movePayLogin.do")
 	public String movePayLogin() {
 		return "store/storeAjax/payLoginModal";
-	}
-	
-	//리뷰 작성 모달 호출
-	@RequestMapping("/store/moveReview.do")
-	public String moveReview(String productNo,String detailNo,Model m) {
-		Product p=service.selectProduct(productNo);
-		ProductImg pi=service.selectMainImg(productNo);
-		Stock s=service.selectStock(detailNo);
-		m.addAttribute("product",p);
-		m.addAttribute("img",pi);
-		m.addAttribute("detailNo",detailNo);
-		m.addAttribute("stock",s);
-		return "store/storeAjax/reviewModal";
 	}
 	
 	@RequestMapping("/store/payCheck.do")
@@ -148,25 +126,25 @@ public class StoreAjaxController {
 		return list;
 	}
 	
-	//어떤 구매내역에 대해 리뷰 적을건지 선택하는 모달 호출
-	@RequestMapping("/store/moveReviewSelect.do")
+	//리뷰작성모달호출
+	@RequestMapping("/store/moveReview.do")
 	public String moveReviewSelect(HttpSession session,String productNo,String details,Model m) {
 		//상품이름, 구매한 옵션, 이미지
 		
 		Product p=service.selectProduct(productNo);
-		ProductImg pi=service.selectMainImg(productNo);
+		//ProductImg pi=service.selectMainImg(productNo);
 		m.addAttribute("product",p);
-		m.addAttribute("img",pi);
+		//m.addAttribute("img",pi);
 		
-		List<String> detailNoList = JSONArray.fromObject(details);//리뷰안쓴 디테일 번호들
-		List<Stock> stockList=new ArrayList<Stock>();
+		List<String> detailNoList = JSONArray.fromObject(details);//리뷰안쓴 결제상세 번호들
+		List<Map> stockList=new ArrayList<Map>();
 		for(String s:detailNoList) {
 			stockList.add(service.selectStock(s));
 		}
 		m.addAttribute("detailNoList",detailNoList);
 		m.addAttribute("stockList",stockList);
 	 
-		return "store/storeAjax/reviewSelectModal";
+		return "store/storeAjax/reviewModal";
 	}
 	
 	@RequestMapping("/store/moveReviewEdit.do")
@@ -253,7 +231,7 @@ public class StoreAjaxController {
 		int totalReview=service.totalReviewCount(productNo);
 
 		//페이징
-		String pageBar=new AjaxPageBarFactory().getPageBar(totalReview, cPage, numPerPage, "reviewList.do",productNo,"#reviewCon",null);
+		String pageBar=new AjaxPageBarFactory().getPageBar(totalReview, cPage, numPerPage, "reviewList.do",productNo,"#reviewCon",null,"reviewPaging");
 		
 		m.addAttribute("reviewList",reviews);
 		m.addAttribute("reviewPageBar",pageBar);
@@ -271,7 +249,7 @@ public class StoreAjaxController {
 		int totalQna=service.totalQnaCount(productNo);
 		
 		//페이징
-		String pageBar=new AjaxPageBarFactory().getPageBar(totalQna, cPage, numPerPage, "qnaList.do",productNo,"#qnaCon",null);		
+		String pageBar=new AjaxPageBarFactory().getPageBar(totalQna, cPage, numPerPage, "qnaList.do",productNo,"#qnaCon",null,"qnaPaging");		
 		m.addAttribute("qnaList",qnas);
 		m.addAttribute("qnaPageBar",pageBar);
 		return "store/storeAjax/qnaList";

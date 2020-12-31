@@ -39,7 +39,9 @@
    <div class="album ">
 	   <div class="container my-4 mt-lg-0">
 			<div class="row ">
-				<jsp:include page="/WEB-INF/views/common/communityNav.jsp" />
+				<jsp:include page="/WEB-INF/views/common/communityNav.jsp" >
+					<jsp:param value="dailyDetail" name="comNav"/>
+				</jsp:include>
 			</div>
 		</div>
 	   <div class="my-4 mt-lg-0">

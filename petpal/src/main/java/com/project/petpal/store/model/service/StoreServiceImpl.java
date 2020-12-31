@@ -101,7 +101,7 @@ public class StoreServiceImpl implements StoreService{
 	}
 
 	@Override
-	public Stock selectStock(String detailNo) {
+	public Map selectStock(String detailNo) {
 		// TODO Auto-generated method stub
 		return dao.selectStock(session,detailNo);
 	}
