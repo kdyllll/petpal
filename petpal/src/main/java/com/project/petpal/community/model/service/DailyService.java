@@ -29,4 +29,5 @@ public interface DailyService {
 	List<Map> selectDailyListOne(String memberNo);
 	int dailyCnt(String memberNo);
 	int totalDailyCount();
+	int updateDaily(Daily d,List<Hashtag> hashList,List<DailyCoord> coords,List<Map> fileList,List<DailyImg> updateFile,List<DailyImg> newFile);
 }
