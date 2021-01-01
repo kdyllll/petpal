@@ -90,7 +90,8 @@
    
    
      $("#btn").on("click",e=>{ 
-       $("input[type=file]").each((i,item)=>{                     
+       $("input[type=file]").each((i,item)=>{        
+    	   console.log(item.value);
          if(item.value.length!=0){         
           //등록 누르면 사진 별 +버튼의 상품 이름 input태그에 몇번째 사진의 좌표인지 name 부여
           var imgBox=$(item).parent("label").next(".imgBox");
@@ -103,7 +104,7 @@
     	 $(".hashtag").attr("name","");
     	 //등록 누르면 form 전송
     	 $("#writeFrm").attr("action","${path }/daily/dailyWriteEnd.do").submit();
-       
+         
      });
 
  
