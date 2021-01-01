@@ -35,7 +35,6 @@
 		}
 		
          $(".pay").text(c + "개 상품 구매하기").css({"font-weight":"bold"});
-         
 	});
 	
 	$(document).ready(function() {
@@ -86,17 +85,6 @@
 			
 	         $(".pay").text(c + "개 상품 구매하기").css({"font-weight":"bold"});
 	         
-	         if(totalProduct !=0 && totalProduct<=50000){
-	        	 $(".totalFee").text(2500);
-		         $('.totalProduct').text(totalProduct);
-		         $('.totalPrice').text(Number(totalProduct) + 2500);
-	         }else{
-	        	 $(".totalFee").text(0);
-	        	 $('.totalProduct').text(totalProduct);
-		         $('.totalPrice').text(totalProduct);
-	         }
-	         
-	         
 	       //여기에서 실행-------------------------------------------------------------------------------
 	         fn_checkPrice();
         } );
@@ -124,17 +112,21 @@
      	
      	var objs = document.querySelectorAll(".ch");
      	
-     	<c:set var="i" value="0"/>
 		<c:forEach items="${list}" var="c">
-	     	amount = ${amount[i]}
+			amount = 0;
+			<c:if test="${c.STOCK == 0}">
+				amount = 0;
+			</c:if>
+			<c:if test="${c.STOCK != 0}">
+				amount = ${amount[c.STOCKNO]};
+			</c:if>
      		price = ${c.PRICE};
      		totalProduct += amount * price;
      		$('.totalProduct').text(totalProduct);
      		$('.totalPrice').text(totalProduct);
-     		<c:set var="i" value="${i + 1}" />
      	</c:forEach>
      	
-     	if(totalProduct !=0 && totalProduct<=50000){
+     	if(totalProduct !=0 && totalProduct<50000){
        	 $(".totalFee").text(2500);
 	          $('.totalProduct').text(totalProduct);
 	         $('.totalPrice').text(Number(totalProduct) + 2500);
@@ -146,20 +138,21 @@
      	
      	
 		$(".count").click(function(){
+			if($(this).val() == $(this).next().val()){
+				swal("상품 준비중", "재고가 부족합니다", "warning");
+			}
+			
 			count = $(this).val();
+			price = $(this).parent().next().val();
 			$(this).parent().next().next().text(price * count).append("원");
 			fn_checkPrice();
 		});
 		
-		
 		$('.ch').click( function() {
-			
 			var objs = document.querySelectorAll(".ch");
 			var c = 0;
 			
-			
 			var check = 0;
-			
 			
 			for(var i=0;i<objs.length;i++){
 				if(objs[i].checked===true){
@@ -174,7 +167,6 @@
 				$(".noPay").hide();
 			}
 			
-			
 			for (var j = 0; j < objs.length; j++) {
 	            if (objs[j].checked === true) {
 	              c+=1;
@@ -186,7 +178,7 @@
 	         if($(this).prop("checked") === false){
 				totalProduct = totalProduct - parseInt($(this).parent().nextAll().find('.price').text().trim());
 			}
-	         if(totalProduct !=0 && totalProduct<=50000){
+	         if(totalProduct !=0 && totalProduct<50000){
 	        	 $(".totalFee").text(2500);
 		         $('.totalProduct').text(totalProduct);
 		         $('.totalPrice').text(Number(totalProduct) + 2500);
@@ -203,7 +195,7 @@
 			if($(this).prop("checked") === true){
 				totalProduct = $(".totalProduct").html();
 			}
-			if(totalProduct !=0 && totalProduct<=50000){
+			if(totalProduct !=0 && totalProduct<50000){
 	        	 $(".totalFee").text(2500);
 		          $('.totalProduct').text(totalProduct);
 		         $('.totalPrice').text(Number(totalProduct) + 2500);
@@ -215,35 +207,27 @@
 			
 			fn_checkPrice();
 	     }); 
-		 
  	});
 	
-	
 	function fn_checkPrice(){
-		console.log("총가격함수실행");
 		var total=0;
 		$("input[name=check]:checked").each((i,item)=>{
-			console.log($(item));
-			console.log($(item).parents(".proCon").find("span.price").text().trim());
 			total=total+parseInt($(item).parents(".proCon").find("span.price").text().trim());
 		});
-		if(total !=0 && total<=50000){
+		if(total !=0 && total<50000){
        	 	$(".totalFee").text(2500);
        	 	$('.totalProduct').text(total);
        	 	$('.totalPrice').text(Number(total) + 2500);
         }else{
-       	 $(".totalFee").text(0);
-       	 $('.totalProduct').text(total);
+	       	 $(".totalFee").text(0);
+	       	 $('.totalProduct').text(total);
 	         $('.totalPrice').text(total);
         }
-		
-		
 	}
 	
 	function submitCheck(){
 		var objs = document.querySelectorAll(".ch");
 		var c = 0;
-		
 		
 		for(var i=0;i<objs.length;i++){
 			if(objs[i].checked===true){
@@ -253,8 +237,18 @@
 				$("#preview").append("<input class=\"click\" id=\"click\" type=\"hidden\" name=\"click\" value=\"0\">");
 			}
 		}
+		var count = 0;
+		<c:forEach items="${list}" var="c">
+			<c:if test="${c.STOCK == 0}">
+				count++;
+			</c:if>
+		</c:forEach>
 		
+		if(count == 0){
 			frm.submit();
+		}else{
+			swal("상품수량을 확인해주세요", "", "warning");
+		}
 	}
 	
 	function noBuy(){
@@ -305,7 +299,6 @@
 						data:{deleteCart:deleteCart},
 						success:(result) => {
 							if(result==1){
-								//swal("삭제 완료", "해당 상품이 삭제되었습니다.", "success");
 								swal({
 									title: "삭제 완료",
 									text: "해당 상품이 삭제되었습니다.",
@@ -430,19 +423,28 @@
 										</div> -->
 									</div>
 									<div class="d-flex p-3 priceCon">
-											<div id="count">
-				                                <input class="count" type="number" name="count" value="${amount[i]}" min="1" max="100">
-				                             </div>
-				                             <input type="hidden" name="price" value="${c.PRICE}">
-				                             <span class="price ml-auto"><c:out value="${amount[i] * c.PRICE}"/>원</span>
-				                             <div id="preview"></div>
+										<div id="count">
+											<c:if test="${c.STOCK==0 }">
+												<input class="count" type="number" name="count" value="0" min="0" max="${c.STOCK }">
+											</c:if>
+											<c:if test="${c.STOCK!=0 }">
+				                                <input class="count" type="number" name="count" value="${amount[c.STOCKNO]}" min="1" max="${c.STOCK }">
+											</c:if>
+			                                <input type="hidden" id="stock" name="stock" value="${c.STOCK }">
+			                             </div>
+			                             <c:if test="${c.STOCK==0 }">
+												<input type="hidden" name="price" value="${c.PRICE}">
+			                             		<span class="price ml-auto">0원</span>
+											</c:if>
+											<c:if test="${c.STOCK!=0 }">
+				                                <input type="hidden" name="price" value="${c.PRICE}">
+			                             		<span class="price ml-auto"><c:out value="${amount[c.STOCKNO] * c.PRICE}"/>원</span>
+											</c:if>
+			                             <div id="preview"></div>
 				                    </div>
 	                    		</div>
-			                    <div class="ml-4 mt-3">
-			                    	<small><span>옵션 변경</span></small> <!-- 모달 -->
-			                    </div>
 							</div>
-	                           <c:set var="i" value="${i + 1}" />
+							<c:set var="i" value="${i + 1}" />
 						</c:forEach>
 						
 						<div class="d-block d-md-none mt-5">

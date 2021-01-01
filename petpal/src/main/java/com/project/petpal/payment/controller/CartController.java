@@ -35,11 +35,6 @@ public class CartController {
 		// 쿠키값 가져오기
 	    Cookie[] cookie = request.getCookies() ;
 	    
-	    for(int i=0;i<cookie.length;i++){
-	    	System.out.println(URLDecoder.decode("이름 : " + cookie[i].getName(),"UTF-8"));
-	    	System.out.println(URLDecoder.decode("값 : " + cookie[i].getValue(),"UTF-8"));
-	    }
-	   
 	  //StringTokenizer할 배열 생성
 		String[] cart = new String[cookie.length];
 		
@@ -80,10 +75,7 @@ public class CartController {
 					}
 				}
 			}
-//			System.out.println("현재  쿠키 stockNo : " + stockNo);
-//			System.out.println("현재  쿠키 amount : " + amount);
 		}
-		
 		
 		for(int i=0;i<cookie.length;i++) {
 			cookie[i].setMaxAge(0);
@@ -134,10 +126,14 @@ public class CartController {
 			//값이 없으면 빈 리스트를 넘겨주어야하니 list만 넘김
 			
 			if(stockNo.size() > 0) {
+				mv.addObject("list", service.cartListNonMember(stockNo));
+				
+				HashMap<String, String> map = new HashMap<String, String>();
 				for(int i=0;i<stockNo.size();i++) {
-					mv.addObject("list", service.cartListNonMember(stockNo));
-					mv.addObject("amount", amount);
+					map.put(stockNo.get(i), amount.get(i));
 				}
+				
+				mv.addObject("amount", map);
 				mv.setViewName("cart/cartNonMember");
 			}else {
 				mv.setViewName("cart/cartEmpty");
@@ -157,10 +153,6 @@ public class CartController {
 			
 			Member loginMember=(Member)session.getAttribute("loginMember");
 			String memberNo = loginMember.getMemberNo();
-			
-			for(int i=0;i<deleteCart.length;i++) {
-				System.out.println("넘어온 번호 : " + deleteCart[i]);
-			}
 			
 			HashMap<String, String> map = new HashMap<String, String>();
 			for(int i=0;i<deleteCart.length;i++) {
@@ -184,12 +176,6 @@ public class CartController {
 			List<String> stockNo = new ArrayList<String>();
 			List<String> amount = new ArrayList<String>();
 			
-			
-			for(int i=0;i<cookie.length;i++) {
-				System.out.println("삭제 전 쿠키 : " + URLDecoder.decode(cookie[i].getName(),"UTF-8"));
-				System.out.println("삭제 전 쿠키 : " + URLDecoder.decode(cookie[i].getValue(),"UTF-8"));
-			}
-			
 			//쿠키가 있을 때 실행
 			if(cookie.length>1) {
 				//쿠키에서 값을 가져와 cart배열에 넣어줌
@@ -211,10 +197,6 @@ public class CartController {
 			    }
 			}
 			
-			for(int i=0;i<deleteCart.length;i++) {
-				System.out.println("넘어온 번호 : " + deleteCart[i]);
-			}
-			
 			//removeAll 메소드를 이용하기 위해 배열로 넘어온 deleteCart에 담겨 있는 값을 리스트에 넣어줌
 			List<String> deleteList = new ArrayList<String>();
 			
@@ -229,9 +211,6 @@ public class CartController {
 			
 			//stockNo에서 deleteList와 동일한 값을 찾아서 없애줌 
 			stockNo.removeAll(deleteList);
-			
-			System.out.println("delete 현재 남은 쿠키 stockNo : " + stockNo);
-			System.out.println("delete 현재 남은 쿠키 amount : " + amount);
 			
 			//쿠키에 담을 String 변수
 			String stocks = "";
@@ -260,10 +239,6 @@ public class CartController {
 			c2.setMaxAge(60 * 60 * 24);
 			c2.setPath("/");
 			response.addCookie(c2);
-			
-			System.out.println("최종쿠키");
-			System.out.println(URLDecoder.decode(c.getValue(),"UTF-8"));
-			System.out.println(URLDecoder.decode(c2.getValue(),"UTF-8"));
 			
 			result = 1;
 		}

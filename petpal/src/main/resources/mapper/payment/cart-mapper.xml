@@ -21,7 +21,7 @@
 			<foreach item="item" index="index" collection="list" separator="," open="(" close=")">
 				#{item}
 			</foreach>
-			 AND TYPE='M' ORDER BY ROWNUM DESC
+			 AND TYPE='M'
 		</if>
 	</select>
 	<delete id="deleteCart" parameterType="hashMap">
