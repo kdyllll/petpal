@@ -82,5 +82,14 @@
 	<update id="updateDailyContent" parameterType="daily">
 		UPDATE DAILY SET CONTENT=#{content} WHERE DAILYNO=#{dailyNo}
 	</update>
-	
+	<select id="selectComment" parameterType="string" resultType="dComment">
+		SELECT DAILYNO,DAILYCOMMENTNO,COMMENTLEVEL,MEMBERNO,IMG,NICKNAME,DAILYCOMMENT,WRITEDATE FROM DAILYCOMMENT LEFT JOIN MEMBER USING(MEMBERNO) WHERE DAILYNO=#{dailyNo}
+		START WITH COMMENTLEVEL=1 CONNECT BY PRIOR DAILYCOMMENTNO=COMMENTREF ORDER SIBLINGS BY WRITEDATE DESC
+	</select>
+	<select id="countComment" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM DAILYCOMMENT WHERE DAILYNO=#{dailyNo}
+	</select>
+	<insert id="insertComment" parameterType="dComment">
+  		INSERT INTO DAILYCOMMENT VALUES(SEQ_DAILYCOMMENTNO.NEXTVAL,#{dailyNo},#{memberNo},#{commentLevel},#{dailyComment},#{commentRef},default)
+  	</insert>
 </mapper>

@@ -2,7 +2,7 @@
 	$(document).on('change','.upload',e=>{ 
 	   let next=$(e.target).parents(".addPic").next(".imgBox");
 	   console.log(next);
-	   if(next.length==0){//다음 미리보기가 없으면 == 변경이 아니고 사진 추가라면
+	   if(next.length==0){//해당 미리보기가 없으면 == 변경이 아니고 사진 추가라면
 	       $.each(e.target.files,(i,v)=>{//미리보기 로직         
 	           let reader=new FileReader();
 	           reader.onload=e=>{                              

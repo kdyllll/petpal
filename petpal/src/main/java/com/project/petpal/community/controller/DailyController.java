@@ -22,13 +22,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.project.petpal.admin.model.vo.Product;
 import com.project.petpal.common.PageBarFactory;
-import com.project.petpal.store.model.vo.ProductImg;
 import com.project.petpal.community.model.service.DailyService;
 import com.project.petpal.community.model.vo.Daily;
+import com.project.petpal.community.model.vo.DailyComment;
 import com.project.petpal.community.model.vo.DailyCoord;
 import com.project.petpal.community.model.vo.DailyImg;
 import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.member.model.vo.Member;
+import com.project.petpal.store.model.vo.ProductImg;
 
 
 
@@ -53,7 +54,7 @@ public class DailyController {
 		List<DailyImg> imgList=service.selectMainImg();
 		List<Hashtag> hashList=service.selectHashAll();
 		int totalCount=service.totalDailyCount();
-		String pageBar=new PageBarFactory().getPageBar(totalCount, cPage, numPerPage, null, null, "moveList.do");
+		String pageBar=new PageBarFactory().getPageBar(totalCount, cPage, numPerPage, null, null, "moveList.do",null);
 		
 		//좋아요 수
 		//댓글 수 보내야 함
@@ -357,6 +358,29 @@ public class DailyController {
 		ProductImg p=service.selectDailyProduct(productNo); //서비스에서 상품이름으로 상품번호 조회한다음에 상품 사진 테이블에서 가져와야함
 		//이미지번호, 상품번호, 이미지이름, 타입(메인M)	
 		return p;		
+	}
+	
+	//일상 댓글 불러오기
+	@RequestMapping("/daily/dailyComment.do")
+	public String selectComment(String dailyNo,
+			@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerPage",defaultValue="5") int numPerPage,
+			Model m) {
+		List<DailyComment> cList=service.selectComment(dailyNo,cPage,numPerPage);
+		int count=service.countComment(dailyNo);
+		String pageBar=new PageBarFactory().getPageBar(count, cPage, numPerPage, null, null, "dailyComment.do",dailyNo);
+		m.addAttribute("count",count);
+		m.addAttribute("pageBar",pageBar);
+		m.addAttribute("cList",cList);		
+		return "community/communityAjax/dailyComment";
+	}
+	
+	//일상 댓글 작성
+	@RequestMapping("/daily/commentWrite.do")
+	@ResponseBody
+	public Boolean insertComment(DailyComment dc,Model m) {
+		int result=service.insertComment(dc);
+		return result>0?true:false;
 	}
 
 	

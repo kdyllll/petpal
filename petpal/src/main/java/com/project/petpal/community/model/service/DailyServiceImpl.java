@@ -1,6 +1,5 @@
 package com.project.petpal.community.model.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,12 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.petpal.admin.model.vo.Product;
-import com.project.petpal.store.model.vo.ProductImg;
 import com.project.petpal.community.model.dao.DailyDao;
 import com.project.petpal.community.model.vo.Daily;
+import com.project.petpal.community.model.vo.DailyComment;
 import com.project.petpal.community.model.vo.DailyCoord;
 import com.project.petpal.community.model.vo.DailyImg;
 import com.project.petpal.community.model.vo.Hashtag;
+import com.project.petpal.store.model.vo.ProductImg;
 
 @Service
 public class DailyServiceImpl implements DailyService {
@@ -247,6 +247,24 @@ public class DailyServiceImpl implements DailyService {
 		
 
 		return result;
+	}
+
+	@Override
+	public List<DailyComment> selectComment(String dailyNo,int cPage,int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectComment(session,dailyNo,cPage,numPerPage);
+	}
+
+	@Override
+	public int countComment(String dailyNo) {
+		// TODO Auto-generated method stub
+		return dao.countComment(session,dailyNo);
+	}
+
+	@Override
+	public int insertComment(DailyComment dc) {
+		// TODO Auto-generated method stub
+		return dao.insertComment(session,dc);
 	}
 
 	

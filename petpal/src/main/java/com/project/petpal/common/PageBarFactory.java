@@ -2,7 +2,7 @@ package com.project.petpal.common;
 
 public class PageBarFactory {
 
-	public static String getPageBar(int totalData,int cPage,int numPerpage,String category,String placeNo,String uri) {
+	public static String getPageBar(int totalData,int cPage,int numPerpage,String category,String placeNo,String uri,String dailyNo) {
 	
 		String pageBar="";
 	      
@@ -51,7 +51,7 @@ public class PageBarFactory {
 	      
 	      pageBar+="<script>";
 	      pageBar+="function fn_paging(cPage){";
-	      pageBar+="location.href='"+uri+"?cPage='+cPage"+(category==null?"":"+'&category="+category+"'")+(placeNo==null?"":"+'&placeNo="+placeNo+"'");
+	      pageBar+="location.href='"+uri+"?cPage='+cPage"+(category==null?"":"+'&category="+category+"'")+(placeNo==null?"":"+'&placeNo="+placeNo+"'")+(dailyNo==null?"":"+'&dailyNo="+dailyNo+"'");
 	      pageBar+="}";
 	      pageBar+="</script>";
 	      return pageBar;

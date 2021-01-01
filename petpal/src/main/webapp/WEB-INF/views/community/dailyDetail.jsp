@@ -18,6 +18,11 @@
      font-family: 'NanumSquare', sans-serif !important;
      white-space: pre-wrap; 
     }
+    
+    a:hover {
+	text-decoration: none;
+	color:black;
+}
 </style>
 </head>
 <body class="bg-white">
@@ -141,7 +146,8 @@
 								</c:forEach>
 								</div><!-- imgCon -->
 				                 <!-- 댓글 -->
-				                 <hr>
+				                 <div id="commentContainer">
+				             <!--     <hr>
 				                 <h4>댓글<span class="text-secondary">2</span></h4>
 				                 <div class="d-flex mb-3">
 				                   <div class="input-group mb-3">
@@ -184,8 +190,8 @@
 					                    </div>     
 					                  </div>   
 		                		</div>
-		                		<div class="d-flex justify-content-center">댓글페이징바</div>
-	               			
+		                		<div class="d-flex justify-content-center">댓글페이징바</div> -->
+	               			</div>
 
 	        		</div><!-- container title -->
 	         	</div><!-- col-lg-9 sm-12 -->
@@ -258,6 +264,7 @@
 <script>
 let loginMember=$(".loginMember").val();
 let dailyNo=$(".dailyNo").val();
+commentAjax();
 $(document).ready(function (){
 	$(".bubble").hide();
 
@@ -282,7 +289,6 @@ $(".followBtn").on("click",e=>{
 
 //로그인 모달
 function loginModal(){
-	console.log("실행");
 	$.ajax({
 		url: "${path}/login/moveLogin.do",
 		dataType:"html",
@@ -292,6 +298,85 @@ function loginModal(){
 		}
 	});
 };
+
+function commentAjax(){
+	$.ajax({
+		url: "${path}/daily/dailyComment.do",
+		dataType:"html",
+		data:{dailyNo:dailyNo},
+		success:(data)=>{
+			$("#commentContainer").html(data);
+		}
+	});
+};
  
+//댓글 스크립트
+ 
+$(function(){//로그인 안되어있을때 댓글창 누르면 손가락표시
+	if(loginMember==""){
+		$("[name=dailyComment]").css({"cursor":"pointer"});
+	}
+});
+
+$(document).on('click','[name=dailyComment]',function(e) { //댓글창 누르면 로그인 확인
+		if(loginMember==""){
+			loginModal();
+		}
+});
+
+$(document).on('click','.reply',function(e) {//답글달기 눌렀을때
+	if(loginMember==""){
+		loginModal();
+		return;
+	}
+	var comment=$(e.target).parents("div.comment");//답글달기의 댓글
+	
+	if($("div.editor").length==2&&!comment.next().hasClass("editor")){//댓글달기 창이 두개이고 
+		var flag=confirm("다른 댓글에서 작성하고 있던 내용이 유실됩니다. 정말 이 댓글로 전환하시겠습니까?")
+		if(flag==true){//확인 눌렀을때
+			$("#commentContainer").find("div.subComment").remove();
+		}else{//취소 눌렀을때 변화없음
+			
+		}
+	}
+	if($("div.editor").length==1){//댓글달기창이 하나일때
+	var editor=$("div.editor").clone();
+	editor.addClass("ml-5");
+	editor.addClass("subComment");
+	editor.find("[name=commentLevel]").val("2");
+	editor.find("[name=dailyComment]").val("");
+	editor.find("[name=commentRef]").val($(e.target).val());
+	comment.after(editor);//
+	}
+});
+
+$(document).on('click','.write',function(e) {//댓글 등록 버튼 눌렀을때
+	if(loginMember==""){//로그인 안되어있다면
+		loginModal();
+		return;
+	}else if($(e.target).parents("div.editor").find("[name=dailyComment]").val().trim()==""){//댓글 내용이 없으면
+		alert("내용을 입력해주세요.");
+		return;
+	}
+	var dailyNo=$(".dailyNo").val();
+	var dailyComment=$(e.target).parents("div.editor").find("[name=dailyComment]").val();
+	var commentLevel=$(e.target).parents("div.editor").find("[name=commentLevel]").val();
+	var commentRef=$(e.target).parents("div.editor").find("[name=commentRef]").val();
+	$.ajax({
+		url:"${path}/daily/commentWrite.do",
+		data:{dailyComment:dailyComment,commentLevel:commentLevel,memberNo:loginMember,dailyNo:dailyNo,commentRef:commentRef,},
+		success:data=>{
+			if(data===true){
+				//alert("댓글이 등록되었습니다.");
+				commentAjax();
+			}else{
+				alert("댓글 등록에 실패하였습니다.");
+			}
+		},
+		error:function(){
+			alert("댓글 등록에 실패하였습니다.");
+		}
+	})
+});
 </script>
 </html>
