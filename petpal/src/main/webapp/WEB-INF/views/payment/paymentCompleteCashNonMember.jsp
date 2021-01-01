@@ -35,8 +35,9 @@
   	<div style="padding-top:5em;"></div>
   	<div class="container">
 		<div class="d-none d-md-block">
-	  		<p class="mb-5 text-center">결제가 완료되었습니다.&nbsp;&nbsp;&nbsp; <c:out value="${list[0].POINTPLUS }"/>P가 적립되었습니다.</p>
-	  		<h4 class="text-center mb-5">주문번호는 <c:out value="${list[0].ORDERNO }"/>입니다.</h4>
+	  		<p class="mb-5 text-center">결제가 완료되었습니다.</p>
+	  		<h4 class="text-center mb-3">주문번호는 <c:out value="${list[0].ORDERNO }"/>입니다.</h4>
+	  		<h6 class="text-center mb-5">고객님이 입력하신 이메일을 통해서 주문번호가 전송됩니다. 메일을 확인해주세요.</h6>
 	  		<h4 class="text-center mb-4">입금 계좌 : 신한 - 5429385720</h4>
 	  		<div class="row" style="margin:0px auto;">
 	  			<div class="col-6" style="width:360px;">
@@ -45,7 +46,6 @@
 	  					<h6>받는 분 : <c:out value="${list[0].RECEIVERNAME }"/> / 연락처 - <c:out value="${list[0].RECEIVERTEL }"/></h6>
 	  					<h6>배송지 - <c:out value="${list[0].L0C }"/></h6>
 	  					<h6>이메일 - <c:out value="${list[0].EMAIL }"/></h6>
-	  					<h6>사용 포인트 - <c:out value="${list[0].POINTMINUS }"/>P / 남은 포인트 - <c:out value="${point }"/>P</h6>
 	  					<h6>결제금액 - <c:out value="${list[0].TOTALPRICE }"/>원 / 결제수단 - <c:out value="${list[0].PAYKIND }"/></h6>
 	  					<h6></h6>
 	  				</div>
@@ -99,8 +99,9 @@
 			</div>
 	  	</div>
 		<div class="d-md-none d-block">
-	  		<p class="mb-5 text-center">결제가 완료되었습니다.&nbsp;&nbsp;&nbsp; <c:out value="${list[0].POINTPLUS }"/>P가 적립되었습니다.</p>
-	  		<h4 class="text-center mb-5">주문번호는 <c:out value="${list[0].ORDERNO }"/>입니다.</h4>
+	  		<p class="mb-5 text-center">결제가 완료되었습니다.</p>
+	  		<h4 class="text-center mb-3">주문번호는 <c:out value="${list[0].ORDERNO }"/>입니다.</h4>
+	  		<h6 class="text-center mb-5">고객님이 입력하신 이메일을 통해서 주문번호가 전송됩니다. 메일을 확인해주세요.</h6>
 	  		<h4 class="text-center mb-4">입금 계좌 : 신한 - 5429385720</h4>
 	  		<div class="" style="margin:0px auto;">
 	  			<div class="" style="width:100%;">
