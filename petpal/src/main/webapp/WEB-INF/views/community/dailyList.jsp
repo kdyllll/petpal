@@ -35,7 +35,7 @@
                     <button type="button" id="dailyWriteBtn" class="btn btn-outline-secondary ml-auto" >글쓰기</button>
                 </div>
                 <div class="form-inline container-xl mb-5">
-                    <div class="input-group col-lg-5 col-8">
+                    <div class="input-group col-lg-5 col-8 p-0">
                         <input type="text" class="form-control " placeholder="해시태그 내용을 입력하세요" aria-describedby="basic-addon2">
                         <div class="input-group-append">
                             <button type="button" id="searchBtn" class="input-group-text bg-point">검색</button>
@@ -100,13 +100,13 @@
 		                                <span class="text-dark mx-1 align-text-middle">0</span>
 		                            </button>
 		                        </div>
-		                        <div class="card-body p-0">
+		                        <div class="card-body p-0 px-1">
 		                            <p class="card-text mb-1">${d.CONTENT }</p>
 		                            <div class="d-flex justify-content-between align-items-center">
 		                                <small class="text-muted pl-1">
 		                                	<c:forEach var="h" items="${hashList}">
 		                                		<c:if test="${not empty h and (h.postNo eq d.DAILYNO )}">
-		                                    		<a href="#">#<c:out value="${h.hashContent }"/></a>
+		                                    		<a class="text-secondary bg-point" href="#">#<c:out value="${h.hashContent }"/></a>
 		                                    	</c:if>
 		                                    </c:forEach>  
 		                                </small>

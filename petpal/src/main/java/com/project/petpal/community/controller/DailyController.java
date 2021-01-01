@@ -284,6 +284,7 @@ public class DailyController {
 		if(!dir.exists()) dir.mkdirs(); 
 		List<DailyImg> updateFile=new ArrayList<DailyImg>();
 		for(MultipartFile f:update) {
+			System.out.println(f);
 			if(!f.isEmpty()) {
 				String originalName=f.getOriginalFilename();
 				String ext=originalName.substring(originalName.lastIndexOf(".")+1);
@@ -327,6 +328,7 @@ public class DailyController {
 				newFile.add(img);			
 			}
 		}
+		System.out.println("업데이트파일"+updateFile);
 		int result=service.updateDaily(d,hashList,coords,fileList,updateFile,newFile);
 		
 		m.addAttribute("msg",result>0?"게시글이 수정되었습니다.":"게시글 수정에 실패했습니다.");

@@ -14,6 +14,10 @@
       z-index: 500;
     }
       
+    pre{
+     font-family: 'NanumSquare', sans-serif !important;
+     white-space: pre-wrap; 
+    }
 </style>
 </head>
 <body class="bg-white">
@@ -39,7 +43,7 @@
              
 			                <div class="imgCon">
 			                	<c:forEach var="i" items="${imgList }" varStatus="vs">			
-			                		<div class="position-relative rounded m-1 col-12">                		
+			                		<div class="position-relative rounded m-1 p-0 col-12">                		
 					                 <img src="${path }/resources/upload/community/daily/${i.dailyImgName}" class="col-12 mb-1 p-0 rounded">					                 
 					                 <!-- 이미지와 연결된 상품태그들 -->				                 
 									 <c:forEach var="c" items="${coordList }"> 
@@ -70,7 +74,7 @@
 						                  <div class="d-lg-none mt-5">
 						                    <div class="row d-flex justify-content-between">
 						                      <div class="row ml-3 d-flex align-items-center">
-							                      <a href="${path }/user/moveUserInfo.do?memberNo=${daily.MEMBERNO}" class="p-0 d-flex align-items-center ml-2">
+							                      <a href="${path }/user/moveUserInfo.do?memberNo=${daily.MEMBERNO}" class="text-black p-0 d-flex align-items-center ml-2">
 								                      <div class="col-5 p-0">
 								                        <c:if test="${not empty daily.IMG }">                
 						                                	<img src="${path }/resources/upload/member/profile/${daily.IMG}" class="rounded" style="width:40px; height: 40px;">
@@ -81,7 +85,7 @@
 								                      </div>
 					                          	  	  <strong><span class="text-black p-0 ml-2 align-middle"><c:out value="${daily.NICKNAME }"/></span></strong>
 					                        	  </a>
-					                       		  <button type="button" class="followBtn btn btn-sm bg-testC mr-2 ml-3 text-black-50" style="height: 30px;">팔로우</button>
+					                       		  <button type="button" class="followBtn btn btn-sm bg-point mr-2 ml-3 text-black-50" style="height: 30px;">팔로우</button>
 				                      		  </div>
 				                      		  <div class="mr-4">
 							                        <button class="btn btn-link mb-3">
@@ -98,8 +102,8 @@
 							                        </button>
 				                      		   </div>
 				                    		 </div> <!-- row d-flex -->
-				                    		 <div class="ml-3 mt-4">
-				                      			<p><c:out value="${daily.CONTENT }"/></p>
+				                    		 <div class="ml-3 my-2">
+				                      			<pre class="m-0"><c:out value="${daily.CONTENT }"/></pre>
 							                      <div>
 						                       		<c:forEach var="h" items="${hashList}">
 				                                    		<a href="#">#<c:out value="${h.hashContent }"/></a>				                                    	
@@ -108,7 +112,7 @@
 				                    		 </div>
 					                    		<c:choose>
 						                    		<c:when test="${(loginMember.memberNo eq daily.MEMBERNO) or (loginMember.memberNo eq '63') }">
-								                     <div class="d-flex justify-content-between align-items-center my-2 mx-4">
+								                     <div class="d-flex justify-content-between align-items-center my-3 mx-4">
 									                     	<div>
 									                     		<c:if test="${loginMember.memberNo eq daily.MEMBERNO }">
 											                  		<button type="button" onclick="location.replace('${path}/daily/moveUpdate.do?dailyNo=${daily.DAILYNO }');" class="dailyEdit btn btn-link btn-outline-secondary px-2 py-0 mr-2 text-black-50">수정</button>
@@ -214,10 +218,10 @@
 		                      </div>
 		                      <strong><span class="col-3 p-0 ml-2 align-middle"><c:out value="${daily.NICKNAME }"/></span></strong>
 		                    </a>
-		                    <button type="button" class="followBtn btn btn-sm bg-daily col-4 col-xl-3 mr-2">팔로우</button>
+		                    <button type="button" class="followBtn btn btn-sm bg-point col-4 col-xl-3 mr-2">팔로우</button>
 		                 </div>
-		                 <div class="mt-2">
-		                   <p><c:out value="${daily.CONTENT }"/></p>
+		                 <div class="mt-3">
+		                   <pre class="my-1 "><c:out value="${daily.CONTENT }"/></pre>
 		                   <div>
 		                     <c:forEach var="h" items="${hashList}">
                            		<a href="#">#<c:out value="${h.hashContent }"/></a>				                                    	

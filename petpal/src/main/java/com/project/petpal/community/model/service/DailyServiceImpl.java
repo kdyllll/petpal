@@ -172,6 +172,7 @@ public class DailyServiceImpl implements DailyService {
 		for(Map m:fileList) {
 			String status=(String) m.get("change");
 			String imgNo=(String) m.get("dailyImgNo");
+			System.out.println("상태"+status);
 			System.out.println("사진번호"+imgNo);
 			if(status.equals("delete")) {//사진 상태가 삭제면 행삭제
 				result=dao.deleteDailyImg(session,imgNo);

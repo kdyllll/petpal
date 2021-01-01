@@ -26,7 +26,7 @@
         <form id="writeFrm" class="container mt-5 col-lg-8" method="post" enctype="multipart/form-data">
         	<input type="hidden" name="dailyNo" value="${daily.DAILYNO }"/>
         	<c:forEach var="i" items="${imgList }" varStatus="vs">
-        		<input type="hidden" class="change" name="change" value="none"/>
+        		<input type="hidden" class="change ${vs.index }" name="change" value="none"/>
         	</c:forEach>
             <p class="h2 mb-5 mt-2"><strong>일상 수정하기</strong></p>
             <div class="form-group row px-3" id="imgContainer">               
@@ -192,7 +192,7 @@ $(".bubble").hide();
 $(document).on("click","button.oriDelete",e=>{
 	var num=$(e.target).parents(".imgBox").find(".picNum").val();
 	$(".change").each((i,item)=>{
-		if($(item).attr("name")==num){
+		if($(item).hasClass(num)){
 			$(item).val("delete");
 		}
 	});
@@ -204,7 +204,7 @@ $(".updatePic").on("change",e=>{
 	var imgBox=$(e.target).parents(".imgBox");
 	var num=imgBox.find(".picNum").val();
 	$(".change").each((i,item)=>{
-		if($(item).attr("name")==num){
+		if($(item).hasClass(num)){
 			$(item).val("update");
 		}
 	});	 
@@ -232,7 +232,7 @@ $("#btn").on("click",e=>{
     
 	 $(".hashtag").attr("name","");//아무것도 안적힌 해시태그는 안넘어가도록 name 뺏기
 	 //등록 누르면 form 전송
-	 //$("#writeFrm").attr("action","${path }/daily/dailyUpdateEnd.do").submit();
+	 $("#writeFrm").attr("action","${path }/daily/dailyUpdateEnd.do").submit();
   
 });
 
