@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.petpal.admin.model.vo.Product;
+import com.project.petpal.common.AjaxPageBarFactory;
 import com.project.petpal.common.PageBarFactory;
 import com.project.petpal.community.model.service.DailyService;
 import com.project.petpal.community.model.vo.Daily;
@@ -54,7 +55,7 @@ public class DailyController {
 		List<DailyImg> imgList=service.selectMainImg();
 		List<Hashtag> hashList=service.selectHashAll();
 		int totalCount=service.totalDailyCount();
-		String pageBar=new PageBarFactory().getPageBar(totalCount, cPage, numPerPage, null, null, "moveList.do",null);
+		String pageBar=new PageBarFactory().getPageBar(totalCount, cPage, numPerPage, null, null, "moveList.do");
 		
 		//좋아요 수
 		//댓글 수 보내야 함
@@ -368,7 +369,7 @@ public class DailyController {
 			Model m) {
 		List<DailyComment> cList=service.selectComment(dailyNo,cPage,numPerPage);
 		int count=service.countComment(dailyNo);
-		String pageBar=new PageBarFactory().getPageBar(count, cPage, numPerPage, null, null, "dailyComment.do",dailyNo);
+		String pageBar=new AjaxPageBarFactory().getPageBar(count, cPage, numPerPage, "dailyComment.do", null, "#commentContainer", null, "commentAjax",dailyNo);
 		m.addAttribute("count",count);
 		m.addAttribute("pageBar",pageBar);
 		m.addAttribute("cList",cList);		

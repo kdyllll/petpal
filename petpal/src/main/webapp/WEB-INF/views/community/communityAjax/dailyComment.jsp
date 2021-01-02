@@ -27,7 +27,7 @@
 </div>
 <c:forEach items="${cList }" var="c">
 	<c:if test="${c.commentLevel eq 1 }">
-		<div class="d-flex mb-3 comment level1">
+		<div class="d-flex mb-2 comment level1">
 			<a href="${path }/user/moveUserInfo.do?memberNo=${c.memberNo}">
 				<div class="">
 					<img src="${path }/resources/upload/member/profile/${c.img }" class="rounded-circle mr-3">
@@ -39,7 +39,7 @@
 			<span class="ml-1"><c:out value="${c.dailyComment }" /></span>
 		</div>
 		<div>
-			<span class="text-secondary" style="font-size: 14px;"> 
+			<span class="text-dark" style="font-size: 14px;"> 
 				<c:set var="today" value="<%=new java.util.Date()%>" /> 
 				<fmt:parseNumber value="${(today.time-c.writeDate.time)/(1000*60) }" var="cha" integerOnly="true" /> 
 				<c:choose>
@@ -55,13 +55,14 @@
 					</c:otherwise>
 				</c:choose>
 			</span>
-			<button class="reply click btn p-0 text-black-50 ml-2" style="font-weight: bold; font-size:14px;" value="${c.dailyCommentNo }">답글 달기</button>
+			<button class="reply click btn p-0 text-dark ml-2" style="font-weight: bold; font-size:14px;" value="${c.dailyCommentNo }">답글 달기</button>
+			<button class="click btn p-0 text-black-50" style="font-weight: bold; font-size:14px;" value="${c.dailyCommentNo }">· 삭제</button>
 		</div>
 		</div>
 		</div>
 	</c:if>
 	<c:if test="${c.commentLevel eq 2 }">
-		<div class="d-flex mb-3 comment level2 ml-5">
+		<div class="d-flex mb-1 comment level2 ml-5 bg-light p-2 py-3 rounded">
 			<a class="text-dark" href="${path }/user/moveUserInfo.do?memberNo=${c.memberNo}">
 				<div>
 					<img src="${path }/resources/upload/member/profile/${c.img }"
@@ -73,7 +74,7 @@
 			</a> <span class="ml-1"><c:out value="${c.dailyComment }" /></span>
 		</div>
 		<div>
-			<span style="font-size: 14px; color: gray;"> <c:set
+			<span class="text-dark" style="font-size: 14px;"> <c:set
 					var="today" value="<%=new java.util.Date()%>" /> <fmt:parseNumber
 					value="${(today.time-c.writeDate.time)/(1000*60) }" var="cha"
 					integerOnly="true" /> <c:choose>
@@ -89,6 +90,7 @@
 					</c:otherwise>
 				</c:choose>
 			</span>
+			 <button class="click btn p-0 text-black-50" style="font-weight: bold; font-size:14px;" value="${c.dailyCommentNo }">· 삭제</button>
 		</div>
 		</div>
 		</div>
