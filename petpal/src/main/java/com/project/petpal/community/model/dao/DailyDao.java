@@ -46,5 +46,7 @@ public interface DailyDao {
 	int insertComment(SqlSession session,DailyComment dc);
 	int commentDelete(SqlSession session,String dailyCommentNo);
 	int comment2Delete(SqlSession session,String dailyCommentNo);
+	List<Map> selectDailyHeart(SqlSession session,int cPage,int numPerPage);
+	List<Map> selectDailyFollow(SqlSession session,int cPage,int numPerPage);
 	
 }

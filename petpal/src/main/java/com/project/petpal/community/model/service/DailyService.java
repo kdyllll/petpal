@@ -37,5 +37,7 @@ public interface DailyService {
 	int insertComment(DailyComment dc);
 	int commentDelete(String dailyCommentNo);
 	int comment2Delete(String dailyCommentNo);
+	List<Map> selectDailyHeart(int cPage,int numPerPage);
+	List<Map> selectDailyFollow(int cPage,int numPerPage);
 
 }

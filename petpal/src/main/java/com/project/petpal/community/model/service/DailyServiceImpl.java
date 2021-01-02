@@ -280,6 +280,18 @@ public class DailyServiceImpl implements DailyService {
 		return dao.comment2Delete(session,dailyCommentNo);
 	}
 
+	@Override
+	public List<Map> selectDailyHeart(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectDailyHeart(session,cPage,numPerPage);
+	}
+
+	@Override
+	public List<Map> selectDailyFollow(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectDailyFollow(session,cPage,numPerPage);
+	}
+
 	
 	
 

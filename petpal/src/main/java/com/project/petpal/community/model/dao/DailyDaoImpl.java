@@ -203,6 +203,20 @@ public class DailyDaoImpl implements DailyDao {
 		return session.delete("daily.comment2Delete",dailyCommentNo);
 	}
 
+	@Override
+	public List<Map> selectDailyHeart(SqlSession session, int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("daily.selectDailyHeart",null,rb);
+	}
+
+	@Override
+	public List<Map> selectDailyFollow(SqlSession session, int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("daily.selectDailyFollow",null,rb);
+	}
+
 	
 	
 

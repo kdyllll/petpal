@@ -58,6 +58,7 @@ public class DailyController {
 		String pageBar=new PageBarFactory().getPageBar(totalCount, cPage, numPerPage, null, null, "moveList.do");
 		
 		//좋아요 수
+		//좋아요 리스트(하트켜기용)
 		//댓글 수 보내야 함
 		
 		m.addAttribute("dailyList",dailyList);
@@ -395,6 +396,40 @@ public class DailyController {
 	public Boolean comment2Delete(String dailyCommentNo) {
 		int result=service.comment2Delete(dailyCommentNo);
 		return result>0?true:false;
+	}
+	
+	//일상 정렬
+	@RequestMapping("/daily/dailySort.do")
+	public String dailySort(String sort,Model m,
+			@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerPage",defaultValue="12") int numPerPage) {
+		//sort 는 enrollDate(최신순) / heart(좋아요순) / follow(팔로워많은순)
+		List<Map> dailyList=new ArrayList<Map>();
+		if(sort.equals("enrollDate")) {//최신순 정렬일때
+			dailyList=service.selectDailyAll(cPage,numPerPage);
+		}else if(sort.equals("heart")) {//좋아요순일때(일상+멤버+좋아요)
+			dailyList=service.selectDailyHeart(cPage,numPerPage);
+		}else {//팔로워많은순일때(일상+멤버+팔로우)
+			dailyList=service.selectDailyFollow(cPage,numPerPage);
+		}
+		
+		List<DailyImg> imgList=service.selectMainImg();
+		List<Hashtag> hashList=service.selectHashAll();
+		int totalCount=service.totalDailyCount();
+		String pageBar="";
+		//String pageBar=new PageBarFactory().getPageBar(totalCount, cPage, numPerPage, null, null, "moveList.do");
+		//에이작스 페이지바로 바꿔야함
+		
+		//좋아요 수
+		//좋아요 리스트(하트켜기용)
+		//댓글 수 보내야 함
+		
+		m.addAttribute("dailyList",dailyList);
+		m.addAttribute("imgList",imgList);
+		m.addAttribute("hashList",hashList);
+		//m.addAttribute("pageBar",pageBar);
+		
+		return "community/communityAjax/dailyListAjax";
 	}
 
 	

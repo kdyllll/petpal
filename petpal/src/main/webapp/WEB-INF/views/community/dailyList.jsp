@@ -48,7 +48,7 @@
       				</div>
                 </div>
              
-			<div class="row mt-3">
+			<div id="dailyCon" class="dailyCon row mt-3">
 				<c:if test="${empty dailyList }">
 					<div class="mx-auto">
 						<p class="">일상 글이 없습니다.</p>
@@ -111,12 +111,13 @@
 		                    </div>
 		                </address>
 	               </c:forEach>
+	               <div class="mx-auto my-2">${pageBar }</div>
                </c:if>
 	          </div>
 	          
             </div>
         </div>
-        <div class="text-center">${pageBar }</div>
+        
     </div>
     <div class="pdtModal"></div>
   </main>
@@ -143,7 +144,7 @@
 			data:{sort:sort},
 			dataType:"html",
 			success:(data)=>{
-				
+				$("#dailyCon").html(data);
 			}
 		});
 		
