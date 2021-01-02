@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="payment">
 	<insert id="insertPayment" parameterType="payment">
-		INSERT INTO PAYMENT VALUES(SEQ_PAYMENTNO.NEXTVAL, #{memberNo, jdbcType=VARCHAR}, #{name}, #{receiverName}, #{tel}, #{receiverTel}, #{loc}, null, #{pointPlus}, #{pointMinus}, #{totalPrice}, #{payKind}, SYSDATE, DEFAULT, #{payStatus}, #{email}, #{orderNo})
+		INSERT INTO PAYMENT VALUES(SEQ_PAYMENTNO.NEXTVAL, #{memberNo, jdbcType=VARCHAR}, #{name}, #{receiverName}, #{tel}, #{receiverTel}, #{loc}, null, #{pointPlus}, #{pointMinus}, #{totalPrice}, #{payKind}, SYSDATE, DEFAULT, #{payStatus}, #{email}, #{orderNo}, #{refundName, jdbcType=VARCHAR}, #{refundBank, jdbcType=VARCHAR}, #{refundAccount, jdbcType=VARCHAR})
 		<selectKey keyProperty="paymentNo" resultType="string" order="AFTER">
 			SELECT SEQ_PAYMENTNO.CURRVAL FROM DUAL
 		</selectKey>
@@ -11,7 +11,7 @@
 		INSERT INTO PAYDETAIL VALUES(SEQ_DETAILNO.NEXTVAL, #{paymentNo}, #{stockNo}, #{cnt}, '결제')
 	</insert>
 	<select id="selectPaymentCompleteList" parameterType="string" resultType="map">
-		SELECT PAYMENTNO, PRODUCTNAME, IMGNAME, COLOR, PRICE, PRODUCTSIZE, CNT, EMAIL, NAME, RECEIVERNAME, TEL, RECEIVERTEL, PAYKIND, L0C, POINTPLUS, POINTMINUS, TOTALPRICE, ORDERNO FROM PAYMENT JOIN PAYDETAIL USING(PAYMENTNO) JOIN STOCK USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO) WHERE ORDERNO=#{orderNo}
+		SELECT PAYMENTNO, PRODUCTNAME, IMGNAME, COLOR, PRICE, PRODUCTSIZE, CNT, EMAIL, NAME, RECEIVERNAME, TEL, RECEIVERTEL, PAYKIND, L0C, POINTPLUS, POINTMINUS, TOTALPRICE, ORDERNO, REFUNDNAME, REFUNDBANK, REFUNDACCOUNT FROM PAYMENT JOIN PAYDETAIL USING(PAYMENTNO) JOIN STOCK USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO) WHERE ORDERNO=#{orderNo}
 	</select>
 	<select id="selectPaymentNo" parameterType="string" resultType="string">
 		SELECT PAYMENTNO FROM PAYMENT WHERE ORDERNO = #{orderNo}

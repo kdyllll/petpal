@@ -119,7 +119,11 @@ public class PaymentController {
 										@RequestParam(value="tel") String tel,
 										@RequestParam(value="point") int point,
 										@RequestParam(value="pointMinus") int pointMinus,
-										@RequestParam(value="payKind") String payKind) throws UnsupportedEncodingException {
+										@RequestParam(value="payKind") String payKind,
+										@RequestParam(value="holder") String holder,
+										@RequestParam(value="bank") String bank,
+										@RequestParam(value="bankSelect") String bankSelect,
+										@RequestParam(value="account") String account) throws UnsupportedEncodingException {
 		
 		//8자리 난수 생성
 		Random rand = new Random();
@@ -138,6 +142,14 @@ public class PaymentController {
 			
 			loc = loc + " " + locDetail;
 			
+			String refundName = holder.replaceAll(",", "");
+			String refundBank = "";
+			if(bankSelect.equals("")) {
+				refundBank = bank.replaceAll(",", "");
+			}else {
+				refundBank = bankSelect.replaceAll(",", "");
+			}
+			String refundAccount = account.replaceAll(",", "");
 			
 			//총 결제 금액에서 사용한 포인트 빼기
 			totalPrice = totalPrice - pointMinus;
@@ -156,7 +168,7 @@ public class PaymentController {
 				payStatus = "결제대기";
 			}
 			
-			Payment p = Payment.builder().memberNo(memberNo).receiverName(receiverName).loc(loc).receiverTel(receiverTel).pointPlus(pointPlus).pointMinus(pointMinus).name(name).email(email).tel(tel).totalPrice(totalPrice).payKind(payKind).payStatus(payStatus).orderNo(orderNo).build();
+			Payment p = Payment.builder().memberNo(memberNo).receiverName(receiverName).loc(loc).receiverTel(receiverTel).pointPlus(pointPlus).pointMinus(pointMinus).name(name).email(email).tel(tel).totalPrice(totalPrice).payKind(payKind).payStatus(payStatus).orderNo(orderNo).refundName(refundName).refundBank(refundBank).refundAccount(refundAccount).build();
 			
 			//payment테이블에 insert
 			int result = service.insertPayment(p, cnt, stockNo);
@@ -186,6 +198,15 @@ public class PaymentController {
 			
 			loc = loc + " " + locDetail;
 			
+			String refundName = holder.replaceAll(",", "");
+			String refundBank = "";
+			if(bankSelect.equals("")) {
+				refundBank = bank.replaceAll(",", "");
+			}else {
+				refundBank = bankSelect.replaceAll(",", "");
+			}
+			String refundAccount = account.replaceAll(",", "");
+			
 			String payStatus = "";
 			//카드면 결제완료 현금이면 결제대기
 			if(payKind.equals("신용카드")) {
@@ -194,7 +215,7 @@ public class PaymentController {
 				payStatus = "결제대기";
 			}
 			
-			Payment p = Payment.builder().receiverName(receiverName).loc(loc).receiverTel(receiverTel).name(name).email(email).tel(tel).totalPrice(totalPrice).payKind(payKind).payStatus(payStatus).orderNo(orderNo).build();
+			Payment p = Payment.builder().receiverName(receiverName).loc(loc).receiverTel(receiverTel).name(name).email(email).tel(tel).totalPrice(totalPrice).payKind(payKind).payStatus(payStatus).orderNo(orderNo).refundName(refundName).refundBank(refundBank).refundAccount(refundAccount).build();
 			
 			int result = service.insertPayment(p, cnt, stockNo);
 			

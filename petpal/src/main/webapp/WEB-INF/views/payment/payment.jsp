@@ -11,62 +11,268 @@
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 
-	<c:set var="path" value="${pageContext.request.contextPath }"/> 
- 	<jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
-	 
-	<style>
-	    #adsideWrapper { 
-	     position: absolute;
-	   }
-	   #adside.fixed {
-	     position: fixed;
-	   }
-	</style>
+<c:set var="path" value="${pageContext.request.contextPath }"/> 
+	<jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
+ 
+<style>
+    #adsideWrapper { 
+     position: absolute;
+   }
+   #adside.fixed {
+     position: fixed;
+   }
+</style>
+
+<script>
+let count = 0;
+function stock(){
+	let stockNo=[];
+   	$("input[name=stockNo]").each((i,item)=>{
+   		stockNo.push(item.value);
+   	});
+   	let cnt=[];
+   	$("input[name=cnt]").each((i,item)=>{
+   		cnt.push(item.value);
+   	});
+   	let productName=[];
+   	$("input[name=productName]").each((i,item)=>{
+   		productName.push(item.value);
+   	});
+   	let productSize=[];
+   	$("input[name=productSize]").each((i,item)=>{
+   		productSize.push(item.value);
+   	});
+   	let color=[];
+   	$("input[name=color]").each((i,item)=>{
+   		color.push(item.value);
+   	});
+   	
+   	//동적으로 재고 개수 확인하기
+      	$.ajaxSettings.traditional = true;
+      	$.ajax({
+		url: "${path}/payment/selectStock.do",
+		data:{stockNo:stockNo},
+		dataType:"json",			
+		success:function(data){         
+			$.each(data, function(idx, val) {
+				if(val < cnt[idx]){
+					alert(productName[idx] + " " + color[idx]  + " " + productSize[idx] + " "  +  "상품의 재고가 부족합니다.     장바구니를 확인해주세요!");
+					count++;
+					$("#stock").show();
+					$("#payment").hide();
+				}
+			});
+	       	if(count == 0){
+	       		swal("상품 구매 가능", "구매가 가능한 상품들입니다.", "success");
+	       		$("#stock").hide();
+	       		$("#payment").show();
+	       	}
+		},
+		error:function(data, status, opt)
+	    {
+	        alert("code:"+data.status+"\n"+"message:"+data.responseText+"\n"+"error:"+opt);
+	    }
+	});
+}
 	
-	<script>
-	let count = 0;
-	function stock(){
-		let stockNo=[];
-    	$("input[name=stockNo]").each((i,item)=>{
-    		stockNo.push(item.value);
-    	});
-    	let cnt=[];
-    	$("input[name=cnt]").each((i,item)=>{
-    		cnt.push(item.value);
-    	});
-    	let productName=[];
-    	$("input[name=productName]").each((i,item)=>{
-    		productName.push(item.value);
-    	});
-    	let productSize=[];
-    	$("input[name=productSize]").each((i,item)=>{
-    		productSize.push(item.value);
-    	});
-    	let color=[];
-    	$("input[name=color]").each((i,item)=>{
-    		color.push(item.value);
-    	});
-    	
-    	//동적으로 재고 개수 확인하기
+function check(){
+	//결제 API 실행 전 유효성 검사
+	if($("#name").val()===""){
+		swal("받으실 분의 성함을 입력해주세요", "", "warning");
+		$('#name').focus();
+	}else if($("#address").val()===""){
+		swal("배송지 주소를 입력해주세요", "", "warning");
+		$('#address').focus();
+	}else if($("#detailAddress").val()===""){
+		swal("상세 주소를 입력해주세요", "", "warning");
+		$('#detailAddress').focus();
+	}else if($("#phone").val()===""){
+		swal("받으실 분의 휴대폰 번호를 입력해주세요", "", "warning");
+		$('#phone').focus();
+	}else if($("#rname").val()===""){
+		swal("주문자 이름을 입력해주세요", "", "warning");
+		$('#rname').focus();
+	}else if($("#email").val()===""){
+		swal("이메일을 입력해주세요", "", "warning");
+		$('#email').focus();
+	}else if($("#rphone").val()===""){
+		swal("주문자의 휴대폰 번호를 입력해주세요", "", "warning");
+		$('#rphone').focus();
+	}else if($("#cash").is(":checked")){
+		if($("#holder").val()===""){
+			swal("예금주 명을 입력해주세요", "", "warning");
+			$('#holder').focus();
+		}else if($("select[name=bankSelect]").val()===null){
+			swal("은행명을 입력해주세요", "", "warning");
+			$('#holder').focus();
+		}else if($("#bank").val()===""){
+			swal("은행명을 입력해주세요", "", "warning");
+			$('#holder').focus();
+		}else if($("#account").val()===""){
+			swal("환불 받으실 계좌번호를 입력해주세요", "", "warning");
+			$('#account').focus();
+		}else{
+			swal("정보 입력 완료", "결제를 진행합니다.", "success");
+			frm.submit();
+		}
+	}else{
+			swal("정보 입력 완료", "결제를 진행합니다.", "success");
+			frm.submit();
+		
+		/* if($("input:radio[id='credit']").is(":checked")){
+			 	var IMP = window.IMP;
+			IMP.init('imp77627307');
+
+			IMP.request_pay({
+			    pg : 'inicis', // version 1.1.0부터 지원.
+			    pay_method : 'card',
+			    merchant_uid : 'merchant_' + new Date().getTime(),
+			    name : '주문명:결제테스트',
+			    amount : 100,
+			}, function(rsp) {
+			    if ( rsp.success ) {
+			    	//결제에 성공하면 form 전송
+			        frm.submit();
+			    } else {
+			    	//결제 실패하면 메세지 띄우고 페이지에 머무름
+			        var msg = '결제에 실패하였습니다.';
+			        msg += '에러내용 : ' + rsp.error_msg;
+			        alert(msg);    
+			        return false;
+			    }
+			});
+ 
+		return false;
+		}else{
+			frm.submit();
+		} */
+	}
+}
+	
+	//장바구니 부분 사이드 div 스크롤에 따라 위치 변경
+	$(document).ready(function() {
+		var top = $('#adside').offset().top - parseFloat($('#adside').css('marginTop').replace(/auto/, 0));
+		$(window).scroll(function(event) {
+			var y = $(this).scrollTop() + 400;
+			if (y >= top) {
+				$('#adside').addClass('fixed');
+			} else {
+				$('#adside').removeClass('fixed');
+			}
+		});
+		$("#stock").show();
+		$("#payment").hide();
+	});
+	
+	//주소찾기 API
+	function sample6_execDaumPostcode() {
+		document.getElementById("postcode").value="";
+		document.getElementById("address").value="";
+		document.getElementById("detailAddress").value="";
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    document.getElementById("extraAddress").value = extraAddr;
+                
+                } else {
+                    document.getElementById("extraAddress").value = '';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('postcode').value = data.zonecode;
+                document.getElementById("address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("detailAddress").focus();
+            }
+        }).open();
+    }
+	
+	//핸드폰 번호 입력 시 '-' 자동으로 입력
+	$(document).on("keyup", ".phoneNumber", function() { 
+		$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); 
+	});
+	
+	//배송지 정보와 동일하게 정보 채우기
+	function fill(){
+		var name = $("#name").val();
+		var phone = $("#phone").val();
+
+		$("#rname").val(name);
+		$("#rphone").val(phone);
+	}
+	
+	//장바구니 버튼 누르면 장바구니 페이지로 이동
+	function cart(){
+		location.replace('/petpal/cart/cart.do');
+	}
+	
+	$(document).on("keyup", "#point", function() {
+		if($(this).val() > ${point}){
+			alert("사용 가능한 포인트보다 더 많은 포인트를 입력하셨습니다.");
+			document.getElementById("point").value=${point};
+		}else{
+			document.getElementById("pointMinus").value=$(this).val();
+		}
+	});
+	
+	$(function(){
+		$("#point").blur(function(){
+			let usePoint = $(this).val()%100;
+			if(usePoint!=0){
+				document.getElementById("point").value="";
+				alert("포인트는 100P단위부터 사용 가능합니다.");
+			}else{
+				$("#usePoint").text($(this).val()+"P");
+				$("#total").text((${list[0].totalPrice } - $(this).val() ) + "원");
+				document.getElementById("pointMinus").value=$(this).val();
+				$("#expectation").text((${list[0].totalPrice } - $(this).val()) * 0.1 + "P");
+			}
+		});
+	});
+	
+	function getAddress(){
+		let memberNo = ${memberNo};
+		//배송지 주소 가져오기
        	$.ajaxSettings.traditional = true;
        	$.ajax({
-			url: "${path}/payment/selectStock.do",
-			data:{stockNo:stockNo},
-			dataType:"json",			
-			success:function(data){         
-				$.each(data, function(idx, val) {
-					if(val < cnt[idx]){
-						alert(productName[idx] + " " + color[idx]  + " " + productSize[idx] + " "  +  "상품의 재고가 부족합니다.     장바구니를 확인해주세요!");
-						count++;
-						$("#stock").show();
-						$("#payment").hide();
-					}
-				});
-		       	if(count == 0){
-		       		swal("상품 구매 가능", "구매가 가능한 상품들입니다.", "success");
-		       		$("#stock").hide();
-		       		$("#payment").show();
-		       	}
+			url: "${path}/payment/getAddress.do",
+			data:{memberNo:memberNo},
+			success:function(data){
+				document.getElementById("name").value=data.memberName;
+				document.getElementById("phone").value=data.phone;
+				document.getElementById("postcode").value=data.post;
+				document.getElementById("address").value=data.address;
+				document.getElementById("detailAddress").value=data.detail;
+				document.getElementById("email").value=data.email;
 			},
 			error:function(data, status, opt)
 		    {
@@ -74,198 +280,34 @@
 		    }
 		});
 	}
-		
-	function check(){
-		//결제 API 실행 전 유효성 검사
-		if($("#name").val()===""){
-			swal("받으실 분의 성함을 입력해주세요", "", "warning");
-			$('#name').focus();
-		}else if($("#sample6_address").val()===""){
-			swal("배송지 주소를 입력해주세요", "", "warning");
-			$('#sample6_address').focus();
-		}else if($("#phone").val()===""){
-			swal("받으실 분의 휴대폰 번호를 입력해주세요", "", "warning");
-			$('#phone').focus();
-		}else if($("#rname").val()===""){
-			swal("주문자 이름을 입력해주세요", "", "warning");
-			$('#rname').focus();
-		}else if($("#email").val()===""){
-			swal("이메일을 입력해주세요", "", "warning");
-			$('#email').focus();
-		}else if($("#rphone").val()===""){
-			swal("주문자의 휴대폰 번호를 입력해주세요", "", "warning");
-			$('#rphone').focus();
-		}
-		else{
-				swal("정보 입력 완료", "결제를 진행합니다.", "success");
-				frm.submit();
-			
-			/* if($("input:radio[id='credit']").is(":checked")){
-				 	var IMP = window.IMP;
-				IMP.init('imp77627307');
-
-				IMP.request_pay({
-				    pg : 'inicis', // version 1.1.0부터 지원.
-				    pay_method : 'card',
-				    merchant_uid : 'merchant_' + new Date().getTime(),
-				    name : '주문명:결제테스트',
-				    amount : 100,
-				}, function(rsp) {
-				    if ( rsp.success ) {
-				    	//결제에 성공하면 form 전송
-				        frm.submit();
-				    } else {
-				    	//결제 실패하면 메세지 띄우고 페이지에 머무름
-				        var msg = '결제에 실패하였습니다.';
-				        msg += '에러내용 : ' + rsp.error_msg;
-				        alert(msg);    
-				        return false;
-				    }
-				});
-	 
-			return false;
-			}else{
-				frm.submit();
-			} */
-		}
-	}
-		
-		//장바구니 부분 사이드 div 스크롤에 따라 위치 변경
-		$(document).ready(function() {
-			var top = $('#adside').offset().top - parseFloat($('#adside').css('marginTop').replace(/auto/, 0));
-			$(window).scroll(function(event) {
-				var y = $(this).scrollTop() + 400;
-				if (y >= top) {
-					$('#adside').addClass('fixed');
-				} else {
-					$('#adside').removeClass('fixed');
-				}
-			});
-			$("#stock").show();
-			$("#payment").hide();
+	
+	$(document).ready(function() {
+		$("#expectation").text(${list[0].totalPrice } * 0.1 + "P");
+		$(".refund").hide();
+		$("#cre").show();
+	});
+	
+	$(function(){
+		$('#cash').click(function(){
+			$(".refund").show();
+			$("#cre").hide();
 		});
-		
-		
-		
-		//주소찾기 API
-		function sample6_execDaumPostcode() {
-			document.getElementById("name").value="";
-			document.getElementById("phone").value="";
-			document.getElementById("postcode").value="";
-			document.getElementById("address").value="";
-			document.getElementById("detailAddress").value="";
-	        new daum.Postcode({
-	            oncomplete: function(data) {
-	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-	
-	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-	                var addr = ''; // 주소 변수
-	                var extraAddr = ''; // 참고항목 변수
-	
-	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-	                    addr = data.roadAddress;
-	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-	                    addr = data.jibunAddress;
-	                }
-	
-	                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-	                if(data.userSelectedType === 'R'){
-	                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-	                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-	                        extraAddr += data.bname;
-	                    }
-	                    // 건물명이 있고, 공동주택일 경우 추가한다.
-	                    if(data.buildingName !== '' && data.apartment === 'Y'){
-	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-	                    }
-	                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-	                    if(extraAddr !== ''){
-	                        extraAddr = ' (' + extraAddr + ')';
-	                    }
-	                    // 조합된 참고항목을 해당 필드에 넣는다.
-	                    document.getElementById("extraAddress").value = extraAddr;
-	                
-	                } else {
-	                    document.getElementById("extraAddress").value = '';
-	                }
-	
-	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-	                document.getElementById('postcode').value = data.zonecode;
-	                document.getElementById("address").value = addr;
-	                // 커서를 상세주소 필드로 이동한다.
-	                document.getElementById("detailAddress").focus();
-	            }
-	        }).open();
-	    }
-		
-		//핸드폰 번호 입력 시 '-' 자동으로 입력
-		$(document).on("keyup", ".phoneNumber", function() { 
-			$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); 
+		$('#credit').click(function(){
+			$(".refund").hide();
+			$("#cre").show();
 		});
-		
-		//배송지 정보와 동일하게 정보 채우기
-		function fill(){
-			var name = $("#name").val();
-			var phone = $("#phone").val();
+	});
 	
-			$("#rname").val(name);
-			$("#rphone").val(phone);
+	$(document).on("change","select.bankSelect",e=>{
+		if($(e.target).val()=="기타"){//6+를 선택하면
+		    let box=$(e.target).parents(".bankBox")
+		    $(e.target).remove();
+		    let input=`<input type="text" id="bank" class="refund bankSelect form-control" name="bank">`;
+		    box.prepend(input);
+		    box.children(".bankSelect").focus();
 		}
-		
-		//장바구니 버튼 누르면 장바구니 페이지로 이동
-		function cart(){
-			location.replace('/petpal/cart/cart.do');
-		}
-		
-		$(document).on("keyup", "#point", function() {
-			if($(this).val() > ${point}){
-				alert("사용 가능한 포인트보다 더 많은 포인트를 입력하셨습니다.");
-				document.getElementById("point").value=${point};
-			}else{
-				document.getElementById("pointMinus").value=$(this).val();
-			}
-		});
-		
-		$(function(){
-			$("#point").blur(function(){
-				let usePoint = $(this).val()%100;
-				if(usePoint!=0){
-					document.getElementById("point").value="";
-					alert("포인트는 100P단위부터 사용 가능합니다.");
-				}else{
-					$("#usePoint").text($(this).val()+"P");
-					$("#total").text((${list[0].totalPrice } - $(this).val() ) + "원");
-					document.getElementById("pointMinus").value=$(this).val();
-				}
-			});
-		});
-		
-		function getAddress(){
-			let memberNo = ${memberNo};
-			//배송지 주소 가져오기
-	       	$.ajaxSettings.traditional = true;
-	       	$.ajax({
-				url: "${path}/payment/getAddress.do",
-				data:{memberNo:memberNo},
-				success:function(data){
-					document.getElementById("name").value=data.memberName;
-					document.getElementById("phone").value=data.phone;
-					document.getElementById("postcode").value=data.post;
-					document.getElementById("address").value=data.address;
-					document.getElementById("detailAddress").value=data.detail;
-					document.getElementById("email").value=data.email;
-				},
-				error:function(data, status, opt)
-			    {
-			        alert("code:"+data.status+"\n"+"message:"+data.responseText+"\n"+"error:"+opt);
-			    }
-			});
-		}
-		
-	</script>
+	});
+</script>
 	
 </head>
 <body class="bg-white">
@@ -369,7 +411,7 @@
                             <div class="col-4">
                                 <h3>주문자</h3>
                             </div>
-                            <div class="mr-4 d-flex align-items-center ">
+                            <div class="mr-4 d-flex align-items-center">
                                 <button type="button" class="btn btn-dark" onclick="fill()">배송지 정보와 동일</button>
                             </div>
                         </div>
@@ -398,11 +440,20 @@
                         	<h5 class="mr-3">포인트</h5><small>포인트는 100P단위로 사용 가능합니다. (1P당 1원)</small>
                         </div>
                         <hr>
-                        <div class="mt-2 d-flex align-items-center">
-                        	<input type="text" class="mr-2 form-control" id="point" name="point" style="width:20%" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">P
+                        <div class="mt-4 d-flex align-items-center">
+                        	<input type="text" class="mr-2 form-control" id="point" name="point" value="0" style="width:20%" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">P
                         	<input type="hidden" name="pointMinus" id="pointMinus" value="0">
                         </div>
                         <small>사용 가능한 포인트 <c:out value="${point }"/>P</small>
+                        
+                        <div class="mt-5 d-flex align-items-center">
+                        	<h5 class="mr-3">예상 적립 포인트</h5><small>결제금액의 10%가 포인트로 적립됩니다.</small>
+                        </div>
+                        <hr>
+                        <div class="mt-4 d-flex align-items-center">
+                        	<h6 id="expectation">0P</h6>
+                        </div>
+                        
                         
                         <h5 class="mt-4">총 결제금액</h5>
                         <hr>
@@ -418,7 +469,7 @@
 			                    </li>
 			                    <li class="d-flex justify-content-between">
 			                        <span>사용 포인트</span>
-			                        <span id="usePoint">0원</span>
+			                        <span id="usePoint">0P</span>
 			                    </li>
 			                    <li class="d-flex justify-content-between mt-4">
 		                        	<span></span>
@@ -444,17 +495,51 @@
                         </div>
                     </div>
                     
-                    <div id="refund"></div>
+                   	
+                   	<div class="d-flex justify-content-center mb-3">
+                       	<h5 class="refund">환불 요청 시 환불될 계좌의 정보를 입력해주세요.</h5>
+                    </div>
+                   	<div class="d-flex align-items-center mb-3">
+                   		<span class="refund mr-2">예금주</span>
+                       	<input type="text" class="refund form-control" id="holder" style="width:35%;" name="holder" oninput="this.value = this.value.replace(/[^a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]/g, '').replace(/(\..*)\./g, '$1');">
+                   	</div>
+                    <div class="d-flex">
+                   		<div class="refund d-flex align-items-center mr-3">
+	                   		<span class="refund mr-3" style="width:40px;">은행</span>
+	                   		<div class="bankBox" style="width:80%;">
+		                   		<select name="bankSelect" class="refund bank bankSelect form-control">
+		                   			<option value="bank" selected disabled></option>
+									<option value="신한">신한</option>
+									<option value="국민">국민</option>
+									<option value="농협">농협</option>
+									<option value="우리">우리</option>
+									<option value="카카오">카카오</option>
+									<option value="기타">기타</option>
+				                </select>
+			                </div>
+                   		</div>
+                   		<div class="d-flex align-items-center">
+	                   		<span class="refund mr-3" style="width:30%;">환불 계좌</span>
+	                       	<input type="text" class="refund form-control" id="account" style="width:80%;" name="account" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                    	</div>
+                    </div>
+                    
+                    <div id="cre">
+                    	<input type="hidden" name="holder">
+                    	<input type="hidden" name="bankSelect">
+                    	<input type="hidden" name="bank">
+                    	<input type="hidden" name="account">
+                    </div>
                     
                     <input class="mt-5 btn btn-dark btn-lg btn-block" type="button" id="payment" value="결제하기" onclick="check();"></input>
                     
-                    <div class="d-block" style="text-align: center;">
+                    <div class="mt-5 d-block" style="text-align: center;">
                     	<span id="stock" style="font-size:20px;color:red;">재고를 확인해주세요!</span>
                     </div>
                     
                     
-                    <br><br><br><br><br><br>
                 </form>
+                <br><br><br><br><br><br>
             </div>
         </div>
     </div>

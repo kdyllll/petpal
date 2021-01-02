@@ -28,4 +28,7 @@ public class Payment {
 	private String payStatus;
 	private String email;
 	private String orderNo;
+	private String refundName;
+	private String refundBank;
+	private String refundAccount;
 }

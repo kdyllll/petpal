@@ -47,6 +47,7 @@
 	  					<h6>이메일 - <c:out value="${list[0].EMAIL }"/></h6>
 	  					<h6>사용 포인트 - <c:out value="${list[0].POINTMINUS }"/>P / 남은 포인트 - <c:out value="${point }"/>P</h6>
 	  					<h6>결제금액 - <c:out value="${list[0].TOTALPRICE }"/>원 / 결제수단 - <c:out value="${list[0].PAYKIND }"/></h6>
+	  					<h6>예금주 - <c:out value="${list[0].REFUNDNAME }"/>  / 환불계좌 - <c:out value="${list[0].REFUNDBANK }"/> <c:out value="${list[0].REFUNDACCOUNT }"/></h6>
 	  					<h6></h6>
 	  				</div>
 	  			</div>
@@ -57,7 +58,7 @@
 							<div class="proCon p-3 border border-dark rounded mt-3 mb-2 d-block" style="width:90%; margin:0px auto;">
 								<div class="d-flex mt-2">
 									<div style="margin:0px auto">
-										<a href="" class="d-flex">
+										<div class="d-flex">
 											<div>
 												<img src="${path }/resources/upload/product/detail/${c.IMGNAME}" class="rounded" style="width:100px;height:100px">
 											</div>
@@ -74,7 +75,7 @@
 													<span class="ml-auto"><c:out value="${c.PRICE}"/>원</span>
 												</div>
 											</div>
-										</a>
+										</div>
 											<div class="mt-3">
 												<c:if test="${!empty c.COLOR && !empty c.PRODUCTSIZE}">
 													<span class="mr-3"><c:out value="${c.COLOR }"/> / <c:out value="${c.PRODUCTSIZE }"/> / <c:out value="${c.CNT }"/>개</span>
@@ -110,6 +111,7 @@
 	  					<h6>배송지 - <c:out value="${list[0].L0C }"/></h6>
 	  					<h6>이메일 - <c:out value="${list[0].EMAIL }"/></h6>
 	  					<h6>결제금액 - <c:out value="${list[0].TOTALPRICE }"/>원 / 결제수단 - <c:out value="${list[0].PAYKIND }"/></h6>
+	  					<h6>예금주 - <c:out value="${list[0].REFUNDNAME }"/>  / 환불계좌 - <c:out value="${list[0].REFUNDBANK }"/> <c:out value="${list[0].REFUNDACCOUNT }"/></h6>
 	  					<h6></h6>
 	  				</div>
 	  			</div>
@@ -120,7 +122,7 @@
 							<div class="proCon p-3 border border-dark rounded mt-3 mb-2 d-block" style="width:90%; margin:0px auto;">
 								<div class="d-flex mt-2">
 									<div style="margin:0px auto">
-										<a href="" class="d-flex">
+										<div class="d-flex">
 											<div>
 												<img src="${path }/resources/upload/product/detail/${c.IMGNAME}" class="rounded" style="width:100px;height:100px">
 											</div>
@@ -137,7 +139,7 @@
 													<span class="ml-auto"><c:out value="${c.PRICE}"/>원</span>
 												</div>
 											</div>
-										</a>
+										</div>
 											<div class="mt-3">
 												<c:if test="${!empty c.COLOR && !empty c.PRODUCTSIZE}">
 													<span class="mr-3"><c:out value="${c.COLOR }"/> / <c:out value="${c.PRODUCTSIZE }"/> / <c:out value="${c.CNT }"/>개</span>

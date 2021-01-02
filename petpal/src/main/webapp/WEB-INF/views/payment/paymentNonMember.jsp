@@ -70,9 +70,12 @@
 		if($("#name").val()===""){
 			swal("받으실 분의 성함을 입력해주세요", "", "warning");
 			$('#name').focus();
-		}else if($("#sample6_address").val()===""){
+		}else if($("#address").val()===""){
 			swal("배송지 주소를 입력해주세요", "", "warning");
-			$('#sample6_address').focus();
+			$('#address').focus();
+		}else if($("#detailAddress").val()===""){
+			swal("상세 주소를 입력해주세요", "", "warning");
+			$('#detailAddress').focus();
 		}else if($("#phone").val()===""){
 			swal("받으실 분의 휴대폰 번호를 입력해주세요", "", "warning");
 			$('#phone').focus();
@@ -85,10 +88,26 @@
 		}else if($("#rphone").val()===""){
 			swal("주문자의 휴대폰 번호를 입력해주세요", "", "warning");
 			$('#rphone').focus();
-		}
-		else{
-			swal("정보 입력 완료", "결제를 진행합니다.", "success");
-			frm.submit();
+		}else if($("#cash").is(":checked")){
+			if($("#holder").val()===""){
+				swal("예금주 명을 입력해주세요", "", "warning");
+				$('#holder').focus();
+			}else if($("select[name=bankSelect]").val()===null){
+				swal("은행명을 입력해주세요", "", "warning");
+				$('#holder').focus();
+			}else if($("#bank").val()===""){
+				swal("은행명을 입력해주세요", "", "warning");
+				$('#holder').focus();
+			}else if($("#account").val()===""){
+				swal("환불 받으실 계좌번호를 입력해주세요", "", "warning");
+				$('#account').focus();
+			}else{
+				swal("정보 입력 완료", "결제를 진행합니다.", "success");
+				frm.submit();
+			}
+		}else{
+				swal("정보 입력 완료", "결제를 진행합니다.", "success");
+				frm.submit();
 			
 			/* if($("input:radio[id='credit']").is(":checked")){
 				 	var IMP = window.IMP;
@@ -139,6 +158,9 @@
 	
 	//주소찾기 API
 	function sample6_execDaumPostcode() {
+		document.getElementById("postcode").value="";
+		document.getElementById("address").value="";
+		document.getElementById("detailAddress").value="";
         new daum.Postcode({
             oncomplete: function(data) {
                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
@@ -204,6 +226,32 @@
 	function cart(){
 		location.replace('/petpal/cart/cart.do');
 	}
+	
+	$(document).ready(function() {
+		$(".refund").hide();
+		$("#cre").show();
+	});
+	
+	$(function(){
+		$('#cash').click(function(){
+			$(".refund").show();
+			$("#cre").hide();
+		});
+		$('#credit').click(function(){
+			$(".refund").hide();
+			$("#cre").show();
+		});
+	});
+	
+	$(document).on("change","select.bankSelect",e=>{
+		if($(e.target).val()=="기타"){//6+를 선택하면
+		    let box=$(e.target).parents(".bankBox")
+		    $(e.target).remove();
+		    let input=`<input type="text" id="bank" class="refund bankSelect form-control" name="bank">`;
+		    box.prepend(input);
+		    box.children(".bankSelect").focus();
+		}
+	});
 </script>
 
 	<style>
@@ -374,7 +422,40 @@
                         </div>
                     </div>
                     
-                    <div id="refund"></div>
+                    <div class="d-flex justify-content-center mb-3">
+                       	<h5 class="refund">환불 요청 시 환불될 계좌의 정보를 입력해주세요.</h5>
+                    </div>
+                   	<div class="d-flex align-items-center mb-3">
+                   		<span class="refund mr-2">예금주</span>
+                       	<input type="text" class="refund form-control" id="holder" style="width:35%;" name="holder" oninput="this.value = this.value.replace(/[^a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]/g, '').replace(/(\..*)\./g, '$1');">
+                   	</div>
+                    <div class="d-flex">
+                   		<div class="refund d-flex align-items-center mr-3">
+	                   		<span class="refund mr-3" style="width:40px;">은행</span>
+	                   		<div class="bankBox" style="width:80%;">
+		                   		<select name="bankSelect" class="refund bank bankSelect form-control">
+		                   			<option value="bank" selected disabled></option>
+									<option value="신한">신한</option>
+									<option value="국민">국민</option>
+									<option value="농협">농협</option>
+									<option value="우리">우리</option>
+									<option value="카카오">카카오</option>
+									<option value="기타">기타</option>
+				                </select>
+			                </div>
+                   		</div>
+                   		<div class="d-flex align-items-center">
+	                   		<span class="refund mr-3" style="width:30%;">환불 계좌</span>
+	                       	<input type="text" class="refund form-control" id="account" style="width:80%;" name="account" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                    	</div>
+                    </div>
+                    
+                    <div id="cre">
+                    	<input type="hidden" name="holder">
+                    	<input type="hidden" name="bankSelect">
+                    	<input type="hidden" name="bank">
+                    	<input type="hidden" name="account">
+                    </div>
                     
                     <input class="mt-5 btn btn-dark btn-lg btn-block" type="button" id="payment" value="결제하기" onclick="check();"></input>
                     
