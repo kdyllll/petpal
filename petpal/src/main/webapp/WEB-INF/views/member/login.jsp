@@ -18,7 +18,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
   
   <!-- Page Content -->
-   <main  class="text-center mt-5 mt-lg-0">  
+   <main  class="text-center mt-5 mt-lg-0 bg-white">  
     <div class="container pt-5 pt-lg-0">
       <div class="row pt-5">
         <form class="form-signin" action="${path }/member/memberLogin.do" method="post">
@@ -29,7 +29,7 @@
             </div>
           
             <div class="form-label-group text-left">
-              <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email ID" required autofocus>
+              <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email ID" value="${saveId!=null?saveId:''}" required autofocus>
               <label for="inputEmail">Email ID</label>
             </div>
           
@@ -40,12 +40,12 @@
           
             <div class="checkbox mb-3 text-left">
               <label>
-                <input type="checkbox" value="remember-me"> 아이디 기억하기
+                <input type="checkbox" name="saveId" value="saveId" ${saveId!=null?"checked":"" }> 아이디 기억하기
               </label>
               <div class="mt-3">
                 <a class="mr-5 text-dark" href="#">아이디 찾기</a>
                 <a class="mr-5 text-dark" href="#">비밀번호 재설정</a>
-                <a class="text-dark" href="#">회원가입</a>
+                <a class="text-dark" href="${path }/member/moveJoin.do">회원가입</a>
               </div>
             </div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>       

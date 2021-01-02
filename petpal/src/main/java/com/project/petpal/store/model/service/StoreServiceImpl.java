@@ -101,7 +101,7 @@ public class StoreServiceImpl implements StoreService{
 	}
 
 	@Override
-	public Stock selectStock(String detailNo) {
+	public Map selectStock(String detailNo) {
 		// TODO Auto-generated method stub
 		return dao.selectStock(session,detailNo);
 	}
@@ -212,6 +212,30 @@ public class StoreServiceImpl implements StoreService{
 	public List<DailyImg> selectDailyImg(String productNo) {
 		// TODO Auto-generated method stub
 		return dao.selectDailyImg(session,productNo);
+	}
+
+	@Override
+	public int insertFav(Map fav) {
+		// TODO Auto-generated method stub
+		return dao.insertFav(session,fav);
+	}
+
+	@Override
+	public List<Product> favList(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.favList(session,memberNo);
+	}
+
+	@Override
+	public int deleteFav(Map fav) {
+		// TODO Auto-generated method stub
+		return dao.deleteFav(session,fav);
+	}
+
+	@Override
+	public List<Product> starList() {
+		// TODO Auto-generated method stub
+		return dao.starList(session);
 	}
 
 	

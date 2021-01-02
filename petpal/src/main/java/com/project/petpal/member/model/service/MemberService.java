@@ -22,12 +22,15 @@ public interface MemberService {
    int countFollowing(String memberNo);
    int countFollower(String memberNo);
    List<DailyImg> selectDailyMain(String memberNo);
-   List<Map> selectTipMain(String memberNo);
-   List<Map> selectPlaceMain(String memberNo);
-   List<Map> selectFindMain(String memberNo);
-
-   List<Daily> selectDailyList(String memberNo);
+   List<Map> selectTipMain(String memberNo,int cPage,int numPerPage);
+   List<Map> selectPlaceMain(String memberNo,int cPage,int numPerPage);
+   List<Map> selectFindMain(String memberNo,int cPage,int numPerPage);
+   List<Daily> selectDailyList(String memberNo,int cPage,int numPerPage);
    List<Hashtag> selectDailyHash(String memberNo);
+   int dailyCount(String memberNo);
+   int tipCount(String memberNo);
+   int placeCount(String memberNo);
+   int findCount(String memberNo);
 
 
 }

@@ -13,19 +13,22 @@
 	<!-- Page Content -->
 	<main role="main">
 		<section class="mt-5">
-			<div class="container mt-2">
-				<div id="blog" class="row">
-					<jsp:include page="/WEB-INF/views/common/communityNav.jsp" />
-					<div id="btn" class="mb-5">
-						<button type="button" class="kind btn btn-secondary btn-sm mr-3">병원</button>
-						<button type="button" class="kind btn btn-secondary btn-sm mr-3">미용</button>
-						<button type="button" class="kind btn btn-secondary btn-sm mr-3">호텔링</button>
-						<button type="button" class="kind btn btn-secondary btn-sm mr-3">훈련소</button>
-						<button type="button" class="kind btn btn-secondary btn-sm mr-3">기타</button>
+			<div class="container mt-2 pl-0">
+				<div id="blog" >
+					<jsp:include page="/WEB-INF/views/common/communityNav.jsp" >
+						<jsp:param value="placeList" name="comNav"/>
+					</jsp:include>
+					<div class="container d-flex justify-content-center position-relative">
+						<div id="btn" class="mb-5">
+							<button type="button" class="kind btn btn-secondary btn-sm mr-3">병원</button>
+							<button type="button" class="kind btn btn-secondary btn-sm mr-3">미용</button>
+							<button type="button" class="kind btn btn-secondary btn-sm mr-3">호텔링</button>
+							<button type="button" class="kind btn btn-secondary btn-sm mr-3">훈련소</button>
+							<button type="button" class="kind btn btn-secondary btn-sm mr-3">기타</button>
+						</div>
+						 <div class="mr-5 position-absolute " style="top:0; right:0;"><button id="write" class="btn">글쓰기</button></div> 
 					</div>
-					<div class="float-end mr-5"><button id="write" class="btn">글쓰기</button></div>
-					
-					
+		
 					<c:if test="${empty list }">
 						<div class="col-12 mb-4 text-center mt-5">
 							<p>장소 후기가 없습니다.</p>
@@ -33,14 +36,16 @@
 					</c:if>
 					<c:if test="${not empty list }">
 						<c:forEach var="p" items="${list }">
-							<div class="col-12 col-sm-10 offset-sm-1 blogShort mb-4 border-bottom ">
-								<a href="${path }/place/movePlaceDetail.do?placeNo=${p.placeNo}" class="post-all">
-									<div class="row">
-										<div class="col-9">
+							<div class="col-2 col-sm-10 offset-sm-1 blogShort mb-4 border-bottom ">
+								<a href="${path }/place/movePlaceDetail.do?placeNo=${p.placeNo}" class="post-all row ">
+									
+										<div class="col-3 col-sm-9">
 											<div class="decoration">
 												<h3><c:out value="${p.title}" /></h3>
 												<article>
-													<p class="content"><c:out value="${p.content}" /></p>
+													<p class="content">
+													
+													<c:out value="${fn:substring(p.content,0,50)}" /><c:if test="${fn:length(p.content) > 50 }">...</c:if></p>
 												</article>
 											</div>
 											<img
@@ -59,11 +64,10 @@
 												<c:out value="${p.position[1] }" />
 											</p>
 										</div>
-										<div class="col-3">
+										<div class="col-1 col-sm-3 ">
 											<img src="${path }/resources/upload/place/${p.fileName}"
-												alt="post img" class="rounded float-right">
-										</div>
-									</div>
+												alt="post img" class="rounded float-right" style="width:75%;">
+										</div>	
 								</a>
 							</div>
 						</c:forEach>

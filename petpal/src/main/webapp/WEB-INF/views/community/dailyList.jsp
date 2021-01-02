@@ -27,16 +27,18 @@
         <div class="container my-4 mt-lg-0">
             <div class="row ">
             <input type="hidden" class="loginMember" value="${loginMember.memberNo }"/>
-                <jsp:include page="/WEB-INF/views/common/communityNav.jsp" />
+                <jsp:include page="/WEB-INF/views/common/communityNav.jsp" >
+                	<jsp:param value="dailyList" name="comNav"/>
+                </jsp:include>
                 <div class="form-inline container text-center mb-3">
                     <h3>일상</h3>
                     <button type="button" id="dailyWriteBtn" class="btn btn-outline-secondary ml-auto" >글쓰기</button>
                 </div>
                 <div class="form-inline container-xl mb-5">
-                    <div class="input-group col-lg-5 col-8">
+                    <div class="input-group col-lg-5 col-8 p-0">
                         <input type="text" class="form-control " placeholder="해시태그 내용을 입력하세요" aria-describedby="basic-addon2">
                         <div class="input-group-append">
-                            <button type="button" id="searchBtn" class="input-group-text">검색</button>
+                            <button type="button" id="searchBtn" class="input-group-text bg-point">검색</button>
                         </div>
                     </div>
                     <div class="dropdown ml-auto">
@@ -71,14 +73,14 @@
 		                                <div class="ml-1">
 		                                    <a href="${path }/user/moveUserInfo.do?memberNo=${d.MEMBERNO}"><span class="text-dark align-top mx-1"><strong><c:out value="${d.NICKNAME }"/></strong></span></a>
 		                                    <span><strong> · </strong></span>
-		                                    <span><button class="btn btn-link text-daily p-0 align-top"><strong> 팔로우</strong></button></span>
+		                                    <span><button class="btn btn-link text-point p-0 align-top"><strong> 팔로우</strong></button></span>
 		                                    <p class="ml-1" style="font-size: 12px;"><c:out value="${d.INFO }"/></p>  
 		                                </div>                    
 		                        </div>
 		                        <c:forEach var="i" items="${imgList}">
 		                        	<c:if test="${i.dailyNo eq d.DAILYNO}">
-		                        	<a class="d-inline-block border" href="${path }/daily/moveDetail.do?dailyNo=${d.DAILYNO }">                        
-	                        			<img src="${path }/resources/upload/community/daily/${i.dailyImgName}" class="rounded" width="100%" height="250px">
+		                        	<a class="d-inline-block" href="${path }/daily/moveDetail.do?dailyNo=${d.DAILYNO }">                        
+	                        			<img src="${path }/resources/upload/community/daily/${i.dailyImgName}" class="rounded" width="100%">
 	                        			<input type="hidden" value="${d.DAILYNO }"/>
 		                        	</a>	
 		                        	</c:if>
@@ -98,13 +100,13 @@
 		                                <span class="text-dark mx-1 align-text-middle">0</span>
 		                            </button>
 		                        </div>
-		                        <div class="card-body p-0">
+		                        <div class="card-body p-0 px-1">
 		                            <p class="card-text mb-1">${d.CONTENT }</p>
 		                            <div class="d-flex justify-content-between align-items-center">
 		                                <small class="text-muted pl-1">
 		                                	<c:forEach var="h" items="${hashList}">
 		                                		<c:if test="${not empty h and (h.postNo eq d.DAILYNO )}">
-		                                    		<a href="#">#<c:out value="${h.hashContent }"/></a>
+		                                    		<a class="text-secondary bg-point" href="#">#<c:out value="${h.hashContent }"/></a>
 		                                    	</c:if>
 		                                    </c:forEach>  
 		                                </small>
@@ -117,7 +119,7 @@
 
             </div>
         </div>
-        <div class="text-center">페이지바</div>
+        <div class="text-center">${pageBar }</div>
     </div>
     <div class="pdtModal"></div>
   </main>

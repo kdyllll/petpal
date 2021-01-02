@@ -101,8 +101,7 @@ input:focus {
 						<!--해시태그-->
 						<div id="tagCon" class="mt-3 pl-2">
 							<div
-								class="tagBox bg-light rounded text-secondary d-inline-block pl-1 py-1 ml-1 mb-2">
-								#<input name="hashtag"
+								class="tagBox bg-light rounded text-secondary d-inline-block pl-1 py-1 ml-1 mb-2">#<input name="hashtag"
 									style="box-sizing: content-box; width: 75px;"
 									onKeypress="javascript:if(event.keyCode==13) {$('.hashtag').focusout()}"
 									type="text" class="hashtag border-0 bg-transparent "
@@ -227,7 +226,7 @@ input:focus {
 	     $('.hashtag').on('keydown',e=>{
 	        var value = $(e.target).val().trim();
 	        $("#tagCon").append('<div id="virtual_dom" style="display: inline-block;">' + value + '</div>'); 
-	       
+	       	
 	        if($('#virtual_dom').width()<$("#tagCon").width()-70){
 	        var inputWidth =  $('#virtual_dom').width()+15; 
 	        }else{
@@ -240,8 +239,17 @@ input:focus {
 
 	    // 해시태그 작성 후 새 해시태그 추가
 	    $('.hashtag').focusout(function(e) {  
+	    	let cnt=0;
+	        $("input[name=hashtag]").each((i,item)=>{//해시태그 중복 입력 확인
+	              if($(item).val().trim()==$(e.target).val().trim()){
+	                 cnt++;
+	              }
+	        });
 	      if($(e.target).val().trim().length==0){
 	        //아무일도 일어나지 않음!
+	      }else if(cnt>1){//중복되었다면
+	          alert("해시태그는 중복해서 입력할 수 없습니다.");
+	          $(e.target).val("");
 	      }else if($(e.target).hasClass("hashtag") === true){
 	        //해시태그 작성 태그 복제
 	        var clone=$(e.target).parents(".tagBox").clone(true);

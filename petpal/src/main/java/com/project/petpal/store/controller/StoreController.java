@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
+import com.project.petpal.common.StarMapping;
 import com.project.petpal.community.model.vo.DailyImg;
 import com.project.petpal.member.model.vo.Member;
 import com.project.petpal.store.model.service.StoreService;
@@ -35,13 +36,15 @@ public class StoreController {
 	
 	@RequestMapping("/store/moveStoreHome.do")//스토어 홈으로 이동하는 서블릿
 	public String moveStoreHome(Model m) {
-		
-		 List<Product> dList=service.dogList(); //강아지 상품리스트
-		 List<Product> cList=service.catList(); //고양이 상품리스트
-		 List<Product> sList=service.smallList(); //소동물 상품리스트
+		 List<Product> starList=service.starList();//평균별점 리스트
+		 
+		 List<Product> dList=StarMapping.starMapping(service.dogList(),starList);//강아지 상품리스트
+		 List<Product> cList=StarMapping.starMapping(service.catList(),starList); //고양이 상품리스트
+		 List<Product> sList=StarMapping.starMapping(service.smallList(),starList); //소동물 상품리스트
+		 
 		 m.addAttribute("dList",dList);
 		 m.addAttribute("cList",cList);
-		 m.addAttribute("sList",sList);
+		 m.addAttribute("sList",sList);	
 		return "store/storeHome";
 	}
 
@@ -79,17 +82,18 @@ public class StoreController {
 	}
 	@RequestMapping("/store/moveCategory.do")//카테고리별 상품리스트로 이동하는 서블릿
 	public String moveCategory(String cNo,Model m) {
+		List<Product> starList=service.starList();//평균별점 리스트
 		if(cNo.equals("S")) {//소동물 더보기
 			cNo="S1','S2','S3','S4";
 		}else if(!cNo.contains("S")){//소동물 누른게 아니면
 			List<Map> scList=service.subCateList(cNo);//소분류 리스트
 			m.addAttribute("scList",scList);
 		}
-		List<Product> soList=service.soldOutList(cNo);//품절리스트
+		List<Product> soList=StarMapping.starMapping(service.soldOutList(cNo),starList);//품절리스트
 		if(soList.size()!=0) {//품절리스트가 0일수도 있음
 			m.addAttribute("soList",soList);
 		}
-		List<Product> list=service.categoryList(cNo);
+		List<Product> list=StarMapping.starMapping(service.categoryList(cNo),starList);
 		m.addAttribute("list",list);
 		return "store/categoryStore";
 	}

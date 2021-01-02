@@ -25,7 +25,7 @@ public interface StoreService {
 	List<String> payCheck(Map m);
 	int insertReview(Review r);
 	List<Review> selectReview(String productNo,int cPage,int numPerPage);
-	Stock selectStock(String detailNo);
+	Map selectStock(String detailNo);
 	int deleteReview(String reviewNo);
 	int updateReview(Review r);
 	Review selectReviewOne(String reviewNo);
@@ -44,4 +44,8 @@ public interface StoreService {
 	int totalReviewCount(String productNo);
 	int totalQnaCount(String productNo);
 	List<DailyImg> selectDailyImg(String productNo);
+	int insertFav(Map fav);
+	List<Product> favList(String memberNo);
+	int deleteFav(Map fav);
+	List<Product> starList();
 } 

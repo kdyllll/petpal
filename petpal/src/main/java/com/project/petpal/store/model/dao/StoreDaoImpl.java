@@ -97,7 +97,7 @@ public class StoreDaoImpl implements StoreDao{
 	}
 
 	@Override
-	public Stock selectStock(SqlSession session, String detailNo) {
+	public Map selectStock(SqlSession session, String detailNo) {
 		// TODO Auto-generated method stub
 		return session.selectOne("store.selectStock",detailNo);
 	}
@@ -210,6 +210,31 @@ public class StoreDaoImpl implements StoreDao{
 		// TODO Auto-generated method stub
 		return session.selectList("store.selectDailyImg",productNo);
 	}
+
+	@Override
+	public int insertFav(SqlSession session, Map fav) {
+		// TODO Auto-generated method stub
+		return session.insert("store.insertFav",fav);
+	}
+
+	@Override
+	public List<Product> favList(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("store.favList",memberNo);
+	}
+
+	@Override
+	public int deleteFav(SqlSession session, Map fav) {
+		// TODO Auto-generated method stub
+		return session.delete("store.deleteFav",fav);
+	}
+
+	@Override
+	public List<Product> starList(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectList("store.starList");
+	}
+	
 	
 	
 	

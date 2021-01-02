@@ -24,11 +24,14 @@ public interface MemberDao {
    int countFollowing(SqlSession session, String memberNo);
    int countFollower(SqlSession session, String memberNo);
    List<DailyImg> selectDailyMain(SqlSession session, String memberNo);
-   List<Map> selectTipMain(SqlSession session, String memberNo);
-   List<Map> selectPlaceMain(SqlSession session, String memberNo);
-   List<Map> selectFindMain(SqlSession session, String memberNo);
-
-   List<Daily> selectDailyList(SqlSession session, String memberNo);
+   List<Map> selectTipMain(SqlSession session, String memberNo,int cPage,int numPerPage);
+   List<Map> selectPlaceMain(SqlSession session, String memberNo,int cPage,int numPerPage);
+   List<Map> selectFindMain(SqlSession session, String memberNo,int cPage,int numPerPage);
+   List<Daily> selectDailyList(SqlSession session, String memberNo,int cPage,int numPerPage);
    List<Hashtag> selectDailyHash(SqlSession session, String memberNo);
+   int dailyCount(SqlSession session,String memberNo);
+   int tipCount(SqlSession session,String memberNo);
+   int placeCount(SqlSession session,String memberNo);
+   int findCount(SqlSession session,String memberNo);
 
 }

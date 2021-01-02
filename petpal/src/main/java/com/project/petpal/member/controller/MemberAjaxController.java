@@ -12,9 +12,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.project.petpal.common.AjaxPageBarFactory;
 import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyImg;
 import com.project.petpal.community.model.vo.Hashtag;
@@ -69,11 +71,11 @@ public class MemberAjaxController {
       //일상 메인 사진
       List<DailyImg> dailyList=service.selectDailyMain(memberNo);
       //노하우 작성 글+메인 사진
-      List<Map> tipList=service.selectTipMain(memberNo);
+      List<Map> tipList=service.selectTipMain(memberNo,1,6);
       //장소후기 작성 글+메인사진
-      List<Map> placeList=service.selectPlaceMain(memberNo);
+      List<Map> placeList=service.selectPlaceMain(memberNo,1,6);
       //찾아주세요 작성 글+메인 사진
-      List<Map> findList=service.selectFindMain(memberNo);
+      List<Map> findList=service.selectFindMain(memberNo,1,6);
       
       m.addAttribute("dailyList",dailyList);
       m.addAttribute("tipList",tipList);
@@ -85,44 +87,64 @@ public class MemberAjaxController {
 	
 	//유저인포-일상 글 조회
 	@RequestMapping("/user/moveDaily.do")
-	public String moveDaily(String memberNo,Model m) {
-		List<Daily> dailyList=service.selectDailyList(memberNo);
+	public String moveDaily(String memberNo,Model m,
+			@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerPage",defaultValue="12") int numPerPage) {
+		List<Daily> dailyList=service.selectDailyList(memberNo,cPage,numPerPage);
 		List<DailyImg> imgList=service.selectDailyMain(memberNo);
 		List<Hashtag> hashList=service.selectDailyHash(memberNo);
+		int totalData=service.dailyCount(memberNo);
+		String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveDaily.do", null, ".postCon", memberNo,"dailyPaging",null);
 		
 		m.addAttribute("dailyList",dailyList);
 		m.addAttribute("imgList",imgList);
-		m.addAttribute("hashList",hashList);			
+		m.addAttribute("hashList",hashList);		
+		m.addAttribute("pageBar",pageBar);
 		return "member/memberAjax/userDaily";
 	}
 	
 	//유저인포-노하우 글 조회
 	@RequestMapping("/user/moveTip.do")
-	public String moveTip(String memberNo,Model m) {
+	public String moveTip(String memberNo,Model m,
+			@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerPage",defaultValue="12") int numPerPage) {
 		//노하우 작성 글+메인 사진
-	    List<Map> tipList=service.selectTipMain(memberNo);
-		
+	    List<Map> tipList=service.selectTipMain(memberNo,cPage,numPerPage);
+	    int totalData=service.tipCount(memberNo);
+	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveTip.do", null, ".postCon", memberNo,"tipPaging",null);
+	    
 	    m.addAttribute("tipList",tipList);
+	    m.addAttribute("pageBar",pageBar);
 		return "member/memberAjax/userTip";
 	}
 	
 	//유저인포-장소후기 글 조회
 	@RequestMapping("/user/movePlace.do")
-	public String movePlace(String memberNo,Model m) {
+	public String movePlace(String memberNo,Model m,
+			@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerPage",defaultValue="8") int numPerPage) {
 		//장소후기 작성 글+메인사진
-	    List<Map> placeList=service.selectPlaceMain(memberNo);
+	    List<Map> placeList=service.selectPlaceMain(memberNo,cPage,numPerPage);
+	    int totalData=service.placeCount(memberNo);
+	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "movePlace.do", null, ".postCon", memberNo,"placePaging",null);
 	    
 	    m.addAttribute("placeList",placeList);
+	    m.addAttribute("pageBar",pageBar);
 		return "member/memberAjax/userPlace";
 	}
 	
 	//유저인포-찾아주세요 글 조회
 	@RequestMapping("/user/moveFind.do")
-	public String moveFind(String memberNo,Model m) {
+	public String moveFind(String memberNo,Model m,
+			@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerPage",defaultValue="12") int numPerPage) {
 		//찾아주세요 작성 글+메인 사진
-	    List<Map> findList=service.selectFindMain(memberNo);
-			
+	    List<Map> findList=service.selectFindMain(memberNo,cPage,numPerPage);
+	    int totalData=service.findCount(memberNo);	
+	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveFind.do", null, ".postCon", memberNo,"findPaging",null);
+	    
 	    m.addAttribute("findList",findList);
+	    m.addAttribute("pageBar",pageBar);
 		return "member/memberAjax/userFind";
 	}
 }

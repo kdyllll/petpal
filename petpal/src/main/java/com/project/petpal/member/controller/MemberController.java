@@ -3,17 +3,18 @@ package com.project.petpal.member.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-
 import java.util.List;
-
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -24,10 +25,10 @@ import com.project.petpal.community.model.service.DailyService;
 import com.project.petpal.community.model.service.FindService;
 import com.project.petpal.community.model.service.PlaceService;
 import com.project.petpal.community.model.service.TipService;
-import com.project.petpal.community.model.vo.Daily;
-import com.project.petpal.community.model.vo.DailyImg;
 import com.project.petpal.member.model.service.MemberService;
 import com.project.petpal.member.model.vo.Member;
+import com.project.petpal.store.model.service.StoreService;
+import com.project.petpal.store.model.vo.Product;
 
 @Controller
 @SessionAttributes("loginMember")
@@ -45,6 +46,8 @@ public class MemberController {
    private PlaceService pService;
    @Autowired
    private DailyService dService;
+   @Autowired
+   private StoreService storeService;
    
 
    @RequestMapping("/member/moveMyPage.do")
@@ -98,7 +101,9 @@ public class MemberController {
    }
 
    @RequestMapping("/member/myPageFav.do")
-   public String myPageFav() {
+   public String myPageFav(String memberNo,Model m) {
+	  List<Product> list=storeService.favList(memberNo);
+	  m.addAttribute("list",list);
       return "member/myPageFav";
    }
 
@@ -144,16 +149,35 @@ public class MemberController {
    }
 
    @RequestMapping("/member/moveLogin.do")
-   public String moveLogin() {
+   public String moveLogin(@CookieValue(value="saveId", required = false) Cookie saveId,
+		   Model m) {
+	   if(saveId!=null) {
+		   System.out.println(saveId.getValue());
+		   m.addAttribute("saveId",saveId.getValue());
+	   }	   
       return "member/login";
    }
 
    @RequestMapping("/member/memberLogin.do")
-   public String memberLogin(String email, String password, Model m) {
+   public String memberLogin(String email, String password,  Model m, HttpServletResponse response,
+		   @RequestParam(value = "saveId", required = false) String saveId) {
       Member login = service.selectMember(email);
       if (login != null && pwEncoder.matches(password, login.getPassword())) {
 //      if(login!=null) {
          m.addAttribute("loginMember", login);
+         
+         //아이디 기억하기
+	      if(saveId!=null) {
+	    	Cookie c=new Cookie("saveId",email);
+	  		c.setMaxAge(60 * 60 * 24 * 30 ); //쿠키 한달 유지
+	  		c.setPath("/");
+	  		response.addCookie(c); //쿠키 추가
+	      }else {
+	    	Cookie c=new Cookie("saveId",null);
+	  		c.setMaxAge(0); //쿠키 삭제
+	  		c.setPath("/");
+	  		response.addCookie(c); //쿠키 추가
+	      }
          return "redirect:/";
       } else {
          // 로그인실패
@@ -161,6 +185,8 @@ public class MemberController {
          m.addAttribute("loc", "/member/moveLogin.do");
          return "common/msg";
       }
+      
+      
    }
 
    @RequestMapping("/member/passwordUpdateEnd.do")

@@ -20,6 +20,6 @@
       <a href="${path }/member/moveMyPage.do" class="mb-0 <%=mpNav.equals("profile") ? "text-dark" : "text-muted" %> lh-100 px-3">프로필</a>
       <a href="${path }/member/myPageShop.do" class="mb-0 <%=mpNav.equals("shop") ? "text-dark" : "text-muted" %> lh-100 px-3">쇼핑</a>
       <a href="${path }/member/myPageModify.do" class="mb-0 <%=mpNav.equals("modify") ? "text-dark" : "text-muted" %> lh-100 px-3">개인정보수정</a>
-      <a href="${path }/member/myPageFav.do" class="mb-0 <%=mpNav.equals("fav") ? "text-dark" : "text-muted" %> lh-100 px-3">관심상품</a>
+      <a href="${path }/member/myPageFav.do?memberNo=${loginMember.memberNo}" class="mb-0 <%=mpNav.equals("fav") ? "text-dark" : "text-muted" %> lh-100 px-3">관심상품</a>
     </div>
   </div>

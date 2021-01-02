@@ -1,7 +1,7 @@
 package com.project.petpal.common;
 
 public class AjaxPageBarFactory {
-	public static String getPageBar(int totalData,int cPage,int numPerPage,String uri,String productNo,String con) {
+	public static String getPageBar(int totalData,int cPage,int numPerPage,String uri,String productNo,String con,String memberNo,String func,String dailyNo) {
 
 		String pageBar="";
 		
@@ -16,7 +16,7 @@ public class AjaxPageBarFactory {
 		if(pageNo==1) {
 		}else {
 			pageBar+="<li class='page-item'>";
-			pageBar+="<button class='btn btn-link text-secondary ' onclick='javascript:fn_ajaxPaging("+(pageNo-1)+")'>이전</button>";
+			pageBar+="<button class='btn btn-link text-secondary ' onclick='javascript:fn_"+func+"("+(pageNo-1)+")'>이전</button>";
 			pageBar+="</li>";
 		}
 		
@@ -27,7 +27,7 @@ public class AjaxPageBarFactory {
 				pageBar+="</li>";
 			}else {
 				pageBar+="<li class='page-item'>";
-				pageBar+="<button class='btn btn-link text-secondary ' onclick='javascript:fn_ajaxPaging("+(pageNo)+")'>"+pageNo+"</button>";
+				pageBar+="<button class='btn btn-link text-secondary ' onclick='javascript:fn_"+func+"("+(pageNo)+")'>"+pageNo+"</button>";
 				pageBar+="</li>";
 			}
 			pageNo++;
@@ -36,7 +36,7 @@ public class AjaxPageBarFactory {
 		if(pageNo>totalPage) {
 		}else {
 			pageBar+="<li class='page-item'>";
-			pageBar+="<button class='btn btn-link text-secondary ' onclick='javascript:fn_ajaxPaging("+(pageNo)+")'>다음</button>";
+			pageBar+="<button class='btn btn-link text-secondary ' onclick='javascript:fn_"+func+"("+(pageNo)+")'>다음</button>";
 			pageBar+="</li>";
 		}
 	
@@ -44,11 +44,11 @@ public class AjaxPageBarFactory {
 		
 		pageBar+="<script>";
 		
-		pageBar+="function fn_ajaxPaging(cPage){";
+		pageBar+="function fn_"+func+"(cPage){";
 			pageBar+="$.ajaxSettings.traditional = true;";
 			pageBar+="$.ajax({";
 				pageBar+="url:'"+uri+"',";
-				pageBar+="data:{cPage:cPage" +(productNo==null?"":",productNo:"+productNo)+ "},";
+				pageBar+="data:{cPage:cPage" +(productNo==null?"":",productNo:"+productNo)+ (memberNo==null?"":",memberNo:"+memberNo)+ (dailyNo==null?"":",dailyNo:'"+dailyNo)+ "'},";
 				pageBar+="dataType:'html',";
 				pageBar+="success:(data)=>{";
 				pageBar+="$('"+con+"').html(data);";
