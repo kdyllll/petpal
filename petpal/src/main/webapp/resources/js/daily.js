@@ -1,13 +1,13 @@
 	//사진 입력 취소했을 때 원래 사진 날아가는 것 대비하기
     var clone;
-    $(document).on('click','.upload',e=>{//파일 입력할때 미리 입력태그 클론만들기
+    $(document).on('click','.upload',e=>{//새사진 추가/파일 입력할때 미리 입력태그 클론만들기
      clone=$(e.target).clone(true);
     });
 
 	//사진미리보기
 	$(document).on('change','.upload',e=>{ 
         if (e.target.value.length==0) {//파일 입력 취소 누르면 원래 사진 유지하도록
-			let label=$(e.target).parents(".addPic");
+			let label=$(e.target).parents(".picLabel");
 			$(e.target).remove();//값 없어진 인풋 지우고
 			label.prepend(clone);//미리 복사해놓은 인풋태그로 대체
         }else{
@@ -47,7 +47,7 @@
      function fn_add(){
        $("#imgContainer").find(".addPic").hide();
        if($(".imgBox").length!=5){  
-         let label=`<label class="addPic rounded text-center bg-light btn btn-block mt-3" style="cursor: pointer; height:50px;">
+         let label=`<label class="addPic picLabel rounded text-center bg-light btn btn-block mt-3" style="cursor: pointer; height:50px;">
 			        	 <input name="pic" class="d-none upload" type="file" accept="images/*"/>
 			             <svg width="40px" height="40px" viewBox="0 0 16 16" class="bi bi-camera-fill text-secondary" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="font-size: 60px;">
 			                  <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>

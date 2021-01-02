@@ -273,9 +273,6 @@ public class DailyController {
 		//사진 변경에 대해서는 서비스에서 트랜젝션으로 처리해야함 일단 정리를 해서 보내기
 		//사진 받아오기
 		List<DailyImg> imgList=service.selectDailyImg(dailyNo);
-		for(DailyImg ddi:imgList) {
-			System.out.println(ddi);
-		}
 		//change []
 		//Map에 넣어서 보내기 (넣을 항목: 사진번호, 상태(none,delete,update), 파일이름)
 		List<Map> fileList=new ArrayList<Map>();
@@ -286,7 +283,6 @@ public class DailyController {
 		if(!dir.exists()) dir.mkdirs(); 
 		List<DailyImg> updateFile=new ArrayList<DailyImg>();
 		for(MultipartFile f:update) {
-			System.out.println(f);
 			if(!f.isEmpty()) {
 				String originalName=f.getOriginalFilename();
 				String ext=originalName.substring(originalName.lastIndexOf(".")+1);
@@ -306,7 +302,7 @@ public class DailyController {
 		}
 		for(int i=0;i<change.length;i++) {
 			Map map=new HashMap();
-			System.out.println("맵에 넣는 이미지번호"+imgList.get(i).getDailyImgNo());
+//			System.out.println("맵에 넣는 이미지번호"+imgList.get(i).getDailyImgNo());
 			map.put("dailyImgNo", imgList.get(i).getDailyImgNo());
 			map.put("change", change[i]);
 			fileList.add(map);
@@ -330,7 +326,6 @@ public class DailyController {
 				newFile.add(img);			
 			}
 		}
-		System.out.println("업데이트파일"+updateFile);
 		int result=service.updateDaily(d,hashList,coords,fileList,updateFile,newFile);
 		
 		m.addAttribute("msg",result>0?"게시글이 수정되었습니다.":"게시글 수정에 실패했습니다.");
@@ -390,9 +385,7 @@ public class DailyController {
 	@RequestMapping("/daily/commentDelete.do")
 	@ResponseBody
 	public Boolean commentDelete(String dailyCommentNo) {
-		System.out.println("댓글컨트롤러 실행"+dailyCommentNo);
 		int result=service.commentDelete(dailyCommentNo);
-		System.out.println("댓글컨트롤러에 반환된 result"+result);
 		return result>0?true:false;
 	}
 	
@@ -400,9 +393,7 @@ public class DailyController {
 	@RequestMapping("/daily/comment2Delete.do")
 	@ResponseBody
 	public Boolean comment2Delete(String dailyCommentNo) {
-		System.out.println("대댓글컨트롤러 실행"+dailyCommentNo);
 		int result=service.comment2Delete(dailyCommentNo);
-		System.out.println("대댓글컨트롤러에 반환된 result"+result);
 		return result>0?true:false;
 	}
 
