@@ -197,12 +197,14 @@
         <!--상품 상세창-->
         <div class="container mt-5 col-lg-8 col-10 offset-lg-2">     
           <div class="mb-5">
+          
+          <!-- 일상과 연결되는 사진들 -->
             <c:if test="${not empty dailyList }">
 	            <p class="h5 py-4"><strong>유저들의 스타일링 샷</strong> <span class="text-point"><c:out value="${fn:length(dailyList)}"/></span></p>
 	            <div id="carouselExampleControls" class="carousel slide block col-lg-8 offset-lg-2">
 	              <div class="carousel-inner rounded ">
-	                <c:forEach var="d" items="${dailyList }">
-	                	<a href="${path }/daily/moveDetail.do?dailyNo=${d.dailyNo}" class="carousel-item active">
+	                <c:forEach var="d" items="${dailyList }" varStatus="vs">
+	                	<a href="${path }/daily/moveDetail.do?dailyNo=${d.dailyNo}" class="carousel-item ${vs.first?'active':'' }">
 		                  <img src="${path }/resources/upload/community/daily/${d.dailyImgName}" class="d-block w-100">
 		                </a>
 	                </c:forEach>               
@@ -217,6 +219,7 @@
 	              </a>
 	            </div>
 			 </c:if>
+
 
             <!--상품정보-->
             <div id="pInfo">

@@ -363,24 +363,46 @@ public class DailyController {
 	
 	//일상 댓글 불러오기
 	@RequestMapping("/daily/dailyComment.do")
-	public String selectComment(String dailyNo,
+	public String selectComment(String dailyNo,String writeMember,
 			@RequestParam(value="cPage",defaultValue="1") int cPage,
 			@RequestParam(value="numPerPage",defaultValue="5") int numPerPage,
 			Model m) {
 		List<DailyComment> cList=service.selectComment(dailyNo,cPage,numPerPage);
 		int count=service.countComment(dailyNo);
-		String pageBar=new AjaxPageBarFactory().getPageBar(count, cPage, numPerPage, "dailyComment.do", null, "#commentContainer", null, "commentAjax",dailyNo);
+		int total=service.countCommentPage(dailyNo);
+		String pageBar=new AjaxPageBarFactory().getPageBar(total, cPage, numPerPage, "dailyComment.do", null, "#commentContainer", null, "commentAjax",dailyNo,writeMember);
 		m.addAttribute("count",count);
 		m.addAttribute("pageBar",pageBar);
-		m.addAttribute("cList",cList);		
+		m.addAttribute("cList",cList);	
+		m.addAttribute("writeMember",writeMember);
 		return "community/communityAjax/dailyComment";
 	}
 	
 	//일상 댓글 작성
 	@RequestMapping("/daily/commentWrite.do")
 	@ResponseBody
-	public Boolean insertComment(DailyComment dc,Model m) {
+	public Boolean insertComment(DailyComment dc) {
 		int result=service.insertComment(dc);
+		return result>0?true:false;
+	}
+	
+	//일상 댓글 삭제 → 댓글 상태 D로 변경
+	@RequestMapping("/daily/commentDelete.do")
+	@ResponseBody
+	public Boolean commentDelete(String dailyCommentNo) {
+		System.out.println("댓글컨트롤러 실행"+dailyCommentNo);
+		int result=service.commentDelete(dailyCommentNo);
+		System.out.println("댓글컨트롤러에 반환된 result"+result);
+		return result>0?true:false;
+	}
+	
+	//일상 대댓글 삭제 
+	@RequestMapping("/daily/comment2Delete.do")
+	@ResponseBody
+	public Boolean comment2Delete(String dailyCommentNo) {
+		System.out.println("대댓글컨트롤러 실행"+dailyCommentNo);
+		int result=service.comment2Delete(dailyCommentNo);
+		System.out.println("대댓글컨트롤러에 반환된 result"+result);
 		return result>0?true:false;
 	}
 

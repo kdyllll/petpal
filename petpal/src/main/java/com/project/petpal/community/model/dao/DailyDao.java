@@ -42,5 +42,9 @@ public interface DailyDao {
 	int updateDailyContent(SqlSession session,Daily d);
 	List<DailyComment> selectComment(SqlSession session,String dailyNo,int cPage,int numPerPage);
 	int countComment(SqlSession session,String dailyNo);
+	int countCommentPage(SqlSession session,String dailyNo);
 	int insertComment(SqlSession session,DailyComment dc);
+	int commentDelete(SqlSession session,String dailyCommentNo);
+	int comment2Delete(SqlSession session,String dailyCommentNo);
+	
 }

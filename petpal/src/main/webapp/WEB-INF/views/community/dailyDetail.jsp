@@ -30,6 +30,7 @@
   
   <main role="main" style="min-height:100vh;">
   <input type="hidden" class="loginMember" value="${loginMember.memberNo }"/>
+  <input type="hidden" class="writeMember" value="${daily.MEMBERNO }"/>
   <input type="hidden" class="dailyNo" value="${daily.DAILYNO }"/>
    <div class="album ">
 	   <div class="container my-4 mt-lg-0">
@@ -147,50 +148,7 @@
 								</div><!-- imgCon -->
 				                 <!-- 댓글 -->
 				                 <div id="commentContainer">
-				             <!--     <hr>
-				                 <h4>댓글<span class="text-secondary">2</span></h4>
-				                 <div class="d-flex mb-3">
-				                   <div class="input-group mb-3">
-				                     <input type="text" class="form-control" placeholder="칭찬과 격려의 댓글은 작성자에게 큰 힘이 됩니다:)"
-				                       aria-label="Recipient's username" aria-describedby="button-addon2">
-				                     <div class="input-group-append">
-				                       <button class="btn btn-outline-secondary" type="button" id="button-addon2">등록</button>
-				                     </div>
-				                   </div>
-				                 </div>
-				                 <div>
-					                  <div class="d-flex mb-3">
-						                    <a href="#">
-						                      <img src="./img/avatar.webp" class="rounded" style="width:40px; height: 40px;">
-						                    </a>
-						                    <div class="ml-1">
-						                        <a href="#"><span class="text-dark align-top mx-1"><strong>닉네임</strong></span></a>
-						                        <span>댓글 내용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</span>
-						                        <div class="d-flex align-items-center ml-1">
-						                          <p class="m-0 text-secondary" style="font-size: 12px;">
-						                        		    몇분전  
-						                          </p>  
-						                          <button class="btn text-black-50 p-0 ml-2" style="font-weight:bold; font-size: 12px;">답글 달기</button>
-						                        </div>
-						                    </div>     
-			                  		   </div>
-					                  <div class="d-flex mb-3">
-					                    <a href="#">
-					                      <img src="./img/avatar.webp" class="rounded" style="width:40px; height: 40px;">
-					                    </a>
-					                    <div class="ml-1">
-					                        <a href="#"><span class="text-dark align-top mx-1"><strong>닉네임</strong></span></a>
-					                        <span>댓글 내용</span>
-					                        <div class="d-flex align-items-center ml-1">
-					                          <p class="m-0 text-secondary" style="font-size: 12px;">
-					                            몇분전  
-					                          </p>  
-					                          <button class="btn text-black-50 p-0 ml-2" style="font-weight:bold; font-size: 12px;">답글 달기</button>
-					                        </div>
-					                    </div>     
-					                  </div>   
-		                		</div>
-		                		<div class="d-flex justify-content-center">댓글페이징바</div> -->
+
 	               			</div>
 
 	        		</div><!-- container title -->
@@ -299,18 +257,37 @@ function loginModal(){
 	});
 };
 
+//댓글 스크립트
 function commentAjax(){
+	let writeMember=$(".writeMember").val();
 	$.ajax({
 		url: "${path}/daily/dailyComment.do",
 		dataType:"html",
-		data:{dailyNo:dailyNo},
+		data:{dailyNo:dailyNo,writeMember:writeMember},
 		success:(data)=>{
 			$("#commentContainer").html(data);
 		}
 	});
 };
- 
-//댓글 스크립트
+
+function commentDelete(path,data){
+	$.ajax({
+		url:path,
+		data:{dailyCommentNo:data},
+		success:data=>{
+			if(data===true){
+				alert("댓글이 삭제되었습니다.");
+				commentAjax();
+			}else{
+				alert("댓글 삭제에 실패하였습니다.");
+			}
+		},
+		error:function(){
+			alert("댓글 삭제에 실패하였습니다.");
+		}
+	})
+}
+
  
 $(function(){//로그인 안되어있을때 댓글창 누르면 손가락표시
 	if(loginMember==""){
@@ -364,10 +341,10 @@ $(document).on('click','.write',function(e) {//댓글 등록 버튼 눌렀을때
 	var commentRef=$(e.target).parents("div.editor").find("[name=commentRef]").val();
 	$.ajax({
 		url:"${path}/daily/commentWrite.do",
-		data:{dailyComment:dailyComment,commentLevel:commentLevel,memberNo:loginMember,dailyNo:dailyNo,commentRef:commentRef,},
+		data:{dailyComment:dailyComment,commentLevel:commentLevel,memberNo:loginMember,dailyNo:dailyNo,commentRef:commentRef},
 		success:data=>{
 			if(data===true){
-				//alert("댓글이 등록되었습니다.");
+				alert("댓글이 등록되었습니다.");
 				commentAjax();
 			}else{
 				alert("댓글 등록에 실패하였습니다.");
@@ -378,5 +355,17 @@ $(document).on('click','.write',function(e) {//댓글 등록 버튼 눌렀을때
 		}
 	})
 });
+
+$(document).on("click",".commentDelete",e=>{
+	//댓글 삭제 눌렀을 때 (댓글은 업뎃 대댓글은 삭제)
+	commentDelete("${path}/daily/commentDelete.do",$(e.target).val());	
+});
+
+$(document).on("click",".comment2Delete",e=>{
+	//대댓글 삭제 눌렀을 때 (대댓글은 삭제)
+	commentDelete("${path}/daily/comment2Delete.do",$(e.target).val())	
+});
+
+
 </script>
 </html>

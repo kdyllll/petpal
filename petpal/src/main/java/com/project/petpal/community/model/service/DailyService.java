@@ -33,7 +33,9 @@ public interface DailyService {
 	int updateDaily(Daily d,List<Hashtag> hashList,List<DailyCoord> coords,List<Map> fileList,List<DailyImg> updateFile,List<DailyImg> newFile);
 	List<DailyComment> selectComment(String dailyNo,int cPage,int numPerPage);
 	int countComment(String dailyNo);
+	int countCommentPage(String dailyNo);
 	int insertComment(DailyComment dc);
-
+	int commentDelete(String dailyCommentNo);
+	int comment2Delete(String dailyCommentNo);
 
 }

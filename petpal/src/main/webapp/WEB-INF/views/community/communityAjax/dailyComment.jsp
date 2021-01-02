@@ -11,6 +11,7 @@
 }
 
 </style>
+<hr>
 <h4>
 	댓글<span class="su text-secondary"><c:out value="${count }" /></span>
 </h4>
@@ -27,7 +28,7 @@
 </div>
 <c:forEach items="${cList }" var="c">
 	<c:if test="${c.commentLevel eq 1 }">
-		<div class="d-flex mb-2 comment level1">
+		<div class="d-flex mb-2 ml-1 comment level1">
 			<a href="${path }/user/moveUserInfo.do?memberNo=${c.memberNo}">
 				<div class="">
 					<img src="${path }/resources/upload/member/profile/${c.img }" class="rounded-circle mr-3">
@@ -36,7 +37,17 @@
 					<div>
 						<strong><span class="text-dark"><c:out value="${c.nickName }" /></span></strong>
 			</a> 
-			<span class="ml-1"><c:out value="${c.dailyComment }" /></span>
+			<c:if test="${c.status eq 'E' }">
+				<span class="ml-1"><c:out value="${c.dailyComment }" /></span>
+			</c:if>
+			<c:if test="${c.status eq 'D' }">
+				<span class="ml-1 text-black-50" style="font-size:14px;">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle-fill" style="color:" viewBox="0 0 16 16">
+					  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+					</svg>
+					 &nbsp;삭제된 댓글입니다.
+				</span>
+			</c:if>
 		</div>
 		<div>
 			<span class="text-dark" style="font-size: 14px;"> 
@@ -55,14 +66,18 @@
 					</c:otherwise>
 				</c:choose>
 			</span>
-			<button class="reply click btn p-0 text-dark ml-2" style="font-weight: bold; font-size:14px;" value="${c.dailyCommentNo }">답글 달기</button>
-			<button class="click btn p-0 text-black-50" style="font-weight: bold; font-size:14px;" value="${c.dailyCommentNo }">· 삭제</button>
+			<c:if test="${c.status eq 'E' }">
+				<button class="reply click btn p-0 text-dark ml-2" style="font-weight: bold; font-size:14px;" value="${c.dailyCommentNo }">답글 달기</button>
+				<c:if test="${(loginMember.memberNo eq c.memberNo) or (loginMember.memberNo eq '63') or (writeMember eq loginMember.memberNo) }">
+					<button class="commentDelete click btn p-0 text-black-50" style="font-weight: bold; font-size:14px;" value="${c.dailyCommentNo }">· 삭제</button>
+				</c:if>
+			</c:if>
 		</div>
 		</div>
 		</div>
 	</c:if>
 	<c:if test="${c.commentLevel eq 2 }">
-		<div class="d-flex mb-1 comment level2 ml-5 bg-light p-2 py-3 rounded">
+		<div class="d-flex mb-1 comment level2 ml-5 p-2 py-3 rounded mr-1 ${loginMember.memberNo eq c.memberNo?'bg-point':'bg-light' }">
 			<a class="text-dark" href="${path }/user/moveUserInfo.do?memberNo=${c.memberNo}">
 				<div>
 					<img src="${path }/resources/upload/member/profile/${c.img }"
@@ -90,10 +105,14 @@
 					</c:otherwise>
 				</c:choose>
 			</span>
-			 <button class="click btn p-0 text-black-50" style="font-weight: bold; font-size:14px;" value="${c.dailyCommentNo }">· 삭제</button>
+			<c:if test="${(loginMember.memberNo eq c.memberNo) or (loginMember.memberNo eq '63') or (writeMember eq loginMember.memberNo) }">
+			 <button class="comment2Delete click btn p-0 text-black-50" style="font-weight: bold; font-size:14px;" value="${c.dailyCommentNo }">· 삭제</button>
+			</c:if>
 		</div>
 		</div>
 		</div>
 	</c:if>
+
 </c:forEach>
 <div>${pageBar }</div>
+
