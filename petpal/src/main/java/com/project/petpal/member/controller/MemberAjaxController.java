@@ -94,7 +94,7 @@ public class MemberAjaxController {
 		List<DailyImg> imgList=service.selectDailyMain(memberNo);
 		List<Hashtag> hashList=service.selectDailyHash(memberNo);
 		int totalData=service.dailyCount(memberNo);
-		String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveDaily.do", null, ".postCon", memberNo,"dailyPaging");
+		String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveDaily.do", null, ".postCon", memberNo,"dailyPaging",null);
 		
 		m.addAttribute("dailyList",dailyList);
 		m.addAttribute("imgList",imgList);
@@ -111,7 +111,7 @@ public class MemberAjaxController {
 		//노하우 작성 글+메인 사진
 	    List<Map> tipList=service.selectTipMain(memberNo,cPage,numPerPage);
 	    int totalData=service.tipCount(memberNo);
-	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveTip.do", null, ".postCon", memberNo,"tipPaging");
+	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveTip.do", null, ".postCon", memberNo,"tipPaging",null);
 	    
 	    m.addAttribute("tipList",tipList);
 	    m.addAttribute("pageBar",pageBar);
@@ -126,7 +126,7 @@ public class MemberAjaxController {
 		//장소후기 작성 글+메인사진
 	    List<Map> placeList=service.selectPlaceMain(memberNo,cPage,numPerPage);
 	    int totalData=service.placeCount(memberNo);
-	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "movePlace.do", null, ".postCon", memberNo,"placePaging");
+	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "movePlace.do", null, ".postCon", memberNo,"placePaging",null);
 	    
 	    m.addAttribute("placeList",placeList);
 	    m.addAttribute("pageBar",pageBar);
@@ -141,7 +141,7 @@ public class MemberAjaxController {
 		//찾아주세요 작성 글+메인 사진
 	    List<Map> findList=service.selectFindMain(memberNo,cPage,numPerPage);
 	    int totalData=service.findCount(memberNo);	
-	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveFind.do", null, ".postCon", memberNo,"findPaging");
+	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveFind.do", null, ".postCon", memberNo,"findPaging",null);
 	    
 	    m.addAttribute("findList",findList);
 	    m.addAttribute("pageBar",pageBar);
