@@ -3,6 +3,7 @@ package com.project.petpal.member.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -276,14 +277,54 @@ public class MemberController {
       return "member/userInfo";
    }
    @RequestMapping("/member/refundApply.do")
-   public String refundApply(String detailNo, Model model) {
-	   int result = service.productRefund(detailNo);
-	   
-	   String loc = "";
-	   String msg = "반품신청에 실패하였습니다.";
-	   if(result>0) {
-		   msg= "반품접수 되었습니다.";
+   public String refundApply(String detailNum,String refundReason, String refundTextArea, Model model) {
+	   Map m = new HashMap();
+	   String reason = "";
+	   if(refundReason.equals("bad")) {
+		   reason = "불량";
+	   }else if(refundReason.equals("delivery")) {
+		   reason="배송지연";
+	   }else if(refundReason.equals("simple")) {
+		   reason="단순변심";
+	   } else if(refundReason.equals("other")) {
+		   reason = refundTextArea;
 	   }
+	   
+	   m.put("detailNo", detailNum);
+	   m.put("reason", reason);
+		int result = service.productRefund(m);
+	   String loc = "/member/myPageShop.do";
+	   String msg = "반품신청에 실패하였습니다.";
+	
+		if(result>0) { msg= "반품접수 되었습니다."; }
+		
+	   model.addAttribute("loc", loc);
+	   model.addAttribute("msg", msg);
+	   return "common/msg";
+   }
+   
+   @RequestMapping("/member/changeApply.do")
+   public String changeApply(String detailNum,String changeReason, String changeTextArea, Model model) {
+	   Map m = new HashMap();
+	   String reason = "";
+	   if(changeReason.equals("bad")) {
+		   reason = "불량";
+	   }else if(changeReason.equals("delivery")) {
+		   reason="배송지연";
+	   }else if(changeReason.equals("simple")) {
+		   reason="단순변심";
+	   } else if(changeReason.equals("other")) {
+		   reason = changeTextArea;
+	   }
+	   
+	   m.put("detailNo", detailNum);
+	   m.put("reason", reason);
+		/* int result = service.productChange(m); */
+	   String loc = "/member/myPageShop.do";
+	   String msg = "교환신청에 실패하였습니다.";
+	
+		/* if(result>0) { msg= "교환접수 되었습니다."; } */
+		
 	   model.addAttribute("loc", loc);
 	   model.addAttribute("msg", msg);
 	   return "common/msg";

@@ -33,6 +33,8 @@ public interface MemberService {
    int findCount(String memberNo);
    List<Map> selectPaymentList(String memberNo);
    Map selectShopDetail(String detailNo);
-   int productRefund(String detailNo);
+   int productRefund(Map m);
+   String getStockNo(String detailNo);
+   String getProductNo(String stockNo);
 
 }

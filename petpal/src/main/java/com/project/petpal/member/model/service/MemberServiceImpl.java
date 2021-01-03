@@ -164,9 +164,21 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public int productRefund(String detailNo) {
+	public int productRefund(Map m) {
 		// TODO Auto-generated method stub
-		return dao.productRefund(session, detailNo);
+		return dao.productRefund(session, m);
+	}
+
+	@Override
+	public String getStockNo(String detailNo) {
+		// TODO Auto-generated method stub
+		return dao.getStockNo(session, detailNo);
+	}
+
+	@Override
+	public String getProductNo(String stockNo) {
+		// TODO Auto-generated method stub
+		return dao.getProductNo(session, stockNo);
 	}
 	   
 	

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.project.petpal.admin.model.service.AdminService;
+import com.project.petpal.admin.model.vo.Stock;
 import com.project.petpal.common.AjaxPageBarFactory;
 import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyImg;
@@ -30,6 +32,8 @@ public class MemberAjaxController {
 	private MemberService service;
 	@Autowired
 	private BCryptPasswordEncoder pwEncoder;
+	@Autowired
+	private AdminService aService;
 	
 	@RequestMapping("/member/passwordUpdate.do")
 	@ResponseBody
@@ -148,11 +152,22 @@ public class MemberAjaxController {
 		return "member/memberAjax/userFind";
 	}
 	
-	//회원정보(주문조회) - 상품 디테일보기
+	//회원마이페이지(주문조회) - 상품 디테일보기
 	@RequestMapping("/member/shopDetailAjax.do")
 	public String shopDetail(String detailNo, Model model) {
 		Map shop = service.selectShopDetail(detailNo);
 		model.addAttribute("shop", shop);
 		return "member/memberAjax/shopDetail";
+	}
+	
+	//회원마이페이지(주문조회 - 교환하기) 
+	@RequestMapping("/member/moveProductChangePage.do")
+	public String moveProductChangePage(String detailNo, Model model) {
+		String stockNo = service.getStockNo(detailNo);
+		String pdtNo = service.getProductNo(stockNo);
+		List<Stock> sList = aService.selectStock(pdtNo);
+		model.addAttribute("detailNo", detailNo);
+		model.addAttribute("sList",sList);
+		return "member/memberAjax/changeProduct";
 	}
 }

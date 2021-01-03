@@ -86,9 +86,30 @@
 				0</strong></a>
 	</div>
 </div>
+<div class="row  py-3 mt-5  bg-white rounded ">
+<h6 class="pl-2 pb-3 mb-0">주문내역(0개)</h6>
+	<div class="py-2 d-flex justify-content-around align-items-center"
+		style="width: 100%;">
+		<a href="#"
+			class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block "><strong>반품(대기)
+				0</strong></a>	
+		<a href="#"
+			class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block "><strong>반품(완료)
+				0</strong></a>		
+		<a href="#"
+			class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block "><strong>환불(대기)
+				0</strong></a>	
+		<a href="#"
+			class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block "><strong>환불(완료)
+				0</strong></a>
+		<a href="#"
+			class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block "><strong>구매완료
+				0</strong></a>
+	</div>
+</div>
 <div class="row">
 	<div class="col-12 my-3 p-3 bg-white rounded shadow-sm">
-		<h6 class="pb-3 mb-0">주문내역(0개)</h6>
+		
 		<c:if test="${not empty shop }">
 			<c:forEach var="s" items="${shop }">
 				<div>
@@ -166,13 +187,24 @@
 
 					<form class="modal-body refundFrm" method="post">
 						<div class="refundNo"></div>
+						<select name="refundReason" style="width:100%;" class=" refundReason form-select d-block py-2 mb-3" aria-label="Default select example">
+						  <option value="no" selected>반품사유</option>
+						  <option value="bad">불량</option>
+						  <option value="delivery">배송지연</option>
+						  <option value="simple">단순변심</option>
+						  <option value="other">기타</option>
+						</select>
+						<div class="form-floating refundText">
+						  
+
+						</div>
 						<p class="text-center">반품신청 하시겠습니까?</p>
 						<div class="d-flex justify-content-center">
 							<button type="button" class="btn btn-outline-secondary btn-sm"
 								data-dismiss="modal">취소</button>
 							<button type="button"
 								class="btn btn-outline-secondary btn-sm ml-2 refundEndBtn">신청</button>
-							<input type="hidden" name="detailNo" />
+							
 						</div>
 					</form>
 
@@ -181,35 +213,7 @@
 		</div>
 	</div>
 	<div class="shopChangeModal">
-		<div class="modal fade change" id="staticBackdrop" tabindex="-1"
-			aria-labelledby="exampleModalLabel" data-backdrop="static"
-			aria-hidden="true">
-			<div
-				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">교환신청</h5>
-						<button type="button btn-sm" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-
-					</div>
-
-					<form class="modal-body changeFrm" >
-						<p class="text-center">교환신청 하시겠습니까?</p>
-						<div class="d-flex justify-content-center">
-							<button type="button" class="btn btn-outline-secondary btn-sm"
-								data-dismiss="modal">취소</button>
-							<button type="button"
-								class="btn btn-outline-secondary btn-sm ml-2 changeEndBtn">신청</button>
-							
-						</div>
-					</form>
-
-				</div>
-			</div>
-		</div>
+		
 	</div>
 </div>
 </main>
@@ -224,20 +228,45 @@
 	 
 	 $(".refundBtn").on("click", e=> {
 		 let input = $(e.target).next().val();
-		 let newInput = $("<input>").attr({"name" : "datailNo" , "value":input, "type": "hidden"});
+		 let newInput = $("<input>").attr({"name" : "detailNum" , "value":input, "type": "hidden"});
 		 $(".refundFrm").children(".refundNo").html("");
 		 $(".refundFrm").children(".refundNo").append(newInput);
+		 console.log(input);
 		 $(".refund").modal();
 	 })
 	 $(".changeBtn").on("click", e=> {
-		 $(".change").modal();
+		 let detailNo = $(e.target).prev().val();
+		 moveAjaxModal("${path}/member/moveProductChangePage.do",detailNo,".change");
 	 })
-	 
+	 $(".refundReason").on("change", e=> {
+		 	$(".refundText").html("");
+			 if($(e.target).val() == "other") {
+				 let textA = $("<textarea>").attr({"class":"form-control refundTextArea","placeholder":"사유를 작성해주세요.", "height":"100px"});
+				 $(".refundText").html(textA);
+			 }
+		 })
+	
+		 
+	//유효성 검사 && form넘기기
 	 $(".refundEndBtn").on("click", e => {
-		 $(".refundFrm").attr("action", "${path}/member/refundApply.do").submit();
+		 avaliality(".refundReason",".refundText > textarea",".refundFrm", "${path}/member/refundApply.do");
 	 })
-	 
 
+	 //유효성검사 함수
+	 function avaliality(a,b,c,d) {
+		 let aa = $(a).val();
+		 if(aa == "no") {
+			 alert("교환사유를 선택해주세요");
+			 return;
+		 }if($(b).val() == "") {
+			 alert("교환사유를 적어주세요");
+			 return;
+		 }
+		
+		 $(c).attr("action", d).submit();
+	 }
+	 
+	//ajax 함수
 	 function moveAjaxModal(path,detailNo, md) {
 		 $.ajax({
 			url:path,

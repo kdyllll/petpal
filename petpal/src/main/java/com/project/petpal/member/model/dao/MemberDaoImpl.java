@@ -158,9 +158,21 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public int productRefund(SqlSession session, String detailNo) {
+	public int productRefund(SqlSession session,Map m) {
 		// TODO Auto-generated method stub
-		return session.update("member.productRefund", detailNo);
+		return session.update("member.productRefund", m);
+	}
+
+	@Override
+	public String getStockNo(SqlSession session, String detailNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.getStockNo", detailNo);
+	}
+
+	@Override
+	public String getProductNo(SqlSession session, String stockNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.getProductNo", stockNo);
 	}
 
 	
