@@ -22,6 +22,7 @@ import com.project.petpal.community.model.vo.DailyImg;
 import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.member.model.service.MemberService;
 import com.project.petpal.member.model.vo.Member;
+import com.project.petpal.member.model.vo.NaverLoginBO;
 
 @Controller
 @SessionAttributes("loginMember")
@@ -30,6 +31,13 @@ public class MemberAjaxController {
 	private MemberService service;
 	@Autowired
 	private BCryptPasswordEncoder pwEncoder;
+	
+   private NaverLoginBO naverLoginBO;
+   
+	@Autowired
+	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+		this.naverLoginBO = naverLoginBO;
+	}
 	
 	@RequestMapping("/member/passwordUpdate.do")
 	@ResponseBody
@@ -61,7 +69,9 @@ public class MemberAjaxController {
 	
 	//로그인 모달 호출
 	@RequestMapping("/login/moveLogin.do")
-	public String moveLogin() {
+	public String moveLogin(HttpSession session,Model m) {
+		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+		m.addAttribute("naverUrl", naverAuthUrl);
 		return "common/commonAjax/loginModal";
 	}
 	

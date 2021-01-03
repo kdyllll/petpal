@@ -67,7 +67,9 @@
     <select id="selectDailyHash" resultType="hashtag" parameterType="string">
     	SELECT * FROM HASHTAG LEFT JOIN DAILY ON POSTNO=DAILYNO WHERE POSTNO LIKE 'D%' AND MEMBERNO=#{memberNo}
     </select>
-   
+    <select id="selectNaverMember" resultType="member" parameterType="string">
+    	SELECT * FROM MEMBER WHERE SNSNO=#{value}
+    </select>
 
 
 </mapper>

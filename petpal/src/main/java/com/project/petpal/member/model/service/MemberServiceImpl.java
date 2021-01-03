@@ -150,6 +150,12 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return dao.findCount(session,memberNo);
 	}
+
+	@Override
+	public Member selectNaverMember(String id) {
+		// TODO Auto-generated method stub
+		return dao.selectNaverMember(session,id);
+	}
 	   
 	
 

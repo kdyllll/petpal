@@ -27,6 +27,7 @@ import com.project.petpal.community.model.service.PlaceService;
 import com.project.petpal.community.model.service.TipService;
 import com.project.petpal.member.model.service.MemberService;
 import com.project.petpal.member.model.vo.Member;
+import com.project.petpal.member.model.vo.NaverLoginBO;
 import com.project.petpal.store.model.service.StoreService;
 import com.project.petpal.store.model.vo.Product;
 
@@ -48,7 +49,12 @@ public class MemberController {
    private DailyService dService;
    @Autowired
    private StoreService storeService;
+   private NaverLoginBO naverLoginBO;
    
+	@Autowired
+	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+		this.naverLoginBO = naverLoginBO;
+	}
 
    @RequestMapping("/member/moveMyPage.do")
    public String moveMyPage(HttpSession session, Model m) {
@@ -150,11 +156,13 @@ public class MemberController {
 
    @RequestMapping("/member/moveLogin.do")
    public String moveLogin(@CookieValue(value="saveId", required = false) Cookie saveId,
-		   Model m) {
+		   Model m, HttpSession session) {
 	   if(saveId!=null) {
 		   System.out.println(saveId.getValue());
 		   m.addAttribute("saveId",saveId.getValue());
 	   }	   
+	   String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+	   m.addAttribute("naverUrl", naverAuthUrl);
       return "member/login";
    }
 

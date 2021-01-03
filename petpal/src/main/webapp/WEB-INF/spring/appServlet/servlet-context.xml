@@ -39,6 +39,9 @@
 			</beans:list>
 		</beans:property>
 	</beans:bean>
-   
+	
+	<!-- 네이버 로그인 -->
+    <beans:bean id="naverLoginBO" class="com.project.petpal.member.model.vo.NaverLoginBO" />
+
 </beans:beans>
 
