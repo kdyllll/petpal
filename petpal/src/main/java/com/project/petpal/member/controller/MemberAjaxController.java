@@ -147,4 +147,12 @@ public class MemberAjaxController {
 	    m.addAttribute("pageBar",pageBar);
 		return "member/memberAjax/userFind";
 	}
+	
+	//회원정보(주문조회) - 상품 디테일보기
+	@RequestMapping("/member/shopDetailAjax.do")
+	public String shopDetail(String detailNo, Model model) {
+		Map shop = service.selectShopDetail(detailNo);
+		model.addAttribute("shop", shop);
+		return "member/memberAjax/shopDetail";
+	}
 }

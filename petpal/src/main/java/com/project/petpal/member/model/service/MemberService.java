@@ -31,6 +31,7 @@ public interface MemberService {
    int tipCount(String memberNo);
    int placeCount(String memberNo);
    int findCount(String memberNo);
-
+   List<Map> selectPaymentList(String memberNo);
+   Map selectShopDetail(String detailNo);
 
 }

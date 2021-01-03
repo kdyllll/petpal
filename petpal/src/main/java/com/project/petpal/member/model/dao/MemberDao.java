@@ -33,5 +33,7 @@ public interface MemberDao {
    int tipCount(SqlSession session,String memberNo);
    int placeCount(SqlSession session,String memberNo);
    int findCount(SqlSession session,String memberNo);
+   List<Map> selectPaymentList(SqlSession session, String memberNo);
+   Map selectShopDetail(SqlSession session, String detailNo);
 
 }

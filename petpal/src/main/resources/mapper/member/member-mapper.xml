@@ -30,7 +30,7 @@
     </select>
 
    <select id="followCnt" parameterType="string" resultType="int">
-      SELECT COUNT(*) FROM FOLLOW WHERE MEMBERNO=#{memberNo}
+      SELECT COUNT(*) FROM FOLLOW WHERE FOLLOWERNO=#{memberNo}
    </select>
    <select id="favCnt" parameterType="string" resultType="int">
       SELECT COUNT(*) FROM FAV WHERE MEMBERNO=#{memberNo}
@@ -43,10 +43,10 @@
        SELECT * FROM MEMBER WHERE MEMBERNO=#{memberNo}
     </select>
     <select id="countFollowing" resultType="int" parameterType="string">
-       SELECT COUNT(*) FROM FOLLOW WHERE MEMBERNO=#{memberNo}
+       SELECT COUNT(*) FROM FOLLOW WHERE FOLLOWERNO=#{memberNo}
     </select>
     <select id="countFollower" resultType="int" parameterType="string">
-       SELECT COUNT(*) FROM FOLLOW WHERE WRITERNO=#{memberNo}
+       SELECT COUNT(*) FROM FOLLOW WHERE FOLLOWERNO=#{memberNo}
     </select>
     <select id="selectDailyMain" resultType="dailyImg" parameterType="string">
        SELECT * FROM DAILYIMG LEFT JOIN DAILY USING(DAILYNO) WHERE MEMBERNO=#{memberNo} AND STATUS='M'
@@ -66,6 +66,12 @@
     </select>
     <select id="selectDailyHash" resultType="hashtag" parameterType="string">
     	SELECT * FROM HASHTAG LEFT JOIN DAILY ON POSTNO=DAILYNO WHERE POSTNO LIKE 'D%' AND MEMBERNO=#{memberNo}
+    </select>
+    <select id="selectPaymentList" resultType="map" parameterType="string">
+    	SELECT * FROM PAYMENT JOIN PAYDETAIL USING(PAYMENTNO) JOIN STOCK USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO) WHERE TYPE='M' AND MEMBERNO=#{memberNo}
+    </select>
+    <select id="selectShopDetail" resultType="map" parameterType="string">
+    	SELECT * FROM PAYMENT JOIN PAYDETAIL USING(PAYMENTNO) JOIN STOCK USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO) WHERE TYPE='M' and detailNo=#{detailNo}
     </select>
    
 

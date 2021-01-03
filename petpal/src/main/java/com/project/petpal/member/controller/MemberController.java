@@ -83,7 +83,9 @@ public class MemberController {
    public String myPageShop(Model m,HttpSession session) {
 	  Member mem = (Member)session.getAttribute("loginMember");
 	  Member member = service.selectMemberOne(mem.getMemberNo());
+	  List<Map> shop = service.selectPaymentList(mem.getMemberNo());
 	  m.addAttribute("member",member);
+	  m.addAttribute("shop", shop);
       return "member/myPageShop";
    }
 
