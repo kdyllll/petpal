@@ -45,7 +45,7 @@
 	                         <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
 	                       </svg>
 	                     </button>
-	                     <label>
+	                     <label class="picLabel">
 		                     <input name="update" class="d-none updatePic" type="file" accept="images/*" required/>
 		                     <div class="oriUpdate btn ml-3">
 		                     	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise text-white" viewBox="0 0 16 16">
@@ -199,20 +199,43 @@ $(document).on("click","button.oriDelete",e=>{
 	$(e.target).parents(".imgBox").remove();
 });
 
+/* <label class="picLabel">
+<input name="update" class="d-none updatePic" type="file" accept="images/*" required/>
+<div class="oriUpdate btn ml-3">
+	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise text-white" viewBox="0 0 16 16">
+	  <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+	  <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+	</svg>
+</div>
+</label>
+ */
+var clone;
 //기존사진 변경 버튼 눌렀을 때
+$(document).on('click','.oriUpdate',e=>{//파일 입력할때 미리 입력태그 클론만들기
+     clone=$(e.target).siblings(".updatePic").clone(true);
+});
+
+
 $(".updatePic").on("change",e=>{
-	var imgBox=$(e.target).parents(".imgBox");
-	var num=imgBox.find(".picNum").val();
-	$(".change").each((i,item)=>{
-		if($(item).hasClass(num)){
-			$(item).val("update");
-		}
-	});	 
-	changeThum(e,imgBox);
+	 if (e.target.value.length==0) {//파일 입력 취소 누르면 원래 사진 유지하도록
+		let label=$(e.target).parents(".picLabel");
+		$(e.target).remove();//값 없어진 인풋 지우고
+		label.prepend(clone);//미리 복사해놓은 인풋태그로 대체
+     }else{
+		var imgBox=$(e.target).parents(".imgBox");
+		var num=imgBox.find(".picNum").val();
+		$(".change").each((i,item)=>{
+			if($(item).hasClass(num)){
+				$(item).val("update");
+			}
+		});	 
+		changeThum(e,imgBox);
+     }
 });
 
 $("#btn").on("click",e=>{ 
-  $("input[type=file]").each((i,item)=>{  	  
+  $("input[type=file]").each((i,item)=>{  
+		 console.log(item.value);
 		if($(item).parents(".imgBox").length!=0){ //기존 사진이라면(업데이트인풋태그라면)
 			//사진을 업데이트 하지 않은 상태라면 값이 비어있을 수도 있음, 그래도 +태그에 인덱스 부여해야하므로 비어있는지는 확인 X
 			var imgBox=$(item).parents(".imgBox");
@@ -231,6 +254,7 @@ $("#btn").on("click",e=>{
     });
     
 	 $(".hashtag").attr("name","");//아무것도 안적힌 해시태그는 안넘어가도록 name 뺏기
+
 	 //등록 누르면 form 전송
 	 $("#writeFrm").attr("action","${path }/daily/dailyUpdateEnd.do").submit();
   

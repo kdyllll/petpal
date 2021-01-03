@@ -172,15 +172,11 @@ public class DailyServiceImpl implements DailyService {
 		for(Map m:fileList) {
 			String status=(String) m.get("change");
 			String imgNo=(String) m.get("dailyImgNo");
-			System.out.println("상태"+status);
-			System.out.println("사진번호"+imgNo);
 			if(status.equals("delete")) {//사진 상태가 삭제면 행삭제
 				result=dao.deleteDailyImg(session,imgNo);
-				System.out.println("기존사진삭제"+result);
 			}else if(status.equals("update")) {//사진 상태가 업데이트면 파일명 업데이트
 				updateFile.get(updateCnt).setDailyImgNo(imgNo);
 				result=dao.updateDailyImg(session,updateFile.get(updateCnt));
-				System.out.println("기존사진수정"+result);
 				updateCnt++;
 			}//변화없으면 아무것도 X	
 			
@@ -190,10 +186,8 @@ public class DailyServiceImpl implements DailyService {
 		//새로운 사진 삽입
 		if(result>0) {
 			if(newFile!=null) {
-				System.out.println("사진 삽입");
 				for(DailyImg di:newFile) {
 				result=dao.insertDailyImg(session, di);
-				System.out.println("사진삽입"+result);
 				}
 			}
 		}
@@ -203,16 +197,13 @@ public class DailyServiceImpl implements DailyService {
 		String status=(String) fileList.get(0).get("change");
 		if(result>0&&status.equals("delete")) {//메인사진이 지워진상태라면
 			result=dao.updateImgStatus(session,imgList.get(0));
-			System.out.println("메인사진"+result);
 		}
 		//내용, 해시, 좌표는 다 삭제하고 새로 삽입	
 		if(result>0) { 
 			//좌표 삽입
 			if(result>0) {
 				if(coords!=null) { 
-					System.out.println("좌표 등록");
 					for(DailyCoord dc:coords) {
-						System.out.println(dc);
 						switch(dc.getIndex()) {
 							case "0":dc.setDailyImgNo(imgList.get(0).getDailyImgNo());break;
 							case "1":dc.setDailyImgNo(imgList.get(1).getDailyImgNo());break;
@@ -221,7 +212,6 @@ public class DailyServiceImpl implements DailyService {
 							case "4":dc.setDailyImgNo(imgList.get(4).getDailyImgNo());break;
 						}
 						result=dao.insertDailyCoords(session,dc);
-						System.out.println("좌표등록"+result);
 					}
 				}
 			}
@@ -234,14 +224,12 @@ public class DailyServiceImpl implements DailyService {
 					for(Hashtag h:hashList) {
 						h.setPostNo(d.getDailyNo());
 						result=dao.insertHashtag(session,h);
-						System.out.println("해시삽입"+result);
 					}
 				}
 			}
 			//글 내용 수정
 			if(result>0) {
 				result=dao.updateDailyContent(session,d);
-				System.out.println("글내용수정"+result);
 			}
 		}
 		
@@ -260,11 +248,48 @@ public class DailyServiceImpl implements DailyService {
 		// TODO Auto-generated method stub
 		return dao.countComment(session,dailyNo);
 	}
+	
+	@Override
+	public int countCommentPage(String dailyNo) {
+		// TODO Auto-generated method stub
+		return dao.countCommentPage(session,dailyNo);
+	}
 
 	@Override
 	public int insertComment(DailyComment dc) {
 		// TODO Auto-generated method stub
 		return dao.insertComment(session,dc);
+	}
+
+	@Override
+	@Transactional
+	public int commentDelete(String dailyCommentNo) {
+		// TODO Auto-generated method stub
+		//자기 자신을 참조하는 댓글(=대댓글)이 있다면 상태만 D로 변경
+		int result=dao.commentDelete(session,dailyCommentNo);
+		//대댓글이 없다면 댓글 삭제 처리
+		if(result<1) {
+			result=dao.comment2Delete(session,dailyCommentNo);
+		}		
+		return result;
+	}
+
+	@Override
+	public int comment2Delete(String dailyCommentNo) {
+		// TODO Auto-generated method stub
+		return dao.comment2Delete(session,dailyCommentNo);
+	}
+
+	@Override
+	public List<Map> selectDailyHeart(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectDailyHeart(session,cPage,numPerPage);
+	}
+
+	@Override
+	public List<Map> selectDailyFollow(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectDailyFollow(session,cPage,numPerPage);
 	}
 
 	

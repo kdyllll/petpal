@@ -150,6 +150,18 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return dao.findCount(session,memberNo);
 	}
+
+	@Override
+	public List<Map> selectPaymentList(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectPaymentList(session, memberNo);
+	}
+
+	@Override
+	public Map selectShopDetail(String detailNo) {
+		// TODO Auto-generated method stub
+		return dao.selectShopDetail(session, detailNo);
+	}
 	   
 	
 
