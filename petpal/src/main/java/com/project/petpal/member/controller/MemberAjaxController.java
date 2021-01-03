@@ -21,6 +21,7 @@ import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyImg;
 import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.member.model.service.MemberService;
+import com.project.petpal.member.model.vo.KakaoLoginApi;
 import com.project.petpal.member.model.vo.Member;
 import com.project.petpal.member.model.vo.NaverLoginBO;
 
@@ -33,6 +34,7 @@ public class MemberAjaxController {
 	private BCryptPasswordEncoder pwEncoder;
 
     private NaverLoginBO naverLoginBO;
+    private KakaoLoginApi kakaoLoginApi;
    
 	@Autowired
 	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
@@ -72,6 +74,8 @@ public class MemberAjaxController {
 	public String moveLogin(HttpSession session,Model m) {
 		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
 		m.addAttribute("naverUrl", naverAuthUrl);
+		String kakaoUrl = kakaoLoginApi.getAuthorizationUrl(session);
+		m.addAttribute("kakaoUrl",kakaoUrl);
 		return "common/commonAjax/loginModal";
 	}
 	

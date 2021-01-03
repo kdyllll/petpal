@@ -53,7 +53,13 @@
               <button class="btn btn-lg btn-secondary btn-block my-1" type="button">구글</button>
               <button class="btn btn-lg btn-secondary btn-block mt-0 mb-1" type="button">카카오</button>
               <button class="btn btn-lg btn-secondary btn-block mt-0" type="button">네이버</button>
-              
+              <div id="kakao_id_login" style="text-align: center"> 
+              <a href="${kakaoUrl}"> 
+              <img width="223" src="${path }/resources/images/facebook.png" />
+              </a> 
+              </div>
+
+
 				<div id="naver_id_login" style="text-align:center"><a href="${naverUrl}">
 				<img width="223" src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png"/></a></div>
 				<br>

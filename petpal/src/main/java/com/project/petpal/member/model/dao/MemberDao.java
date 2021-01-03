@@ -33,5 +33,5 @@ public interface MemberDao {
    int tipCount(SqlSession session,String memberNo);
    int placeCount(SqlSession session,String memberNo);
    int findCount(SqlSession session,String memberNo);
-   Member selectNaverMember(SqlSession session,String id);
+   Member selectSnsMember(SqlSession session,String id);
 }

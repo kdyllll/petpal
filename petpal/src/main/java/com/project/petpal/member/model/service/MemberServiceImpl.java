@@ -152,9 +152,9 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public Member selectNaverMember(String id) {
+	public Member selectSnsMember(String id) {
 		// TODO Auto-generated method stub
-		return dao.selectNaverMember(session,id);
+		return dao.selectSnsMember(session,id);
 	}
 	   
 	

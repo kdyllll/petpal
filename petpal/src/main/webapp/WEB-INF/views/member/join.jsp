@@ -19,7 +19,7 @@
 					<div class="text-center">
 						<a href="${naverUrl }"><img src="${path }/resources/images/naver.PNG"
 							style="width: 80px; height: 80px;" alt=""></a> <a href="#"><img
-							src="${path }/resources/images/facebook.png"
+							src="${kakaoUrl }/resources/images/facebook.png"
 							style="width: 80px; height: 80px;" alt=""></a> <a href="#"><img
 							src="${path }/resources/images/google.png"
 							style="width: 80px; height: 80px;" alt=""></a>

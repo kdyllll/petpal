@@ -146,9 +146,9 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public Member selectNaverMember(SqlSession session, String id) {
+	public Member selectSnsMember(SqlSession session, String id) {
 		// TODO Auto-generated method stub
-		return session.selectOne("member.selectNaverMember",id);
+		return session.selectOne("member.selectSnsMember",id);
 	}
 
 	

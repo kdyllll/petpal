@@ -59,7 +59,7 @@ public class NaverController {
 		String id = (String)response_obj.get("id");
 		
 		//네이버로 가입되어있는 회원인지 확인
-		Member loginMember=service.selectNaverMember(id);
+		Member loginMember=service.selectSnsMember(id);
 		if(loginMember !=null ) {//네이버 간편로그인으로 가입했었으면
 			model.addAttribute("loginMember", loginMember);
 	         return "redirect:/";

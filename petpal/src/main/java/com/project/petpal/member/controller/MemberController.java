@@ -26,6 +26,8 @@ import com.project.petpal.community.model.service.FindService;
 import com.project.petpal.community.model.service.PlaceService;
 import com.project.petpal.community.model.service.TipService;
 import com.project.petpal.member.model.service.MemberService;
+import com.project.petpal.member.model.vo.KakaoEnrollApi;
+import com.project.petpal.member.model.vo.KakaoLoginApi;
 import com.project.petpal.member.model.vo.Member;
 import com.project.petpal.member.model.vo.NaverEnrollBo;
 import com.project.petpal.member.model.vo.NaverLoginBO;
@@ -54,6 +56,8 @@ public class MemberController {
    private NaverLoginBO naverLoginBO;
 
    private NaverEnrollBo naverEnrollBO;
+   private KakaoLoginApi kakaoLoginApi;
+   private KakaoEnrollApi kakaoEnrollApi;
    
 	@Autowired
 	private void setNaverLoginBO(NaverLoginBO naverLoginBO,NaverEnrollBo naverEnrollBO) {
@@ -110,6 +114,8 @@ public class MemberController {
    public String moveJoin(Model m,HttpSession session) {
 	  String naverAuthUrl = naverEnrollBO.getAuthorizationUrl(session);
 	  m.addAttribute("naverUrl", naverAuthUrl);
+	  String kakaoUrl = kakaoEnrollApi.getAuthorizationUrl(session);
+	  m.addAttribute("kakaoUrl",kakaoUrl);	  
       return "member/join";
    }
 
@@ -170,6 +176,8 @@ public class MemberController {
 	   }	   
 	   String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
 	   m.addAttribute("naverUrl", naverAuthUrl);
+	   String kakaoUrl = kakaoLoginApi.getAuthorizationUrl(session);
+	   m.addAttribute("kakaoUrl",kakaoUrl);
       return "member/login";
    }
 

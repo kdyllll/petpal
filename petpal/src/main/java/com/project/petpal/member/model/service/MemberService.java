@@ -31,6 +31,6 @@ public interface MemberService {
    int tipCount(String memberNo);
    int placeCount(String memberNo);
    int findCount(String memberNo);
-   Member selectNaverMember(String id);
+   Member selectSnsMember(String id);
 
 }
