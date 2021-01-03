@@ -13,21 +13,16 @@
       background: rgba(255, 255, 255, 0.8);
       z-index: 500;
     }
-    .bubble:after {
-      bottom: 100%;
-      left: 50%;
-      border: solid transparent;
-      content: "";
-      height: 0;
-      width: 0;
-      position: absolute;
-      pointer-events: none;
-      border-color: rgba(209, 209, 209, 0);
-      border-bottom-color:rgba(255, 255, 255, 0.8);
-      border-width: 5px;
-      margin-left: -5px;
-    }
       
+    pre{
+     font-family: 'NanumSquare', sans-serif !important;
+     white-space: pre-wrap; 
+    }
+    
+    a:hover {
+	text-decoration: none;
+	color:black;
+}
 </style>
 </head>
 <body class="bg-white">
@@ -35,6 +30,7 @@
   
   <main role="main" style="min-height:100vh;">
   <input type="hidden" class="loginMember" value="${loginMember.memberNo }"/>
+  <input type="hidden" class="writeMember" value="${daily.MEMBERNO }"/>
   <input type="hidden" class="dailyNo" value="${daily.DAILYNO }"/>
    <div class="album ">
 	   <div class="container my-4 mt-lg-0">
@@ -48,30 +44,31 @@
 	    	<div class="container">
 	        	<div class="row ">
 			         <!-- 왼쪽 -->
-			         <div class="col-lg-9 col-sm-12">
+			         <div class="col-lg-8 col-12">
 			           <div class="container" id="title">	
              
 			                <div class="imgCon">
 			                	<c:forEach var="i" items="${imgList }" varStatus="vs">			
-			                		<div class="position-relative rounded m-1 col-12">                		
-					                 <img src="${path }/resources/upload/community/daily/${i.dailyImgName}" class="col-12 mb-1 p-0 rounded">	
+			                		<div class="position-relative rounded m-1 p-0 col-12">                		
+					                 <img src="${path }/resources/upload/community/daily/${i.dailyImgName}" class="col-12 mb-1 p-0 rounded">					                 
 					                 <!-- 이미지와 연결된 상품태그들 -->				                 
 									 <c:forEach var="c" items="${coordList }"> 
 									 	<c:if test="${c.DAILYIMGNO eq i.dailyImgNo }">       
-									 		<c:set var="yy" value="${c.YCODE +5 }"/>   
+									 		<c:set var="yy" value="${c.YCODE +5 }"/>  
+									 		<c:set var="xx" value="${c.XCODE -15 }"/>  
 											<div class="plusTag">
 								                <svg class="plusBtn position-absolute" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
 								                    style="top:${c.YCODE}%; left:${c.XCODE }%;">
 								                    <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
 								                </svg>
-								                <div class="bubble rounded shadow-sm col-4 col-lg-4 position-absolute px-1" style="top:${yy}%; left:${c.XCODE }%;">
-								                  <div class="row d-flex flex-wrap">
+								                <div class="bubble rounded shadow-sm col-4 col-lg-4 position-absolute px-1" style="top:${yy}%; left:${xx}%;">
+								                  <div class="row d-flex flex-wrap  m-0 py-2">
 								                  	<c:forEach var="pi" items="${pImgList }">
 									                  	<c:if test="${pi.productNo eq c.PRODUCTNO }">
-									                    	<img class="col-2 border" src="${path }/resources/upload/product/detail/${pi.imgName}">
+									                    	<img class="col-4 border p-0 m-0 ml-1" src="${path }/resources/upload/product/detail/${pi.imgName}">
 									                    </c:if>
 								                    </c:forEach>
-								                    <p class="p-1 mb-0"><c:out value="${c.PRODUCTNAME }"/></p>
+								                    <p class="p-1 ml-2 mb-0 col-7"><c:out value="${c.PRODUCTNAME }"/></p>
 								                  </div>
 								                </div>
 								             </div>
@@ -83,7 +80,7 @@
 						                  <div class="d-lg-none mt-5">
 						                    <div class="row d-flex justify-content-between">
 						                      <div class="row ml-3 d-flex align-items-center">
-							                      <a href="${path }/user/moveUserInfo.do?memberNo=${daily.MEMBERNO}" class="p-0 d-flex align-items-center ml-2">
+							                      <a href="${path }/user/moveUserInfo.do?memberNo=${daily.MEMBERNO}" class="text-black p-0 d-flex align-items-center ml-2">
 								                      <div class="col-5 p-0">
 								                        <c:if test="${not empty daily.IMG }">                
 						                                	<img src="${path }/resources/upload/member/profile/${daily.IMG}" class="rounded" style="width:40px; height: 40px;">
@@ -94,7 +91,7 @@
 								                      </div>
 					                          	  	  <strong><span class="text-black p-0 ml-2 align-middle"><c:out value="${daily.NICKNAME }"/></span></strong>
 					                        	  </a>
-					                       		  <button type="button" class="followBtn btn btn-sm bg-testC mr-2 ml-3 text-black-50" style="height: 30px;">팔로우</button>
+					                       		  <button type="button" class="followBtn btn btn-sm bg-point mr-2 ml-3 text-black-50" style="height: 30px;">팔로우</button>
 				                      		  </div>
 				                      		  <div class="mr-4">
 							                        <button class="btn btn-link mb-3">
@@ -111,83 +108,48 @@
 							                        </button>
 				                      		   </div>
 				                    		 </div> <!-- row d-flex -->
-				                    		 <div class="ml-3 mt-4">
-				                      			<p><c:out value="${daily.CONTENT }"/></p>
+				                    		 <div class="ml-3 my-2">
+				                      			<pre class="m-0"><c:out value="${daily.CONTENT }"/></pre>
 							                      <div>
 						                       		<c:forEach var="h" items="${hashList}">
 				                                    		<a href="#">#<c:out value="${h.hashContent }"/></a>				                                    	
 				                                    </c:forEach>
 							                      </div>
 				                    		 </div>
-				                    		<c:choose>
-					                    		<c:when test="${(loginMember.memberNo eq daily.MEMBERNO) or (loginMember.memberNo eq '63') }">
-							                     <div class="d-flex justify-content-between align-items-center my-2 mx-4">
-								                     	<div>
-								                     		<c:if test="${loginMember.memberNo eq daily.MEMBERNO }">
-										                  		<button type="button" onclick="location.href'${path}/daily/updateDaily.do?dailyNo=${daily.DAILYNO }';" class="dailyEdit btn btn-link btn-outline-secondary px-2 py-0 mr-2 text-black-50">수정</button>
-										                  	</c:if>
-										                  	<button type="button" onclick="location.replace('${path}/daily/deleteDaily.do?dailyNo=${daily.DAILYNO }');" class="dailyDelete btn btn-link btn-outline-secondary px-2 py-0 text-black-50">삭제</button>
-										                </div>
-										        </c:when>
-										        <c:otherwise>
-										        	<div class="d-flex justify-content-end align-items-center my-2 mx-4">
-										        </c:otherwise>
-									        </c:choose>
-						                     	<div>
-							                      <span class="text-secondary"><c:out value="${daily.ENROLLDATE }"/></span>
-							                      <button type="button" class="btn btn-link text-black-50 p-0 ml-2"  onclick="fn_claimModal('${daily.DAILYNO}');">신고</button> 
-						                     	</div>
-						                     </div>
+					                    		<c:choose>
+						                    		<c:when test="${(loginMember.memberNo eq daily.MEMBERNO) or (loginMember.memberNo eq '63') }">
+								                     <div class="d-flex justify-content-between align-items-center my-3 mx-4">
+									                     	<div>
+									                     		<c:if test="${loginMember.memberNo eq daily.MEMBERNO }">
+											                  		<button type="button" onclick="location.replace('${path}/daily/moveUpdate.do?dailyNo=${daily.DAILYNO }');" class="dailyEdit btn btn-link btn-outline-secondary px-2 py-0 mr-2 text-black-50">수정</button>
+											                  	</c:if>
+											                  	<button type="button" onclick="location.replace('${path}/daily/deleteDaily.do?dailyNo=${daily.DAILYNO }');" class="dailyDelete btn btn-link btn-outline-secondary px-2 py-0 text-black-50">삭제</button>
+											          		</div>
+														    <div>
+										                      <span class="text-secondary"><c:out value="${daily.ENROLLDATE }"/></span>
+										                      <button type="button" class="btn btn-link text-black-50 p-0 ml-2"  onclick="fn_claimModal('${daily.DAILYNO}');">신고</button> 
+									                     	</div>
+									                   </div>
+											        </c:when>
+											        <c:otherwise>
+											        	<div class="d-flex justify-content-end align-items-center my-2 mx-4">
+												        	<div>
+										                      <span class="text-secondary"><c:out value="${daily.ENROLLDATE }"/></span>
+										                      <button type="button" class="btn btn-link text-black-50 p-0 ml-2"  onclick="fn_claimModal('${daily.DAILYNO}');">신고</button> 
+									                     	</div>
+									                     </div>
+											        </c:otherwise>
+									        	</c:choose>
+						                     	<!--  -->
+						                     </div><!-- d-lg-none mt-5 -->
 						                    
 					                     </c:if>				              
 								</c:forEach>
 								</div><!-- imgCon -->
 				                 <!-- 댓글 -->
-				                 <hr>
-				                 <h4>댓글<span class="text-secondary">2</span></h4>
-				                 <div class="d-flex mb-3">
-				                   <div class="input-group mb-3">
-				                     <input type="text" class="form-control" placeholder="칭찬과 격려의 댓글은 작성자에게 큰 힘이 됩니다:)"
-				                       aria-label="Recipient's username" aria-describedby="button-addon2">
-				                     <div class="input-group-append">
-				                       <button class="btn btn-outline-secondary" type="button" id="button-addon2">등록</button>
-				                     </div>
-				                   </div>
-				                 </div>
-				                 <div>
-					                  <div class="d-flex mb-3">
-						                    <a href="#">
-						                      <img src="./img/avatar.webp" class="rounded" style="width:40px; height: 40px;">
-						                    </a>
-						                    <div class="ml-1">
-						                        <a href="#"><span class="text-dark align-top mx-1"><strong>닉네임</strong></span></a>
-						                        <span>댓글 내용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</span>
-						                        <div class="d-flex align-items-center ml-1">
-						                          <p class="m-0 text-secondary" style="font-size: 12px;">
-						                        		    몇분전  
-						                          </p>  
-						                          <button class="btn text-black-50 p-0 ml-2" style="font-weight:bold; font-size: 12px;">답글 달기</button>
-						                        </div>
-						                    </div>     
-			                  		   </div>
-					                  <div class="d-flex mb-3">
-					                    <a href="#">
-					                      <img src="./img/avatar.webp" class="rounded" style="width:40px; height: 40px;">
-					                    </a>
-					                    <div class="ml-1">
-					                        <a href="#"><span class="text-dark align-top mx-1"><strong>닉네임</strong></span></a>
-					                        <span>댓글 내용</span>
-					                        <div class="d-flex align-items-center ml-1">
-					                          <p class="m-0 text-secondary" style="font-size: 12px;">
-					                            몇분전  
-					                          </p>  
-					                          <button class="btn text-black-50 p-0 ml-2" style="font-weight:bold; font-size: 12px;">답글 달기</button>
-					                        </div>
-					                    </div>     
-					                  </div>   
-		                		</div>
-		                		<div class="d-flex justify-content-center">댓글페이징바</div>
-	               			</div><!-- col-lg-9 -->
+				                 <div id="commentContainer">
+
+	               			</div>
 
 	        		</div><!-- container title -->
 	         	</div><!-- col-lg-9 sm-12 -->
@@ -220,10 +182,10 @@
 		                      </div>
 		                      <strong><span class="col-3 p-0 ml-2 align-middle"><c:out value="${daily.NICKNAME }"/></span></strong>
 		                    </a>
-		                    <button type="button" class="followBtn btn btn-sm bg-daily col-4 col-xl-3 mr-2">팔로우</button>
+		                    <button type="button" class="followBtn btn btn-sm bg-point col-4 col-xl-3 mr-2">팔로우</button>
 		                 </div>
-		                 <div class="mt-2">
-		                   <p><c:out value="${daily.CONTENT }"/></p>
+		                 <div class="mt-3">
+		                   <pre class="my-1 "><c:out value="${daily.CONTENT }"/></pre>
 		                   <div>
 		                     <c:forEach var="h" items="${hashList}">
                            		<a href="#">#<c:out value="${h.hashContent }"/></a>				                                    	
@@ -238,7 +200,7 @@
 		               <c:if test="${(loginMember.memberNo eq daily.MEMBERNO) or (loginMember.memberNo eq '63') }">
 			               <div class="d-flex justify-content-end mr-1">
 			               		<c:if test="${loginMember.memberNo eq daily.MEMBERNO }">
-			                  		<button type="button" onclick="location.href'${path}/daily/updateDaily.do?dailyNo=${daily.DAILYNO }';" class="dailyEdit btn btn-link btn-outline-secondary px-2 py-0 mr-2 text-black-50">수정</button>
+			                  		<button type="button" onclick="location.replace('${path}/daily/moveUpdate.do?dailyNo=${daily.DAILYNO }');" class="dailyEdit btn btn-link btn-outline-secondary px-2 py-0 mr-2 text-black-50">수정</button>
 			                  	</c:if>
 			                  	<button type="button" onclick="location.replace('${path}/daily/deleteDaily.do?dailyNo=${daily.DAILYNO }');" class="dailyDelete btn btn-link btn-outline-secondary px-2 py-0 text-black-50">삭제</button>
 			               </div>
@@ -260,6 +222,7 @@
 <script>
 let loginMember=$(".loginMember").val();
 let dailyNo=$(".dailyNo").val();
+commentAjax();
 $(document).ready(function (){
 	$(".bubble").hide();
 
@@ -284,7 +247,6 @@ $(".followBtn").on("click",e=>{
 
 //로그인 모달
 function loginModal(){
-	console.log("실행");
 	$.ajax({
 		url: "${path}/login/moveLogin.do",
 		dataType:"html",
@@ -294,6 +256,116 @@ function loginModal(){
 		}
 	});
 };
+
+//댓글 스크립트
+function commentAjax(){
+	let writeMember=$(".writeMember").val();
+	$.ajax({
+		url: "${path}/daily/dailyComment.do",
+		dataType:"html",
+		data:{dailyNo:dailyNo,writeMember:writeMember},
+		success:(data)=>{
+			$("#commentContainer").html(data);
+		}
+	});
+};
+
+function commentDelete(path,data){
+	$.ajax({
+		url:path,
+		data:{dailyCommentNo:data},
+		success:data=>{
+			if(data===true){
+				alert("댓글이 삭제되었습니다.");
+				commentAjax();
+			}else{
+				alert("댓글 삭제에 실패하였습니다.");
+			}
+		},
+		error:function(){
+			alert("댓글 삭제에 실패하였습니다.");
+		}
+	})
+}
+
  
+$(function(){//로그인 안되어있을때 댓글창 누르면 손가락표시
+	if(loginMember==""){
+		$("[name=dailyComment]").css({"cursor":"pointer"});
+	}
+});
+
+$(document).on('click','[name=dailyComment]',function(e) { //댓글창 누르면 로그인 확인
+		if(loginMember==""){
+			loginModal();
+		}
+});
+
+$(document).on('click','.reply',function(e) {//답글달기 눌렀을때
+	if(loginMember==""){
+		loginModal();
+		return;
+	}
+	var comment=$(e.target).parents("div.comment");//답글달기의 댓글
+	
+	if($("div.editor").length==2&&!comment.next().hasClass("editor")){//댓글달기 창이 두개이고 
+		var flag=confirm("다른 댓글에서 작성하고 있던 내용이 유실됩니다. 정말 이 댓글로 전환하시겠습니까?")
+		if(flag==true){//확인 눌렀을때
+			$("#commentContainer").find("div.subComment").remove();
+		}else{//취소 눌렀을때 변화없음
+			
+		}
+	}
+	if($("div.editor").length==1){//댓글달기창이 하나일때
+	var editor=$("div.editor").clone();
+	editor.addClass("ml-5");
+	editor.addClass("subComment");
+	editor.find("[name=commentLevel]").val("2");
+	editor.find("[name=dailyComment]").val("");
+	editor.find("[name=commentRef]").val($(e.target).val());
+	comment.after(editor);//
+	}
+});
+
+$(document).on('click','.write',function(e) {//댓글 등록 버튼 눌렀을때
+	if(loginMember==""){//로그인 안되어있다면
+		loginModal();
+		return;
+	}else if($(e.target).parents("div.editor").find("[name=dailyComment]").val().trim()==""){//댓글 내용이 없으면
+		alert("내용을 입력해주세요.");
+		return;
+	}
+	var dailyNo=$(".dailyNo").val();
+	var dailyComment=$(e.target).parents("div.editor").find("[name=dailyComment]").val();
+	var commentLevel=$(e.target).parents("div.editor").find("[name=commentLevel]").val();
+	var commentRef=$(e.target).parents("div.editor").find("[name=commentRef]").val();
+	$.ajax({
+		url:"${path}/daily/commentWrite.do",
+		data:{dailyComment:dailyComment,commentLevel:commentLevel,memberNo:loginMember,dailyNo:dailyNo,commentRef:commentRef},
+		success:data=>{
+			if(data===true){
+				alert("댓글이 등록되었습니다.");
+				commentAjax();
+			}else{
+				alert("댓글 등록에 실패하였습니다.");
+			}
+		},
+		error:function(){
+			alert("댓글 등록에 실패하였습니다.");
+		}
+	})
+});
+
+$(document).on("click",".commentDelete",e=>{
+	//댓글 삭제 눌렀을 때 (댓글은 업뎃 대댓글은 삭제)
+	commentDelete("${path}/daily/commentDelete.do",$(e.target).val());	
+});
+
+$(document).on("click",".comment2Delete",e=>{
+	//대댓글 삭제 눌렀을 때 (대댓글은 삭제)
+	commentDelete("${path}/daily/comment2Delete.do",$(e.target).val())	
+});
+
+
 </script>
 </html>

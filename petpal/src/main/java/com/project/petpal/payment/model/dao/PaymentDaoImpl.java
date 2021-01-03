@@ -1,5 +1,6 @@
 package com.project.petpal.payment.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,4 +27,39 @@ public class PaymentDaoImpl implements PaymentDao {
 	public List<Map> selectPaymentCompleteList(SqlSession session, String orderNo) {
 		return session.selectList("payment.selectPaymentCompleteList", orderNo);
 	}
+
+	@Override
+	public String selectPaymentNo(SqlSession session, String orderNo) {
+		return session.selectOne("payment.selectPaymentNo", orderNo);
+	}
+
+	@Override
+	public List<String> selectStockNo(SqlSession session, String paymentNo) {
+		return session.selectList("payment.selectStockNo", paymentNo);
+	}
+
+	@Override
+	public int deleteCart(SqlSession session, String stockNo, String memberNo) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("stockNo", stockNo);
+		map.put("memberNo", memberNo);
+		
+		return session.delete("payment.deleteCart", map);
+	}
+
+	@Override
+	public String selectStock(SqlSession session, String stockNo) {
+		return session.selectOne("payment.selectStock", stockNo);
+	}
+
+	@Override
+	public int selectPoint(SqlSession session, String memberNo) {
+		return session.selectOne("payment.selectPoint", memberNo);
+	}
+
+	@Override
+	public List<Map> selectAddress(SqlSession session, String memberNo) {
+		return session.selectList("payment.selectAddress", memberNo);
+	}
+
 }

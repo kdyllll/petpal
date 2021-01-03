@@ -37,4 +37,34 @@ public class PaymentServiceImpl implements PaymentService {
 	public List<Map> selectPaymentCompleteList(String orderNo) {
 		return dao.selectPaymentCompleteList(session, orderNo);
 	}
+
+	@Override
+	public String selectPaymentNo(String orderNo) {
+		return dao.selectPaymentNo(session, orderNo);
+	}
+
+	@Override
+	public List<String> selectStockNo(String paymentNo) {
+		return dao.selectStockNo(session, paymentNo);
+	}
+
+	@Override
+	public int deleteCart(String stockNo, String memberNo) {
+		return dao.deleteCart(session, stockNo, memberNo);
+	}
+
+	@Override
+	public String selectStock(String stockNo) {
+		return dao.selectStock(session, stockNo);
+	}
+
+	@Override
+	public int selectPoint(String memberNo) {
+		return dao.selectPoint(session, memberNo);
+	}
+
+	@Override
+	public List<Map> selectAddress(String memberNo) {
+		return dao.selectAddress(session, memberNo);
+	}
 }

@@ -8,11 +8,12 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.project.petpal.admin.model.vo.Product;
-import com.project.petpal.store.model.vo.ProductImg;
 import com.project.petpal.community.model.vo.Daily;
+import com.project.petpal.community.model.vo.DailyComment;
 import com.project.petpal.community.model.vo.DailyCoord;
 import com.project.petpal.community.model.vo.DailyImg;
 import com.project.petpal.community.model.vo.Hashtag;
+import com.project.petpal.store.model.vo.ProductImg;
 
 @Repository
 public class DailyDaoImpl implements DailyDao {
@@ -128,6 +129,92 @@ public class DailyDaoImpl implements DailyDao {
 	public int totalDailyCount(SqlSession session) {
 		// TODO Auto-generated method stub
 		return session.selectOne("daily.totalDailyCount");
+	}
+
+	@Override
+	public int deleteDailyImg(SqlSession session, String dailyImgNo) {
+		// TODO Auto-generated method stub
+		return session.delete("daily.deleteDailyImg",dailyImgNo);
+	}
+
+	@Override
+	public int updateDailyImg(SqlSession session, DailyImg di) {
+		// TODO Auto-generated method stub
+		return session.update("daily.updateDailyImg",di);
+	}
+
+	@Override
+	public int updateImgStatus(SqlSession session, DailyImg di) {
+		// TODO Auto-generated method stub
+		return session.update("daily.updateImgStatus",di);
+	}
+
+	@Override
+	public int deleteAllCoords(SqlSession session, String dailyImgNo) {
+		// TODO Auto-generated method stub
+		return session.delete("daily.deleteAllCoords",dailyImgNo);
+	}
+
+	@Override
+	public int deleteAllHash(SqlSession session, String dailyNo) {
+		// TODO Auto-generated method stub
+		return session.delete("daily.deleteAllHash",dailyNo);
+	}
+
+	@Override
+	public int updateDailyContent(SqlSession session, Daily d) {
+		// TODO Auto-generated method stub
+		return session.update("daily.updateDailyContent",d);
+	}
+
+	@Override
+	public List<DailyComment> selectComment(SqlSession session, String dailyNo, int cPage, int numPerPage) {
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("daily.selectComment",dailyNo,rb);
+	}
+
+	@Override
+	public int countComment(SqlSession session, String dailyNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("daily.countComment",dailyNo);
+	}
+	
+	@Override
+	public int countCommentPage(SqlSession session, String dailyNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("daily.countCommentPage",dailyNo);
+	}
+
+	@Override
+	public int insertComment(SqlSession session, DailyComment dc) {
+		// TODO Auto-generated method stub
+		return session.insert("daily.insertComment",dc);
+	}
+
+	@Override
+	public int commentDelete(SqlSession session, String dailyCommentNo) {
+		// TODO Auto-generated method stub
+		return session.update("daily.commentDelete",dailyCommentNo);
+	}
+
+	@Override
+	public int comment2Delete(SqlSession session, String dailyCommentNo) {
+		// TODO Auto-generated method stub
+		return session.delete("daily.comment2Delete",dailyCommentNo);
+	}
+
+	@Override
+	public List<Map> selectDailyHeart(SqlSession session, int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("daily.selectDailyHeart",null,rb);
+	}
+
+	@Override
+	public List<Map> selectDailyFollow(SqlSession session, int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("daily.selectDailyFollow",null,rb);
 	}
 
 	

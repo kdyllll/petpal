@@ -30,38 +30,34 @@
                 <jsp:include page="/WEB-INF/views/common/communityNav.jsp" >
                 	<jsp:param value="dailyList" name="comNav"/>
                 </jsp:include>
-                <div class="form-inline container text-center mb-3">
+                <div class="d-flex justify-content-between container text-center mb-3">
                     <h3>일상</h3>
-                    <button type="button" id="dailyWriteBtn" class="btn btn-outline-secondary ml-auto" >글쓰기</button>
+                    
+					<div class="form-inline">
+	                    <button type="button" id="dailyWriteBtn" class="btn btn-outline-secondary ml-auto mr-3" >글쓰기</button>
+		                  <div class="dropdown ml-auto">
+		                      <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		                        	정렬
+		                      </button>
+		                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+		                            <button class="sortBtn dropdown-item" value="enrollDate">최신순</button>
+		                            <button class="sortBtn dropdown-item" value="heart">인기순</button>
+		                            <button class="sortBtn dropdown-item" value="follow">팔로워순</button>
+		                      </div>
+		                  </div>	  
+      				</div>
                 </div>
-                <div class="form-inline container-xl mb-5">
-                    <div class="input-group col-lg-5 col-8">
-                        <input type="text" class="form-control " placeholder="해시태그 내용을 입력하세요" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button type="button" id="searchBtn" class="input-group-text bg-point">검색</button>
-                        </div>
-                    </div>
-                    <div class="dropdown ml-auto">
-                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        정렬
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <button class="dropdown-item" href="#">최신순</button>
-                            <button class="dropdown-item" href="#">인기순</button>
-                            <button class="dropdown-item" href="#">팔로워순</button>
-                        </div>
-                    </div>
-                </div>
-
+             
+			<div id="dailyCon" class="dailyCon row mt-3">
 				<c:if test="${empty dailyList }">
 					<div class="mx-auto">
 						<p class="">일상 글이 없습니다.</p>
 					</div>
 				</c:if>
 				<c:if test="${not empty dailyList }">
+
 					<c:forEach var="d" items="${dailyList}">
-		                <address class="col-xl-3 col-lg-4 col-md-6">
+		                <address class="col-xl-3 col-lg-4 col-md-6 m-0">
 		                    <div class="card mb-4 bg-transparent border-0">
 		                        <div class="px-3 row mb-2">  
 		                        		<c:if test="${not empty d.IMG }">                
@@ -100,13 +96,13 @@
 		                                <span class="text-dark mx-1 align-text-middle">0</span>
 		                            </button>
 		                        </div>
-		                        <div class="card-body p-0">
+		                        <div class="card-body p-0 px-1">
 		                            <p class="card-text mb-1">${d.CONTENT }</p>
 		                            <div class="d-flex justify-content-between align-items-center">
 		                                <small class="text-muted pl-1">
 		                                	<c:forEach var="h" items="${hashList}">
 		                                		<c:if test="${not empty h and (h.postNo eq d.DAILYNO )}">
-		                                    		<a href="#">#<c:out value="${h.hashContent }"/></a>
+		                                    		<a class="text-secondary bg-point" href="#">#<c:out value="${h.hashContent }"/></a>
 		                                    	</c:if>
 		                                    </c:forEach>  
 		                                </small>
@@ -115,11 +111,13 @@
 		                    </div>
 		                </address>
 	               </c:forEach>
+	               <div class="mx-auto my-2">${pageBar }</div>
                </c:if>
-
+	          </div>
+	          
             </div>
         </div>
-        <div class="text-center">${pageBar }</div>
+        
     </div>
     <div class="pdtModal"></div>
   </main>
@@ -129,20 +127,39 @@
 </body>
 <script>
 	let loginMember=$(".loginMember").val();
-	$("#dailyWriteBtn").on("click",e=>{
+	//글쓰기로 이동
+	$("#dailyWriteBtn").on("click",e=>{ 
 		if(loginMember==""){
-			$.ajax({
-				url: "${path}/login/moveLogin.do",
-				dataType:"html",
-				success:(data) => {
-					$(".pdtModal").html(data);	
-	         		$('div.modal').modal(); 
-				}
-			});
+			fn_loginCheck();
 		}else{
 			location.href='${path}/daily/moveWrite.do';
 		}
 	});
 
+	//정렬버튼 눌렀을 때
+	$(document).on('click','.sortBtn',e=>{
+		let sort=$(e.target).val();
+		$.ajax({
+			url:"${path}/daily/dailySort.do",
+			data:{sort:sort},
+			dataType:"html",
+			success:(data)=>{
+				$("#dailyCon").html(data);
+			}
+		});
+		
+	});
+	
+	//로그인 모달
+	function fn_loginCheck(){
+		$.ajax({
+			url: "${path}/login/moveLogin.do",
+			dataType:"html",
+			success:(data) => {
+				$(".pdtModal").html(data);	
+         		$('div.modal').modal(); 
+			}
+		});
+	}
 </script>
 </html>

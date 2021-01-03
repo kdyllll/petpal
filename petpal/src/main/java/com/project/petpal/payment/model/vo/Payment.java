@@ -18,8 +18,9 @@ public class Payment {
 	private String receiverTel;
 	private String loc;
 	private String memo;
-	private String pointPlus;
-	private String pointMinus;
+	private int point;
+	private int pointPlus;
+	private int pointMinus;
 	private int totalPrice;
 	private String payKind;
 	private String payDate;
@@ -27,4 +28,7 @@ public class Payment {
 	private String payStatus;
 	private String email;
 	private String orderNo;
+	private String refundName;
+	private String refundBank;
+	private String refundAccount;
 }

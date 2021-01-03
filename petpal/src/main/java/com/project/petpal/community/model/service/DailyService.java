@@ -4,11 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import com.project.petpal.admin.model.vo.Product;
-import com.project.petpal.store.model.vo.ProductImg;
 import com.project.petpal.community.model.vo.Daily;
+import com.project.petpal.community.model.vo.DailyComment;
 import com.project.petpal.community.model.vo.DailyCoord;
 import com.project.petpal.community.model.vo.DailyImg;
 import com.project.petpal.community.model.vo.Hashtag;
+import com.project.petpal.store.model.vo.ProductImg;
 
 public interface DailyService {
 
@@ -29,4 +30,14 @@ public interface DailyService {
 	List<Map> selectDailyListOne(String memberNo);
 	int dailyCnt(String memberNo);
 	int totalDailyCount();
+	int updateDaily(Daily d,List<Hashtag> hashList,List<DailyCoord> coords,List<Map> fileList,List<DailyImg> updateFile,List<DailyImg> newFile);
+	List<DailyComment> selectComment(String dailyNo,int cPage,int numPerPage);
+	int countComment(String dailyNo);
+	int countCommentPage(String dailyNo);
+	int insertComment(DailyComment dc);
+	int commentDelete(String dailyCommentNo);
+	int comment2Delete(String dailyCommentNo);
+	List<Map> selectDailyHeart(int cPage,int numPerPage);
+	List<Map> selectDailyFollow(int cPage,int numPerPage);
+
 }
