@@ -154,7 +154,37 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public Member selectSnsMember(String id) {
 		// TODO Auto-generated method stub
-		return dao.selectSnsMember(session,id);
+		return dao.selectSnsMember(session,id);	
+	}
+	
+	@Override
+	public List<Map> selectPaymentList(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectPaymentList(session, memberNo);
+	}
+
+	@Override
+	public Map selectShopDetail(String detailNo) {
+		// TODO Auto-generated method stub
+		return dao.selectShopDetail(session, detailNo);
+	}
+
+	@Override
+	public int productRefund(Map m) {
+		// TODO Auto-generated method stub
+		return dao.productRefund(session, m);
+	}
+
+	@Override
+	public String getStockNo(String detailNo) {
+		// TODO Auto-generated method stub
+		return dao.getStockNo(session, detailNo);
+	}
+
+	@Override
+	public String getProductNo(String stockNo) {
+		// TODO Auto-generated method stub
+		return dao.getProductNo(session, stockNo);
 	}
 	   
 	

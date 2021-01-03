@@ -30,7 +30,7 @@
     </select>
 
    <select id="followCnt" parameterType="string" resultType="int">
-      SELECT COUNT(*) FROM FOLLOW WHERE MEMBERNO=#{memberNo}
+      SELECT COUNT(*) FROM FOLLOW WHERE FOLLOWERNO=#{memberNo}
    </select>
    <select id="favCnt" parameterType="string" resultType="int">
       SELECT COUNT(*) FROM FAV WHERE MEMBERNO=#{memberNo}
@@ -43,10 +43,10 @@
        SELECT * FROM MEMBER WHERE MEMBERNO=#{memberNo}
     </select>
     <select id="countFollowing" resultType="int" parameterType="string">
-       SELECT COUNT(*) FROM FOLLOW WHERE MEMBERNO=#{memberNo}
+       SELECT COUNT(*) FROM FOLLOW WHERE FOLLOWERNO=#{memberNo}
     </select>
     <select id="countFollower" resultType="int" parameterType="string">
-       SELECT COUNT(*) FROM FOLLOW WHERE WRITERNO=#{memberNo}
+       SELECT COUNT(*) FROM FOLLOW WHERE FOLLOWERNO=#{memberNo}
     </select>
     <select id="selectDailyMain" resultType="dailyImg" parameterType="string">
        SELECT * FROM DAILYIMG LEFT JOIN DAILY USING(DAILYNO) WHERE MEMBERNO=#{memberNo} AND STATUS='M'
@@ -60,7 +60,6 @@
     <select id="selectFindMain" resultType="map" parameterType="string">
        SELECT * FROM FINDIMG LEFT JOIN FIND USING(FINDNO) WHERE MEMBERNO=#{memberNo} AND IMGSTATUS='M'
     </select>
-
     <select id="selectDailyList" resultType="daily" parameterType="string">
     	SELECT * FROM DAILY WHERE MEMBERNO=#{memberNo}
     </select>
@@ -70,6 +69,20 @@
     <select id="selectSnsMember" resultType="member" parameterType="string">
     	SELECT * FROM MEMBER WHERE SNSNO=#{value}
     </select>
-
+    <select id="selectPaymentList" resultType="map" parameterType="string">
+    	SELECT * FROM PAYMENT JOIN PAYDETAIL USING(PAYMENTNO) JOIN STOCK USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO) WHERE TYPE='M' AND MEMBERNO=#{memberNo}
+    </select>
+    <select id="selectShopDetail" resultType="map" parameterType="string">
+    	SELECT * FROM PAYMENT JOIN PAYDETAIL USING(PAYMENTNO) JOIN STOCK USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO) WHERE TYPE='M' and detailNo=#{detailNo}
+    </select>
+    <update id="productRefund" parameterType="map">
+    	UPDATE PAYDETAIL SET DETAILSTATUS='반품중',REFUNDINFO=#{reason} WHERE DETAILNO=#{detailNo}
+    </update>
+    <select id="getStockNo" resultType="string" parameterType="string">
+    	SELECT STOCKNO FROM PAYDETAIL WHERE DETAILNO=#{detailNo}
+    </select>
+    <select id="getProductNo" resultType="string" parameterType="string">
+    	select PRODUCTNO from stock where stockNo=#{stockNo}
+    </select>
 
 </mapper>

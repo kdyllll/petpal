@@ -32,5 +32,10 @@ public interface MemberService {
    int placeCount(String memberNo);
    int findCount(String memberNo);
    Member selectSnsMember(String id);
+   List<Map> selectPaymentList(String memberNo);
+   Map selectShopDetail(String detailNo);
+   int productRefund(Map m);
+   String getStockNo(String detailNo);
+   String getProductNo(String stockNo);
 
 }
