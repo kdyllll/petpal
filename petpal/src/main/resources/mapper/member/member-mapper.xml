@@ -73,7 +73,8 @@
     <select id="selectShopDetail" resultType="map" parameterType="string">
     	SELECT * FROM PAYMENT JOIN PAYDETAIL USING(PAYMENTNO) JOIN STOCK USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO) WHERE TYPE='M' and detailNo=#{detailNo}
     </select>
+    <update id="productRefund" parameterType="string">
+    	UPDATE PAYDETAIL SET DETAILSTATUS='반품중' WHERE DETAILNO=#{detailNo}
+    </update>
    
-
-
 </mapper>

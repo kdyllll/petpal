@@ -275,5 +275,18 @@ public class MemberController {
       m.addAttribute("follower",follower);
       return "member/userInfo";
    }
+   @RequestMapping("/member/refundApply.do")
+   public String refundApply(String detailNo, Model model) {
+	   int result = service.productRefund(detailNo);
+	   
+	   String loc = "";
+	   String msg = "반품신청에 실패하였습니다.";
+	   if(result>0) {
+		   msg= "반품접수 되었습니다.";
+	   }
+	   model.addAttribute("loc", loc);
+	   model.addAttribute("msg", msg);
+	   return "common/msg";
+   }
 
 }

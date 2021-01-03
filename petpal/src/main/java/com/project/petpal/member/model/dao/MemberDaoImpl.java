@@ -157,6 +157,12 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectOne("member.selectShopDetail", detailNo);
 	}
 
+	@Override
+	public int productRefund(SqlSession session, String detailNo) {
+		// TODO Auto-generated method stub
+		return session.update("member.productRefund", detailNo);
+	}
+
 	
    
    

@@ -117,10 +117,11 @@
 								<!-- 결제일, 결제정보 주소지 ... -->
 								<input type="hidden" value="${s.DETAILNO }" name="detailNo">
 								<button type="button"
-									class="btn btn-outline-secondary btn-sm mr-2"
+									class="btn btn-outline-secondary btn-sm mr-2 refundBtn"
 									style="font-size: 12px;">반품신청</button>
-								<button type="button" class="btn btn-outline-secondary btn-sm"
-									style="font-size: 12px;">환불신청</button>
+								<input type="hidden" name="detailNo" value="${s.DETAILNO }" />
+								<button type="button" class="btn btn-outline-secondary btn-sm changeBtn"
+									style="font-size: 12px;">교환신청</button>
 							</c:when>
 							<c:when test="${s.DETAILSTATUS eq '반품중' }">
 								<span style="font-size: 12px;">반품신청(대기)</span>
@@ -135,8 +136,10 @@
 							</c:when>
 							<c:otherwise>
 								<span style="font-size: 12px;">취소신청(완료)</span>
-								<button type="button" class="ml-2 btn btn-outline-secondary btn-sm"
+								<button type="button"
+									class="ml-2 btn btn-outline-secondary btn-sm"
 									style="font-size: 12px;">취소정보</button>
+
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -145,6 +148,69 @@
 		</c:if>
 	</div>
 	<div class="shopModal"></div>
+	<div class="shopRefundModal">
+		<div class="modal fade refund" id="staticBackdrop" tabindex="-1"
+			aria-labelledby="exampleModalLabel" data-backdrop="static"
+			aria-hidden="true">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">반품신청</h5>
+						<button type="button btn-sm" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+
+					</div>
+
+					<form class="modal-body refundFrm" method="post">
+						<div class="refundNo"></div>
+						<p class="text-center">반품신청 하시겠습니까?</p>
+						<div class="d-flex justify-content-center">
+							<button type="button" class="btn btn-outline-secondary btn-sm"
+								data-dismiss="modal">취소</button>
+							<button type="button"
+								class="btn btn-outline-secondary btn-sm ml-2 refundEndBtn">신청</button>
+							<input type="hidden" name="detailNo" />
+						</div>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="shopChangeModal">
+		<div class="modal fade change" id="staticBackdrop" tabindex="-1"
+			aria-labelledby="exampleModalLabel" data-backdrop="static"
+			aria-hidden="true">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">교환신청</h5>
+						<button type="button btn-sm" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+
+					</div>
+
+					<form class="modal-body changeFrm" >
+						<p class="text-center">교환신청 하시겠습니까?</p>
+						<div class="d-flex justify-content-center">
+							<button type="button" class="btn btn-outline-secondary btn-sm"
+								data-dismiss="modal">취소</button>
+							<button type="button"
+								class="btn btn-outline-secondary btn-sm ml-2 changeEndBtn">신청</button>
+							
+						</div>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 </main>
 
@@ -153,10 +219,26 @@
  $(function() {
 	 $(".shopDetail").on("click", e=> {
 		 let detailNo = $(e.target).next().val();
-		  moveAjaxModal("${path}/member/shopDetailAjax.do", detailNo ); 
+		  moveAjaxModal("${path}/member/shopDetailAjax.do", detailNo, ".sDetail" ); 
 	 })
 	 
-	 function moveAjaxModal(path,detailNo) {
+	 $(".refundBtn").on("click", e=> {
+		 let input = $(e.target).next().val();
+		 let newInput = $("<input>").attr({"name" : "datailNo" , "value":input, "type": "hidden"});
+		 $(".refundFrm").children(".refundNo").html("");
+		 $(".refundFrm").children(".refundNo").append(newInput);
+		 $(".refund").modal();
+	 })
+	 $(".changeBtn").on("click", e=> {
+		 $(".change").modal();
+	 })
+	 
+	 $(".refundEndBtn").on("click", e => {
+		 $(".refundFrm").attr("action", "${path}/member/refundApply.do").submit();
+	 })
+	 
+
+	 function moveAjaxModal(path,detailNo, md) {
 		 $.ajax({
 			url:path,
 			 data:{detailNo : detailNo},
@@ -165,7 +247,7 @@
 				 console.log(data);
 				 /* $(".shopModal").html(""); */
 				 $(".shopModal").html(data);
-	      		 $('div.modal').modal(); 
+	      		 $(md).modal(); 
 			 }
 		 });
 	 }

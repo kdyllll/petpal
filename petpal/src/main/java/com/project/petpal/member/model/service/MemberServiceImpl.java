@@ -162,6 +162,12 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return dao.selectShopDetail(session, detailNo);
 	}
+
+	@Override
+	public int productRefund(String detailNo) {
+		// TODO Auto-generated method stub
+		return dao.productRefund(session, detailNo);
+	}
 	   
 	
 
