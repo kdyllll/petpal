@@ -31,8 +31,8 @@ public class MemberAjaxController {
 	private MemberService service;
 	@Autowired
 	private BCryptPasswordEncoder pwEncoder;
-	
-   private NaverLoginBO naverLoginBO;
+
+    private NaverLoginBO naverLoginBO;
    
 	@Autowired
 	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {

@@ -17,7 +17,7 @@
 				<div class="container">
 					<h2 class="text-center font-weight-bold" id="title">회원가입</h2>
 					<div class="text-center">
-						<a href="#"><img src="${path }/resources/images/naver.PNG"
+						<a href="${naverUrl }"><img src="${path }/resources/images/naver.PNG"
 							style="width: 80px; height: 80px;" alt=""></a> <a href="#"><img
 							src="${path }/resources/images/facebook.png"
 							style="width: 80px; height: 80px;" alt=""></a> <a href="#"><img

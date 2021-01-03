@@ -27,6 +27,7 @@ import com.project.petpal.community.model.service.PlaceService;
 import com.project.petpal.community.model.service.TipService;
 import com.project.petpal.member.model.service.MemberService;
 import com.project.petpal.member.model.vo.Member;
+import com.project.petpal.member.model.vo.NaverEnrollBo;
 import com.project.petpal.member.model.vo.NaverLoginBO;
 import com.project.petpal.store.model.service.StoreService;
 import com.project.petpal.store.model.vo.Product;
@@ -49,11 +50,15 @@ public class MemberController {
    private DailyService dService;
    @Autowired
    private StoreService storeService;
+
    private NaverLoginBO naverLoginBO;
+
+   private NaverEnrollBo naverEnrollBO;
    
 	@Autowired
-	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+	private void setNaverLoginBO(NaverLoginBO naverLoginBO,NaverEnrollBo naverEnrollBO) {
 		this.naverLoginBO = naverLoginBO;
+		this.naverEnrollBO = naverEnrollBO;
 	}
 
    @RequestMapping("/member/moveMyPage.do")
@@ -102,7 +107,9 @@ public class MemberController {
    }
 
    @RequestMapping("/member/moveJoin.do")//회원가입페이지로 가는 서블릿
-   public String moveJoin() {
+   public String moveJoin(Model m,HttpSession session) {
+	  String naverAuthUrl = naverEnrollBO.getAuthorizationUrl(session);
+	  m.addAttribute("naverUrl", naverAuthUrl);
       return "member/join";
    }
 
