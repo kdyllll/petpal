@@ -43,5 +43,6 @@ public interface MemberDao {
    Map selectPayDetail(SqlSession session, String detailNo);
    int selectCnt(SqlSession session,Map m);
    int selectDeliveryCnt(SqlSession session, Map m);
+   List<Map> selectPointList(SqlSession session, String memberNo);
 
 }

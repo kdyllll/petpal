@@ -141,6 +141,8 @@ public class MemberController {
 	  p.put("deliveryStatus", "구매확정");
 	  int pay = service.selectDeliveryCnt(p);
 	  System.out.println(payDelCnt+"."+deliveryEndCnt+"."+deliveryStartCnt+"."+pay);
+	  
+	  List<Map> point = service.selectPointList(mem.getMemberNo());
 	  m.addAttribute("riCnt",refundIngCnt);
 	  m.addAttribute("rCnt",refundCnt);
 	  m.addAttribute("ciCnt",changeIngCnt);
@@ -152,6 +154,7 @@ public class MemberController {
 	  m.addAttribute("deCnt",deliveryEndCnt);
 	  m.addAttribute("dsCnt",deliveryStartCnt);
 	  m.addAttribute("pay",pay);
+	  m.addAttribute("point", point);
       return "member/myPageShop";
    }
 

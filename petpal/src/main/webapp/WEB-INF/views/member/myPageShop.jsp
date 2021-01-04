@@ -18,7 +18,7 @@
 			class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block text-center ">적립금
 			<c:out value="${member.point}" />원
 		</a>
-		<button type="button" class="ml-2 btn btn-outline-secondary btn-sm "
+		<button type="button" class="ml-2 btn btn-outline-secondary btn-sm pointBtn"
 			style="font-size: 12px;">내역보기</button>
 	</div>
 </div>
@@ -103,7 +103,7 @@
 							<strong class="d-block text-gray-dark"><c:if
 									test="${s.DETAILSTATUS eq '결제완료' }">( <c:out
 										value="${s.DETAILSTATUS }" /> )</c:if></strong>
-							<c:out value="${s.PRODUCTNAME }" />
+							<c:out value="${s.PRODUCTNAME }" /> ( <fmt:formatDate value="${s.PAYDATE }" pattern="yyyy/MM/dd" /> )
 							<br />
 							<c:out value="${s.COLOR }" />
 							<c:out value="${s.PRODUCTSIZE }" />
@@ -209,6 +209,52 @@
 		</div>
 	</div>
 	<div class="shopChangeModal"></div>
+	<div class="pointModal">
+		<div class="modal fade point" id="staticBackdrop" tabindex="-1"
+			aria-labelledby="exampleModalLabel" data-backdrop="static"
+			aria-hidden="true">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">포인트 내역</h5>
+						<button type="button btn-sm" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+
+					</div>
+					<style>
+						.modal-body > p {
+							font-size:14px;
+						}
+					</style>
+					<form class="modal-body refundFrm" method="post">
+						<c:if test="${not empty point }">
+							<c:forEach var="p" items="${point }" >
+								<c:if test="${p.POINTPLUS ne 0 && p.POINTMINUS eq 0 }">
+								<p>적립 : +<c:out value="${p.POINTPLUS }"/> ( <fmt:formatDate value="${p.PAYDATE }" pattern="yyyy/MM/dd" /> )</p>
+								</c:if>
+								<c:if test="${p.POINTMINUS ne  0 && p.POINTPLUS eq 0 }">
+									<p> 사용 : -<c:out value="${p.POINTMINUS }"/> ( <fmt:formatDate value="${p.PAYDATE }" pattern="yyyy/MM/dd" /> )</p>
+								</c:if>
+								<c:if test="${p.POINTPLUS ne 0 && p.POINTMINUS ne 0 }">
+									<p>적립 : +<c:out value="${p.POINTPLUS }"/> ( <fmt:formatDate value="${p.PAYDATE }" pattern="yyyy/MM/dd" /> )</p>
+									<p> 사용 : -<c:out value="${p.POINTMINUS }"/> ( <fmt:formatDate value="${p.PAYDATE }" pattern="yyyy/MM/dd" /> )</p>
+								</c:if>
+								
+							</c:forEach>
+						</c:if>
+						<c:if test="${empty point }">
+							<p>적립 : +3000 (가입포인트)</p>
+							<p>적립, 사용된 포인트가 없습니다.</p>
+						</c:if>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 </main>
 
@@ -220,6 +266,12 @@
 		  moveAjaxModal("${path}/member/shopDetailAjax.do", detailNo, ".sDetail" ); 
 	 })
 	 
+	 //포인트 모달
+	 $(".pointBtn").on("click", e => {
+		 $(".point").modal();
+	 })
+	 
+	 //환불 모달
 	 $(".refundBtn").on("click", e=> {
 		 let input = $(e.target).next().val();
 		 let newInput = $("<input>").attr({"name" : "detailNum" , "value":input, "type": "hidden"});
@@ -228,10 +280,13 @@
 		 console.log(input);
 		 $(".refund").modal();
 	 })
+	 //교환모달
 	 $(".changeBtn").on("click", e=> {
 		 let detailNo = $(e.target).prev().val();
 		 moveAjaxModal("${path}/member/moveProductChangePage.do",detailNo,".change");
 	 })
+	 
+	 //환불에 other누르면 textarea나옴
 	 $(".refundReason").on("change", e=> {
 		 	$(".refundText").html("");
 			 if($(e.target).val() == "other") {
@@ -240,6 +295,7 @@
 			 }
 		 })
 		 
+	
 	 $(".infoDetail").on("click", e => {
 		 let detailNo = $(e.target).next().val();
 		 moveAjaxModal("${path}/member/infoDetail.do",detailNo,".iDetail" );

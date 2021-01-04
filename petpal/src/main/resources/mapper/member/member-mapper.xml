@@ -105,5 +105,8 @@
     <select id="selectDeliveryCnt" resultType="_int" parameterType="map">
     	SELECT COUNT(*) FROM PAYDETAIL JOIN PAYMENT USING(PAYMENTNO) WHERE MEMBERNO=#{memberNo} AND deliveryStatus = #{deliveryStatus} AND DETAILSTATUS='결제'
     </select>
+    <select id="selectPointList" resultType="map" parameterType="string">
+    	select * from payment where memberno = #{memberNo} and pointplus !=0 or pointminus != 0 ORDER BY PAYDATE
+    </select>
 
 </mapper>

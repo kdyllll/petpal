@@ -210,6 +210,12 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return dao.selectDeliveryCnt(session, m);
 	}
+
+	@Override
+	public List<Map> selectPointList(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectPointList(session,memberNo);
+	}
 	   
 	
 

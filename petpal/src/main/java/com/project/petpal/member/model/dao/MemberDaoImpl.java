@@ -205,6 +205,12 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectOne("member.selectDeliveryCnt", m);
 	}
 
+	@Override
+	public List<Map> selectPointList(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("member.selectPointList", memberNo);
+	}
+
 	
    
    
