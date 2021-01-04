@@ -216,8 +216,30 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return dao.selectPointList(session,memberNo);
 	}
+
+	@Override
+	public List<Map> selectPaymentListNon(Map m) {
+		// TODO Auto-generated method stub
+		return dao.selectPaymentListNon(session,m);
+	}
+
+	@Override
+	public int selectOrderCheck(String orderNo) {
+		// TODO Auto-generated method stub
+		return dao.selectOrderCheck(session,orderNo);
+	}
 	   
-	
+	@Override
+	public int selectCntNon(Map m) {
+		// TODO Auto-generated method stub
+		return dao.selectCntNon(session, m);
+	}
+
+	@Override
+	public int selectDeliveryCntNon(Map m) {
+		// TODO Auto-generated method stub
+		return dao.selectDeliveryCntNon(session, m);
+	}
 
 
 }

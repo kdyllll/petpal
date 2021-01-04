@@ -42,5 +42,8 @@ public interface MemberService {
    int selectCnt(Map m);
    int selectDeliveryCnt(Map m);
    List<Map> selectPointList(String memberNo);
-
+   List<Map> selectPaymentListNon(Map m);
+   int selectOrderCheck(String orderNo);
+   int selectCntNon(Map m);
+   int selectDeliveryCntNon(Map m);
 }

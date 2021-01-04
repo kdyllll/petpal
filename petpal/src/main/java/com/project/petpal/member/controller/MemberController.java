@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
@@ -440,5 +441,68 @@ public class MemberController {
 	   return "common/msg";
    }
 
+   @RequestMapping("/nonMemberShop.do")
+   public String moveNonMemberShop(Model m,HttpSession session, HttpServletRequest request,String orderNo) {
+		  String status = request.getParameter("orderStatus"); 
+		  String payStatus = request.getParameter("payStatus");
+		  String deliveryStatus = request.getParameter("deliveryStatus");
+
+		  Map list = new HashMap();
+		  list.put("orderNo",orderNo);
+		  list.put("status", status);
+		  list.put("payStatus",payStatus);
+		  list.put("deliveryStatus",deliveryStatus);
+		  List<Map> shop = service.selectPaymentListNon(list);
+//		  취소,교환중,교환,반품중,결제 갯수 구하기
+		  Map map = new HashMap();
+		  map.put("orderNo",orderNo);
+		  String n = "";
+		  n="반품중";
+		  map.put("n",n);
+		  int refundIngCnt = service.selectCntNon(map);
+		  n="취소";
+		  map.put("n",n);
+		  int refundCnt = service.selectCntNon(map);
+		  n="교환중";
+		  map.put("n",n);
+		  int changeIngCnt = service.selectCntNon(map);
+		  n="교환";
+		  map.put("n",n);
+		  int changeCnt = service.selectCntNon(map);
+		  n="결제";
+		  map.put("n",n);
+		  int payCnt = service.selectCntNon(map);
+//		  결제완료, 배송준비중, 배송중, 배송완료 ... 갯수 구하기
+		  Map p = new HashMap();
+		  p.put("orderNo",orderNo);
+		  p.put("deliveryStatus", "배송준비중");
+		  int payDelCnt = service.selectDeliveryCntNon(p);
+		  p.put("deliveryStatus", "배송시작");
+		  int deliveryStartCnt = service.selectDeliveryCntNon(p);
+		  p.put("deliveryStatus", "배송완료");
+		  int deliveryEndCnt = service.selectDeliveryCntNon(p);
+		  p.put("deliveryStatus", "구매확정");
+		  int pay = service.selectDeliveryCntNon(p);
+		  System.out.println(payDelCnt+"."+deliveryEndCnt+"."+deliveryStartCnt+"."+pay);
+		  
+		  m.addAttribute("riCnt",refundIngCnt);
+		  m.addAttribute("rCnt",refundCnt);
+		  m.addAttribute("ciCnt",changeIngCnt);
+		  m.addAttribute("cCnt",changeCnt);
+		  m.addAttribute("payCnt",payCnt);
+		  m.addAttribute("shop", shop);
+		  m.addAttribute("payDelCnt",payDelCnt);
+		  m.addAttribute("deCnt",deliveryEndCnt);
+		  m.addAttribute("dsCnt",deliveryStartCnt);
+		  m.addAttribute("pay",pay);
+	   return "member/nonMemberShop";
+   }
+   
+   @RequestMapping("/orderCheck.do")
+   @ResponseBody
+   public Boolean orderCheck(String orderNo) {
+	   int result=service.selectOrderCheck(orderNo);
+	   return result>0?true:false;
+   }
 
 }

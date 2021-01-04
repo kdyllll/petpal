@@ -70,7 +70,7 @@
         </form>
       </div>
      
-      <form class="form-signin">
+      <form id="nonMemberFrm" class="form-signin" action="${path }/nonMemberShop.do">
         <div class=" accordion" id="accordionExample">          
             <a class="btn btn-lg btn-transparent btn-block text-center"  data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
               비회원 주문조회
@@ -78,10 +78,10 @@
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
               <div class="card-body">                             
                 <div class="form-label-group">
-                  <input type="text" id="inputPassword" class="form-control" placeholder="주문번호" required>
+                  <input type="text" name="orderNo" class="form-control" placeholder="주문번호" required>
                   <label for="inputPassword">주문번호</label>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">조회하기</button>
+                <button id="nonMemberBtn" class="btn btn-lg btn-primary btn-block" type="button">조회하기</button>
               </div>
             </div>
         </div>   
@@ -92,5 +92,28 @@
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 </body>
-
+<script>
+	$(document).on("click","#nonMemberBtn",e=>{
+		if($("input[name=orderNo]").val().trim().length!=0){
+			var orderNo=$("input[name=orderNo]").val().trim();
+			$.ajax({
+				url:"${path}/orderCheck.do",
+				data:{orderNo:orderNo},
+				success:(data) => {
+					if(data==true){
+						$("#nonMemberFrm").submit();
+					}else{
+	                    alert("주문 내역이 없습니다. 번호를 다시 확인하세요.");
+					}
+				},
+				error:(request,status,error)=>{
+                    alert("주문 내역이 없습니다. 번호를 다시 확인하세요.");
+                 }	
+			})
+			
+		}else{
+			alert("주문 번호를 입력해주세요.");
+		}
+	})
+</script>
 </html>
