@@ -17,9 +17,10 @@ public class Cart {
 	private int count;
 	private int price;
 	private int sale;
-	private int stock;
+	private String stock;
 	private String memberNo;
 	private String stockNo;
+	private int totalProduct;
 	private int totalPrice;
 	private int fee;
 }

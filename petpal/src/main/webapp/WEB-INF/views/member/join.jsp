@@ -16,9 +16,9 @@
 				<div class="container">
 					<h2 class="text-center font-weight-bold" id="title">회원가입</h2>
 					<div class="text-center">
-						<a href="#"><img src="${path }/resources/images/naver.PNG"
-							style="width: 80px; height: 80px;" alt=""></a> <a href=""><img
-							src="${path }/resources/images/facebook.png"
+						<a href="${naverUrl }"><img src="${path }/resources/images/naver.PNG"
+							style="width: 80px; height: 80px;" alt=""></a> <a href="#"><img
+							src="${kakaoUrl }/resources/images/facebook.png"
 							style="width: 80px; height: 80px;" alt=""></a> <a href="https://accounts.google.com/o/oauth2/v2/auth?scope=https://mail.google.com/&response_type=code&state=security_token%3D138r5719ru3e1%26url%3Dhttps://oauth2.example.com/token&client_id=1028720606752-69v5b1ln634gfmd5ju9mu4sl0n1c2vu2.apps.googleusercontent.com&redirect_uri=http://localhost:9090/petpal/redirect&access_type=offline"><img
 							src="${path }/resources/images/google.png"
 							style="width: 80px; height: 80px;" alt=""></a>

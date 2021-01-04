@@ -21,14 +21,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.petpal.admin.model.vo.Product;
+import com.project.petpal.common.AjaxPageBarFactory;
 import com.project.petpal.common.PageBarFactory;
-import com.project.petpal.store.model.vo.ProductImg;
 import com.project.petpal.community.model.service.DailyService;
 import com.project.petpal.community.model.vo.Daily;
+import com.project.petpal.community.model.vo.DailyComment;
 import com.project.petpal.community.model.vo.DailyCoord;
 import com.project.petpal.community.model.vo.DailyImg;
 import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.member.model.vo.Member;
+import com.project.petpal.store.model.vo.ProductImg;
 
 
 
@@ -56,6 +58,7 @@ public class DailyController {
 		String pageBar=new PageBarFactory().getPageBar(totalCount, cPage, numPerPage, null, null, "moveList.do");
 		
 		//좋아요 수
+		//좋아요 리스트(하트켜기용)
 		//댓글 수 보내야 함
 		
 		m.addAttribute("dailyList",dailyList);
@@ -134,10 +137,12 @@ public class DailyController {
 
 		//해시태그
 		List<Hashtag> hashList=new ArrayList();
-		for(String hash:hashtag) {
-			Hashtag h=new Hashtag();
-			h.setHashContent(hash);
-			hashList.add(h);
+		if(hashtag!=null) {
+			for(String hash:hashtag) {
+				Hashtag h=new Hashtag();
+				h.setHashContent(hash);
+				hashList.add(h);
+			};
 		};
 		
 		//보내기
@@ -157,9 +162,6 @@ public class DailyController {
 		Map daily=service.selectDailyOne(dailyNo);
 		//글 사진
 		List<DailyImg> imgList=service.selectDailyImg(dailyNo);
-		for(DailyImg d:imgList) {
-			System.out.println(d);
-		}
 		//상품 태그
 		List<Map> coordList=service.selectCoordList(dailyNo);
 		//상품 이미지
@@ -247,12 +249,14 @@ public class DailyController {
 		Daily d=Daily.builder().dailyNo(dailyNo).memberNo(login.getMemberNo()).content(content).build();
 		//해시태그
 		List<Hashtag> hashList=new ArrayList();
-		for(String hash:hashtag) {
-			Hashtag h=new Hashtag();
-			h.setPostNo(dailyNo);
-			h.setHashContent(hash);
-			hashList.add(h);
-		};
+		if(hashtag!=null) {
+			for(String hash:hashtag) {
+				Hashtag h=new Hashtag();
+				h.setPostNo(dailyNo);
+				h.setHashContent(hash);
+				hashList.add(h);
+			};
+		}
 		//좌표
 		//좌표
 		//사진번호, 상품번호, x좌표, y좌표
@@ -300,6 +304,7 @@ public class DailyController {
 		}
 		for(int i=0;i<change.length;i++) {
 			Map map=new HashMap();
+//			System.out.println("맵에 넣는 이미지번호"+imgList.get(i).getDailyImgNo());
 			map.put("dailyImgNo", imgList.get(i).getDailyImgNo());
 			map.put("change", change[i]);
 			fileList.add(map);
@@ -351,6 +356,81 @@ public class DailyController {
 		ProductImg p=service.selectDailyProduct(productNo); //서비스에서 상품이름으로 상품번호 조회한다음에 상품 사진 테이블에서 가져와야함
 		//이미지번호, 상품번호, 이미지이름, 타입(메인M)	
 		return p;		
+	}
+	
+	//일상 댓글 불러오기
+	@RequestMapping("/daily/dailyComment.do")
+	public String selectComment(String dailyNo,String writeMember,
+			@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerPage",defaultValue="5") int numPerPage,
+			Model m) {
+		List<DailyComment> cList=service.selectComment(dailyNo,cPage,numPerPage);
+		int count=service.countComment(dailyNo);
+		int total=service.countCommentPage(dailyNo);
+		String pageBar=new AjaxPageBarFactory().getPageBar(total, cPage, numPerPage, "dailyComment.do", null, "#commentContainer", null, "commentAjax",dailyNo,writeMember);
+		m.addAttribute("count",count);
+		m.addAttribute("pageBar",pageBar);
+		m.addAttribute("cList",cList);	
+		m.addAttribute("writeMember",writeMember);
+		return "community/communityAjax/dailyComment";
+	}
+	
+	//일상 댓글 작성
+	@RequestMapping("/daily/commentWrite.do")
+	@ResponseBody
+	public Boolean insertComment(DailyComment dc) {
+		int result=service.insertComment(dc);
+		return result>0?true:false;
+	}
+	
+	//일상 댓글 삭제 → 댓글 상태 D로 변경
+	@RequestMapping("/daily/commentDelete.do")
+	@ResponseBody
+	public Boolean commentDelete(String dailyCommentNo) {
+		int result=service.commentDelete(dailyCommentNo);
+		return result>0?true:false;
+	}
+	
+	//일상 대댓글 삭제 
+	@RequestMapping("/daily/comment2Delete.do")
+	@ResponseBody
+	public Boolean comment2Delete(String dailyCommentNo) {
+		int result=service.comment2Delete(dailyCommentNo);
+		return result>0?true:false;
+	}
+	
+	//일상 정렬
+	@RequestMapping("/daily/dailySort.do")
+	public String dailySort(String sort,Model m,
+			@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerPage",defaultValue="12") int numPerPage) {
+		//sort 는 enrollDate(최신순) / heart(좋아요순) / follow(팔로워많은순)
+		List<Map> dailyList=new ArrayList<Map>();
+		if(sort.equals("enrollDate")) {//최신순 정렬일때
+			dailyList=service.selectDailyAll(cPage,numPerPage);
+		}else if(sort.equals("heart")) {//좋아요순일때(일상+멤버+좋아요)
+			dailyList=service.selectDailyHeart(cPage,numPerPage);
+		}else {//팔로워많은순일때(일상+멤버+팔로우)
+			dailyList=service.selectDailyFollow(cPage,numPerPage);
+		}
+		
+		List<DailyImg> imgList=service.selectMainImg();
+		List<Hashtag> hashList=service.selectHashAll();
+		int totalCount=service.totalDailyCount();
+		String pageBar="";
+		//String pageBar=new PageBarFactory().getPageBar(totalCount, cPage, numPerPage, null, null, "moveList.do");
+		//에이작스 페이지바로 바꿔야함
+		
+		//좋아요 수
+		//좋아요 리스트(하트켜기용)
+		//댓글 수 보내야 함
+		
+		m.addAttribute("dailyList",dailyList);
+		m.addAttribute("imgList",imgList);
+		m.addAttribute("hashList",hashList);
+		//m.addAttribute("pageBar",pageBar);
+		
+		return "community/communityAjax/dailyListAjax";
 	}
 
 	

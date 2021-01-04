@@ -1,7 +1,7 @@
 package com.project.petpal.common;
 
 public class AjaxPageBarFactory {
-	public static String getPageBar(int totalData,int cPage,int numPerPage,String uri,String productNo,String con,String memberNo,String func) {
+	public static String getPageBar(int totalData,int cPage,int numPerPage,String uri,String productNo,String con,String memberNo,String func,String dailyNo,String writeMember) {
 
 		String pageBar="";
 		
@@ -48,7 +48,7 @@ public class AjaxPageBarFactory {
 			pageBar+="$.ajaxSettings.traditional = true;";
 			pageBar+="$.ajax({";
 				pageBar+="url:'"+uri+"',";
-				pageBar+="data:{cPage:cPage" +(productNo==null?"":",productNo:"+productNo)+ (memberNo==null?"":",memberNo:"+memberNo)+ "},";
+				pageBar+="data:{cPage:cPage" +(productNo==null?"":",productNo:"+productNo)+ (memberNo==null?"":",memberNo:"+memberNo)+ (dailyNo==null?"":",dailyNo:'"+dailyNo)+"'"+(writeMember==null?"":",writeMember:'"+writeMember)+ "'},";
 				pageBar+="dataType:'html',";
 				pageBar+="success:(data)=>{";
 				pageBar+="$('"+con+"').html(data);";

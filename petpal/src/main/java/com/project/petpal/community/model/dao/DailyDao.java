@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.project.petpal.admin.model.vo.Product;
 import com.project.petpal.community.model.vo.Daily;
+import com.project.petpal.community.model.vo.DailyComment;
 import com.project.petpal.community.model.vo.DailyCoord;
 import com.project.petpal.community.model.vo.DailyImg;
 import com.project.petpal.community.model.vo.Hashtag;
@@ -39,5 +40,13 @@ public interface DailyDao {
 	int deleteAllCoords(SqlSession session,String dailyImgNo);
 	int deleteAllHash(SqlSession session,String dailyNo);
 	int updateDailyContent(SqlSession session,Daily d);
+	List<DailyComment> selectComment(SqlSession session,String dailyNo,int cPage,int numPerPage);
+	int countComment(SqlSession session,String dailyNo);
+	int countCommentPage(SqlSession session,String dailyNo);
+	int insertComment(SqlSession session,DailyComment dc);
+	int commentDelete(SqlSession session,String dailyCommentNo);
+	int comment2Delete(SqlSession session,String dailyCommentNo);
+	List<Map> selectDailyHeart(SqlSession session,int cPage,int numPerPage);
+	List<Map> selectDailyFollow(SqlSession session,int cPage,int numPerPage);
 	
 }

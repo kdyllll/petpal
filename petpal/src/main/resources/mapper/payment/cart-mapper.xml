@@ -24,7 +24,7 @@
 			 AND TYPE='M'
 		</if>
 	</select>
-	<delete id="deleteCart" parameterType="string">
-		DELETE FROM CART WHERE STOCKNO = #{stockNo}
+	<delete id="deleteCart" parameterType="hashMap">
+		DELETE FROM CART WHERE STOCKNO = #{stockNo} AND MEMBERNO = #{memberNo}
 	</delete>
 </mapper>

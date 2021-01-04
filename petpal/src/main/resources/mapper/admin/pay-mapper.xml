@@ -17,7 +17,7 @@
 		SELECT * FROM PAYDETAIL WHERE PAYMENTNO=#{paymentNo} AND DETAILSTATUS='결제'
 	</select>
 	<update id="updatePaymentStatus" parameterType="string">
-		UPDATE PAYMENT SET PAYSTATUS='취소완료' WHERE PAYMENTNO=#{paymentNo}
+		UPDATE PAYMENT SET PAYSTATUS='취소완료', DELIVERYSTATUS='취소' WHERE PAYMENTNO=#{paymentNo}
 	</update>
 	<update id="orderCancelAll" parameterType="string">
 		UPDATE PAYDETAIL SET DETAILSTATUS='취소' WHERE PAYMENTNO=#{paymentNo}

@@ -1,6 +1,5 @@
 package com.project.petpal.community.model.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,12 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.petpal.admin.model.vo.Product;
-import com.project.petpal.store.model.vo.ProductImg;
 import com.project.petpal.community.model.dao.DailyDao;
 import com.project.petpal.community.model.vo.Daily;
+import com.project.petpal.community.model.vo.DailyComment;
 import com.project.petpal.community.model.vo.DailyCoord;
 import com.project.petpal.community.model.vo.DailyImg;
 import com.project.petpal.community.model.vo.Hashtag;
+import com.project.petpal.store.model.vo.ProductImg;
 
 @Service
 public class DailyServiceImpl implements DailyService {
@@ -173,22 +173,19 @@ public class DailyServiceImpl implements DailyService {
 			String status=(String) m.get("change");
 			String imgNo=(String) m.get("dailyImgNo");
 			if(status.equals("delete")) {//사진 상태가 삭제면 행삭제
-				System.out.println("사진 삭제");
 				result=dao.deleteDailyImg(session,imgNo);
 			}else if(status.equals("update")) {//사진 상태가 업데이트면 파일명 업데이트
-				System.out.println("사진 업데이트");
 				updateFile.get(updateCnt).setDailyImgNo(imgNo);
 				result=dao.updateDailyImg(session,updateFile.get(updateCnt));
 				updateCnt++;
 			}//변화없으면 아무것도 X	
 			
 			//사진에 얽힌 모든 좌표 지우기
-			result=dao.deleteAllCoords(session,imgNo);
+			dao.deleteAllCoords(session,imgNo);
 		}
 		//새로운 사진 삽입
 		if(result>0) {
 			if(newFile!=null) {
-				System.out.println("사진 삽입");
 				for(DailyImg di:newFile) {
 				result=dao.insertDailyImg(session, di);
 				}
@@ -219,7 +216,8 @@ public class DailyServiceImpl implements DailyService {
 				}
 			}
 			//해시태그 삭제
-			result=dao.deleteAllHash(session,d.getDailyNo());
+			dao.deleteAllHash(session,d.getDailyNo());
+
 			//해시태그 삽입
 			if(result>0) {
 				if(hashList.size()!=0) {//해시태그가 있으면
@@ -237,6 +235,61 @@ public class DailyServiceImpl implements DailyService {
 		
 
 		return result;
+	}
+
+	@Override
+	public List<DailyComment> selectComment(String dailyNo,int cPage,int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectComment(session,dailyNo,cPage,numPerPage);
+	}
+
+	@Override
+	public int countComment(String dailyNo) {
+		// TODO Auto-generated method stub
+		return dao.countComment(session,dailyNo);
+	}
+	
+	@Override
+	public int countCommentPage(String dailyNo) {
+		// TODO Auto-generated method stub
+		return dao.countCommentPage(session,dailyNo);
+	}
+
+	@Override
+	public int insertComment(DailyComment dc) {
+		// TODO Auto-generated method stub
+		return dao.insertComment(session,dc);
+	}
+
+	@Override
+	@Transactional
+	public int commentDelete(String dailyCommentNo) {
+		// TODO Auto-generated method stub
+		//자기 자신을 참조하는 댓글(=대댓글)이 있다면 상태만 D로 변경
+		int result=dao.commentDelete(session,dailyCommentNo);
+		//대댓글이 없다면 댓글 삭제 처리
+		if(result<1) {
+			result=dao.comment2Delete(session,dailyCommentNo);
+		}		
+		return result;
+	}
+
+	@Override
+	public int comment2Delete(String dailyCommentNo) {
+		// TODO Auto-generated method stub
+		return dao.comment2Delete(session,dailyCommentNo);
+	}
+
+	@Override
+	public List<Map> selectDailyHeart(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectDailyHeart(session,cPage,numPerPage);
+	}
+
+	@Override
+	public List<Map> selectDailyFollow(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectDailyFollow(session,cPage,numPerPage);
 	}
 
 	

@@ -36,17 +36,18 @@
   	<div class="container">
 		<div class="d-none d-md-block">
 	  		<p class="mb-5 text-center">결제가 완료되었습니다.</p>
-	  		<h4 class="text-center mb-5">주문번호는 <c:out value="${list[0].ORDERNO }"/>입니다.</h4>
+	  		<h4 class="text-center mb-3">주문번호는 <c:out value="${list[0].ORDERNO }"/>입니다.</h4>
+	  		<h6 class="text-center mb-5">고객님이 입력하신 이메일을 통해서 주문번호가 전송됩니다. 메일을 확인해주세요.</h6>
+	  		<h4 class="text-center mb-4">입금 계좌 : 신한 - 5429385720</h4>
 	  		<div class="row" style="margin:0px auto;">
 	  			<div class="col-6" style="width:360px;">
 	  				<div class="proCon p-3 border border-dark rounded ml-5 pl-4 mt-3 mb-4 d-block">
 		  				<h5 class="mb-4"><strong>결제 정보</strong></h5>
-	  					<h6><b>받는 분 : </b> 성함 - <c:out value="${list[0].RECEIVERNAME }"/> / 연락처 - <c:out value="${list[0].RECEIVERTEL }"/></h6>
-	  					<%-- <h6>받는 분 연락처 - <c:out value="${list[0].RECEIVERTEL }"/></h6> --%>
+	  					<h6>받는 분 : <c:out value="${list[0].RECEIVERNAME }"/> / 연락처 - <c:out value="${list[0].RECEIVERTEL }"/></h6>
 	  					<h6>배송지 - <c:out value="${list[0].L0C }"/></h6>
 	  					<h6>이메일 - <c:out value="${list[0].EMAIL }"/></h6>
 	  					<h6>결제금액 - <c:out value="${list[0].TOTALPRICE }"/>원 / 결제수단 - <c:out value="${list[0].PAYKIND }"/></h6>
-	  					<h6></h6>
+	  					<h6>예금주 - <c:out value="${list[0].REFUNDNAME }"/>  / 환불계좌 - <c:out value="${list[0].REFUNDBANK }"/> <c:out value="${list[0].REFUNDACCOUNT }"/></h6>
 	  				</div>
 	  			</div>
 	  		
@@ -56,7 +57,7 @@
 							<div class="proCon p-3 border border-dark rounded mt-3 mb-2 d-block" style="width:90%; margin:0px auto;">
 								<div class="d-flex mt-2">
 									<div style="margin:0px auto">
-										<a href="" class="d-flex">
+										<div class="d-flex">
 											<div>
 												<img src="${path }/resources/upload/product/detail/${c.IMGNAME}" class="rounded" style="width:100px;height:100px">
 											</div>
@@ -73,9 +74,17 @@
 													<span class="ml-auto"><c:out value="${c.PRICE}"/>원</span>
 												</div>
 											</div>
-										</a>
+										</div>
 											<div class="mt-3">
-												<span class="mr-3"><c:out value="${c.COLOR }"/> / <c:out value="${c.PRODUCTSIZE }"/> / <c:out value="${c.CNT }"/>개</span>
+												<c:if test="${!empty c.COLOR && !empty c.PRODUCTSIZE}">
+													<span class="mr-3"><c:out value="${c.COLOR }"/> / <c:out value="${c.PRODUCTSIZE }"/> / <c:out value="${c.CNT }"/>개</span>
+												</c:if>
+												<c:if test="${!empty c.COLOR && empty c.PRODUCTSIZE}">
+													<span class="mr-3"><c:out value="${c.COLOR }"/> / <c:out value="${c.CNT }"/>개</span>
+												</c:if>
+												<c:if test="${empty c.COLOR && !empty c.PRODUCTSIZE}">
+													<span class="mr-3"><c:out value="${c.PRODUCTSIZE }"/> / <c:out value="${c.CNT }"/>개</span>
+												</c:if>
 					                            <span><c:out value="${c.PRICE * c.CNT}"/>원</span>
 					                            <c:set var="i" value="${i+1 }"/>
 											</div>
@@ -91,16 +100,18 @@
 	  	</div>
 		<div class="d-md-none d-block">
 	  		<p class="mb-5 text-center">결제가 완료되었습니다.</p>
-	  		<h4 class="text-center mb-5">주문번호는 <c:out value="${list[0].ORDERNO }"/> 입니다.</h4>
+	  		<h4 class="text-center mb-3">주문번호는 <c:out value="${list[0].ORDERNO }"/>입니다.</h4>
+	  		<h6 class="text-center mb-5">고객님이 입력하신 이메일을 통해서 주문번호가 전송됩니다. 메일을 확인해주세요.</h6>
+	  		<h4 class="text-center mb-4">입금 계좌 : 신한 - 5429385720</h4>
 	  		<div class="" style="margin:0px auto;">
 	  			<div class="" style="width:100%;">
 	  				<div class="proCon p-3 border border-dark rounded mt-3 mb-5 d-block">
 		  				<h5 class="mb-4"><strong>결제 정보</strong></h5>
 	  					<h6><b>받는 분 : </b> 성함 - <c:out value="${list[0].RECEIVERNAME }"/> / 연락처 - <c:out value="${list[0].RECEIVERTEL }"/></h6>
-	  					<%-- <h6>받는 분 연락처 - <c:out value="${list[0].RECEIVERTEL }"/></h6> --%>
 	  					<h6>배송지 - <c:out value="${list[0].L0C }"/></h6>
 	  					<h6>이메일 - <c:out value="${list[0].EMAIL }"/></h6>
 	  					<h6>결제금액 - <c:out value="${list[0].TOTALPRICE }"/>원 / 결제수단 - <c:out value="${list[0].PAYKIND }"/></h6>
+	  					<h6>예금주 - <c:out value="${list[0].REFUNDNAME }"/>  / 환불계좌 - <c:out value="${list[0].REFUNDBANK }"/> <c:out value="${list[0].REFUNDACCOUNT }"/></h6>
 	  					<h6></h6>
 	  				</div>
 	  			</div>
@@ -111,7 +122,7 @@
 							<div class="proCon p-3 border border-dark rounded mt-3 mb-2 d-block" style="width:90%; margin:0px auto;">
 								<div class="d-flex mt-2">
 									<div style="margin:0px auto">
-										<a href="" class="d-flex">
+										<div class="d-flex">
 											<div>
 												<img src="${path }/resources/upload/product/detail/${c.IMGNAME}" class="rounded" style="width:100px;height:100px">
 											</div>
@@ -128,9 +139,17 @@
 													<span class="ml-auto"><c:out value="${c.PRICE}"/>원</span>
 												</div>
 											</div>
-										</a>
+										</div>
 											<div class="mt-3">
-												<span class="mr-3 text-center"><c:out value="${c.COLOR }"/> / <c:out value="${c.PRODUCTSIZE }"/> / <c:out value="${c.CNT }"/>개</span>
+												<c:if test="${!empty c.COLOR && !empty c.PRODUCTSIZE}">
+													<span class="mr-3"><c:out value="${c.COLOR }"/> / <c:out value="${c.PRODUCTSIZE }"/> / <c:out value="${c.CNT }"/>개</span>
+												</c:if>
+												<c:if test="${!empty c.COLOR && empty c.PRODUCTSIZE}">
+													<span class="mr-3"><c:out value="${c.COLOR }"/> / <c:out value="${c.CNT }"/>개</span>
+												</c:if>
+												<c:if test="${empty c.COLOR && !empty c.PRODUCTSIZE}">
+													<span class="mr-3"><c:out value="${c.PRODUCTSIZE }"/> / <c:out value="${c.CNT }"/>개</span>
+												</c:if>
 					                            <span><c:out value="${c.PRICE * c.CNT}"/>원</span>
 					                            <c:set var="i" value="${i+1 }"/>
 											</div>

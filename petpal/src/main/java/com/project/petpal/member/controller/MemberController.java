@@ -3,10 +3,12 @@ package com.project.petpal.member.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -27,8 +29,15 @@ import com.project.petpal.community.model.service.FindService;
 import com.project.petpal.community.model.service.PlaceService;
 import com.project.petpal.community.model.service.TipService;
 import com.project.petpal.member.model.service.MemberService;
+<<<<<<< HEAD
 import com.project.petpal.member.model.vo.GoogleLogin;
+=======
+import com.project.petpal.member.model.vo.KakaoEnrollApi;
+import com.project.petpal.member.model.vo.KakaoLoginApi;
+>>>>>>> branch 'develop' of https://github.com/kdyllll/petpal.git
 import com.project.petpal.member.model.vo.Member;
+import com.project.petpal.member.model.vo.NaverEnrollBo;
+import com.project.petpal.member.model.vo.NaverLoginBO;
 import com.project.petpal.store.model.service.StoreService;
 import com.project.petpal.store.model.vo.Product;
 
@@ -50,10 +59,22 @@ public class MemberController {
    private DailyService dService;
    @Autowired
    private StoreService storeService;
+
+   private NaverLoginBO naverLoginBO;
+
+   private NaverEnrollBo naverEnrollBO;
+   private KakaoLoginApi kakaoLoginApi;
+   private KakaoEnrollApi kakaoEnrollApi;
    
+	@Autowired
+	private void setNaverLoginBO(NaverLoginBO naverLoginBO,NaverEnrollBo naverEnrollBO) {
+		this.naverLoginBO = naverLoginBO;
+		this.naverEnrollBO = naverEnrollBO;
+	}
 
    @RequestMapping("/member/moveMyPage.do")
    public String moveMyPage(HttpSession session, Model m) {
+	 
       Member memNo = (Member)session.getAttribute("loginMember");
       String memberNo = memNo.getMemberNo();
       Map member = service.selectMemberOnee(memberNo);
@@ -82,10 +103,63 @@ public class MemberController {
    }
 
    @RequestMapping("/member/myPageShop.do")
-   public String myPageShop(Model m,HttpSession session) {
+   public String myPageShop(Model m,HttpSession session, HttpServletRequest request) {
+	  String status = request.getParameter("orderStatus"); 
+	  String payStatus = request.getParameter("payStatus");
+	  String deliveryStatus = request.getParameter("deliveryStatus");
 	  Member mem = (Member)session.getAttribute("loginMember");
 	  Member member = service.selectMemberOne(mem.getMemberNo());
+	  Map list = new HashMap();
+	  list.put("memberNo", mem.getMemberNo());
+	  list.put("status", status);
+	  list.put("payStatus",payStatus);
+	  list.put("deliveryStatus",deliveryStatus);
+	  List<Map> shop = service.selectPaymentList(list);
+//	  취소,교환중,교환,반품중,결제 갯수 구하기
+	  Map map = new HashMap();
+	  String n = "";
+	  n="반품중";
+	  map.put("memberNo", mem.getMemberNo());
+	  map.put("n",n);
+	  int refundIngCnt = service.selectCnt(map);
+	  n="취소";
+	  map.put("n",n);
+	  int refundCnt = service.selectCnt(map);
+	  n="교환중";
+	  map.put("n",n);
+	  int changeIngCnt = service.selectCnt(map);
+	  n="교환";
+	  map.put("n",n);
+	  int changeCnt = service.selectCnt(map);
+	  n="결제";
+	  map.put("n",n);
+	  int payCnt = service.selectCnt(map);
+//	  결제완료, 배송준비중, 배송중, 배송완료 ... 갯수 구하기
+	  Map p = new HashMap();
+	  p.put("memberNo", mem.getMemberNo());
+	  p.put("deliveryStatus", "배송준비중");
+	  int payDelCnt = service.selectDeliveryCnt(p);
+	  p.put("deliveryStatus", "배송시작");
+	  int deliveryStartCnt = service.selectDeliveryCnt(p);
+	  p.put("deliveryStatus", "배송완료");
+	  int deliveryEndCnt = service.selectDeliveryCnt(p);
+	  p.put("deliveryStatus", "구매확정");
+	  int pay = service.selectDeliveryCnt(p);
+	  System.out.println(payDelCnt+"."+deliveryEndCnt+"."+deliveryStartCnt+"."+pay);
+	  
+	  List<Map> point = service.selectPointList(mem.getMemberNo());
+	  m.addAttribute("riCnt",refundIngCnt);
+	  m.addAttribute("rCnt",refundCnt);
+	  m.addAttribute("ciCnt",changeIngCnt);
+	  m.addAttribute("cCnt",changeCnt);
+	  m.addAttribute("payCnt",payCnt);
 	  m.addAttribute("member",member);
+	  m.addAttribute("shop", shop);
+	  m.addAttribute("payDelCnt",payDelCnt);
+	  m.addAttribute("deCnt",deliveryEndCnt);
+	  m.addAttribute("dsCnt",deliveryStartCnt);
+	  m.addAttribute("pay",pay);
+	  m.addAttribute("point", point);
       return "member/myPageShop";
    }
 
@@ -98,7 +172,11 @@ public class MemberController {
    }
 
    @RequestMapping("/member/moveJoin.do")//회원가입페이지로 가는 서블릿
-   public String moveJoin() {
+   public String moveJoin(Model m,HttpSession session) {
+	  String naverAuthUrl = naverEnrollBO.getAuthorizationUrl(session);
+	  m.addAttribute("naverUrl", naverAuthUrl);
+	  String kakaoUrl = kakaoEnrollApi.getAuthorizationUrl(session);
+	  m.addAttribute("kakaoUrl",kakaoUrl);	  
       return "member/join";
    }
 
@@ -152,11 +230,15 @@ public class MemberController {
 
    @RequestMapping("/member/moveLogin.do")
    public String moveLogin(@CookieValue(value="saveId", required = false) Cookie saveId,
-		   Model m) {
+		   Model m, HttpSession session) {
 	   if(saveId!=null) {
 		   System.out.println(saveId.getValue());
 		   m.addAttribute("saveId",saveId.getValue());
 	   }	   
+	   String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+	   m.addAttribute("naverUrl", naverAuthUrl);
+	   String kakaoUrl = kakaoLoginApi.getAuthorizationUrl(session);
+	   m.addAttribute("kakaoUrl",kakaoUrl);
       return "member/login";
    }
 
@@ -307,5 +389,59 @@ public class MemberController {
        
 	   return "member/join";
    }
+   @RequestMapping("/member/refundApply.do")
+   public String refundApply(String detailNum,String refundReason, String refundTextArea, Model model) {
+	   Map m = new HashMap();
+	   String reason = "";
+	   if(refundReason.equals("bad")) {
+		   reason = "불량";
+	   }else if(refundReason.equals("delivery")) {
+		   reason="배송지연";
+	   }else if(refundReason.equals("simple")) {
+		   reason="단순변심";
+	   } else if(refundReason.equals("other")) {
+		   reason = refundTextArea;
+	   }
+	   
+	   m.put("detailNo", detailNum);
+	   m.put("reason", reason);
+		int result = service.productRefund(m);
+	   String loc = "/member/myPageShop.do";
+	   String msg = "반품신청에 실패하였습니다.";
+	
+		if(result>0) { msg= "반품접수 되었습니다."; }
+		
+	   model.addAttribute("loc", loc);
+	   model.addAttribute("msg", msg);
+	   return "common/msg";
+   }
+   
+   @RequestMapping("/member/changeApply.do")
+   public String changeApply(String detailNum,String changeReason, String changeTextArea, Model model) {
+	   Map m = new HashMap();
+	   String reason = "";
+	   if(changeReason.equals("bad")) {
+		   reason = "불량/"+changeTextArea;
+	   }else if(changeReason.equals("delivery")) {
+		   reason="배송지연/"+changeTextArea;
+	   }else if(changeReason.equals("color")) {
+		   reason="색상변경/"+changeTextArea;
+	   } else if(changeReason.equals("other")) {
+		   reason = changeTextArea;
+	   }
+	   
+	   m.put("detailNo", detailNum);
+	   m.put("reason", reason);
+	   int result = service.productChange(m);
+	   String loc = "/member/myPageShop.do";
+	   String msg = "교환신청에 실패하였습니다.";
+	
+	   if(result>0) { msg= "교환접수 되었습니다."; } 
+		
+	   model.addAttribute("loc", loc);
+	   model.addAttribute("msg", msg);
+	   return "common/msg";
+   }
+
 
 }

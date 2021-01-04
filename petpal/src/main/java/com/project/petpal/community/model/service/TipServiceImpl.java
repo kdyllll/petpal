@@ -27,7 +27,7 @@ public class TipServiceImpl implements TipService {
 		if(result>0) {
 			if(files!=null) {
 				for(TipImg img: files) {
-					img.setTipNo(t.getTipNo());
+					img.setTipNo("T" + t.getTipNo());
 					result = dao.insertTipImg(session, img);
 				}
 			}
