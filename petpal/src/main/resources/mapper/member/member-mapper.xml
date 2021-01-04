@@ -80,6 +80,7 @@
     	<if test="payStatus != null">
 			and PAYSTATUS = #{payStatus} AND DETAILSTATUS='결제'
 		</if>
+		ORDER BY PAYDATE DESC
     </select>
     <select id="selectShopDetail" resultType="map" parameterType="string">
     	SELECT * FROM PAYMENT JOIN PAYDETAIL USING(PAYMENTNO) JOIN STOCK USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO) WHERE TYPE='M' and detailNo=#{detailNo}
@@ -106,7 +107,7 @@
     	SELECT COUNT(*) FROM PAYDETAIL JOIN PAYMENT USING(PAYMENTNO) WHERE MEMBERNO=#{memberNo} AND deliveryStatus = #{deliveryStatus} AND DETAILSTATUS='결제'
     </select>
     <select id="selectPointList" resultType="map" parameterType="string">
-    	select * from payment where memberno = #{memberNo} and pointplus !=0 or pointminus != 0 ORDER BY PAYDATE
+    	select * from payment where memberno = #{memberNo} and pointplus !=0 or pointminus != 0 ORDER BY PAYDATE DESC
     </select>
 
 </mapper>
