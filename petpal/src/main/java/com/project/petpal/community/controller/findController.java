@@ -33,8 +33,11 @@ public class findController {
 	private FindService service;
 	
 	@RequestMapping("/community/findList.do")
-	public String findList(Model model) {
-		List<Map> list = service.selectFindList();
+	public String findList(Model model, HttpServletRequest request) {
+		String cate = request.getParameter("cate");
+		Map map = new HashMap();
+		map.put("cate",cate);
+		List<Map> list = service.selectFindList(map);
 		for(Map m : list) {
 			System.out.println(m);
 		}
