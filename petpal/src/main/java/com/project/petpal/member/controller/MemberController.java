@@ -29,12 +29,9 @@ import com.project.petpal.community.model.service.FindService;
 import com.project.petpal.community.model.service.PlaceService;
 import com.project.petpal.community.model.service.TipService;
 import com.project.petpal.member.model.service.MemberService;
-<<<<<<< HEAD
 import com.project.petpal.member.model.vo.GoogleLogin;
-=======
 import com.project.petpal.member.model.vo.KakaoEnrollApi;
 import com.project.petpal.member.model.vo.KakaoLoginApi;
->>>>>>> branch 'develop' of https://github.com/kdyllll/petpal.git
 import com.project.petpal.member.model.vo.Member;
 import com.project.petpal.member.model.vo.NaverEnrollBo;
 import com.project.petpal.member.model.vo.NaverLoginBO;
