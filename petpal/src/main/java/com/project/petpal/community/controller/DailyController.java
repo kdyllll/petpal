@@ -367,7 +367,7 @@ public class DailyController {
 		List<DailyComment> cList=service.selectComment(dailyNo,cPage,numPerPage);
 		int count=service.countComment(dailyNo);
 		int total=service.countCommentPage(dailyNo);
-		String pageBar=new AjaxPageBarFactory().getPageBar(total, cPage, numPerPage, "dailyComment.do", null, "#commentContainer", null, "commentAjax",dailyNo,writeMember);
+		String pageBar=new AjaxPageBarFactory().getPageBar(total, cPage, numPerPage, "dailyComment.do", null, "#commentContainer", null, "commentAjax",dailyNo,writeMember,null);
 		m.addAttribute("count",count);
 		m.addAttribute("pageBar",pageBar);
 		m.addAttribute("cList",cList);	
@@ -417,7 +417,7 @@ public class DailyController {
 		List<DailyImg> imgList=service.selectMainImg();
 		List<Hashtag> hashList=service.selectHashAll();
 		int totalCount=service.totalDailyCount();
-		String pageBar="";
+		String pageBar=new AjaxPageBarFactory().getPageBar(totalCount, cPage, numPerPage, "dailySort.do", null, "#dailyCon", null, "dailyAjaxPage", null,null,sort);
 		//String pageBar=new PageBarFactory().getPageBar(totalCount, cPage, numPerPage, null, null, "moveList.do");
 		//에이작스 페이지바로 바꿔야함
 		
@@ -428,7 +428,7 @@ public class DailyController {
 		m.addAttribute("dailyList",dailyList);
 		m.addAttribute("imgList",imgList);
 		m.addAttribute("hashList",hashList);
-		//m.addAttribute("pageBar",pageBar);
+		m.addAttribute("pageBar",pageBar);
 		
 		return "community/communityAjax/dailyListAjax";
 	}
