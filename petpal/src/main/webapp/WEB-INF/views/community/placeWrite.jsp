@@ -72,7 +72,7 @@ input:focus {
 											class="btn rounded bg-light col-12 col-lg-10 border d-flex justify-content-center align-items-center addPic"
 											style="height: 206px;"> <input name="pic"
 											class="d-none upload" id="upload" type="file"
-											accept="images/*" />
+											accept="images/*"/>
 											<div>
 												<svg width="1em" height="1em" viewBox="0 0 16 16"
 													class="bi bi-camera-fill text-secondary"
@@ -133,10 +133,20 @@ input:focus {
 	
 </body>
 <script>
+	var clone;
+	$(document).on('click','.upload',e=>{
+	 clone=$(e.target).clone(true);
+	});
 	  //사진!!
 	  //사진 미리보기
 	  $(document).on('change','.upload',function(e){
+		  if (e.target.value.length==0) {
+		         let label=$(e.target).parents(".addPic");
+		         $(e.target).remove();
+		         label.prepend(clone);
+		        }else{
 		  var f=e.target;
+		  var file=$(e.target);
 		$("#hide").hide(); // 사진 등록 창 안보이게
 	        $.each(e.target.files,(i,v)=>{//미리보기 로직 
 	            let reader=new FileReader();
@@ -150,21 +160,42 @@ input:focus {
 	                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
 	                              </svg>
 	                            </button>
+	                            <label>
+		                           <div class="oriUpdate" style="cursor:pointer;">
+			                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="update bi bi-arrow-counterclockwise text-white" viewBox="0 0 16 16">
+			                          <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+			                          <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+			                        </svg>
+		                          </div>
+	                        	</label>
 	                          </div>
 	                        </div>`;
-					 if(f.id!="upload"){ //사진라벨이 아닐떄
-					 	let content=`<textarea class="form-control col-12 col-lg-10 mb-3 content" name="content" rows="8"
-							placeholder="설명을 입력해주세요" style="resize: none;"></textarea>`;
-	            		$("#container").append(`<div class="row remove"><div class="col-6">`+img+`</div><div class="col-6">`+content+`</div></div>`);
-	            	 }else{//사진라벨일때 
-	                $("#imgContainer").append(img);
-	            	} 
-					 fn_add();
+					 if(f.id!="upload"){ //사진라벨이 아닐떄(첫번째 순서가 아닐떄)
+						 if(file.parents(".addPic").next(".remove").length!=0){//사진변경할때
+							 file.parents(".addPic").next(".remove").find("img").attr("src",e.target.result);
+						 }else{//사진추가일때
+							 let content=`<textarea class="form-control col-12 col-lg-10 mb-3 content" name="content" rows="8"
+									placeholder="설명을 입력해주세요" style="resize: none;"></textarea>`;
+			            		$("#container").append(`<div class="row remove"><div class="col-6">`+img+`</div><div class="col-6">`+content+`</div></div>`);
+			            		fn_add();
+						 }
+	            	 }else{//사진라벨일때 (첫번째 순서일때)
+	            		if(file.parents("#hide").next(".preview").length!=0){//사진변경할때
+	            			file.parents("#hide").next(".preview").find("img").attr("src",e.target.result);
+	            		}else{//사진추가일떄
+	            			$("#imgContainer").append(img);
+	            			fn_add();
+	            		}
+	                
+	            	}
+						 
+					 
 	            }
 	            reader.readAsDataURL(v);
 	            
 	        });
-	    });
+		        }
+	    }); 
 	  
 	    //사진 추가하기 버튼 추가하는 로직
 	    function fn_add(){
@@ -295,7 +326,7 @@ input:focus {
 	    	  alert("카테고리를 선택해주세요");
 	    	  return;
 	      } */
-	      if($(".previewImg").length==0){
+	    /*   if($(".previewImg").length==0){
 	    	  alert("사진을 올려주세요.");
 	    	  return;
 	      }else if($(".previewImg").length!=5&&$(".upload").last().val()==""){//인풋 파일태그 마지막 값 지움
@@ -303,18 +334,26 @@ input:focus {
 	      } 
 	     if($("input[name=hashtag]").last().val().trim()==""){//해쉬태그 마지막이 값이없으면 지워버림
 	    	 $("input[name=hashtag]").last().remove()
-	     }
+	     } */
 	     
-	        /* for(var i=0;i<$(".upload").length;i++){
-	    	  console.log($(".upload")[i].files);
-	    	  console.log($(".upload").last().val());
-	      }   */
-	      
-	       //등록 누르면 form 전송
-	       $("#writeFrm").submit();
+	       
+	     	/*     $.each($("input[name=pic]"),(i,v)=>{
+	        	console.log(i);
+	        	console.log(v.value);
+	        });  */
+	      //등록 누르면 form 전송
+	      $("#writeFrm").submit();
 	      
 	    });
-
+	    $(document).on('click','.update',function(e){
+	    	
+	    	var update=e.target;
+	    	if(update==$(".update")[0]&&$(e.target).parents("div.preview").prev("div#hide").find(".upload").length!=0){//사진변경버튼 첫번쨰일때
+	    		$(e.target).parents("div.preview").prev("div#hide").find(".upload").click();
+	    	}else{
+	    		$(e.target).parents("div.remove").prev(".addPic").find(".upload").click();
+	    	}
+	    });
 	
 	
 	//주소api

@@ -26,5 +26,7 @@ public interface PlaceDao {
 
 	List<PlaceComment> commentList(SqlSession session,String placeNo,int cPage,int numPerpage);
 	List<Hashtag> hashList(SqlSession session,String placeNo);
-	
+	int deletePlaceImg(SqlSession session,String placeNo);
+	int updatePlace(SqlSession session,Place p);
+	int deleteHashtag(SqlSession session,String placeNo);
 }

@@ -22,6 +22,7 @@ public interface PlaceService {
 
 	List<PlaceComment> commentList(String placeNo,int cPage,int numPerpage);
 	List<Hashtag> hashList(String placeNo);
+	int updatePlace(Place p,List<PlaceImg> list,String[] hashtag) throws Exception;
 	
 	
 }

@@ -7,7 +7,6 @@
 <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
 <script
 	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
 </head>
 <body class="bg-white">
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -18,9 +17,9 @@
 					<h2 class="text-center font-weight-bold" id="title">회원가입</h2>
 					<div class="text-center">
 						<a href="#"><img src="${path }/resources/images/naver.PNG"
-							style="width: 80px; height: 80px;" alt=""></a> <a href="#"><img
+							style="width: 80px; height: 80px;" alt=""></a> <a href=""><img
 							src="${path }/resources/images/facebook.png"
-							style="width: 80px; height: 80px;" alt=""></a> <a href="#"><img
+							style="width: 80px; height: 80px;" alt=""></a> <a href="https://accounts.google.com/o/oauth2/v2/auth?scope=https://mail.google.com/&response_type=code&state=security_token%3D138r5719ru3e1%26url%3Dhttps://oauth2.example.com/token&client_id=1028720606752-69v5b1ln634gfmd5ju9mu4sl0n1c2vu2.apps.googleusercontent.com&redirect_uri=http://localhost:9090/petpal/redirect&access_type=offline"><img
 							src="${path }/resources/images/google.png"
 							style="width: 80px; height: 80px;" alt=""></a>
 					</div>
@@ -306,6 +305,7 @@ input[type="checkbox"]:checked+svg {
     	$("#hide").show();//미리보기가 삭제되었으니 사진 등록창 보이게
     }); 
 	
+	
 	//주소api
      function sample6_execDaumPostcode() {
          new daum.Postcode({
@@ -332,4 +332,5 @@ input[type="checkbox"]:checked+svg {
          }).open();
      } 
 </script>
+
 </html>
