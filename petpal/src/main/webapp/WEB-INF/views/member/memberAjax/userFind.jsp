@@ -11,10 +11,10 @@
 </c:if>
 <c:if test="${not empty findList  }">
 	<c:forEach var="f" items="${findList }">
-		<div class="col mb-4">
+		<div class="col-xl-3 col-lg-4 col-md-6 mb-4">
 			<div class="card h-100 border-0 " style="overflow: hidden;">
 				<a href="${path}/community/findDetail.do?findNo=${f.FINDNO}">
-					<img src="${path }/resources/upload/find/${f.FILENAME}" style="width: 100%; height: 200px;">
+					<img src="${path }/resources/upload/find/${f.FILENAME}" style="width:100%;">
 				</a>
 				<div class="card-body">
 					<h5 class="card-title"><c:out value="${f.TITLE }"/></h5>

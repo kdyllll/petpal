@@ -15,7 +15,7 @@
 			<div class="col-xl-3 col-lg-4 col-md-6" style="cursor:pointer" id="img" onclick="location.replace('${path}/community/tipDetail.do?tipNo=${t.TIPNO}')">
 				<div class="card mb-4 bg-transparent border-0"  >
 					<div class="test">
-						<img src="${path}/resources/upload/tip/${t.MAINIMG}"  id="scale" width="100%" height="225">
+						<img src="${path}/resources/upload/tip/${t.MAINIMG}"  id="scale" style="width:100%;">
 					</div>
 					<div class="card-body">
 						<p class="card-text"><c:out value="${t.TITLE }"/></p>

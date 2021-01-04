@@ -28,7 +28,7 @@
 					</div>
 					<div class="col-3">
 						<img src="${path }/resources/upload/place/${p.FILENAME}"
-							alt="post img" class="rounded float-right">
+							alt="post img" class="rounded float-right" style="width:100%">
 					</div>
 				</div>
 			</a>

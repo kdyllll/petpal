@@ -12,7 +12,7 @@
 	</c:if>
 	<c:if test="${not empty dailyList }">
 			<c:forEach var="d" items="${dailyList}">
-			      <address class="col-xl-3 col-lg-4 col-md-6">
+			      <address class="col-xl-3 col-lg-4 col-md-6 m-0">
 			          <div class="card mb-4 bg-transparent border-0">
 			             
 			              <c:forEach var="i" items="${imgList}">
