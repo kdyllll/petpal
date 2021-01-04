@@ -39,5 +39,7 @@ public interface MemberDao {
    int productRefund(SqlSession session, Map m);
    String getStockNo(SqlSession session, String detailNo);
    String getProductNo(SqlSession session, String stockNo);
+   int productChange(SqlSession session, Map m);
+   Map selectPayDetail(SqlSession sesssion, String detailNo);
 
 }

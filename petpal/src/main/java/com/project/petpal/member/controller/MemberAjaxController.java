@@ -178,11 +178,16 @@ public class MemberAjaxController {
 	//회원마이페이지(주문조회 - 교환하기) 
 	@RequestMapping("/member/moveProductChangePage.do")
 	public String moveProductChangePage(String detailNo, Model model) {
-		String stockNo = service.getStockNo(detailNo);
-		String pdtNo = service.getProductNo(stockNo);
-		List<Stock> sList = aService.selectStock(pdtNo);
+
 		model.addAttribute("detailNo", detailNo);
-		model.addAttribute("sList",sList);
 		return "member/memberAjax/changeProduct";
+	}
+	
+	//회원마이페이지(주문조회-교환/반품 정보 상세보기)
+	@RequestMapping("/member/infoDetail.do")
+	public String infoDetail(Model model, String detailNo) {
+		Map detail = service.selectPayDetail(detailNo);
+		model.addAttribute("detail",detail);
+		return "member/memberAjax/infoDetail";
 	}
 }

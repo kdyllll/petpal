@@ -331,22 +331,22 @@ public class MemberController {
 	   Map m = new HashMap();
 	   String reason = "";
 	   if(changeReason.equals("bad")) {
-		   reason = "불량";
+		   reason = "불량/"+changeTextArea;
 	   }else if(changeReason.equals("delivery")) {
-		   reason="배송지연";
-	   }else if(changeReason.equals("simple")) {
-		   reason="단순변심";
+		   reason="배송지연/"+changeTextArea;
+	   }else if(changeReason.equals("color")) {
+		   reason="색상변경/"+changeTextArea;
 	   } else if(changeReason.equals("other")) {
 		   reason = changeTextArea;
 	   }
 	   
 	   m.put("detailNo", detailNum);
 	   m.put("reason", reason);
-		/* int result = service.productChange(m); */
+	   int result = service.productChange(m);
 	   String loc = "/member/myPageShop.do";
 	   String msg = "교환신청에 실패하였습니다.";
 	
-		/* if(result>0) { msg= "교환접수 되었습니다."; } */
+	   if(result>0) { msg= "교환접수 되었습니다."; } 
 		
 	   model.addAttribute("loc", loc);
 	   model.addAttribute("msg", msg);

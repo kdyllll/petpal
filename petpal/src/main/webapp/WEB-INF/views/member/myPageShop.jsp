@@ -146,20 +146,35 @@
 							</c:when>
 							<c:when test="${s.DETAILSTATUS eq '반품중' }">
 								<span style="font-size: 12px;">반품신청(대기)</span>
-							</c:when>
-							<c:when test="${s.DETAILSTATUS eq '반품' }">
-								<span style="font-size: 12px;">반품신청(완료)</span>
-								<button type="button" class="btn btn-outline-secondary btn-sm"
+								<button type="button"
+									class="ml-2 btn btn-outline-secondary btn-sm infoDetail"
 									style="font-size: 12px;">반품정보</button>
+									<input type="hidden" name="detailNo" value="${s.DETAILNO }" />
+								
 							</c:when>
-							<c:when test="${s.DETAILSTATUS eq '취소중' }">
-								<span style="font-size: 12px;">취소신청(대기)</span>
+							
+							<c:when test="${s.DETAILSTATUS eq '교환중' }">
+								<span style="font-size: 12px;">교환신청(대기)</span>
+								<button type="button"
+									class="ml-2 btn btn-outline-secondary btn-sm infoDetail"
+									style="font-size: 12px;">교환정보</button>
+									<input type="hidden" name="detailNo" value="${s.DETAILNO }" />
+								
+							</c:when>
+							<c:when test="${s.DETAILSTATUS eq '교환' }">
+								<span style="font-size: 12px;">교환신청(완료)</span>
+								<button type="button"
+									class="ml-2 btn btn-outline-danger btn-sm infoDetail"
+									style="font-size: 12px;">교환정보</button>
+									<input type="hidden" name="detailNo" value="${s.DETAILNO }" />
+								
 							</c:when>
 							<c:otherwise>
-								<span style="font-size: 12px;">취소신청(완료)</span>
+								<span style="font-size: 12px;">취소완료</span>
 								<button type="button"
-									class="ml-2 btn btn-outline-secondary btn-sm"
-									style="font-size: 12px;">취소정보</button>
+									class="ml-2 btn btn-outline-secondary btn-sm infoDetail"
+									style="font-size: 12px;">반품정보</button>
+									<input type="hidden" name="detailNo" value="${s.DETAILNO }" />
 
 							</c:otherwise>
 						</c:choose>
@@ -245,6 +260,11 @@
 				 $(".refundText").html(textA);
 			 }
 		 })
+		 
+	 $(".infoDetail").on("click", e => {
+		 let detailNo = $(e.target).next().val();
+		 moveAjaxModal("${path}/member/infoDetail.do",detailNo,".iDetail" );
+	 })
 	
 		 
 	//유효성 검사 && form넘기기

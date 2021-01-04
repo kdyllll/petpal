@@ -37,5 +37,7 @@ public interface MemberService {
    int productRefund(Map m);
    String getStockNo(String detailNo);
    String getProductNo(String stockNo);
+   int productChange(Map m);
+   Map selectPayDetail(String detailNo);
 
 }

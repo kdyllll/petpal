@@ -186,6 +186,18 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return dao.getProductNo(session, stockNo);
 	}
+
+	@Override
+	public int productChange(Map m) {
+		// TODO Auto-generated method stub
+		return dao.productChange(session, m);
+	}
+
+	@Override
+	public Map selectPayDetail(String detailNo) {
+		// TODO Auto-generated method stub
+		return dao.selectPayDetail(session, detailNo);
+	}
 	   
 	
 

@@ -26,10 +26,12 @@
 					<option value="no" selected>교환사유</option>
 					<option value="bad">불량</option>
 					<option value="delivery">배송지연</option>
-					<option value="simple">단순변심</option>
+					<option value="color">색상변경</option>
 					<option value="other">기타</option>
 				</select>
-				<div class="form-floating changeText"></div>
+				<div class="form-floating changeText">
+					<textarea name="changeTextArea" class="form-control changeTextArea" placeholder="교환 옵션을 적어주세요. (사이즈, 수량문의는 취소 후 재구매)" style="height:100px;"></textarea>
+				</div>
 				<p class="text-center">교환신청 하시겠습니까?</p>
 				<div class="d-flex justify-content-center">
 					<button type="button" class="btn btn-outline-secondary btn-sm "
@@ -45,14 +47,6 @@
 </div>
 <script>
 $(function(){
-	
-	 $(".changeReason").on("change", e=> {
-		 	$(".changeText").html("");
-			 if($(e.target).val() == "other") {
-				 let textA = $("<textarea>").attr({"class":"form-control refundTextArea","placeholder":"사유를 작성해주세요.", "height":"100px"});
-				 $(".changeText").html(textA);
-			 }
-		 })
 		 
 	  $(".changeEndBtn").on("click", e => {
 		 avaliality(".changeReason",".changeText > textarea",".changeFrm","${path}/member/changeApply.do");
@@ -66,7 +60,7 @@ $(function(){
 		 }if($(b).val() == "") {
 			 alert("교환사유를 적어주세요");
 			 return;
-		 }
+		 } 
 		
 		 $(c).attr("action", d).submit();
 	 }

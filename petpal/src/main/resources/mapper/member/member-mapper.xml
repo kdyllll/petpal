@@ -76,13 +76,19 @@
     	SELECT * FROM PAYMENT JOIN PAYDETAIL USING(PAYMENTNO) JOIN STOCK USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO) WHERE TYPE='M' and detailNo=#{detailNo}
     </select>
     <update id="productRefund" parameterType="map">
-    	UPDATE PAYDETAIL SET DETAILSTATUS='반품중',REFUNDINFO=#{reason} WHERE DETAILNO=#{detailNo}
+    	UPDATE PAYDETAIL SET DETAILSTATUS='반품중',REFUNDINFO=#{reason},REFUNDDATE=SYSDATE WHERE DETAILNO=#{detailNo}
     </update>
     <select id="getStockNo" resultType="string" parameterType="string">
     	SELECT STOCKNO FROM PAYDETAIL WHERE DETAILNO=#{detailNo}
     </select>
     <select id="getProductNo" resultType="string" parameterType="string">
     	select PRODUCTNO from stock where stockNo=#{stockNo}
+    </select>
+    <update id="productChange" parameterType="map">
+    	UPDATE PAYDETAIL SET DETAILSTATUS='교환중',CHANGEINFO=#{reason}, CHANGEDATE=SYSDATE WHERE DETAILNO=#{detailNo}
+    </update>
+    <select id="selectPayDetail" resultType="map" parameterType="string">
+    	SELECT * FROM PAYDETAIL WHERE DETAILNO=#{detailNo}
     </select>
 
 </mapper>
