@@ -67,14 +67,27 @@ public class PlaceDaoImpl implements PlaceDao{
 
 	@Override
 	public List<Map> selectPlaceListOne(SqlSession session, String memberNo) {
-		// TODO Auto-generated method stub
 		return session.selectList("place.selectPlaceListOne",memberNo);
 	}
 
 	@Override
 	public int placeCnt(SqlSession session, String memberNo) {
-		// TODO Auto-generated method stub
 		return session.selectOne("place.placeCnt", memberNo);
+	}
+
+	@Override
+	public int deletePlaceImg(SqlSession session, String placeNo) {
+		return session.delete("place.deletePlaceImg",placeNo);
+	}
+
+	@Override
+	public int updatePlace(SqlSession session, Place p) {
+		return session.update("place.updatePlace",p);
+	}
+
+	@Override
+	public int deleteHashtag(SqlSession session, String placeNo) {
+		return session.delete("place.deleteHashtag",placeNo);
 	}
 
 }

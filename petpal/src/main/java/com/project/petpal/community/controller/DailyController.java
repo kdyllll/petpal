@@ -78,6 +78,7 @@ public class DailyController {
 			@RequestParam(value="index", required=false) String[] index,
 			@RequestParam(value="hashtag", required=false) String[] hashtag
 			) {
+		
 		//받아야 하는것
 		//1.글내용 2.작성자(접속자) 3.사진(최대5개) 4.사진 당 상품좌표 5.해시태그
 		//DB 

@@ -152,9 +152,9 @@ public class MemberDaoImpl implements MemberDao {
 	}
 	
 	@Override
-	public List<Map> selectPaymentList(SqlSession session, String memberNo) {
+	public List<Map> selectPaymentList(SqlSession session, Map m) {
 		// TODO Auto-generated method stub
-		return session.selectList("member.selectPaymentList", memberNo);
+		return session.selectList("member.selectPaymentList", m);
 	}
 
 	@Override
@@ -179,6 +179,36 @@ public class MemberDaoImpl implements MemberDao {
 	public String getProductNo(SqlSession session, String stockNo) {
 		// TODO Auto-generated method stub
 		return session.selectOne("member.getProductNo", stockNo);
+	}
+
+	@Override
+	public int productChange(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.update("member.productChange", m);
+	}
+
+	@Override
+	public Map selectPayDetail(SqlSession session, String detailNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.selectPayDetail", detailNo);
+	}
+
+	@Override
+	public int selectCnt(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.selectCnt", m);
+	}
+
+	@Override
+	public int selectDeliveryCnt(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.selectDeliveryCnt", m);
+	}
+
+	@Override
+	public List<Map> selectPointList(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("member.selectPointList", memberNo);
 	}
 
 	

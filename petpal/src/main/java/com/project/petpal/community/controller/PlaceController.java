@@ -87,12 +87,12 @@ public class PlaceController {
 		List<Place> list=service.placeList(category,cPage,numPerpage);//페이징된 리스트
 		int totalData=service.selectCount(category);//장소후기 총개수
 		long curTime=System.currentTimeMillis();//현재날짜
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		for(Place p:list) {
 			try {
 			Date pd=sdf.parse(p.getPlaceDate());
 			long pTime=pd.getTime();//작성날짜
-			long cha=(curTime-pTime)/1000/60;//분단위
+			long cha=(curTime-pTime)/(1000*60);//분단위
 			String status="";
 			if(cha<60) {//1시간보단 적을경우
 				status=cha+"분 전";
@@ -119,7 +119,6 @@ public class PlaceController {
 	private MemberService mService;
 	@RequestMapping("/place/movePlaceDetail.do")
 	public String selectPlace(String placeNo,Model m,@RequestParam(value="cPage",defaultValue="1") int cPage) {
-		System.out.println(placeNo);
 		int numPerpage=5;
 		List<Place> list = service.selectPlace(placeNo);//장소후기리스트 (사진과내용이 여러개라서 리스트)
 		List<PlaceComment> cList=service.commentList(placeNo,cPage,numPerpage);//댓글리스트
@@ -131,6 +130,66 @@ public class PlaceController {
 		m.addAttribute("cList",cList);
 		m.addAttribute("list", list);
 		return "community/placeDetail";
+	}
+	@RequestMapping("/place/movePlaceUpdate.do")
+	public String movePlaceUpdate(String placeNo,Model m) {
+		List<Place> list=service.selectPlace(placeNo);
+		List<Hashtag> hList=service.hashList(placeNo);
+		m.addAttribute("list",list);
+		m.addAttribute("hList",hList);
+		return "community/placeUpdate";
+	}
+	@RequestMapping("/place/placeUpdateEnd.do")
+	public String updatePlace(Place p,String[] hashtag,String[] f,@RequestParam(value="content",required=false, defaultValue=" ")String[] content,@RequestParam(value="pic", required=false)MultipartFile[] files,Model m,HttpSession session) {
+		List<PlaceImg> list = new ArrayList();
+		int j=0;//content인덱스
+		if(f!=null) {//기존사진이 있다면
+			for(int i=0;i<f.length;i++) {
+				PlaceImg pi=new PlaceImg();
+				System.out.println("기존사진"+f[i]);
+				pi.setFileName(f[i]);
+				pi.setContent(content[j]);
+				j++;
+				list.add(pi);
+			}
+		}
+		String path=session.getServletContext().getRealPath("/resources/upload/place");
+		File dir=new File(path);
+		
+		for(int i=0;i<files.length;i++) {
+			if(!files[i].isEmpty()) {
+				 //파일명생성하기
+				  String originalName=files[i].getOriginalFilename();
+				  System.out.println("사진추가"+originalName);
+				  String ext=originalName.substring(originalName.lastIndexOf(".")+1);
+				  //리네임규칙
+				  SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+				  int rndValue=(int)(Math.random()*10000);
+				  String reName=sdf.format(System.currentTimeMillis())+"_"+rndValue+"."+ext;
+				  try {
+					  files[i].transferTo(new File(path+"/"+reName));
+				  }catch(IOException e) {//작성실패시
+					  e.printStackTrace();
+					  m.addAttribute("msg","오류가 발생하였습니다.다시 시도해주세요.");
+				  }
+				  PlaceImg pi=new PlaceImg();
+				  pi.setContent(content[j]);
+				  j++;
+				  pi.setFileName(reName);
+				  list.add(pi);
+			}
+		}
+		try {
+			int result=service.updatePlace(p, list, hashtag);
+			m.addAttribute("msg","수정에 성공하였습니다.");
+			m.addAttribute("loc","/place/movePlaceList.do");
+		}catch(Exception e) {
+			e.printStackTrace();
+			m.addAttribute("msg","수정에 실패하였습니다.");
+		}
+		
+		
+		return "common/msg";
 	}
 	
 }

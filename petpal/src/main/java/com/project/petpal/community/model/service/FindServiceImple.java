@@ -41,9 +41,9 @@ public class FindServiceImple implements FindService {
 	}
 
 	@Override
-	public List<Map> selectFindList() {
+	public List<Map> selectFindList(Map map) {
 		// TODO Auto-generated method stub
-		return dao.selectFindList(session);
+		return dao.selectFindList(session, map);
 	}
 	
 	@Override
