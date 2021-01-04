@@ -13,103 +13,84 @@
 	<jsp:param name="mpNav" value="shop" />
 </jsp:include>
 <div class="row  py-3 mb-3 mt-4  bg-white rounded shadow-sm ">
-	<div class="py-2 " style="width: 100%;">
+	<div class="py-2 d-flex justify-content-center align-items-center" style="width: 100%;">
 		<a href="#"
 			class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block text-center ">적립금
 			<c:out value="${member.point}" />원
 		</a>
-	</div>
-</div>
-<div class="row">
-	<div class="col-12 my-2 p-3 bg-white rounded shadow-sm">
-		<h6 class=" pb-3 mb-0">적립금 내역</h6>
-		<div class="media text-muted pt-3">
-			<p
-				class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-				<strong class="d-block text-gray-dark">@username</strong> +20000
-			</p>
-		</div>
-		<div class="media text-muted pt-3">
-			<p
-				class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-				<strong class="d-block text-gray-dark">@username</strong> +20000
-			</p>
-		</div>
-		<div class="media text-muted pt-3">
-			<p
-				class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-				<strong class="d-block text-gray-dark">@username</strong> +20000
-			</p>
-		</div>
-		<small class="d-block text-right mt-3"> <a href="#">더보기</a>
-		</small>
+		<button type="button" class="ml-2 btn btn-outline-secondary btn-sm "
+			style="font-size: 12px;">내역보기</button>
 	</div>
 </div>
 <div class="row  py-3 mb-3 mt-5  bg-white rounded shadow-sm ">
 	<div class="py-2 d-flex justify-content-around align-items-center"
 		style="width: 100%;">
 
-		<a href="#"
+		<a href="${path }/member/myPageShop.do?payStatus=결제완료"
 			class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block "><strong>결제완료
-				0</strong></a>
+				<c:out value="${payDelCnt }" default="0" /></strong></a>
 		<svg class="bi bi-chevron-right" width="20" height="20"
 			viewBox="0 0 20 20" fill="currentColor"
 			xmlns="http://www.w3.org/2000/svg">
 			<path fill-rule="evenodd"
 				d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" /></svg>
-		<a href="#"
+		<a href="${path }/member/myPageShop.do?deliveryStatus=배송준비중"
 			class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block "><strong>배송준비
-				0</strong></a>
+				<c:out value="${payDelCnt }" default="0" /></strong></a>
 		<svg class="bi bi-chevron-right" width="20" height="20"
 			viewBox="0 0 20 20" fill="currentColor"
 			xmlns="http://www.w3.org/2000/svg">
 			<path fill-rule="evenodd"
 				d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" /></svg>
-		<a href="#"
+		<a href="${path }/member/myPageShop.do?deliveryStatus=배송중"
 			class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block "><strong>배송중
-				0</strong></a>
+				<c:out value="${dsCnt }" default="0" /></strong></a>
 		<svg class="bi bi-chevron-right" width="20" height="20"
 			viewBox="0 0 20 20" fill="currentColor"
 			xmlns="http://www.w3.org/2000/svg">
 			<path fill-rule="evenodd"
 				d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" /></svg>
-		<a href="#"
+		<a href="${path }/member/myPageShop.do?deliveryStatus=배송완료"
 			class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block "><strong>배송완료
-				0</strong></a>
+				<c:out value="${deCnt }" default="0" /></strong></a>
 		<svg class="bi bi-chevron-right" width="20" height="20"
 			viewBox="0 0 20 20" fill="currentColor"
 			xmlns="http://www.w3.org/2000/svg">
 			<path fill-rule="evenodd"
 				d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" /></svg>
-		<a href="#"
+		<a href="${path }/member/myPageShop.do?payStatus=구매확정"
 			class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block "><strong>구매확정
-				0</strong></a>
+				<c:out value="${pay }" default="0" /></strong></a>
 	</div>
 </div>
 <div class="row  py-3 mt-5  bg-white rounded ">
-<h6 class="pl-2 pb-3 mb-0">주문내역(0개)</h6>
+	<a href="${path }/member/myPageShop.do"
+		class="pl-2 pb-3 mb-0 text-dark"> 주문내역( <c:out
+			value="${pay+riCnt+rCnt+ciCnt+cCnt }" /> 개)
+	</a>
 	<div class="py-2 d-flex justify-content-around align-items-center"
 		style="width: 100%;">
-		<a href="#"
+		<a href="${path }/member/myPageShop.do?orderStatus=반품중"
 			class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block "><strong>반품(대기)
-				0</strong></a>	
-		<a href="#"
+				<c:out value="${riCnt }" default="0" />
+		</strong></a> <a href="${path }/member/myPageShop.do?orderStatus=취소"
 			class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block "><strong>반품(완료)
-				0</strong></a>		
-		<a href="#"
-			class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block "><strong>환불(대기)
-				0</strong></a>	
-		<a href="#"
-			class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block "><strong>환불(완료)
-				0</strong></a>
-		<a href="#"
+				<c:out value="${rCnt }" default="0" />
+		</strong></a> <a href="${path }/member/myPageShop.do?orderStatus=교환중"
+			class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block "><strong>교환(대기)
+				<c:out value="${ciCnt }" default="0" />
+		</strong></a> <a href="${path }/member/myPageShop.do?orderStatus=교환"
+			class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block "><strong>교환(완료)
+				<c:out value="${cCnt }" default="0" />
+		</strong></a> <a href="${path }/member/myPageShop.do?orderStatus=결제"
 			class="mb-0 text-decoration-none lh-100 px-3 text-dark d-block "><strong>구매완료
-				0</strong></a>
+				<c:out value="${payCnt }" default="0" />
+		</strong></a>
 	</div>
 </div>
 <div class="row">
 	<div class="col-12 my-3 p-3 bg-white rounded shadow-sm">
-		
+
 		<c:if test="${not empty shop }">
 			<c:forEach var="s" items="${shop }">
 				<div>
@@ -141,7 +122,8 @@
 									class="btn btn-outline-secondary btn-sm mr-2 refundBtn"
 									style="font-size: 12px;">반품신청</button>
 								<input type="hidden" name="detailNo" value="${s.DETAILNO }" />
-								<button type="button" class="btn btn-outline-secondary btn-sm changeBtn"
+								<button type="button"
+									class="btn btn-outline-secondary btn-sm changeBtn"
 									style="font-size: 12px;">교환신청</button>
 							</c:when>
 							<c:when test="${s.DETAILSTATUS eq '반품중' }">
@@ -149,32 +131,32 @@
 								<button type="button"
 									class="ml-2 btn btn-outline-secondary btn-sm infoDetail"
 									style="font-size: 12px;">반품정보</button>
-									<input type="hidden" name="detailNo" value="${s.DETAILNO }" />
-								
+								<input type="hidden" name="detailNo" value="${s.DETAILNO }" />
+
 							</c:when>
-							
+
 							<c:when test="${s.DETAILSTATUS eq '교환중' }">
 								<span style="font-size: 12px;">교환신청(대기)</span>
 								<button type="button"
 									class="ml-2 btn btn-outline-secondary btn-sm infoDetail"
 									style="font-size: 12px;">교환정보</button>
-									<input type="hidden" name="detailNo" value="${s.DETAILNO }" />
-								
+								<input type="hidden" name="detailNo" value="${s.DETAILNO }" />
+
 							</c:when>
 							<c:when test="${s.DETAILSTATUS eq '교환' }">
 								<span style="font-size: 12px;">교환신청(완료)</span>
 								<button type="button"
 									class="ml-2 btn btn-outline-danger btn-sm infoDetail"
 									style="font-size: 12px;">교환정보</button>
-									<input type="hidden" name="detailNo" value="${s.DETAILNO }" />
-								
+								<input type="hidden" name="detailNo" value="${s.DETAILNO }" />
+
 							</c:when>
 							<c:otherwise>
 								<span style="font-size: 12px;">취소완료</span>
 								<button type="button"
 									class="ml-2 btn btn-outline-secondary btn-sm infoDetail"
 									style="font-size: 12px;">반품정보</button>
-									<input type="hidden" name="detailNo" value="${s.DETAILNO }" />
+								<input type="hidden" name="detailNo" value="${s.DETAILNO }" />
 
 							</c:otherwise>
 						</c:choose>
@@ -202,24 +184,23 @@
 
 					<form class="modal-body refundFrm" method="post">
 						<div class="refundNo"></div>
-						<select name="refundReason" style="width:100%;" class=" refundReason form-select d-block py-2 mb-3" aria-label="Default select example">
-						  <option value="no" selected>반품사유</option>
-						  <option value="bad">불량</option>
-						  <option value="delivery">배송지연</option>
-						  <option value="simple">단순변심</option>
-						  <option value="other">기타</option>
+						<select name="refundReason" style="width: 100%;"
+							class=" refundReason form-select d-block py-2 mb-3"
+							aria-label="Default select example">
+							<option value="no" selected>반품사유</option>
+							<option value="bad">불량</option>
+							<option value="delivery">배송지연</option>
+							<option value="simple">단순변심</option>
+							<option value="other">기타</option>
 						</select>
-						<div class="form-floating refundText">
-						  
-
-						</div>
+						<div class="form-floating refundText"></div>
 						<p class="text-center">반품신청 하시겠습니까?</p>
 						<div class="d-flex justify-content-center">
 							<button type="button" class="btn btn-outline-secondary btn-sm"
 								data-dismiss="modal">취소</button>
 							<button type="button"
 								class="btn btn-outline-secondary btn-sm ml-2 refundEndBtn">신청</button>
-							
+
 						</div>
 					</form>
 
@@ -227,9 +208,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="shopChangeModal">
-		
-	</div>
+	<div class="shopChangeModal"></div>
 </div>
 </main>
 

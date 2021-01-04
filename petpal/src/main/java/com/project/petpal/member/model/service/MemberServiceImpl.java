@@ -158,9 +158,9 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	@Override
-	public List<Map> selectPaymentList(String memberNo) {
+	public List<Map> selectPaymentList(Map m) {
 		// TODO Auto-generated method stub
-		return dao.selectPaymentList(session, memberNo);
+		return dao.selectPaymentList(session, m);
 	}
 
 	@Override
@@ -197,6 +197,18 @@ public class MemberServiceImpl implements MemberService{
 	public Map selectPayDetail(String detailNo) {
 		// TODO Auto-generated method stub
 		return dao.selectPayDetail(session, detailNo);
+	}
+
+	@Override
+	public int selectCnt(Map m) {
+		// TODO Auto-generated method stub
+		return dao.selectCnt(session, m);
+	}
+
+	@Override
+	public int selectDeliveryCnt(Map m) {
+		// TODO Auto-generated method stub
+		return dao.selectDeliveryCnt(session, m);
 	}
 	   
 	

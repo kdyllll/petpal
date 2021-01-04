@@ -34,12 +34,14 @@ public interface MemberDao {
    int placeCount(SqlSession session,String memberNo);
    int findCount(SqlSession session,String memberNo);
    Member selectSnsMember(SqlSession session,String id);
-   List<Map> selectPaymentList(SqlSession session, String memberNo);
+   List<Map> selectPaymentList(SqlSession session, Map m);
    Map selectShopDetail(SqlSession session, String detailNo);
    int productRefund(SqlSession session, Map m);
    String getStockNo(SqlSession session, String detailNo);
    String getProductNo(SqlSession session, String stockNo);
    int productChange(SqlSession session, Map m);
-   Map selectPayDetail(SqlSession sesssion, String detailNo);
+   Map selectPayDetail(SqlSession session, String detailNo);
+   int selectCnt(SqlSession session,Map m);
+   int selectDeliveryCnt(SqlSession session, Map m);
 
 }

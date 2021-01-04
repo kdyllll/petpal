@@ -69,8 +69,17 @@
     <select id="selectSnsMember" resultType="member" parameterType="string">
     	SELECT * FROM MEMBER WHERE SNSNO=#{value}
     </select>
-    <select id="selectPaymentList" resultType="map" parameterType="string">
+    <select id="selectPaymentList" resultType="map" parameterType="map">
     	SELECT * FROM PAYMENT JOIN PAYDETAIL USING(PAYMENTNO) JOIN STOCK USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO) WHERE TYPE='M' AND MEMBERNO=#{memberNo}
+    	<if test="status != null">
+			and DETAILSTATUS = #{status}
+		</if>
+    	<if test="deliveryStatus != null">
+			and DELIVERYSTATUS = #{deliveryStatus} AND DETAILSTATUS='결제'
+		</if>
+    	<if test="payStatus != null">
+			and PAYSTATUS = #{payStatus} AND DETAILSTATUS='결제'
+		</if>
     </select>
     <select id="selectShopDetail" resultType="map" parameterType="string">
     	SELECT * FROM PAYMENT JOIN PAYDETAIL USING(PAYMENTNO) JOIN STOCK USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO) WHERE TYPE='M' and detailNo=#{detailNo}
@@ -89,6 +98,12 @@
     </update>
     <select id="selectPayDetail" resultType="map" parameterType="string">
     	SELECT * FROM PAYDETAIL WHERE DETAILNO=#{detailNo}
+    </select>
+    <select id="selectCnt" resultType="_int" parameterType="map">
+    	SELECT COUNT(*) FROM PAYDETAIL JOIN PAYMENT USING(PAYMENTNO) WHERE MEMBERNO=#{memberNo} AND DETAILSTATUS=#{n}
+    </select>
+    <select id="selectDeliveryCnt" resultType="_int" parameterType="map">
+    	SELECT COUNT(*) FROM PAYDETAIL JOIN PAYMENT USING(PAYMENTNO) WHERE MEMBERNO=#{memberNo} AND deliveryStatus = #{deliveryStatus} AND DETAILSTATUS='결제'
     </select>
 
 </mapper>

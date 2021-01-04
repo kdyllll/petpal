@@ -29,10 +29,10 @@ div.modal-body>p {
 				<p class="pl-3">
 					<c:out value="${detail.DETAILSTATUS }" /> 
 					<c:choose>
-						<c:when test="${detail.DETAILSTATUS eq '취소' || detail.DETAILSTATUS eq '반품중' }">
+						<c:when test="${(detail.DETAILSTATUS eq '취소' || detail.DETAILSTATUS eq '반품중') && not empty detail.REFUNDDATE }">
 							( <fmt:formatDate value="${detail.REFUNDDATE }" pattern="yyyy/MM/dd" /> )
 						</c:when>
-						<c:when test="${detail.DETAILSTATUS eq '교환' || detail.DETAILSTATUS eq '교환중' }">
+						<c:when test="${(detail.DETAILSTATUS eq '교환' || detail.DETAILSTATUS eq '교환중') && not empty detail.CHANGEDATE }">
 							( <fmt:formatDate value="${detail.CHANGEDATE }" pattern="yyyy/MM/dd"/> )
 						</c:when>
 					</c:choose> 			

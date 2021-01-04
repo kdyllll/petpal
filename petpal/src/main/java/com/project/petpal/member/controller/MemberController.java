@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -68,6 +69,7 @@ public class MemberController {
 
    @RequestMapping("/member/moveMyPage.do")
    public String moveMyPage(HttpSession session, Model m) {
+	 
       Member memNo = (Member)session.getAttribute("loginMember");
       String memberNo = memNo.getMemberNo();
       Map member = service.selectMemberOnee(memberNo);
@@ -96,12 +98,60 @@ public class MemberController {
    }
 
    @RequestMapping("/member/myPageShop.do")
-   public String myPageShop(Model m,HttpSession session) {
+   public String myPageShop(Model m,HttpSession session, HttpServletRequest request) {
+	  String status = request.getParameter("orderStatus"); 
+	  String payStatus = request.getParameter("payStatus");
+	  String deliveryStatus = request.getParameter("deliveryStatus");
 	  Member mem = (Member)session.getAttribute("loginMember");
 	  Member member = service.selectMemberOne(mem.getMemberNo());
-	  List<Map> shop = service.selectPaymentList(mem.getMemberNo());
+	  Map list = new HashMap();
+	  list.put("memberNo", mem.getMemberNo());
+	  list.put("status", status);
+	  list.put("payStatus",payStatus);
+	  list.put("deliveryStatus",deliveryStatus);
+	  List<Map> shop = service.selectPaymentList(list);
+//	  취소,교환중,교환,반품중,결제 갯수 구하기
+	  Map map = new HashMap();
+	  String n = "";
+	  n="반품중";
+	  map.put("memberNo", mem.getMemberNo());
+	  map.put("n",n);
+	  int refundIngCnt = service.selectCnt(map);
+	  n="취소";
+	  map.put("n",n);
+	  int refundCnt = service.selectCnt(map);
+	  n="교환중";
+	  map.put("n",n);
+	  int changeIngCnt = service.selectCnt(map);
+	  n="교환";
+	  map.put("n",n);
+	  int changeCnt = service.selectCnt(map);
+	  n="결제";
+	  map.put("n",n);
+	  int payCnt = service.selectCnt(map);
+//	  결제완료, 배송준비중, 배송중, 배송완료 ... 갯수 구하기
+	  Map p = new HashMap();
+	  p.put("memberNo", mem.getMemberNo());
+	  p.put("deliveryStatus", "배송준비중");
+	  int payDelCnt = service.selectDeliveryCnt(p);
+	  p.put("deliveryStatus", "배송시작");
+	  int deliveryStartCnt = service.selectDeliveryCnt(p);
+	  p.put("deliveryStatus", "배송완료");
+	  int deliveryEndCnt = service.selectDeliveryCnt(p);
+	  p.put("deliveryStatus", "구매확정");
+	  int pay = service.selectDeliveryCnt(p);
+	  System.out.println(payDelCnt+"."+deliveryEndCnt+"."+deliveryStartCnt+"."+pay);
+	  m.addAttribute("riCnt",refundIngCnt);
+	  m.addAttribute("rCnt",refundCnt);
+	  m.addAttribute("ciCnt",changeIngCnt);
+	  m.addAttribute("cCnt",changeCnt);
+	  m.addAttribute("payCnt",payCnt);
 	  m.addAttribute("member",member);
 	  m.addAttribute("shop", shop);
+	  m.addAttribute("payDelCnt",payDelCnt);
+	  m.addAttribute("deCnt",deliveryEndCnt);
+	  m.addAttribute("dsCnt",deliveryStartCnt);
+	  m.addAttribute("pay",pay);
       return "member/myPageShop";
    }
 
@@ -352,5 +402,6 @@ public class MemberController {
 	   model.addAttribute("msg", msg);
 	   return "common/msg";
    }
+
 
 }
