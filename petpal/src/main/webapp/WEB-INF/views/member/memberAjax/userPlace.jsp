@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
+<div class="row">
 <c:if test="${empty placeList }">
 	<div class="col-12 mb-4 text-center mt-5">
 		<p>장소 후기가 없습니다.</p>
@@ -22,7 +23,6 @@
 							</article>
 						</div>
 						<span class="mr-2"> <c:out value="${p.PLACEDATE }"/> </span>
-						<span class="mr-2">댓글수</span> 
 						<span class="mr-2"><c:out value="${p.CATEGORY }" /></span>
 						<p><c:out value="${p.POSITION }" /></p>
 					</div>
@@ -35,4 +35,5 @@
 		</div>
 	</c:forEach>
 </c:if>
+</div>
 <div class="mx-auto">${pageBar }</div>

@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
+<div class="row">
 <c:if test="${empty tipList }">
 	<div class="col-12 mb-4 text-center mt-5">
 		<p class="">노하우 글이 없습니다.</p>
@@ -19,15 +20,11 @@
 					</div>
 					<div class="card-body">
 						<p class="card-text"><c:out value="${t.TITLE }"/></p>
-						<div class="d-flex justify-content-between align-items-center">
-						<small class="text-muted"> <label>조회수 0
-								</label> <label>스크랩 0
-									</label></small>
-						</div>
 					</div>
 				</div>
 			</div>						
 		</c:if>
 	</c:forEach>
 </c:if>
+</div>
 <div class="mx-auto">${pageBar }</div>

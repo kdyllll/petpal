@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
+<div class="row">
 <c:if test="${empty findList }">
 	<div class="col-12 mb-4 text-center mt-5">
 		<p class="">찾아주세요 글이 없습니다.</p>
@@ -18,11 +19,10 @@
 				</a>
 				<div class="card-body">
 					<h5 class="card-title"><c:out value="${f.TITLE }"/></h5>
-					<p class="card-text"><c:out value="${f.CONTENT }"/></p>
-					<span class=""><c:out value="${f.ADDRESS }"/></span>
 				</div>
 			</div>
 		</div>
 	</c:forEach>
 </c:if>
+</div>
 <div class="mx-auto">${pageBar }</div>
