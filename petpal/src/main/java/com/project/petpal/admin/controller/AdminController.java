@@ -1,5 +1,6 @@
 package com.project.petpal.admin.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -66,6 +67,46 @@ public class AdminController {
 		List<Map> list = service.productIOAll();
 		m.addAttribute("list", list);
 		return "admin/adminInOutList";
+	}
+	
+	@RequestMapping("/admin/orderSearch.do")
+	public String orderSearch(String searchType, String keyword, Model model) {
+
+		Map m = new HashMap();
+		m.put("type",searchType);
+		m.put("key", keyword);
+		List<Map> oList = service.orderSearch(m);
+		model.addAttribute("oList",oList);
+		return "admin/adminOrder";
+	}
+	
+	@RequestMapping("/admin/searchMember.do")
+	public String searchMember(String searchType, String keyword, Model model) {
+		Map m = new HashMap();
+		m.put("type",searchType);
+		m.put("key", keyword);
+		List<Map> mList = service.memberSearch(m);
+		model.addAttribute("mList",mList);
+		return "admin/memberList";
+	}
+	
+	@RequestMapping("/admin/searchClaim.do")
+	public String searchClaim(String searchType, String keyword, Model model) {
+		Map m = new HashMap();
+		m.put("type",searchType);
+		m.put("key", keyword);
+		List<Map> cList = service.searchClaim(m);
+		model.addAttribute("cList",cList);
+		return "admin/adminClaim";
+	}
+	@RequestMapping("/admin/searchCommunity.do")
+	public String searchCommunity(String searchType, String keyword, Model model) {
+		Map m = new HashMap();
+		m.put("type",searchType);
+		m.put("key", keyword);
+		List<Map> pList = service.searchCommunity(m);
+		model.addAttribute("pList",pList);
+		return "admin/adminCommunity";
 	}
 	
 }

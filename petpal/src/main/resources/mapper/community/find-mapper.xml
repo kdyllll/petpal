@@ -10,8 +10,11 @@
 	<insert id="insertFindPic" parameterType="findImg">
 		INSERT INTO FINDIMG VALUES(SEQ_FINDIMGNO.NEXTVAL,#{findNo},#{fileName},#{imgStatus})
 	</insert>
-	<select id="selectFindList" resultType="map">
+	<select id="selectFindList" resultType="map" parameterType="map">
 		SELECT * FROM FIND JOIN FINDIMG USING(FINDNO) JOIN MEMBER USING(MEMBERNO) WHERE IMGSTATUS = 'M' AND STATUS='N' 
+		<if test="cate != null">
+			AND CATE=#{cate}
+		</if>
 	</select>
 	
 	   <select id="selectFindListOne" parameterType="string" resultType="map" >
@@ -35,4 +38,13 @@
 	<update id="updateOtherFind" parameterType="map">
 		UPDATE FIND SET CATE=#{cate}, TITLE=#{title}, CONTENT=#{content}, ADDRESS=#{address} WHERE FINDNO = #{findNo}
 	</update>
+	<select id="selectFindLike" resultType="string" parameterType="string">
+		select FINDNO from FINDLIKE WHERE MEMBERNO=#{memberNo}
+	</select>
+	<delete id="deleteFindLike" parameterType="string">
+		DELETE FROM FINDLIKE WHERE FINDNO=#{findNo}
+	</delete>
+	<insert id="insertFindLike" parameterType="map">
+		INSERT INTO FINDLIKE VALUES(#{findNo}, #{memberNo})
+	</insert>
 </mapper>

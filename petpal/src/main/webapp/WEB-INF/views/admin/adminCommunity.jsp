@@ -24,36 +24,25 @@
 				class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-5 "
 				style="height: 100vh; overflow-y: auto;">
 				<h2 class="my-3">게시글관리</h2>
-				<div class="row align-items-center">
+				<form class="row align-items-center" method="post" action="${path }/admin/searchCommunity.do">
+				
 					<div class="mb-3  col-lg-2">
 						<label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
-						<select class="custom-select mr-sm-2" id="searchType">
-							<option selected value="userEmail">작성자이메일</option>
-							<option value="userCommunityNum">게시글번호</option>
+						<select class="custom-select mr-sm-2" name="searchType" id="searchType">
+							<option selected value="EMAIL">작성자이메일</option>
+							<option value="PLACENO">게시글번호</option>
 						</select>
+					</div>	
+					<div class="input-group mb-3  col-lg-5 ">
+						<input type="text" class="form-control input-group-sm"
+							name="keyword" placeholder="검색어를 입력해주세요">
+						<div class="input-group-append">
+							<button class="btn btn-outline-secondary" type="submit"
+								>Button</button>
+						</div>
+
 					</div>
-					<form id="search-userEmail" class="input-group mb-3  col-lg-5">
-						<input type="hidden" name="searchType" value="userEmail">
-						<input type="text" class="form-control input-group-sm"
-							name="searchKeyword" placeholder="이메일을 입력해주세요">
-						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" type="button"
-								>Button</button>
-						</div>
-					</form>
-					<form id="search-userCommunityNum"
-						class="input-group mb-3  col-lg-5 d-none">
-
-						<input type="hidden" name="searchType" value="userCommunityNum">
-						<input type="text" class="form-control input-group-sm"
-							name="searchKeyword" placeholder="게시글번호를 입력해주세요">
-						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" type="button"
-								>Button</button>
-						</div>
-
-					</form>
-				</div>
+				</form>
 				<div class="table-responsive" style="min-height: 80vh;">
 					<table class="table mb-5">
 						<thead>
@@ -122,16 +111,6 @@
 	<div class="placeModal"></div>
 	<script>
     $(function(){
-        let userEmail = $("#search-userEmail");
-        let userCommunityNum = $("#search-userCommunityNum");
-        $("#searchType").on("change", e => {
-            userEmail.addClass("d-none");
-            userCommunityNum.addClass("d-none");
-
-            let target = $(e.target).val();
-            $("#search-"+target).removeClass("d-none");
-        });
-        $("#searchType").change();
         
         $(".placeDetail").on("click", e => {
         	let placeNo = $(e.target).prev().val();

@@ -152,9 +152,15 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public List<Map> selectPaymentList(String memberNo) {
+	public Member selectSnsMember(String id) {
 		// TODO Auto-generated method stub
-		return dao.selectPaymentList(session, memberNo);
+		return dao.selectSnsMember(session,id);	
+	}
+	
+	@Override
+	public List<Map> selectPaymentList(Map m) {
+		// TODO Auto-generated method stub
+		return dao.selectPaymentList(session, m);
 	}
 
 	@Override
@@ -162,8 +168,84 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return dao.selectShopDetail(session, detailNo);
 	}
-	   
+
+	@Override
+	public int productRefund(Map m) {
+		// TODO Auto-generated method stub
+		return dao.productRefund(session, m);
+	}
+
+	@Override
+	public String getStockNo(String detailNo) {
+		// TODO Auto-generated method stub
+		return dao.getStockNo(session, detailNo);
+	}
+
+	@Override
+	public String getProductNo(String stockNo) {
+		// TODO Auto-generated method stub
+		return dao.getProductNo(session, stockNo);
+	}
+
+	@Override
+	public int productChange(Map m) {
+		// TODO Auto-generated method stub
+		return dao.productChange(session, m);
+	}
+
+	@Override
+	public Map selectPayDetail(String detailNo) {
+		// TODO Auto-generated method stub
+		return dao.selectPayDetail(session, detailNo);
+	}
+
+	@Override
+	public int selectCnt(Map m) {
+		// TODO Auto-generated method stub
+		return dao.selectCnt(session, m);
+	}
+
+	@Override
+	public int selectDeliveryCnt(Map m) {
+		// TODO Auto-generated method stub
+		return dao.selectDeliveryCnt(session, m);
+	}
+
+	@Override
+	public List<Map> selectPointList(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectPointList(session,memberNo);
+	}
+
+	@Override
+	public List<Map> selectPaymentListNon(Map m) {
+		// TODO Auto-generated method stub
+		return dao.selectPaymentListNon(session,m);
+	}
+
+	@Override
+	public int selectOrderCheck(String orderNo) {
+		// TODO Auto-generated method stub
+		return dao.selectOrderCheck(session,orderNo);
+	}
 	
+	@Override
+	public Member checkNickName(String nickName) {
+		// TODO Auto-generated method stub
+		return dao.checkNickName(session,nickName);
+	}
+	   
+	@Override
+	public int selectCntNon(Map m) {
+		// TODO Auto-generated method stub
+		return dao.selectCntNon(session, m);
+	}
+
+	@Override
+	public int selectDeliveryCntNon(Map m) {
+		// TODO Auto-generated method stub
+		return dao.selectDeliveryCntNon(session, m);
+	}
 
 
 }

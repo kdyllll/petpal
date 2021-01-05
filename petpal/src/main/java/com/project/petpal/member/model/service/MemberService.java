@@ -31,7 +31,20 @@ public interface MemberService {
    int tipCount(String memberNo);
    int placeCount(String memberNo);
    int findCount(String memberNo);
-   List<Map> selectPaymentList(String memberNo);
+   Member selectSnsMember(String id);
+   List<Map> selectPaymentList(Map m);
    Map selectShopDetail(String detailNo);
-
+   int productRefund(Map m);
+   String getStockNo(String detailNo);
+   String getProductNo(String stockNo);
+   int productChange(Map m);
+   Map selectPayDetail(String detailNo);
+   int selectCnt(Map m);
+   int selectDeliveryCnt(Map m);
+   List<Map> selectPointList(String memberNo);
+   List<Map> selectPaymentListNon(Map m);
+   int selectOrderCheck(String orderNo);
+   int selectCntNon(Map m);
+   int selectDeliveryCntNon(Map m);
+   Member checkNickName(String nickName);
 }

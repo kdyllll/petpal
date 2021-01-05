@@ -78,6 +78,7 @@ public class DailyController {
 			@RequestParam(value="index", required=false) String[] index,
 			@RequestParam(value="hashtag", required=false) String[] hashtag
 			) {
+		
 		//받아야 하는것
 		//1.글내용 2.작성자(접속자) 3.사진(최대5개) 4.사진 당 상품좌표 5.해시태그
 		//DB 
@@ -366,7 +367,7 @@ public class DailyController {
 		List<DailyComment> cList=service.selectComment(dailyNo,cPage,numPerPage);
 		int count=service.countComment(dailyNo);
 		int total=service.countCommentPage(dailyNo);
-		String pageBar=new AjaxPageBarFactory().getPageBar(total, cPage, numPerPage, "dailyComment.do", null, "#commentContainer", null, "commentAjax",dailyNo,writeMember);
+		String pageBar=new AjaxPageBarFactory().getPageBar(total, cPage, numPerPage, "dailyComment.do", null, "#commentContainer", null, "commentAjax",dailyNo,writeMember,null);
 		m.addAttribute("count",count);
 		m.addAttribute("pageBar",pageBar);
 		m.addAttribute("cList",cList);	
@@ -416,7 +417,7 @@ public class DailyController {
 		List<DailyImg> imgList=service.selectMainImg();
 		List<Hashtag> hashList=service.selectHashAll();
 		int totalCount=service.totalDailyCount();
-		String pageBar="";
+		String pageBar=new AjaxPageBarFactory().getPageBar(totalCount, cPage, numPerPage, "dailySort.do", null, "#dailyCon", null, "dailyAjaxPage", null,null,sort);
 		//String pageBar=new PageBarFactory().getPageBar(totalCount, cPage, numPerPage, null, null, "moveList.do");
 		//에이작스 페이지바로 바꿔야함
 		
@@ -427,7 +428,7 @@ public class DailyController {
 		m.addAttribute("dailyList",dailyList);
 		m.addAttribute("imgList",imgList);
 		m.addAttribute("hashList",hashList);
-		//m.addAttribute("pageBar",pageBar);
+		m.addAttribute("pageBar",pageBar);
 		
 		return "community/communityAjax/dailyListAjax";
 	}

@@ -18,7 +18,7 @@ public class PlaceAjaxController {
 	private PlaceService service;
 	
 	@RequestMapping("/place/commentWrite.do")
-	public String commentWrite(PlaceComment pc,Model m) {
+	public String commentWrite(PlaceComment pc,Model m) {//댓글썼을때
 		int numPerpage=5;
 		int result=service.insertComment(pc);
 		List<PlaceComment> cList=service.commentList(pc.getPlaceNo(),1,numPerpage);

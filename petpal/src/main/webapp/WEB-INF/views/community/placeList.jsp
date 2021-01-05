@@ -21,7 +21,7 @@
 					<div class="container d-flex justify-content-center position-relative">
 						<div id="btn" class="mb-5">
 							<button type="button" class="kind btn btn-secondary btn-sm mr-3">병원</button>
-							<button type="button" class="kind btn btn-secondary btn-sm mr-3">미용</button>
+							<button type="button" class="kind btn btn-secondary btn-sm mr-3">미용실</button>
 							<button type="button" class="kind btn btn-secondary btn-sm mr-3">호텔링</button>
 							<button type="button" class="kind btn btn-secondary btn-sm mr-3">훈련소</button>
 							<button type="button" class="kind btn btn-secondary btn-sm mr-3">기타</button>
@@ -42,11 +42,11 @@
 										<div class="col-3 col-sm-9">
 											<div class="decoration">
 												<h3><c:out value="${p.title}" /></h3>
-												<article>
+												 <article>
 													<p class="content">
 													
 													<c:out value="${fn:substring(p.content,0,50)}" /><c:if test="${fn:length(p.content) > 50 }">...</c:if></p>
-												</article>
+												 </article>
 											</div>
 											<img
 												style="width: 1em; height: 1em; vertical-align: baseline;"
@@ -82,14 +82,14 @@
 
 </body>
 <script>
-$(function(){//글자길이가 길면 ...표시
+ $(function(){//글자길이가 길면 ...표시
 	for(var i=0;i<$(".content").length;i++){
 		var str=$(".content").eq(i).html();
 		if(str.length>95){
 			$(".content").eq(i).html(str.substring(0,95)+"...");
 		}
 	}
-});
+}); 
 
 
 	$(document).on(

@@ -8,8 +8,17 @@
       <result column="address" property="address" typeHandler="strArr"/>
     </resultMap>
     <insert id="insertMember" parameterType="member">
-       INSERT INTO MEMBER VALUES('M'||TO_CHAR(SEQ_MEMBERNO.NEXTVAL),#{email},#{password},#{memberName},#{phone},#{address,typeHandler=strArr},DEFAULT,DEFAULT,#{nickName},
+       INSERT INTO MEMBER VALUES('M'||TO_CHAR(SEQ_MEMBERNO.NEXTVAL),#{email},
        <choose>
+       		<when test="password != null">
+       			#{password}
+       		</when>
+       		<when test="password == null">
+                   NULL
+            </when>
+       </choose>
+       ,#{memberName},#{phone},#{address,typeHandler=strArr},DEFAULT,DEFAULT,#{nickName},
+       		<choose>
                 <when test="img != null">
                    #{img}
                 </when>
@@ -17,7 +26,16 @@
                    DEFAULT
                 </when>
              </choose>
-       ,NULL)
+       ,NULL,
+        <choose>
+       		<when test="snsNo != null">
+       			#{snsNo}
+       		</when>
+       		<when test="snsNo == null">
+                   NULL
+            </when>
+       </choose>
+       )
     </insert>
     <update id="updatePassword" parameterType="member">
        UPDATE MEMBER SET PASSWORD=#{password} where MEMBERNO=#{memberNo}
@@ -60,20 +78,78 @@
     <select id="selectFindMain" resultType="map" parameterType="string">
        SELECT * FROM FINDIMG LEFT JOIN FIND USING(FINDNO) WHERE MEMBERNO=#{memberNo} AND IMGSTATUS='M'
     </select>
-
     <select id="selectDailyList" resultType="daily" parameterType="string">
     	SELECT * FROM DAILY WHERE MEMBERNO=#{memberNo}
     </select>
     <select id="selectDailyHash" resultType="hashtag" parameterType="string">
     	SELECT * FROM HASHTAG LEFT JOIN DAILY ON POSTNO=DAILYNO WHERE POSTNO LIKE 'D%' AND MEMBERNO=#{memberNo}
     </select>
-    <select id="selectPaymentList" resultType="map" parameterType="string">
+    <select id="selectSnsMember" resultType="member" parameterType="string">
+    	SELECT * FROM MEMBER WHERE SNSNO=#{value}
+    </select>
+    <select id="selectPaymentList" resultType="map" parameterType="map">
     	SELECT * FROM PAYMENT JOIN PAYDETAIL USING(PAYMENTNO) JOIN STOCK USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO) WHERE TYPE='M' AND MEMBERNO=#{memberNo}
+    	<if test="status != null">
+			and DETAILSTATUS = #{status}
+		</if>
+    	<if test="deliveryStatus != null">
+			and DELIVERYSTATUS = #{deliveryStatus} AND DETAILSTATUS='결제'
+		</if>
+    	<if test="payStatus != null">
+			and PAYSTATUS = #{payStatus} AND DETAILSTATUS='결제'
+		</if>
+		ORDER BY PAYDATE DESC
     </select>
     <select id="selectShopDetail" resultType="map" parameterType="string">
     	SELECT * FROM PAYMENT JOIN PAYDETAIL USING(PAYMENTNO) JOIN STOCK USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO) WHERE TYPE='M' and detailNo=#{detailNo}
     </select>
-   
-
-
+    <update id="productRefund" parameterType="map">
+    	UPDATE PAYDETAIL SET DETAILSTATUS='반품중',REFUNDINFO=#{reason},REFUNDDATE=SYSDATE WHERE DETAILNO=#{detailNo}
+    </update>
+    <select id="getStockNo" resultType="string" parameterType="string">
+    	SELECT STOCKNO FROM PAYDETAIL WHERE DETAILNO=#{detailNo}
+    </select>
+    <select id="getProductNo" resultType="string" parameterType="string">
+    	select PRODUCTNO from stock where stockNo=#{stockNo}
+    </select>
+    <update id="productChange" parameterType="map">
+    	UPDATE PAYDETAIL SET DETAILSTATUS='교환중',CHANGEINFO=#{reason}, CHANGEDATE=SYSDATE WHERE DETAILNO=#{detailNo}
+    </update>
+    <select id="selectPayDetail" resultType="map" parameterType="string">
+    	SELECT * FROM PAYDETAIL WHERE DETAILNO=#{detailNo}
+    </select>
+    <select id="selectCnt" resultType="_int" parameterType="map">
+    	SELECT COUNT(*) FROM PAYDETAIL JOIN PAYMENT USING(PAYMENTNO) WHERE MEMBERNO=#{memberNo} AND DETAILSTATUS=#{n}
+    </select>
+    <select id="selectDeliveryCnt" resultType="_int" parameterType="map">
+    	SELECT COUNT(*) FROM PAYDETAIL JOIN PAYMENT USING(PAYMENTNO) WHERE MEMBERNO=#{memberNo} AND deliveryStatus = #{deliveryStatus} AND DETAILSTATUS='결제'
+    </select>
+    <select id="selectPointList" resultType="map" parameterType="string">
+    	select * from payment where memberno = #{memberNo} and pointplus !=0 or pointminus != 0 ORDER BY PAYDATE DESC
+    </select>
+    <select id="selectPaymentListNon" resultType="map" parameterType="map">
+    	SELECT * FROM PAYMENT JOIN PAYDETAIL USING(PAYMENTNO) JOIN STOCK USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO) WHERE TYPE='M' AND ORDERNO=#{orderNo}
+    	<if test="status != null">
+			and DETAILSTATUS = #{status}
+		</if>
+    	<if test="deliveryStatus != null">
+			and DELIVERYSTATUS = #{deliveryStatus} AND DETAILSTATUS='결제'
+		</if>
+    	<if test="payStatus != null">
+			and PAYSTATUS = #{payStatus} AND DETAILSTATUS='결제'
+		</if>
+		ORDER BY PAYDATE DESC
+    </select>
+    <select id="selectOrderCheck" parameterType="string" resultType="_int">
+    	SELECT COUNT(*) FROM PAYMENT WHERE ORDERNO=#{value}
+    </select>
+        <select id="selectCntNon" resultType="_int" parameterType="map">
+    	SELECT COUNT(*) FROM PAYDETAIL JOIN PAYMENT USING(PAYMENTNO) WHERE ORDERNO=#{orderNo} AND DETAILSTATUS=#{n}
+    </select>
+    <select id="selectDeliveryCntNon" resultType="_int" parameterType="map">
+    	SELECT COUNT(*) FROM PAYDETAIL JOIN PAYMENT USING(PAYMENTNO) WHERE ORDERNO=#{orderNo} AND deliveryStatus = #{deliveryStatus} AND DETAILSTATUS='결제'
+    </select>
+    <select id="checkNickName" resultType="member" parameterType="string">
+    	SELECT * FROM MEMBER WHERE NICKNAME=#{nickName}
+    </select>
 </mapper>

@@ -16,12 +16,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.project.petpal.admin.model.service.AdminService;
+import com.project.petpal.admin.model.vo.Stock;
 import com.project.petpal.common.AjaxPageBarFactory;
 import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyImg;
 import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.member.model.service.MemberService;
+import com.project.petpal.member.model.vo.KakaoLoginApi;
 import com.project.petpal.member.model.vo.Member;
+import com.project.petpal.member.model.vo.NaverLoginBO;
 
 @Controller
 @SessionAttributes("loginMember")
@@ -30,6 +34,17 @@ public class MemberAjaxController {
 	private MemberService service;
 	@Autowired
 	private BCryptPasswordEncoder pwEncoder;
+
+    private NaverLoginBO naverLoginBO;
+    private KakaoLoginApi kakaoLoginApi;
+   
+	@Autowired
+	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+		this.naverLoginBO = naverLoginBO;
+	}
+	@Autowired
+	private AdminService aService;
+
 	
 	@RequestMapping("/member/passwordUpdate.do")
 	@ResponseBody
@@ -61,7 +76,11 @@ public class MemberAjaxController {
 	
 	//로그인 모달 호출
 	@RequestMapping("/login/moveLogin.do")
-	public String moveLogin() {
+	public String moveLogin(HttpSession session,Model m) {
+		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+		m.addAttribute("naverUrl", naverAuthUrl);
+		String kakaoUrl = kakaoLoginApi.getAuthorizationUrl(session);
+		m.addAttribute("kakaoUrl",kakaoUrl);
 		return "common/commonAjax/loginModal";
 	}
 	
@@ -94,7 +113,7 @@ public class MemberAjaxController {
 		List<DailyImg> imgList=service.selectDailyMain(memberNo);
 		List<Hashtag> hashList=service.selectDailyHash(memberNo);
 		int totalData=service.dailyCount(memberNo);
-		String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveDaily.do", null, ".postCon", memberNo,"dailyPaging",null, null);
+		String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveDaily.do", null, ".postCon", memberNo,"dailyPaging",null, null,null);
 		
 		m.addAttribute("dailyList",dailyList);
 		m.addAttribute("imgList",imgList);
@@ -111,7 +130,7 @@ public class MemberAjaxController {
 		//노하우 작성 글+메인 사진
 	    List<Map> tipList=service.selectTipMain(memberNo,cPage,numPerPage);
 	    int totalData=service.tipCount(memberNo);
-	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveTip.do", null, ".postCon", memberNo,"tipPaging",null, null);
+	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveTip.do", null, ".postCon", memberNo,"tipPaging",null, null,null);
 	    
 	    m.addAttribute("tipList",tipList);
 	    m.addAttribute("pageBar",pageBar);
@@ -126,7 +145,7 @@ public class MemberAjaxController {
 		//장소후기 작성 글+메인사진
 	    List<Map> placeList=service.selectPlaceMain(memberNo,cPage,numPerPage);
 	    int totalData=service.placeCount(memberNo);
-	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "movePlace.do", null, ".postCon", memberNo,"placePaging",null, null);
+	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "movePlace.do", null, ".postCon", memberNo,"placePaging",null, null,null);
 	    
 	    m.addAttribute("placeList",placeList);
 	    m.addAttribute("pageBar",pageBar);
@@ -141,18 +160,41 @@ public class MemberAjaxController {
 		//찾아주세요 작성 글+메인 사진
 	    List<Map> findList=service.selectFindMain(memberNo,cPage,numPerPage);
 	    int totalData=service.findCount(memberNo);	
-	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveFind.do", null, ".postCon", memberNo,"findPaging",null, null);
+	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveFind.do", null, ".postCon", memberNo,"findPaging",null, null,null);
 	    
 	    m.addAttribute("findList",findList);
 	    m.addAttribute("pageBar",pageBar);
 		return "member/memberAjax/userFind";
 	}
 	
-	//회원정보(주문조회) - 상품 디테일보기
+	//회원마이페이지(주문조회) - 상품 디테일보기
 	@RequestMapping("/member/shopDetailAjax.do")
 	public String shopDetail(String detailNo, Model model) {
 		Map shop = service.selectShopDetail(detailNo);
 		model.addAttribute("shop", shop);
 		return "member/memberAjax/shopDetail";
 	}
+	
+	//회원마이페이지(주문조회 - 교환하기) 
+	@RequestMapping("/member/moveProductChangePage.do")
+	public String moveProductChangePage(String detailNo, Model model) {
+
+		model.addAttribute("detailNo", detailNo);
+		return "member/memberAjax/changeProduct";
+	}
+	
+	//회원마이페이지(주문조회-교환/반품 정보 상세보기)
+	@RequestMapping("/member/infoDetail.do")
+	public String infoDetail(Model model, String detailNo) {
+		Map detail = service.selectPayDetail(detailNo);
+		model.addAttribute("detail",detail);
+		return "member/memberAjax/infoDetail";
+	}
+	//닉네임 중복확인
+	 @RequestMapping("/member/checkNickName.do")
+	 @ResponseBody
+	   public boolean checkNickName(String nickName,Model m) {
+		   	Member member=service.checkNickName(nickName);
+		   return(member==null?true:false);
+	   }
 }

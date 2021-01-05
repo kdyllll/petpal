@@ -19,14 +19,22 @@
 				</jsp:include>
 			</div>
 		</div>
-		<section class="mt-5 pt-5">
+		<section class="">
 			<div class="container">
 				<div class="row">
 				<c:set var="place" value="${list[0] }"/>
 					<input type="hidden" name="placeNo" value="${ place.placeNo}" id="placeNo">
 					<input type="hidden" name="memberNo" value="${loginMember.memberNo }" id="memberNo">
 					<div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2">
-						<p style="color: #35c5f0; font-weight: bold;"><c:out value="${place.category }"/></p>
+						<div class="d-flex justify-content-between mb-3">
+							<span style="color: #35c5f0; font-weight: bold;"><c:out value="${place.category }"/></span>
+							<c:if test="${loginMember.memberNo==place.memberNo}">
+							<div class="d-flex">
+							<button type="button" class="btn btn-outline-secondary" id="update">수정</button>
+							<button type="button" class="btn btn-outline-secondary" id="delete">삭제</button>
+							</div>
+							</c:if>
+						</div>
 						<h2 class="font-weight-bold mb-5"><c:out value="${place.title }"/></h2>
 						<div class="mb-4 d-sm-flex justify-content-sm-between">
 							<a href="${path }/user/moveUserInfo.do" class="d-inline-flex">
@@ -288,6 +296,19 @@ ul li{
 						alert("댓글 등록에 실패하였습니다.");
 					}
 				})
+			});
+	$(document).on(
+			'click',
+			'#update',
+			function(e) {//수정버튼 눌렀을때
+				var placeNo=$("#placeNo").val();
+				location.assign('${path}/place/movePlaceUpdate.do?placeNo='+placeNo);
+			});
+	$(document).on(
+			'click',
+			'#delete',
+			function(e) {//삭제버튼 눌렀을때
+				
 			});
 	
 		var maker;

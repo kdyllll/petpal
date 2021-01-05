@@ -8,7 +8,7 @@ import com.project.petpal.community.model.vo.FindImg;
 
 public interface FindService {
 	int insertFindWrite(Find f, List<FindImg> lfi, FindImg fi);
-	List<Map> selectFindList();
+	List<Map> selectFindList(Map map);
 	List<Map> selectFindListOne(String memberNo);
 	int findCnt(String memberNo);
 	Map detailOne(String findNo);
@@ -17,4 +17,7 @@ public interface FindService {
 	int deleteFindImg(List<FindImg> fin);
 	int insertSubImgs(List<FindImg> fin);
 	int updateOtherFind(Map m);
+	List<String> selectFindLike(String memberNo);
+	int deleteFindLike(String findNo);
+	int insertFindLike(Map m);
 }

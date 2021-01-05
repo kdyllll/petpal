@@ -41,9 +41,9 @@ public class FindServiceImple implements FindService {
 	}
 
 	@Override
-	public List<Map> selectFindList() {
+	public List<Map> selectFindList(Map map) {
 		// TODO Auto-generated method stub
-		return dao.selectFindList(session);
+		return dao.selectFindList(session, map);
 	}
 	
 	@Override
@@ -99,5 +99,23 @@ public class FindServiceImple implements FindService {
 	public int updateOtherFind(Map m) {
 		// TODO Auto-generated method stub
 		return dao.updateOtherFind(session, m);
+	}
+
+	@Override
+	public List<String> selectFindLike(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectFindLike(session, memberNo);
+	}
+
+	@Override
+	public int deleteFindLike(String findNo) {
+		// TODO Auto-generated method stub
+		return dao.deleteFindLike(session, findNo);
+	}
+
+	@Override
+	public int insertFindLike(Map m) {
+		// TODO Auto-generated method stub
+		return dao.insertFindLike(session,m);
 	}
 }

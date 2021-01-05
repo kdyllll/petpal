@@ -58,4 +58,13 @@ CONNECT BY PRIOR PLACECOMMENTNO=COMMENTREF  ORDER SIBLINGS BY WRITEDATE DESC
   <select id="placeCnt" resultType="_int" parameterType="string">
   	select count(*) from member join place using(memberNo) where memberNo = #{memberNo}
   </select>
+  <update id="updatePlace" parameterType="place">
+  	UPDATE PLACE SET TITLE=#{title},EXPLANATION=#{explanation},CATEGORY=#{category},POSITION=#{position,typeHandler=strArr} WHERE PLACENO=#{placeNo}
+  </update>
+  <delete id="deletePlaceImg" parameterType="string">
+  	DELETE FROM PLACEIMG WHERE PLACENO=#{placeNo}
+  </delete>
+  <update id="deleteHashtag" parameterType="string">
+  	DELETE FROM HASHTAG WHERE POSTNO=#{placeNo}
+  </update>
 </mapper>

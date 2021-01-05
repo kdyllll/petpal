@@ -146,9 +146,15 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public List<Map> selectPaymentList(SqlSession session, String memberNo) {
+	public Member selectSnsMember(SqlSession session, String id) {
 		// TODO Auto-generated method stub
-		return session.selectList("member.selectPaymentList", memberNo);
+		return session.selectOne("member.selectSnsMember",id);
+	}
+	
+	@Override
+	public List<Map> selectPaymentList(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.selectList("member.selectPaymentList", m);
 	}
 
 	@Override
@@ -157,7 +163,85 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectOne("member.selectShopDetail", detailNo);
 	}
 
-	
+	@Override
+	public int productRefund(SqlSession session,Map m) {
+		// TODO Auto-generated method stub
+		return session.update("member.productRefund", m);
+	}
+
+	@Override
+	public String getStockNo(SqlSession session, String detailNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.getStockNo", detailNo);
+	}
+
+	@Override
+	public String getProductNo(SqlSession session, String stockNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.getProductNo", stockNo);
+	}
+
+	@Override
+	public int productChange(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.update("member.productChange", m);
+	}
+
+	@Override
+	public Map selectPayDetail(SqlSession session, String detailNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.selectPayDetail", detailNo);
+	}
+
+	@Override
+	public int selectCnt(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.selectCnt", m);
+	}
+
+	@Override
+	public int selectDeliveryCnt(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.selectDeliveryCnt", m);
+	}
+
+	@Override
+	public List<Map> selectPointList(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("member.selectPointList", memberNo);
+	}
+
+	@Override
+	public List<Map> selectPaymentListNon(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.selectList("member.selectPaymentListNon",m);
+	}
+
+	@Override
+	public int selectOrderCheck(SqlSession session, String orderNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.selectOrderCheck",orderNo);
+	}
+
+	@Override
+	public int selectCntNon(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.selectCntNon", m);
+	}
+
+	@Override
+	public int selectDeliveryCntNon(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.selectDeliveryCntNon", m);
+	}
+
+	@Override
+	public Member checkNickName(SqlSession session, String nickName) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.checkNickName",nickName);
+	}
+
+
    
    
 

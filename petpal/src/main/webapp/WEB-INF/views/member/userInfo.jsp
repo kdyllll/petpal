@@ -7,6 +7,11 @@
 <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
 
 </head>
+<style>
+a{color:black;}	
+a:hover{text-decoration:none;}
+
+</style>
 <body class="bg-white">
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
   

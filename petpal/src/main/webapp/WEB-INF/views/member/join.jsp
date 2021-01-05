@@ -7,7 +7,6 @@
 <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
 <script
 	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
 </head>
 <body class="bg-white">
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -17,10 +16,10 @@
 				<div class="container">
 					<h2 class="text-center font-weight-bold" id="title">회원가입</h2>
 					<div class="text-center">
-						<a href="#"><img src="${path }/resources/images/naver.PNG"
-							style="width: 80px; height: 80px;" alt=""></a> <a href="#"><img
-							src="${path }/resources/images/facebook.png"
-							style="width: 80px; height: 80px;" alt=""></a> <a href="#"><img
+						<a href="${naverUrl }"><img src="${path }/resources/images/naver.PNG"
+							style="width: 80px; height: 80px;" alt=""></a> <a href="${kakaoUrl }"><img
+							src="${path }/resources/images/kakao.jpg"
+							style="width: 80px; height: 80px;" alt=""></a> <a href="${googleUrl }"><img
 							src="${path }/resources/images/google.png"
 							style="width: 80px; height: 80px;" alt=""></a>
 					</div>
@@ -55,8 +54,9 @@
 											class="form-control input-lg" placeholder="이름">
 									</div>
 									<div class="mb-4">
-										<input type="text" name="nickName" id="nickname"
-											class="form-control input-lg" placeholder="닉네임">
+										<input type="text" name="nickName" id="nickName" style="width:75%;"
+											class="form-control input-lg d-inline" placeholder="닉네임" >
+											<button type="button" class="btn btn-outline-secondary" id="check">중복확인</button>
 									</div>
 									<div class="mb-4">
 										<input type="text" id="sample6_postcode" name="address"
@@ -172,6 +172,8 @@ input[type="checkbox"]+svg {
 input[type="checkbox"]:checked+svg {
 	color: #00CC00;
 }
+#password{font-family:맑은고딕, Malgun Gothic, dotum, gulim, sans-serif;}
+#password2{font-family:맑은고딕, Malgun Gothic, dotum, gulim, sans-serif;}
 </style>
 
 <script>
@@ -220,9 +222,9 @@ input[type="checkbox"]:checked+svg {
 			alert("이름을 입력해주세요.");
 			return;
 		}
-		if(($("#nickname").val().trim())==""){//닉네임이 공백일때
+		if(($("#nickName").val().trim())==""){//닉네임이 공백일때
 			alert("닉네임은 빈칸이거나 공백으로만 할 수 없습니다. 다시 입력해주세요");
-			$("#nickname").val($("#nickname").val().trim());
+			$("#nickName").val($("#nickName").val().trim());
 			return;
 		}
 		if($("#sample6_postcode").val()==""||$("#sample6_address").val()==""||($("#sample6_detailAddress").val()).trim()==""){
@@ -306,6 +308,27 @@ input[type="checkbox"]:checked+svg {
     	$("#hide").show();//미리보기가 삭제되었으니 사진 등록창 보이게
     }); 
 	
+	$(document).on('click','#check',function(e){//닉네임 중복확인
+		var nickName=$("#nickName").val().trim();
+		if(nickName==""){
+			alert("닉네임을 입력해주세요");
+			return;
+		}
+		$.ajax({
+			url:"${path}/member/checkNickName.do",
+			data:{nickName:nickName},
+			success:data=>{
+				console.log(data);
+				if(data==true){
+					alert("사용가능합니다.");
+				}else{
+					alert("이미 있는 닉네임입니다.");
+				}
+			}
+		});
+	});
+	
+	
 	//주소api
      function sample6_execDaumPostcode() {
          new daum.Postcode({
@@ -332,4 +355,5 @@ input[type="checkbox"]:checked+svg {
          }).open();
      } 
 </script>
+
 </html>
