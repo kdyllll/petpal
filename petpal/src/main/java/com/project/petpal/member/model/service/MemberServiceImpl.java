@@ -228,6 +228,12 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return dao.selectOrderCheck(session,orderNo);
 	}
+	
+	@Override
+	public Member checkNickName(String nickName) {
+		// TODO Auto-generated method stub
+		return dao.checkNickName(session,nickName);
+	}
 	   
 	@Override
 	public int selectCntNon(Map m) {

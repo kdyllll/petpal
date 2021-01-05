@@ -5,6 +5,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -18,7 +20,7 @@ import org.apache.http.message.BasicNameValuePair;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class GoogleLogin {
+public class GoogleEnrollApi {
 
 	public static JsonNode getAccessToken(String autorize_code) {
 		 
@@ -26,9 +28,9 @@ public class GoogleLogin {
  
         final List<NameValuePair> postParams = new ArrayList<NameValuePair>();
         postParams.add(new BasicNameValuePair("grant_type", "authorization_code"));
-        postParams.add(new BasicNameValuePair("client_id", "***************************"));
-        postParams.add(new BasicNameValuePair("client_secret", "***************************"));
-        postParams.add(new BasicNameValuePair("redirect_uri", "https://localhost:8443/social/googleLogin.do")); // 리다이렉트 URI
+        postParams.add(new BasicNameValuePair("client_id", "219357295493-i7rjjv86vko3gntafhbpa3q6jithq77t.apps.googleusercontent.com"));
+        postParams.add(new BasicNameValuePair("client_secret", "XA8HCBa5IPBNZQo3OSHPwNZW"));
+        postParams.add(new BasicNameValuePair("redirect_uri", "http://localhost:9090/petpal/googleEnroll")); // 리다이렉트 URI
         postParams.add(new BasicNameValuePair("code", autorize_code)); // 로그인 과정중 얻은 code 값
  
         final HttpClient client = HttpClientBuilder.create().build();
@@ -58,7 +60,6 @@ public class GoogleLogin {
         } finally {
             // clear resources
         }
- 
         return returnNode;
  
     }
@@ -97,6 +98,11 @@ public class GoogleLogin {
 	        return returnNode;
 	 
 	    }
+	//연결 주소 url 만들어주는 메소드
+		public static String getAuthorizationUrl(HttpSession session) { 
+			String googleUrl = "https://accounts.google.com/o/oauth2/v2/auth?" + "client_id=" + "219357295493-i7rjjv86vko3gntafhbpa3q6jithq77t.apps.googleusercontent.com" + "&redirect_uri=" + "http://localhost:9090/petpal/googleEnroll" + "&response_type=code"+"&scope=email%20profile%20openid"; 
+			return googleUrl; 
+		}
 
 
 }

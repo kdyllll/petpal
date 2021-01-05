@@ -97,19 +97,21 @@ public class NaverController {
 			//response의 nickname값 파싱
 			String email = (String)response_obj.get("email");
 			String id = (String)response_obj.get("id");
-			String name = (String)response_obj.get("name");
-			String mobile = (String)response_obj.get("mobile");
 			System.out.println(email);//이메일 주소
-			System.out.println(name);//이름
-			System.out.println(mobile);//전화번호
 			System.out.println(id);//고유ID번호
 			
-			model.addAttribute("snsNo",id);
-			model.addAttribute("email",email);
-			model.addAttribute("name",name);
-			model.addAttribute("mobile",mobile);
+			Member member=service.selectSnsMember(id);
+		       if(member!=null) {//가입되어있으면
+		    	   model.addAttribute("loginMember",member);
+		    	   model.addAttribute("msg","가입되어있는 회원입니다.로그인 되었습니다.");
+		    	   return "common/msg";
+		       }else {
+		    	   model.addAttribute("snsNo",id);
+				   model.addAttribute("email",email);
+				   return "member/addUserInfo";
+		       }
 			
-			return "회원가입 세부사항 이동 주소";
+			
 
 		}
 	

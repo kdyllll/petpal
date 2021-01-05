@@ -46,4 +46,5 @@ public interface MemberService {
    int selectOrderCheck(String orderNo);
    int selectCntNon(Map m);
    int selectDeliveryCntNon(Map m);
+   Member checkNickName(String nickName);
 }

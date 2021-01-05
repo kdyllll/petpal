@@ -190,4 +190,11 @@ public class MemberAjaxController {
 		model.addAttribute("detail",detail);
 		return "member/memberAjax/infoDetail";
 	}
+	//닉네임 중복확인
+	 @RequestMapping("/member/checkNickName.do")
+	 @ResponseBody
+	   public boolean checkNickName(String nickName,Model m) {
+		   	Member member=service.checkNickName(nickName);
+		   return(member==null?true:false);
+	   }
 }

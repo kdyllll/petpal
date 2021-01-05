@@ -48,4 +48,5 @@ public interface MemberDao {
    int selectOrderCheck(SqlSession session,String orderNo);
    int selectCntNon(SqlSession session,Map m);
    int selectDeliveryCntNon(SqlSession session, Map m);
+   Member checkNickName(SqlSession session,String nickName);
 }

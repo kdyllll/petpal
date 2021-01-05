@@ -234,6 +234,14 @@ public class MemberDaoImpl implements MemberDao {
 		// TODO Auto-generated method stub
 		return session.selectOne("member.selectDeliveryCntNon", m);
 	}
+
+	@Override
+	public Member checkNickName(SqlSession session, String nickName) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.checkNickName",nickName);
+	}
+
+
    
    
 
