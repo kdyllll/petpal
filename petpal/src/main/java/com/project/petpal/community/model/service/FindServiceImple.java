@@ -100,4 +100,22 @@ public class FindServiceImple implements FindService {
 		// TODO Auto-generated method stub
 		return dao.updateOtherFind(session, m);
 	}
+
+	@Override
+	public List<String> selectFindLike(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectFindLike(session, memberNo);
+	}
+
+	@Override
+	public int deleteFindLike(String findNo) {
+		// TODO Auto-generated method stub
+		return dao.deleteFindLike(session, findNo);
+	}
+
+	@Override
+	public int insertFindLike(Map m) {
+		// TODO Auto-generated method stub
+		return dao.insertFindLike(session,m);
+	}
 }

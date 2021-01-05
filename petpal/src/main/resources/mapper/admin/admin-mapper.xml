@@ -22,4 +22,36 @@
 	<update id="updatePlace" parameterType="map">
 		UPDATE PLACE SET STATUS=#{status} WHERE PLACENO=#{placeNo}
 	</update>
+	<select id="orderSearch" resultType="map" parameterType="map">
+		SELECT * FROM MEMBER M JOIN PAYMENT P ON M.MEMBERNO=P.MEMBERNO
+		<where>
+			<if test="type != null and key != null">
+				AND ${type} like '%'|| #{key}||'%'
+			</if>
+		</where>
+	</select>
+	<select id="memberSearch" parameterType="map" resultType="map">
+		SELECT * FROM MEMBER 
+		<where>
+			<if test="type != null and key != null">
+				AND ${type} like '%'|| #{key}||'%'
+			</if>
+		</where>
+	</select>
+	<select id="searchClaim" parameterType="map" resultType="map">
+		SELECT * FROM CLAIM JOIN MEMBER USING(MEMBERNO)
+		<where>
+			<if test="type != null and key != null">
+				AND ${type} like '%'|| #{key}||'%'
+			</if>
+		</where>
+	</select>
+	<select id="searchCommunity"  parameterType="map" resultType="map">
+		select * from place join member using(MEMBERNO)
+		<where>
+			<if test="type != null and key != null">
+				AND ${type} like '%'|| #{key}||'%'
+			</if>
+		</where>
+	</select>
 </mapper>

@@ -17,4 +17,7 @@ public interface FindService {
 	int deleteFindImg(List<FindImg> fin);
 	int insertSubImgs(List<FindImg> fin);
 	int updateOtherFind(Map m);
+	List<String> selectFindLike(String memberNo);
+	int deleteFindLike(String findNo);
+	int insertFindLike(Map m);
 }

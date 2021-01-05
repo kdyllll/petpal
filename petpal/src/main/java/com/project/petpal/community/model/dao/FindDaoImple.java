@@ -84,6 +84,24 @@ public class FindDaoImple implements FindDao {
 		return session.update("find.updateOtherFind", m);
 	}
 
+	@Override
+	public List<String> selectFindLike(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("find.selectFindLike", memberNo);
+	}
+
+	@Override
+	public int deleteFindLike(SqlSession session, String findNo) {
+		// TODO Auto-generated method stub
+		return session.delete("find.deleteFindLike", findNo);
+	}
+
+	@Override
+	public int insertFindLike(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.insert("find.insertFindLike", m);
+	}
+
 
 	
 }
