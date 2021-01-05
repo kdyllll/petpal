@@ -130,6 +130,12 @@ public class PlaceServiceImpl implements PlaceService{
 		return dao.selectPlaceHeartWeek(session,cPage,numPerPage);
 	}
 	
+	@Override
+	public List<Map> selectPlaceHash(int cPage, int numPerPage,String hashtag) {
+		// TODO Auto-generated method stub
+		return dao.selectPlaceHash(session,cPage,numPerPage,hashtag);
+	}
+	
 	
 
 }

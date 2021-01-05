@@ -97,6 +97,13 @@ public class PlaceDaoImpl implements PlaceDao{
 		return session.selectList("place.selectPlaceHeartWeek",null,rb);
 	}
 	
+	@Override
+	public List<Map> selectPlaceHash(SqlSession session, int cPage, int numPerPage,String hashtag) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("place.selectPlaceHash",hashtag,rb);
+	}
+	
 	
 
 }

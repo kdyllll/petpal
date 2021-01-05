@@ -51,9 +51,10 @@ public class CommunityController {
 		//일상 4개(사진,작성자사진,작성자닉네임,해시태그)
 		List<Map> dailyList=dService.selectDailyHash(1,4,hashtag);
 		//노하우 4개(사진,제목,작성자사진,작성자닉네임,해시태그)
-		List<Map> tipList=dService.selectTipHash(1,4,hashtag);
+		List<Map> tipList=tService.selectTipHash(1,4,hashtag);
 		//장소후기 3개(사진,제목,작성자사진,작성자닉네임,장소)
-		List<Map> placeList=dService.selectPlaceHash(1,4,hashtag);
+		List<Map> placeList=pService.selectPlaceHash(1,4,hashtag);
+		
 		
 		
 		return "community/hashSearch";
