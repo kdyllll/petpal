@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.project.petpal.board.model.service.NoticeService;
 import com.project.petpal.board.model.vo.Notice;
 import com.project.petpal.board.model.vo.NoticeImg;
+import com.project.petpal.member.model.vo.Member;
 
 @Controller
 public class NoticeController {
@@ -28,19 +29,48 @@ public class NoticeController {
 	private NoticeService service;
 	
 	@RequestMapping("board/noticeList.do")
-	public ModelAndView noticeList(ModelAndView mv) {
+	public ModelAndView noticeList(ModelAndView mv, HttpSession session) {
+		Member loginMember=(Member)session.getAttribute("loginMember");
+		
+		String email="";
+		if(loginMember == null) {
+			email = "";
+		}else {
+			email = loginMember.getEmail();
+		}
+		
+		String manager = "member";
+		if(email.equals("admin@naver.com")) {
+			manager = "manager";
+		}
 		
 		mv.addObject("list", service.noticeList());
+		mv.addObject("manager", manager);
 		mv.setViewName("board/noticeList");
 		return mv;
 	}
 	
 	@RequestMapping("/board/noticeDetail.do")
-	public ModelAndView noticeDetail(HttpServletRequest request, HttpServletResponse response, ModelAndView mv) {
+	public ModelAndView noticeDetail(HttpSession session, HttpServletRequest request, HttpServletResponse response, ModelAndView mv) {
+		Member loginMember=(Member)session.getAttribute("loginMember");
+		
+		String email="";
+		if(loginMember == null) {
+			email = "";
+		}else {
+			email = loginMember.getEmail();
+		}
+		
+		String manager = "member";
+		if(email.equals("admin@naver.com")) {
+			manager = "manager";
+		}
+		
 		String noticeNo = request.getParameter("noticeNo");
 		
 		mv.addObject("mainList", service.noticeMainList(noticeNo));
 		mv.addObject("imgList", service.noticeImgList(noticeNo));
+		mv.addObject("manager", manager);
 		mv.setViewName("/board/noticeDetail");
 		return mv;
 	}
@@ -58,7 +88,9 @@ public class NoticeController {
 			@RequestParam(value = "content1") String content1,
 			@RequestParam(value = "content2", defaultValue = "") String content2) {
 
-		String memberNo = "1";
+		Member loginMember=(Member)session.getAttribute("loginMember");
+		String memberNo = loginMember.getMemberNo();
+		
 		Notice n = Notice.builder().memberNo(memberNo).title(title).content1(content1).content2(content2).build();
 
 		String path = session.getServletContext().getRealPath("/resources/upload/board/notice");

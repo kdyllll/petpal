@@ -43,10 +43,10 @@ public class TipDaoImpl implements TipDao {
 		return session.update("tip.updateTip", t);
 	}
 
-	@Override
-	public int updateTipImg(SqlSession session, TipImg ti) {
-		return session.update("tip.updateTipImg", ti);
-	}
+//	@Override
+//	public int updateTipImg(SqlSession session, TipImg ti) {
+//		return session.update("tip.updateTipImg", ti);
+//	}
 
 	@Override
 	public List<Map> selectTipListOne(SqlSession session, String memberNo) {
@@ -67,5 +67,28 @@ public class TipDaoImpl implements TipDao {
 		return session.selectList("tip.selectTipHeartWeek",null,rb);
 	}
 	
-	
+	@Override
+	public int tipDelete(SqlSession session, String tipNo) {
+		return session.delete("tip.tipDelete", tipNo);
+	}
+
+	@Override
+	public int updateMainImg(SqlSession session, TipImg ti) {
+		return session.update("tip.updateMainImg", ti);
+	}
+
+	@Override
+	public int deleteTipImg(SqlSession session, TipImg ti) {
+		return session.delete("tip.deleteTipImg", ti);
+	}
+
+	@Override
+	public int insertSubImgs(SqlSession session, TipImg ti) {
+		return session.insert("tip.insertSubImgs", ti);
+	}
+
+	@Override
+	public int updateContent(SqlSession session, TipImg ti) {
+		return session.update("tip.updateContent", ti);
+	}
 }

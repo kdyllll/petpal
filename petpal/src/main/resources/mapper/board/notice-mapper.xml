@@ -11,12 +11,12 @@
 		INSERT INTO NOTICEIMG VALUES(SEQ_NOTICEIMGNO.NEXTVAL, #{noticeNo}, #{content, jdbcType=VARCHAR}, #{contentImg, jdbcType=VARCHAR})
 	</insert>
 	<select id="noticeList" resultType="map">
-		SELECT * FROM NOTICE
+		SELECT * FROM NOTICE ORDER BY NOTICENO
 	</select>
 	<select id="noticeMainList" parameterType="string" resultType="map">
-		SELECT * FROM NOTICE WHERE NOTICENO = #{noticeNo}
+		SELECT * FROM NOTICE WHERE NOTICENO = #{noticeNo} ORDER BY NOTICENO
 	</select>
 	<select id="noticeImgList" parameterType="string" resultType="map">
-		SELECT * FROM NOTICEIMG WHERE NOTICENO = #{noticeNo}
+		SELECT * FROM NOTICEIMG WHERE NOTICENO = #{noticeNo}  ORDER BY NOTICEIMGNO
 	</select>
 </mapper>
