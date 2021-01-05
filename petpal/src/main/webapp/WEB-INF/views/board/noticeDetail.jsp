@@ -15,12 +15,31 @@
 		<div style="padding-top: 5em;"></div>
 
 		<div class="container" style="max-width: 940px;">
-			<small>공지사항</small>
+			<div class="d-flex">
+				<span>공지사항</span>
+				
+				<div class="dropdown ml-auto">
+	             		<div href="#" id="imageDropdown" data-toggle="dropdown">
+	             			<svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-three-dots-vertical" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+	             				<path fill-rule="evenodd" d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+	              		</svg>
+	   					</div>
+	   					<c:if test="${manager eq 'manager'}">
+						    <div class="dropdown-menu dropdown-menu-right">
+						    <%-- onclick="location.replace('${path}/community/tipUpdate.do?tipNo=${t.TIPNO}')" --%>
+							    <button class="dropdown-item" type="button" >수정하기</button>
+							    <button class="dropdown-item" type="button" id="delete">삭제하기</button>
+						  	</div>
+				  	</c:if>
+				</div>
+			</div>
+			
+			
 			<c:forEach items="${mainList }" var="n">
 				<h3 class="mt-3 mb-5 font-weight-bold"><c:out value="${n.TITLE}"/></h3>
 				<p><c:out value="${n.CONTENT1 }"/></p>
 			</c:forEach>
-
+			
 			<c:forEach items="${imgList }" var="n">
 				<c:if test="${not empty n.CONTENTIMG }">
 					<div>
