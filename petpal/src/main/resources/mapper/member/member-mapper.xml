@@ -8,8 +8,17 @@
       <result column="address" property="address" typeHandler="strArr"/>
     </resultMap>
     <insert id="insertMember" parameterType="member">
-       INSERT INTO MEMBER VALUES('M'||TO_CHAR(SEQ_MEMBERNO.NEXTVAL),#{email},#{password},#{memberName},#{phone},#{address,typeHandler=strArr},DEFAULT,DEFAULT,#{nickName},
+       INSERT INTO MEMBER VALUES('M'||TO_CHAR(SEQ_MEMBERNO.NEXTVAL),#{email},
        <choose>
+       		<when test="password != null">
+       			#{password}
+       		</when>
+       		<when test="password == null">
+                   NULL
+            </when>
+       </choose>
+       ,#{memberName},#{phone},#{address,typeHandler=strArr},DEFAULT,DEFAULT,#{nickName},
+       		<choose>
                 <when test="img != null">
                    #{img}
                 </when>
@@ -17,7 +26,16 @@
                    DEFAULT
                 </when>
              </choose>
-       ,NULL)
+       ,NULL,
+        <choose>
+       		<when test="snsNo != null">
+       			#{snsNo}
+       		</when>
+       		<when test="snsNo == null">
+                   NULL
+            </when>
+       </choose>
+       )
     </insert>
     <update id="updatePassword" parameterType="member">
        UPDATE MEMBER SET PASSWORD=#{password} where MEMBERNO=#{memberNo}
@@ -108,6 +126,9 @@
     </select>
     <select id="selectPointList" resultType="map" parameterType="string">
     	select * from payment where memberno = #{memberNo} and pointplus !=0 or pointminus != 0 ORDER BY PAYDATE DESC
+    </select>
+    <select id="checkNickName" resultType="member" parameterType="string">
+    	SELECT * FROM MEMBER WHERE NICKNAME=#{nickName}
     </select>
 
 </mapper>

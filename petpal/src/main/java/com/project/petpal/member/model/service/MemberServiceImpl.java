@@ -216,6 +216,12 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return dao.selectPointList(session,memberNo);
 	}
+
+	@Override
+	public Member checkNickName(String nickName) {
+		// TODO Auto-generated method stub
+		return dao.checkNickName(session,nickName);
+	}
 	   
 	
 

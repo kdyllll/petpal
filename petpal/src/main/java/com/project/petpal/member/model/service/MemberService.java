@@ -42,5 +42,6 @@ public interface MemberService {
    int selectCnt(Map m);
    int selectDeliveryCnt(Map m);
    List<Map> selectPointList(String memberNo);
+   Member checkNickName(String nickName);
 
 }

@@ -211,6 +211,12 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectList("member.selectPointList", memberNo);
 	}
 
+	@Override
+	public Member checkNickName(SqlSession session, String nickName) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.checkNickName",nickName);
+	}
+
 	
    
    
