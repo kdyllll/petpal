@@ -14,7 +14,7 @@
 		<!-- 위 공간 -->
 		<div style="padding-top: 5em;"></div>
 		<div class="container" style="max-width: 940px;">
-			<h3 class="mt-3 mb-5 font-weight-bold">공지사항</h3>
+			<h3 class="mt-3 mb-5 ml-3 font-weight-bold">공지사항</h3>
 			<form class="needs-validation" name="noticeWrite" action="${path }/board/noticeWriteEnd.do" method="post" enctype="multipart/form-data">
 			
 			<input type="text" class="form-control mt-5 mb-3 border-bottom" name="title" id="name" placeholder="제목을 입력하세요" value="" required style="border: none;">
@@ -24,6 +24,8 @@
 			<div class="invalid-feedback">내용을 입력해주세요.</div>
 			<textarea id="xt" style="width:300px;height:1px;overflow-y:hidden;position:absolute;top:-9px;opacity:0" disabled></textarea>
 			
+			<div id="preview" class="content"></div>
+
 			<!-- 첨부 버튼 -->
 			<div id="attach">
 				<label class="ml-3" for="uploadInputBox">
@@ -35,7 +37,6 @@
 				<input id="uploadInputBox" name="contentImg" style="display: none" type="file" name="filedata" multiple />
 			</div>
 			
-			<div id="preview" class="content"></div>
 	
 			<!-- multipart 업로드시 영역 -->
 			<!-- 
