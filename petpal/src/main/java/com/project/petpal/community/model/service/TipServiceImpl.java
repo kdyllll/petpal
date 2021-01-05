@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.petpal.community.model.dao.TipDao;
+import com.project.petpal.community.model.vo.FindImg;
 import com.project.petpal.community.model.vo.Tip;
 import com.project.petpal.community.model.vo.TipImg;
 
@@ -52,19 +53,8 @@ public class TipServiceImpl implements TipService {
 	}
 
 	@Override
-	public int updateTip(Tip t, List<TipImg> files) {
-		int result = dao.updateTip(session, t);
-
-		if(result>0) {
-			if(files!=null) {
-				for(TipImg img: files) {
-					img.setTipNo(t.getTipNo());
-					result = dao.updateTipImg(session, img);
-				}
-			}
-		}
-		
-		return result;
+	public int updateTip(Tip t) {
+		return dao.updateTip(session, t);
 	}
 
 	@Override
@@ -77,6 +67,35 @@ public class TipServiceImpl implements TipService {
 	public int tipCnt(String memberNo) {
 		// TODO Auto-generated method stub
 		return dao.tipCnt(session, memberNo);
+	}
+
+	@Override
+	public int tipDelete(String tipNo) {
+		return dao.tipDelete(session, tipNo);
+	}
+
+	@Override
+	public int updateMainImg(TipImg ti) {
+		return dao.updateMainImg(session, ti);
+	}
+
+	@Override
+	public int deleteTipImg(TipImg ti) {
+		return dao.deleteTipImg(session, ti);
+	}
+
+	@Override
+	public int insertSubImgs(List<TipImg> ti) {
+		int result = 0;
+		for(TipImg fi : ti) {
+			result = dao.insertSubImgs(session, fi);
+		}
+		return result;
+	}
+
+	@Override
+	public int updateContent(TipImg ti) {
+		return dao.updateContent(session, ti);
 	}
 
 }

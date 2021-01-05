@@ -11,7 +11,12 @@ public interface TipService {
 	List<Map> tipList();
 	List<Map> tipMainList(String tipNo);
 	List<Map> tipDetail(String tipNo);
-	int updateTip(Tip t, List<TipImg> files);
+	int updateTip(Tip t);
 	List<Map> selectTipListOne(String memberNo);
 	int tipCnt(String memberNo);
+	int tipDelete(String tipNo);
+	int updateMainImg(TipImg ti);
+	int deleteTipImg(TipImg ti);
+	int insertSubImgs(List<TipImg> ti);
+	int updateContent(TipImg ti);
 }
