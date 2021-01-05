@@ -105,6 +105,9 @@
 			<c:if test="${not empty mainList[0].CONTENT2 }">
 				<textarea class="autosize form-control border-0 mt-5 mb-5" name="content2" style="resize: none; overflow-y:hidden;"><c:out value="${mainList[0].CONTENT2 }"/></textarea>
 			</c:if>
+			<c:if test="${empty mainList[0].CONTENT2 }">
+				<textarea class="autosize form-control border-0 mt-5 mb-5" name="content2" placeholder="내용을입력하세요" style="resize: none; overflow-y:hidden;"></textarea>
+			</c:if>
 			
 			<div id="hide"></div>
 			
