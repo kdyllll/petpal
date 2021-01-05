@@ -70,7 +70,7 @@
 									
 					
 					<div class="dailyCon row col-12 my-3">
-						<p class="h4 col-12 mb-4"><strong>인기 사진</strong> <a href="#" class="text-hgh ml-1" style="font-size:15px;">더보기</a></p>
+						<p class="h4 col-12 mb-4"><strong>인기 사진</strong> <a href="${path }/daily/moveList.do" class="text-hgh ml-1" style="font-size:15px;">더보기</a></p>
 						<c:forEach var="d" items="${dailyList}">
 							<div class="col-3" >
 								<div class="card mb-4 bg-transparent border-0">
@@ -91,7 +91,7 @@
 					</div>
 					
 					<div class="tipCon row col-12 my-3">
-						<p class="h4 col-12 mb-4"><strong>베스트 노하우</strong><a href="#" class="text-hgh ml-2" style="font-size:15px;">더보기</a></p>
+						<p class="h4 col-12 mb-4"><strong>베스트 노하우</strong><a href="{path }/community/tipList.do" class="text-hgh ml-2" style="font-size:15px;">더보기</a></p>
 						<c:forEach var="t" items="${tipList }" varStatus="vs" begin="1" end="3">						
 							<div class="col-4" style="cursor: pointer" onclick="location.replace('${path}/community/tipDetail.do?tipNo=${t.TIPNO }')">							
 								<div class="card mb-4 bg-transparent border-0">
@@ -107,7 +107,7 @@
 					</div>
 					
 					<div class="placeCon row col-12 my-3">
-						<p class="h4 col-12 mb-4"><strong>유저들의 장소리뷰</strong><a href="#" class="text-hgh ml-2" style="font-size:15px;">더보기</a></p>
+						<p class="h4 col-12 mb-4"><strong>유저들의 장소리뷰</strong><a href="${path }/place/movePlaceList.do" class="text-hgh ml-2" style="font-size:15px;">더보기</a></p>
 						<c:forEach var="p" items="${placeList }">
 							<div class="col-11 ml-3 border-bottom row py-2" style="cursor: pointer" onclick="location.replace('${path}/place/movePlaceDetail.do?placeNo=${p.PLACENO }')">
 								<div class="col-2 ml-5 my-3">

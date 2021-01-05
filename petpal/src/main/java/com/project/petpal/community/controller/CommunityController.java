@@ -26,6 +26,7 @@ public class CommunityController {
    @Autowired
    private DailyService dService;
 	
+   //커뮤니티 메인
 	@RequestMapping("/community/communityList.do")
 	public String communityList(Model m) {
 		//일상 4개(사진,작성자사진,작성자닉네임) / 2주 안에 올린 것 중 좋아요 순 
@@ -42,5 +43,19 @@ public class CommunityController {
 		m.addAttribute("placeList",placeList);
 		m.addAttribute("findList",findList);
 		return "community/communityMain";
+	}
+	
+	//해시태그 검색
+	@RequestMapping("/community/hashSearch.do")
+	public String hashSearch(String hashtag,Model m) {
+		//일상 4개(사진,작성자사진,작성자닉네임,해시태그)
+		List<Map> dailyList=dService.selectDailyHash(1,4,hashtag);
+		//노하우 4개(사진,제목,작성자사진,작성자닉네임,해시태그)
+		List<Map> tipList=dService.selectTipHash(1,4,hashtag);
+		//장소후기 3개(사진,제목,작성자사진,작성자닉네임,장소)
+		List<Map> placeList=dService.selectPlaceHash(1,4,hashtag);
+		
+		
+		return "community/hashSearch";
 	}
 }
