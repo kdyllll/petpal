@@ -8,7 +8,14 @@
 
 </head>
 <style>
+.title{
+/* 	text-shadow: -1px 0 #000,
+	       0 1px #000,
+	       1px 0 #000,
+	       0 -1px #000; *//*글자 테두리*/
+	text-shadow: 1px 1px 5px #000;
 
+}
 </style>
 <body class="bg-white">
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -22,11 +29,15 @@
 					</jsp:include>
 					
 					<!-- 배너 -->
-					<div class="col-9 mb-5 banner">
+					<div class="col-9 mb-5 banner position-relative">
 						<a href="${path }/community/tipDetail.do?tipNo=${tipList[0].TIPNO}"><img class="rounded" width="100%" src="${path }/resources/upload/tip/${tipList[0].MAINIMG}"/></a>
+						<div class="position-absolute text-white" style="bottom:25;left:40;"><strong class="h3 title"><c:out value="${tipList[0].TITLE }"/></strong></div>
+						<div class="position-absolute border border-white rounded px-3 py-2 text-weight-bold" style="bottom:20; right:40; cursor: pointer;" onclick="location.replace('${path}/community/tipDetail.do?tipNo=${tipList[0].TIPNO }')">
+							<strong class="h5 title text-white">보러가기</strong>
+						</div>
 					</div>
 
-					<div id="carouselExampleIndicators" class="find carousel slide col-3 p-0 rounded mb-5 border" data-ride="carousel">
+					<div id="carouselExampleIndicators" class="find carousel slide col-3 p-0 mb-5 border-top border-bottom" data-ride="carousel">
 							<ol class="carousel-indicators">
 							<c:forEach items="${findList }" varStatus="vs">
 								<li data-target="#carouselExampleIndicators" data-slide-to="${vs.index }" class="${vs.index eq 0?'active':'' }"></li>
