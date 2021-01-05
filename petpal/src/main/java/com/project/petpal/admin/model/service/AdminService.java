@@ -37,4 +37,6 @@ public interface AdminService {
 	int updatePlace(Map m);
 	List<Map> orderSearch(Map m);
 	List<Map> memberSearch(Map m);
+	List<Map> searchClaim(Map m);
+	List<Map> searchCommunity(Map m);
 }

@@ -43,4 +43,6 @@ public interface AdminDao {
 	int updatePlace(SqlSession session, Map m);
 	List<Map> orderSearch(SqlSession session, Map m);
 	List<Map> memberSearch(SqlSession session, Map m);
+	List<Map> searchClaim(SqlSession session, Map m);
+	List<Map> searchCommunity(SqlSession session, Map m);
 }

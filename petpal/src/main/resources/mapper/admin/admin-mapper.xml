@@ -38,4 +38,20 @@
 			</if>
 		</where>
 	</select>
+	<select id="searchClaim" parameterType="map" resultType="map">
+		SELECT * FROM CLAIM JOIN MEMBER USING(MEMBERNO)
+		<where>
+			<if test="type != null and key != null">
+				AND ${type} like '%'|| #{key}||'%'
+			</if>
+		</where>
+	</select>
+	<select id="searchCommunity"  parameterType="map" resultType="map">
+		select * from place join member using(MEMBERNO)
+		<where>
+			<if test="type != null and key != null">
+				AND ${type} like '%'|| #{key}||'%'
+			</if>
+		</where>
+	</select>
 </mapper>

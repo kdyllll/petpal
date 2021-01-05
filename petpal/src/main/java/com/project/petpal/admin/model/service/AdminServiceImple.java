@@ -225,5 +225,17 @@ public class AdminServiceImple implements AdminService {
 		return dao.memberSearch(session, m);
 	}
 
+	@Override
+	public List<Map> searchClaim(Map m) {
+		// TODO Auto-generated method stub
+		return dao.searchClaim(session, m);
+	}
+
+	@Override
+	public List<Map> searchCommunity(Map m) {
+		// TODO Auto-generated method stub
+		return dao.searchCommunity(session,m);
+	}
+
 	
 }

@@ -208,4 +208,16 @@ public class AdminDaoImple implements AdminDao {
 		return session.selectList("admin.memberSearch", m);
 	}
 
+	@Override
+	public List<Map> searchClaim(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.selectList("admin.searchClaim", m);
+	}
+
+	@Override
+	public List<Map> searchCommunity(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.selectList("admin.searchCommunity", m);
+	}
+
 }

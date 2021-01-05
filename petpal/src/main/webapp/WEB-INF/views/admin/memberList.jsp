@@ -38,7 +38,7 @@
 					</div>
 					<div class="input-group mb-3  col-lg-5">
 						<input type="text" class="form-control input-group-sm"
-							name="keyword" placeholder="이메일을 입력해주세요">
+							name="keyword" placeholder="검색어를 입력해주세요">
 						<div class="input-group-append">
 							<button class="btn btn-outline-secondary" type="submit"
 								id="button-addon2">Button</button>

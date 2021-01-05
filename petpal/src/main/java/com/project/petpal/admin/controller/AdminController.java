@@ -90,4 +90,23 @@ public class AdminController {
 		return "admin/memberList";
 	}
 	
+	@RequestMapping("/admin/searchClaim.do")
+	public String searchClaim(String searchType, String keyword, Model model) {
+		Map m = new HashMap();
+		m.put("type",searchType);
+		m.put("key", keyword);
+		List<Map> cList = service.searchClaim(m);
+		model.addAttribute("cList",cList);
+		return "admin/adminClaim";
+	}
+	@RequestMapping("/admin/searchCommunity.do")
+	public String searchCommunity(String searchType, String keyword, Model model) {
+		Map m = new HashMap();
+		m.put("type",searchType);
+		m.put("key", keyword);
+		List<Map> pList = service.searchCommunity(m);
+		model.addAttribute("pList",pList);
+		return "admin/adminCommunity";
+	}
+	
 }
