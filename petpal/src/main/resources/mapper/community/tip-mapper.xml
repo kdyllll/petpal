@@ -36,7 +36,7 @@
 		DELETE FROM TIP WHERE TIPNO = #{tipNo}
 	</delete>
 	<update id="updateTip" parameterType="tip">
-		UPDATE TIP SET CATEGORY = #{category}, TITLE = #{title}, CONTENT1 = #{content1}, CONTENT2 = #{content2}, ENROLLDATE = SYSDATE WHERE TIPNO = #{tipNo}
+		UPDATE TIP SET CATEGORY = #{category}, TITLE = #{title}, CONTENT1 = #{content1}, CONTENT2 = #{content2}, TIPDATE = SYSDATE WHERE TIPNO = #{tipNo}
 	</update>
 	<update id="updateMainImg" parameterType="tipImg">
 		UPDATE TIPIMG SET MAINIMG = #{mainImg} WHERE TIPIMGNO=#{tipImgNo}

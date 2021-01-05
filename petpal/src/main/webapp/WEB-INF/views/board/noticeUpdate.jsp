@@ -26,46 +26,10 @@
   <main role="main" style="min-height:100vh;">
   	<div class="container" style="max-width: 940px;">
   	<c:set var="loop_flag" value="false" />
-        <form class="needs-validation" id="tipWrite" name="tipWrite" action="${path }/community/tipUpdateEnd.do?tipNo=${mainList[0].TIPNO }" method="post" enctype="multipart/form-data">
+        <form class="needs-validation" id="noticeWrite" name="noticeWrite" action="${path }/board/noticeUpdateEnd.do?noticeNo=${mainList[0].NOTICENO }" method="post" enctype="multipart/form-data">
             <div>
                 <div class="row">
                     <div class="col-md-12 mt-5">
-						<div class="form-inline mb-5">
-							<label class="mr-3">카테고리</label>
-							<c:forEach items="${mainList }" var="t">
-								<div class="d-col-6">
-									<select id="select" class="form-control" name="category">
-										<option value="" selected disabled style="color: #bdbdbd;"><small><c:out value="${t.CATEGORY }"/></small>
-										</option>
-										<option value="훈련">훈련</option>
-										<option value="수제간식">수제간식</option>
-										<option value="DIY 옷">DIY 옷</option>
-										<option value="DIY 가구">DIY 가구</option>
-										<option value="건강">건강</option>
-										<option value="팁">팁</option>
-										<option value="기타">기타</option>
-									</select>
-								</div>
-							</c:forEach>
-						</div>
-						<c:forEach items="${imgList }" var="t">
-							<c:if test="${not empty t.MAINIMG }">
-							<div class="float-none picLabel" id="image_container" style="display: table; background-color: #F7F7F7; height: 300px; width: 100%; position: relative;" onclick="document.all.file.click()">
-								<input type="file" class="updatePic" name="mainImg" id="file" style="display: none" onchange="setThumbnail(event);" required>
-								<div class="button text-center" style="display: table-cell; vertical-align: middle;">
-									<button type="button" id="i" class="btn btn-outline-secondary">메인 사진 추가하기</button>
-								</div>
-								<div id="change">
-									<button type="button" id="u" class="btn btn-dark col-auto oriUpdate">
-										<span class="align-text-bottom">사진 변경하기</span>
-									</button>
-								</div>
-								<input type="hidden" name="mainImgNo" value="${t.TIPIMGNO }">
-								<img src="${path }/resources/upload/tip/${t.MAINIMG }" style="width: 100%; height: 300px;">
-							</div>
-							</c:if>
-							</c:forEach>
-			
 			
 			<input type="text" class="form-control mt-5 mb-3 border-bottom" name="title" id="title" value="<c:out value="${mainList[0].TITLE }"/>" required style="border: none;">
 			<div class="invalid-feedback">제목을 입력해주세요.</div>
@@ -74,15 +38,15 @@
 			<div class="invalid-feedback">내용을 입력해주세요.</div>
 			
 				<!-- 기존사진 -->
-				<c:forEach items="${imgList }" var="t">
-					<c:if test="${not empty t.CONTENTIMG }">
+				<c:forEach items="${imgList }" var="n">
+					<c:if test="${not empty n.CONTENTIMG }">
 						<div id="div">
 							<button type="button" class="btn btn-light  float-right" onclick="dImg(event);">x</button>
-							<input type="hidden" value="${t.TIPIMGNO }">
-							<img id="img" src="${path }/resources/upload/tip/${t.CONTENTIMG}" width="100%" height="400px">
+							<input type="hidden" value="${n.NOTICEIMGNO }">
+							<img id="img" src="${path }/resources/upload/board/notice/${n.CONTENTIMG}" width="100%" height="400px">
 							<div class="mb-2" style="white-space:pre-line;">
-								<textarea class="autosize form-control border-0" name="imgContent" style="resize: none; overflow-y:hidden;"><c:out value="${t.CONTENT}"/></textarea>
-								<input type="hidden" name="tipImgNo" value="${t.TIPIMGNO }">
+								<textarea class="autosize form-control border-0" name="imgContent" style="resize: none; overflow-y:hidden;"><c:out value="${n.CONTENT}"/></textarea>
+								<input type="hidden" name="noticeImgNo" value="${n.NOTICEIMGNO }">
 							</div>
 						</div>
                     </c:if>
@@ -132,28 +96,6 @@
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 <script>
-var clone;
-//기존사진 변경 버튼 눌렀을 때
-$(document).on('click','.oriUpdate',e=>{//파일 입력할때 미리 입력태그 클론만들기
-     clone=$(".updatePic").clone(true);
-});
-
-
-$(".updatePic").on("change",e=>{
-	 if (e.target.value.length==0) {//파일 입력 취소 누르면 원래 사진 유지하도록
-		let label=$(e.target).parents(".picLabel");
-		$(e.target).remove();//값 없어진 인풋 지우고
-		label.prepend(clone);//미리 복사해놓은 인풋태그로 대체
-     }
-});
-
-
-	$(document).ready(function() {
-		$("#i").hide();
-    	$("#u").show();
-    	$("#d").hide();
-	});
-
 	function dImg(event){
 		if(window.confirm("사진을 지우면 사진에 대한 설명도 같이 지워집니다.")){
 			let target = $(event.target).next().val();
@@ -161,31 +103,6 @@ $(".updatePic").on("change",e=>{
 			$("#delNo").append(input);
 			$(event.target).parent().remove();
 		}
-	}
-
-	function setThumbnail(event) {
-		var reader = new FileReader();
-		reader.onload = function(event) {
-			var img = document.createElement("img");
-			img.setAttribute("src",
-					event.target.result);
-			img.setAttribute("width", "100%");
-			img.setAttribute("height", "300px");
-
-			$("#image_container").find("img").remove();
-			document.querySelector("div#image_container").appendChild(img);
-			$("#i").hide();
-			$("#u").show();
-			$("#d").show();
-		};
-		reader.readAsDataURL(event.target.files[0]);
-	}
-	
-	function deleteImg(event) {
-		$("#image_container").find("img").remove();
-		$("#i").show();
-		$("#u").hide();
-		$("#d").hide();
 	}
 	
 	//임의의 file object영역
@@ -294,11 +211,6 @@ $(".updatePic").on("change",e=>{
     });
 		        
 	function selectCheck(){
-      	var select = document.getElementById("select");
-      	var selected = select.options[select.selectedIndex].value;
-      	var file = $("#file").val();
-      	var count = 0;
-      	
       	if($("#title").val() === ""){
       		alert("제목을 입력해주세요");
       		$("#title").focus();
@@ -309,31 +221,7 @@ $(".updatePic").on("change",e=>{
       		$("#content1").focus();
       		return;
       	}
-      	
-      	if(selected === ""){
-      		let cate;
-      		if(window.confirm("카테고리가 변경되지 않았습니다. 카테고리 변경하지 않고 수정하시겠습니까?")){
-      			<c:forEach items="${mainList }" var="t">
-      				$("#hide").append(`<input type="hidden" name="category" value="${t.CATEGORY}">`);
-      			</c:forEach>
-      		}else{
-      			alert("카테고리 변경해주세요");
-      			count++;
-      			return;
-      		}
-      	}
-      	if(file === ""){
-      		if(window.confirm("메인사진이 변경되지 않았습니다. 메인사진을 변경하지 않고 수정하시겠습니까?(지우신 사진도 변경되지 않습니다.)")){
-  				$("#hide").append(`<input type="hidden" name="mainImg" value="${imgList[0].MAINIMG }`);
-  				//된다
-      		}else{
-      			alert("메인사진을 변경해주세요");
-      			count++;
-      		}
-      	}
-      	if(count==0){
-      		tipWrite.submit();
-      	}
+   		noticeWrite.submit();
 	}
 </script>
 

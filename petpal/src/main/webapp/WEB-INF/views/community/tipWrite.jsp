@@ -101,11 +101,6 @@
 				<input id="uploadInputBox" name="contentImg" style="display: none" type="file" name="filedata" multiple />
 			</div>
 			
-	
-			<!-- multipart 업로드시 영역 -->
-			<!-- <form id="uploadForm" name="fileName" style="display: none;" method="post" enctype="multipart/form-data"></form> -->
-
-			
 			<textarea class="autosize form-control border-0 mt-5 mb-5"  id="ta2" name="content2" placeholder="내용을입력하세요" style="resize: none; overflow-y:hidden;"></textarea>
 
                         <div class="ml-3 mt-5 mb-5">

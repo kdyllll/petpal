@@ -19,4 +19,21 @@
 	<select id="noticeImgList" parameterType="string" resultType="map">
 		SELECT * FROM NOTICEIMG WHERE NOTICENO = #{noticeNo}  ORDER BY NOTICEIMGNO
 	</select>
+	
+	
+	<delete id="noticeDelete" parameterType="string">
+		DELETE FROM NOTICE WHERE NOTICENO = #{noticeNo}
+	</delete>
+	<update id="updateNotice" parameterType="notice">
+		UPDATE NOTICE SET TITLE = #{title}, CONTENT1 = #{content1}, CONTENT2 = #{content2}, WRITEDATE = SYSDATE WHERE NOTICENO = #{noticeNo}
+	</update>
+	<delete id="deleteNoticeImg" parameterType="noticeImg">
+		DELETE FROM NOTICEIMG WHERE NOTICEIMGNO = #{noticeImgNo}
+	</delete>
+	<insert id="insertSubImgs" parameterType="noticeImg">
+		INSERT INTO NOTICEIMG VALUES(SEQ_NOTICEIMGNO.NEXTVAL, #{noticeNo}, #{content, jdbcType=VARCHAR}, #{contentImg, jdbcType=VARCHAR})
+	</insert>
+	<update id="updateContent" parameterType="noticeImg">
+		UPDATE NOTICEIMG SET CONTENT = #{content} WHERE NOTICEIMGNO=#{noticeImgNo}
+	</update>
 </mapper>

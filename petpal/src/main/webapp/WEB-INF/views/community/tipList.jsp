@@ -32,7 +32,7 @@ $(document).ready(function() {
 		});
 	};
 	$(document).ready(function(){
-		$("#img").click( function() {
+		$(".img").click( function() {
 			let tipNo = $(this).prev().val();
 			location.href="${path}/community/tipDetail.do?tipNo=" + tipNo;
 		});
@@ -94,7 +94,7 @@ $(document).ready(function() {
 						<div class="col-xl-3 col-lg-4 col-md-6" style="cursor:pointer">
 							<div class="card mb-4 bg-transparent border-0"  >
 								<input type="hidden" class="tipNo" value="${t.TIPNO }">
-								<div class="test" id="img">
+								<div class="img test">
 									<img src="${path}/resources/upload/tip/${t.MAINIMG}"  id="scale" width="100%" height="225">
 								</div>
 								<div class="card-body">
