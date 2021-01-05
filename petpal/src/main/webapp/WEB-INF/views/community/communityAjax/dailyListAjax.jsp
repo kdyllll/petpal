@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
-
+<div class="row col-12">
 <c:if test="${empty dailyList }">
 <div class="mx-auto">
 	<p class="">일상 글이 없습니다.</p>
@@ -67,5 +67,7 @@
        </div>
    </address>
  </c:forEach>
- <div class="mx-auto my-2">${pageBar }</div>
+
 </c:if>
+</div>
+ <div class="mx-auto my-2">${pageBar }</div>

@@ -19,17 +19,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.project.petpal.community.model.service.DailyService;
 import com.project.petpal.community.model.service.FindService;
 import com.project.petpal.community.model.service.PlaceService;
 import com.project.petpal.community.model.service.TipService;
 import com.project.petpal.member.model.service.MemberService;
-import com.project.petpal.member.model.vo.GoogleLogin;
+import com.project.petpal.member.model.vo.GoogleEnrollApi;
+import com.project.petpal.member.model.vo.GoogleLoginApi;
 import com.project.petpal.member.model.vo.KakaoEnrollApi;
 import com.project.petpal.member.model.vo.KakaoLoginApi;
 import com.project.petpal.member.model.vo.Member;
@@ -62,6 +63,8 @@ public class MemberController {
    private NaverEnrollBo naverEnrollBO;
    private KakaoLoginApi kakaoLoginApi;
    private KakaoEnrollApi kakaoEnrollApi;
+   private GoogleEnrollApi googleEnrollApi;
+   private GoogleLoginApi googleLoginApi;
    
 	@Autowired
 	private void setNaverLoginBO(NaverLoginBO naverLoginBO,NaverEnrollBo naverEnrollBO) {
@@ -173,7 +176,9 @@ public class MemberController {
 	  String naverAuthUrl = naverEnrollBO.getAuthorizationUrl(session);
 	  m.addAttribute("naverUrl", naverAuthUrl);
 	  String kakaoUrl = kakaoEnrollApi.getAuthorizationUrl(session);
-	  m.addAttribute("kakaoUrl",kakaoUrl);	  
+	  m.addAttribute("kakaoUrl",kakaoUrl);
+	  String googleUrl=googleEnrollApi.getAuthorizationUrl(session);
+	  m.addAttribute("googleUrl",googleUrl);
       return "member/join";
    }
 
@@ -187,11 +192,12 @@ public class MemberController {
    @RequestMapping("/member/insertMember.do")//회원가입창에서 가입버튼눌렀을때 회원가입 요청하는 서블릿
 
    public String insertMember(Model m,Member member,@RequestParam(value="f", required=false)MultipartFile f, HttpSession session) {
+	   String snsNo=member.getSnsNo();
+	  if(snsNo==null) {//그냥회원가입이면
+		  String oriPw=member.getPassword();
+	      member.setPassword(pwEncoder.encode(oriPw));
+	  }
       
-      String oriPw=member.getPassword();
-
-      member.setPassword(pwEncoder.encode(oriPw));
-
       String path=session.getServletContext().getRealPath("/resources/upload/member/profile");
       
       File dir=new File(path);
@@ -216,7 +222,11 @@ public class MemberController {
       }
       int result=service.insertMember(member);
       if(result>0) {
-         m.addAttribute("msg","가입에 성공하였습니다!"); 
+         m.addAttribute("msg","가입에 성공하였습니다!");
+         if(snsNo!=null) {
+        	 Member loginMember=service.selectSnsMember(snsNo);
+        	 m.addAttribute("loginMember",loginMember);
+         }
       }else {
          m.addAttribute("msg","가입에 실패하였습니다!");
          m.addAttribute("loc","/member/moveJoin.do");
@@ -354,38 +364,7 @@ public class MemberController {
       m.addAttribute("follower",follower);
       return "member/userInfo";
    }
-   @RequestMapping("/redirect")
-   public String ddd(Model m,@RequestParam("code") String code, HttpSession session) {
-	// 코드 확인
-       System.out.println("code : " + code);
-       
-       
-       // Access Token 발급
-       JsonNode jsonToken = GoogleLogin.getAccessToken(code);
-       String accessToken = jsonToken.get("access_token").toString();
-       String refreshToken = "";
-       if(jsonToken.has("refresh_token")) {
-           refreshToken = jsonToken.get("refresh_token").toString();
-       }
-       String expiresTime = jsonToken.get("expires_in").toString();
-       System.out.println("Access Token : " + accessToken);
-       System.out.println("Refresh Token : " + refreshToken);
-       System.out.println("Expires Time : " + expiresTime);
-
-       // Access Token으로 사용자 정보 반환
-       JsonNode userInfo = GoogleLogin.getGoogleUserInfo(accessToken);
-       System.out.println(userInfo.toString());
-       
-       String socialMail = userInfo.get("email").asText();
-       
-       // 사용자 정보 출력
-       System.out.println("socialMail : " + socialMail);
-       
-       // 받아온 사용자 정보를 view에 전달
-       m.addAttribute("socialMail", socialMail);
-       
-	   return "member/join";
-   }
+   
    @RequestMapping("/member/refundApply.do")
    public String refundApply(String detailNum,String refundReason, String refundTextArea, Model model) {
 	   Map m = new HashMap();
@@ -440,5 +419,68 @@ public class MemberController {
 	   return "common/msg";
    }
 
+   @RequestMapping("/nonMemberShop.do")
+   public String moveNonMemberShop(Model m,HttpSession session, HttpServletRequest request,String orderNo) {
+		  String status = request.getParameter("orderStatus"); 
+		  String payStatus = request.getParameter("payStatus");
+		  String deliveryStatus = request.getParameter("deliveryStatus");
+
+		  Map list = new HashMap();
+		  list.put("orderNo",orderNo);
+		  list.put("status", status);
+		  list.put("payStatus",payStatus);
+		  list.put("deliveryStatus",deliveryStatus);
+		  List<Map> shop = service.selectPaymentListNon(list);
+//		  취소,교환중,교환,반품중,결제 갯수 구하기
+		  Map map = new HashMap();
+		  map.put("orderNo",orderNo);
+		  String n = "";
+		  n="반품중";
+		  map.put("n",n);
+		  int refundIngCnt = service.selectCntNon(map);
+		  n="취소";
+		  map.put("n",n);
+		  int refundCnt = service.selectCntNon(map);
+		  n="교환중";
+		  map.put("n",n);
+		  int changeIngCnt = service.selectCntNon(map);
+		  n="교환";
+		  map.put("n",n);
+		  int changeCnt = service.selectCntNon(map);
+		  n="결제";
+		  map.put("n",n);
+		  int payCnt = service.selectCntNon(map);
+//		  결제완료, 배송준비중, 배송중, 배송완료 ... 갯수 구하기
+		  Map p = new HashMap();
+		  p.put("orderNo",orderNo);
+		  p.put("deliveryStatus", "배송준비중");
+		  int payDelCnt = service.selectDeliveryCntNon(p);
+		  p.put("deliveryStatus", "배송시작");
+		  int deliveryStartCnt = service.selectDeliveryCntNon(p);
+		  p.put("deliveryStatus", "배송완료");
+		  int deliveryEndCnt = service.selectDeliveryCntNon(p);
+		  p.put("deliveryStatus", "구매확정");
+		  int pay = service.selectDeliveryCntNon(p);
+		  System.out.println(payDelCnt+"."+deliveryEndCnt+"."+deliveryStartCnt+"."+pay);
+		  
+		  m.addAttribute("riCnt",refundIngCnt);
+		  m.addAttribute("rCnt",refundCnt);
+		  m.addAttribute("ciCnt",changeIngCnt);
+		  m.addAttribute("cCnt",changeCnt);
+		  m.addAttribute("payCnt",payCnt);
+		  m.addAttribute("shop", shop);
+		  m.addAttribute("payDelCnt",payDelCnt);
+		  m.addAttribute("deCnt",deliveryEndCnt);
+		  m.addAttribute("dsCnt",deliveryStartCnt);
+		  m.addAttribute("pay",pay);
+	   return "member/nonMemberShop";
+   }
+   
+   @RequestMapping("/orderCheck.do")
+   @ResponseBody
+   public Boolean orderCheck(String orderNo) {
+	   int result=service.selectOrderCheck(orderNo);
+	   return result>0?true:false;
+   }
 
 }

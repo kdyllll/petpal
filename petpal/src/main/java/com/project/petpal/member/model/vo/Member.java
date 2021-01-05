@@ -25,6 +25,7 @@ public class Member {
 	private String nickName;
 	private String info;
 	private String img;
+	private String snsNo;
 
 	
 }

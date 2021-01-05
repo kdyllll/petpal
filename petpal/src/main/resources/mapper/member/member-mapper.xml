@@ -8,8 +8,17 @@
       <result column="address" property="address" typeHandler="strArr"/>
     </resultMap>
     <insert id="insertMember" parameterType="member">
-       INSERT INTO MEMBER VALUES('M'||TO_CHAR(SEQ_MEMBERNO.NEXTVAL),#{email},#{password},#{memberName},#{phone},#{address,typeHandler=strArr},DEFAULT,DEFAULT,#{nickName},
+       INSERT INTO MEMBER VALUES('M'||TO_CHAR(SEQ_MEMBERNO.NEXTVAL),#{email},
        <choose>
+       		<when test="password != null">
+       			#{password}
+       		</when>
+       		<when test="password == null">
+                   NULL
+            </when>
+       </choose>
+       ,#{memberName},#{phone},#{address,typeHandler=strArr},DEFAULT,DEFAULT,#{nickName},
+       		<choose>
                 <when test="img != null">
                    #{img}
                 </when>
@@ -17,7 +26,16 @@
                    DEFAULT
                 </when>
              </choose>
-       ,NULL)
+       ,NULL,
+        <choose>
+       		<when test="snsNo != null">
+       			#{snsNo}
+       		</when>
+       		<when test="snsNo == null">
+                   NULL
+            </when>
+       </choose>
+       )
     </insert>
     <update id="updatePassword" parameterType="member">
        UPDATE MEMBER SET PASSWORD=#{password} where MEMBERNO=#{memberNo}
@@ -109,5 +127,29 @@
     <select id="selectPointList" resultType="map" parameterType="string">
     	select * from payment where memberno = #{memberNo} and pointplus !=0 or pointminus != 0 ORDER BY PAYDATE DESC
     </select>
-
+    <select id="selectPaymentListNon" resultType="map" parameterType="map">
+    	SELECT * FROM PAYMENT JOIN PAYDETAIL USING(PAYMENTNO) JOIN STOCK USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO) WHERE TYPE='M' AND ORDERNO=#{orderNo}
+    	<if test="status != null">
+			and DETAILSTATUS = #{status}
+		</if>
+    	<if test="deliveryStatus != null">
+			and DELIVERYSTATUS = #{deliveryStatus} AND DETAILSTATUS='결제'
+		</if>
+    	<if test="payStatus != null">
+			and PAYSTATUS = #{payStatus} AND DETAILSTATUS='결제'
+		</if>
+		ORDER BY PAYDATE DESC
+    </select>
+    <select id="selectOrderCheck" parameterType="string" resultType="_int">
+    	SELECT COUNT(*) FROM PAYMENT WHERE ORDERNO=#{value}
+    </select>
+        <select id="selectCntNon" resultType="_int" parameterType="map">
+    	SELECT COUNT(*) FROM PAYDETAIL JOIN PAYMENT USING(PAYMENTNO) WHERE ORDERNO=#{orderNo} AND DETAILSTATUS=#{n}
+    </select>
+    <select id="selectDeliveryCntNon" resultType="_int" parameterType="map">
+    	SELECT COUNT(*) FROM PAYDETAIL JOIN PAYMENT USING(PAYMENTNO) WHERE ORDERNO=#{orderNo} AND deliveryStatus = #{deliveryStatus} AND DETAILSTATUS='결제'
+    </select>
+    <select id="checkNickName" resultType="member" parameterType="string">
+    	SELECT * FROM MEMBER WHERE NICKNAME=#{nickName}
+    </select>
 </mapper>

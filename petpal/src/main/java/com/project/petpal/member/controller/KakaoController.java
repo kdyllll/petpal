@@ -7,13 +7,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.project.petpal.member.model.service.MemberService;
+import com.project.petpal.member.model.vo.KakaoEnrollApi;
 import com.project.petpal.member.model.vo.KakaoLoginApi;
 import com.project.petpal.member.model.vo.Member;
 
 @Controller
+@SessionAttributes("loginMember")
 public class KakaoController {
 	
     @Autowired
@@ -56,7 +59,7 @@ public class KakaoController {
 	 @RequestMapping(value = "/kakaoEnroll", produces = "application/json")
 	    public String kakaoEnroll(@RequestParam("code") String code, Model model, HttpSession session) {        
 	        //카카오 rest api 객체 선언
-	        KakaoLoginApi kr = new KakaoLoginApi();
+	        KakaoEnrollApi kr = new KakaoEnrollApi();
 	        //결과값을 node에 담아줌
 	        JsonNode node = kr.getAccessToken(code);
 	        //결과값 출력
@@ -72,10 +75,17 @@ public class KakaoController {
 	        System.out.println(email);
 	        System.out.println(id);
 	        
-	        model.addAttribute("snsNo",id);
-			model.addAttribute("email",email);
-	  
-			return "회원가입 세부사항 이동 주소";
+	        Member member=service.selectSnsMember(id);
+		       if(member!=null) {//가입되어있으면
+		    	   model.addAttribute("loginMember",member);
+		    	   model.addAttribute("msg","가입되어있는 회원입니다.로그인 되었습니다.");
+		    	   return "common/msg";
+		       }else {
+		    	   model.addAttribute("snsNo",id);
+				   model.addAttribute("email",email);
+				   return "member/addUserInfo";
+		       }
+	        
 
 	  }
 

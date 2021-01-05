@@ -48,7 +48,8 @@
       				</div>
                 </div>
              
-			<div id="dailyCon" class="dailyCon row mt-3">
+			<div id="dailyCon" class="dailyCon mt-3 col-12">
+			 <div class="row col-12">
 				<c:if test="${empty dailyList }">
 					<div class="mx-auto">
 						<p class="">일상 글이 없습니다.</p>
@@ -110,9 +111,12 @@
 		                        </div>
 		                    </div>
 		                </address>
-	               </c:forEach>
-	               <div class="mx-auto my-2">${pageBar }</div>
-               </c:if>
+	               </c:forEach>               
+	               </c:if>
+	              </div>
+	              <div class="mx-auto my-2">${pageBar }</div>
+
+
 	          </div>
 	          
             </div>

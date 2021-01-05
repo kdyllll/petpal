@@ -44,5 +44,9 @@ public interface MemberDao {
    int selectCnt(SqlSession session,Map m);
    int selectDeliveryCnt(SqlSession session, Map m);
    List<Map> selectPointList(SqlSession session, String memberNo);
-
+   List<Map> selectPaymentListNon(SqlSession session,Map m);
+   int selectOrderCheck(SqlSession session,String orderNo);
+   int selectCntNon(SqlSession session,Map m);
+   int selectDeliveryCntNon(SqlSession session, Map m);
+   Member checkNickName(SqlSession session,String nickName);
 }

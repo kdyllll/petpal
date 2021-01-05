@@ -14,40 +14,16 @@
 		<section class="my-5 pt-5">
 			<div class="container-fluid">
 				<div class="container">
-					<h2 class="text-center font-weight-bold" id="title">회원가입</h2>
-					<div class="text-center">
-						<a href="${naverUrl }"><img src="${path }/resources/images/naver.PNG"
-							style="width: 80px; height: 80px;" alt=""></a> <a href="${kakaoUrl }"><img
-							src="${path }/resources/images/kakao.jpg"
-							style="width: 80px; height: 80px;" alt=""></a> <a href="${googleUrl }"><img
-							src="${path }/resources/images/google.png"
-							style="width: 80px; height: 80px;" alt=""></a>
-					</div>
-					<hr>
-					<div class="row">
-
+						<div class="row">
 						<div class="col-md-6 offset-md-3 col-sm-10 offset-sm-1">
 							<form role="form" method="post" enctype="multipart/form-data"
 								action="${path }/member/insertMember.do" id="frm">
 								<fieldset>
-									<p class="text-uppercase pull-center font-weight-bold">기본정보</p>
-									<div class="input-group mb-4">
+									<p class="text-uppercase pull-center font-weight-bold">추가 정보 입력</p>
+									<div class="mb-4">
+										<input value="${snsNo }" type="hidden" name="snsNo">
 										<input type="text" class="form-control input-lg"
-											placeholder="이메일" name="email" id="email">
-										<div class="input-group-append">
-											<button type="button" class="btn btn-secondary">이메일인증</button>
-										</div>
-									</div>
-									<div class="mb-4">
-										<input type="password" name="password" id="password"
-											class="form-control input-lg"
-											placeholder="비밀번호(숫자,문자,특수문자 혼용 8~15글자)">
-										<p id="pw"></p>
-									</div>
-									<div class="mb-4">
-										<input type="password" name="password2" id="password2"
-											class="form-control input-lg" placeholder="비밀번호 확인">
-										<p id="pw2"></p>
+											value="${email }" name="email" id="email" readonly>
 									</div>
 									<div class="mb-4">
 										<input type="text" name="memberName" id="membername"
@@ -172,9 +148,8 @@ input[type="checkbox"]+svg {
 input[type="checkbox"]:checked+svg {
 	color: #00CC00;
 }
-#password{font-family:맑은고딕, Malgun Gothic, dotum, gulim, sans-serif;}
-#password2{font-family:맑은고딕, Malgun Gothic, dotum, gulim, sans-serif;}
 </style>
+
 
 <script>
 	
@@ -222,9 +197,9 @@ input[type="checkbox"]:checked+svg {
 			alert("이름을 입력해주세요.");
 			return;
 		}
-		if(($("#nickName").val().trim())==""){//닉네임이 공백일때
+		if(($("#nickname").val().trim())==""){//닉네임이 공백일때
 			alert("닉네임은 빈칸이거나 공백으로만 할 수 없습니다. 다시 입력해주세요");
-			$("#nickName").val($("#nickName").val().trim());
+			$("#nickname").val($("#nickname").val().trim());
 			return;
 		}
 		if($("#sample6_postcode").val()==""||$("#sample6_address").val()==""||($("#sample6_detailAddress").val()).trim()==""){
@@ -307,8 +282,7 @@ input[type="checkbox"]:checked+svg {
     	previewDiv.remove();//미리보기div삭제
     	$("#hide").show();//미리보기가 삭제되었으니 사진 등록창 보이게
     }); 
-	
-	$(document).on('click','#check',function(e){//닉네임 중복확인
+    $(document).on('click','#check',function(e){//닉네임 중복확인
 		var nickName=$("#nickName").val().trim();
 		if(nickName==""){
 			alert("닉네임을 입력해주세요");
