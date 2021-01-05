@@ -238,6 +238,12 @@ public class StoreServiceImpl implements StoreService{
 		return dao.starList(session);
 	}
 
+	@Override
+	public double selectAvgReview(String productNo) {
+		// TODO Auto-generated method stub
+		return dao.selectAvgReview(session,productNo);
+	}
+
 	
 	
 	

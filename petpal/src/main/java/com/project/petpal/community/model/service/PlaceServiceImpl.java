@@ -124,4 +124,12 @@ public class PlaceServiceImpl implements PlaceService{
 		return result;
 	}
 
+	@Override
+	public List<Map> selectPlaceHeartWeek(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectPlaceHeartWeek(session,cPage,numPerPage);
+	}
+	
+	
+
 }

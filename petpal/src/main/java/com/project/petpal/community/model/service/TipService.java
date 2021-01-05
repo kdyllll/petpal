@@ -14,6 +14,7 @@ public interface TipService {
 	int updateTip(Tip t);
 	List<Map> selectTipListOne(String memberNo);
 	int tipCnt(String memberNo);
+	List<Map> selectTipHeartWeek(int cPage,int numPerPage);
 	int tipDelete(String tipNo);
 	int updateMainImg(TipImg ti);
 	int deleteTipImg(TipImg ti);

@@ -81,11 +81,11 @@
                <%if(r.getReviewComment()!=null){ %>
                <div class="text-right">
                 <c:if test="${loginMember.memberNo eq '63'}">
-                 <a class="replyEdit text-black-50 text-right pb-2 pr-4"  style="font-size: 12px;" style="cursor: pointer;">
+                 <a class="replyEdit text-black-50 text-right pb-2 pr-4"  style="font-size: 14px;" style="cursor: pointer;">
 		                    답글 수정
 		      </a>
                 </c:if>
-                <a class="replyShow text-hgh text-right pb-2" style="font-size: 12px;" style="cursor: pointer;">
+                <a class="replyShow text-hgh text-right pb-2" style="font-size: 14px;" style="cursor: pointer;">
                   <strong>판매자 답글</strong>
                 </a>
             </div> 
@@ -104,9 +104,9 @@
                <%}else{ %>
                <div class="text-right">
                 <c:if test="${loginMember.memberNo eq '63'}">
-                	<a class="replyWrite text-black-50 text-right pb-2 pr-4"  style="font-size: 12px;" style="cursor: pointer;">답글 작성</a>
+                	<a class="replyWrite text-black-50 text-right pb-2 pr-4"  style="font-size: 14px;" style="cursor: pointer;">답글 작성</a>
                 </c:if>
-                <a class="text-black-50 text-right pb-2" style="font-size: 12px;" style="cursor: pointer;"><strong>판매자 답글</strong></a>
+                <a class="text-black-50 text-right pb-2" style="font-size: 14px;" style="cursor: pointer;"><strong>판매자 답글</strong></a>
              </div>
              <form class="replyWriteFrm collapse  mt-2 p-3 pb-0 bg-light rounded text-right" >
                 <div class="form-group">

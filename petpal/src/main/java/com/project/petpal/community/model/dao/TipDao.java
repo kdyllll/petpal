@@ -17,6 +17,7 @@ public interface TipDao {
 	int updateTip(SqlSession session, Tip t);
 	List<Map> selectTipListOne(SqlSession session, String memberNo);
 	int tipCnt(SqlSession session, String memberNo);
+	List<Map> selectTipHeartWeek(SqlSession session,int cPage,int numPerPage);
 	int tipDelete(SqlSession session, String tipNo);
 	int updateMainImg(SqlSession session, TipImg ti);
 	int deleteTipImg(SqlSession session, TipImg ti);

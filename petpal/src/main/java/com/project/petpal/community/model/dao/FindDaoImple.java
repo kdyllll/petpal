@@ -3,6 +3,7 @@ package com.project.petpal.community.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -102,6 +103,13 @@ public class FindDaoImple implements FindDao {
 		return session.insert("find.insertFindLike", m);
 	}
 
+	@Override
+	public List<Map> selectFindHeartWeek(SqlSession session, int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("find.selectFindHeartWeek",null,rb);
+	}
 
+	
 	
 }

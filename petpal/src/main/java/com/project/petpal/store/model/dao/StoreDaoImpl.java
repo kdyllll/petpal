@@ -234,13 +234,14 @@ public class StoreDaoImpl implements StoreDao{
 		// TODO Auto-generated method stub
 		return session.selectList("store.starList");
 	}
-	
-	
-	
-	
+
+	@Override
+	public double selectAvgReview(SqlSession session, String productNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("store.selectAvgReview",productNo);
+	}
 	
 
-	
 	
 	
 

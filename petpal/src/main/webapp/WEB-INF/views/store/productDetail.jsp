@@ -74,7 +74,36 @@
             </p>
             <div class="px-3 pb-2 border-bottom">
               <div class="row mb-3 mx-2 d-flex justify-content-between"> 
-                <a href="#" class="text-dark">★★★☆☆ <c:out value="${reviewCount }"/>개 리뷰</a>
+                <a href="#" class="text-dark align-middle">
+                <fmt:parseNumber var= "su" integerOnly= "true" value= "${reviewAvg }" />
+                <c:forEach begin="0" end="4" varStatus="vs">
+	                <span class="text-hgh box float-left position-relative mr-1" style="width: 25px; height:25px;"> 
+				      <div class="no m-0 p-0 mx-auto position-absolute d-inline" style="top:0;">
+				        <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+				          <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+				        </svg>    
+				      </div>
+				      
+                	<c:choose>
+                		<c:when test="${vs.index lt su}">
+                			<div class="yes  m-0 p-0 mx-auto position-absolute overflow-hidden d-inline" style="top:0; width:100%; height:25px;">
+                		</c:when>
+                		<c:when test="${vs.index eq su }">
+                			<c:set var="percent" value="${(reviewAvg-su)*100 }"/>
+                			<div class="yes  m-0 p-0 mx-auto position-absolute overflow-hidden d-inline" style="top:0; width:${percent}%; height:25px;">
+                		</c:when>
+                		<c:otherwise>
+                			<div class="yes  m-0 p-0 mx-auto position-absolute overflow-hidden d-inline" style="top:0; width:0%; height:25px;">
+                		</c:otherwise>
+                	</c:choose>
+                	
+                		 <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+				          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+				        </svg>
+				      </div>
+				    </span>
+                </c:forEach>
+    		<span class="ml-2 align-middle"><c:out value="${reviewCount }"/>개 리뷰</span></a>
                 <button type="button" class="badge bg-light border-0" id="heart">
                 <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-heart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
@@ -92,7 +121,7 @@
             		</c:if>
             	</c:forEach>
               <div class="row mb-3">
-                <span class="h1 col-3 text-right  text-hgh align-middle"><strong>
+                <span class="col-3 text-right text-hgh align-middle pt-2" style="font-size:40px;"><strong>
                 	<c:out value="${sale }"/>%
                 </strong></span>
                 <span class="col-9">
@@ -111,7 +140,7 @@
               </p>
             </div>
             <div class="px-3 py-3 border-bottom">
-              <p>CJ대한통운<br>
+              <p class="m-0">CJ대한통운<br>
               2,500원 (50,000원 이상 구매시 무료배송) <br>
               </p>              
             </div>
@@ -244,11 +273,41 @@
             <!--리뷰-->
             <div id="review">
               <div class="row d-flex justify-content-between px-3 py-4 mt-5">
-                <p class="h5">
+                <div class="h5 row pl-3">
                   <strong>리뷰</strong> 
                   <span class="text-point pl-3"><c:out value="${reviewCount }"/></span>
-                  <span class="text-hgh pl-3">★★★☆☆</span>
-                </p>
+                  <div class="text-hgh pl-3">
+                   <fmt:parseNumber var= "su" integerOnly= "true" value= "${reviewAvg }" />
+	                <c:forEach begin="0" end="4" varStatus="vs">
+		                <span class="box float-left position-relative mr-1" style="width: 20px; height:20px;"> 
+					      <div class="no m-0 p-0 mx-auto position-absolute d-inline" style="top:0;">
+					        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+					          <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+					        </svg>    
+					      </div>
+					      
+	                	<c:choose>
+	                		<c:when test="${vs.index lt su}">
+	                			<div class="yes  m-0 p-0 mx-auto position-absolute overflow-hidden d-inline" style="top:0; width:100%; height:20px;">
+	                		</c:when>
+	                		<c:when test="${vs.index eq su }">
+	                			<c:set var="percent" value="${(reviewAvg-su)*100 }"/>
+	                			<div class="yes  m-0 p-0 mx-auto position-absolute overflow-hidden d-inline" style="top:0; width:${percent}%; height:20px;">
+	                		</c:when>
+	                		<c:otherwise>
+	                			<div class="yes  m-0 p-0 mx-auto position-absolute overflow-hidden d-inline" style="top:0; width:0%; height:20px;">
+	                		</c:otherwise>
+	                	</c:choose>
+	                	
+	                		 <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+					          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+					        </svg>
+					      </div>
+					    </span>
+	                </c:forEach>
+                  
+				  </div>
+                </div>
                 <button type="button" class="btn btn-link text-black-50" data-toggle="modal" id="reviewBtn" ><strong>리뷰 쓰기</strong></button>
               </div>
               <div id="reviewCon">

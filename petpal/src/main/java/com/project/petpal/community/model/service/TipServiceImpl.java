@@ -70,6 +70,12 @@ public class TipServiceImpl implements TipService {
 	}
 
 	@Override
+	public List<Map> selectTipHeartWeek(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectTipHeartWeek(session,cPage,numPerPage);
+	}
+
+	@Override
 	public int tipDelete(String tipNo) {
 		return dao.tipDelete(session, tipNo);
 	}

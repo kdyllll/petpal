@@ -217,6 +217,13 @@ public class DailyDaoImpl implements DailyDao {
 		return session.selectList("daily.selectDailyFollow",null,rb);
 	}
 
+	@Override
+	public List<Map> selectDailyHeartWeek(SqlSession session, int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("daily.selectDailyHeartWeek",null,rb);
+	}
+
 	
 	
 
