@@ -51,5 +51,5 @@ public interface StoreDao {
 	List<Product> favList(SqlSession session,String memberNo);
 	int deleteFav(SqlSession session,Map fav);
 	List<Product> starList(SqlSession session);
-	
+	double selectAvgReview(SqlSession session,String productNo);
 }

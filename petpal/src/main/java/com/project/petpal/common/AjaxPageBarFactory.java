@@ -49,7 +49,7 @@ public class AjaxPageBarFactory {
 			pageBar+="$.ajaxSettings.traditional = true;";
 			pageBar+="$.ajax({";
 				pageBar+="url:'"+uri+"',";
-				pageBar+="data:{cPage:cPage" +(productNo==null?"":",productNo:"+productNo)+ (memberNo==null?"":",memberNo:"+memberNo)+ (dailyNo==null?"":",dailyNo:'"+dailyNo+"'")+(writeMember==null?"":",writeMember:'"+writeMember+"'")+(sort==null?"":",sort:'"+sort)+"'},";
+				pageBar+="data:{cPage:cPage" +(productNo==null?"":",productNo:'"+productNo+"'")+ (memberNo==null?"":",memberNo:'"+memberNo+"'")+ (dailyNo==null?"":",dailyNo:'"+dailyNo+"'")+(writeMember==null?"":",writeMember:'"+writeMember+"'")+(sort==null?"":",sort:'"+sort+"'")+"},";
 				pageBar+="dataType:'html',";
 				pageBar+="success:(data)=>{";
 				pageBar+="$('"+con+"').html(data);";

@@ -11,19 +11,47 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 	<main role="main" style="min-height: 100vh;">
-		<div class="album bg-light">
+		<div class="album">
 			<div class="container my-4 mt-lg-0">
 				<div class="row ">
 					<jsp:include page="/WEB-INF/views/common/communityNav.jsp" >
 						<jsp:param value="comHome" name="comNav"/>
 					</jsp:include>
+					
+					<!-- 배너 -->
+						<div id="carouselExampleIndicators" class="carousel slide mb-5 rounded col-10" data-ride="carousel">
+							<ol class="carousel-indicators">
+								<li data-target="#carouselExampleIndicators" data-slide-to="0"
+									class="active"></li>
+								<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+							</ol>
+							<div class="carousel-inner" role="listbox">
+								<div class="carousel-item active">
+									<img class="d-block img-fluid rounded" src="${path }/resources/images/banner.jpg"
+										alt="First slide" style=" width: 100%">
+								</div>
+								<div class="carousel-item">
+									<img class="d-block img-fluid rounded" src="${path }/resources/images/banner2.jpg"
+										alt="Second slide" style="width: 100%">
+								</div>
+							</div>
+							<a class="carousel-control-prev"
+								href="#carouselExampleIndicators" role="button"
+								data-slide="prev"> <span class="carousel-control-prev-icon"
+								aria-hidden="true"></span> <span class="sr-only">Previous</span>
+							</a> <a class="carousel-control-next"
+								href="#carouselExampleIndicators" role="button"
+								data-slide="next"> <span class="carousel-control-next-icon"
+								aria-hidden="true"></span> <span class="sr-only">Next</span>
+							</a>
+						</div>
+					
+					
 					<div class="form-inline container text-center mb-3">
-						<h3>커뮤니티 메인 리스트</h3>
+						<h3>인기 사진</h3>
 					</div>
 
-					<div class="col-xl-3 col-lg-4 col-md-6" style="cursor: pointer"
-						id="img"
-						onclick="location.replace('${path}/community/tipDetail.do')">
+					<div class="col-xl-3 col-lg-4 col-md-6" style="cursor: pointer"	onclick="location.replace('${path}/community/tipDetail.do')">
 						<div class="card mb-4 bg-transparent border-0">
 							<div class="test">
 								<img src="${path }/resources/images/test.jpg" id="scale"

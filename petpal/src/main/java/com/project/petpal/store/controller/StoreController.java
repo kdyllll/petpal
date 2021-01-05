@@ -70,6 +70,9 @@ public class StoreController {
 		int reviewCount=service.totalReviewCount(productNo);
 		int qnaCount=service.totalQnaCount(productNo);
 		
+		//리뷰 평균 점수
+		double reviewAvg=service.selectAvgReview(productNo);
+		
 		m.addAttribute("product",p);
 		m.addAttribute("imgs",pImg);
 		m.addAttribute("stockList",stockList);
@@ -77,7 +80,7 @@ public class StoreController {
 		m.addAttribute("dailyList",dailyList);
 		m.addAttribute("reviewCount",reviewCount);
 		m.addAttribute("qnaCount",qnaCount);
-	
+		m.addAttribute("reviewAvg",reviewAvg);
 		return "store/productDetail";
 	}
 	@RequestMapping("/store/moveCategory.do")//카테고리별 상품리스트로 이동하는 서블릿
