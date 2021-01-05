@@ -11,4 +11,10 @@ public interface NoticeService {
 	List<Map> noticeList();
 	List<Map> noticeMainList(String noticeNo);
 	List<Map> noticeImgList(String noticeNo);
+	
+	int updateNotice(Notice n);
+	int noticeDelete(String tipNo);
+	int deleteNoticeImg(NoticeImg ni);
+	int insertSubImgs(List<NoticeImg> ni);
+	int updateContent(NoticeImg ni);
 }

@@ -14,4 +14,9 @@ public interface NoticeDao {
 	List<Map> noticeList(SqlSession session);
 	List<Map> noticeMainList(SqlSession session, String noticeNo);
 	List<Map> noticeImgList(SqlSession session, String noticeNo);
+	int updateNotice(SqlSession session, Notice n);
+	int noticeDelete(SqlSession session, String noticeNo);
+	int deleteNoticeImg(SqlSession session, NoticeImg ni);
+	int insertSubImgs(SqlSession session, NoticeImg ni);
+	int updateContent(SqlSession session, NoticeImg ni);
 }
