@@ -118,4 +118,12 @@ public class FindServiceImple implements FindService {
 		// TODO Auto-generated method stub
 		return dao.insertFindLike(session,m);
 	}
+
+	@Override
+	public List<Map> selectFindHeartWeek(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectFindHeartWeek(session,cPage,numPerPage);
+	}
+	
+	
 }

@@ -31,5 +31,12 @@
 	<select id="tipCnt" resultType="_int" parameterType="string">
 		select count(*) from member join tip using(memberNo) where memberNo = #{memberNo}
 	</select>
+	<select id="selectTipHeartWeek" resultType="map">
+		SELECT TIPNO,TITLE,MAINIMG,COUNT(HEARTMEMBERNO) AS HEARTCOUNT
+  		FROM TIP LEFT JOIN TIPLIKE USING(TIPNO) LEFT JOIN TIPIMG USING(TIPNO)
+  		WHERE FLOOR(SYSDATE-ENROLLDATE)<![CDATA[<]]>14 AND MAINIMG IS NOT NULL
+  		GROUP BY (TIPNO,TITLE,ENROLLDATE,MAINIMG) 
+  		ORDER BY HEARTCOUNT DESC, ENROLLDATE DESC
+	</select>
 	
 </mapper>

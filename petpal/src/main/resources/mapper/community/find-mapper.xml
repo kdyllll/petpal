@@ -39,7 +39,7 @@
 		UPDATE FIND SET CATE=#{cate}, TITLE=#{title}, CONTENT=#{content}, ADDRESS=#{address} WHERE FINDNO = #{findNo}
 	</update>
 	<select id="selectFindLike" resultType="string" parameterType="string">
-		select FINDNO from FINDLIKE WHERE MEMBERNO=#{memberNo}
+		select FINDNO from FINDLIKE WHERE HEARTMEMBERNO=#{memberNo}
 	</select>
 	<delete id="deleteFindLike" parameterType="string">
 		DELETE FROM FINDLIKE WHERE FINDNO=#{findNo}
@@ -47,4 +47,11 @@
 	<insert id="insertFindLike" parameterType="map">
 		INSERT INTO FINDLIKE VALUES(#{findNo}, #{memberNo})
 	</insert>
+	<select id="selectFindHeartWeek" resultType="map">
+		SELECT FINDNO,ADDRESS,TITLE,FILENAME,ENROLLDATE,IMGSTATUS, COUNT(HEARTMEMBERNO) AS HEARTCOUNT
+  		FROM FIND LEFT JOIN FINDLIKE USING(FINDNO) LEFT JOIN FINDIMG USING(FINDNO)
+        WHERE FLOOR(SYSDATE-ENROLLDATE)<![CDATA[<]]>14 AND IMGSTATUS='M'
+  		GROUP BY (FINDNO,ADDRESS,TITLE,FILENAME,ENROLLDATE,IMGSTATUS)
+  		ORDER BY HEARTCOUNT DESC, ENROLLDATE DESC
+	</select>
 </mapper>

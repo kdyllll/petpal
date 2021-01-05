@@ -79,4 +79,11 @@ public class TipServiceImpl implements TipService {
 		return dao.tipCnt(session, memberNo);
 	}
 
+	@Override
+	public List<Map> selectTipHeartWeek(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectTipHeartWeek(session,cPage,numPerPage);
+	}
+
+	
 }

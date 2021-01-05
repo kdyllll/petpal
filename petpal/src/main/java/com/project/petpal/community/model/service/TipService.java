@@ -14,4 +14,5 @@ public interface TipService {
 	int updateTip(Tip t, List<TipImg> files);
 	List<Map> selectTipListOne(String memberNo);
 	int tipCnt(String memberNo);
+	List<Map> selectTipHeartWeek(int cPage,int numPerPage);
 }

@@ -90,4 +90,13 @@ public class PlaceDaoImpl implements PlaceDao{
 		return session.delete("place.deleteHashtag",placeNo);
 	}
 
+	@Override
+	public List<Map> selectPlaceHeartWeek(SqlSession session, int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("place.selectPlaceHeartWeek",null,rb);
+	}
+	
+	
+
 }
