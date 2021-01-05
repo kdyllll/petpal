@@ -26,62 +26,26 @@
 				class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-5 "
 				style="height: 100vh; overflow-y: auto;">
 				<h2 class="my-3">회원정보</h2>
-				<div class="row align-items-center">
+				<form  method="post" action="${path }/admin/searchMember.do" class="row align-items-center">
 					<div class="mb-3  col-lg-2">
 						<label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
-						<select class="custom-select mr-sm-2" id="searchType">
-							<option selected value="userEmail">이메일</option>
-							<option value="userName">이름</option>
-							<option value="userPhone">전화번호</option>
-							<option value="userOrderNum">주문번호</option>
+						<select class="custom-select mr-sm-2" name="searchType">
+							<option selected value="EMAIL">이메일</option>
+							<option value="MEMBERNAME">이름</option>
+							<option value="PHONE">전화번호</option>
+							<option value="ADDRESS">주소</option>
 						</select>
 					</div>
-					<form id="search-userEmail" class="input-group mb-3  col-lg-5">
-						<input type="hidden" name="searchType" value="userEmail">
+					<div class="input-group mb-3  col-lg-5">
 						<input type="text" class="form-control input-group-sm"
-							name="searchKeyword" placeholder="이메일을 입력해주세요">
+							name="keyword" placeholder="이메일을 입력해주세요">
 						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" type="button"
+							<button class="btn btn-outline-secondary" type="submit"
 								id="button-addon2">Button</button>
 						</div>
-					</form>
-					<form id="search-userName"
-						class="input-group mb-3  col-lg-5 d-none">
-
-						<input type="hidden" name="searchType" value="userName"> <input
-							type="text" class="form-control input-group-sm"
-							name="searchKeyword" placeholder="이름을 입력해주세요">
-						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" type="button"
-								id="button-addon2">Button</button>
-						</div>
-
-					</form>
-					<form id="search-userPhone"
-						class="input-group mb-3  col-lg-5 d-none">
-
-						<input type="hidden" name="searchType" value="userPhone">
-						<input type="text" class="form-control input-group-sm"
-							name="searchKeyword" placeholder="전화번호를 입력해주세요">
-						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" type="button"
-								id="button-addon2">Button</button>
-						</div>
-
-					</form>
-					<form id="search-userOrderNum"
-						class="input-group mb-3  col-lg-5 d-none">
-
-						<input type="hidden" name="searchType" value="userOrderNum">
-						<input type="text" class="form-control input-group-sm"
-							name="searchKeyword" placeholder="주문번호를 입력해주세요">
-						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" type="button"
-								id="button-addon2">Button</button>
-						</div>
-
-					</form>
-				</div>
+					</div>
+					
+				</form>
 
 				<div class="table-responsive" style="min-height: 80vh;">
 					<table class="table mb-5">
@@ -130,26 +94,6 @@
 			<div class="orderModal"></div>
 		</div>
 	</div>
-	<script>
-    $(function(){
-        let userEmail = $("#search-userEmail");
-        let userName = $("#search-userName");
-        let userPhone = $("#search-userPhone");
-        let userOrderNum = $("#search-userOrderNum");
-        $("#searchType").on("change", e => {
-            userEmail.addClass("d-none");
-            userName.addClass("d-none");
-            userPhone.addClass("d-none");
-            userOrderNum.addClass("d-none");
 
-            let target = $(e.target).val();
-            $("#search-"+target).removeClass("d-none");
-        });
-        $("#searchType").change();
-        
-    })
-
-
-</script>
 </body>
 </html>
