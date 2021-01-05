@@ -10,8 +10,11 @@
 	<insert id="insertFindPic" parameterType="findImg">
 		INSERT INTO FINDIMG VALUES(SEQ_FINDIMGNO.NEXTVAL,#{findNo},#{fileName},#{imgStatus})
 	</insert>
-	<select id="selectFindList" resultType="map">
+	<select id="selectFindList" resultType="map" parameterType="map">
 		SELECT * FROM FIND JOIN FINDIMG USING(FINDNO) JOIN MEMBER USING(MEMBERNO) WHERE IMGSTATUS = 'M' AND STATUS='N' 
+		<if test="cate != null">
+			AND CATE=#{cate}
+		</if>
 	</select>
 	
 	   <select id="selectFindListOne" parameterType="string" resultType="map" >

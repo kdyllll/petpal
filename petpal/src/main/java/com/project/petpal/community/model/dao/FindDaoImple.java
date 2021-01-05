@@ -31,9 +31,9 @@ public class FindDaoImple implements FindDao {
 	}
 
 	@Override
-	public List<Map> selectFindList(SqlSession session) {
+	public List<Map> selectFindList(SqlSession session,Map map) {
 		// TODO Auto-generated method stub
-		return session.selectList("find.selectFindList");
+		return session.selectList("find.selectFindList", map);
 	}
 	
 	@Override

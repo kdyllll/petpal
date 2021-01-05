@@ -19,7 +19,7 @@
     		<p><c:out value="${member.NICKNAME }" /></p>
     		<c:choose>
 		    	<c:when test="${not empty member.IMG }"><img src="${path }/resources/upload/member/profile/${member.IMG}" style="width:45%;"></c:when>
-		    	<c:otherwise><img src="${path }/resources/upload/member/profile/avatar.webp"></c:otherwise>
+		    	<c:otherwise><img src="${path }/resources/upload/member/profile/avatar.webp" style="width:45%;"></c:otherwise>
 	    	</c:choose>
 	    	<p class="mt-2"><c:out value="${member.EMAIL }"/></p>
 	    	<c:if test="${not empty member.INFO }">	 
@@ -30,13 +30,13 @@
 		<div style="width:100%; height:1px; background-color:#ced6e0;" class="my-3"></div>
     	<div class="row d-flex justify-content-around mt-4">
     		<div class="d-flex flex-column align-items-center">
-    	 	 	<a href="#">좋아요</a><p><c:out value="${fav }" /></p>
+    	 	 	<a href="#" class="text-dark">좋아요</a><p><c:out value="${fav }" /></p>
     	 	 </div >
     	 	 <div class="d-flex flex-column align-items-center">
-	   		 	<a href="#">팔로우</a><p><c:out value="${follow }" /></p>
+	   		 	<a href="#" class="text-dark">팔로우</a><p><c:out value="${follow }" /></p>
 	   		 </div>
 	   		 <div class="d-flex flex-column align-items-center">
-	   		 	<span>포인트</span><p><c:out value="${member.POINT }" /></p>
+	   		 	<a href="${path }/member/myPageShop.do" class="text-dark">포인트</a><p><c:out value="${member.POINT }" /></p>
 	   		 </div>
     	</div>  
     </div>
@@ -48,7 +48,7 @@
          <c:when test="${not empty dList}">
         <c:forEach var="d" items="${dList }">      
         <div class="media text-muted pt-3">
-          <a href="#"><img class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="${path }/resources/upload/daily/${d.FILENAME}" /></a>
+          <a href="#"><img class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="${path }/resources/upload/community/daily/${d.DAILYIMGNAME}" /></a>
           <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <div class="d-flex justify-content-between align-items-center w-100">
               <strong class="text-gray-dark"><c:out value="${d.CONTENT }"/></strong>
@@ -124,7 +124,9 @@
       <div class="mb-3 pb-3 px-3 bg-white rounded shadow-sm">
       	<div class="border-bottom border-gray pb-2 pt-3 mb-0 d-flex justify-content-between align-items-center" >
         <span >찾아주세요 <c:out default="0" value="${findCnt }"/></span>
+        <c:if test="${not empty fList }">
         <a href="${path }/daily/moveWrite.do" class="text-muted">글작성하기</a>
+        </c:if>
         </div>
         <c:choose>
          <c:when test="${not empty fList}">

@@ -12,7 +12,9 @@
    <link href="${path }/resources/css/member/login.css" rel="stylesheet">
  
 </head>
-
+<style>
+#inputPassword{font-family:맑은고딕, Malgun Gothic, dotum, gulim, sans-serif;}
+</style>
 <body class="bg-white">
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" />

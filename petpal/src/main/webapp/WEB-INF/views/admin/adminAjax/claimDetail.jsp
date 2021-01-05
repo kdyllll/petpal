@@ -27,7 +27,18 @@
 					<c:out value="${claim.EMAIL }" />
 				</p>
 				<span style="font-size: 16px; font-weight: 600;">내용</span>
-				<a class=" text-end" href="#">( 신고 글 보러가기 )</a>
+				<c:if test="${fn:substring(claim.POSTNO,0,1) eq 'F' }">
+					<a class=" text-end" href="${path }/community/findDetail.do?findNo=${claim.POSTNO}">( 신고 글 보러가기 )</a>
+				</c:if>
+				<c:if test="${fn:substring(claim.POSTNO,0,1) eq 'D' }">
+					<a class=" text-end" href="${path }/daily/moveDetail.do?dailyNo=${claim.POSTNO}">( 신고 글 보러가기 )</a>
+				</c:if>
+				<c:if test="${fn:substring(claim.POSTNO,0,1) eq 'T' }">
+					<a class=" text-end" href="${path }/community/tipDetail.do?tipNo=${claim.POSTNO}">( 신고 글 보러가기 )</a>
+				</c:if>
+				<c:if test="${fn:substring(claim.POSTNO,0,1) eq 'P' }">
+					<a class=" text-end" href="${path }/place/movePlaceDetail.do?placeNo=${claim.POSTNO}">( 신고 글 보러가기 )</a>
+				</c:if>
 				<p class="mt-3" >
 					<c:out value="${claim.CONTENT }" />
 				</p>

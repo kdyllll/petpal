@@ -100,7 +100,7 @@
 							<c:forEach var="c" items="${mList }">	
 							<tr>
 								<th scope="row" class="align-middle text-center"><c:out value="${c.MEMBERNAME }" /></th>
-								<th scope="row" class="align-middle text-center"><a href="#"><c:out value="${c.EMAIL }"/></a></th>
+								<th scope="row" class="align-middle text-center"><a href="${path }/user/moveUserInfo.do?memberNo=${c.MEMBERNO}"><c:out value="${c.EMAIL }"/></a></th>
 								<td class="align-middle text-center"><c:out value="${c.PHONE }"/></td>
 								<td class="align-middle text-center"><c:out value="${c.ADDRESS }" /></td>
 								<td class="align-middle text-center"><c:out value="${c.NICKNAME }"/></td>
