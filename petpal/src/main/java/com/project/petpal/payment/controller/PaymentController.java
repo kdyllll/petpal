@@ -37,13 +37,14 @@ public class PaymentController {
 	@RequestMapping("/payment/payment.do")
 	public ModelAndView payment(ModelAndView mv, HttpServletRequest request, HttpServletResponse response, HttpSession session,
 								String memberNo,
-								@RequestParam(value="productName") String[] productName,
-								@RequestParam(value="size") String[] size,
-								@RequestParam(value="color") String[] color,
-								@RequestParam(value="count") int[] count,
-								@RequestParam(value="price") int[] price,
+								@RequestParam(value="productName", required=false) String[] productName,
+								@RequestParam(value="size", required=false) String[] size,
+								@RequestParam(value="color", required=false) String[] color,
+								@RequestParam(value="count", required=false) int[] count,
+								@RequestParam(value="cnt", required=false) int[] cnt,
+								@RequestParam(value="price", required=false) int[] price,
 								@RequestParam(value="stockNo") String[] stockNo,
-								@RequestParam(value="click") String[] click) {
+								@RequestParam(value="click", required=false) String[] click) {
 		
 		//총 상품 금액
 		int totalProduct = 0;
@@ -51,11 +52,31 @@ public class PaymentController {
 		int totalPrice = 0;
 		//배송비
 		int fee = 0;
+		int pprice = 0;
+		int pcount = 0;
+		String pproductName = "";
+		String psize = "";
+		String pcolor = "";
+		String pstockno = "";
 		
-		//상품이 체크되어있는지 확인. check상태면 click==1, 아니면 click==0. click이 1인 애를 찾아서 수량에 따라 상품 값 계산 후 총 상품 금액에 더해줌 
-		for(int i=0;i<price.length;i++) {
-			if(click[i].equals("1")) {
-				totalProduct = totalProduct + (count[i] * price[i]);
+		//cnt는 바로구매에서 넘어오는 수량
+		if(productName==null) {
+			System.out.println(stockNo[0]);
+			System.out.println(cnt[0]);
+			List<Map> list = service.selectProduct(stockNo[0]);
+			pprice = Integer.parseInt(String.valueOf(list.get(0).get("PRICE")));
+			pcount = cnt[0];
+			pcolor = String.valueOf(list.get(0).get("COLOR"));
+			pproductName = String.valueOf(list.get(0).get("PRODUCTNAME"));
+			psize = String.valueOf(list.get(0).get("PRODUCTSIZE"));
+			pstockno = stockNo[0];
+			totalProduct = totalProduct + (pcount * pprice);
+		}else {
+			//상품이 체크되어있는지 확인. check상태면 click==1, 아니면 click==0. click이 1인 애를 찾아서 수량에 따라 상품 값 계산 후 총 상품 금액에 더해줌 
+			for(int i=0;i<price.length;i++) {
+				if(click[i].equals("1")) {
+					totalProduct = totalProduct + (count[i] * price[i]);
+				}
 			}
 		}
 		
@@ -73,19 +94,32 @@ public class PaymentController {
 		//Cart 객체 생성
 		Cart c = Cart.builder().build();
 		
-		//각 조건에 따라 Cart 객체에 데이터 추가 후 list에 추가
-		for(int i=0; i<count.length;i++) {
-			if(click[i].equals("1")) {
-				if(size.length==0 && color.length!=0) {
-					c = Cart.builder().productName(productName[i]).color(color[i]).count(count[i]).price(count[i] * price[i]).fee(fee).totalProduct(totalProduct).totalPrice(totalPrice).stockNo(stockNo[i]).build();
-				}else if(size.length!=0 && color.length==0) {
-					c = Cart.builder().productName(productName[i]).productSize(size[i]).count(count[i]).price(count[i] * price[i]).fee(fee).totalProduct(totalProduct).totalPrice(totalPrice).stockNo(stockNo[i]).build();
+		//cnt는 바로구매에서 넘어오는 수량
+				if(productName==null) {
+					//각 조건에 따라 Cart 객체에 데이터 추가 후 list에 추가
+					if(psize==null) {
+						c = Cart.builder().productName(pproductName).color(pcolor).count(pcount).price(pcount * pprice).fee(fee).totalProduct(totalProduct).totalPrice(totalPrice).stockNo(pstockno).build();
+					}else if(pcolor==null) {
+						c = Cart.builder().productName(pproductName).productSize(psize).count(pcount).price(pcount * pprice).fee(fee).totalProduct(totalProduct).totalPrice(totalPrice).stockNo(pstockno).build();
+					}else {
+						c = Cart.builder().productName(pproductName).productSize(psize).color(pcolor).count(pcount).price(pcount * pprice).fee(fee).totalProduct(totalProduct).totalPrice(totalPrice).stockNo(pstockno).build();
+					}
+					list.add(c);
 				}else {
-					c = Cart.builder().productName(productName[i]).productSize(size[i]).color(color[i]).count(count[i]).price(count[i] * price[i]).fee(fee).totalProduct(totalProduct).totalPrice(totalPrice).stockNo(stockNo[i]).build();
+					//각 조건에 따라 Cart 객체에 데이터 추가 후 list에 추가
+					for(int i=0; i<count.length;i++) {
+						if(click[i].equals("1")) {
+							if(size.length==0 && color.length!=0) {
+								c = Cart.builder().productName(productName[i]).color(color[i]).count(count[i]).price(count[i] * price[i]).fee(fee).totalProduct(totalProduct).totalPrice(totalPrice).stockNo(stockNo[i]).build();
+							}else if(size.length!=0 && color.length==0) {
+								c = Cart.builder().productName(productName[i]).productSize(size[i]).count(count[i]).price(count[i] * price[i]).fee(fee).totalProduct(totalProduct).totalPrice(totalPrice).stockNo(stockNo[i]).build();
+							}else {
+								c = Cart.builder().productName(productName[i]).productSize(size[i]).color(color[i]).count(count[i]).price(count[i] * price[i]).fee(fee).totalProduct(totalProduct).totalPrice(totalPrice).stockNo(stockNo[i]).build();
+							}
+							list.add(c);
+						}
+					}
 				}
-				list.add(c);
-			}
-		}
 	
 		//jsp에 보낼 list
 		mv.addObject("list", list);

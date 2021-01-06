@@ -31,4 +31,7 @@
 	<select id="selectAddress" parameterType="string" resultType="map">
 		SELECT EMAIL, MEMBERNAME, PHONE, ADDRESS FROM MEMBER WHERE MEMBERNO = #{memberNo}
 	</select>
+	<select id="selectProduct" parameterType="string" resultType="map">
+		SELECT * FROM STOCK JOIN PRODUCT USING(PRODUCTNO) WHERE STOCKNO = #{stockNo}
+	</select>
 </mapper>
