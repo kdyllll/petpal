@@ -66,21 +66,7 @@
 			</a>
 		</article>
 		<article class="homeContainer mt-3">
-			<p class="text-center">PETPAL 고객님을 위한 혜택</p>
-			<aside id="carouselExampleDark"
-				class="carousel carousel-dark slide my-5" data-ride="carousel">
-
-				<div class="carousel-inner border border-1" role="listbox">
-					<div class="carousel-item active bg-light">
-						<p style="width: 100%; height: 40px;">여기다가 뭘 넣을까아
-						<p>
-					</div>
-					<div class="carousel-item bg-light">
-						<p style="width: 100%; height: 40px;">여기다 뭘 넣지
-						<p>
-					</div>
-				</div>
-			</aside>
+			
 			<!-- 올리에서 베스트 아이템 -->
 			<p class="text-center mb-5" style="font-size: 25px;">
 				<strong>PETPAL BEST 아이템</strong>
@@ -93,7 +79,7 @@
 						<span><strong>BEST</strong></span>
 						<div class="position-relative" style="background-color: #f4eeed;">
 							<a href="#" style="width: 100%;"> <img
-								src="${path }/resources/images/test2.jpg" alt="..."
+								src="${path }/resources/images/test/aa.jpg" alt="..."
 								class="card-img-top">
 							</a>
 							<div class="position-absolute" style="bottom: 0; left: 5px;">
@@ -112,7 +98,7 @@
 						<span><strong>BEST</strong></span>
 						<div class="position-relative" style="background-color: #f4eeed;">
 							<a href="#" style="width: 100%;"> <img
-								src="${path }/resources/images/test2.jpg" alt="..."
+								src="${path }/resources/images/test/aa.jpg" alt="..."
 								class="card-img-top">
 							</a>
 							<div class="position-absolute" style="bottom: 0; left: 5px;">
@@ -131,7 +117,7 @@
 						<span><strong>BEST</strong></span>
 						<div class="position-relative" style="background-color: #f4eeed;">
 							<a href="#" style="width: 100%;"> <img
-								src="${path }/resources/images/test2.jpg" alt="..."
+								src="${path }/resources/images/test/aa.jpg" alt="..."
 								class="card-img-top">
 							</a>
 							<div class="position-absolute" style="bottom: 0; left: 5px;">
@@ -150,7 +136,7 @@
 						<span><strong>BEST</strong></span>
 						<div class="position-relative" style="background-color: #f4eeed;">
 							<a href="#" style="width: 100%;"> <img
-								src="${path }/resources/images/test2.jpg" alt="..."
+								src="${path }/resources/images/test/aa.jpg" alt="..."
 								class="card-img-top">
 							</a>
 							<div class="position-absolute" style="bottom: 0; left: 5px;">
@@ -175,7 +161,7 @@
 					class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 g-4">
 					<div class="col mb-4">
 						<div class="card h-100 border-0 " style="overflow: hidden;">
-							<a href="#"> <img src="${path }/resources/images/test2.jpg"
+							<a href="#"> <img src="${path }/resources/images/test/aa.jpg"
 								alt="..." class="card-img-top">
 							</a>
 							<div class="card-body">
@@ -193,7 +179,7 @@
 					</div>
 					<div class="col mb-4">
 						<div class="card h-100 border-0 " style="overflow: hidden;">
-							<a href="#"> <img src="${path }/resources/images/test2.jpg"
+							<a href="#"> <img src="${path }/resources/images/test/aa.jpg"
 								alt="..." class="card-img-top">
 							</a>
 							<div class="card-body">
@@ -211,7 +197,7 @@
 					</div>
 					<div class="col mb-4">
 						<div class="card h-100 border-0 " style="overflow: hidden;">
-							<a href="#"> <img src="${path }/resources/images/test2.jpg"
+							<a href="#"> <img src="${path }/resources/images/test/aa.jpg"
 								alt="..." class="card-img-top">
 							</a>
 							<div class="card-body">
@@ -229,7 +215,7 @@
 					</div>
 					<div class="col mb-4">
 						<div class="card h-100 border-0 " style="overflow: hidden;">
-							<a href="#"><img src="${path }/resources/images/test2.jpg"
+							<a href="#"><img src="${path }/resources/images/test/aa.jpg"
 								alt="..." class="card-img-top"> </a>
 							<div class="card-body">
 								<p class="card-text " style="font-size: 12px;">안그래도 귀여운 울애기
@@ -250,7 +236,7 @@
 						<div class="col-12">
 							<div class="row align-items-center">
 								<div class="col-4 col-md-2 d-flex justify-content-start">
-									<img src="${path }/resources/images/test2.jpg"
+									<img src="${path }/resources/images/test/aa.jpg"
 										style="width: 100px; border-radius: 20%;">
 								</div>
 								<div class="col-8 col-md-8 ">
@@ -271,7 +257,7 @@
 						<div class="col-12">
 							<div class="row align-items-center">
 								<div class="col-4 col-md-2 d-flex justify-content-start">
-									<img src="${path }/resources/images/test2.jpg"
+									<img src="${path }/resources/images/test/aa.jpg"
 										style="width: 100px; border-radius: 20%;">
 								</div>
 								<div class="col-8 col-md-8 ">
@@ -297,7 +283,7 @@
 					<div class="col-12">
 						<div class="row align-items-center">
 							<div class="col-4  d-flex justify-content-start">
-								<img src="${path }/resources/images/test2.jpg"
+								<img src="${path }/resources/images/test/aa.jpg"
 									style="width: 100%; height:200px;">
 							</div>
 							<div class="col-8  ">
@@ -308,13 +294,13 @@
 								<span class="pt-3 text-muted mr-3" style="font-size: 13px;">2020.12.25</span> <span class="pt-3 text-muted" style="font-size: 13px;">daye***</span>
 								<div class="row mt-3">
 									<div class="col-4 ">
-										<img src="${path }/resources/images/test2.jpg"
+										<img src="${path }/resources/images/test/aa.jpg"
 									style="width: 50px; border-radius:50%;">
 										<span class="mr-2" style="font-size: 14px;">강아지패딩</span>
 										<span class="text-danger" style="font-size: 13px;">9,700원</span>
 									</div>
 									<div class="col-4 ">
-										<img src="${path }/resources/images/test2.jpg"
+										<img src="${path }/resources/images/test/aa.jpg"
 									style="width: 50px; border-radius:50%;">
 										<span class="mr-2" style="font-size: 14px;">강아지패딩</span>
 										<span class="text-danger" style="font-size: 13px;">9,700원</span>
@@ -332,7 +318,7 @@
 					<div class="col-12">
 						<div class="row align-items-center">
 							<div class="col-4  d-flex justify-content-start">
-								<img src="${path }/resources/images/test2.jpg"
+								<img src="${path }/resources/images/test/aa.jpg"
 									style="width: 100%; height:200px;">
 							</div>
 							<div class="col-8  ">
@@ -343,13 +329,13 @@
 								<span class="pt-3 text-muted mr-3" style="font-size: 13px;">2020.12.25</span> <span class="pt-3 text-muted" style="font-size: 13px;">daye***</span>
 								<div class="row mt-3">
 									<div class="col-4 ">
-										<img src="${path }/resources/images/test2.jpg"
+										<img src="${path }/resources/images/test/aa.jpg"
 									style="width: 50px; border-radius:50%;">
 										<span class="mr-2" style="font-size: 14px;">강아지패딩</span>
 										<span class="text-danger" style="font-size: 13px;">9,700원</span>
 									</div>
 									<div class="col-4 ">
-										<img src="${path }/resources/images/test2.jpg"
+										<img src="${path }/resources/images/test/aa.jpg"
 									style="width: 50px; border-radius:50%;">
 										<span class="mr-2" style="font-size: 14px;">강아지패딩</span>
 										<span class="text-danger" style="font-size: 13px;">9,700원</span>
