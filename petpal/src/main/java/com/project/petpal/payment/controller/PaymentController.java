@@ -126,6 +126,9 @@ public class PaymentController {
 		
 		//로그인 상태면
 		if((Member)session.getAttribute("loginMember")!=null) {
+			Member loginMember=(Member)session.getAttribute("loginMember");
+			memberNo = loginMember.getMemberNo();
+			
 			//회원의 포인트를 받아와서 포인트와 회원번호를 보내줌
 			int point = service.selectPoint(memberNo);
 			mv.addObject("point", point);
