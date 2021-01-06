@@ -11,7 +11,7 @@
   <jsp:include page="/WEB-INF/views/common/myPageNav.jsp" >
   	<jsp:param name="mpNav" value="profile"/>
   </jsp:include>
-  <div class="row py-3 justify-content-between">
+  <div class="row py-3 justify-content-between profileAll" style="min-height: 100vh;">
   <c:if test ="${member != null }"> 
     <div class="col-lg-4 rounded shadow-sm py-3" style=" height: 430px;">
     <!-- 프로필부분,사진,닉네임,팔로우,팔로잉, 좋아요, 적립금, -->
@@ -29,8 +29,9 @@
     	</div>
 		<div style="width:100%; height:1px; background-color:#ced6e0;" class="my-3"></div>
     	<div class="row d-flex justify-content-around mt-4">
+    		<input type="hidden" name="memberNo" value="${member.MEMBERNO }" class="memberNo" />
     		<div class="d-flex flex-column align-items-center">
-    	 	 	<a href="#" class="text-dark">좋아요</a><p><c:out value="${fav }" /></p>
+    	 	 	<button type="button" class="text-dark likeBtn" style="background:none; border:none; outline:none;">좋아요</button><p><c:out value="${fav }" /></p>
     	 	 </div >
     	 	 <div class="d-flex flex-column align-items-center">
 	   		 	<a href="#" class="text-dark">팔로우</a><p><c:out value="${follow }" /></p>
@@ -48,7 +49,7 @@
          <c:when test="${not empty dList}">
         <c:forEach var="d" items="${dList }">      
         <div class="media text-muted pt-3">
-          <a href="#"><img class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="${path }/resources/upload/community/daily/${d.DAILYIMGNAME}" /></a>
+          <a href="${path }/daily/moveDetail.do?dailyNo=${d.DAILYNO}"><img class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="${path }/resources/upload/community/daily/${d.DAILYIMGNAME}" /></a>
           <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <div class="d-flex justify-content-between align-items-center w-100">
               <strong class="text-gray-dark"><c:out value="${d.CONTENT }"/></strong>
@@ -74,7 +75,7 @@
          <c:when test="${not empty tList}">
         <c:forEach var="t" items="${tList }">      
         <div class="media text-muted pt-3">
-          <a href="#"><img class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="${path }/resources/upload/tip/${t.MAINIMG}" /></a>
+          <a href="${path }/community/tipDetail.do?tipNo=${t.TIPNO}"><img class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="${path }/resources/upload/tip/${t.MAINIMG}" /></a>
           <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <div class="d-flex justify-content-between align-items-center w-100">
               <strong class="text-gray-dark"><c:out value="${t.TITLE }"/></strong>
@@ -100,7 +101,7 @@
          <c:when test="${not empty pList}">
         <c:forEach var="p" items="${pList }">      
         <div class="media text-muted pt-3">
-          <a href="#"><img class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="${path }/resources/upload/place/${p.FILENAME}" /></a>
+          <a href="${path }/place/movePlaceDetail.do?placeNo=${p.PLACENO}"><img class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="${path }/resources/upload/place/${p.FILENAME}" /></a>
           <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <div class="d-flex justify-content-between align-items-center w-100">
               <strong class="text-gray-dark"><c:out value="${p.TITLE }"/></strong>
@@ -159,7 +160,24 @@
 </main>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+<script>
+ $(function() {
+	 $(".likeBtn").on("click", e => {
+		 $.ajax({
+			 url : "${path}/member/likeList.do",
+			 data : {memberNo : $(".memberNo").val() },
+			 dataType : "html",
+			 success : data => {
+				 console.log(data);
+				  $(".profileAll").html(data);
+			 }
+			 
+		 })
+		 
+	 })
+ })
 
+</script>
 </body>
 
 </html>

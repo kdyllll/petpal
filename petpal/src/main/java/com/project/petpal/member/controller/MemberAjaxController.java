@@ -1,6 +1,7 @@
 package com.project.petpal.member.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import java.util.Map;
@@ -197,4 +198,23 @@ public class MemberAjaxController {
 		   	Member member=service.checkNickName(nickName);
 		   return(member==null?true:false);
 	   }
+	 
+	 @RequestMapping("/member/likeList.do")
+	 public String likeList(String memberNo, Model model) {
+		 System.out.println(memberNo);
+		 List<Map> dList = service.selectDailyLikeList(memberNo);
+		 List<Map> fList = service.selectFindLikeList(memberNo);
+		 List<Map> pList = service.selectPlaceLikeList(memberNo);
+		 List<Map> tList = service.selectTipLikeList(memberNo);
+		 List<Map> allList = new ArrayList();
+		 allList.addAll(dList);
+		 allList.addAll(fList);
+		 allList.addAll(pList);
+		 allList.addAll(tList);
+		 for(Map m : allList) {
+			 System.out.println(m);
+		 }
+		 model.addAttribute("allList", allList);
+		 return "member/memberAjax/likeList";
+	 }
 }

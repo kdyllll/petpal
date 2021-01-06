@@ -124,6 +124,12 @@ public class FindServiceImple implements FindService {
 		// TODO Auto-generated method stub
 		return dao.selectFindHeartWeek(session,cPage,numPerPage);
 	}
+
+	@Override
+	public int deleteFind(String findNo) {
+		// TODO Auto-generated method stub
+		return dao.deleteFind(session, findNo);
+	}
 	
 	
 }

@@ -47,4 +47,8 @@ public interface MemberService {
    int selectCntNon(Map m);
    int selectDeliveryCntNon(Map m);
    Member checkNickName(String nickName);
+   List<Map> selectDailyLikeList(String memberNo);
+   List<Map> selectFindLikeList(String memberNo);
+   List<Map> selectPlaceLikeList(String memberNo);
+   List<Map> selectTipLikeList(String memberNo);
 }

@@ -110,6 +110,12 @@ public class FindDaoImple implements FindDao {
 		return session.selectList("find.selectFindHeartWeek",null,rb);
 	}
 
+	@Override
+	public int deleteFind(SqlSession session, String findNo) {
+		// TODO Auto-generated method stub
+		return session.delete("find.deleteFind", findNo);
+	}
+
 	
 	
 }
