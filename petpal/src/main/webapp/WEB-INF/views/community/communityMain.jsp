@@ -30,7 +30,10 @@
 					
 					<!-- 배너 -->
 					<div class="col-9 mb-5 banner position-relative">
-						<a href="${path }/community/tipDetail.do?tipNo=${tipList[0].TIPNO}"><img class="rounded" width="100%" src="${path }/resources/upload/tip/${tipList[0].MAINIMG}"/></a>
+						<a href="${path }/community/tipDetail.do?tipNo=${tipList[0].TIPNO}">
+							<img class="rounded" width="100%" src="${path }/resources/upload/tip/${tipList[0].MAINIMG}"/>
+							<%-- <div class="rounded" style="background-image : url('${path }/resources/upload/tip/${tipList[0].MAINIMG}'); background-size: cover;"></div> --%>
+						</a>
 						<div class="position-absolute text-white" style="bottom:25;left:40;"><strong class="h3 title"><c:out value="${tipList[0].TITLE }"/></strong></div>
 						<div class="position-absolute border border-white rounded px-3 py-2 text-weight-bold" style="bottom:20; right:40; cursor: pointer;" onclick="location.replace('${path}/community/tipDetail.do?tipNo=${tipList[0].TIPNO }')">
 							<strong class="h5 title text-white">보러가기</strong>
