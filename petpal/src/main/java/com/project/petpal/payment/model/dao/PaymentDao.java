@@ -18,4 +18,5 @@ public interface PaymentDao {
 	String selectStock(SqlSession session, String stockNo);
 	int selectPoint(SqlSession session, String memberNo);
 	List<Map> selectAddress(SqlSession session, String memberNo);
+	List<Map> selectProduct(SqlSession session, String stockNo);
 }
