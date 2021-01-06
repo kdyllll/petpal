@@ -68,6 +68,13 @@ public class TipDaoImpl implements TipDao {
 	}
 	
 	@Override
+	public List<Map> selectTipHash(SqlSession session, int cPage, int numPerPage,String hashtag) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("tip.selectTipHash",hashtag,rb);
+	}
+	
+	@Override
 	public int tipDelete(SqlSession session, String tipNo) {
 		return session.delete("tip.tipDelete", tipNo);
 	}

@@ -223,6 +223,13 @@ public class DailyDaoImpl implements DailyDao {
 		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
 		return session.selectList("daily.selectDailyHeartWeek",null,rb);
 	}
+	
+	@Override
+	public List<Map> selectDailyHash(SqlSession session, int cPage, int numPerPage,String hashtag) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("daily.selectDailyHash",hashtag,rb);
+	}
 
 	
 	

@@ -40,4 +40,5 @@ public interface DailyService {
 	List<Map> selectDailyHeart(int cPage,int numPerPage);
 	List<Map> selectDailyFollow(int cPage,int numPerPage);
 	List<Map> selectDailyHeartWeek(int cPage,int numPerPage);
+	List<Map> selectDailyHash(int cPage,int numPerPage,String hashtag);
 }

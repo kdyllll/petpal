@@ -30,4 +30,5 @@ public interface PlaceDao {
 	int updatePlace(SqlSession session,Place p);
 	int deleteHashtag(SqlSession session,String placeNo);
 	List<Map> selectPlaceHeartWeek(SqlSession session,int cPage,int numPerPage);
+	List<Map> selectPlaceHash(SqlSession session,int cPage,int numPerPage,String hashtag);
 }

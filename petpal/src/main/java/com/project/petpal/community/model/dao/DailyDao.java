@@ -49,5 +49,6 @@ public interface DailyDao {
 	List<Map> selectDailyHeart(SqlSession session,int cPage,int numPerPage);
 	List<Map> selectDailyFollow(SqlSession session,int cPage,int numPerPage);
 	List<Map> selectDailyHeartWeek(SqlSession session,int cPage,int numPerPage);
+	List<Map> selectDailyHash(SqlSession session,int cPage,int numPerPage,String hashtag);
 	
 }

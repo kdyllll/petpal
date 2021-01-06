@@ -21,4 +21,5 @@ public interface FindService {
 	int deleteFindLike(String findNo);
 	int insertFindLike(Map m);
 	List<Map> selectFindHeartWeek(int cPage,int numPerPage);
+	int deleteFind(String findNo);
 }

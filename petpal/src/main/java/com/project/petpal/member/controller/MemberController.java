@@ -246,6 +246,8 @@ public class MemberController {
 	   m.addAttribute("naverUrl", naverAuthUrl);
 	   String kakaoUrl = kakaoLoginApi.getAuthorizationUrl(session);
 	   m.addAttribute("kakaoUrl",kakaoUrl);
+	   String googleUrl=googleLoginApi.getAuthorizationUrl(session);
+		  m.addAttribute("googleUrl",googleUrl);
       return "member/login";
    }
 

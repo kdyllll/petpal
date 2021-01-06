@@ -50,4 +50,8 @@
 	<update id="updateContent" parameterType="tipImg">
 		UPDATE TIPIMG SET CONTENT = #{content} WHERE TIPIMGNO=#{tipImgNo}
 	</update>
+	<select id="selectTipHash" resultType="map" parameterType="string">
+		SELECT MEMBERNO,TIPNO,CATEGORY,TITLE,MAINIMG,NICKNAME,IMG,HASHCONTENT FROM TIP LEFT JOIN TIPIMG USING(TIPNO) LEFT JOIN MEMBER USING(MEMBERNO) LEFT JOIN HASHTAG ON POSTNO=TIPNO
+		WHERE HASHCONTENT=#{value} MAINIMG IS NOT NULL ORDER BY TIPDATE DESC
+	</select>
 </mapper>

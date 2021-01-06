@@ -49,4 +49,8 @@ public interface MemberDao {
    int selectCntNon(SqlSession session,Map m);
    int selectDeliveryCntNon(SqlSession session, Map m);
    Member checkNickName(SqlSession session,String nickName);
+   List<Map> selectDailyLikeList(SqlSession session, String memberNo);
+   List<Map> selectFindLikeList(SqlSession session, String memberNo);
+   List<Map> selectPlaceLikeList(SqlSession session, String memberNo);
+   List<Map> selectTipLikeList(SqlSession session, String memberNo);
 }

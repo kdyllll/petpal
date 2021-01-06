@@ -54,4 +54,7 @@
   		GROUP BY (FINDNO,ADDRESS,TITLE,FILENAME,ENROLLDATE,IMGSTATUS)
   		ORDER BY HEARTCOUNT DESC, ENROLLDATE DESC
 	</select>
+	<delete id="deleteFind" parameterType="string">
+	 	DELETE FROM FIND WHERE FINDNO=#{findNo}
+	</delete>
 </mapper>

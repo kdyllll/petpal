@@ -236,4 +236,18 @@ public class findController {
 		service.insertFindLike(map);
 		return "redirect:/community/findList.do";
 	}
+	
+	@RequestMapping("/find/findDelete.do")
+	public String findDelete(String findNo,Model model) {
+		String loc= "/community/findDetail.do?findNo="+findNo;
+		String msg="삭제되지않았습니다.";
+		int result = service.deleteFind(findNo);
+		if(result> 0 ) {
+			loc= "/community/findList.do";
+			msg = "삭제되었습니다.";
+		}
+		model.addAttribute("loc", loc);
+		model.addAttribute("msg", msg);
+		return "common/msg";
+	}
 }

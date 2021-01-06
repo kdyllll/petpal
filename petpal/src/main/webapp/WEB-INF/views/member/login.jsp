@@ -50,23 +50,15 @@
                 <a class="text-dark" href="${path }/member/moveJoin.do">회원가입</a>
               </div>
             </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>       
-            <div class=""> 
-              <button class="btn btn-lg btn-secondary btn-block my-1" type="button">구글</button>
-              <button class="btn btn-lg btn-secondary btn-block mt-0 mb-1" type="button">카카오</button>
-              <button class="btn btn-lg btn-secondary btn-block mt-0" type="button">네이버</button>
-              <div id="kakao_id_login" style="text-align: center"> 
-              <a href="${kakaoUrl}"> 
-              <img width="223" src="${path }/resources/images/facebook.png" />
-              </a> 
-              </div>
-
-
-				<div id="naver_id_login" style="text-align:center"><a href="${naverUrl}">
-				<img width="223" src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png"/></a></div>
-				<br>
-
-            </div>
+            <button class="btn btn-lg bg-point btn-block" type="submit">로그인</button>       
+            <div class="mt-3 d-flex justify-content-between">
+						<a href="${naverUrl }"><img src="${path }/resources/images/naver.PNG"
+							style="width: 80px; height: 80px;" alt=""></a> <a href="${kakaoUrl }"><img
+							src="${path }/resources/images/kakao.jpg"
+							style="width: 80px; height: 80px;" alt=""></a> <a href="${googleUrl }"><img
+							src="${path }/resources/images/google.png"
+							style="width: 80px; height: 80px;" alt=""></a>
+			</div>
         </form>
       </div>
      

@@ -1,12 +1,23 @@
 package com.project.petpal.member.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
-
 import java.util.Map;
+import java.util.Properties;
+import java.util.Random;
 
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -17,7 +28,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.project.petpal.admin.model.service.AdminService;
-import com.project.petpal.admin.model.vo.Stock;
 import com.project.petpal.common.AjaxPageBarFactory;
 import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyImg;
@@ -197,4 +207,89 @@ public class MemberAjaxController {
 		   	Member member=service.checkNickName(nickName);
 		   return(member==null?true:false);
 	   }
+	 @RequestMapping("/sendEmail.do")//이메일 인증
+	 public void sendEmail(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		 String email = request.getParameter("email");
+	      
+	      JSONObject emailConfirm= new JSONObject();
+	      
+	      int result=0;
+	      String mesg="";
+	      String loc="";
+
+	         String host="smtp.gmail.com";
+	         String user="cjfdn4646@gmail.com";
+	         String password="Qkrcjfdn123";
+	         
+	         //smtp 서버 설정
+	         Properties props = new Properties();
+	           props.put("mail.smtp.host",host);
+	           props.put("mail.smtp.port",587);
+	           props.put("mail.smtp.auth","true");
+	           props.put("mail.smtp.starttls.enable","true");
+	           props.put("mail.smtp.ssl.trust",host); 
+	           
+	           Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+	               protected PasswordAuthentication getPasswordAuthentication() {
+	                   return new PasswordAuthentication(user,password);
+	               }
+	           });
+	           
+	           try {
+	               MimeMessage msg = new MimeMessage(session);
+	               msg.setFrom(new InternetAddress(user, "PETPAL"));
+	               msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+	               
+	               //메일 제목
+	               msg.setSubject("PETPAL 인증 메일입니다.");
+	               //메일 내용
+	               String content="<h1>[이메일 인증]</h1><br><p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>";
+	               content+="<a href='http://localhost:9090/petpal/authEmail?auth=1'>이메일 인증 확인</a>";
+	               msg.setText(content,"utf-8","html");
+	               
+	               Transport.send(msg);
+	               
+	           }catch (Exception e) {
+	               e.printStackTrace();
+	           }
+	           
+	           System.out.println("인증번호 발송");
+	         result=1;
+	         
+	        
+	      emailConfirm.put("msg",mesg);
+	      emailConfirm.put("result",result);
+	      response.getWriter().print(emailConfirm);
+//	      response.setContentType("application/json;charset=utf-8");
+//	      new Gson().toJson(emailConfirm,response.getWriter());
+		 
+	 }
+	 @RequestMapping("/authEmail")
+	 @ResponseBody
+	 public int authEmail(String auth) {
+		 int result=0;
+		 if(auth!=null) {
+			 result=1;
+		 }
+		 return result;
+	 }
+	 
+	 @RequestMapping("/member/likeList.do")
+	 public String likeList(String memberNo, Model model) {
+		 System.out.println(memberNo);
+		 List<Map> dList = service.selectDailyLikeList(memberNo);
+		 List<Map> fList = service.selectFindLikeList(memberNo);
+		 List<Map> pList = service.selectPlaceLikeList(memberNo);
+		 List<Map> tList = service.selectTipLikeList(memberNo);
+		 List<Map> allList = new ArrayList();
+		 allList.addAll(dList);
+		 allList.addAll(fList);
+		 allList.addAll(pList);
+		 allList.addAll(tList);
+		 for(Map m : allList) {
+			 System.out.println(m);
+		 }
+		 model.addAttribute("allList", allList);
+		 return "member/memberAjax/likeList";
+	 }
 }
