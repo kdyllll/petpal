@@ -88,17 +88,17 @@ public class GoogleController {
 	       // 사용자 정보 출력
 	       System.out.println(email);
 	       System.out.println(id);
-	       Member member=service.selectSnsMember(id);
-	       if(member!=null) {//가입되어있으면
-	    	   m.addAttribute("loginMember",member);
-	    	   m.addAttribute("msg","가입되어있는 회원입니다.로그인 되었습니다.");
-	    	   return "common/msg";
-	       }else {//가입되어있지않으면 추가정보입력 페이지로
-	    	// 받아온 사용자 정보를 view에 전달
-	    	   m.addAttribute("snsNo",id);
-			   m.addAttribute("email",email);
-			   return "member/addUserInfo";
-	       }
+
+	       //구글로 가입되어있는 회원인지 확인
+			Member loginMember=service.selectSnsMember(id);
+			if(loginMember !=null ) {//네이버 간편로그인으로 가입했었으면
+				m.addAttribute("loginMember", loginMember);
+		         return "redirect:/";
+			}else {//가입한 적 없으면
+				 m.addAttribute("msg", "구글 간편로그인으로 가입되지 않은 아이디입니다.");
+		         m.addAttribute("loc", "/member/moveLogin.do");
+		         return "common/msg";
+			}
 	       
 	       
 	   }
