@@ -48,4 +48,5 @@ public interface StoreService {
 	List<Product> favList(String memberNo);
 	int deleteFav(Map fav);
 	List<Product> starList();
+	double selectAvgReview(String productNo);
 } 

@@ -21,4 +21,9 @@ public interface FindDao {
 	int deleteFindImg(SqlSession session, FindImg fin);
 	int insertSubImgs(SqlSession session, FindImg fin);
 	int updateOtherFind(SqlSession session, Map m);
+	List<String> selectFindLike(SqlSession session, String memberNo);
+	int deleteFindLike(SqlSession session, String findNo);
+	int insertFindLike(SqlSession session, Map m);
+	List<Map> selectFindHeartWeek(SqlSession session,int cPage,int numPerPage);
+	int deleteFind(SqlSession session, String findNo);
 }

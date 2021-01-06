@@ -26,37 +26,25 @@
 				class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-5 "
 				style="height: 100vh; overflow-y: auto;">
 				<h2 class="my-3">신고관리</h2>
-				<div class="row align-items-center">
+				<form method="post" action="${path }/admin/searchClaim.do" class="row align-items-center">
 					<div class="mb-3  col-lg-2">
 						<label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
-						<select class="custom-select mr-sm-2" id="searchType">
-							<option selected value="userEmail">신고자이메일</option>
-							<option value="complainNum">신고번호</option>
+						<select class="custom-select mr-sm-2" name="searchType" id="searchType">
+							<option selected value="EMAIL">신고자이메일</option>
+							<option value="CLAIMNO">신고번호</option>
+							<option value="POSTNO">신고글번호</option>
 						</select>
 					</div>
-					<form id="search-userEmail" class="input-group mb-3  col-lg-5">
-						<input type="hidden" name="searchType" value="userEmail">
+					<div  class="input-group mb-3  col-lg-5">
 						<input type="text" class="form-control input-group-sm"
-							name="searchKeyword" placeholder="신고자이메일을 입력해주세요">
+							name="keyword" placeholder="검색어를 입력해주세요">
 						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" type="button"
+							<button class="btn btn-outline-secondary" type="submit"
 								id="button-addon2">Button</button>
 						</div>
-					</form>
-					<form id="search-complainNum"
-						class="input-group mb-3  col-lg-5 d-none">
+					</div>
 
-						<input type="hidden" name="searchType" value="complainNum">
-						<input type="text" class="form-control input-group-sm"
-							name="searchKeyword" placeholder="신고번호를 입력해주세요">
-						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" type="button"
-								id="button-addon2">Button</button>
-						</div>
-
-					</form>
-					-
-				</div>
+				</form>
 
 				<div class="table-responsive" style="min-height: 80vh;">
 					<table class="table mb-5">
@@ -124,20 +112,7 @@
 	<div class="claimModal"></div>
 	<script>
     $(function(){
-        let userEmail = $("#search-userEmail");
-        let userName = $("#search-userName");
-        let complainNum = $("#search-complainNum");
-        $("#searchType").on("change", e => {
-            userEmail.addClass("d-none");
-            userName.addClass("d-none");
-            complainNum.addClass("d-none");
-
-            let target = $(e.target).val();
-            $("#search-"+target).removeClass("d-none");
-        });
-        $("#searchType").change();
-        
-        
+      
         $(".claimDetailBtn").on("click", e => {
         	let claimNo = $(e.target).prev().val();
         	$.ajax({

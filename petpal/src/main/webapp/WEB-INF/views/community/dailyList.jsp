@@ -16,6 +16,17 @@
      display: block;
      opacity: 1;
      }
+     
+    /*  .scale {
+		transition:all 0.5s;
+	}
+	.scale:hover {
+	  transform: scale(1.1);
+	  -webkit-transform: scale(1.1);
+	  -moz-transform: scale(1.1);
+	  -ms-transform: scale(1.1);
+	  -o-transform: scale(1.1);
+	} */
  </style>
 </head>
 <body>
@@ -48,7 +59,8 @@
       				</div>
                 </div>
              
-			<div id="dailyCon" class="dailyCon row mt-3">
+			<div id="dailyCon" class="dailyCon mt-3 col-12">
+			 <div class="row col-12">
 				<c:if test="${empty dailyList }">
 					<div class="mx-auto">
 						<p class="">일상 글이 없습니다.</p>
@@ -76,7 +88,7 @@
 		                        <c:forEach var="i" items="${imgList}">
 		                        	<c:if test="${i.dailyNo eq d.DAILYNO}">
 		                        	<a class="d-inline-block" href="${path }/daily/moveDetail.do?dailyNo=${d.DAILYNO }">                        
-	                        			<img src="${path }/resources/upload/community/daily/${i.dailyImgName}" class="rounded" width="100%">
+	                        			<img src="${path }/resources/upload/community/daily/${i.dailyImgName}" class="rounded scale" width="100%">
 	                        			<input type="hidden" value="${d.DAILYNO }"/>
 		                        	</a>	
 		                        	</c:if>
@@ -110,9 +122,12 @@
 		                        </div>
 		                    </div>
 		                </address>
-	               </c:forEach>
-	               <div class="mx-auto my-2">${pageBar }</div>
-               </c:if>
+	               </c:forEach>               
+	               </c:if>
+	              </div>
+	              <div class="mx-auto my-2">${pageBar }</div>
+
+
 	          </div>
 	          
             </div>

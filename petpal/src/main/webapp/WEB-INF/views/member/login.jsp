@@ -50,27 +50,19 @@
                 <a class="text-dark" href="${path }/member/moveJoin.do">회원가입</a>
               </div>
             </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>       
-            <div class=""> 
-              <button class="btn btn-lg btn-secondary btn-block my-1" type="button">구글</button>
-              <button class="btn btn-lg btn-secondary btn-block mt-0 mb-1" type="button">카카오</button>
-              <button class="btn btn-lg btn-secondary btn-block mt-0" type="button">네이버</button>
-              <div id="kakao_id_login" style="text-align: center"> 
-              <a href="${kakaoUrl}"> 
-              <img width="223" src="${path }/resources/images/facebook.png" />
-              </a> 
-              </div>
-
-
-				<div id="naver_id_login" style="text-align:center"><a href="${naverUrl}">
-				<img width="223" src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png"/></a></div>
-				<br>
-
-            </div>
+            <button class="btn btn-lg bg-point btn-block" type="submit">로그인</button>       
+            <div class="mt-3 d-flex justify-content-between">
+						<a href="${naverUrl }"><img src="${path }/resources/images/naver.PNG"
+							style="width: 80px; height: 80px;" alt=""></a> <a href="${kakaoUrl }"><img
+							src="${path }/resources/images/kakao.jpg"
+							style="width: 80px; height: 80px;" alt=""></a> <a href="${googleUrl }"><img
+							src="${path }/resources/images/google.png"
+							style="width: 80px; height: 80px;" alt=""></a>
+			</div>
         </form>
       </div>
      
-      <form class="form-signin">
+      <form id="nonMemberFrm" class="form-signin" action="${path }/nonMemberShop.do">
         <div class=" accordion" id="accordionExample">          
             <a class="btn btn-lg btn-transparent btn-block text-center"  data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
               비회원 주문조회
@@ -78,10 +70,10 @@
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
               <div class="card-body">                             
                 <div class="form-label-group">
-                  <input type="text" id="inputPassword" class="form-control" placeholder="주문번호" required>
+                  <input type="text" name="orderNo" class="form-control" placeholder="주문번호" required>
                   <label for="inputPassword">주문번호</label>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">조회하기</button>
+                <button id="nonMemberBtn" class="btn btn-lg btn-primary btn-block" type="button">조회하기</button>
               </div>
             </div>
         </div>   
@@ -92,5 +84,28 @@
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 </body>
-
+<script>
+	$(document).on("click","#nonMemberBtn",e=>{
+		if($("input[name=orderNo]").val().trim().length!=0){
+			var orderNo=$("input[name=orderNo]").val().trim();
+			$.ajax({
+				url:"${path}/orderCheck.do",
+				data:{orderNo:orderNo},
+				success:(data) => {
+					if(data==true){
+						$("#nonMemberFrm").submit();
+					}else{
+	                    alert("주문 내역이 없습니다. 번호를 다시 확인하세요.");
+					}
+				},
+				error:(request,status,error)=>{
+                    alert("주문 내역이 없습니다. 번호를 다시 확인하세요.");
+                 }	
+			})
+			
+		}else{
+			alert("주문 번호를 입력해주세요.");
+		}
+	})
+</script>
 </html>

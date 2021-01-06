@@ -3,6 +3,7 @@ package com.project.petpal.community.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -84,6 +85,37 @@ public class FindDaoImple implements FindDao {
 		return session.update("find.updateOtherFind", m);
 	}
 
+	@Override
+	public List<String> selectFindLike(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("find.selectFindLike", memberNo);
+	}
 
+	@Override
+	public int deleteFindLike(SqlSession session, String findNo) {
+		// TODO Auto-generated method stub
+		return session.delete("find.deleteFindLike", findNo);
+	}
+
+	@Override
+	public int insertFindLike(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.insert("find.insertFindLike", m);
+	}
+
+	@Override
+	public List<Map> selectFindHeartWeek(SqlSession session, int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("find.selectFindHeartWeek",null,rb);
+	}
+
+	@Override
+	public int deleteFind(SqlSession session, String findNo) {
+		// TODO Auto-generated method stub
+		return session.delete("find.deleteFind", findNo);
+	}
+
+	
 	
 }

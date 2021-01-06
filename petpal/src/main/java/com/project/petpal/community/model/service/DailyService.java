@@ -39,5 +39,6 @@ public interface DailyService {
 	int comment2Delete(String dailyCommentNo);
 	List<Map> selectDailyHeart(int cPage,int numPerPage);
 	List<Map> selectDailyFollow(int cPage,int numPerPage);
-
+	List<Map> selectDailyHeartWeek(int cPage,int numPerPage);
+	List<Map> selectDailyHash(int cPage,int numPerPage,String hashtag);
 }

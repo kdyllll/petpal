@@ -1,6 +1,7 @@
 package com.project.petpal.member.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -122,7 +123,7 @@ public class MemberAjaxController {
 		List<DailyImg> imgList=service.selectDailyMain(memberNo);
 		List<Hashtag> hashList=service.selectDailyHash(memberNo);
 		int totalData=service.dailyCount(memberNo);
-		String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveDaily.do", null, ".postCon", memberNo,"dailyPaging",null, null);
+		String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveDaily.do", null, ".postCon", memberNo,"dailyPaging",null, null,null);
 		
 		m.addAttribute("dailyList",dailyList);
 		m.addAttribute("imgList",imgList);
@@ -139,7 +140,7 @@ public class MemberAjaxController {
 		//노하우 작성 글+메인 사진
 	    List<Map> tipList=service.selectTipMain(memberNo,cPage,numPerPage);
 	    int totalData=service.tipCount(memberNo);
-	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveTip.do", null, ".postCon", memberNo,"tipPaging",null, null);
+	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveTip.do", null, ".postCon", memberNo,"tipPaging",null, null,null);
 	    
 	    m.addAttribute("tipList",tipList);
 	    m.addAttribute("pageBar",pageBar);
@@ -154,7 +155,7 @@ public class MemberAjaxController {
 		//장소후기 작성 글+메인사진
 	    List<Map> placeList=service.selectPlaceMain(memberNo,cPage,numPerPage);
 	    int totalData=service.placeCount(memberNo);
-	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "movePlace.do", null, ".postCon", memberNo,"placePaging",null, null);
+	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "movePlace.do", null, ".postCon", memberNo,"placePaging",null, null,null);
 	    
 	    m.addAttribute("placeList",placeList);
 	    m.addAttribute("pageBar",pageBar);
@@ -169,7 +170,7 @@ public class MemberAjaxController {
 		//찾아주세요 작성 글+메인 사진
 	    List<Map> findList=service.selectFindMain(memberNo,cPage,numPerPage);
 	    int totalData=service.findCount(memberNo);	
-	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveFind.do", null, ".postCon", memberNo,"findPaging",null, null);
+	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveFind.do", null, ".postCon", memberNo,"findPaging",null, null,null);
 	    
 	    m.addAttribute("findList",findList);
 	    m.addAttribute("pageBar",pageBar);
@@ -271,5 +272,24 @@ public class MemberAjaxController {
 			 result=1;
 		 }
 		 return result;
+	 }
+	 
+	 @RequestMapping("/member/likeList.do")
+	 public String likeList(String memberNo, Model model) {
+		 System.out.println(memberNo);
+		 List<Map> dList = service.selectDailyLikeList(memberNo);
+		 List<Map> fList = service.selectFindLikeList(memberNo);
+		 List<Map> pList = service.selectPlaceLikeList(memberNo);
+		 List<Map> tList = service.selectTipLikeList(memberNo);
+		 List<Map> allList = new ArrayList();
+		 allList.addAll(dList);
+		 allList.addAll(fList);
+		 allList.addAll(pList);
+		 allList.addAll(tList);
+		 for(Map m : allList) {
+			 System.out.println(m);
+		 }
+		 model.addAttribute("allList", allList);
+		 return "member/memberAjax/likeList";
 	 }
 }

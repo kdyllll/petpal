@@ -218,12 +218,58 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
+	public List<Map> selectPaymentListNon(Map m) {
+		// TODO Auto-generated method stub
+		return dao.selectPaymentListNon(session,m);
+	}
+
+	@Override
+	public int selectOrderCheck(String orderNo) {
+		// TODO Auto-generated method stub
+		return dao.selectOrderCheck(session,orderNo);
+	}
+	
+	@Override
 	public Member checkNickName(String nickName) {
 		// TODO Auto-generated method stub
 		return dao.checkNickName(session,nickName);
 	}
 	   
-	
+	@Override
+	public int selectCntNon(Map m) {
+		// TODO Auto-generated method stub
+		return dao.selectCntNon(session, m);
+	}
+
+	@Override
+	public int selectDeliveryCntNon(Map m) {
+		// TODO Auto-generated method stub
+		return dao.selectDeliveryCntNon(session, m);
+	}
+
+	@Override
+	public List<Map> selectDailyLikeList(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectDailyLikeList(session, memberNo);
+	}
+
+	@Override
+	public List<Map> selectFindLikeList(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectFindLikeList(session, memberNo);
+	}
+
+	@Override
+	public List<Map> selectPlaceLikeList(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectPlaceLikeList(session, memberNo);
+	}
+
+	@Override
+	public List<Map> selectTipLikeList(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectTipLikeList(session, memberNo);
+	}
 
 
 }

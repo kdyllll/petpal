@@ -292,6 +292,18 @@ public class DailyServiceImpl implements DailyService {
 		return dao.selectDailyFollow(session,cPage,numPerPage);
 	}
 
+	@Override
+	public List<Map> selectDailyHeartWeek(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectDailyHeartWeek(session,cPage,numPerPage);
+	}
+	
+	@Override
+	public List<Map> selectDailyHash(int cPage, int numPerPage,String hashtag) {
+		// TODO Auto-generated method stub
+		return dao.selectDailyHash(session,cPage,numPerPage,hashtag);
+	}
+
 	
 	
 

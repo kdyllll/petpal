@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.project.petpal.community.model.service.FindService;
 import com.project.petpal.community.model.vo.Find;
 import com.project.petpal.community.model.vo.FindImg;
+import com.project.petpal.member.model.vo.Member;
 
 import lombok.Builder;
 
@@ -33,13 +34,15 @@ public class findController {
 	private FindService service;
 	
 	@RequestMapping("/community/findList.do")
-	public String findList(Model model, HttpServletRequest request) {
+	public String findList(Model model, HttpServletRequest request,HttpSession session) {
+		Member m =(Member)session.getAttribute("loginMember");
 		String cate = request.getParameter("cate");
 		Map map = new HashMap();
 		map.put("cate",cate);
 		List<Map> list = service.selectFindList(map);
-		for(Map m : list) {
-			System.out.println(m);
+		if(m!=null) {
+			List<String> like = service.selectFindLike(m.getMemberNo());
+			model.addAttribute("like", like);
 		}
 		model.addAttribute("list", list);
 		return "community/findList";
@@ -211,6 +214,38 @@ public class findController {
 		
 		String loc = "/community/findDetail.do?findNo="+findNo;
 		String msg = "수정성공";
+		model.addAttribute("loc", loc);
+		model.addAttribute("msg", msg);
+		return "common/msg";
+	}
+	
+//	좋아요 삭제
+	@RequestMapping("/find/deleteLike.do")
+	public String deleteLike(String findNo, Model model) {
+		service.deleteFindLike(findNo);
+		return "redirect:/community/findList.do";
+	}
+//	좋아요 추가
+	@RequestMapping("/find/insertLike.do")
+	public String insertLike(HttpSession session, String findNo) {
+		Map map = new HashMap();
+		Member m = (Member)session.getAttribute("loginMember");
+		map.put("memberNo", m.getMemberNo());
+		map.put("findNo", findNo);
+		
+		service.insertFindLike(map);
+		return "redirect:/community/findList.do";
+	}
+	
+	@RequestMapping("/find/findDelete.do")
+	public String findDelete(String findNo,Model model) {
+		String loc= "/community/findDetail.do?findNo="+findNo;
+		String msg="삭제되지않았습니다.";
+		int result = service.deleteFind(findNo);
+		if(result> 0 ) {
+			loc= "/community/findList.do";
+			msg = "삭제되었습니다.";
+		}
 		model.addAttribute("loc", loc);
 		model.addAttribute("msg", msg);
 		return "common/msg";
