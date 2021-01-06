@@ -348,7 +348,7 @@ ul li{
 								// 인포윈도우로 장소에 대한 설명을 표시합니다
 								var infowindow = new kakao.maps.InfoWindow(
 										{
-											content : '<div style="width:150px;text-align:center;padding:6px 0;">어쩌구</div>'	
+											content : '<div style="width:150px;text-align:center;padding:6px 0;">장소 위치</div>'	
 										});
 								infowindow.open(map, marker);
 

@@ -54,6 +54,7 @@
 											class="form-control input-lg" placeholder="이름">
 									</div>
 									<div class="mb-4">
+										<input type="hidden" class="checked" value="0">
 										<input type="text" name="nickName" id="nickName" style="width:75%;"
 											class="form-control input-lg d-inline" placeholder="닉네임" >
 											<button type="button" class="btn btn-outline-secondary" id="check">중복확인</button>
@@ -201,7 +202,7 @@ input[type="checkbox"]:checked+svg {
 	//회원가입버튼 눌렀을때
 	function join(){
 		
-		/* var phone=$("#phone").val();//핸드폰번호값
+		var phone=$("#phone").val();//핸드폰번호값
 		var regphone=/^010([0-9]{8})$/;//핸드폰번호 정규표현식
 		var regPw = /^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/;
 		var pw = $("#password").val();//비밀번호값
@@ -227,6 +228,10 @@ input[type="checkbox"]:checked+svg {
 			$("#nickName").val($("#nickName").val().trim());
 			return;
 		}
+		if($(".checked").val()==0){
+			alert("닉네임 중복확인 해주세요");
+			return;
+		}
 		if($("#sample6_postcode").val()==""||$("#sample6_address").val()==""||($("#sample6_detailAddress").val()).trim()==""){
 			alert("주소를 다시 입력해주세요.");
 			return;
@@ -240,11 +245,12 @@ input[type="checkbox"]:checked+svg {
 			return;
 		}
 		
-		$("#nickname").val($("#nickname").val().trim());//닉네임 양쪽 공백제거하여 보냄 */
+		$("#nickName").val($("#nickName").val().trim());//닉네임 양쪽 공백제거하여 보냄 
 		$("#frm").submit();
 	}
-	/* $("#password").keyup(e=>{//비밀번호 입력할때
+	 $("#password").keyup(e=>{//비밀번호 입력할때
 		var pw= $("#password").val();
+		var pw2 = $("#password2").val();
 		var regPw = /^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/;
 		if(regPw.test(pw)!=true){
 			$("#pw").attr("style","color:red;font-size:12px;");
@@ -252,6 +258,13 @@ input[type="checkbox"]:checked+svg {
 		}else{
 			$("#pw").attr("style","color:green;font-size:12px;");
 			$("#pw").html("사용가능합니다.");
+		}
+		if(pw!=pw2){
+			$("#pw2").attr("style","color:red;font-size:12px;");
+			$("#pw2").html("비밀번호가 일치하지 않습니다.");
+		}else{
+			$("#pw2").attr("style","color:green;font-size:12px;");
+			$("#pw2").html("비밀번호가 일치합니다.");
 		}
 	});
 	$("#password2").keyup(e=>{//비밀번호 확인 입력할때
@@ -273,7 +286,11 @@ input[type="checkbox"]:checked+svg {
 	$("#email").keyup(e=>{//이메일입력할때
 		$("#email").val($("#email").val().trim());//이메일에 공백못들어가게함
 		
-	}); */
+	}); 
+	$("#nickName").keyup(e=>{//이메일입력할때
+		$(".checked").val(0);
+		
+	}); 
 	//사진!!
 	  //사진 미리보기
 	  $(document).on('change','.upload',function(e){
@@ -328,9 +345,9 @@ input[type="checkbox"]:checked+svg {
 			url:"${path}/member/checkNickName.do",
 			data:{nickName:nickName},
 			success:data=>{
-				console.log(data);
 				if(data==true){
 					alert("사용가능합니다.");
+					$(".checked").val(1);
 				}else{
 					alert("이미 있는 닉네임입니다.");
 				}
