@@ -247,5 +247,29 @@ public class MemberServiceImpl implements MemberService{
 		return dao.selectDeliveryCntNon(session, m);
 	}
 
+	@Override
+	public List<Map> selectDailyLikeList(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectDailyLikeList(session, memberNo);
+	}
+
+	@Override
+	public List<Map> selectFindLikeList(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectFindLikeList(session, memberNo);
+	}
+
+	@Override
+	public List<Map> selectPlaceLikeList(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectPlaceLikeList(session, memberNo);
+	}
+
+	@Override
+	public List<Map> selectTipLikeList(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectTipLikeList(session, memberNo);
+	}
+
 
 }

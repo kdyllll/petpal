@@ -241,6 +241,30 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectOne("member.checkNickName",nickName);
 	}
 
+	@Override
+	public List<Map> selectDailyLikeList(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("member.selectDailyLikeList", memberNo);
+	}
+
+	@Override
+	public List<Map> selectFindLikeList(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("member.selectFindLikeList", memberNo);
+	}
+
+	@Override
+	public List<Map> selectPlaceLikeList(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("member.selectPlaceLikeList", memberNo);
+	}
+
+	@Override
+	public List<Map> selectTipLikeList(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("member.selectTipLikeList", memberNo);
+	}
+
 
    
    
