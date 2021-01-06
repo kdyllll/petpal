@@ -35,7 +35,7 @@
 										<input type="text" class="form-control input-lg"
 											placeholder="이메일" name="email" id="email">
 										<div class="input-group-append">
-											<button type="button" class="btn btn-secondary">이메일인증</button>
+											<button type="button" class="btn btn-secondary" id="auth">이메일인증</button>
 										</div>
 									</div>
 									<div class="mb-4">
@@ -307,6 +307,16 @@ input[type="checkbox"]:checked+svg {
     	previewDiv.remove();//미리보기div삭제
     	$("#hide").show();//미리보기가 삭제되었으니 사진 등록창 보이게
     }); 
+    $(document).on('click','#auth',function(e){//이메일 인증
+    	var email=$("#email").val();
+    	$.ajax({
+    		url:"${path}/sendEmail.do",
+    		data:{email:email},
+    		success:data=>{
+    			console.log(data);
+			}
+    	})
+    });
 	
 	$(document).on('click','#check',function(e){//닉네임 중복확인
 		var nickName=$("#nickName").val().trim();

@@ -281,6 +281,11 @@ public class StoreAjaxController {
 		m.addAttribute("list",list);
 		return "member/memberAjax/memberFavAjax";
 	}
+	@RequestMapping("/store/sortProduct")
+	public String sortProduct() {
+		
+		return "";
+	}
 	
 	
 	
