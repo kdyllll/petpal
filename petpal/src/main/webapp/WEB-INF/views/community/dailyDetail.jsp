@@ -13,7 +13,7 @@
       background: rgba(255, 255, 255, 0.8);
       z-index: 500;
     }
-    .bubble:after {
+/*     .bubble:after {
       bottom: 100%;
       left: 50%;
       border: solid transparent;
@@ -27,7 +27,7 @@
       border-width: 5px;
       margin-left: -5px;
     }
-      
+       */
     pre{
      font-family: 'NanumSquare', sans-serif !important;
      white-space: pre-wrap; 
@@ -69,20 +69,21 @@
 					                 <!-- 이미지와 연결된 상품태그들 -->				                 
 									 <c:forEach var="c" items="${coordList }"> 
 									 	<c:if test="${c.DAILYIMGNO eq i.dailyImgNo }">       
-									 		<c:set var="yy" value="${c.YCODE +5 }"/>   
+									 		<c:set var="yy" value="${c.YCODE +5 }"/>  
+					 						<c:set var="xx" value="${c.XCODE -15 }"/> 
 											<div class="plusTag">
 								                <svg class="plusBtn position-absolute" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
 								                    style="top:${c.YCODE}%; left:${c.XCODE }%;">
 								                    <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
 								                </svg>
-								                <div class="bubble rounded shadow-sm col-4 col-lg-4 position-absolute px-1" style="top:${yy}%; left:${c.XCODE }%;">
-								                  <div class="row d-flex flex-wrap">
+								                <div class="bubble rounded shadow-sm col-4 col-lg-4 position-absolute px-1" style="top:${yy}%; left:${xx }%; cursor:pointer;" onclick="location.replace('${path }/store/moveDetail.do?productNo=${c.PRODUCTNO}')">
+								                  <div class="row d-flex flex-wrap m-0 py-2" style="width:100%;">
 								                  	<c:forEach var="pi" items="${pImgList }">
 									                  	<c:if test="${pi.productNo eq c.PRODUCTNO }">
-									                    	<img class="col-2 border" src="${path }/resources/upload/product/detail/${pi.imgName}">
+									                    	<img class="col-4 border p-0 m-0 ml-1" src="${path }/resources/upload/product/detail/${pi.imgName}">
 									                    </c:if>
 								                    </c:forEach>
-								                    <p class="p-1 mb-0"><c:out value="${c.PRODUCTNAME }"/></p>
+								                    <p class="p-1 ml-2 mb-0 col-7"><c:out value="${c.PRODUCTNAME }"/></p>
 								                  </div>
 								                </div>
 								             </div>
