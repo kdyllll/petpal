@@ -25,4 +25,5 @@ public interface FindDao {
 	int deleteFindLike(SqlSession session, String findNo);
 	int insertFindLike(SqlSession session, Map m);
 	List<Map> selectFindHeartWeek(SqlSession session,int cPage,int numPerPage);
+	int deleteFind(SqlSession session, String findNo);
 }
