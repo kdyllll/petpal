@@ -482,5 +482,21 @@ public class MemberController {
 	   int result=service.selectOrderCheck(orderNo);
 	   return result>0?true:false;
    }
+   
+   //팔로우
+   @RequestMapping("/member/memberFollow.do")
+   public String follow(HttpSession session, Model m) {
+		 
+	      Member memNo = (Member)session.getAttribute("loginMember");
+	      String memberNo = memNo.getMemberNo();
+	      Map member = service.selectMemberOnee(memberNo);
+	      int followCnt = service.followCnt(memberNo);
+	      int favCnt = service.favCnt(memberNo);
+	      m.addAttribute("follow",followCnt);
+	      m.addAttribute("fav",favCnt);   
+	      m.addAttribute("member", member);
+	      
+	   return "member/memberFollow";
+   }
 
 }
