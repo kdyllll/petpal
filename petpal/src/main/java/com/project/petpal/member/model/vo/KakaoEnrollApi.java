@@ -30,7 +30,8 @@ public class KakaoEnrollApi {
  
         postParams.add(new BasicNameValuePair("client_id", "d8bef86f08e813e18aa9c8170d315353"));
  
-        postParams.add(new BasicNameValuePair("redirect_uri", "http://localhost:9090/petpal/kakaoEnroll"));
+//        postParams.add(new BasicNameValuePair("redirect_uri", "http://localhost:9090/petpal/kakaoEnroll"));
+        postParams.add(new BasicNameValuePair("redirect_uri", "http://rclass.iptime.org:9999/20PM_PETPAL_final/kakaoEnroll"));
  
         postParams.add(new BasicNameValuePair("code", autorize_code));
  
@@ -94,7 +95,8 @@ public class KakaoEnrollApi {
 	}
 	
 	public static String getAuthorizationUrl(HttpSession session) { 
-		String kakaoUrl = "https://kauth.kakao.com/oauth/authorize?" + "client_id=" + "d8bef86f08e813e18aa9c8170d315353" + "&redirect_uri=" + "http://localhost:9090/petpal/kakaoEnroll" + "&response_type=code"; 
+//		String kakaoUrl = "https://kauth.kakao.com/oauth/authorize?" + "client_id=" + "d8bef86f08e813e18aa9c8170d315353" + "&redirect_uri=" + "http://localhost:9090/petpal/kakaoEnroll" + "&response_type=code"; 
+		String kakaoUrl = "https://kauth.kakao.com/oauth/authorize?" + "client_id=" + "d8bef86f08e813e18aa9c8170d315353" + "&redirect_uri=" + "http://rclass.iptime.org:9999/20PM_PETPAL_final/kakaoEnroll" + "&response_type=code"; 
 		return kakaoUrl; 
 	}
 
