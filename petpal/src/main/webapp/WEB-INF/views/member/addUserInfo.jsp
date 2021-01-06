@@ -30,6 +30,7 @@
 											class="form-control input-lg" placeholder="이름">
 									</div>
 									<div class="mb-4">
+										<input type="hidden" class="checked" value="0">
 										<input type="text" name="nickName" id="nickName" style="width:75%;"
 											class="form-control input-lg d-inline" placeholder="닉네임" >
 											<button type="button" class="btn btn-outline-secondary" id="check">중복확인</button>
@@ -153,7 +154,49 @@ input[type="checkbox"]:checked+svg {
 
 <script>
 	
+	//회원가입버튼 눌렀을때
+	function join(){
+		
+		var phone=$("#phone").val();//핸드폰번호값
+		var regphone=/^010([0-9]{8})$/;//핸드폰번호 정규표현식
+		var regPw = /^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/;
+		var pw = $("#password").val();//비밀번호값
+		var pw2 = $("#password2").val();//비밀번호확인값
 	
+		if($("#membername").val()==""){//이름이 공백일때
+			alert("이름을 입력해주세요.");
+			return;
+		}
+		if(($("#nickName").val().trim())==""){//닉네임이 공백일때
+			alert("닉네임은 빈칸이거나 공백으로만 할 수 없습니다. 다시 입력해주세요");
+			$("#nickName").val($("#nickName").val().trim());
+			return;
+		}
+		if($(".checked").val()==0){
+			alert("닉네임 중복확인 해주세요");
+			return;
+		}
+		if($("#sample6_postcode").val()==""||$("#sample6_address").val()==""||($("#sample6_detailAddress").val()).trim()==""){
+			alert("주소를 다시 입력해주세요.");
+			return;
+		}
+		if(regphone.test(phone)!=true){//핸드폰번호가 형식이 맞지않으면
+			alert("핸드폰번호를 확인해주세요.");
+			return;
+		}
+		if($("#allcheck").prop("checked")==false){//전체동의가 체크되지 않으면
+			alert("약관의 동의해주세요");
+			return;
+		}
+		
+		$("#nickName").val($("#nickName").val().trim());//닉네임 양쪽 공백제거하여 보냄 
+		$("#frm").submit();
+	}
+	
+		$("#nickName").keyup(e=>{//이메일입력할때
+			$(".checked").val(0);
+			
+		}); 
 	//체크박스 하나씩 체크하거나 풀때
 	$(".check").click(e=>{
 		
@@ -173,82 +216,36 @@ input[type="checkbox"]:checked+svg {
 			$(".check").prop("checked",false);
 		}
 	});
-	//회원가입버튼 눌렀을때
-	function join(){
-		
-		/* var phone=$("#phone").val();//핸드폰번호값
-		var regphone=/^010([0-9]{8})$/;//핸드폰번호 정규표현식
-		var regPw = /^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/;
-		var pw = $("#password").val();//비밀번호값
-		var pw2 = $("#password2").val();//비밀번호확인값
-
-		if($("#email").val()==""){//이메일이 공백일때
-			alert("이메일을 입력해주세요.");
+	
+	$(document).on('click','#check',function(e){//닉네임 중복확인
+		var nickName=$("#nickName").val().trim();
+		if(nickName==""){
+			alert("닉네임을 입력해주세요");
 			return;
 		}
-		if(pw==""||pw2==""){//비밀번호,비밀번호확인 둘중 하나라도 입력안했을때
-			alert("비밀번호를 입력해주세요.");
-			return;
-		}else if(!(pw==pw2&&regPw.test(pw))){//공백이 아니고 정상적이지 않을때
-			alert("비밀번호를 확인해주세요.");
-			return;
-		}
-		if($("#membername").val()==""){//이름이 공백일때
-			alert("이름을 입력해주세요.");
-			return;
-		}
-		if(($("#nickname").val().trim())==""){//닉네임이 공백일때
-			alert("닉네임은 빈칸이거나 공백으로만 할 수 없습니다. 다시 입력해주세요");
-			$("#nickname").val($("#nickname").val().trim());
-			return;
-		}
-		if($("#sample6_postcode").val()==""||$("#sample6_address").val()==""||($("#sample6_detailAddress").val()).trim()==""){
-			alert("주소를 다시 입력해주세요.");
-			return;
-		}
-		if(regphone.test(phone)!=true){//핸드폰번호가 형식이 맞지않으면
-			alert("핸드폰번호를 확인해주세요.");
-			return;
-		}
-		if($("#allcheck").prop("checked")==false){//전체동의가 체크되지 않으면
-			alert("약관의 동의해주세요");
-			return;
-		}
-		
-		$("#nickname").val($("#nickname").val().trim());//닉네임 양쪽 공백제거하여 보냄 */
-		$("#frm").submit();
-	}
-	/* $("#password").keyup(e=>{//비밀번호 입력할때
-		var pw= $("#password").val();
-		var regPw = /^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/;
-		if(regPw.test(pw)!=true){
-			$("#pw").attr("style","color:red;font-size:12px;");
-			$("#pw").html("문자,숫자,특수기호를 혼용하여 8~15글자로 입력해주세요.");
-		}else{
-			$("#pw").attr("style","color:green;font-size:12px;");
-			$("#pw").html("사용가능합니다.");
-		}
+		$.ajax({
+			url:"${path}/member/checkNickName.do",
+			data:{nickName:nickName},
+			success:data=>{
+				if(data==true){
+					alert("사용가능합니다.");
+					$(".checked").val(1);
+				}else{
+					alert("이미 있는 닉네임입니다.");
+				}
+			}
+		});
 	});
-	$("#password2").keyup(e=>{//비밀번호 확인 입력할때
-		var pw = $("#password").val();
-		var pw2 = $("#password2").val();
-		var regPw = /^.*(?=^.{4,13})(?=.*\d)(?=.*[a-zA-Z]).*$/;
-		if(pw!=pw2){
-			$("#pw2").attr("style","color:red;font-size:12px;");
-			$("#pw2").html("비밀번호가 일치하지 않습니다.");
-		}else{
-			$("#pw2").attr("style","color:green;font-size:12px;");
-			$("#pw2").html("비밀번호가 일치합니다.");
-		}
-		
-	});
+	
+	 
+	
 	$("#membername").keyup(e=>{//이름입력할때
 		$("#membername").val($("#membername").val().trim());//이름에 공백못들어가게함
 	});
 	$("#email").keyup(e=>{//이메일입력할때
 		$("#email").val($("#email").val().trim());//이메일에 공백못들어가게함
 		
-	}); */
+	}); 
 	//사진!!
 	  //사진 미리보기
 	  $(document).on('change','.upload',function(e){
@@ -282,27 +279,7 @@ input[type="checkbox"]:checked+svg {
     	previewDiv.remove();//미리보기div삭제
     	$("#hide").show();//미리보기가 삭제되었으니 사진 등록창 보이게
     }); 
-    $(document).on('click','#check',function(e){//닉네임 중복확인
-		var nickName=$("#nickName").val().trim();
-		if(nickName==""){
-			alert("닉네임을 입력해주세요");
-			return;
-		}
-		$.ajax({
-			url:"${path}/member/checkNickName.do",
-			data:{nickName:nickName},
-			success:data=>{
-				console.log(data);
-				if(data==true){
-					alert("사용가능합니다.");
-				}else{
-					alert("이미 있는 닉네임입니다.");
-				}
-			}
-		});
-	});
-	
-	
+   
 	//주소api
      function sample6_execDaumPostcode() {
          new daum.Postcode({
