@@ -231,6 +231,24 @@ public class DailyDaoImpl implements DailyDao {
 		return session.selectList("daily.selectDailyHash",hashtag,rb);
 	}
 
+	@Override
+	public int insertDailyLike(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.insert("daily.insertDailyLike", m);
+	}
+
+	@Override
+	public int deleteDailyLike(SqlSession session, String dailyNo) {
+		// TODO Auto-generated method stub
+		return session.delete("daily.deleteDailyLike", dailyNo);
+	}
+
+	@Override
+	public List<String> selectDailyLike(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("daily.selectDailyLike", memberNo);
+	}
+
 	
 	
 
