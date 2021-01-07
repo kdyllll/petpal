@@ -41,10 +41,21 @@
 									class="form-control col-3 d-inline align-middle stockNum"
 									name="stock" /> 
 									<input type="hidden" name="stockNo" class="stockNo" value="${s.stockNo }" /> 
-									<input type="submit" value="수정" class=" d-inline btn btn-outline-secondary align-middle insertStockBtn" />
+									<button type="button" class=" d-inline btn btn-outline-secondary align-middle insertStockBtn" >수정</button>
 									<input type="hidden" name="stockk" value="${s.stock }" /> 
 							</div>
-							<script>
+							
+						</form>
+					</c:forEach>
+				</c:if>
+			</div>
+			<div class="modal-footer ">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
 						$(function() {
 							$(".insertStockBtn").on("click", e => {
 								 let stock = $(e.target).next().val();
@@ -69,22 +80,10 @@
 								}
 								if(flag == false) {
 									return;
-								}  else {
+								} else {
 									$(".stockFrm").attr("action","${path}/admin/updateStockEnd.do").submit(); 									
 								}
-									
-								
-								
+
 							})
 						})
 					</script>
-						</form>
-					</c:forEach>
-				</c:if>
-			</div>
-			<div class="modal-footer ">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
