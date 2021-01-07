@@ -51,4 +51,14 @@ public interface MemberService {
    List<Map> selectFindLikeList(String memberNo);
    List<Map> selectPlaceLikeList(String memberNo);
    List<Map> selectTipLikeList(String memberNo);
+   List<Map> selectFollowing(String memberNo,int cPage,int numPerPage);
+   List<Map> selectFollower(String memberNo,int cPage,int numPerPage);
+   int followingCount(String memberNo);
+   int followerCount(String memberNo);
+   String selectNList(String memberNo);
+   String selectIList(String memberNo);
+   String selectMList(String memberNo);
+   int insertFollow(String memberNo, String writerNo);
+   List<Map> selectFollow(String memberNo, String writerNo);
+   int deleteFollow(String memberNo, String writerNo);
 }

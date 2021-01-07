@@ -1,5 +1,6 @@
 package com.project.petpal.member.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -265,9 +266,76 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectList("member.selectTipLikeList", memberNo);
 	}
 
+	@Override
+	public List<Map> selectFollowing(SqlSession session, String memberNo, int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+	      return session.selectList("follow.selectFollowing",memberNo,rb);
+	}
+	
+	@Override
+	public List<Map> selectFollower(SqlSession session, String memberNo, int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("follow.selectFollower",memberNo,rb);
+	}
 
+	@Override
+	public int followingCount(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("follow.followingCnt",memberNo);
+	}
    
-   
+	@Override
+	public int followerCount(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("follow.followerCnt",memberNo);
+	}
 
+	@Override
+	public String selectNList(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.selectNList", memberNo);
+	}
+	@Override
+	public String selectIList(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.selectIList", memberNo);
+	}
+	@Override
+	public String selectMList(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.selectMList", memberNo);
+	}
+
+	@Override
+	public int insertFollow(SqlSession session, String memberNo, String writerNo) {
+		// TODO Auto-generated method stub
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("memberNo", memberNo);
+		map.put("writerNo", writerNo);
+		
+		return session.insert("follow.insertFollow", map);
+	}
+
+	@Override
+	public List<Map> selectFollow(SqlSession session, String memberNo, String writerNo) {
+		// TODO Auto-generated method stub
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("memberNo", memberNo);
+		map.put("writerNo", writerNo);
+		
+		return session.selectList("follow.selectFollow", map);
+	}
+
+	@Override
+	public int deleteFollow(SqlSession session, String memberNo, String writerNo) {
+		// TODO Auto-generated method stub
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("memberNo", memberNo);
+		map.put("writerNo", writerNo);
+		
+		return session.delete("follow.deleteFollow", map);
+	}
 
 }
