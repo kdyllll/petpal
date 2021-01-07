@@ -50,4 +50,33 @@ public class NoticeServiceImpl implements NoticeService {
 	public List<Map> noticeImgList(String noticeNo) {
 		return dao.noticeImgList(session, noticeNo);
 	}
+	
+	@Override
+	public int updateNotice(Notice n) {
+		return dao.updateNotice(session, n);
+	}
+
+	@Override
+	public int noticeDelete(String noticeNo) {
+		return dao.noticeDelete(session, noticeNo);
+	}
+
+	@Override
+	public int deleteNoticeImg(NoticeImg ni) {
+		return dao.deleteNoticeImg(session, ni);
+	}
+
+	@Override
+	public int insertSubImgs(List<NoticeImg> ni) {
+		int result = 0;
+		for(NoticeImg fi : ni) {
+			result = dao.insertSubImgs(session, fi);
+		}
+		return result;
+	}
+
+	@Override
+	public int updateContent(NoticeImg ni) {
+		return dao.updateContent(session, ni);
+	}
 }

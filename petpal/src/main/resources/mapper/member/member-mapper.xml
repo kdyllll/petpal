@@ -1,19 +1,259 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "- //mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="member">
-	<select id="selectMember" parameterType="string" resultMap="memberMap">
+	<select id="selectMember" parameterType="string"
+		resultMap="memberMap">
 		SELECT * FROM MEMBER WHERE EMAIL = #{email}
 	</select>
 	<resultMap type="member" id="memberMap">
-		<result column="address" property="address" typeHandler="strArr"/>
-    </resultMap>
-    <insert id="insertMember" parameterType="member">
-    	INSERT INTO MEMBER VALUES('M'||TO_CHAR(SEQ_MEMBERNO.NEXTVAL),#{email},#{password},#{memberName},#{phone},#{address,typeHandler=strArr},DEFAULT,DEFAULT,#{nickName},#{img},NULL)
-    </insert>
-    <update id="updatePassword" parameterType="member">
-    	UPDATE MEMBER SET PASSWORD=#{password} where MEMBERNO=#{memberNo}
-    </update>
-    <update id="updateMemberEnd" parameterType="member">
-    	UPDATE MEMBER SET NICKNAME=#{nickName},PHONE=#{phone},MEMBERNAME=#{memberName},address=#{address,typeHandler=strArr}, IMG=#{img}, INFO=#{info} where MEMBERNO=#{memberNo}
-    </update>
+		<result column="address" property="address"
+			typeHandler="strArr" />
+	</resultMap>
+	<insert id="insertMember" parameterType="member">
+		INSERT INTO MEMBER VALUES('M'||TO_CHAR(SEQ_MEMBERNO.NEXTVAL),#{email},
+		<choose>
+			<when test="password != null">
+				#{password}
+			</when>
+			<when test="password == null">
+				NULL
+			</when>
+		</choose>
+		,#{memberName},#{phone},#{address,typeHandler=strArr},3000,DEFAULT,#{nickName},
+		<choose>
+			<when test="img != null">
+				#{img}
+			</when>
+			<when test="img == null">
+				DEFAULT
+			</when>
+		</choose>
+		,NULL,
+		<choose>
+			<when test="snsNo != null">
+				#{snsNo}
+			</when>
+			<when test="snsNo == null">
+				NULL
+			</when>
+		</choose>
+		)
+	</insert>
+	<update id="updatePassword" parameterType="member">
+		UPDATE MEMBER SET
+		PASSWORD=#{password} where MEMBERNO=#{memberNo}
+	</update>
+	<update id="updateMemberEnd" parameterType="member">
+		UPDATE MEMBER SET
+		NICKNAME=#{nickName},PHONE=#{phone},MEMBERNAME=#{memberName},address=#{address,typeHandler=strArr},
+		IMG=#{img}, INFO=#{info} where MEMBERNO=#{memberNo}
+	</update>
+	<select id="selectMemberAll" resultType="map">
+		SELECT * FROM MEMBER
+	</select>
+
+	<select id="followCnt" parameterType="string" resultType="int">
+		SELECT
+		COUNT(*) FROM FOLLOW WHERE FOLLOWERNO=#{memberNo}
+	</select>
+	<select id="favCnt" parameterType="string" resultType="int">
+		SELECT
+		COUNT(*) FROM FAV WHERE MEMBERNO=#{memberNo}
+	</select>
+	<select id="selectMemberOnee" parameterType="string"
+		resultType="map">
+		SELECT * FROM MEMBER WHERE MEMBERNO = #{memberNo}
+	</select>
+
+	<select id="selectMemberOne" resultType="member"
+		parameterType="string">
+		SELECT * FROM MEMBER WHERE MEMBERNO=#{memberNo}
+	</select>
+	<select id="countFollowing" resultType="int"
+		parameterType="string">
+		SELECT COUNT(*) FROM FOLLOW WHERE FOLLOWERNO=#{memberNo}
+	</select>
+	<select id="countFollower" resultType="int"
+		parameterType="string">
+		SELECT COUNT(*) FROM FOLLOW WHERE WRITERNO=#{memberNo}
+	</select>
+	<select id="selectDailyMain" resultType="dailyImg"
+		parameterType="string">
+		SELECT * FROM DAILYIMG LEFT JOIN DAILY USING(DAILYNO)
+		WHERE
+		MEMBERNO=#{memberNo} AND STATUS='M'
+	</select>
+	<select id="selectTipMain" resultType="map"
+		parameterType="string">
+		SELECT * FROM TIPIMG LEFT JOIN TIP USING(TIPNO) WHERE
+		MEMBERNO=#{memberNo}
+		AND MAINIMG IS NOT NULL
+	</select>
+	<select id="selectPlaceMain" resultType="map"
+		parameterType="string">
+		SELECT * FROM PLACEIMG LEFT JOIN PLACE USING(PLACENO)
+		WHERE
+		MEMBERNO=#{memberNo} AND TYPE='M'
+	</select>
+	<select id="selectFindMain" resultType="map"
+		parameterType="string">
+		SELECT * FROM FINDIMG LEFT JOIN FIND USING(FINDNO) WHERE
+		MEMBERNO=#{memberNo} AND IMGSTATUS='M'
+	</select>
+	<select id="selectDailyList" resultType="daily"
+		parameterType="string">
+		SELECT * FROM DAILY WHERE MEMBERNO=#{memberNo}
+	</select>
+	<select id="selectDailyHash" resultType="hashtag"
+		parameterType="string">
+		SELECT * FROM HASHTAG LEFT JOIN DAILY ON POSTNO=DAILYNO
+		WHERE POSTNO LIKE
+		'D%' AND MEMBERNO=#{memberNo}
+	</select>
+	<select id="selectSnsMember" resultType="member"
+		parameterType="string">
+		SELECT * FROM MEMBER WHERE SNSNO=#{value}
+	</select>
+	<select id="selectPaymentList" resultType="map"
+		parameterType="map">
+		SELECT * FROM PAYMENT JOIN PAYDETAIL USING(PAYMENTNO) JOIN STOCK
+		USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG
+		USING(PRODUCTNO) WHERE TYPE='M' AND MEMBERNO=#{memberNo}
+		<if test="status != null">
+			and DETAILSTATUS = #{status}
+		</if>
+		<if test="deliveryStatus != null">
+			and DELIVERYSTATUS = #{deliveryStatus} AND
+			DETAILSTATUS='결제'
+		</if>
+		<if test="payStatus != null">
+			and PAYSTATUS = #{payStatus} AND DETAILSTATUS='결제'
+		</if>
+		ORDER BY PAYDATE DESC
+	</select>
+	<select id="selectShopDetail" resultType="map"
+		parameterType="string">
+		SELECT * FROM PAYMENT JOIN PAYDETAIL USING(PAYMENTNO)
+		JOIN STOCK
+		USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG
+		USING(PRODUCTNO) WHERE TYPE='M' and detailNo=#{detailNo}
+	</select>
+	<update id="productRefund" parameterType="map">
+		UPDATE PAYDETAIL SET
+		DETAILSTATUS='반품중',REFUNDINFO=#{reason},REFUNDDATE=SYSDATE WHERE
+		DETAILNO=#{detailNo}
+	</update>
+	<select id="getStockNo" resultType="string"
+		parameterType="string">
+		SELECT STOCKNO FROM PAYDETAIL WHERE DETAILNO=#{detailNo}
+	</select>
+	<select id="getProductNo" resultType="string"
+		parameterType="string">
+		select PRODUCTNO from stock where stockNo=#{stockNo}
+	</select>
+	<update id="productChange" parameterType="map">
+		UPDATE PAYDETAIL SET
+		DETAILSTATUS='교환중',CHANGEINFO=#{reason},
+		CHANGEDATE=SYSDATE WHERE
+		DETAILNO=#{detailNo}
+	</update>
+	<select id="selectPayDetail" resultType="map"
+		parameterType="string">
+		SELECT * FROM PAYDETAIL WHERE DETAILNO=#{detailNo}
+	</select>
+	<select id="selectCnt" resultType="_int" parameterType="map">
+		SELECT
+		COUNT(*) FROM PAYDETAIL JOIN PAYMENT USING(PAYMENTNO) WHERE
+		MEMBERNO=#{memberNo} AND DETAILSTATUS=#{n}
+	</select>
+	<select id="selectDeliveryCnt" resultType="_int"
+		parameterType="map">
+		SELECT COUNT(*) FROM PAYDETAIL JOIN PAYMENT
+		USING(PAYMENTNO) WHERE
+		MEMBERNO=#{memberNo} AND deliveryStatus =
+		#{deliveryStatus} AND
+		DETAILSTATUS='결제'
+	</select>
+	<select id="selectPointList" resultType="map"
+		parameterType="string">
+		select * from payment where memberno = #{memberNo} and
+		pointplus !=0 or
+		pointminus != 0 ORDER BY PAYDATE DESC
+	</select>
+	<select id="selectPaymentListNon" resultType="map"
+		parameterType="map">
+		SELECT * FROM PAYMENT JOIN PAYDETAIL USING(PAYMENTNO) JOIN STOCK
+		USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG
+		USING(PRODUCTNO) WHERE TYPE='M' AND ORDERNO=#{orderNo}
+		<if test="status != null">
+			and DETAILSTATUS = #{status}
+		</if>
+		<if test="deliveryStatus != null">
+			and DELIVERYSTATUS = #{deliveryStatus} AND
+			DETAILSTATUS='결제'
+		</if>
+		<if test="payStatus != null">
+			and PAYSTATUS = #{payStatus} AND DETAILSTATUS='결제'
+		</if>
+		ORDER BY PAYDATE DESC
+	</select>
+	<select id="selectOrderCheck" parameterType="string"
+		resultType="_int">
+		SELECT COUNT(*) FROM PAYMENT WHERE ORDERNO=#{value}
+	</select>
+	<select id="selectCntNon" resultType="_int" parameterType="map">
+		SELECT COUNT(*) FROM PAYDETAIL JOIN PAYMENT USING(PAYMENTNO) WHERE
+		ORDERNO=#{orderNo} AND DETAILSTATUS=#{n}
+	</select>
+	<select id="selectDeliveryCntNon" resultType="_int"
+		parameterType="map">
+		SELECT COUNT(*) FROM PAYDETAIL JOIN PAYMENT
+		USING(PAYMENTNO) WHERE
+		ORDERNO=#{orderNo} AND deliveryStatus =
+		#{deliveryStatus} AND
+		DETAILSTATUS='결제'
+	</select>
+	<select id="checkNickName" resultType="member"
+		parameterType="string">
+		SELECT * FROM MEMBER WHERE NICKNAME=#{nickName}
+	</select>
+	<select id="selectDailyLikeList" resultType="map"
+		parameterType="string">
+		select dailyno as likeno, content, dailydate,
+		memberno,dailyimgname from
+		daily join dailylike using(dailyno) join
+		dailyimg using(dailyno) where
+		status ='M' and heartmemberno=#{memberNo}
+	</select>
+	<select id="selectFindLikeList" resultType="map"
+		parameterType="string">
+		select findno as likeno, address, content, title,
+		enrolldate,filename,memberno from find join findlike using(findNo)
+		join findimg using(findno) where heartmemberno=#{memberNo} and
+		imgstatus='M'
+	</select>
+	<select id="selectPlaceLikeList" resultType="map"
+		parameterType="string">
+		select placeno as likeno, filename, title, placedate as
+		enrolldate,
+		position,category from place join placeimg using(placeno)
+		join
+		placelike using(placeno) where type='M' and
+		heartmemberno=#{memberNo}
+	</select>
+	<select id="selectTipLikeList" resultType="map"
+		parameterType="string">
+		select tipno as likeno, title, tipdate as enrolldate,
+		content1 as content,mainimg from tip join tipimg using(tipno) join
+		tiplike using(tipno) where mainimg is not null and heartmemberno=#{memberNo}
+	</select>
+	<select id="selectNList" parameterType="string" resultType="string">
+		SELECT NICKNAME FROM MEMBER WHERE MEMBERNO = #{memberNo}
+	</select>
+	<select id="selectIList" parameterType="string" resultType="string">
+		SELECT IMG FROM MEMBER WHERE MEMBERNO = #{memberNo}
+	</select>
+	<select id="selectMList" parameterType="string" resultType="string">
+		SELECT MEMBERNO FROM MEMBER WHERE MEMBERNO = #{memberNo}
+	</select>
 </mapper>

@@ -21,7 +21,8 @@ public class Product {
 	private String subcate;
 	private int price;
 	private int sale;
-	private int star;
-	
+	private double star;
+	private String imgName;
+	private int cnt;
 	
 }

@@ -14,5 +14,6 @@ public class DailyImg {
 	private String dailyImgNo;
 	private String dailyNo;
 	private String dailyImgName;
+	private String status;
 	
 }

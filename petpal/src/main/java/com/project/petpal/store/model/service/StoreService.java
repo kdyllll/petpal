@@ -3,8 +3,12 @@ package com.project.petpal.store.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.project.petpal.community.model.vo.DailyImg;
+import com.project.petpal.payment.model.vo.Cart;
 import com.project.petpal.store.model.vo.Product;
 import com.project.petpal.store.model.vo.ProductImg;
+import com.project.petpal.store.model.vo.Qna;
+import com.project.petpal.store.model.vo.Review;
 import com.project.petpal.store.model.vo.Stock;
 
 public interface StoreService {
@@ -18,4 +22,34 @@ public interface StoreService {
 	List<Map> subCateList(String cNo);
 	List<Product> soldOutList(String cNo);
 	int insertCart(Map m);
-}
+	List<String> payCheck(Map m);
+	int insertReview(Review r);
+	List<Review> selectReview(String productNo,int cPage,int numPerPage);
+	Map selectStock(String detailNo);
+	int deleteReview(String reviewNo);
+	int updateReview(Review r);
+	Review selectReviewOne(String reviewNo);
+	int reviewComment(Map map);
+	ProductImg selectMainImg(String productNo);
+	int insertQna(Qna q);
+	List<Qna> selectQna(String productNo,int cPage,int numPerPage);
+	int deleteQna(String qnaNo);
+	Qna selectQnaOne(String qnaNo);
+	int updateQna(Qna qna);
+	int writeQnaComment(Qna qna);
+	int editQnaComment(Qna qna);
+	int deleteQnaComment(String qnaNo);
+	Cart selectCartOne(Map m);
+	int updateCartCnt(Map m);
+	int totalReviewCount(String productNo);
+	int totalQnaCount(String productNo);
+	List<DailyImg> selectDailyImg(String productNo);
+	int insertFav(Map fav);
+	List<Product> favList(String memberNo);
+	int deleteFav(Map fav);
+	List<Product> starList();
+	double selectAvgReview(String productNo);
+	List<Product> saleList();
+	List<Product> categoryList(Map sort);
+	List<Product> soldOutList(Map sort);
+} 

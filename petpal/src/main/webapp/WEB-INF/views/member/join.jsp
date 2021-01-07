@@ -7,7 +7,6 @@
 <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
 <script
 	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
 </head>
 <body class="bg-white">
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -17,10 +16,10 @@
 				<div class="container">
 					<h2 class="text-center font-weight-bold" id="title">회원가입</h2>
 					<div class="text-center">
-						<a href="#"><img src="${path }/resources/images/naver.PNG"
-							style="width: 80px; height: 80px;" alt=""></a> <a href="#"><img
-							src="${path }/resources/images/facebook.png"
-							style="width: 80px; height: 80px;" alt=""></a> <a href="#"><img
+						<a href="${naverUrl }"><img src="${path }/resources/images/naver.PNG"
+							style="width: 80px; height: 80px;" alt=""></a> <a href="${kakaoUrl }"><img
+							src="${path }/resources/images/kakao.jpg"
+							style="width: 80px; height: 80px;" alt=""></a> <a href="${googleUrl }"><img
 							src="${path }/resources/images/google.png"
 							style="width: 80px; height: 80px;" alt=""></a>
 					</div>
@@ -36,7 +35,7 @@
 										<input type="text" class="form-control input-lg"
 											placeholder="이메일" name="email" id="email">
 										<div class="input-group-append">
-											<button type="button" class="btn btn-secondary">이메일인증</button>
+											<button type="button" class="btn btn-secondary" id="auth">이메일인증</button>
 										</div>
 									</div>
 									<div class="mb-4">
@@ -55,8 +54,10 @@
 											class="form-control input-lg" placeholder="이름">
 									</div>
 									<div class="mb-4">
-										<input type="text" name="nickName" id="nickname"
-											class="form-control input-lg" placeholder="닉네임">
+										<input type="hidden" class="checked" value="0">
+										<input type="text" name="nickName" id="nickName" style="width:75%;"
+											class="form-control input-lg d-inline" placeholder="닉네임" >
+											<button type="button" class="btn btn-outline-secondary" id="check">중복확인</button>
 									</div>
 									<div class="mb-4">
 										<input type="text" id="sample6_postcode" name="address"
@@ -97,8 +98,9 @@
                   </svg>
 													<br> <span> 사진 올리기(선택) </span>
 												</div>
+												</label>
 										</div>
-										</label>
+										
 									</div>
 									<h5 class="font-weight-bold">이용약관</h5>
 									<div class="mb-1">
@@ -171,6 +173,8 @@ input[type="checkbox"]+svg {
 input[type="checkbox"]:checked+svg {
 	color: #00CC00;
 }
+#password{font-family:맑은고딕, Malgun Gothic, dotum, gulim, sans-serif;}
+#password2{font-family:맑은고딕, Malgun Gothic, dotum, gulim, sans-serif;}
 </style>
 
 <script>
@@ -197,7 +201,8 @@ input[type="checkbox"]:checked+svg {
 	});
 	//회원가입버튼 눌렀을때
 	function join(){
-		/* var phone=$("#phone").val();//핸드폰번호값
+		
+		var phone=$("#phone").val();//핸드폰번호값
 		var regphone=/^010([0-9]{8})$/;//핸드폰번호 정규표현식
 		var regPw = /^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/;
 		var pw = $("#password").val();//비밀번호값
@@ -218,9 +223,13 @@ input[type="checkbox"]:checked+svg {
 			alert("이름을 입력해주세요.");
 			return;
 		}
-		if(($("#nickname").val().trim())==""){//닉네임이 공백일때
+		if(($("#nickName").val().trim())==""){//닉네임이 공백일때
 			alert("닉네임은 빈칸이거나 공백으로만 할 수 없습니다. 다시 입력해주세요");
-			$("#nickname").val($("#nickname").val().trim());
+			$("#nickName").val($("#nickName").val().trim());
+			return;
+		}
+		if($(".checked").val()==0){
+			alert("닉네임 중복확인 해주세요");
 			return;
 		}
 		if($("#sample6_postcode").val()==""||$("#sample6_address").val()==""||($("#sample6_detailAddress").val()).trim()==""){
@@ -236,11 +245,12 @@ input[type="checkbox"]:checked+svg {
 			return;
 		}
 		
-		$("#nickname").val($("#nickname").val().trim());//닉네임 양쪽 공백제거하여 보냄 */
+		$("#nickName").val($("#nickName").val().trim());//닉네임 양쪽 공백제거하여 보냄 
 		$("#frm").submit();
 	}
-	/* $("#password").keyup(e=>{//비밀번호 입력할때
+	 $("#password").keyup(e=>{//비밀번호 입력할때
 		var pw= $("#password").val();
+		var pw2 = $("#password2").val();
 		var regPw = /^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/;
 		if(regPw.test(pw)!=true){
 			$("#pw").attr("style","color:red;font-size:12px;");
@@ -248,6 +258,13 @@ input[type="checkbox"]:checked+svg {
 		}else{
 			$("#pw").attr("style","color:green;font-size:12px;");
 			$("#pw").html("사용가능합니다.");
+		}
+		if(pw!=pw2){
+			$("#pw2").attr("style","color:red;font-size:12px;");
+			$("#pw2").html("비밀번호가 일치하지 않습니다.");
+		}else{
+			$("#pw2").attr("style","color:green;font-size:12px;");
+			$("#pw2").html("비밀번호가 일치합니다.");
 		}
 	});
 	$("#password2").keyup(e=>{//비밀번호 확인 입력할때
@@ -269,7 +286,11 @@ input[type="checkbox"]:checked+svg {
 	$("#email").keyup(e=>{//이메일입력할때
 		$("#email").val($("#email").val().trim());//이메일에 공백못들어가게함
 		
-	}); */
+	}); 
+	$("#nickName").keyup(e=>{//이메일입력할때
+		$(".checked").val(0);
+		
+	}); 
 	//사진!!
 	  //사진 미리보기
 	  $(document).on('change','.upload',function(e){
@@ -300,9 +321,40 @@ input[type="checkbox"]:checked+svg {
 	//사진 삭제
     $(document).on('click','.del',function(e){
     	 let previewDiv=$(e.target).parents(".preview");
-    	previewDiv.remove();//div삭제
-    	$("#hide").show();
+    	previewDiv.remove();//미리보기div삭제
+    	$("#hide").show();//미리보기가 삭제되었으니 사진 등록창 보이게
     }); 
+    $(document).on('click','#auth',function(e){//이메일 인증
+    	var email=$("#email").val();
+    	$.ajax({
+    		url:"${path}/sendEmail.do",
+    		data:{email:email},
+    		success:data=>{
+    			console.log(data);
+			}
+    	})
+    });
+	
+	$(document).on('click','#check',function(e){//닉네임 중복확인
+		var nickName=$("#nickName").val().trim();
+		if(nickName==""){
+			alert("닉네임을 입력해주세요");
+			return;
+		}
+		$.ajax({
+			url:"${path}/member/checkNickName.do",
+			data:{nickName:nickName},
+			success:data=>{
+				if(data==true){
+					alert("사용가능합니다.");
+					$(".checked").val(1);
+				}else{
+					alert("이미 있는 닉네임입니다.");
+				}
+			}
+		});
+	});
+	
 	
 	//주소api
      function sample6_execDaumPostcode() {
@@ -330,4 +382,5 @@ input[type="checkbox"]:checked+svg {
          }).open();
      } 
 </script>
+
 </html>

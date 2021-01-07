@@ -1,3 +1,6 @@
+<%@page import="org.springframework.ui.Model"%>
+<%@page import="java.util.List"%>
+<%@page import="com.project.petpal.store.model.vo.Review"%>
 <%@page import="com.project.petpal.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -5,24 +8,22 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
-	Member loginMember = (Member) session.getAttribute("loginMember");
+	List<Review> reviewList=(List) request.getAttribute("reviewList");
+	Member loginMember=(Member)session.getAttribute("loginMember");
 %>
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
  <jsp:include page="/WEB-INF/views/common/commonLink.jsp" />
-   
+
 </head>
 <body class="bg-white">
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
   
   <!-- Page Content -->
   <main role="main" class="pt-5" style="min-height:100vh;">
+  	  <input type="hidden" id="loginMember" value="${loginMember }"/>
+  	  <input type="hidden" id="memberNo" value="${loginMember.memberNo }"/>
       <form class="payFrm container mt-5 productHeader"> 
-        <!-- <nav aria-label="breadcrumb ">
-          <ol class="breadcrumb bg-transparent">
-            <li class="breadcrumb-item"><a href="#">강아지</a></li>
-            <li class="breadcrumb-item"><a href="#">가구</a></li>
-          </ol>
-        </nav> -->
+ 
         <div class="panel-body row">  
           <div class="col-lg-6">
             <!-- 상품 사진 -->
@@ -67,16 +68,47 @@
           </div>
           <!-- 상품 정보들 -->
           <div class="col-lg-6 ">
-          	
+          	<input type="hidden" id="productNo" value="${product.productNo }"/>
             <p id="productName" class="h3">               
                   <c:out value="${product.productName}"/>
             </p>
             <div class="px-3 pb-2 border-bottom">
               <div class="row mb-3 mx-2 d-flex justify-content-between"> 
-                <a href="#" class="">★★★☆☆ 00개 리뷰</a>
-                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <a href="#" class="text-dark align-middle">
+                <fmt:parseNumber var= "su" integerOnly= "true" value= "${reviewAvg }" />
+                <c:forEach begin="0" end="4" varStatus="vs">
+	                <span class="text-hgh box float-left position-relative mr-1" style="width: 25px; height:25px;"> 
+				      <div class="no m-0 p-0 mx-auto position-absolute d-inline" style="top:0;">
+				        <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+				          <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+				        </svg>    
+				      </div>
+				      
+                	<c:choose>
+                		<c:when test="${vs.index lt su}">
+                			<div class="yes  m-0 p-0 mx-auto position-absolute overflow-hidden d-inline" style="top:0; width:100%; height:25px;">
+                		</c:when>
+                		<c:when test="${vs.index eq su }">
+                			<c:set var="percent" value="${(reviewAvg-su)*100 }"/>
+                			<div class="yes  m-0 p-0 mx-auto position-absolute overflow-hidden d-inline" style="top:0; width:${percent}%; height:25px;">
+                		</c:when>
+                		<c:otherwise>
+                			<div class="yes  m-0 p-0 mx-auto position-absolute overflow-hidden d-inline" style="top:0; width:0%; height:25px;">
+                		</c:otherwise>
+                	</c:choose>
+                	
+                		 <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+				          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+				        </svg>
+				      </div>
+				    </span>
+                </c:forEach>
+    		<span class="ml-2 align-middle"><c:out value="${reviewCount }"/>개 리뷰</span></a>
+                <button type="button" class="badge bg-light border-0" id="heart">
+                <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-heart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                </svg>          
+                </svg>     
+                </button>     
               </div>
               	<c:forEach var="i" items="${stockList}" varStatus="vs">
             		<c:if test="${vs.first}">
@@ -89,42 +121,51 @@
             		</c:if>
             	</c:forEach>
               <div class="row mb-3">
-                <span class="h1 col-3 text-right text-info align-middle"><strong><c:out value="${sale }"/>%</strong></span>
+                <span class="col-3 text-right text-hgh align-middle pt-2" style="font-size:40px;"><strong>
+                	<c:out value="${sale }"/>%
+                </strong></span>
                 <span class="col-9">
                   <p class="mb-0"><del>
-                  	
-                  	<c:out value="${price }"/>
+                  	<fmt:formatNumber value="${price }" pattern="###,###,###"/>원
                   </del></p>
                   <p class="h1"><strong>
-                  	<c:out value="${price * sale * 0.001 }"/>
+                  	<fmt:formatNumber value="${price * (100 - sale) / 100  }" pattern="###,###,###"/>원
                   </strong></p>
                 </span>
               </div>
-              <p class=""><b class="text-info"><c:out value="${price * sale * 0.001 * 0.1}"/>P</b> 적립해드립니다.</p>
+              <p class="">
+              		<b class="text-hgh">
+              			<fmt:formatNumber value="${price * (100 - sale) / 1000  }" pattern="###,###,###"/>P
+              		</b> 적립해드립니다.
+              </p>
             </div>
             <div class="px-3 py-3 border-bottom">
-              <p>CJ대한통운<br>
+              <p class="m-0">CJ대한통운<br>
               2,500원 (50,000원 이상 구매시 무료배송) <br>
-                <span class="pl-1 text-muted">도서산간지역 추가금액 발생 가능</span>
               </p>              
             </div>
             <div class="py-3 px-3">
-              <c:if test="${not empty colors }">
-	              <select id="color" class="form-control mb-1" >
-	                <option disabled selected>색상</option>  
-                	<c:forEach var="i" items="${colors}">
-                		<option value="${i }"><c:out value="${i }"/></option>
+              <c:if test="${fn:length(stockList) > 1 }">
+	              <select id="option" class="form-control mb-1" >
+	                <option value="default" disabled selected>옵션 선택</option> 	                 
+                	<c:forEach var="s" items="${stockList}">
+                		<option value="${s.stockNo }" ${s.stock>0?"":"disabled" }>
+                			<c:out value="${s.color }"/> 	
+                			&nbsp;
+                			<c:out value="${s.productSize }"/> 
+							&nbsp;&nbsp; / &nbsp;&nbsp;
+                			<c:if test="${s.stock > 0 }">
+                				<c:out value="${s.stock }"/>개
+                			</c:if>
+                			<c:if test="${s.stock < 1 }">
+                				(품절)
+                			</c:if>
+                		</option>
                 	</c:forEach>       
+                	
 	              </select>
               </c:if>
-              <c:if test="${not empty sizes }">
-	              <select id="size" class="form-control" >
-	                <option disabled selected>크기</option>
-	                <c:forEach var="i" items="${sizes }">
-	                	<option value="${i }"><c:out value="${i }"/></option>
-	                </c:forEach>
-	              </select>
-              </c:if>
+
             </div>
             <div id="orderList" class="">
               
@@ -134,8 +175,8 @@
               <span id="totalPrice" class="h3"><strong>0원</strong></span>
             </div>
             <div class="row mx-1 py-3 d-flex justify-content-around">
-              <div class="col-6"><button type="button" id="cartBtn" class="btn btn-outline-primary btn-lg btn-block " data-toggle="modal">장바구니</button></div>             
-              <div class="col-6"><button type="button" id="payBtn" class="btn btn-primary btn-lg btn-block" data-toggle="modal">바로구매</button></div>
+              <div class="col-6"><button type="button" id="cartBtn" class="btn bg-light btn-lg btn-block " data-toggle="modal">장바구니</button></div>             
+              <div class="col-6"><button type="button" id="payBtn" class="btn bg-point btn-lg btn-block" data-toggle="modal">바로구매</button></div>
             </div>      
           </div>
         </div>
@@ -145,16 +186,16 @@
       <div class="productContainer">
          <!--스티키-->
         <div class="sticky-top d-none d-lg-block" style="top:70px; height:20px;">
-          <nav class="navbar mt-3 navbar-expand-lg navbar-light bg-light ">
+          <nav class="navbar mt-3 navbar-expand-lg navbar-light bg-point ">
               <ul class="nav container justify-content-around  d-flex ">
                 <li class="nav-item ">
                   <a class="nav-link text-dark" href="#pInfo">상품정보</a>
                 </li>
                 <li class="nav-item ">
-                  <a class="nav-link text-dark" href="#review">리뷰(00개)</a>
+                  <a class="nav-link text-dark" href="#review">리뷰(<c:out value="${reviewCount }"/>개)</a>
                 </li>
                 <li class="nav-item ">
-                  <a class="nav-link text-dark" href="#inquiry">문의(00개)</a>
+                  <a class="nav-link text-dark" href="#qna">문의(<c:out value="${qnaCount }"/>개)</a>
                 </li>
                 <li class="nav-item ">
                   <a class="nav-link text-dark" href="#rule">배송/환불</a>
@@ -163,17 +204,17 @@
           </nav>
         </div>
         <div class="sticky-top d-lg-none" style="top:170px; height:20px;">
-            <nav class="navbar mt-3 navbar-expand-lg navbar-light bg-light ">
+            <nav class="navbar mt-3 navbar-expand-lg navbar-light bg-point ">
   
                 <ul class="nav container justify-content-around  d-flex ">
                   <li class="nav-item ">
                     <a class="nav-link text-dark" href="#">상품정보</a>
                   </li>
                   <li class="nav-item ">
-                    <a class="nav-link text-dark" href="#">리뷰(00개)</a>
+                    <a class="nav-link text-dark" href="#">리뷰(<c:out value="${reviewCount }"/>개)</a>
                   </li>
                   <li class="nav-item ">
-                    <a class="nav-link text-dark" href="#">문의(00개)</a>
+                    <a class="nav-link text-dark" href="#">문의(<c:out value="${qnaCount }"/>개)</a>
                   </li>
                   <li class="nav-item ">
                     <a class="nav-link text-dark" href="#">배송/환불</a>
@@ -183,33 +224,32 @@
           </div>
 
         <!--상품 상세창-->
-        <div class="container mt-5 col-lg-8 col-10 offset-lg-2"> 
+        <div class="container mt-5 col-lg-8 col-10 offset-lg-2">     
           <div class="mb-5">
-            <p class="h5 py-4"><strong>유저들의 스타일링 샷</strong> <span class="text-info">0</span></p>
-            <div id="carouselExampleControls" class="carousel slide block col-lg-8 offset-lg-2">
-              <div class="carousel-inner rounded ">
-                <div class="carousel-item active">
-                  <img src="" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                  <img src="" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                  <img src="" class="d-block w-100" alt="...">
-                </div>
-              </div>
-              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-              </a>
-            </div>
-            <!-- <div id="pInfo" style="height:150px;">
+          
+          <!-- 일상과 연결되는 사진들 -->
+            <c:if test="${not empty dailyList }">
+	            <p class="h5 py-4"><strong>유저들의 스타일링 샷</strong> <span class="text-point"><c:out value="${fn:length(dailyList)}"/></span></p>
+	            <div id="carouselExampleControls" class="carousel slide block col-lg-8 offset-lg-2">
+	              <div class="carousel-inner rounded ">
+	                <c:forEach var="d" items="${dailyList }" varStatus="vs">
+	                	<a href="${path }/daily/moveDetail.do?dailyNo=${d.dailyNo}" class="carousel-item ${vs.first?'active':'' }">
+		                  <img src="${path }/resources/upload/community/daily/${d.dailyImgName}" class="d-block w-100">
+		                </a>
+	                </c:forEach>               
+	              </div>
+	              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+	                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+	                <span class="sr-only">Previous</span>
+	              </a>
+	              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+	                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+	                <span class="sr-only">Next</span>
+	              </a>
+	            </div>
+			 </c:if>
 
-            </div> -->
+
             <!--상품정보-->
             <div id="pInfo">
               <p class="h5 py-4"><strong>상품정보</strong></p>
@@ -228,151 +268,70 @@
                 </tr>
               </tbody>
             </table>
+            
+            
             <!--리뷰-->
             <div id="review">
               <div class="row d-flex justify-content-between px-3 py-4 mt-5">
-                <p class="h5">
+                <div class="h5 row pl-3">
                   <strong>리뷰</strong> 
-                  <span class="text-info pl-3">0</span>
-                  <span class="text-info pl-3">★★★☆☆</span>
-                </p>
-                <button type="button" class="btn btn-link text-info" data-toggle="modal" ><strong>리뷰 쓰기</strong></button>
+                  <span class="text-point pl-3"><c:out value="${reviewCount }"/></span>
+                  <div class="text-hgh pl-3">
+                   <fmt:parseNumber var= "su" integerOnly= "true" value= "${reviewAvg }" />
+	                <c:forEach begin="0" end="4" varStatus="vs">
+		                <span class="box float-left position-relative mr-1" style="width: 20px; height:20px;"> 
+					      <div class="no m-0 p-0 mx-auto position-absolute d-inline" style="top:0;">
+					        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+					          <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+					        </svg>    
+					      </div>
+					      
+	                	<c:choose>
+	                		<c:when test="${vs.index lt su}">
+	                			<div class="yes  m-0 p-0 mx-auto position-absolute overflow-hidden d-inline" style="top:0; width:100%; height:20px;">
+	                		</c:when>
+	                		<c:when test="${vs.index eq su }">
+	                			<c:set var="percent" value="${(reviewAvg-su)*100 }"/>
+	                			<div class="yes  m-0 p-0 mx-auto position-absolute overflow-hidden d-inline" style="top:0; width:${percent}%; height:20px;">
+	                		</c:when>
+	                		<c:otherwise>
+	                			<div class="yes  m-0 p-0 mx-auto position-absolute overflow-hidden d-inline" style="top:0; width:0%; height:20px;">
+	                		</c:otherwise>
+	                	</c:choose>
+	                	
+	                		 <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+					          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+					        </svg>
+					      </div>
+					    </span>
+	                </c:forEach>
+                  
+				  </div>
+                </div>
+                <button type="button" class="btn btn-link text-black-50" data-toggle="modal" id="reviewBtn" ><strong>리뷰 쓰기</strong></button>
               </div>
-              <!--리뷰창-->
-              <article class="px-4 mb-3 pb-3 border-bottom">
-                <div class="row pl-2">
-                  <a href="" class="rounded-circle pr-3">
-                    <img src="./img/avatar.webp" width="30px;">
-                  </a>                  
-                  <div style="font-size: 12px;">
-                    <p class="my-0">작성자</p>
-                    <div ><span class="text-info">★★★☆☆</span> <span>구매날짜</span></div>
-                  </div>
-                </div>
-                <div class="my-2"> 옵션 </div>
-                <img src=""  width="150px" class="rounded mb-3">
-                <p>똥강아지 너무 좋아하고 좀 큰거 같은데 넘 편해보이고 좋으네요 한번 잘 써보겠습니다</p>
-                <div class="text-right">
-                  <a class="text-info text-right pb-2 pr-4"  style="font-size: 12px;" data-toggle="collapse" href="#replyWrite" role="button" aria-expanded="false" aria-controls="collapseExample">답글 수정(판매자만)</a>
-                  <a class="text-info text-right pb-2"  style="font-size: 12px;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    <strong>판매자 답글</strong>
-                  </a>
-                </div>
-                <div class="collapse py-3 mt-2 pr-3 bg-light rounded text-right" id="collapseExample">
-                  <p class="mb-0">구매해주셔서 감사합니다. </p>
-                </div>
-                <form class="collapse  mt-2 p-3 pb-0 bg-light rounded text-right" id="replyWrite">
-                  <div class="form-group">
-                    <textarea class="form-control" rows="2" style="resize:none;" placeholder="구매해주셔서 감사합니다."></textarea>
-                    <button type="button" class="btn btn-primary mt-2">완료</button>
-                  </div> 
-                </form>               
-              </article>
+              <div id="reviewCon">
+            
+              </div>
 
-              <article class="px-4 mb-3 pb-3 border-bottom">
-                <div class="row pl-2">
-                  <a href="" class="rounded-circle pr-3">
-                    <img src="./img/avatar.webp" width="30px;">
-                  </a>                  
-                  <div style="font-size: 12px;">
-                    <p class="my-0">작성자</p>
-                    <div ><span class="text-info">★★★☆☆</span> <span>구매날짜</span></div>
-                  </div>
-                </div>
-                <div class="my-2"> 옵션 </div>
-                <img src="" width="150px" class="rounded mb-3">
-                <p>똥강아지 너무 좋아하고 좀 큰거 같은데 넘 편해보이고 좋으네요 한번 잘 써보겠습니다</p>
-                <div class="text-right">
-                  <a class="text-info text-right pb-2 pr-4"  style="font-size: 12px;" data-toggle="collapse" href="#replyWrite2" role="button" aria-expanded="false" aria-controls="collapseExample">답글 달기(판매자만)</a>
-                  <a class="text-black-50 text-right pb-2" style="font-size: 12px;" data-toggle="collapse" href="" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    <strong>판매자 답글</strong>
-                  </a>
-                </div>
-                <form class="collapse  mt-2 p-3 pb-0 bg-light rounded text-right" id="replyWrite2">
-                  <div class="form-group">
-                    <textarea class="form-control" rows="2" style="resize:none;" placeholder=""></textarea>
-                    <button type="button" class="btn btn-primary mt-2">완료</button>
-                  </div> 
-                </form>
-                
-              </article>
-              <div class="mt-3 text-center">페이지바</div>
             </div>
 
-            <!--문의-->
-            <div id="inquiry" class="row d-flex justify-content-between px-3 py-4 mt-5" >
-              <p class="h5">
-                <strong>문의</strong> 
-                <span class="text-info pl-3">0</span>               
-              </p>
-              <button type="button" class="btn btn-link text-info" data-toggle="modal" ><strong>문의 하기</strong></button>
-            <!--문의-->
-            <article class="border-bottom py-3">
-              <div class="row d-flex justify-content-between pl-2"> 
-                <p class="mb-0"style="font-size: 14px;">구매 | 배송 | <span class="text-secondary"> 답변전</span></p>
-                <a class="text-info text-right pb-2 pr-4"  style="font-size: 12px;" data-toggle="collapse" href="#replyWrite3" role="button" aria-expanded="false" aria-controls="collapseExample">답글 달기(판매자만)</a>
-              </div>
-              <p class="text-black-50" style="font-size: 12px;">작성자 | <span>작성일</span></p>
-              <div class="row ml-2">
-                <p class="text-info mr-3"><strong>Q</strong></p>
-                <p>11/6 부터 순차발송된다 메세지받았는데
-                  아직 배송정보가 안잡힙니다
-                  언제출고되나요?</p>
-              </div> 
-              <form class="collapse" id="replyWrite3">
-                <div class="form-group row ml-2">
-                  <p class=""><strong class="text-info mr-2">A</strong></p>
-                  <div class="col-11"> 
-                    <textarea class="form-control" rows="2" style="resize:none;" placeholder=""></textarea>
-                    <button type="button" class="btn btn-primary mt-2 offset-10 col-2">완료</button>
-                  </div>
-                </div> 
-              </form>
-              
-            </article>
-            <article class="inquiry border-bottom py-3">
-              <div class="row d-flex justify-content-between pl-2"> 
-                <p class="mb-0"style="font-size: 14px;">구매 | 배송 | <span class="text-info"> 답변완료</span></p>
-                <a class="text-info text-right pb-2 pr-4 updateReply" style="font-size: 12px;">답글 수정(판매자만)</a>
-              </div>
-              <p class="text-black-50" style="font-size: 12px;">작성자 | <span>작성일</span></p>
-              <div class="row ml-2">
-                <p class="text-info mr-3"><strong>Q</strong></p>
-                <p >11/6 부터 순차발송된다 메세지받았는데
-                  아직 배송정보가 안잡힙니다
-                  언제출고되나요?</p>
-              </div> 
-              <div class="oriReply row ml-2">
-                <p class=""><strong class="text-info mr-2">A</strong></p>
-                <div class="col-11"> 
-                  <span class="text-black-50" style="font-size: 12px;">답글작성날짜</span>
-                  <p class="content">안녕하세요 그날 오후 즈음 입고가되서 순차적 배송 작업하다보니 일부출고되고 또나머지는 어제부터 발송 처리중이며 이번주 수목 기준은 예상하시면 될듯합니다. 많이 기다려주셔서 너무나 감사합니다</p>
-                </div>
-              </div> 
-              
-                <form class="writeFrm d-none" id="replyWrite4">
-                  <div class="form-group row ml-2">
-                    <p class=""><strong class="text-info mr-2">A</strong></p>
-                    <div class="col-11 mt-2"> 
-                      <textarea class="writeText form-control" rows="3" style="resize:none;" placeholder=""></textarea>
-                      <button type="button" class="btn btn-primary mt-2 offset-10 col-2">완료</button>
-                    </div>
-                  </div> 
-                </form>
-              
-            </article>
-            <script>
-              $(".updateReply").click(function(e){       
-                var ori=$(e.target).parents(".inquiry").find("div.oriReply");
-                var write=ori.next(".writeFrm");
-                var content=ori.find("p.content").html();
-                //console.log(write);
-                ori.toggleClass("d-none");
-                write.find("textarea.writeText").html(content);
-                write.toggleClass("d-none");
-              });
-            </script>
-            <div class="mt-3 text-center">페이지바</div>
+
+
+           <!--문의-->
+			<div id="qna">
+	           <div class="row d-flex justify-content-between px-3 py-4 mt-5" >
+	              <p class="h5">
+	                <strong>문의</strong> 
+	                <span class="text-point pl-3"><c:out value="${qnaCount }"/></span>               
+	              </p>
+	              <button type="button" id="qnaBtn" class="btn btn-link text-black-50" data-toggle="modal" ><strong>문의 하기</strong></button>
+	             
+	            </div>
+	            <div id="qnaCon">
+	            
+	            </div>	            
+            </div>
 
             <!--배송교환환불-->
             <p id="rule" class="h5 py-4"><strong>배송/교환/환불</strong></p>
@@ -388,8 +347,8 @@
                   <td>2,500원</td>
                 </tr>
                 <tr>
-                  <td class="border-bottom text-secondary">도서산간지역 추가 배송비</td>
-                  <td class="border-bottom">5,000원</td>
+                  <td class="border-bottom text-secondary">무료 배송</td>
+                  <td class="border-bottom">30,000원 이상 구매시</td>
                 </tr>
               </tbody>
             </table>
@@ -413,7 +372,7 @@
                 둘 중 하나 경과 시 반품/교환 불가</li>
             </ul>
             <header class="py-3" style="font-size: 17px;"><strong>반품/교환 불가능 사유</strong></header>
-            <ul>
+            <ul class="mb-5">
               <li>반품요청기간이 지난 경우</li>
               <li>구매자의 책임 있는 사유로 상품 등이 멸실 또는 훼손된 경우</li>
               <li>포장을 개봉하였으나 포장이 훼손되어 상품가치가 현저히 상실된 경우</li>
@@ -428,96 +387,69 @@
     </main>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
-
+<style>
+	#heart:focus{
+		outline:none;
+	}
+</style>
 </body>
 <script>
-		let loginMember=<%=loginMember%>;
+		let productNo=$("#productNo").val();
+		let loginMember=$("#loginMember").val();
+		let stockList=${jsonStock};
+		reviewCall();//리뷰 리스트
+		qnaCall();//문의 리스트
 		//수량 선택
-		//옵션이 없다면 바로 수량체크할 수 있게
-		if($("#color").length==0&&$("#size").length==0){
-		  fn_select();
-		  $(".delete").hide();
+		if(stockList.length<2){
+			fn_select();
 		}
-		$(document).on("change","#color",e=>{
-		  fn_select();
+		$("#option").on("change",e=>{
+			fn_select();
 		});
-		$(document).on("change","#size",e=>{
-		  fn_select();
-		});
-		
+	
 		//선택한 옵션 제품 수량 선택박스 && 총금액 계산
 		function fn_select(){
-		  let color=$("#color option:selected").val();
-		  let size=$("#size option:selected").val();
+		  let stockNo=$("#option option:selected").val();
 		  let option="";
-		  let price="";
-		  let stockNo="";
-		  let stockList=${jsonStock};
-		 	  
+		  let price="";		  
+		  let stock="";
+ 		  let display="";
 		  let flag=true;
           //유효성 검사
           $(".orderBox").each((i,item)=>{
-            if($("#color").length!=0){
-              if(color==$(item).find(".color").val()){
-                if($("#size").length!=0&&size==$(item).find(".size").val()){
-                  alert("이미 선택한 옵션입니다.");     
-                  flag=false;        
-                }else{
-                  alert("이미 선택한 옵션입니다.");
-                  flag=false;  
-                };
-              };
-            }else{
-              if(size==$(item).find(".size").val()){
-                alert("이미 선택한 옵션입니다.");
-                flag=false;  
-              };
-            };
+        	  if($("#option").val()==$(item).find(".stockNo").val()){
+        		  alert("이미 선택한 옵션입니다.");
+        		  flag=false;
+        	  }
           });
           if(flag==false){
-            return;
+        	  return;
           }
-		  //oo ox xo xx
-		  if($("#color").length!=0){
-		    if($("#size").length!=0){
-		      option=color + " / " + size;
-		      for(let s in stockList){
-		    	  if(stockList[s].color==color&&stockList[s].productSize==size){
-		    		  price=stockList[s].price;
-		    		  stockNo=stockList[s].stockNo;
-		    	  }
-		      }
-		    }else{
-		      option=color;
-		      for(let s in stockList){
-		    	  if(stockList[s].color==color&&stockList[s].productSize==size){
-		    		  price=stockList[s].price;
-		    		  stockNo=stockList[s].stockNo;
-		    	  }
-		      }
-		    }
+		  //oo ox xo xx(옵션(컬러/사이즈)가 존재하는지에 따라 출력할 방식 조절)
+		  //옵션이름, 재고번호, 금액 넣기	
+		  if(stockList.length>1){
+	         for(let s in stockList){
+	        	 if(stockList[s].stockNo==stockNo){
+	        		 price=stockList[s].price * (100-stockList[s].sale) / 100;
+	        		 option=stockList[s].color+" "+stockList[s].productSize;
+	        		 stock=stockList[s].stock;
+	        		 
+	        	 }
+	         }
 		  }else{
-		    if($("#size").length!=0){
-		      option=size;
-		      for(let s in stockList){
-		    	  if(stockList[s].color==color&&stockList[s].productSize==size){
-		    		  price=stockList[s].price;
-		    		  stockNo=stockList[s].stockNo;
-		    	  }
-		      }
-		    }else{
-		      option=$("#productName").text().trim();
-		      price=stockList[0].price;
-		      stockNo=stockList[s].stockNo;
-		    }
+			 price=stockList[0].price * (100-stockList[0].sale) / 100;
+     		 option=$("#productName").text()+"  /  (재고 "+stockList[0].stock+"개)";
+     		 stock=stockList[0].stock;
+     		 stockNo=stockList[0].stockNo;
+     		 display="d-none";
 		  }
-		
-		  if(color!="색상" && size!="크기"){
-		    let optionTag=`<article class="orderBox rounded bg-light m-3 pl-3 pr-1 py-2">
+		  /*상품선택박스에 옵션 표시 */
+		    let orderBox=`<article class="orderBox rounded bg-light m-3 pl-3 pr-1 py-2">
 		              <div class="d-flex justify-content-between align-items-center mb-3">
 		                <p class="m-0">`+option+`</p>
 		                <input type="hidden" class="stockNo" name="stockNo" value="`+stockNo+`"/>
-		                <button type="button" class="delete btn p-0 m-0 ">
+		                <input type="hidden" class="stockCnt" value="`+stock+`"/>
+		                <button type="button" class="delete btn p-0 m-0 `+display+`">
 		                  <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 		                    <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
 		                  </svg>
@@ -536,32 +468,67 @@
 		                <p class="d-none eachPrice">`+price+`</p>
 		              </div>
 		            </article>`
-		    $("#orderList").append(optionTag);
+		    $("#orderList").append(orderBox);
 		    fn_total();
 		  };
 		  
-		};
+
 		//수량 입력하면 금액 바뀌게
 		//수량 6+선택하면 직접입력할 수 있게
+		//셀렉트일때
 		$(document).on("change","select.cntSelect",e=>{ 
-		  if($(e.target).val()=="next"){
-		    let box=$(e.target).parents(".cntBox")
-		    $(e.target).remove();
-		    let input=`<input type="text" name="cnt" value="1" class="cnt cntSelect form-control col-5"/>`;
-		    box.prepend(input);
-		    box.children(".cntSelect").focus();
-		  }else{
-			  let oriPrice=parseInt($(e.target).siblings(".eachPrice").text());
-              let newPrice=oriPrice * ($(e.target).val());
-              $(e.target).next(".price").text(newPrice+"원");
-              fn_total();
-          };  
+			let stockCnt=parseInt($(e.target).parents(".orderBox").find(".stockCnt").val()); //재고 개수
+			let cnt=parseInt($(e.target).val()); //선택한 개수
+			if($(e.target).val()!="next"&&cnt>stockCnt){ //재고보다 많은 양을 선택하면
+				alert("재고가 부족합니다.");
+				$(e.target).val('1').prop("selected",true);
+		        fn_total();
+				return; 
+				let oriPrice=parseInt($(e.target).siblings(".eachPrice").text());
+	              let newPrice=oriPrice * ($(e.target).val());
+	              $(e.target).next(".price").text(newPrice+"원");
+	              fn_total();
+			}			  
+			  if($(e.target).val()=="next"){//6+를 선택하면
+				    if(stockCnt<6){//재고가 6보다 작으면 
+				        alert("재고가 부족합니다.");
+				        $(e.target).val('1').prop("selected",true);
+				        fn_total();
+				    }else{//많으면 인풋태그로 변환해주기
+					    let box=$(e.target).parents(".cntBox")
+					    $(e.target).remove();
+					    let input=`<input type="text" name="cnt" value="1" class="cnt cntSelect form-control col-5"/>`;
+					    box.prepend(input);
+					    box.children(".cntSelect").focus();
+				    }
+			  }else{//다른 개수를 선택하면
+				  let oriPrice=parseInt($(e.target).siblings(".eachPrice").text());
+	              let newPrice=oriPrice * ($(e.target).val());
+	              $(e.target).next(".price").text(newPrice+"원");
+	              fn_total();
+	          };  
 		});
+		//인풋일때
 		$(document).on("focusout","input.cntSelect",e=>{
-			let oriPrice=parseInt($(e.target).siblings(".eachPrice").text());
-            let newPrice=oriPrice * ($(e.target).val());
-            $(e.target).next(".price").text(newPrice+"원");
-            fn_total();
+			let stockCnt=parseInt($(e.target).parents(".orderBox").find(".stockCnt").val());//재고 개수
+			let oriPrice=parseInt($(e.target).siblings(".eachPrice").text());//개당 가격
+			let cnt=parseInt($(e.target).val());//선택한 개수
+			if($(e.target).val()==""){//아무것도 입력하지 않으면 1로 돌리기
+				$(e.target).val(1);
+				$(e.target).next(".price").text(oriPrice+"원");
+				fn_total(); 
+			}else{		
+	            if(cnt>stockCnt){//재고보다 많이 입력하면 alert 띄우고 1로 돌리기
+					alert("재고가 부족합니다.");
+					$(e.target).val(1);
+					$(e.target).next(".price").text(oriPrice+"원");
+					fn_total(); 
+				}else{	//다른 개수를 입력하면 금액 계산해서 써주기
+		            let newPrice=oriPrice * (cnt);
+		            $(e.target).next(".price").text(newPrice+"원");
+		            fn_total(); 
+				}
+			}        
 		});
 		//x누르면 선택박스 사라지게
 		$(document).on("click",".delete",e=>{
@@ -577,9 +544,42 @@
           });
           $("#totalPrice").text(totalPrice);
         };
-		
+         	
+        
+        //재고 개수 동적으로 처리하기
+        function fn_stock(){
+        	let stockNo=[];
+        	$("input[name=stockNo]").each((i,item)=>{
+        		stockNo.push(item.value);
+        	});
+        	let cnt=[];
+        	$(".cntSelect").each((i,item)=>{
+        		 cnt.push(item.value);
+        	});
+        	let flag=true;
+        	$.ajaxSettings.traditional = true;
+        	$.ajax({
+				url: "${path}/store/stockCheck.do",
+				async: false,  //에이작스의 실행을 기다렸다가 결과를 리턴하도록 비동기식으로 설정
+				data:{productNo:productNo,stockNo:stockNo,cnt:cnt},
+				dataType:"json",			
+				success:(data) => {	//재고수량보다 많이 선택한 상품의 옵션 이름 list
+					if(data.length>0){//더 많이 선택한 것이 있다면
+						flag=false;
+						let msg="";
+						for(let i in data){
+							msg=msg+data[i]+"의 재고가 부족합니다. \n";							
+						}
+						alert(msg);					
+					}
+				}
+			});
+        	return flag;
+        }
+        
         
         //모달즈
+        
         //장바구니 모달
         $("#cartBtn").on("click",e=>{
             if($(".orderBox").length==0){
@@ -597,62 +597,193 @@
             	$(".cntSelect").each((i,item)=>{
             		 cnt.push(item.value);
             	});
-            	$.ajaxSettings.traditional = true;
-            	$.ajax({
-    				url: "${path}/store/insertCart.do",
-    				data:{stockNo:stockNo,cnt:cnt},
-    				dataType:"html",			
-    				success:(data) => {
-    					//console.log(data);					
-    					$(".pdtModal").html(data);	
-    	         		$('div.modal').modal(); 
-    				},
-    				error:(request,status,error)=>{
-                       alert("장바구니에 상품을 담지 못했습니다.");
-                    }
-    			});
-              	
+            	//동적으로 재고 개수 확인하기
+            	let flag=fn_stock();
+            	if(flag==true){
+            		//삽입하기
+	            	$.ajaxSettings.traditional = true;
+	            	$.ajax({
+	    				url: "${path}/store/insertCart.do",
+	    				data:{stockNo:stockNo,cnt:cnt},
+	    				dataType:"html",			
+	    				success:(data) => {				
+	    					$(".pdtModal").html(data);	
+	    	         		$('div.modal').modal(); 
+	    				},
+	    				error:(request,status,error)=>{
+	                       alert("장바구니에 상품을 담지 못했습니다.");
+	                    }
+	    			}); 
+            	}  
+    
             }
           });
+        
         //결제 모달
-        $("#payBtn").on("click",e=>{
+        $(document).on("click","#payBtn",e=>{
+        	console.log("클릭");
             if($(".orderBox").length==0){
-              alert("상품을 선택하세요.");
               return;
             }else{
-            	//로그인 되어 있으면 바로 결제로 넘김
-            	if(loginMember!=null){
-            		$(".payFrm").attr("action","${path}/payment/payment.do").submit();
-            	}else{
-            		console.log("로그인안됨");
-		            //로그인 안되어 있으면 로그인 모달 띄우기
-            		$.ajax({
-        				url: "${path}/store/movePayLogin.do",
-        				dataType:"html",
-        				success:(data) => {
-        					$(".pdtModal").html(data);	
-        	         		$('div.modal').modal(); 
-        				}
-        			});
+            	if(loginMember!=""){ //로그인 되어 있다면
+            		//재고 개수 동적으로 처리하기
+		            	//재고번호 input name stockNo
+		            	//수량 input name cnt
+		            	let flag=fn_stock();
+		        		if(flag==true){    	
+            				$(".payFrm").attr("action","${path}/payment/payment.do").submit();
+		        		} 
+            	}else{ //로그인 안되어 있으면 로그인 모달 띄우기(결제로그인모달)        	
+            			$.ajax({
+            				url: "${path}/store/movePayLogin.do",
+            				dataType:"html",
+            				success:(data) => {
+            					$(".pdtModal").html(data);	
+            	         		$('div.modal').modal(); 
+            				}
+            			});          		
             	};
             };
           });
         //리뷰 작성 모달
+        $("#reviewBtn").on("click",e=>{                    	
+            	if(loginMember!=""){ //로그인 되어 있으면 바로 리뷰모달로 넘김
+            		//이 물건을 구매한 사용자인지 확인(이것도 에이작스해야할듯)
+             		$.ajax({
+          				url: "${path}/store/payCheck.do",
+          				data:{productNo:productNo},
+          				success:(data) => {//data는 list임
+          			  		if(data.length!=0){//2주안에 리뷰를 안 쓴 구매내역이 있으면 
+          			  				//리뷰 작성 모달
+          			  				$.ajaxSettings.traditional = true;
+	          			  			$.ajax({
+		          						url: "${path}/store/moveReview.do",
+		          						data:{productNo:productNo,details:JSON.stringify(data)},
+		          						dataType:"html",
+		          						success:(data) => {
+		          							$(".pdtModal").html(data);
+		          			         		$('div.modal').modal(); 
+		          						}
+		          					});  			  			
+          			     	}else{//구매내역이 없으면
+          			            alert("구매 내역이 없습니다.");
+          			    	};
+          				}
+          			}); 
+            	}else{//로그인 안되어 있으면 로그인 모달 띄우기		            
+            		loginModal();
+            	};
+            
+          });
+        
+             
+        
+        
         
         //문의 작성 모달
-        
-        function ajaxModal(path, subData){
-			$.ajax({
-				url: path,
-				data:subData,
+        $("#qnaBtn").on("click",e=>{
+        	if(loginMember!=""){//로그인되어있으면 문의 모달 띄우기 
+        		$.ajax({
+    				url: "${path}/store/moveQna.do",
+    				data:{productNo:productNo},
+    				dataType:"html",
+    				success:(data) => {
+    					$(".pdtModal").html(data);
+    	         		$('div.modal').modal(); 
+    				}
+    			});
+        	}else{//로그인 안되어있으면 로그인 모달 띄우기
+        		loginModal();
+        	}
+        });
+        //문의 수정 모달
+        $(".qnaEdit").on("click",e=>{
+        	let qnaNo=$(e.target).parents("article.qna").find("input.qnaNo").val();
+        	$.ajaxSettings.traditional = true;
+	  		$.ajax({
+				url: "${path}/store/moveQnaEdit.do",
+				data:{productNo:productNo, qnaNo:qnaNo},
 				dataType:"html",
 				success:(data) => {
-					console.log(data);
 					$(".pdtModal").html(data);
 	         		$('div.modal').modal(); 
 				}
 			});
+        });
+        
+
+		//로그인모달
+		function loginModal(){
+			$.ajax({
+				url: "${path}/login/moveLogin.do",
+				dataType:"html",
+				success:(data) => {
+					$(".pdtModal").html(data);	
+	         		$('div.modal').modal(); 
+				}
+			});
+		};
+		
+		//리뷰작성모달
+		function fn_reviewWrite(pNo,dNo){
+			$.ajaxSettings.traditional = true;
+	  		$.ajax({
+				url: "${path}/store/moveReview.do",
+				data:{productNo:pNo, detailNo:dNo},
+				dataType:"html",
+				success:(data) => {
+					$(".pdtModal").html("");
+					$(".pdtModal").html(data);
+	         		$('div.modal').modal(); 
+				}
+			});
+		};
+		
+		//리뷰 부르기 Ajax
+		function reviewCall(){
+			$.ajax({
+				url: "${path}/store/reviewList.do",
+				data:{productNo:productNo},
+				dataType:"html",
+				success:(data) => {
+					$("#reviewCon").html(data);
+				}
+			});
 		}
+		
+		//문의 부르기 Ajax
+		function qnaCall(){
+			$.ajax({
+				url: "${path}/store/qnaList.do",
+				data:{productNo:productNo},
+				dataType:"html",
+				success:(data) => {
+					$("#qnaCon").html(data);
+				}
+			});
+		}
+		$(document).on("click","#heart",e=>{ 
+			if(loginMember==""){
+				alert("로그인 후 관싱상품을 담을 수 있습니다.");
+				return;
+			}else{
+				var memberNo=$("#memberNo").val();
+			$.ajax({
+				url:"${path}/store/insertFav.do",
+				data:{productNo:productNo,memberNo:memberNo},
+				success:(data) => {
+					if(data==1){
+						alert('관심상품을 담았습니다.')
+					}else{
+						alert("관심상품을 삭제하였습니다.")
+					}
+				},
+				error:(request,status,error)=>{
+                    alert("관심상품을 담지 못하였습니다.다시 시도해주세요.");
+                 }
+			})
+			}
+		});
         
 </script>
 

@@ -36,5 +36,33 @@ public class NoticeDaoImpl implements NoticeDao {
 	public List<Map> noticeImgList(SqlSession session, String noticeNo) {
 		return session.selectList("notice.noticeImgList", noticeNo);
 	}
+	
+	
+	
+	
+	@Override
+	public int updateNotice(SqlSession session, Notice n) {
+		return session.update("notice.updateNotice", n);
+	}
+
+	@Override
+	public int noticeDelete(SqlSession session, String noticeNo) {
+		return session.delete("notice.noticeDelete", noticeNo);
+	}
+
+	@Override
+	public int deleteNoticeImg(SqlSession session, NoticeImg ni) {
+		return session.delete("notice.deleteNoticeImg", ni);
+	}
+
+	@Override
+	public int insertSubImgs(SqlSession session, NoticeImg ni) {
+		return session.insert("notice.insertSubImgs", ni);
+	}
+
+	@Override
+	public int updateContent(SqlSession session, NoticeImg ni) {
+		return session.update("notice.updateContent", ni);
+	}
 
 }

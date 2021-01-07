@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "- //mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="find">
+	<insert id="insertFindWrite" parameterType="find">
+		INSERT INTO FIND VALUES('F'||SEQ_FINDNO.NEXTVAL,#{memberNo},'N',#{address},#{content},#{title},default,#{cate})
+		<selectKey keyProperty="findNo" resultType="string" order="AFTER">
+  		SELECT SEQ_FINDNO.CURRVAL from DUAL 
+  		</selectKey>
+	</insert>
+	<insert id="insertFindPic" parameterType="findImg">
+		INSERT INTO FINDIMG VALUES(SEQ_FINDIMGNO.NEXTVAL,#{findNo},#{fileName},#{imgStatus})
+	</insert>
+	<select id="selectFindList" resultType="map" parameterType="map">
+		SELECT * FROM FIND JOIN FINDIMG USING(FINDNO) JOIN MEMBER USING(MEMBERNO) WHERE IMGSTATUS = 'M' AND STATUS='N' 
+		<if test="cate != null">
+			AND CATE=#{cate}
+		</if>
+	</select>
+	
+	   <select id="selectFindListOne" parameterType="string" resultType="map" >
+   		select * from member join find using(memberNo) join findImg using(findNo) where memberNo = #{memberNo} and imgStatus='M'
+   </select>
+	<select id="findCnt" parameterType="string" resultType="int">
+		select count(*) from member join find using(memberNo) where memberNo = #{memberNo}		
+	</select>
+	<select id="detailOne" parameterType="string" resultType="map">
+		select * from find join member using(memberNo) join findImg using(findNo) where findNo = #{findNo} and imgStatus = 'M'
+	</select>
+	<select id="findSubPic" resultType="map" parameterType="string">
+		select * from find join findImg using(findNo) where findNo = #{findNo} and imgStatus='S'
+	</select>
+	<update id="updateMainImg" parameterType="findImg">
+		UPDATE FINDIMG SET FILENAME=#{fileName} WHERE FINDNO=#{findNo} AND IMGSTATUS = 'M'
+	</update>
+	<delete id="deleteFindImg" parameterType="findImg">
+		DELETE FROM FINDIMG WHERE FINDIMGNO = #{findImgNo}
+	</delete>
+	<update id="updateOtherFind" parameterType="map">
+		UPDATE FIND SET CATE=#{cate}, TITLE=#{title}, CONTENT=#{content}, ADDRESS=#{address} WHERE FINDNO = #{findNo}
+	</update>
+	<select id="selectFindLike" resultType="string" parameterType="string">
+		select FINDNO from FINDLIKE WHERE HEARTMEMBERNO=#{memberNo}
+	</select>
+	<delete id="deleteFindLike" parameterType="string">
+		DELETE FROM FINDLIKE WHERE FINDNO=#{findNo}
+	</delete>
+	<insert id="insertFindLike" parameterType="map">
+		INSERT INTO FINDLIKE VALUES(#{findNo}, #{memberNo})
+	</insert>
+	<select id="selectFindHeartWeek" resultType="map">
+		SELECT FINDNO,ADDRESS,TITLE,FILENAME,ENROLLDATE,IMGSTATUS, COUNT(HEARTMEMBERNO) AS HEARTCOUNT
+  		FROM FIND LEFT JOIN FINDLIKE USING(FINDNO) LEFT JOIN FINDIMG USING(FINDNO)
+        WHERE FLOOR(SYSDATE-ENROLLDATE)<![CDATA[<]]>14 AND IMGSTATUS='M'
+  		GROUP BY (FINDNO,ADDRESS,TITLE,FILENAME,ENROLLDATE,IMGSTATUS)
+  		ORDER BY HEARTCOUNT DESC, ENROLLDATE DESC
+	</select>
+	<delete id="deleteFind" parameterType="string">
+	 	DELETE FROM FIND WHERE FINDNO=#{findNo}
+	</delete>
+</mapper>

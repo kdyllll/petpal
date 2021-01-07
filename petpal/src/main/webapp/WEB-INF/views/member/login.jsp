@@ -12,13 +12,15 @@
    <link href="${path }/resources/css/member/login.css" rel="stylesheet">
  
 </head>
-
+<style>
+#inputPassword{font-family:맑은고딕, Malgun Gothic, dotum, gulim, sans-serif;}
+</style>
 <body class="bg-white">
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
   
   <!-- Page Content -->
-   <main  class="text-center mt-5 mt-lg-0">  
+   <main  class="text-center mt-5 mt-lg-0 bg-white">  
     <div class="container pt-5 pt-lg-0">
       <div class="row pt-5">
         <form class="form-signin" action="${path }/member/memberLogin.do" method="post">
@@ -29,7 +31,7 @@
             </div>
           
             <div class="form-label-group text-left">
-              <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email ID" required autofocus>
+              <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email ID" value="${saveId!=null?saveId:''}" required autofocus>
               <label for="inputEmail">Email ID</label>
             </div>
           
@@ -40,24 +42,27 @@
           
             <div class="checkbox mb-3 text-left">
               <label>
-                <input type="checkbox" value="remember-me"> 아이디 기억하기
+                <input type="checkbox" name="saveId" value="saveId" ${saveId!=null?"checked":"" }> 아이디 기억하기
               </label>
               <div class="mt-3">
                 <a class="mr-5 text-dark" href="#">아이디 찾기</a>
                 <a class="mr-5 text-dark" href="#">비밀번호 재설정</a>
-                <a class="text-dark" href="#">회원가입</a>
+                <a class="text-dark" href="${path }/member/moveJoin.do">회원가입</a>
               </div>
             </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>       
-            <div class=""> 
-              <button class="btn btn-lg btn-secondary btn-block my-1" type="button">구글</button>
-              <button class="btn btn-lg btn-secondary btn-block mt-0 mb-1" type="button">카카오</button>
-              <button class="btn btn-lg btn-secondary btn-block mt-0" type="button">등등</button>
-            </div>
+            <button class="btn btn-lg bg-point btn-block" type="submit">로그인</button>       
+            <div class="mt-3 d-flex justify-content-between">
+						<a href="${naverUrl }"><img src="${path }/resources/images/naver.PNG"
+							style="width: 80px; height: 80px;" alt=""></a> <a href="${kakaoUrl }"><img
+							src="${path }/resources/images/kakao.jpg"
+							style="width: 80px; height: 80px;" alt=""></a> <a href="${googleUrl }"><img
+							src="${path }/resources/images/google.png"
+							style="width: 80px; height: 80px;" alt=""></a>
+			</div>
         </form>
       </div>
      
-      <form class="form-signin">
+      <form id="nonMemberFrm" class="form-signin" action="${path }/nonMemberShop.do">
         <div class=" accordion" id="accordionExample">          
             <a class="btn btn-lg btn-transparent btn-block text-center"  data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
               비회원 주문조회
@@ -65,10 +70,10 @@
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
               <div class="card-body">                             
                 <div class="form-label-group">
-                  <input type="text" id="inputPassword" class="form-control" placeholder="주문번호" required>
+                  <input type="text" name="orderNo" class="form-control" placeholder="주문번호" required>
                   <label for="inputPassword">주문번호</label>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">조회하기</button>
+                <button id="nonMemberBtn" class="btn btn-lg btn-primary btn-block" type="button">조회하기</button>
               </div>
             </div>
         </div>   
@@ -79,5 +84,28 @@
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 </body>
-
+<script>
+	$(document).on("click","#nonMemberBtn",e=>{
+		if($("input[name=orderNo]").val().trim().length!=0){
+			var orderNo=$("input[name=orderNo]").val().trim();
+			$.ajax({
+				url:"${path}/orderCheck.do",
+				data:{orderNo:orderNo},
+				success:(data) => {
+					if(data==true){
+						$("#nonMemberFrm").submit();
+					}else{
+	                    alert("주문 내역이 없습니다. 번호를 다시 확인하세요.");
+					}
+				},
+				error:(request,status,error)=>{
+                    alert("주문 내역이 없습니다. 번호를 다시 확인하세요.");
+                 }	
+			})
+			
+		}else{
+			alert("주문 번호를 입력해주세요.");
+		}
+	})
+</script>
 </html>

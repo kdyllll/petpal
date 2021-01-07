@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="payment">
+	<insert id="insertPayment" parameterType="payment">
+		INSERT INTO PAYMENT VALUES(SEQ_PAYMENTNO.NEXTVAL, #{memberNo, jdbcType=VARCHAR}, #{name}, #{receiverName}, #{tel}, #{receiverTel}, #{loc}, null, #{pointPlus}, #{pointMinus}, #{totalPrice}, #{payKind}, SYSDATE, DEFAULT, #{payStatus}, #{email}, #{orderNo}, #{refundName, jdbcType=VARCHAR}, #{refundBank, jdbcType=VARCHAR}, #{refundAccount, jdbcType=VARCHAR})
+		<selectKey keyProperty="paymentNo" resultType="string" order="AFTER">
+			SELECT SEQ_PAYMENTNO.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+	<insert id="insertPayDetail" parameterType="payDetail">
+		INSERT INTO PAYDETAIL VALUES(SEQ_DETAILNO.NEXTVAL, #{paymentNo}, #{stockNo}, #{cnt}, '결제', null, null, null, null)
+	</insert>
+	<select id="selectPaymentCompleteList" parameterType="string" resultType="map">
+		SELECT PAYMENTNO, PRODUCTNAME, IMGNAME, COLOR, PRICE, PRODUCTSIZE, CNT, EMAIL, NAME, RECEIVERNAME, TEL, RECEIVERTEL, PAYKIND, L0C, POINTPLUS, POINTMINUS, TOTALPRICE, ORDERNO, REFUNDNAME, REFUNDBANK, REFUNDACCOUNT FROM PAYMENT JOIN PAYDETAIL USING(PAYMENTNO) JOIN STOCK USING(STOCKNO) JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO) WHERE ORDERNO=#{orderNo}
+	</select>
+	<select id="selectPaymentNo" parameterType="string" resultType="string">
+		SELECT PAYMENTNO FROM PAYMENT WHERE ORDERNO = #{orderNo}
+	</select>
+	<select id="selectStockNo" parameterType="string" resultType="string">
+		SELECT STOCKNO FROM PAYDETAIL WHERE PAYMENTNO = #{paymentNo}
+	</select>
+	<delete id="deleteCart" parameterType="hashMap">
+		DELETE FROM CART WHERE STOCKNO = #{stockNo} AND MEMBERNO = #{memberNo}
+	</delete>
+	<select id="selectStock" parameterType="string" resultType="string">
+		SELECT STOCK FROM STOCK WHERE STOCKNO = #{stockNo}
+	</select>
+	<select id="selectPoint" parameterType="string" resultType="_int">
+		SELECT POINT FROM MEMBER WHERE MEMBERNO = #{memberNo}
+	</select>
+	<select id="selectAddress" parameterType="string" resultType="map">
+		SELECT EMAIL, MEMBERNAME, PHONE, ADDRESS FROM MEMBER WHERE MEMBERNO = #{memberNo}
+	</select>
+	<select id="selectProduct" parameterType="string" resultType="map">
+		SELECT * FROM STOCK JOIN PRODUCT USING(PRODUCTNO) WHERE STOCKNO = #{stockNo}
+	</select>
+</mapper>

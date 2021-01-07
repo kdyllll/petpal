@@ -125,17 +125,17 @@
 							</ol>
 							<div class="carousel-inner" role="listbox">
 								<div class="carousel-item active">
-									<img class="d-block img-fluid" src="sea)연어.png"
-										alt="First slide" style="height: 350px; width: 100%">
+									<img class="d-block img-fluid" src="${path }/resources/images/banner.jpg"
+										alt="First slide" style=" width: 100%">
 								</div>
 								<div class="carousel-item">
-									<img class="d-block img-fluid" src="sea)연어.png"
-										alt="Second slide" style="height: 350px; width: 100%">
+									<img class="d-block img-fluid" src="${path }/resources/images/banner2.jpg"
+										alt="Second slide" style="width: 100%">
 								</div>
-								<div class="carousel-item">
+								<!-- <div class="carousel-item">
 									<img class="d-block img-fluid" src="sea)연어.png"
 										alt="Third slide" style="height: 350px; width: 100%">
-								</div>
+								</div> -->
 							</div>
 							<a class="carousel-control-prev"
 								href="#carouselExampleIndicators" role="button"
@@ -163,7 +163,7 @@
 							<c:forEach var="p" items="${dList }" begin="0" end="2">
 							<div class="col-lg-4 col-md-6 mb-4">
 								<a href="${path }/store/moveDetail.do?productNo=${p.productNo}"> <img class="card-img-top"
-									src="resources/upload/product/detail/${p.fileName }" alt="">
+									src="${path }/resources/upload/product/detail/${p.imgName}" alt="">
 									<h4 class="text-black" style="color: black;"><c:out value="${p.productName }"/></h4>
 									<div>
 										<span style="font-weight: bold; color: #35c5f0;"><c:out value="${p.sale }"/>%</span> 
@@ -171,9 +171,14 @@
 										<span
 											style="font-weight: bold; color: black;"><fmt:formatNumber value="${per+(100-(per%100))%100 }"/>~</span>
 									</div>
+									<c:if test="${p.star!=0 }">
 									<div>
-										<small class="text-muted" style="font-weight: bold;">별점&#9733;4.0</small>
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+</svg>
+										<small class="text-muted" style="font-weight: bold;"><c:out value="${p.star }"/></small>
 									</div>
+									</c:if>
 								</a>
 							</div>
 							</c:forEach>
@@ -192,7 +197,7 @@
 							<c:forEach var="p" items="${cList }" begin="0" end="2">
 							<div class="col-lg-4 col-md-6 mb-4">
 								<a href="${path }/store/moveDetail.do?productNo=${p.productNo}"> <img class="card-img-top"
-									src="resources/upload/product/detail/${p.fileName }" alt="">
+									src="${path }/resources/upload/product/detail/${p.imgName}" alt="">
 									<h4 class="text-black" style="color: black;"><c:out value="${p.productName }"/></h4>
 									<div>
 										<span style="font-weight: bold; color: #35c5f0;"><c:out value="${p.sale }"/>%</span> 
@@ -200,16 +205,21 @@
 										<span
 											style="font-weight: bold; color: black;"><fmt:formatNumber value="${per+(100-(per%100))%100 }"/>~</span>
 									</div>
+									<c:if test="${p.star!=0 }">
 									<div>
-										<small class="text-muted" style="font-weight: bold;">별점&#9733;4.0</small>
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+</svg>
+										<small class="text-muted" style="font-weight: bold;"><c:out value="${p.star }"/></small>
 									</div>
+									</c:if>
 								</a>
 							</div>
 							</c:forEach>
 							</c:if>
 							<div class="col-12 category-container mt-5">
 								<h5 style="font-weight: bold;">소동물</h5>
-								<a class="text-info" style="font-weight: bold;" href="${path }/store/moveCategory.do?cNo=S">더보기</a>
+								<a class="text-info" style="font-weight: bold;" href="${path }/store/moveCategory.do?cNo=S1">더보기</a>
 							</div>
 							<c:if test="${empty sList }">
 								<div class="col-12 mb-4 text-center">
@@ -220,7 +230,7 @@
 							<c:forEach var="p" items="${sList }" begin="0" end="2">
 							<div class="col-lg-4 col-md-6 mb-4">
 								<a href="${path }/store/moveDetail.do?productNo=${p.productNo}"> <img class="card-img-top"
-									src="resources/upload/product/detail/${p.fileName }" alt="">
+									src="${path }/resources/upload/product/detail/${p.imgName}" alt="">
 									<h4 class="text-black" style="color: black;"><c:out value="${p.productName }"/></h4>
 									<div>
 										<span style="font-weight: bold; color: #35c5f0;"><c:out value="${p.sale }"/>%</span> 
@@ -228,9 +238,14 @@
 										<span
 											style="font-weight: bold; color: black;"><fmt:formatNumber value="${per+(100-(per%100))%100 }"/>~</span>
 									</div>
+									<c:if test="${p.star!=0 }">
 									<div>
-										<small class="text-muted" style="font-weight: bold;">별점&#9733;4.0</small>
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+</svg>
+										<small class="text-muted" style="font-weight: bold;"><c:out value="${p.star }"/></small>
 									</div>
+									</c:if>
 								</a>
 							</div>
 							</c:forEach>

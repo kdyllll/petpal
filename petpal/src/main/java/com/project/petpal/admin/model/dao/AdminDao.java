@@ -26,5 +26,23 @@ public interface AdminDao {
 	int updateProductImgEnd(SqlSession session, ProductImg p);
 	List<Map> productIOAll(SqlSession session);
 	List<Map> searchProduct(SqlSession session, String productName);
-
+	List<Map> inOutSearch(SqlSession session, Map m);
+	List<Map> selectOrderList(SqlSession session);
+	List<Map> selectPayDetail(SqlSession session, String paymentNo);
+	Map selectPaymentOne(SqlSession session, String paymentNo);
+	int orderCancelOne(SqlSession session, String detailNo);
+	List<Map> payDetailStatus(SqlSession session, String paymentNo);
+	int updatePaymentStatus(SqlSession session, String paymentNo);
+	int orderCancelAll(SqlSession session, String paymentNo);
+	List<Map> selectClaimAll(SqlSession session);
+	Map selectClaimOne(SqlSession session, String claimNo);
+	int claimDelete(SqlSession session, String claimNo);
+	int claimAccept(SqlSession session, String claimNo);
+	List<Map> selectPlaceList(SqlSession session);
+	Map selectPlaceOne(SqlSession session, String placeNo);
+	int updatePlace(SqlSession session, Map m);
+	List<Map> orderSearch(SqlSession session, Map m);
+	List<Map> memberSearch(SqlSession session, Map m);
+	List<Map> searchClaim(SqlSession session, Map m);
+	List<Map> searchCommunity(SqlSession session, Map m);
 }

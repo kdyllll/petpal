@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="tip">
 	<insert id="insertTip" parameterType="tip">
-		INSERT INTO TIP VALUES(SEQ_TIPNO.NEXTVAL, #{memberNo}, #{category}, #{title}, #{content1}, #{content2}, SYSDATE)
+		INSERT INTO TIP VALUES('T'||SEQ_TIPNO.NEXTVAL, #{memberNo}, #{category}, #{title}, #{content1}, #{content2}, SYSDATE)
 		<selectKey keyProperty="tipNo" resultType="string" order="AFTER">
 			SELECT SEQ_TIPNO.CURRVAL FROM DUAL
 		</selectKey>
@@ -11,12 +11,50 @@
 		INSERT INTO TIPIMG VALUES(SEQ_TIPIMGNO.NEXTVAL, #{tipNo}, #{mainImg, jdbcType=VARCHAR}, #{contentImg, jdbcType=VARCHAR}, #{content, jdbcType=VARCHAR})
 	</insert>
 	<select id="tipList" resultType="map">
-		SELECT * FROM TIP JOIN TIPIMG USING(TIPNO)
+		SELECT * FROM TIP JOIN TIPIMG USING(TIPNO) JOIN MEMBER USING(MEMBERNO) ORDER BY TIPNO DESC
 	</select>
 	<select id="tipMainList" resultType="map">
-		SELECT * FROM TIP WHERE TIPNO = #{tipNo}
+		SELECT * FROM TIP WHERE TIPNO = #{tipNo} ORDER BY TIPNO DESC
 	</select>
 	<select id="tipDetail" parameterType="string" resultType="map">
-		SELECT * FROM TIPIMG WHERE TIPNO = #{tipNo}
+		SELECT * FROM TIPIMG WHERE TIPNO = #{tipNo} ORDER BY TIPIMGNO
+	</select>
+	<select id="selectTipListOne" parameterType="string" resultType="map">
+		select * from member join tip using(memberNo) join tipImg using(tipNo) where memberNo=#{memberNo} and mainImg is not null
+	</select>
+	<select id="tipCnt" resultType="_int" parameterType="string">
+		select count(*) from member join tip using(memberNo) where memberNo = #{memberNo}
+	</select>
+	<select id="selectTipHeartWeek" resultType="map">
+		SELECT TIPNO,TITLE,MAINIMG,COUNT(HEARTMEMBERNO) AS HEARTCOUNT
+  		FROM TIP LEFT JOIN TIPLIKE USING(TIPNO) LEFT JOIN TIPIMG USING(TIPNO)
+  		WHERE FLOOR(SYSDATE-TIPDATE)<![CDATA[<]]>14 AND MAINIMG IS NOT NULL
+  		GROUP BY (TIPNO,TITLE,TIPDATE,MAINIMG) 
+  		ORDER BY HEARTCOUNT DESC, TIPDATE DESC
+	</select>
+	<delete id="tipDelete" parameterType="string">
+		DELETE FROM TIP WHERE TIPNO = #{tipNo}
+	</delete>
+	<update id="updateTip" parameterType="tip">
+		UPDATE TIP SET CATEGORY = #{category}, TITLE = #{title}, CONTENT1 = #{content1}, CONTENT2 = #{content2}, TIPDATE = SYSDATE WHERE TIPNO = #{tipNo}
+	</update>
+	<update id="updateMainImg" parameterType="tipImg">
+		UPDATE TIPIMG SET MAINIMG = #{mainImg} WHERE TIPIMGNO=#{tipImgNo}
+	</update>
+	<delete id="deleteTipImg" parameterType="tipImg">
+		DELETE FROM TIPIMG WHERE TIPIMGNO = #{tipImgNo}
+	</delete>
+	<insert id="insertSubImgs" parameterType="tipImg">
+		INSERT INTO TIPIMG VALUES(SEQ_TIPIMGNO.NEXTVAL, #{tipNo}, null, #{contentImg, jdbcType=VARCHAR}, #{content, jdbcType=VARCHAR})
+	</insert>
+	<update id="updateContent" parameterType="tipImg">
+		UPDATE TIPIMG SET CONTENT = #{content} WHERE TIPIMGNO=#{tipImgNo}
+	</update>
+	<select id="selectTipHash" resultType="map" parameterType="string">
+		SELECT MEMBERNO,TIPNO,CATEGORY,TITLE,MAINIMG,NICKNAME,IMG,HASHCONTENT FROM TIP LEFT JOIN TIPIMG USING(TIPNO) LEFT JOIN MEMBER USING(MEMBERNO) LEFT JOIN HASHTAG ON POSTNO=TIPNO
+		WHERE HASHCONTENT=#{value} AND MAINIMG IS NOT NULL ORDER BY TIPDATE DESC
+	</select>
+	<select id="selectMember" parameterType="string" resultType="map">
+		SELECT MEMBERNAME, NICKNAME, IMG FROM MEMBER WHERE MEMBERNO = #{writerNo}
 	</select>
 </mapper>

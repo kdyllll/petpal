@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "- //mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="daily">
 	<insert id="insertDaily" parameterType="daily">
-		INSERT INTO DAILY VALUES(SEQ_DAILYNO.NEXTVAL,#{memberNo},#{content},SYSDATE)
+		INSERT INTO DAILY VALUES('D'||SEQ_DAILYNO.NEXTVAL,#{memberNo},#{content},SYSDATE)
 		<selectKey keyProperty="dailyNo" resultType="string" order="AFTER">
-			SELECT SEQ_DAILYNO.CURRVAL FROM DUAL
+			SELECT 'D'||SEQ_DAILYNO.CURRVAL FROM DUAL
 		</selectKey>
 	</insert>
 	<insert id="insertDailyImg" parameterType="dailyImg">
-		INSERT INTO DAILYIMG VALUES(SEQ_DAILYIMGNO.NEXTVAL,#{dailyNo},#{dailyImgName})
+		INSERT INTO DAILYIMG VALUES(SEQ_DAILYIMGNO.NEXTVAL,#{dailyNo},#{dailyImgName},#{status})
 		<selectKey keyProperty="dailyImgNo" resultType="string" order="AFTER">
 			SELECT SEQ_DAILYIMGNO.CURRVAL FROM DUAL
 		</selectKey>
@@ -27,5 +27,110 @@
 	</select>
 	<select id="selectProductAll" resultType="product">
 		SELECT * FROM PRODUCT
+	</select>
+	<insert id="insertHashtag" parameterType="hashtag">
+		INSERT INTO HASHTAG VALUES(#{postNo},#{hashContent})
+	</insert>
+	<select id="selectDailyAll" resultType="map">
+		SELECT * FROM DAILY LEFT JOIN MEMBER USING(MEMBERNO) ORDER BY DAILYDATE DESC
+	</select>
+	<select id="selectMainImg" resultType="dailyImg">
+		SELECT * FROM DAILYIMG WHERE STATUS='M'
+	</select>
+	<select id="selectHashAll" resultType="hashtag">
+		SELECT * FROM HASHTAG WHERE POSTNO LIKE 'D%'
+	</select>
+	<select id="selectDailyOne" resultType="map" parameterType="string">
+		SELECT * FROM DAILY LEFT JOIN MEMBER USING(MEMBERNO) WHERE DAILYNO=#{dailyNo}
+	</select>
+	<select id="selectDailyImg" resultType="dailyImg" parameterType="string">
+		SELECT * FROM DAILYIMG WHERE DAILYNO=#{dailyNo} ORDER BY DAILYIMGNO
+	</select>
+	<select id="selectHashList" resultType="hashtag" parameterType="string">
+		SELECT * FROM HASHTAG WHERE POSTNO=#{dailyNo}
+	</select>
+	<select id="selectCoordList" resultType="map" parameterType="string">
+		SELECT * FROM COORD LEFT JOIN DAILYIMG USING (DAILYIMGNO) LEFT JOIN PRODUCT USING(PRODUCTNO) WHERE DAILYNO=#{dailyNo}
+	</select>
+	<delete id="deleteDaily" parameterType="string">
+		DELETE FROM DAILY WHERE DAILYNO=#{value}
+	</delete>
+	<select id="selectDailyListOne" parameterType="string" resultType="map">
+		select * from member join daily using(memberno) join dailyimg using(dailyno) where memberNo = #{memberNo} and status='M'
+	</select>
+	<select id="dailyCnt" parameterType="string" resultType="_int">
+		select count(*) from member join daily using(memberNo) where memberNo = #{memberNo}
+	</select>
+	<select id="totalDailyCount" resultType="_int">
+		SELECT COUNT(*) FROM DAILY
+	</select>
+	<delete id="deleteDailyImg" parameterType="string">
+		DELETE FROM DAILYIMG WHERE DAILYIMGNO=#{value}
+	</delete>
+	<update id="updateDailyImg" parameterType="dailyImg">
+		UPDATE DAILYIMG SET DAILYIMGNAME=#{dailyImgName} WHERE DAILYIMGNO=#{dailyImgNo} 
+	</update>
+	<update id="updateImgStatus" parameterType="dailyImg">
+		UPDATE DAILYIMG SET STATUS='M' WHERE DAILYIMGNO=${dailyImgNo}
+	</update>
+	<delete id="deleteAllCoords" parameterType="string">
+		DELETE FROM COORD WHERE DAILYIMGNO=#{dailyImgNo}
+	</delete>
+	<delete id="deleteAllHash" parameterType="string">
+		DELETE FROM HASHTAG WHERE POSTNO=#{value}
+	</delete>
+	<update id="updateDailyContent" parameterType="daily">
+		UPDATE DAILY SET CONTENT=#{content} WHERE DAILYNO=#{dailyNo}
+	</update>
+	<select id="selectComment" parameterType="string" resultType="dComment">
+		SELECT DAILYNO,DAILYCOMMENTNO,COMMENTLEVEL,MEMBERNO,IMG,NICKNAME,DAILYCOMMENT,WRITEDATE,STATUS FROM DAILYCOMMENT LEFT JOIN MEMBER USING(MEMBERNO) WHERE DAILYNO=#{dailyNo}
+		START WITH COMMENTLEVEL=1 CONNECT BY PRIOR DAILYCOMMENTNO=COMMENTREF ORDER SIBLINGS BY WRITEDATE DESC
+	</select>
+	<select id="countComment" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM DAILYCOMMENT WHERE DAILYNO=#{dailyNo} AND STATUS='E'
+	</select>
+	<select id="countCommentPage" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM DAILYCOMMENT WHERE DAILYNO=#{dailyNo}
+	</select>
+	<insert id="insertComment" parameterType="dComment">
+  		INSERT INTO DAILYCOMMENT VALUES(SEQ_DAILYCOMMENTNO.NEXTVAL,#{dailyNo},#{memberNo},#{commentLevel},#{dailyComment},#{commentRef},default,default)
+  	</insert>
+  	<update id="commentDelete" parameterType="string">
+  		UPDATE DAILYCOMMENT SET STATUS='D' WHERE DAILYCOMMENTNO=#{dailyCommentNo} AND (SELECT COUNT(*) FROM DAILYCOMMENT WHERE COMMENTREF=#{dailyCommentNo})>0
+  	</update>
+  	<delete id="comment2Delete" parameterType="string">
+  		DELETE FROM DAILYCOMMENT WHERE DAILYCOMMENTNO=#{dailyCommentNo}
+  	</delete>
+  	<select id="selectDailyHeart" resultType="map">
+  		SELECT DAILYNO,MEMBERNO,CONTENT,NICKNAME,IMG,INFO,DAILYDATE,COUNT(HEARTMEMBERNO) AS HEARTCOUNT 
+  		FROM DAILY LEFT JOIN MEMBER USING(MEMBERNO) LEFT JOIN DAILYLIKE USING(DAILYNO) 
+  		GROUP BY (DAILYNO,MEMBERNO,CONTENT,NICKNAME,IMG,INFO,DAILYDATE) 
+  		ORDER BY HEARTCOUNT DESC, DAILYDATE DESC
+  	</select>
+  	<select id="selectDailyFollow" resultType="map">
+  		SELECT DAILYNO,MEMBERNO,CONTENT,NICKNAME,IMG,INFO,DAILYDATE,COUNT(FOLLOWERNO) AS FOLLOWCOUNT 
+  		FROM DAILY LEFT JOIN MEMBER USING(MEMBERNO) LEFT JOIN FOLLOW F ON MEMBERNO=WRITERNO 
+  		GROUP BY (DAILYNO,MEMBERNO,CONTENT,NICKNAME,IMG,INFO,DAILYDATE) 
+  		ORDER BY FOLLOWCOUNT DESC, DAILYDATE DESC
+  	</select>
+  	<select id="selectDailyHeartWeek" resultType="map">
+  		SELECT DAILYNO,MEMBERNO,CONTENT,NICKNAME,IMG,INFO,DAILYDATE,DAILYIMGNAME,STATUS,COUNT(HEARTMEMBERNO) AS HEARTCOUNT 
+  		FROM DAILY LEFT JOIN MEMBER USING(MEMBERNO) LEFT JOIN DAILYLIKE USING(DAILYNO) LEFT JOIN DAILYIMG USING(DAILYNO) 
+  		WHERE FLOOR(SYSDATE-DAILYDATE)<![CDATA[<]]>14 AND STATUS = 'M'
+  		GROUP BY (DAILYNO,MEMBERNO,CONTENT,NICKNAME,IMG,INFO,DAILYDATE,DAILYIMGNAME,STATUS) 
+  		ORDER BY HEARTCOUNT DESC, DAILYDATE DESC
+  	</select>
+  	<select id="selectDailyHash" resultType="map" parameterType="string">
+  		SELECT MEMBERNO,DAILYNO,CONTENT,DAILYIMGNAME,NICKNAME,IMG,HASHCONTENT FROM DAILY LEFT JOIN DAILYIMG USING(DAILYNO) LEFT JOIN MEMBER USING(MEMBERNO) LEFT JOIN HASHTAG ON POSTNO=DAILYNO
+		WHERE HASHCONTENT=#{value} AND STATUS='M' ORDER BY DAILYDATE DESC
+  	</select>
+  	<delete id="deleteDailyLike" parameterType="string">
+		DELETE FROM DAILYLIKE WHERE DAILYNO=#{dailyNo}
+	</delete>
+	<insert id="insertDailyLike" parameterType="map">
+		INSERT INTO DAILYLIKE VALUES(#{dailyNo}, #{memberNo})
+	</insert>
+	<select id="selectDailyLike" resultType="string" parameterType="string">
+		select DAILYNO from DAILYLIKE WHERE HEARTMEMBERNO=#{memberNo}
 	</select>
 </mapper>

@@ -1,0 +1,72 @@
+@charset "UTF-8";
+.text-point{
+  color:#eae1d8;
+}
+
+.text-hgh{
+  color:#e78382;
+}
+
+.text-tip{
+  color:#f7dad9;
+}
+
+.text-daily{
+  color:#fff5ea;
+}
+
+.text-find{
+  color:#d6d2c4;
+}
+
+.text-place{
+  color:#968c83;
+}
+
+.text-gray{
+  color:grey;
+}
+
+.text-lightgray{
+  color:#F5F5F5;
+}
+
+.bg-point{
+  background-color:#eae1d8;
+}
+
+.bg-hgh{
+  background-color:#e78382;
+}
+
+.bg-tip{
+  background-color:#f7dad9;
+}
+
+.bg-daily{
+  background-color:#fff5ea;
+}
+
+.bg-find{
+  background-color:#d6d2c4;
+}
+
+.bg-place{
+  background-color:#968c83;
+}
+
+.bg-gray{
+  background-color:grey;
+}
+
+.bg-lightgray{
+  background-color:#F5F5F5;
+}
+
+.bg-testC{
+	background-color:#fae3d9;
+}
+
+.text-testC{
+	color:#fae3d9;
+}
