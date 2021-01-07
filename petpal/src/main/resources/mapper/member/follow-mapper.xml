@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="follow">
+	<select id="selectFollowing" resultType="map"
+		parameterType="string">
+		SELECT * FROM FOLLOW where FOLLOWERNO = #{memberNo}
+	</select>
+	<select id="selectFollower" resultType="map"
+		parameterType="string">
+		SELECT * FROM FOLLOW where WRITERNO = #{memberNo}
+	</select>
+	<select id="followingCnt" parameterType="string" resultType="int">
+		SELECT
+		COUNT(*) FROM FOLLOW WHERE FOLLOWERNO=#{memberNo}
+	</select>
+	<select id="followerCnt" parameterType="string" resultType="int">
+		SELECT
+		COUNT(*) FROM FOLLOW WHERE WRITERNO=#{memberNo}
+	</select>
+	<insert id="insertFollow" parameterType="hashMap">
+		INSERT INTO FOLLOW VALUES(#{memberNo}, #{writerNo})
+	</insert>
+	<select id="selectFollow" parameterType="hashMap" resultType="map">
+		SELECT * FROM FOLLOW WHERE FOLLOWERNO = #{memberNo} AND WRITERNO = #{writerNo}
+	</select>
+	<delete id="deleteFollow" parameterType="hashMap">
+		DELETE FROM FOLLOW WHERE FOLLOWERNO = #{memberNo} AND WRITERNO = #{writerNo} 
+	</delete>
+</mapper>

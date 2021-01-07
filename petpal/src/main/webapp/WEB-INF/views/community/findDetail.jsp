@@ -321,7 +321,47 @@
 			$("#findDetailFrm").attr("action","${path}/find/findDelete.do").submit();
 		})
 		
-		
+		//팔로우 체크
+		$(document).ready(function(){
+	 		let writerNo = '${place.memberNo}';
+	 		$.ajax({
+	 			async: false,
+	 			url: "${path}/user/followingCheck.do",
+	 			data: {writerNo : writerNo},
+	 			success:(data) => {
+	 				if(data==10){
+	 					$(".following").hide();
+	 					$(".follow").show();
+	 				}else if(data==20){
+	 					$(".following").show();
+	 					$(".follow").hide();
+	 				}
+	 			},error:function(request, status, error){
+	 				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	 			}
+	 		});
+	 	})
+	 	
+	 	//팔로우
+	 	$(".followBtn").on('click',function() {
+	 		let writerNo = '${place.memberNo}';
+	 		$.ajax({
+	 			async: false,
+	 			url: "${path}/user/following.do",
+	 			data: {writerNo : writerNo},
+	 			success:(data) => {
+	 				if(data==10){
+	 					$(".following").show();
+	 					$(".follow").hide();
+	 				}else if(data==20){
+	 					$(".following").hide();
+	 					$(".follow").show();
+	 				}
+	 			},error:function(request, status, error){
+	 				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	 			}
+	 		});
+	 	})
 
 </script>
 </body>

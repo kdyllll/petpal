@@ -271,5 +271,61 @@ public class MemberServiceImpl implements MemberService{
 		return dao.selectTipLikeList(session, memberNo);
 	}
 
+	@Override
+	public List<Map> selectFollowing(String memberNo, int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectFollowing(session,memberNo,cPage,numPerPage);
+	}
+	
+	@Override
+	public List<Map> selectFollower(String memberNo, int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectFollower(session,memberNo,cPage,numPerPage);
+	}
+	
+	@Override
+	public int followingCount(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.followingCount(session,memberNo);
+	}
+	
+	@Override
+	public int followerCount(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.followerCount(session,memberNo);
+	}
 
+	@Override
+	public String selectNList(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectNList(session, memberNo);
+	}
+	@Override
+	public String selectIList(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectIList(session, memberNo);
+	}
+	@Override
+	public String selectMList(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectMList(session, memberNo);
+	}
+
+	@Override
+	public int insertFollow(String memberNo, String writerNo) {
+		// TODO Auto-generated method stub
+		return dao.insertFollow(session, memberNo, writerNo);
+	}
+
+	@Override
+	public List<Map> selectFollow(String memberNo, String writerNo) {
+		// TODO Auto-generated method stub
+		return dao.selectFollow(session, memberNo, writerNo);
+	}
+
+	@Override
+	public int deleteFollow(String memberNo, String writerNo) {
+		// TODO Auto-generated method stub
+		return dao.deleteFollow(session, memberNo, writerNo);
+	}
 }

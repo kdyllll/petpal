@@ -2,6 +2,7 @@ package com.project.petpal.member.controller;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -292,4 +293,133 @@ public class MemberAjaxController {
 		 model.addAttribute("allList", allList);
 		 return "member/memberAjax/likeList";
 	 }
+	 
+	//팔로잉
+	@RequestMapping("/user/moveFollowing.do")
+	public String moveFollowing(String memberNo,Model m,
+			@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerPage",defaultValue="12") int numPerPage) {
+		//팔로잉
+	    List<Map> followingList=service.selectFollowing(memberNo,cPage,numPerPage);
+	    int totalData=service.followingCount(memberNo);	
+	    String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveFollowing.do", null, ".postCon", memberNo,"followingPaging",null, null,null);
+	    
+	    List member = null;
+		List nickMap = new ArrayList();
+		List imgMap = new ArrayList();
+		List noMap = new ArrayList();
+		
+		String nick = "";
+		String img = "";
+		String mem = "";
+		
+		for(int i=0;i<followingList.size();i++) {
+			nick = service.selectNList((String) followingList.get(i).get("WRITERNO"));
+			img = service.selectIList((String) followingList.get(i).get("WRITERNO"));
+			mem = service.selectMList((String) followingList.get(i).get("WRITERNO"));
+			nickMap.add(nick);
+			imgMap.add(img);
+			noMap.add(mem);
+		}
+		
+		m.addAttribute("followingList",followingList);
+		m.addAttribute("pageBar",pageBar);
+		m.addAttribute("nickName", nickMap);
+		m.addAttribute("img", imgMap);
+		m.addAttribute("memberNo", noMap);
+	    
+		return "member/memberAjax/userFollowing";
+	}
+
+	//팔로워
+	@RequestMapping("/user/moveFollower.do")
+	public String moveFollower(String memberNo,Model m,
+			@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerPage",defaultValue="12") int numPerPage) {
+		//팔로잉
+		List<Map> followerList=service.selectFollower(memberNo,cPage,numPerPage);
+		int totalData=service.followerCount(memberNo);	
+		String pageBar=new AjaxPageBarFactory().getPageBar(totalData, cPage, numPerPage, "moveFollower.do", null, ".postCon", memberNo,"followerPaging",null, null,null);
+		
+		List member = null;
+		List nickMap = new ArrayList();
+		List imgMap = new ArrayList();
+		List noMap = new ArrayList();
+		
+		String nick = "";
+		String img = "";
+		String mem = "";
+		
+		for(int i=0;i<followerList.size();i++) {
+			nick = service.selectNList((String) followerList.get(i).get("WRITERNO"));
+			img = service.selectIList((String) followerList.get(i).get("WRITERNO"));
+			mem = service.selectMList((String) followerList.get(i).get("WRITERNO"));
+			nickMap.add(nick);
+			imgMap.add(img);
+			noMap.add(mem);
+		}
+		
+		m.addAttribute("followerList",followerList);
+		m.addAttribute("pageBar",pageBar);
+		m.addAttribute("nickName", nickMap);
+		m.addAttribute("img", imgMap);
+		m.addAttribute("memberNo", noMap);
+		
+		return "member/memberAjax/userFollower";
+	}
+	
+	//팔로잉
+	@RequestMapping("/user/following.do")
+	@ResponseBody
+	public int following(String writerNo, HttpSession session) {
+		int result = 0;
+		
+		Member loginMember=(Member)session.getAttribute("loginMember");
+		
+		if(loginMember == null) {
+			result=100;
+		}else {
+			String memberNo=loginMember.getMemberNo();
+			List<Map> list = service.selectFollow(memberNo, writerNo);
+			
+			//팔로잉 상태가 아니면
+			if(list.isEmpty()) {
+				result = service.insertFollow(memberNo, writerNo);
+				result = 10;
+				//팔로잉 상태면 테이블에서 지우기
+			}else {
+				result = service.deleteFollow(memberNo, writerNo);
+				result = 20;
+			}
+			
+		}
+		
+		return result;
+	}
+	
+	//팔로잉체크
+	@RequestMapping("/user/followingCheck.do")
+	@ResponseBody
+	public int followingCheck(String writerNo, HttpSession session) {
+		int result = 0;
+		
+		Member loginMember=(Member)session.getAttribute("loginMember");
+		
+		if(loginMember == null) {
+			result=100;
+		}else {
+			String memberNo=loginMember.getMemberNo();
+			List<Map> list = service.selectFollow(memberNo, writerNo);
+			
+			//노 팔로잉
+			if(list.isEmpty()) {
+				result = 10;
+			//팔로잉
+			}else {
+				result = 20;
+			}
+		}
+		return result;
+	}
+	
 }

@@ -53,4 +53,14 @@ public interface MemberDao {
    List<Map> selectFindLikeList(SqlSession session, String memberNo);
    List<Map> selectPlaceLikeList(SqlSession session, String memberNo);
    List<Map> selectTipLikeList(SqlSession session, String memberNo);
+   List<Map> selectFollowing(SqlSession session, String memberNo,int cPage,int numPerPage);
+   List<Map> selectFollower(SqlSession session, String memberNo,int cPage,int numPerPage);
+   int followingCount(SqlSession session,String memberNo);
+   int followerCount(SqlSession session,String memberNo);
+   String selectNList(SqlSession session, String memberNo);
+   String selectIList(SqlSession session, String memberNo);
+   String selectMList(SqlSession session, String memberNo);
+   int insertFollow(SqlSession session, String memberNo, String writerNo);
+   List<Map> selectFollow(SqlSession session, String memberNo, String writerNo);
+   int deleteFollow(SqlSession session, String memberNo, String writerNo);
 }
