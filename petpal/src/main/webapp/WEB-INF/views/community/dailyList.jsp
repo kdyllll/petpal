@@ -12,6 +12,14 @@
 	transition: all 850ms ease;
 }
 
+<<<<<<< HEAD
+     .dropdown:hover .dropdown-menu {
+     display: block;
+     opacity: 1;
+     }
+     
+ </style>
+=======
 .dropdown:hover .dropdown-menu {
 	display: block;
 	opacity: 1;
@@ -28,6 +36,7 @@
 	  -o-transform: scale(1.1);
 	} */
 </style>
+>>>>>>> branch 'develop' of https://github.com/kdyllll/petpal.git
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -61,7 +70,6 @@
 							</div>
 						</div>
 					</div>
-
 					<div id="dailyCon" class="dailyCon mt-3 col-12">
 						<div class="row col-12">
 							<c:if test="${empty dailyList }">
@@ -202,7 +210,7 @@
 													<small class="text-muted pl-1"> <c:forEach var="h"
 															items="${hashList}">
 															<c:if test="${not empty h and (h.postNo eq d.DAILYNO )}">
-																<a class="text-secondary bg-point" href="#">#<c:out
+																<a class="text-secondary bg-point" href="${path }/community/hashSearch.do?hashtag=${h.hashContent}">#<c:out
 																		value="${h.hashContent }" /></a>
 															</c:if>
 														</c:forEach>

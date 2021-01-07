@@ -32,7 +32,8 @@ public class KakaoLoginApi {
  
         postParams.add(new BasicNameValuePair("client_id", "d8bef86f08e813e18aa9c8170d315353"));
  
-        postParams.add(new BasicNameValuePair("redirect_uri", "http://localhost:9090/petpal/kakaoLogin"));
+//        postParams.add(new BasicNameValuePair("redirect_uri", "http://localhost:9090/petpal/kakaoLogin"));
+        postParams.add(new BasicNameValuePair("redirect_uri", "http://rclass.iptime.org:9999/20PM_PETPAL_final/kakaoLogin"));
  
         postParams.add(new BasicNameValuePair("code", autorize_code));
  
@@ -98,7 +99,8 @@ public class KakaoLoginApi {
 	
 	//연결 주소 url 만들어주는 메소드
 	public static String getAuthorizationUrl(HttpSession session) { 
-		String kakaoUrl = "https://kauth.kakao.com/oauth/authorize?" + "client_id=" + "d8bef86f08e813e18aa9c8170d315353" + "&redirect_uri=" + "http://localhost:9090/petpal/kakaoLogin" + "&response_type=code"; 
+//		String kakaoUrl = "https://kauth.kakao.com/oauth/authorize?" + "client_id=" + "d8bef86f08e813e18aa9c8170d315353" + "&redirect_uri=" + "http://localhost:9090/petpal/kakaoLogin" + "&response_type=code"; 
+		String kakaoUrl = "https://kauth.kakao.com/oauth/authorize?" + "client_id=" + "d8bef86f08e813e18aa9c8170d315353" + "&redirect_uri=" + "http://rclass.iptime.org:9999/20PM_PETPAL_final/kakaoLogin" + "&response_type=code"; 
 		return kakaoUrl; 
 	}
 

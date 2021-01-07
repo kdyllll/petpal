@@ -71,7 +71,10 @@ public class StoreController {
 		int qnaCount=service.totalQnaCount(productNo);
 		
 		//리뷰 평균 점수
-		double reviewAvg=service.selectAvgReview(productNo);
+		double reviewAvg=0.0;
+		if(reviewCount!=0) {
+			reviewAvg=service.selectAvgReview(productNo);
+		}
 		
 		m.addAttribute("product",p);
 		m.addAttribute("imgs",pImg);
