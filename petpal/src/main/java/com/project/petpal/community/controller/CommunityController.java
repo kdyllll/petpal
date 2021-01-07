@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.project.petpal.community.model.service.CommunityService;
 import com.project.petpal.community.model.service.DailyService;
 import com.project.petpal.community.model.service.FindService;
 import com.project.petpal.community.model.service.PlaceService;
@@ -25,6 +26,8 @@ public class CommunityController {
    private PlaceService pService;
    @Autowired
    private DailyService dService;
+   @Autowired
+   private CommunityService service;
 	
    //커뮤니티 메인
 	@RequestMapping("/community/communityList.do")
@@ -50,12 +53,30 @@ public class CommunityController {
 	public String hashSearch(String hashtag,Model m) {
 		//일상 4개(사진,작성자사진,작성자닉네임,해시태그)
 		List<Map> dailyList=dService.selectDailyHash(1,4,hashtag);
+		for(Map map:dailyList) {
+			String postNo=(String) map.get("DAILYNO");
+			List<String> hashList=service.selectHashList(postNo);
+			map.put("hashList", hashList);
+		}
 		//노하우 4개(사진,제목,작성자사진,작성자닉네임,해시태그)
 		List<Map> tipList=tService.selectTipHash(1,4,hashtag);
+		for(Map map:tipList) {
+			String postNo=(String) map.get("TIPNO");
+			List<String> hashList=service.selectHashList(postNo);
+			map.put("hashList", hashList);
+		}
 		//장소후기 3개(사진,제목,작성자사진,작성자닉네임,장소)
 		List<Map> placeList=pService.selectPlaceHash(1,4,hashtag);
+		for(Map map:placeList) {
+			String postNo=(String) map.get("PLACENO");
+			List<String> hashList=service.selectHashList(postNo);
+			map.put("hashList", hashList);
+		}
 		
-		
+		m.addAttribute("hashtag",hashtag);
+		m.addAttribute("dailyList",dailyList);
+		m.addAttribute("tipList",tipList);
+		m.addAttribute("placeList",placeList);		
 		
 		return "community/hashSearch";
 	}

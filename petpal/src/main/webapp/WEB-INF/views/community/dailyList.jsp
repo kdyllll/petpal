@@ -17,16 +17,6 @@
      opacity: 1;
      }
      
-    /*  .scale {
-		transition:all 0.5s;
-	}
-	.scale:hover {
-	  transform: scale(1.1);
-	  -webkit-transform: scale(1.1);
-	  -moz-transform: scale(1.1);
-	  -ms-transform: scale(1.1);
-	  -o-transform: scale(1.1);
-	} */
  </style>
 </head>
 <body>
@@ -114,7 +104,7 @@
 		                                <small class="text-muted pl-1">
 		                                	<c:forEach var="h" items="${hashList}">
 		                                		<c:if test="${not empty h and (h.postNo eq d.DAILYNO )}">
-		                                    		<a class="text-secondary bg-point" href="#">#<c:out value="${h.hashContent }"/></a>
+		                                    		<a class="text-secondary bg-point" href="${path }/community/hashSearch.do?hashtag=${h.hashContent}" >#<c:out value="${h.hashContent }"/></a>
 		                                    	</c:if>
 		                                    </c:forEach>  
 		                                </small>
