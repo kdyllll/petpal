@@ -107,11 +107,20 @@ public class findController {
 	}
 	
 	@RequestMapping("/community/findDetail.do")
-	public String findDetail(HttpServletRequest request, HttpServletResponse response,Model model) {
+	public String findDetail(HttpServletRequest request, HttpServletResponse response,Model model,HttpSession session) {
 		String findNo = request.getParameter("findNo");
 		Map fDetail = service.detailOne(findNo);
 		List<Map> findPics = service.findSubPic(findNo);
-
+		Member m = (Member)session.getAttribute("loginMember");
+		if(m!=null) {
+			List<String> like = service.selectFindLike(m.getMemberNo());
+			for(String l : like) {
+				if(l.equals(findNo)) {
+					String fLike = l;
+					model.addAttribute("like", fLike);					
+				}
+			}
+		}
 		model.addAttribute("fDetail", fDetail);
 		model.addAttribute("findPics", findPics);
 		return "community/findDetail";
@@ -250,4 +259,5 @@ public class findController {
 		model.addAttribute("msg", msg);
 		return "common/msg";
 	}
+	
 }

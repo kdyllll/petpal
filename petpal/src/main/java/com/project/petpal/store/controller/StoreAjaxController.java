@@ -5,6 +5,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.petpal.common.AjaxPageBarFactory;
+import com.project.petpal.common.DateSort;
+import com.project.petpal.common.IntegerSort;
+import com.project.petpal.common.StarMapping;
+import com.project.petpal.common.StarSort;
 import com.project.petpal.member.model.vo.Member;
 import com.project.petpal.payment.model.vo.Cart;
 import com.project.petpal.store.model.service.StoreService;
@@ -281,10 +286,37 @@ public class StoreAjaxController {
 		m.addAttribute("list",list);
 		return "member/memberAjax/memberFavAjax";
 	}
-	@RequestMapping("/store/sortProduct")
-	public String sortProduct() {
-		
-		return "";
+	@RequestMapping("/store/sortProduct.do")//소분류나 정렬 눌렀을떄
+	public String sortProduct(@RequestParam Map sort,Model m) {
+		String state=(String)sort.get("state");//정렬상태
+		if(sort.get("subcate")=="") {//소분류를 누르지 않았거나 전체눌렀을때
+			sort.put("subcate",null);
+		}
+		List<Product> starList=service.starList();//리뷰평점,상품번호 리스트
+		List<Product> list=StarMapping.starMapping(service.categoryList(sort), starList);//카테고리 리스트
+		if(state.equals("date")) {//최신순
+			Collections.sort(list,new DateSort());
+		}else if(state.equals("popul")) {//인기순
+			List<Product> saleList=service.saleList();//판매갯수,상품번호 리스트
+			for(Product p:list) {//상품리스트와 판매갯수 매핑
+				for(Product s:saleList){
+					if(p.getProductNo().equals(s.getProductNo())) {//상품번호가 같으면
+						p.setCnt(s.getCnt());//판매개수 넣어줌
+					}
+				}
+			}
+			Collections.sort(list,new IntegerSort());
+		}else if(state.equals("star")) {//리뷰평점순
+			Collections.sort(list,new StarSort());
+		}
+		m.addAttribute("list",list);
+		List<Product> soList=StarMapping.starMapping(service.soldOutList(sort),starList);//품절리스트
+		if(soList.size()!=0) {//품절리스트가 0일수도 있음
+			m.addAttribute("soList",soList);
+		}
+		System.out.println(list);
+		System.out.println(soList);
+		return "store/storeAjax/categorySortStore";
 	}
 	
 	

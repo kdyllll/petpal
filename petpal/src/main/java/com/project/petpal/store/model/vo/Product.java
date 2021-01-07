@@ -23,5 +23,6 @@ public class Product {
 	private int sale;
 	private double star;
 	private String imgName;
+	private int cnt;
 	
 }

@@ -52,4 +52,7 @@ public interface StoreDao {
 	int deleteFav(SqlSession session,Map fav);
 	List<Product> starList(SqlSession session);
 	double selectAvgReview(SqlSession session,String productNo);
+	List<Product> saleList(SqlSession session);
+	List<Product> categoryList(SqlSession session,Map sort);
+	List<Product> soldOutList(SqlSession session,Map sort);
 }

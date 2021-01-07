@@ -244,6 +244,21 @@ public class StoreServiceImpl implements StoreService{
 		return dao.selectAvgReview(session,productNo);
 	}
 
+	@Override
+	public List<Product> saleList() {
+		return dao.saleList(session);
+	}
+
+	@Override
+	public List<Product> categoryList(Map sort) {
+		return dao.categoryList(session, sort);
+	}
+
+	@Override
+	public List<Product> soldOutList(Map sort) {
+		return dao.soldOutList(session,sort);
+	}
+
 	
 	
 	

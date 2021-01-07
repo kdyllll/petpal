@@ -313,7 +313,8 @@ ul li{
 			'click',
 			'#delete',
 			function(e) {//삭제버튼 눌렀을때
-				
+				var placeNo=$("#placeNo").val();
+				location.assign('${path}/place/movePlaceDelete.do?placeNo='+placeNo);
 			});
 	
 		var maker;

@@ -71,7 +71,10 @@ public class StoreController {
 		int qnaCount=service.totalQnaCount(productNo);
 		
 		//리뷰 평균 점수
-		double reviewAvg=service.selectAvgReview(productNo);
+		double reviewAvg=0.0;
+		if(reviewCount!=0) {
+			reviewAvg=service.selectAvgReview(productNo);
+		}
 		
 		m.addAttribute("product",p);
 		m.addAttribute("imgs",pImg);
@@ -86,9 +89,8 @@ public class StoreController {
 	@RequestMapping("/store/moveCategory.do")//카테고리별 상품리스트로 이동하는 서블릿
 	public String moveCategory(String cNo,Model m) {
 		List<Product> starList=service.starList();//평균별점 리스트
-		if(cNo.equals("S")) {//소동물 더보기
-			cNo="S1','S2','S3','S4";
-		}else if(!cNo.contains("S")){//소동물 누른게 아니면
+		
+		if(!cNo.contains("S")){//소동물 누른게 아니면
 			List<Map> scList=service.subCateList(cNo);//소분류 리스트
 			m.addAttribute("scList",scList);
 		}
@@ -97,7 +99,7 @@ public class StoreController {
 			m.addAttribute("soList",soList);
 		}
 		List<Product> list=StarMapping.starMapping(service.categoryList(cNo),starList);
-		m.addAttribute("list",list);
+		m.addAttribute("list",list);//상품리스트
 		return "store/categoryStore";
 	}
 	
