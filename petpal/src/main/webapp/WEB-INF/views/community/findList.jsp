@@ -77,16 +77,6 @@
 						<button type="submit"
 							class="btn btn-outline-secondary mr-2 smallBtn">소동물</button>
 						<div class="cate"></div>
-						<div class="order"></div>
-						<div class="dropdown ml-auto">
-							<button class="btn btn-light dropdown-toggle" type="button"
-								id="dropdownMenuButton" data-toggle="dropdown"
-								aria-haspopup="true" aria-expanded="false">정렬</button>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<button type="submit" class="dropdown-item new">최신순</button>
-								<button type="submit" class="dropdown-item best">인기순</button>
-							</div>
-						</div>
 					</form>
 				</div>
 				<div
@@ -140,7 +130,7 @@
 												<c:set var="flag" value="true" />
 											</c:if>
 										</c:forEach>
-										
+
 									</c:if>
 									<div class="d-flex justify-content-between mx-1 my-1">
 										<div class="likeFrm" method="post">
@@ -200,12 +190,12 @@
 																d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z" />
 											</svg>
 													</button>
-													
+
 												</c:if>
-												
+
 											</c:if>
 											<span class="text-dark mx-1">0</span>
-											
+
 										</div>
 
 										<div>
@@ -326,12 +316,6 @@
 			
 		})
 
-		
-		function order(cate){
-			$(".order").html("");
-			let input = $("<input>").attr({"type" : "hidden", "name" : "order", "class":"order","value" : cate});
-			$(".order").html(input);
-		}
 		
 		function search(cate) {
 			$(".cate").html("");
