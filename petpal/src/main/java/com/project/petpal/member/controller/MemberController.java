@@ -491,12 +491,16 @@ public class MemberController {
 		 
 	      Member memNo = (Member)session.getAttribute("loginMember");
 	      String memberNo = memNo.getMemberNo();
-	      Map member = service.selectMemberOnee(memberNo);
-	      int followCnt = service.followCnt(memberNo);
-	      int favCnt = service.favCnt(memberNo);
-	      m.addAttribute("follow",followCnt);
-	      m.addAttribute("fav",favCnt);   
-	      m.addAttribute("member", member);
+	    //닉네임, 팔로잉팔로워 수, 설명
+	      Member member=service.selectMemberOne(memberNo);      
+	      //팔로잉
+	      int following=service.countFollowing(memberNo);
+	      //팔로워
+	      int follower=service.countFollower(memberNo);
+	      
+	      m.addAttribute("member",member);
+	      m.addAttribute("following",following);
+	      m.addAttribute("follower",follower);
 	      
 	   return "member/memberFollow";
    }
