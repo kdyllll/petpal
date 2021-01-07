@@ -21,4 +21,5 @@ public interface TipService {
 	int deleteTipImg(TipImg ti);
 	int insertSubImgs(List<TipImg> ti);
 	int updateContent(TipImg ti);
+	List<Map> selectMember(String writerNo);
 }

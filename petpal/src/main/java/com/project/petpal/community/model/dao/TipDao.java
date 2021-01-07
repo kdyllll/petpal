@@ -24,4 +24,5 @@ public interface TipDao {
 	int deleteTipImg(SqlSession session, TipImg ti);
 	int insertSubImgs(SqlSession session, TipImg ti);
 	int updateContent(SqlSession session, TipImg ti);
+	List<Map> selectMember(SqlSession session, String writerNo);
 }
