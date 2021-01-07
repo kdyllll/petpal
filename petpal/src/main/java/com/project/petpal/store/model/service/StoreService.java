@@ -49,4 +49,7 @@ public interface StoreService {
 	int deleteFav(Map fav);
 	List<Product> starList();
 	double selectAvgReview(String productNo);
+	List<Product> saleList();
+	List<Product> categoryList(Map sort);
+	List<Product> soldOutList(Map sort);
 } 

@@ -8,6 +8,16 @@
 
 </head>
 <style>
+.dropdown .dropdown-menu {
+     display: block;
+     opacity: 0;
+     transition: all 850ms ease;
+     }
+
+     .dropdown:hover .dropdown-menu {
+     display: block;
+     opacity: 1;
+     }
 .card-img-top {
 	/* width: 255px; */
 	height: 255px;
@@ -122,29 +132,33 @@ a:hover {
 					</div>
 					<!-- /.col-lg-3 -->
 
-					<div class="col-lg-9 mt-5">
+					<div class="col-lg-9 mt-5" >
 						<div
 							class="form-inline container-xl mb-4 d-flex justify-content-between">
 							<c:if test="${not empty scList }">
 							<button type="button"
-								class="font-weight-bold btn btn-secondary btn-sm mr-3 mt-2">전체</button>
+								class="font-weight-bold btn btn-secondary btn-sm mr-3 mt-2 subcate">전체</button>
 								<c:forEach var="sc" items="${scList }">
 							<button type="button"
-								class="font-weight-bold btn btn-secondary btn-sm mr-3 mt-2"><c:out value="${sc.SUBCATE }"/></button>
+								class="font-weight-bold btn btn-secondary btn-sm mr-3 mt-2 subcate"><c:out value="${sc.SUBCATE }"/></button>
 								</c:forEach>
 								</c:if>
+								<input type="hidden" id="subcate">
 							<div class="dropdown ml-auto mt-2">
 								<button class="btn btn-light dropdown-toggle" type="button"
 									id="dropdownMenuButton" data-toggle="dropdown"
 									aria-haspopup="true" aria-expanded="false">정렬</button>
 								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									<button class="dropdown-item" href="#">최신순</button>
-									<button class="dropdown-item" href="#">인기순</button>
-									<button class="dropdown-item" href="#">리뷰평점순</button>
+									<button class="dropdown-item sort" value="date">최신순</button>
+									<button class="dropdown-item sort" value="popul">인기순</button>
+									<button class="dropdown-item sort" value="star">리뷰평점순</button>
+									<input id="sortState" type="hidden">
 								</div>
 							</div>
 						</div>
-						<div class="row">
+						<div class="row" id="container">
+							<c:set var="product" value="${list[0] }"/>
+							<input type="hidden" value="${product.categoryNo }" id="cNo">
 							<c:if test="${empty list && empty soList }">
 								<div class="col-12 mb-4 text-center">
 									<p>상품이 없습니다.</p>
@@ -216,7 +230,43 @@ a:hover {
 
 </body>
 <script>
-	
+var state=$("#sortState").val();//정렬상태
+var subcate=$("#subcate").val();//소분류 상태
+var cNo=$("#cNo").val();//중분류 카테고리번호
+$(document).on(//소분류 눌렀을때
+		'click',
+		'.subcate',
+		function(e) {
+			if(e.target.textContent=='전체'){
+				subcate="";
+			}else{
+				subcate=e.target.textContent;
+			}
+			 $.ajax({
+				url:"${path}/store/sortProduct.do",
+				data:{cNo:cNo,state:state,subcate:subcate},
+				success:data=>{
+					$("#container").html("");
+					$("#container").append(data);
+					
+				}
+			}); 
+		});
+		
+$(document).on(//정렬 눌렀을떄
+		'click',
+		'.sort',
+		function(e) {
+			state=$(e.target).val();
+			 $.ajax({
+				url:"${path}/store/sortProduct.do",
+				data:{cNo:cNo,state:state,subcate:subcate},
+				success:data=>{
+					$("#container").html("");
+					$("#container").append(data);
+				}
+			}); 
+		});
 </script>
 
 </html>

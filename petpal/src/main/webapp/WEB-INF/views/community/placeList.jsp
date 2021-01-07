@@ -20,6 +20,7 @@
 					</jsp:include>
 					<div class="container d-flex justify-content-center position-relative">
 						<div id="btn" class="mb-5">
+							<button type="button" class="kind btn btn-secondary btn-sm mr-3">전체</button>
 							<button type="button" class="kind btn btn-secondary btn-sm mr-3">병원</button>
 							<button type="button" class="kind btn btn-secondary btn-sm mr-3">미용실</button>
 							<button type="button" class="kind btn btn-secondary btn-sm mr-3">호텔링</button>
@@ -96,9 +97,12 @@
 			'click',
 			'.kind',
 			function(e) {
-
-				location.assign('${path}/place/movePlaceList.do?category='
-						+ e.target.textContent);
+				if(e.target.textContent=='전체'){
+					location.assign('${path}/place/movePlaceList.do');
+				}else{
+					location.assign('${path}/place/movePlaceList.do?category='
+							+ e.target.textContent);
+				}
 
 			});
 	$(document).on(
