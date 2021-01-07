@@ -105,8 +105,7 @@
           <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <div class="d-flex justify-content-between align-items-center w-100">
             
-              <strong class="text-gray-dark"><c:out value="${p.TITLE }"/></strong>
-             
+              <div><span ><strong class="text-gray-dark"><c:out value="${p.TITLE }"/></strong></span>
               <c:choose>
               	<c:when test="${p.STATUS eq 'M' }">
               		 <span class="text-danger">(승인거절)</span>
@@ -118,7 +117,9 @@
               		 <span class="text-muted">(승인대기중)</span>
               	</c:otherwise>
               	
-              </c:choose>
+              </c:choose></div>
+             
+              
               	
 			<span><fmt:formatDate value="${p.ENROLLDATE }" pattern="yyyy/MM/dd"/></span>
             </div>

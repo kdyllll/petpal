@@ -19,7 +19,7 @@
 				NULL
 			</when>
 		</choose>
-		,#{memberName},#{phone},#{address,typeHandler=strArr},DEFAULT,DEFAULT,#{nickName},
+		,#{memberName},#{phone},#{address,typeHandler=strArr},3000,DEFAULT,#{nickName},
 		<choose>
 			<when test="img != null">
 				#{img}

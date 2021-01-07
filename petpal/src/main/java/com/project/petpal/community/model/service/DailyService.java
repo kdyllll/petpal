@@ -18,7 +18,7 @@ public interface DailyService {
 	ProductImg selectDailyProduct(String productNo);
 	List<Product> selectProductName(String key);
 	List<Product> selectProductAll();
-	List<Map> selectDailyAll(int cPage,int numPerPage);
+	List<Map> selectDailyAll(int cPage,int numPerPage,Map<String,String> keyword);
 	List<DailyImg> selectMainImg();
 	List<Hashtag> selectHashAll();
 	Map selectDailyOne(String dailyNo);
@@ -29,7 +29,7 @@ public interface DailyService {
 	int deleteDaily(String dailyNo);
 	List<Map> selectDailyListOne(String memberNo);
 	int dailyCnt(String memberNo);
-	int totalDailyCount();
+	int totalDailyCount(Map<String,String> keyword);
 	int updateDaily(Daily d,List<Hashtag> hashList,List<DailyCoord> coords,List<Map> fileList,List<DailyImg> updateFile,List<DailyImg> newFile);
 	List<DailyComment> selectComment(String dailyNo,int cPage,int numPerPage);
 	int countComment(String dailyNo);

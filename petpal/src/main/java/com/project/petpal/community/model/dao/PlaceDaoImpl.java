@@ -31,8 +31,8 @@ public class PlaceDaoImpl implements PlaceDao{
 	}
 
 	@Override
-	public List<Place> placeList(SqlSession session,String category,int cPage,int numPerpage) {
-		return session.selectList("place.placeList",category,new RowBounds((cPage-1)*numPerpage,numPerpage));
+	public List<Place> placeList(SqlSession session,int cPage,int numPerpage,Map<String,String> keyword) {
+		return session.selectList("place.placeList",keyword,new RowBounds((cPage-1)*numPerpage,numPerpage));
 	}
 
 	@Override
@@ -41,8 +41,8 @@ public class PlaceDaoImpl implements PlaceDao{
 	}
 
 	@Override
-	public int selectCount(SqlSession session,String category) {
-		return session.selectOne("place.selectCount");
+	public int selectCount(SqlSession session,Map<String,String> keyword) {
+		return session.selectOne("place.selectCount",keyword);
 	}
 
 	@Override
