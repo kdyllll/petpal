@@ -86,6 +86,9 @@
 						<!-- 댓글 -->
 						<hr class="my-5">
 						
+						<!-- 로그인모달 -->
+						<div class="loginModal"></div>
+						
 						<div id="commentContainer">
 						<h4>
 							댓글<span class="su"><c:out value="${count }"/></span>
