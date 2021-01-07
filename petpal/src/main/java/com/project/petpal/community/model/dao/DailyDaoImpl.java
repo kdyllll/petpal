@@ -60,10 +60,10 @@ public class DailyDaoImpl implements DailyDao {
 	}
 
 	@Override
-	public List<Map> selectDailyAll(SqlSession session,int cPage,int numPerPage) {
+	public List<Map> selectDailyAll(SqlSession session,int cPage,int numPerPage,Map<String,String> keyword) {
 		// TODO Auto-generated method stub
 		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
-		return session.selectList("daily.selectDailyAll",null,rb);
+		return session.selectList("daily.selectDailyAll",keyword,rb);
 	}
 
 	@Override
@@ -126,9 +126,9 @@ public class DailyDaoImpl implements DailyDao {
 	}
 
 	@Override
-	public int totalDailyCount(SqlSession session) {
+	public int totalDailyCount(SqlSession session,Map<String,String> keyword) {
 		// TODO Auto-generated method stub
-		return session.selectOne("daily.totalDailyCount");
+		return session.selectOne("daily.totalDailyCount",keyword);
 	}
 
 	@Override

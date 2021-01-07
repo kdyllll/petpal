@@ -52,8 +52,8 @@ public class PlaceServiceImpl implements PlaceService{
 		}
 
 	@Override
-	public List<Place> placeList(String category,int cPage,int numPerpage) {
-		return dao.placeList(session,category,cPage,numPerpage);
+	public List<Place> placeList(int cPage,int numPerpage,Map<String,String> keyword) {
+		return dao.placeList(session,cPage,numPerpage,keyword);
 	}
 
 	@Override
@@ -62,8 +62,8 @@ public class PlaceServiceImpl implements PlaceService{
 	}
 
 	@Override
-	public int selectCount(String category) {
-		return dao.selectCount(session,category);
+	public int selectCount(Map<String,String> keyword) {
+		return dao.selectCount(session,keyword);
 	}
 
 	@Override

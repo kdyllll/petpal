@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -82,10 +84,23 @@ public class PlaceController {
 		return "common/msg";
 	}
 	@RequestMapping("/place/movePlaceList.do")//장소후기 리스트 이동 서블릿
-	public String placeList(Model m,String category,@RequestParam(value="cPage",defaultValue="1") int cPage) {
+	public String placeList(Model m,String category,
+			@RequestParam(value="hashtag", required=false) String hashtag,
+			@RequestParam(value="cPage",defaultValue="1") int cPage) {
+		//해시태그 검색어로 검색됐을 경우 구분
+		Map<String,String> keyword=new HashMap<String,String>();
+		keyword.put("hashtag", hashtag);
+		keyword.put("category", category);
+		String search="";
+		//검색어를 통해 들어오는 거면 search도 보내서 정렬버튼 없앰
+		if(hashtag!=null) {
+			search="search";
+		}
+				
+				
 		int numPerpage=7;//한페이지의 출력할 개수
-		List<Place> list=service.placeList(category,cPage,numPerpage);//페이징된 리스트
-		int totalData=service.selectCount(category);//장소후기 총개수
+		List<Place> list=service.placeList(cPage,numPerpage,keyword);//페이징된 리스트
+		int totalData=service.selectCount(keyword);//장소후기 총개수
 		long curTime=System.currentTimeMillis();//현재날짜
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		for(Place p:list) {
@@ -111,6 +126,7 @@ public class PlaceController {
 				e.printStackTrace();
 			}
 		}
+		m.addAttribute("search",search);
 		m.addAttribute("pageBar",PageBarFactory.getPageBar(totalData, cPage, numPerpage,category,null, "movePlaceList.do"));
 		m.addAttribute("list",list);
 		return "community/placeList";

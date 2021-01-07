@@ -22,7 +22,7 @@ public interface DailyDao {
 	List<Product> selectProductName(SqlSession session,String key);
 	List<Product> selectProductAll(SqlSession session);
 	int insertHashtag(SqlSession session,Hashtag h);
-	List<Map> selectDailyAll(SqlSession session,int cPage,int numPerPage);
+	List<Map> selectDailyAll(SqlSession session,int cPage,int numPerPage,Map<String,String> keyword);
 	List<DailyImg> selectMainImg(SqlSession session);
 	List<Hashtag> selectHashAll(SqlSession session);
 	Map selectDailyOne(SqlSession session,String dailyNo);
@@ -33,7 +33,7 @@ public interface DailyDao {
 	int deleteDaily(SqlSession session,String dailyNo);
 	List<Map> selectDailyListOne(SqlSession session, String memberNo);
 	int dailyCnt(SqlSession session, String memberNo);
-	int totalDailyCount(SqlSession session);
+	int totalDailyCount(SqlSession session,Map<String,String> keyword);
 	int deleteDailyImg(SqlSession session, String dailyImgNo);
 	int updateDailyImg(SqlSession session,DailyImg di);
 	int updateImgStatus(SqlSession session,DailyImg di);
