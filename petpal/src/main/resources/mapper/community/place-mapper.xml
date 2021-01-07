@@ -26,18 +26,24 @@
   </insert>
   <select id="placeList" resultType="place" parameterType="string" resultMap="placeMap">
   	SELECT * FROM PLACE JOIN PLACEIMG USING(PLACENO) JOIN MEMBER USING(MEMBERNO) WHERE TYPE='M'
-  	 <if test="value !=null">
+  	 <if test="category !=null">
   		AND CATEGORY=#{value}
   	</if> 
+  	<if test="hashtag != null">
+  		AND PLACENO IN (SELECT PLACENO FROM PLACE LEFT JOIN HASHTAG ON POSTNO=PLACENO WHERE HASHCONTENT=#{hashtag}) 
+  	</if>
   </select>
   <select id="selectPlace" resultType="place" parameterType="string" resultMap="placeMap" >
   	SELECT * FROM PLACEIMG JOIN PLACE USING(PLACENO) JOIN MEMBER USING(MEMBERNO) WHERE PLACENO=#{placeNo}
   </select>
   <select id="selectCount" resultType="_int" parameterType="string">
-  	SELECT COUNT(*) FROM PLACE
-  	 <if test="value !=null">
-  		WHERE CATEGORY=#{value}
+  	SELECT COUNT(*) FROM PLACE WHERE 1=1
+  	 <if test="category !=null">
+  		AND CATEGORY=#{value}
   	</if> 
+  	<if test="hashtag != null">
+  		AND PLACENO IN (SELECT PLACENO FROM PLACE LEFT JOIN HASHTAG ON POSTNO=PLACENO WHERE HASHCONTENT=#{hashtag})
+  	</if>
   </select>
   <select id="commentCount" resultType="_int" parameterType="string">
   	SELECT COUNT(*) FROM PLACECOMMENT WHERE PLACENO=#{placeNo}

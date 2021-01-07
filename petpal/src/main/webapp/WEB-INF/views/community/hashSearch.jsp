@@ -12,11 +12,11 @@
   
   <main role="main" style="min-height:100vh;">
   	<div class="container my-4 pt-4">
-  		<form class="my-2 mt-5 d-flex justify-content-center">
+  		<form class="my-2 mt-5 d-flex justify-content-center" action="${path }/community/hashSearch.do">
   			<div class="input-group col-lg-6 col-8">	  		
-			    <input type="text" id="hashInput" class="form-control " placeholder="#해시태그 재검색" value="${hashtag }" >
+			    <input type="text" id="hashInput" class="form-control" name="hashtag" placeholder="#해시태그 재검색" value="${hashtag }" >
                  <div class="input-group-append">
-                     <button type="button" class="input-group-text bg-point">검색</button>
+                     <button type="submit" class="input-group-text bg-point">검색</button>
                  </div>
                   
             </div>
@@ -55,7 +55,9 @@
 		</div>
 		
 		<div class="tipCon row col-12 my-4 border-bottom pb-3">
-			<p class="h4 col-12 mb-3"><strong>노하우 검색 결과</strong><a href="#" class="text-hgh ml-2 ${empty tipList?'d-none':'' }" style="font-size:15px;">더보기</a></p>
+			<p class="h4 col-12 mb-3"><strong>노하우 검색 결과</strong>
+				<a href="${path }/place/movePlaceList.do?hashtag=${hashtag}" class="text-hgh ml-2 ${empty tipList?'d-none':'' }" style="font-size:15px;">더보기</a>
+			</p>
 			<div class="mx-auto mb-2"><c:out value="${empty tipList?'검색 결과가 없습니다.':'' }"/></div>
 			<c:forEach var="t" items="${tipList }" varStatus="vs" begin="1" end="3">						
 				<div class="col-lg-3 col-6" style="cursor: pointer" onclick="location.replace('${path}/community/tipDetail.do?tipNo=${t.TIPNO }')">							
@@ -81,7 +83,7 @@
 		</div>
 		
 		<div class="placeCon row col-12 my-4 border-bottom pb-3 mb-4">
-			<p class="h4 col-12 mb-3"><strong>유저들의 장소리뷰</strong><a href="#" class="text-hgh ml-2 ${empty placeList?'d-none':'' }" style="font-size:15px;">더보기</a></p>
+			<p class="h4 col-12 mb-3"><strong>유저들의 장소리뷰</strong><a href="${path }/place/movePlaceList.do?hashtag=${hashtag}" class="text-hgh ml-2 ${empty placeList?'d-none':'' }" style="font-size:15px;">더보기</a></p>
 			<div class="mx-auto mb-2"><c:out value="${empty placeList?'검색 결과가 없습니다.':'' }"/></div>
 			<c:forEach var="p" items="${placeList }">
 				<div class="col-11 ml-3 border-bottom row py-2" style="cursor: pointer" onclick="location.replace('${path}/place/movePlaceDetail.do?placeNo=${p.PLACENO }')">

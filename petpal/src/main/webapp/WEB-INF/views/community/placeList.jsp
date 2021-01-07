@@ -18,8 +18,8 @@
 					<jsp:include page="/WEB-INF/views/common/communityNav.jsp" >
 						<jsp:param value="placeList" name="comNav"/>
 					</jsp:include>
-					<div class="container d-flex justify-content-center position-relative">
-						<div id="btn" class="mb-5">
+					<div class="container col-12 d-flex justify-content-center position-relative mb-5">
+						<div id="btn" class=" ${search eq 'search'?'d-none':'' }">
 							<button type="button" class="kind btn btn-secondary btn-sm mr-3">병원</button>
 							<button type="button" class="kind btn btn-secondary btn-sm mr-3">미용실</button>
 							<button type="button" class="kind btn btn-secondary btn-sm mr-3">호텔링</button>

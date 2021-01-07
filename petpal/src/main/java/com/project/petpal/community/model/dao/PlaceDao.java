@@ -15,9 +15,9 @@ public interface PlaceDao {
 	int insertPlace(SqlSession session,Place p);
 	int insertPlaceImg(SqlSession session,PlaceImg pi);
 	int insertHashtag(SqlSession session,Map m);
-	List<Place> placeList(SqlSession session,String category,int cPage,int numPerpage);
+	List<Place> placeList(SqlSession session,int cPage,int numPerpage,Map<String,String> keyword);
 	List<Place> selectPlace(SqlSession session,String placeNo);
-	int selectCount(SqlSession session,String category);
+	int selectCount(SqlSession session,Map<String,String> keyword);
 	int commentCount(SqlSession session,String placeNo);
 	int insertComment(SqlSession session,PlaceComment pc);
 
