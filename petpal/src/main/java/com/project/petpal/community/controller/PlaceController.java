@@ -207,5 +207,16 @@ public class PlaceController {
 		
 		return "common/msg";
 	}
+	@RequestMapping("/place/movePlaceDelete.do")
+	public String deletePlace(String placeNo,Model m) {
+		int result=service.deletePlace(placeNo);
+		if(result>0) {
+			m.addAttribute("msg","삭제에 성공하였습니다.");
+		}else {
+			m.addAttribute("msg","삭제에 실패하였습니다.");
+		}
+		m.addAttribute("loc","/place/movePlaceList.do");
+		return "common/msg";
+	}
 	
 }

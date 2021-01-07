@@ -34,7 +34,7 @@
     	 	 	<button type="button" class="text-dark likeBtn" style="background:none; border:none; outline:none;">좋아요</button><p><c:out value="${fav }" /></p>
     	 	 </div >
     	 	 <div class="d-flex flex-column align-items-center">
-	   		 	<a href="#" class="text-dark">팔로우</a><p><c:out value="${follow }" /></p>
+	   		 	<a href="${path }/member/memberFollow.do" class="text-dark">팔로우<p><c:out value="${follow }" /></p></a>
 	   		 </div>
 	   		 <div class="d-flex flex-column align-items-center">
 	   		 	<a href="${path }/member/myPageShop.do" class="text-dark">포인트</a><p><c:out value="${member.POINT }" /></p>
@@ -104,7 +104,23 @@
           <a href="${path }/place/movePlaceDetail.do?placeNo=${p.PLACENO}"><img class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="${path }/resources/upload/place/${p.FILENAME}" /></a>
           <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <div class="d-flex justify-content-between align-items-center w-100">
-              <strong class="text-gray-dark"><c:out value="${p.TITLE }"/></strong>
+            
+              <div><span ><strong class="text-gray-dark"><c:out value="${p.TITLE }"/></strong></span>
+              <c:choose>
+              	<c:when test="${p.STATUS eq 'M' }">
+              		 <span class="text-danger">(승인거절)</span>
+              	</c:when>
+              	<c:when test="${p.STATUS eq 'Y' }">
+              		 <span class="text-success">(승인)</span>
+              	</c:when>
+              	<c:otherwise>
+              		 <span class="text-muted">(승인대기중)</span>
+              	</c:otherwise>
+              	
+              </c:choose></div>
+             
+              
+              	
 			<span><fmt:formatDate value="${p.ENROLLDATE }" pattern="yyyy/MM/dd"/></span>
             </div>
             <span class="d-block"><c:out value="${p.CONTENT }"/></span>

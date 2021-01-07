@@ -240,6 +240,22 @@ public class StoreDaoImpl implements StoreDao{
 		// TODO Auto-generated method stub
 		return session.selectOne("store.selectAvgReview",productNo);
 	}
+
+	@Override
+	public List<Product> saleList(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectList("store.saleList");
+	}
+
+	@Override
+	public List<Product> categoryList(SqlSession session, Map sort) {
+		return session.selectList("store.categorySortList",sort);
+	}
+
+	@Override
+	public List<Product> soldOutList(SqlSession session, Map sort) {
+		return session.selectList("store.soldOutList2",sort);
+	}
 	
 
 	

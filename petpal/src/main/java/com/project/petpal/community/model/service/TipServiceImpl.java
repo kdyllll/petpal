@@ -110,4 +110,9 @@ public class TipServiceImpl implements TipService {
 		return dao.updateContent(session, ti);
 	}
 
+	@Override
+	public List<Map> selectMember(String writerNo) {
+		return dao.selectMember(session, writerNo);
+	}
+
 }

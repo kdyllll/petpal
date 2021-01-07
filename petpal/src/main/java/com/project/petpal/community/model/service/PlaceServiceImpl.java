@@ -135,6 +135,11 @@ public class PlaceServiceImpl implements PlaceService{
 		// TODO Auto-generated method stub
 		return dao.selectPlaceHash(session,cPage,numPerPage,hashtag);
 	}
+
+	@Override
+	public int deletePlace(String placeNo) {
+		return dao.deletePlace(session,placeNo);
+	}
 	
 	
 

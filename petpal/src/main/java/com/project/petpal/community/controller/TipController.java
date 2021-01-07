@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,14 +14,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.petpal.community.model.service.TipService;
-import com.project.petpal.community.model.vo.FindImg;
 import com.project.petpal.community.model.vo.Tip;
 import com.project.petpal.community.model.vo.TipImg;
 import com.project.petpal.member.model.vo.Member;
@@ -60,10 +59,15 @@ public class TipController {
 		}else {
 			memberNo = loginMember.getMemberNo();
 		}
-		
+//		System.out.println(service.selectMember(writerNo));
+		List<Map> tip = service.tipMainList(tipNo);
+		String writer = (String) tip.get(0).get("MEMBERNO");
+		mv.addObject("member", service.selectMember((String) tip.get(0).get("MEMBERNO")));
 		mv.addObject("mainList",service.tipMainList(tipNo));
 		mv.addObject("imgList",service.tipDetail(tipNo));
 		mv.addObject("memberNo", memberNo);
+		mv.addObject("writer", writer);
+		System.out.println(tip.get(0).get("MEMBERNO"));
 		mv.addObject("loc", "/community/tipDetail.do");
 		
 		return mv;

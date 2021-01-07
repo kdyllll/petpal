@@ -98,4 +98,9 @@ public class TipDaoImpl implements TipDao {
 	public int updateContent(SqlSession session, TipImg ti) {
 		return session.update("tip.updateContent", ti);
 	}
+
+	@Override
+	public List<Map> selectMember(SqlSession session, String writerNo) {
+		return session.selectList("tip.selectMember", writerNo);
+	}
 }

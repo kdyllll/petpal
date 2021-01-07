@@ -25,5 +25,5 @@ public interface PlaceService {
 	int updatePlace(Place p,List<PlaceImg> list,String[] hashtag) throws Exception;
 	List<Map> selectPlaceHeartWeek(int cPage,int numPerPage);
 	List<Map> selectPlaceHash(int cPage,int numPerPage,String hashtag);
-	
+	int deletePlace(String placeNo);
 }

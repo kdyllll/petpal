@@ -241,10 +241,16 @@
         $(".secondCateCon").addClass("d-none");
         if(value=="dog") {
           $("#dogCate").removeClass("d-none");
+          $("#thirdCate").val("");
+          $("#thirdCate").attr("readonly", false);
         } else if(value=="cat") {
           $("#catCate").removeClass("d-none");
+          $("#thirdCate").val("");
+          $("#thirdCate").attr("readonly", false);
         } else if(value=="smallAni") {
           $("#smallCate").removeClass("d-none");
+          $("#thirdCate").val("no");
+          $("#thirdCate").attr("readonly", true);
         }
       });
 

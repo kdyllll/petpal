@@ -19,7 +19,7 @@
 				NULL
 			</when>
 		</choose>
-		,#{memberName},#{phone},#{address,typeHandler=strArr},DEFAULT,DEFAULT,#{nickName},
+		,#{memberName},#{phone},#{address,typeHandler=strArr},3000,DEFAULT,#{nickName},
 		<choose>
 			<when test="img != null">
 				#{img}
@@ -75,7 +75,7 @@
 	</select>
 	<select id="countFollower" resultType="int"
 		parameterType="string">
-		SELECT COUNT(*) FROM FOLLOW WHERE FOLLOWERNO=#{memberNo}
+		SELECT COUNT(*) FROM FOLLOW WHERE WRITERNO=#{memberNo}
 	</select>
 	<select id="selectDailyMain" resultType="dailyImg"
 		parameterType="string">
@@ -246,5 +246,14 @@
 		select tipno as likeno, title, tipdate as enrolldate,
 		content1 as content,mainimg from tip join tipimg using(tipno) join
 		tiplike using(tipno) where mainimg is not null and heartmemberno=#{memberNo}
+	</select>
+	<select id="selectNList" parameterType="string" resultType="string">
+		SELECT NICKNAME FROM MEMBER WHERE MEMBERNO = #{memberNo}
+	</select>
+	<select id="selectIList" parameterType="string" resultType="string">
+		SELECT IMG FROM MEMBER WHERE MEMBERNO = #{memberNo}
+	</select>
+	<select id="selectMList" parameterType="string" resultType="string">
+		SELECT MEMBERNO FROM MEMBER WHERE MEMBERNO = #{memberNo}
 	</select>
 </mapper>

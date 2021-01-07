@@ -219,7 +219,7 @@
 							</c:if>
 							<div class="col-12 category-container mt-5">
 								<h5 style="font-weight: bold;">소동물</h5>
-								<a class="text-info" style="font-weight: bold;" href="${path }/store/moveCategory.do?cNo=S">더보기</a>
+								<a class="text-info" style="font-weight: bold;" href="${path }/store/moveCategory.do?cNo=S1">더보기</a>
 							</div>
 							<c:if test="${empty sList }">
 								<div class="col-12 mb-4 text-center">

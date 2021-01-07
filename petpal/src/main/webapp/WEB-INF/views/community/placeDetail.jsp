@@ -86,6 +86,9 @@
 						<!-- 댓글 -->
 						<hr class="my-5">
 						
+						<!-- 로그인모달 -->
+						<div class="loginModal"></div>
+						
 						<div id="commentContainer">
 						<h4>
 							댓글<span class="su"><c:out value="${count }"/></span>
@@ -310,7 +313,8 @@ ul li{
 			'click',
 			'#delete',
 			function(e) {//삭제버튼 눌렀을때
-				
+				var placeNo=$("#placeNo").val();
+				location.assign('${path}/place/movePlaceDelete.do?placeNo='+placeNo);
 			});
 	
 		var maker;
