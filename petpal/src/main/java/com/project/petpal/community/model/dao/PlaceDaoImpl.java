@@ -103,6 +103,12 @@ public class PlaceDaoImpl implements PlaceDao{
 		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
 		return session.selectList("place.selectPlaceHash",hashtag,rb);
 	}
+
+	@Override
+	public int deletePlace(SqlSession session, String placeNo) {
+		// TODO Auto-generated method stub
+		return session.delete("place.deletePlace",placeNo);
+	}
 	
 	
 
