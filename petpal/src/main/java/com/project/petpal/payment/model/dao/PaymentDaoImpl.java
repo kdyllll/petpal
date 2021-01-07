@@ -62,4 +62,9 @@ public class PaymentDaoImpl implements PaymentDao {
 		return session.selectList("payment.selectAddress", memberNo);
 	}
 
+	@Override
+	public List<Map> selectProduct(SqlSession session, String stockNo) {
+		return session.selectList("payment.selectProduct", stockNo);
+	}
+
 }

@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,13 +51,18 @@ public class DailyController {
 	@RequestMapping("/daily/moveList.do")
 	public String moveDailyList(Model m,
 			@RequestParam(value="cPage",defaultValue="1") int cPage,
-			@RequestParam(value="numPerPage",defaultValue="12") int numPerPage) {
+			@RequestParam(value="numPerPage",defaultValue="12") int numPerPage, HttpSession session) {
 		List<Map> dailyList=service.selectDailyAll(cPage,numPerPage);
 		List<DailyImg> imgList=service.selectMainImg();
 		List<Hashtag> hashList=service.selectHashAll();
 		int totalCount=service.totalDailyCount();
 		String pageBar=new PageBarFactory().getPageBar(totalCount, cPage, numPerPage, null, null, "moveList.do");
-		
+		Member mem = (Member)session.getAttribute("loginMember");
+		if(mem!=null) {		
+			List<String> like = service.selectDailyLike(mem.getMemberNo());
+			System.out.println(like);
+			m.addAttribute("like", like);
+		}		
 		//좋아요 수
 		//좋아요 리스트(하트켜기용)
 		//댓글 수 보내야 함
@@ -155,7 +161,7 @@ public class DailyController {
 	
 	//글 디테일로 이동
 	@RequestMapping("/daily/moveDetail.do")
-	public String moveDetail(String dailyNo,Model m) {
+	public String moveDetail(String dailyNo,Model m,HttpSession session) {
 		//글사진, 상품 태그, 글내용, 글 해시태그, 글 작성시간, 글 번호, 글좋아요, 글댓글, 작성자 사진, 작성자 닉네임, 
 		
 		//글 + 멤버 
@@ -176,6 +182,16 @@ public class DailyController {
 		//해시태그
 		List<Hashtag> hashList=service.selectHashList(dailyNo);
 		//좋아요
+		Member mem =(Member)session.getAttribute("loginMember");
+		if(mem!=null) {
+			List<String> like = service.selectDailyLike(mem.getMemberNo());
+			for(String l : like) {
+				if(l.equals(dailyNo)) {
+					String dLike = l;
+					m.addAttribute("like", dLike);					
+				}
+			}
+		}
 		
 		m.addAttribute("daily",daily);
 		m.addAttribute("imgList",imgList);
@@ -433,6 +449,22 @@ public class DailyController {
 		return "community/communityAjax/dailyListAjax";
 	}
 
+	@RequestMapping("/daily/insertLike.do")
+	public String insertLike(HttpSession session, String dailyNo) {
+		Map map = new HashMap();
+		Member m = (Member)session.getAttribute("loginMember");
+		map.put("memberNo", m.getMemberNo());
+		map.put("dailyNo", dailyNo);		
+		service.insertDailyLike(map);
+		return "redirect:/community/findList.do";
+	}
+	
+//	좋아요 삭제
+	@RequestMapping("/daily/deleteLike.do")
+	public String deleteLike(String dailyNo, Model model) {
+		service.deleteDailyLike(dailyNo);
+		return "redirect:/community/findList.do";
+	}
 	
 	
 

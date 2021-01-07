@@ -41,4 +41,7 @@ public interface DailyService {
 	List<Map> selectDailyFollow(int cPage,int numPerPage);
 	List<Map> selectDailyHeartWeek(int cPage,int numPerPage);
 	List<Map> selectDailyHash(int cPage,int numPerPage,String hashtag);
+	int insertDailyLike(Map m);
+	int deleteDailyLike(String dailyNo);
+	List<String> selectDailyLike(String memberNo);
 }

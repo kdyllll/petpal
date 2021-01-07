@@ -304,6 +304,24 @@ public class DailyServiceImpl implements DailyService {
 		return dao.selectDailyHash(session,cPage,numPerPage,hashtag);
 	}
 
+	@Override
+	public int insertDailyLike(Map m) {
+		// TODO Auto-generated method stub
+		return dao.insertDailyLike(session, m);
+	}
+
+	@Override
+	public int deleteDailyLike(String dailyNo) {
+		// TODO Auto-generated method stub
+		return dao.deleteDailyLike(session,dailyNo);
+	}
+
+	@Override
+	public List<String> selectDailyLike(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectDailyLike(session, memberNo);
+	}
+
 	
 	
 

@@ -61,42 +61,41 @@ public class CartController {
 		    while(st2.hasMoreTokens()) {
 		    	amount.add(st2.nextToken());
 		    }
-		}
-		
-		//기존에 있던 쿠키에 이미 재고번호가 다시 쿠키로 들어오면 동일한 값을 찾아서 그 값에 해당하는 수량을 원래 상품 수량에 합치고 나중에 들어온 재고번호 쿠키를 삭제함
-		for(int i=0;i<stockNo.size();i++) {
-			for(int j=0;j<amount.size();j++) {
-				if(i!=j) {
-					if(stockNo.get(i).equals(stockNo.get(j))) {
-						int c = Integer.parseInt(amount.get(i)) + Integer.parseInt(amount.get(j));
-						amount.set(i, Integer.toString(c));
-						stockNo.remove(j);
-						amount.remove(j);
+			
+			//기존에 있던 쿠키에 이미 재고번호가 다시 쿠키로 들어오면 동일한 값을 찾아서 그 값에 해당하는 수량을 원래 상품 수량에 합치고 나중에 들어온 재고번호 쿠키를 삭제함
+			for(int i=0;i<stockNo.size();i++) {
+				for(int j=0;j<amount.size();j++) {
+					if(i!=j) {
+						if(stockNo.get(i).equals(stockNo.get(j))) {
+							int c = Integer.parseInt(amount.get(i)) + Integer.parseInt(amount.get(j));
+							amount.set(i, Integer.toString(c));
+							stockNo.remove(j);
+							amount.remove(j);
+						}
 					}
 				}
 			}
-		}
-		
-		for(int i=0;i<cookie.length;i++) {
-			cookie[i].setMaxAge(0);
-		}
-		
-		//쿠키에 담을 String 변수
-		String stocks = "";
-		String amounts = "";
-		
-		//쿠키용 String 변수에 값을 넣어줌
-		for(int i=0;i<stockNo.size();i++) {
-			if(stocks.equals("")) {
-				stocks=stockNo.get(i);
-			}else {
-				stocks=stocks+","+stockNo.get(i);
+			
+			for(int i=0;i<cookie.length;i++) {
+				cookie[i].setMaxAge(0);
 			}
-			if(amounts.equals("")) {
-				amounts=amount.get(i);
-			}else {
-				amounts=amounts+","+amount.get(i);
-			}
+			
+			//쿠키에 담을 String 변수
+			String stocks = "";
+			String amounts = "";
+			
+			//쿠키용 String 변수에 값을 넣어줌
+			for(int i=0;i<stockNo.size();i++) {
+				if(stocks.equals("")) {
+					stocks=stockNo.get(i);
+				}else {
+					stocks=stocks+","+stockNo.get(i);
+				}
+				if(amounts.equals("")) {
+					amounts=amount.get(i);
+				}else {
+					amounts=amounts+","+amount.get(i);
+				}
 		}
 		
 		//쿠키 생성
@@ -108,6 +107,7 @@ public class CartController {
 		c2.setMaxAge(60 * 60 * 24);
 		c2.setPath("/");
 		response.addCookie(c2);
+		}
 		
 		
 		if((Member)session.getAttribute("loginMember")!=null) {

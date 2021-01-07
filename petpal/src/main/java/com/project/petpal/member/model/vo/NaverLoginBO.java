@@ -19,7 +19,8 @@ public class NaverLoginBO{
 	//state: 애플리케이션이 생성한 상태 토큰
 	private final static String CLIENT_ID = "c0qHWpTfBZYYdxlCkV9G";
 	private final static String CLIENT_SECRET = "IguBoR5Knl";
-	private final static String REDIRECT_URI = "http://localhost:9090/petpal/naverLogin.do";
+//	private final static String REDIRECT_URI = "http://localhost:9090/petpal/naverLogin.do";
+	private final static String REDIRECT_URI = "http://rclass.iptime.org:9999/20PM_PETPAL_final/naverLogin.do";
 	private final static String SESSION_STATE = "oauth_state";
 	
 	/* 프로필 조회 API URL */

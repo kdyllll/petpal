@@ -67,4 +67,9 @@ public class PaymentServiceImpl implements PaymentService {
 	public List<Map> selectAddress(String memberNo) {
 		return dao.selectAddress(session, memberNo);
 	}
+
+	@Override
+	public List<Map> selectProduct(String stockNo) {
+		return dao.selectProduct(session, stockNo);
+	}
 }

@@ -11,6 +11,10 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
   
   <main role="main" style="min-height:100vh;">
+  	<div class="container my-4 pt-4">
+  		<div class="my-2">
+  			<p>#해시태그 검색 : <c:out value="${hashtag }"/></p>
+  		</div>
    		<div class="dailyCon row col-12 my-3">
 			<p class="h4 col-12 mb-4"><strong>사진 검색 결과</strong> <a href="#" class="text-hgh ml-1" style="font-size:15px;">더보기</a></p>
 			<c:forEach var="d" items="${dailyList}">
@@ -27,9 +31,9 @@
                                 </div>   
                                 <div class="d-flex justify-content-between align-items-center">
 		                                <small class="text-muted pl-1">
-		                                	<c:forEach var="h" items="${dailyHash}">
-		                                		<c:if test="${not empty h and (h.postNo eq d.DAILYNO )}">
-		                                    		<a class="text-secondary bg-point">#<c:out value="${h.hashContent }"/></a>
+		                                	<c:forEach var="h" items="${d.hashList}">
+		                                		<c:if test="${not empty h}">
+		                                    		<a class="text-secondary bg-point">#<c:out value="${h }"/></a>
 		                                    	</c:if>
 		                                    </c:forEach>  
 		                                </small>
@@ -54,11 +58,11 @@
 						</div>
 						<div class="d-flex justify-content-between align-items-center">
                               <small class="text-muted pl-1">
-                              	<c:forEach var="h" items="${tipHash}">
-                              		<c:if test="${not empty h and (h.postNo eq t.TIPNO )}">
-                                  		<a class="text-secondary bg-point">#<c:out value="${h.hashContent }"/></a>
-                                  	</c:if>
-                                  </c:forEach>  
+                                	<c:forEach var="h" items="${t.hashList}">
+                                		<c:if test="${not empty h}">
+                                    		<a class="text-secondary bg-point">#<c:out value="${h }"/></a>
+                                    	</c:if>
+                                    </c:forEach>  
                               </small>
                           </div>
 					</div>						
@@ -79,11 +83,11 @@
 						<li><c:out value="${p.POSITION}"/></li>
 						<li><div class="d-flex justify-content-between align-items-center">
                                 <small class="text-muted pl-1">
-                                	<c:forEach var="h" items="${placeHash}">
-                                		<c:if test="${not empty h and (h.postNo eq p.PLACENO )}">
-                                    		<a class="text-secondary bg-point">#<c:out value="${h.hashContent }"/></a>
-                                    	</c:if>
-                                    </c:forEach>  
+                                   <c:forEach var="h" items="${p.hashList}">
+	                               		<c:if test="${not empty h}">
+	                                   		<a class="text-secondary bg-point">#<c:out value="${h }"/></a>
+	                                   	</c:if>
+                                   </c:forEach>    
                                 </small>
                             </div></li>
 					</ul>
@@ -91,6 +95,7 @@
 				</div>
 			</c:forEach>
 		</div>
+	</div>
   </main>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

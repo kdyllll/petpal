@@ -14,4 +14,5 @@ public interface PaymentService {
 	String selectStock(String stockNo);
 	int selectPoint(String memberNo);
 	List<Map> selectAddress(String memberNo);
+	List<Map> selectProduct(String stockNo);
 }
