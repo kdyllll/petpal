@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.project.petpal.admin.model.vo.Product;
 import com.project.petpal.common.AjaxPageBarFactory;
 import com.project.petpal.common.PageBarFactory;
+import com.project.petpal.community.model.service.CommunityService;
 import com.project.petpal.community.model.service.DailyService;
 import com.project.petpal.community.model.vo.Daily;
 import com.project.petpal.community.model.vo.DailyComment;
@@ -40,7 +41,8 @@ public class DailyController {
 	
 	@Autowired
 	private DailyService service;
-	
+	@Autowired
+	private CommunityService cService;
 	//글 입력으로 이동
 	@RequestMapping("/daily/moveWrite.do")
 	public String moveDailyWrite(Model m) {
@@ -50,12 +52,26 @@ public class DailyController {
 	//글 목록으로 이동
 	@RequestMapping("/daily/moveList.do")
 	public String moveDailyList(Model m,
+			@RequestParam(value="hashtag", required=false) String hashtag,
 			@RequestParam(value="cPage",defaultValue="1") int cPage,
 			@RequestParam(value="numPerPage",defaultValue="12") int numPerPage, HttpSession session) {
-		List<Map> dailyList=service.selectDailyAll(cPage,numPerPage);
+		//해시태그 검색어로 검색됐을 경우 구분
+		Map<String,String> keyword=new HashMap<String,String>();
+		keyword.put("hashtag", hashtag);
+		String search="";
+		//검색어를 통해 들어오는 거면 search도 보내서 정렬버튼 없앰
+		if(hashtag!=null) {
+			search="search";
+		}
+		
+		List<Map> dailyList=service.selectDailyAll(cPage,numPerPage,keyword);
+		for(Map map:dailyList) {
+			String postNo=(String) map.get("DAILYNO");
+			List<String> hashList=cService.selectHashList(postNo);
+			map.put("hashList", hashList);
+		}
 		List<DailyImg> imgList=service.selectMainImg();
-		List<Hashtag> hashList=service.selectHashAll();
-		int totalCount=service.totalDailyCount();
+		int totalCount=service.totalDailyCount(keyword);
 		String pageBar=new PageBarFactory().getPageBar(totalCount, cPage, numPerPage, null, null, "moveList.do");
 		Member mem = (Member)session.getAttribute("loginMember");
 		if(mem!=null) {		
@@ -66,10 +82,9 @@ public class DailyController {
 		//좋아요 수
 		//좋아요 리스트(하트켜기용)
 		//댓글 수 보내야 함
-		
+		m.addAttribute("search",search);
 		m.addAttribute("dailyList",dailyList);
 		m.addAttribute("imgList",imgList);
-		m.addAttribute("hashList",hashList);
 		m.addAttribute("pageBar",pageBar);
 		return "community/dailyList";
 	}
@@ -423,7 +438,7 @@ public class DailyController {
 		//sort 는 enrollDate(최신순) / heart(좋아요순) / follow(팔로워많은순)
 		List<Map> dailyList=new ArrayList<Map>();
 		if(sort.equals("enrollDate")) {//최신순 정렬일때
-			dailyList=service.selectDailyAll(cPage,numPerPage);
+			dailyList=service.selectDailyAll(cPage,numPerPage,null);
 		}else if(sort.equals("heart")) {//좋아요순일때(일상+멤버+좋아요)
 			dailyList=service.selectDailyHeart(cPage,numPerPage);
 		}else {//팔로워많은순일때(일상+멤버+팔로우)
@@ -432,7 +447,7 @@ public class DailyController {
 		
 		List<DailyImg> imgList=service.selectMainImg();
 		List<Hashtag> hashList=service.selectHashAll();
-		int totalCount=service.totalDailyCount();
+		int totalCount=service.totalDailyCount(null);
 		String pageBar=new AjaxPageBarFactory().getPageBar(totalCount, cPage, numPerPage, "dailySort.do", null, "#dailyCon", null, "dailyAjaxPage", null,null,sort);
 		//String pageBar=new PageBarFactory().getPageBar(totalCount, cPage, numPerPage, null, null, "moveList.do");
 		//에이작스 페이지바로 바꿔야함

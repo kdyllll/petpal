@@ -12,13 +12,21 @@
   
   <main role="main" style="min-height:100vh;">
   	<div class="container my-4 pt-4">
-  		<div class="my-2">
-  			<p>#해시태그 검색 : <c:out value="${hashtag }"/></p>
-  		</div>
-   		<div class="dailyCon row col-12 my-3">
-			<p class="h4 col-12 mb-4"><strong>사진 검색 결과</strong> <a href="#" class="text-hgh ml-1" style="font-size:15px;">더보기</a></p>
+  		<form class="my-2 mt-5 d-flex justify-content-center">
+  			<div class="input-group col-lg-6 col-8">	  		
+			    <input type="text" id="hashInput" class="form-control " placeholder="#해시태그 재검색" value="${hashtag }" >
+                 <div class="input-group-append">
+                     <button type="button" class="input-group-text bg-point">검색</button>
+                 </div>
+                  
+            </div>
+  		</form>
+   		<div class="dailyCon row col-12 my-4 border-bottom pb-3">
+			<p class="h4 col-12 mb-3"><strong>사진 검색 결과</strong> 
+			<a href="${path }/daily/moveList.do?hashtag=${hashtag}" class="text-hgh ml-1 ${empty dailyList?'d-none':'' }" style="font-size:15px;">더보기</a></p>
+			<div class="mx-auto mb-2"><c:out value="${empty dailyList?'검색 결과가 없습니다.':'' }"/></div>
 			<c:forEach var="d" items="${dailyList}">
-				<div class="col-3" >
+				<div class="col-lg-3 col-6" >
 					<div class="card mb-4 bg-transparent border-0">
 						<a href="${path}/daily/moveDetail.do?dailyNo=${d.DAILYNO }">
 							<img src="${path }/resources/upload/community/daily/${d.DAILYIMGNAME}" width="100%" class="rounded">
@@ -29,11 +37,11 @@
                                 <div class="ml-1">
                                     <a href="${path }/user/moveUserInfo.do?memberNo=${d.MEMBERNO}"><span class="text-dark align-top mx-1"><strong><c:out value="${d.NICKNAME }"/></strong></span></a> 
                                 </div>   
-                                <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex justify-content-between align-items-center col-12 p-0 mt-1">
 		                                <small class="text-muted pl-1">
 		                                	<c:forEach var="h" items="${d.hashList}">
 		                                		<c:if test="${not empty h}">
-		                                    		<a class="text-secondary bg-point">#<c:out value="${h }"/></a>
+		                                    		<a href="${path }/community/hashSearch.do?hashtag=${h}" class="text-secondary bg-point">#<c:out value="${h }"/></a>
 		                                    	</c:if>
 		                                    </c:forEach>  
 		                                </small>
@@ -43,12 +51,14 @@
 					</div>
 				</div>
 			</c:forEach>
+			
 		</div>
 		
-		<div class="tipCon row col-12 my-3">
-			<p class="h4 col-12 mb-4"><strong>노하우 검색 결과</strong><a href="#" class="text-hgh ml-2" style="font-size:15px;">더보기</a></p>
+		<div class="tipCon row col-12 my-4 border-bottom pb-3">
+			<p class="h4 col-12 mb-3"><strong>노하우 검색 결과</strong><a href="#" class="text-hgh ml-2 ${empty tipList?'d-none':'' }" style="font-size:15px;">더보기</a></p>
+			<div class="mx-auto mb-2"><c:out value="${empty tipList?'검색 결과가 없습니다.':'' }"/></div>
 			<c:forEach var="t" items="${tipList }" varStatus="vs" begin="1" end="3">						
-				<div class="col-4" style="cursor: pointer" onclick="location.replace('${path}/community/tipDetail.do?tipNo=${t.TIPNO }')">							
+				<div class="col-lg-3 col-6" style="cursor: pointer" onclick="location.replace('${path}/community/tipDetail.do?tipNo=${t.TIPNO }')">							
 					<div class="card mb-4 bg-transparent border-0">
 						<div class="test">
 							<img src="${path }/resources/upload/tip/${t.MAINIMG}" width="100%" class="rounded">
@@ -60,7 +70,7 @@
                               <small class="text-muted pl-1">
                                 	<c:forEach var="h" items="${t.hashList}">
                                 		<c:if test="${not empty h}">
-                                    		<a class="text-secondary bg-point">#<c:out value="${h }"/></a>
+                                    		<a href="${path }/community/hashSearch.do?hashtag=${h}" class="text-secondary bg-point">#<c:out value="${h }"/></a>
                                     	</c:if>
                                     </c:forEach>  
                               </small>
@@ -70,8 +80,9 @@
 			</c:forEach>
 		</div>
 		
-		<div class="placeCon row col-12 my-3">
-			<p class="h4 col-12 mb-4"><strong>유저들의 장소리뷰</strong><a href="#" class="text-hgh ml-2" style="font-size:15px;">더보기</a></p>
+		<div class="placeCon row col-12 my-4 border-bottom pb-3 mb-4">
+			<p class="h4 col-12 mb-3"><strong>유저들의 장소리뷰</strong><a href="#" class="text-hgh ml-2 ${empty placeList?'d-none':'' }" style="font-size:15px;">더보기</a></p>
+			<div class="mx-auto mb-2"><c:out value="${empty placeList?'검색 결과가 없습니다.':'' }"/></div>
 			<c:forEach var="p" items="${placeList }">
 				<div class="col-11 ml-3 border-bottom row py-2" style="cursor: pointer" onclick="location.replace('${path}/place/movePlaceDetail.do?placeNo=${p.PLACENO }')">
 					<div class="col-2 ml-5 my-3">
@@ -85,7 +96,7 @@
                                 <small class="text-muted pl-1">
                                    <c:forEach var="h" items="${p.hashList}">
 	                               		<c:if test="${not empty h}">
-	                                   		<a class="text-secondary bg-point">#<c:out value="${h }"/></a>
+	                                   		<a href="${path }/community/hashSearch.do?hashtag=${h}" class="text-secondary bg-point">#<c:out value="${h }"/></a>
 	                                   	</c:if>
                                    </c:forEach>    
                                 </small>

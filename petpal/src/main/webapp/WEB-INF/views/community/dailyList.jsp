@@ -42,7 +42,7 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 	<!-- Page Content -->
-	<main role="main" style="min-height: 100vh;">
+	<main role="main" style="min-height: 100vh;" class="mt-0">
 		<div class="album ">
 			<div class="container my-4 mt-lg-0">
 				<div class="row ">
@@ -53,21 +53,26 @@
 					</jsp:include>
 					<div
 						class="d-flex justify-content-between container text-center mb-3">
-						<h3>일상</h3>
+						<h3>일상 <c:out value="${search eq 'search'?' 검색결과':'' }"/></h3>
 
 						<div class="form-inline">
 							<button type="button" id="dailyWriteBtn"
 								class="btn btn-outline-secondary ml-auto mr-3">글쓰기</button>
-							<div class="dropdown ml-auto">
-								<button class="btn btn-light dropdown-toggle" type="button"
-									id="dropdownMenuButton" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false">정렬</button>
-								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									<button class="sortBtn dropdown-item" value="enrollDate">최신순</button>
-									<button class="sortBtn dropdown-item" value="heart">인기순</button>
-									<button class="sortBtn dropdown-item" value="follow">팔로워순</button>
+								
+							<!-- 정렬버튼 -->
+							<c:if test="${search ne 'search' }">
+								<div class="dropdown ml-auto">
+									<button class="btn btn-light dropdown-toggle" type="button"
+										id="dropdownMenuButton" data-toggle="dropdown"
+										aria-haspopup="true" aria-expanded="false">정렬</button>
+									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+										<button class="sortBtn dropdown-item" value="enrollDate">최신순</button>
+										<button class="sortBtn dropdown-item" value="heart">인기순</button>
+										<button class="sortBtn dropdown-item" value="follow">팔로워순</button>
+									</div>
 								</div>
-							</div>
+							</c:if>
+							
 						</div>
 					</div>
 					<div id="dailyCon" class="dailyCon mt-3 col-12">
@@ -207,13 +212,12 @@
 												<p class="card-text mb-1">${d.CONTENT }</p>
 												<div
 													class="d-flex justify-content-between align-items-center">
-													<small class="text-muted pl-1"> <c:forEach var="h"
-															items="${hashList}">
-															<c:if test="${not empty h and (h.postNo eq d.DAILYNO )}">
-																<a class="text-secondary bg-point" href="${path }/community/hashSearch.do?hashtag=${h.hashContent}">#<c:out
-																		value="${h.hashContent }" /></a>
-															</c:if>
-														</c:forEach>
+													<small class="text-muted pl-1"> 
+															<c:forEach var="h" items="${d.hashList}">
+						                                		<c:if test="${not empty h}">
+						                                    		<a href="${path }/community/hashSearch.do?hashtag=${h}" class="text-secondary bg-point">#<c:out value="${h }"/></a>
+						                                    	</c:if>
+						                                    </c:forEach>					
 													</small>
 												</div>
 											</div>

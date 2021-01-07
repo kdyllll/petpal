@@ -31,8 +31,13 @@
 	<insert id="insertHashtag" parameterType="hashtag">
 		INSERT INTO HASHTAG VALUES(#{postNo},#{hashContent})
 	</insert>
-	<select id="selectDailyAll" resultType="map">
-		SELECT * FROM DAILY LEFT JOIN MEMBER USING(MEMBERNO) ORDER BY DAILYDATE DESC
+	<select id="selectDailyAll" resultType="map" parameterType="map">
+		SELECT * FROM DAILY LEFT JOIN MEMBER USING(MEMBERNO)
+		WHERE 1=1 
+		<if test="hashtag != null">
+		   AND DAILYNO IN (SELECT DAILYNO FROM DAILY LEFT JOIN HASHTAG ON POSTNO=DAILYNO WHERE HASHCONTENT=#{hashtag}) 
+		</if>
+		ORDER BY DAILYDATE DESC
 	</select>
 	<select id="selectMainImg" resultType="dailyImg">
 		SELECT * FROM DAILYIMG WHERE STATUS='M'
@@ -61,8 +66,12 @@
 	<select id="dailyCnt" parameterType="string" resultType="_int">
 		select count(*) from member join daily using(memberNo) where memberNo = #{memberNo}
 	</select>
-	<select id="totalDailyCount" resultType="_int">
+	<select id="totalDailyCount" resultType="_int" parameterType="map">
 		SELECT COUNT(*) FROM DAILY
+		WHERE 1=1 
+		<if test="hashtag != null">
+		   AND DAILYNO IN (SELECT DAILYNO FROM DAILY LEFT JOIN HASHTAG ON POSTNO=DAILYNO WHERE HASHCONTENT=#{hashtag}) 
+		</if>
 	</select>
 	<delete id="deleteDailyImg" parameterType="string">
 		DELETE FROM DAILYIMG WHERE DAILYIMGNO=#{value}
