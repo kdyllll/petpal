@@ -22,4 +22,7 @@ public interface TipService {
 	int insertSubImgs(List<TipImg> ti);
 	int updateContent(TipImg ti);
 	List<Map> selectMember(String writerNo);
+	List<String> selectTipLike(String memberNo);
+	int insertLike(Map m);
+	int deleteLike(String tipNo);
 }

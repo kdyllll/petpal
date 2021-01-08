@@ -57,4 +57,13 @@
 	<select id="selectMember" parameterType="string" resultType="map">
 		SELECT MEMBERNAME, NICKNAME, IMG FROM MEMBER WHERE MEMBERNO = #{writerNo}
 	</select>
+	<select id="selectTipLike" resultType="string" parameterType="string">
+		select TIPNO from TIPLIKE WHERE HEARTMEMBERNO=#{memberNo}
+	</select>
+		<delete id="deleteLike" parameterType="string">
+		DELETE FROM TIPLIKE WHERE TIPNO=#{tipNo}
+	</delete>
+	<insert id="insertLike" parameterType="map">
+		INSERT INTO TIPLIKE VALUES(#{tipNo}, #{memberNo})
+	</insert>
 </mapper>

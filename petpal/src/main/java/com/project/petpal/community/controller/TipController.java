@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,13 +33,18 @@ public class TipController {
 	private TipService service;
 	
 	@RequestMapping("/community/tipList.do")
-	public ModelAndView TipList(ModelAndView mv, HttpSession session) {
+	public ModelAndView TipList(ModelAndView mv, HttpSession session, Model model) {
 		Member loginMember=(Member)session.getAttribute("loginMember");
 		String memberNo="";
 		if(loginMember == null) {
 			memberNo = "";
 		}else {
 			memberNo = loginMember.getMemberNo();
+		}
+		
+		if(loginMember!=null) {
+			List<String> like = service.selectTipLike(loginMember.getMemberNo());
+			model.addAttribute("like", like);
 		}
 		
 		mv.addObject("list",service.tipList());
@@ -49,7 +56,7 @@ public class TipController {
 	}
 	
 	@RequestMapping("/community/tipDetail.do")
-	public ModelAndView TipDetail(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelAndView mv) {
+	public ModelAndView TipDetail(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelAndView mv , Model model) {
 		String tipNo = request.getParameter("tipNo");
 		
 		Member loginMember=(Member)session.getAttribute("loginMember");
@@ -58,6 +65,14 @@ public class TipController {
 			memberNo = "";
 		}else {
 			memberNo = loginMember.getMemberNo();
+			//좋아요 가져오기
+			List<String> like = service.selectTipLike(loginMember.getMemberNo());
+			for(String l : like) {
+				if(l.equals(tipNo)) {
+					String tLike = l;
+					model.addAttribute("like", tLike);					
+				}
+			}
 		}
 //		System.out.println(service.selectMember(writerNo));
 		List<Map> tip = service.tipMainList(tipNo);
@@ -333,4 +348,31 @@ public class TipController {
 		
 		return mv;
 	}
+	
+//	좋아요 추가
+	@RequestMapping("/tip/insertLike.do")
+	public String insertLike(HttpSession session, String tipNo) {
+		Map map = new HashMap();
+		Member m = (Member)session.getAttribute("loginMember");
+		map.put("memberNo", m.getMemberNo());
+		map.put("tipNo", tipNo);
+		
+		service.insertLike(map);
+		return "redirect:/community/tipList.do";
+	}
+//	좋아요삭제
+	@RequestMapping("/tip/deleteLike.do")
+	public String findDelete(String tipNo,Model model) {
+		String loc= "/community/findDetail.do?tipNo="+tipNo;
+		String msg="삭제되지않았습니다.";
+		int result = service.deleteLike(tipNo);
+		if(result> 0 ) {
+			loc= "/community/tipList.do";
+			msg = "삭제되었습니다.";
+		}
+		model.addAttribute("loc", loc);
+		model.addAttribute("msg", msg);
+		return "common/msg";
+	}
+	
 }

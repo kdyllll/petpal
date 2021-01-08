@@ -123,8 +123,8 @@
 										type="hidden" value="${t.FINDNO }" />
 									</a>
 
+									<c:set var="flag" value="false" />
 									<c:if test="${not empty like }">
-										<c:set var="flag" value="false" />
 										<c:forEach var="l" items="${like }">
 											<c:if test="${l eq t.FINDNO }">
 												<c:set var="flag" value="true" />

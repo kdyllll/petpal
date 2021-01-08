@@ -115,4 +115,21 @@ public class TipServiceImpl implements TipService {
 		return dao.selectMember(session, writerNo);
 	}
 
+	@Override
+	public List<String> selectTipLike(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectTipLike(session, memberNo);
+	}
+
+	@Override
+	public int insertLike(Map m) {
+		// TODO Auto-generated method stub
+		return dao.insertLike(session, m);
+	}
+
+	@Override
+	public int deleteLike(String tipNo) {
+		// TODO Auto-generated method stub
+		return dao.deleteLike(session, tipNo);
+	}
 }
