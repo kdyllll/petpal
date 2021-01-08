@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.project.petpal.common.PageBarFactory;
 import com.project.petpal.community.model.service.FindService;
 import com.project.petpal.community.model.vo.Find;
 import com.project.petpal.community.model.vo.FindImg;
@@ -34,16 +35,20 @@ public class findController {
 	private FindService service;
 	
 	@RequestMapping("/community/findList.do")
-	public String findList(Model model, HttpServletRequest request,HttpSession session) {
+	public String findList(Model model, HttpServletRequest request,HttpSession session,@RequestParam(value = "cPage", defaultValue = "1") int cPage,
+			@RequestParam(value = "numPerPage", defaultValue = "12") int numPerPage) {
 		Member m =(Member)session.getAttribute("loginMember");
 		String cate = request.getParameter("cate");
 		Map map = new HashMap();
 		map.put("cate",cate);
-		List<Map> list = service.selectFindList(map);
+		int totalData = service.findTotalCount();		
+		List<Map> list = service.selectFindList(map, cPage, numPerPage);
 		if(m!=null) {
 			List<String> like = service.selectFindLike(m.getMemberNo());
 			model.addAttribute("like", like);
 		}
+		model.addAttribute("totalData", totalData);
+		model.addAttribute("pageBar", new PageBarFactory().getPageBar(totalData, cPage, numPerPage,null,null, "findList.do"));
 		model.addAttribute("list", list);
 		return "community/findList";
 	}
