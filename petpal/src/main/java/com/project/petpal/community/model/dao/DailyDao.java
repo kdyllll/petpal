@@ -51,7 +51,7 @@ public interface DailyDao {
 	List<Map> selectDailyHeartWeek(SqlSession session,int cPage,int numPerPage);
 	List<Map> selectDailyHash(SqlSession session,int cPage,int numPerPage,String hashtag);
 	int insertDailyLike(SqlSession session, Map m);
-	int deleteDailyLike(SqlSession session, String dailyNo);
+	int deleteDailyLike(SqlSession session, Map m);
 	List<String> selectDailyLike(SqlSession session, String memberNo);
 	
 }

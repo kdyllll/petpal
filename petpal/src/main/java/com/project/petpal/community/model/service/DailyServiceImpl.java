@@ -311,9 +311,9 @@ public class DailyServiceImpl implements DailyService {
 	}
 
 	@Override
-	public int deleteDailyLike(String dailyNo) {
+	public int deleteDailyLike(Map m) {
 		// TODO Auto-generated method stub
-		return dao.deleteDailyLike(session,dailyNo);
+		return dao.deleteDailyLike(session,m);
 	}
 
 	@Override

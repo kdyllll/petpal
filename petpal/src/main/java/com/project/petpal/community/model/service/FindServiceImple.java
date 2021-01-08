@@ -108,9 +108,9 @@ public class FindServiceImple implements FindService {
 	}
 
 	@Override
-	public int deleteFindLike(String findNo) {
+	public int deleteFindLike(Map m) {
 		// TODO Auto-generated method stub
-		return dao.deleteFindLike(session, findNo);
+		return dao.deleteFindLike(session, m);
 	}
 
 	@Override

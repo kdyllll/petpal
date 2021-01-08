@@ -154,9 +154,9 @@ public class PlaceServiceImpl implements PlaceService{
 	}
 
 	@Override
-	public int deleteLike(String placeNo) {
+	public int deleteLike(Map m) {
 		// TODO Auto-generated method stub
-		return dao.deleteLike(session, placeNo);
+		return dao.deleteLike(session, m);
 	}
 	
 	

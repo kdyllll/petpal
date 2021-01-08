@@ -16,6 +16,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -477,8 +478,12 @@ public class DailyController {
 	
 //	좋아요 삭제
 	@RequestMapping("/daily/deleteLike.do")
-	public String deleteLike(String dailyNo, Model model) {
-		service.deleteDailyLike(dailyNo);
+	public String deleteLike(String dailyNo, Model model, HttpSession session) {
+		Member mem = (Member)session.getAttribute("loginMember");
+		Map map = new HashMap();
+		map.put("no", dailyNo);
+		map.put("memberNo", mem.getMemberNo());
+		service.deleteDailyLike(map);
 		return "";
 	}
 

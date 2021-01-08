@@ -362,8 +362,12 @@ public class TipController {
 	}
 //	좋아요삭제
 	@RequestMapping("/tip/deleteLike.do")
-	public String findDelete(String tipNo,Model model) {
-		service.deleteLike(tipNo);
+	public String findDelete(String tipNo,Model model, HttpSession session) {
+		Member mem = (Member)session.getAttribute("loginMember");
+		Map map = new HashMap();
+		map.put("no", tipNo);
+		map.put("memberNo", mem.getMemberNo());
+		service.deleteLike(map);
 		return "";
 	}
 	

@@ -27,5 +27,5 @@ public interface TipDao {
 	List<Map> selectMember(SqlSession session, String writerNo);
 	List<String> selectTipLike(SqlSession session, String memberNo);
 	int insertLike(SqlSession session, Map m);
-	int deleteLike(SqlSession session, String tipNo);
+	int deleteLike(SqlSession session, Map m);
 }

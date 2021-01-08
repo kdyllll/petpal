@@ -128,8 +128,8 @@ public class TipServiceImpl implements TipService {
 	}
 
 	@Override
-	public int deleteLike(String tipNo) {
+	public int deleteLike(Map m) {
 		// TODO Auto-generated method stub
-		return dao.deleteLike(session, tipNo);
+		return dao.deleteLike(session, m);
 	}
 }

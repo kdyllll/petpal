@@ -24,5 +24,5 @@ public interface TipService {
 	List<Map> selectMember(String writerNo);
 	List<String> selectTipLike(String memberNo);
 	int insertLike(Map m);
-	int deleteLike(String tipNo);
+	int deleteLike(Map m);
 }

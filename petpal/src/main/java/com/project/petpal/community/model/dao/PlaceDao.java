@@ -34,5 +34,5 @@ public interface PlaceDao {
 	int deletePlace(SqlSession session,String placeNo);
 	String selectLike(SqlSession session, Map m);
 	int insertLike(SqlSession session, Map m);
-	int deleteLike(SqlSession session, String placeNo);
+	int deleteLike(SqlSession session, Map m);
 }

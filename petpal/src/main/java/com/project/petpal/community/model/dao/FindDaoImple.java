@@ -92,9 +92,9 @@ public class FindDaoImple implements FindDao {
 	}
 
 	@Override
-	public int deleteFindLike(SqlSession session, String findNo) {
+	public int deleteFindLike(SqlSession session, Map m) {
 		// TODO Auto-generated method stub
-		return session.delete("find.deleteFindLike", findNo);
+		return session.delete("find.deleteFindLike", m);
 	}
 
 	@Override

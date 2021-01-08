@@ -127,7 +127,7 @@
 	</select>
 	<delete id="deleteLike" parameterType="string">
 		DELETE FROM PLACELIKE
-		WHERE PLACENO=#{placeNo}
+		WHERE PLACENO=#{no} AND HEARTMEMBERNO=#{memberNo}
 	</delete>
 	<insert id="insertLike" parameterType="map">
 		INSERT INTO PLACELIKE

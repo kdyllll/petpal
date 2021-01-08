@@ -245,8 +245,12 @@ public class PlaceController {
 	}
 //	좋아요삭제
 	@RequestMapping("/place/deleteLike.do")
-	public String deleteLike(String placeNo, Model model) {
-		service.deleteLike(placeNo);
+	public String deleteLike(String placeNo, Model model, HttpSession session) {
+		Member mem = (Member)session.getAttribute("loginMember");
+		Map map = new HashMap();
+		map.put("no", placeNo);
+		map.put("memberNo", mem.getMemberNo());
+		service.deleteLike(map);
 		return "";
 	}
 

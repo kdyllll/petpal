@@ -117,8 +117,8 @@ public class TipDaoImpl implements TipDao {
 	}
 
 	@Override
-	public int deleteLike(SqlSession session, String tipNo) {
+	public int deleteLike(SqlSession session,Map m) {
 		// TODO Auto-generated method stub
-		return session.delete("tip.deleteLike", tipNo);
+		return session.delete("tip.deleteLike", m);
 	}
 }

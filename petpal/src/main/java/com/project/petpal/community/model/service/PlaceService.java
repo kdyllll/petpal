@@ -28,5 +28,5 @@ public interface PlaceService {
 	int deletePlace(String placeNo);
 	String selectLike(Map m);
 	int insertLike(Map m);
-	int deleteLike(String placeNo);
+	int deleteLike(Map m);
 }
