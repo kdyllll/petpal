@@ -26,4 +26,5 @@ public interface PlaceService {
 	List<Map> selectPlaceHeartWeek(int cPage,int numPerPage);
 	List<Map> selectPlaceHash(int cPage,int numPerPage,String hashtag);
 	int deletePlace(String placeNo);
+	
 }
