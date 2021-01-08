@@ -66,4 +66,13 @@
 	<insert id="insertLike" parameterType="map">
 		INSERT INTO TIPLIKE VALUES(#{tipNo}, #{memberNo})
 	</insert>
+	<insert id="insertHashtag" parameterType="hashtag">
+		INSERT INTO HASHTAG VALUES(#{postNo},#{hashContent})
+	</insert>
+	<select id="selectHashList" resultType="hashtag" parameterType="string">
+		SELECT * FROM HASHTAG WHERE POSTNO=#{tipNo}
+	</select>
+	<delete id="deleteAllHash" parameterType="string">
+		DELETE FROM HASHTAG WHERE POSTNO=#{value}
+	</delete>
 </mapper>

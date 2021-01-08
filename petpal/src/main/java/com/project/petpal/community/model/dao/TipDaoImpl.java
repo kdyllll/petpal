@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.community.model.vo.Tip;
 import com.project.petpal.community.model.vo.TipImg;
 
@@ -120,5 +121,23 @@ public class TipDaoImpl implements TipDao {
 	public int deleteLike(SqlSession session,Map m) {
 		// TODO Auto-generated method stub
 		return session.delete("tip.deleteLike", m);
+	}
+	
+	@Override
+	public int insertHashtag(SqlSession session, Hashtag h) {
+		// TODO Auto-generated method stub
+		return session.insert("tip.insertHashtag",h);
+	}
+	
+	@Override
+	public List<Hashtag> selectHashList(SqlSession session, String tipNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("tip.selectHashList",tipNo);
+	}
+	
+	@Override
+	public int deleteAllHash(SqlSession session, String tipNo) {
+		// TODO Auto-generated method stub
+		return session.delete("tip.deleteAllHash",tipNo);
 	}
 }

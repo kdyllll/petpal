@@ -111,12 +111,41 @@
 			
 			<div id="hide"></div>
 			
-                        <div class="ml-3 mt-5 mb-5">
-                            #해시태그
-                        </div>
+			            <!--해시태그-->
+			            <div id="tagCon" class="mt-3 pl-2 col-12">
+				            <!-- 기존 해시태그 -->
+				            <c:forEach var="h" items="${hashList}">                            
+				             <div class="tagBox bg-light rounded text-secondary d-inline-block pl-1 py-1 ml-1 mb-2">                
+				             	  # <span class="text-dark"><c:out value="${h.hashContent }"/> </span>                                     
+				                  <input name="hashtag" value="${h.hashContent }" type="text" class="d-none" >
+				                  <span class="delete text-secondary ">
+				                      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x pb-1 ml-0" style="font-size: 25px; cursor:pointer;" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+				                          <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+				                      </svg>
+				                  </span>
+				              </div>
+				            </c:forEach>
+			            
+			              <!-- 새 해시태그 입력 -->
+			              <div class="tagBox bg-light rounded text-secondary d-inline-block pl-1 py-1 ml-1 mb-2">                                                      
+			                  #<input name="hashtag" style="box-sizing: content-box; width: 75px;" onKeypress="javascript:if(event.keyCode==13) {$('.hashtag').focusout()}" type="text" class="hashtag border-0 bg-transparent " placeholder="해시태그" aria-label="해시태그" aria-describedby="basic-addon1">
+			                  <span class="d-none delete text-secondary ">
+			                      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x pb-1 ml-0" style="font-size: 25px; cursor:pointer;" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+			                          <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+			                      </svg>
+			                  </span>
+			              </div>
+			            </div>
+			            
+			            
+			            
+			            
+			            
+			            
+			            
                         
                         <div class="text-center mb-5">
-                            <input type="button" class="btn btn-outline-secondary" value="작성하기" onclick="selectCheck();">
+                            <input id="write" type="button" class="btn btn-outline-secondary" value="작성하기">
                         </div>
 						
 						<div id="delNo"></div>
@@ -131,6 +160,8 @@
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
+<script src="${path }/resources/js/hashtag.js"></script>
+<script src="${path }/resources/js/plusTag.js"></script>
 <script>
 var clone;
 //기존사진 변경 버튼 눌렀을 때
@@ -228,13 +259,14 @@ $(".updatePic").on("change",e=>{
 	    }
 	}
     
-	//preview 영역에서 삭제 버튼 클릭시 해당 미리보기이미지 영역 삭제
-	function deletePreview(obj) {
-	    var imgNum = obj.attributes['value'].value;
-	    delete files[imgNum];
-	    $("#preview .preview-box[value=" + imgNum + "]").remove();
-	    resizeHeight();
-	}
+    function deletePreview(obj) {
+    	if(window.confirm("사진을 지우면 사진에 대한 설명도 같이 지워집니다.")){
+            var imgNum = obj.attributes['value'].value;
+            delete files[imgNum];
+            $("#preview .preview-box[value=" + imgNum + "]").remove();
+            resizeHeight();
+    	}
+    }
 		 
 	//client-side validation
 	//always server-side validation required
@@ -270,8 +302,7 @@ $(".updatePic").on("change",e=>{
 	    });
 	});
 		         
-	function xSize(e)
-    {
+	function xSize(e){
         var xe = document.getElementsByClassName('xt'), t;
         e.onfocus = function()
         {
@@ -291,6 +322,11 @@ $(".updatePic").on("change",e=>{
     
     $("textarea.autosize").on('keydown keyup', function () {
     	  $(this).height(1).height( $(this).prop('scrollHeight')+12 );	
+    });
+    
+    
+    $("#write").click(function(){
+    	selectCheck();
     });
 		        
 	function selectCheck(){
@@ -325,16 +361,17 @@ $(".updatePic").on("change",e=>{
       	if(file === ""){
       		if(window.confirm("메인사진이 변경되지 않았습니다. 메인사진을 변경하지 않고 수정하시겠습니까?(지우신 사진도 변경되지 않습니다.)")){
   				$("#hide").append(`<input type="hidden" name="mainImg" value="${imgList[0].MAINIMG }`);
-  				//된다
       		}else{
       			alert("메인사진을 변경해주세요");
       			count++;
       		}
       	}
       	if(count==0){
-      		tipWrite.submit();
+			$(".hashtag").attr("name","");//아무것도 안적힌 해시태그는 안넘어가도록 name 뺏기
+      		$("#tipWrite").submit();
       	}
 	}
+	
 </script>
 
 
