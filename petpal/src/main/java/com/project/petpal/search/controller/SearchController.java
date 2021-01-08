@@ -20,6 +20,6 @@ public class SearchController {
 	public String searchKeyword(String keyword,Model m) {
 		List<Product> pList =service.searchProduct(keyword);
 		System.out.println(pList);
-		return "";
+		return "search/searchAll";
 	}
 }

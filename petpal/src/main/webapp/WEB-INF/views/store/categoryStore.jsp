@@ -39,7 +39,7 @@ a:hover {
 
 				<div class="row">
 					<div class="col-12 mt-xl-3 mt-5 pt-3">
-						<h4>강아지>홈/리빙</h4>
+						<h4>강아지 > 홈/리빙</h4>
 					</div>
 					<div class="col-lg-3 d-lg-block d-none my-5">
 						<div class="accordion" id="accordionExample">

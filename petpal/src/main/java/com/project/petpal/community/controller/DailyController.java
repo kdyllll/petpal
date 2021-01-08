@@ -16,6 +16,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -463,7 +464,8 @@ public class DailyController {
 		
 		return "community/communityAjax/dailyListAjax";
 	}
-
+	
+//	좋아요 추가
 	@RequestMapping("/daily/insertLike.do")
 	public String insertLike(HttpSession session, String dailyNo) {
 		Map map = new HashMap();
@@ -471,16 +473,19 @@ public class DailyController {
 		map.put("memberNo", m.getMemberNo());
 		map.put("dailyNo", dailyNo);		
 		service.insertDailyLike(map);
-		return "redirect:/community/findList.do";
+		return "";
 	}
 	
 //	좋아요 삭제
 	@RequestMapping("/daily/deleteLike.do")
-	public String deleteLike(String dailyNo, Model model) {
-		service.deleteDailyLike(dailyNo);
-		return "redirect:/community/findList.do";
+	public String deleteLike(String dailyNo, Model model, HttpSession session) {
+		Member mem = (Member)session.getAttribute("loginMember");
+		Map map = new HashMap();
+		map.put("no", dailyNo);
+		map.put("memberNo", mem.getMemberNo());
+		service.deleteDailyLike(map);
+		return "";
 	}
-	
-	
+
 
 }

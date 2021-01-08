@@ -18,7 +18,7 @@ public interface FindService {
 	int insertSubImgs(List<FindImg> fin);
 	int updateOtherFind(Map m);
 	List<String> selectFindLike(String memberNo);
-	int deleteFindLike(String findNo);
+	int deleteFindLike(Map m);
 	int insertFindLike(Map m);
 	List<Map> selectFindHeartWeek(int cPage,int numPerPage);
 	int deleteFind(String findNo);
