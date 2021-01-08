@@ -125,8 +125,22 @@
 								</div> <strong><span class="col-3 p-0 ml-2 align-middle"><c:out
 											value="${fDetail.NICKNAME }" /></span></strong>
 							</a>
-							<button type="button"
-								class="followBtn btn btn-sm bg-daily col-4 col-xl-3 mr-2">팔로우</button>
+							<!-- <button type="button" class="followBtn btn btn-sm bg-daily col-4 col-xl-3 mr-2">팔로우</button> -->
+							
+							<c:if test="${loginMember.memberNo ne fDetail.MEMBERNO }">
+		                    	<button type="button" class="follow followBtn btn btn-sm bg-point col-4 col-xl-4 mr-2">팔로우
+		                    		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+									  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+									</svg>
+								</button>
+		                    	<button type="button" class="following followBtn btn btn-sm col-4 col-xl-4 mr-2"  style="background-color:#dfdfdf;">팔로워
+									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-check-fill" viewBox="0 0 16 16">
+									  <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+									  <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+									</svg>
+								</button>
+		                    </c:if>
+							
 						</div>
 						<div class="mt-2">
 							<p>
@@ -246,8 +260,21 @@
 							</div> <strong><span class="col-3 p-0 ml-2 align-middle"><c:out
 										value="${fDetail.NICKNAME }" /></span></strong>
 						</a>
-						<button type="button"
-							class="followBtn btn btn-sm bg-daily col-3 mr-2">팔로우</button>
+						<!-- <button type="button" class="followBtn btn btn-sm bg-daily col-4 col-xl-3 mr-2">팔로우</button> -->
+							
+							<c:if test="${loginMember.memberNo ne fDetail.MEMBERNO }">
+		                    	<button type="button" class="follow followBtn btn btn-sm bg-point col-4 col-xl-3 mr-2">팔로우
+		                    		<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+									  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+									</svg>
+								</button>
+		                    	<button type="button" class="following followBtn btn btn-sm col-4 col-xl-3 mr-2"  style="background-color:#dfdfdf;">팔로워
+									<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-check-fill" viewBox="0 0 16 16">
+									  <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+									  <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+									</svg>
+								</button>
+		                    </c:if>
 					</div>
 					<div class="d-flex justify-content-end align-items-center">
 						<span class="text-secondary" style="font-size: 14px;"><c:out
@@ -280,7 +307,6 @@
 	<script>
 		let loginMember=$(".loginMember").val();
 		let findNo=$(".findNo").val();
-
 
 		//팔로우 버튼 누르면
 		$(".followBtn").on("click",e=>{
@@ -347,7 +373,7 @@
 		
 		//팔로우 체크
 		$(document).ready(function(){
-	 		let writerNo = '${place.memberNo}';
+	 		let writerNo = '${fDetail.MEMBERNO}';
 	 		$.ajax({
 	 			async: false,
 	 			url: "${path}/user/followingCheck.do",
@@ -368,24 +394,28 @@
 	 	
 	 	//팔로우
 	 	$(".followBtn").on('click',function() {
-	 		let writerNo = '${place.memberNo}';
-	 		$.ajax({
-	 			async: false,
-	 			url: "${path}/user/following.do",
-	 			data: {writerNo : writerNo},
-	 			success:(data) => {
-	 				if(data==10){
-	 					$(".following").show();
-	 					$(".follow").hide();
-	 				}else if(data==20){
-	 					$(".following").hide();
-	 					$(".follow").show();
-	 				}
-	 			},error:function(request, status, error){
-	 				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	 			}
-	 		});
-	 	})
+		if(loginMember!=""){
+			let writerNo = '${fDetail.MEMBERNO}';
+ 	 		$.ajax({
+ 	 			async: false,
+ 	 			url: "${path}/user/following.do",
+ 	 			data: {writerNo : writerNo},
+ 	 			success:(data) => {
+ 	 				if(data==10){
+ 	 					$(".following").show();
+ 	 					$(".follow").hide();
+ 	 				}else if(data==20){
+ 	 					$(".following").hide();
+ 	 					$(".follow").show();
+ 	 				}
+ 	 			},error:function(request, status, error){
+ 	 				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+ 	 			}
+ 	 		});
+		}else{ //로그인 안되어 있으면 로그인 모달 띄우기
+			loginModal();
+		};
+ 	});
 
 </script>
 </body>
