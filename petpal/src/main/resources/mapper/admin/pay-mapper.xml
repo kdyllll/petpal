@@ -22,4 +22,7 @@
 	<update id="orderCancelAll" parameterType="string">
 		UPDATE PAYDETAIL SET DETAILSTATUS='취소' WHERE PAYMENTNO=#{paymentNo}
 	</update>
+	<select id="orderTotalCount" resultType="_int">
+		SELECT count(*) FROM PAYMENT LEFT JOIN MEMBER USING(MEMBERNO)
+	</select>
 </mapper>

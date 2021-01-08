@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.petpal.community.model.dao.TipDao;
 import com.project.petpal.community.model.vo.FindImg;
+import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.community.model.vo.Tip;
 import com.project.petpal.community.model.vo.TipImg;
 
@@ -22,7 +23,7 @@ public class TipServiceImpl implements TipService {
 	private TipDao dao;
 	
 	@Override
-	public int insertTip(Tip t, List<TipImg> files) {
+	public int insertTip(Tip t, List<TipImg> files, List<Hashtag> hashList) {
 		int result = dao.insertTip(session, t);
 
 		if(result>0) {
@@ -34,12 +35,22 @@ public class TipServiceImpl implements TipService {
 			}
 		}
 		
+		//해시태그 삽입
+		if(result>0) {
+			if(hashList.size()!=0) {//해시태그가 있으면
+				for(Hashtag h:hashList) {
+					h.setPostNo("T" + t.getTipNo());
+					result=dao.insertHashtag(session,h);
+				}
+			}
+		}
+		
 		return result;
 	}
 
 	@Override
-	public List<Map> tipList() {
-		return dao.tipList(session);
+	public List<Map> tipList(int cPage,int numPerPage, Map<String,String> keyword) {
+		return dao.tipList(session, cPage, numPerPage, keyword);
 	}
 	
 	@Override
@@ -53,8 +64,21 @@ public class TipServiceImpl implements TipService {
 	}
 
 	@Override
-	public int updateTip(Tip t) {
-		return dao.updateTip(session, t);
+	public int updateTip(Tip t, List<Hashtag> hashList) {
+		int result = dao.updateTip(session, t);
+		
+		//해시태그 삭제
+		dao.deleteAllHash(session,t.getTipNo());
+		//해시태그 삽입
+		if(result>0) {
+			if(hashList.size()!=0) {//해시태그가 있으면
+				for(Hashtag h:hashList) {
+					h.setPostNo(t.getTipNo());
+					result=dao.insertHashtag(session,h);
+				}
+			}
+		}
+		return result;
 	}
 
 	@Override
@@ -131,5 +155,17 @@ public class TipServiceImpl implements TipService {
 	public int deleteLike(Map m) {
 		// TODO Auto-generated method stub
 		return dao.deleteLike(session, m);
+	}
+	
+	@Override
+	public List<Hashtag> selectHashList(String tipNo) {
+		// TODO Auto-generated method stub
+		return dao.selectHashList(session,tipNo);
+	}
+
+	@Override
+	public int totalTipCount() {
+		// TODO Auto-generated method stub
+		return dao.totalTipCount(session);
 	}
 }

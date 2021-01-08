@@ -386,6 +386,10 @@
 	 					$(".following").show();
 	 					$(".follow").hide();
 	 				}
+	 				if(data==100){
+	 					$(".following").hide();
+	 					$(".follow").show();
+	 				}
 	 			},error:function(request, status, error){
 	 				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	 			}
@@ -408,6 +412,10 @@
  	 					$(".following").hide();
  	 					$(".follow").show();
  	 				}
+ 	 				if(data==100){
+	 					$(".following").hide();
+	 					$(".follow").show();
+	 				}
  	 			},error:function(request, status, error){
  	 				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
  	 			}

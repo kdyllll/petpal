@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.community.model.vo.Tip;
 import com.project.petpal.community.model.vo.TipImg;
 
@@ -24,8 +25,9 @@ public class TipDaoImpl implements TipDao {
 	}
 
 	@Override
-	public List<Map> tipList(SqlSession session) {
-		return session.selectList("tip.tipList");
+	public List<Map> tipList(SqlSession session, int cPage,int numPerPage, Map<String,String> keyword) {
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("tip.tipList", keyword, rb);
 	}
 	
 	@Override
@@ -42,11 +44,6 @@ public class TipDaoImpl implements TipDao {
 	public int updateTip(SqlSession session, Tip t) {
 		return session.update("tip.updateTip", t);
 	}
-
-//	@Override
-//	public int updateTipImg(SqlSession session, TipImg ti) {
-//		return session.update("tip.updateTipImg", ti);
-//	}
 
 	@Override
 	public List<Map> selectTipListOne(SqlSession session, String memberNo) {
@@ -120,5 +117,29 @@ public class TipDaoImpl implements TipDao {
 	public int deleteLike(SqlSession session,Map m) {
 		// TODO Auto-generated method stub
 		return session.delete("tip.deleteLike", m);
+	}
+	
+	@Override
+	public int insertHashtag(SqlSession session, Hashtag h) {
+		// TODO Auto-generated method stub
+		return session.insert("tip.insertHashtag",h);
+	}
+	
+	@Override
+	public List<Hashtag> selectHashList(SqlSession session, String tipNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("tip.selectHashList",tipNo);
+	}
+	
+	@Override
+	public int deleteAllHash(SqlSession session, String tipNo) {
+		// TODO Auto-generated method stub
+		return session.delete("tip.deleteAllHash",tipNo);
+	}
+
+	@Override
+	public int totalTipCount(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectOne("tip.totalTipCount");
 	}
 }

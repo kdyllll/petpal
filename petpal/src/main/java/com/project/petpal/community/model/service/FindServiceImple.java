@@ -41,9 +41,9 @@ public class FindServiceImple implements FindService {
 	}
 
 	@Override
-	public List<Map> selectFindList(Map map) {
+	public List<Map> selectFindList(Map map,int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return dao.selectFindList(session, map);
+		return dao.selectFindList(session, map ,cPage, numPerPage);
 	}
 	
 	@Override
@@ -129,6 +129,12 @@ public class FindServiceImple implements FindService {
 	public int deleteFind(String findNo) {
 		// TODO Auto-generated method stub
 		return dao.deleteFind(session, findNo);
+	}
+
+	@Override
+	public int findTotalCount() {
+		// TODO Auto-generated method stub
+		return dao.findTotalCount(session);
 	}
 	
 	

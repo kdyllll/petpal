@@ -11,7 +11,13 @@
 		INSERT INTO TIPIMG VALUES(SEQ_TIPIMGNO.NEXTVAL, #{tipNo}, #{mainImg, jdbcType=VARCHAR}, #{contentImg, jdbcType=VARCHAR}, #{content, jdbcType=VARCHAR})
 	</insert>
 	<select id="tipList" resultType="map">
-		SELECT * FROM TIP JOIN TIPIMG USING(TIPNO) JOIN MEMBER USING(MEMBERNO) ORDER BY TIPNO DESC
+		SELECT * FROM TIP JOIN TIPIMG USING(TIPNO) JOIN MEMBER USING(MEMBERNO)
+		WHERE 1=1 
+		<if test="hashtag != null">
+		   AND TIPNO IN (SELECT TIPNO FROM TIP LEFT JOIN HASHTAG ON POSTNO=TIPNO WHERE HASHCONTENT=#{hashtag}) AND MAINIMG IS NOT NULL 
+		</if>
+		ORDER BY TIPDATE DESC
+		
 	</select>
 	<select id="tipMainList" resultType="map">
 		SELECT * FROM TIP WHERE TIPNO = #{tipNo} ORDER BY TIPNO DESC
@@ -66,4 +72,16 @@
 	<insert id="insertLike" parameterType="map">
 		INSERT INTO TIPLIKE VALUES(#{tipNo}, #{memberNo})
 	</insert>
+	<insert id="insertHashtag" parameterType="hashtag">
+		INSERT INTO HASHTAG VALUES(#{postNo},#{hashContent})
+	</insert>
+	<select id="selectHashList" resultType="hashtag" parameterType="string">
+		SELECT * FROM HASHTAG WHERE POSTNO=#{tipNo}
+	</select>
+	<delete id="deleteAllHash" parameterType="string">
+		DELETE FROM HASHTAG WHERE POSTNO=#{value}
+	</delete>
+	<select id="totalTipCount" resultType="_int">
+		SELECT COUNT(*) FROM TIP JOIN TIPIMG USING(TIPNO) JOIN MEMBER USING(MEMBERNO) WHERE MAINIMG IS NOT NULL
+	</select>
 </mapper>

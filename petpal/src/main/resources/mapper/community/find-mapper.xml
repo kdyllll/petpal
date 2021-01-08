@@ -57,4 +57,7 @@
 	<delete id="deleteFind" parameterType="string">
 	 	DELETE FROM FIND WHERE FINDNO=#{findNo}
 	</delete>
+	<select id="findTotalCount" resultType="_int">
+		SELECT count(*) FROM FIND JOIN FINDIMG USING(FINDNO) JOIN MEMBER USING(MEMBERNO) WHERE IMGSTATUS = 'M' AND STATUS='N' 
+	</select>
 </mapper>

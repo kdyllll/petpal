@@ -21,7 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.petpal.common.PageBarFactory;
+import com.project.petpal.community.model.service.CommunityService;
 import com.project.petpal.community.model.service.TipService;
+import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.community.model.vo.Tip;
 import com.project.petpal.community.model.vo.TipImg;
 import com.project.petpal.member.model.vo.Member;
@@ -31,9 +34,24 @@ public class TipController {
 	
 	@Autowired
 	private TipService service;
+	@Autowired
+	private CommunityService cService;
 	
 	@RequestMapping("/community/tipList.do")
-	public ModelAndView TipList(ModelAndView mv, HttpSession session, Model model) {
+	public String TipList(ModelAndView mv, HttpSession session, Model model,
+								@RequestParam(value="hashtag", required=false) String hashtag,
+								@RequestParam(value="cPage",defaultValue="1") int cPage,
+								@RequestParam(value="numPerPage",defaultValue="12") int numPerPage) {
+		
+		//해시태그 검색어로 검색됐을 경우 구분
+		Map<String,String> keyword=new HashMap<String,String>();
+		keyword.put("hashtag", hashtag);
+		String search="";
+		//검색어를 통해 들어오는 거면 search도 보내서 정렬버튼 없앰
+		if(hashtag!=null) {
+			search="search";
+		}
+		
 		Member loginMember=(Member)session.getAttribute("loginMember");
 		String memberNo="";
 		if(loginMember == null) {
@@ -47,12 +65,29 @@ public class TipController {
 			model.addAttribute("like", like);
 		}
 		
-		mv.addObject("list",service.tipList());
-		mv.addObject("memberNo", memberNo);
+		List<Map> TipList = service.tipList(cPage,numPerPage, keyword);
 		
-		mv.setViewName("/community/tipList");
+		int totalCount=service.totalTipCount();
+		String pageBar=new PageBarFactory().getPageBar(totalCount, cPage, numPerPage, null, null, "tipList.do");
 		
-		return mv;
+		System.out.println("totalCount : " + totalCount);
+		System.out.println("numPerPage : " + numPerPage);
+		
+		System.out.println("ss : " + (cPage-1)*numPerPage);
+		System.out.println("ssas : " + numPerPage);
+		
+		for(Map map:TipList) {
+			String postNo=(String) map.get("TIPNO");
+			List<String> hashList=cService.selectHashList(postNo);
+			map.put("hashList", hashList);
+		}
+
+		model.addAttribute("list", TipList);
+		
+		model.addAttribute("memberNo", memberNo);
+		model.addAttribute("pageBar", pageBar);
+		
+		return "/community/tipList";
 	}
 	
 	@RequestMapping("/community/tipDetail.do")
@@ -74,15 +109,23 @@ public class TipController {
 				}
 			}
 		}
-//		System.out.println(service.selectMember(writerNo));
+		
+		List<Map> mainList = service.tipMainList(tipNo);
+		
+		for(Map map:mainList) {
+			String postNo=(String) map.get("TIPNO");
+			List<String> hashList=cService.selectHashList(postNo);
+			map.put("hashList", hashList);
+		}
+		
+		
 		List<Map> tip = service.tipMainList(tipNo);
 		String writer = (String) tip.get(0).get("MEMBERNO");
 		mv.addObject("member", service.selectMember((String) tip.get(0).get("MEMBERNO")));
-		mv.addObject("mainList",service.tipMainList(tipNo));
+		mv.addObject("mainList", mainList);
 		mv.addObject("imgList",service.tipDetail(tipNo));
 		mv.addObject("memberNo", memberNo);
 		mv.addObject("writer", writer);
-		System.out.println(tip.get(0).get("MEMBERNO"));
 		mv.addObject("loc", "/community/tipDetail.do");
 		
 		return mv;
@@ -101,7 +144,8 @@ public class TipController {
 							@RequestParam(value="category") String category,
 							@RequestParam(value="title") String title,
 							@RequestParam(value="content1") String content1,
-							@RequestParam(value="content2", defaultValue = "") String content2
+							@RequestParam(value="content2", defaultValue = "") String content2,
+							@RequestParam(value="hashtag", required=false) String[] hashtag
 							) {
 		
 		Member loginMember=(Member)session.getAttribute("loginMember");
@@ -110,6 +154,15 @@ public class TipController {
 		
 		Tip t = Tip.builder().memberNo(memberNo).category(category).title(title).content1(content1).content2(content2).build();
 		
+		//해시태그
+		List<Hashtag> hashList=new ArrayList();
+		if(hashtag!=null) {
+			for(String hash:hashtag) {
+				Hashtag h=new Hashtag();
+				h.setHashContent(hash);
+				hashList.add(h);
+			};
+		};
 		
 		String path=session.getServletContext().getRealPath("/resources/upload/tip");
 		File dir=new File(path);
@@ -157,7 +210,7 @@ public class TipController {
 			}
 		}
 		
-		int result = service.insertTip(t, files);
+		int result = service.insertTip(t, files, hashList);
 		mv.addObject("msg", result>0?"입력 성공":"입력 실패");
 		mv.addObject("loc", "/community/tipList.do");
 		
@@ -170,8 +223,12 @@ public class TipController {
 	public ModelAndView tipUpdate(HttpServletRequest request, HttpServletResponse response, ModelAndView mv) {
 		String tipNo = request.getParameter("tipNo");
 		
+		//해시태그
+		List<Hashtag> hashList=service.selectHashList(tipNo);
+		
 		mv.addObject("mainList",service.tipMainList(tipNo));
 		mv.addObject("imgList",service.tipDetail(tipNo));
+		mv.addObject("hashList",hashList);
 		mv.addObject("loc", "/community/tipUpdate.do");
 		
 		return mv;
@@ -190,7 +247,8 @@ public class TipController {
 			@RequestParam(value="newImgContent", defaultValue="") String newImgContent,
 			@RequestParam(value = "mainImgNo", defaultValue = "0") String[] mainImgNo,
 			@RequestParam(value = "deleteImgNo", defaultValue = "0") String[] deleteImgNo,
-			@RequestParam(value = "tipImgNo", defaultValue = "0") String[] tipImgNo
+			@RequestParam(value = "tipImgNo", defaultValue = "0") String[] tipImgNo,
+			@RequestParam(value="hashtag", required=false) String[] hashtag
 			) {
 		
 		//로그인 정보 받아오기
@@ -201,11 +259,22 @@ public class TipController {
 		Tip t = Tip.builder().memberNo(memberNo).category(category).title(title).content1(content1).content2(content2).tipNo(tipNo).build();
 		
 		//Tip update
-		int tResult = service.updateTip(t);
 
 		//for문에서 사용할 TipImg 객체
 		TipImg img = TipImg.builder().build();
-
+		
+		//해시태그
+		List<Hashtag> hashList=new ArrayList();
+		if(hashtag!=null) {
+			for(String hash:hashtag) {
+				Hashtag h=new Hashtag();
+				h.setPostNo(tipNo);
+				h.setHashContent(hash);
+				hashList.add(h);
+			};
+		}
+		int tResult = service.updateTip(t, hashList);
+		
 		//사진 저장될 경로 지정
 		String path=session.getServletContext().getRealPath("/resources/upload/tip");
 		File dir=new File(path);
@@ -215,8 +284,6 @@ public class TipController {
 		//main사진 업데이트용 변수
 		int mResult = 0;
 		
-		System.out.println(mainImgNo[0]);
-		
 		//메인사진용 for문
 		for(MultipartFile f:mainImg) {
 			//넘어온 사진이 없으면 update 안함
@@ -224,7 +291,6 @@ public class TipController {
 			if(!f.isEmpty()) {
 				//넘어온 사진이 있으면 update 함
 				if(!f.isEmpty()) {
-					System.out.println("메인사진 update 함");
 					String originalName=f.getOriginalFilename();
 					String ext=originalName.substring(originalName.lastIndexOf(".")+1);
 					
@@ -238,7 +304,6 @@ public class TipController {
 					}
 					//객체에 정보를 담아줌
 					img = TipImg.builder().mainImg(reName).tipImgNo(mainImgNo[0]).build();
-					System.out.println(img);
 					//메인사진 업데이트
 					mResult = service.updateMainImg(img);
 				}
@@ -263,16 +328,11 @@ public class TipController {
 		
 		int dResult = 0;
 		
-		for(int i=0;i<deleteImgNo.length;i++) {
-			System.out.println("넘어온 번호 : " + deleteImgNo[i]);
-		}
-		
 //		기존 이미지 삭제
 		for(int i=0;i<deleteImgNo.length;i++) {
 			TipImg ti = TipImg.builder().tipImgNo(deleteImgNo[i]).build();
 			dResult=service.deleteTipImg(ti);
 		}
-		System.out.println("기존사진 삭제(0이면 삭제안됨, 1이면 삭제됨)"+dResult);
 		
 		List<TipImg> subImgs=new ArrayList<TipImg>();
 		
@@ -301,26 +361,14 @@ public class TipController {
 		int sResult = service.insertSubImgs(subImgs);
 		
 		if(sResult>0) {
-			System.out.println(content);
-			for(int u=0;u<tipImgNo.length;u++) {
-				System.out.println(tipImgNo[u]);
-			}
-			
 			int cResult = 0;
 			for(int k=0;k<content.size();k++) {
-				System.out.println("content : " + content.get(k));
 				img = TipImg.builder().content(content.get(k)).tipImgNo(tipImgNo[k]).build();
 				cResult = service.updateContent(img);
 			}
 		}else {
-			System.out.println(content);
-			for(int u=0;u<tipImgNo.length;u++) {
-				System.out.println(tipImgNo[u]);
-			}
-			
 			int cResult = 0;
 			for(int k=0;k<content.size();k++) {
-				System.out.println("content : " + content.get(k));
 				img = TipImg.builder().content(content.get(k)).tipImgNo(tipImgNo[k]).build();
 				cResult = service.updateContent(img);
 			}

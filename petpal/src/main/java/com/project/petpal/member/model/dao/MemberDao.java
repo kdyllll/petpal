@@ -16,7 +16,7 @@ public interface MemberDao {
    Member selectMember(SqlSession session,String email);
    int updatePassword(SqlSession session, Member member);
    int updateMemberEnd(SqlSession session, Member member);
-   List<Map> selectMemberAll(SqlSession session);
+   List<Map> selectMemberAll(SqlSession session,int cPage, int numPerPage);
    int followCnt(SqlSession session, String memberNo);
    int favCnt(SqlSession session, String memberNo);
    Map selectMemberOnee(SqlSession session, String memberNo);

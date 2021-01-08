@@ -120,7 +120,6 @@
                         </div>
 
 
-                        <!-- 파일 선택 시 이미지 표시해주는 function -->
                         <script src="${path }/resources/js/hashtag.js"></script>
 						<script src="${path }/resources/js/plusTag.js"></script>
                         <script>
@@ -207,22 +206,14 @@
 		        } else
 		            alert('invalid file input'); // 첨부클릭 후 취소시의 대응책은 세우지 않았다.
 		        }
-				
-		    	$(document).ready(function(e){
-		    		if(event.keyCode==13) {$('.btn').focusout()}
-		    	})
 		    
 		        //preview 영역에서 삭제 버튼 클릭시 해당 미리보기이미지 영역 삭제
 		        function deletePreview(obj) {
-		        	if(event.keyCode==13){
-		        		alert("enter");
-		        	}else{
 		        	if(window.confirm("사진을 지우면 사진에 대한 설명도 같이 지워집니다.")){
 			            var imgNum = obj.attributes['value'].value;
 			            delete files[imgNum];
 			            $("#preview .preview-box[value=" + imgNum + "]").remove();
 			            resizeHeight();
-		        	}
 		        	}
 		        }
 		 
@@ -262,7 +253,8 @@
 		     
 		        $("textarea.autosize").on('keydown keyup', function () {
 		      	  $(this).height(1).height( $(this).prop('scrollHeight')+12 );	
-		      });
+		     	 });
+		        
 		        $("#write").click(function(){
                 	selectCheck();
                 });
@@ -280,8 +272,10 @@
 			        	alert("커버 사진을 선택해주세요");
 			        	return;
                 	}
+			        $(".hashtag").attr("name","");//아무것도 안적힌 해시태그는 안넘어가도록 name 뺏기
                 	$("#tipWrite").submit();
 	        	}
+		        
 		</script>
 
 
