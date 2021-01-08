@@ -14,9 +14,9 @@
 		SELECT * FROM TIP JOIN TIPIMG USING(TIPNO) JOIN MEMBER USING(MEMBERNO)
 		WHERE 1=1 
 		<if test="hashtag != null">
-		   AND TIPNO IN (SELECT TIPNO FROM TIP LEFT JOIN HASHTAG ON POSTNO=TIPNO WHERE HASHCONTENT=#{hashtag}) AND MAINIMG IS NOT NULL 
+		   AND TIPNO IN (SELECT TIPNO FROM TIP LEFT JOIN HASHTAG ON POSTNO=TIPNO WHERE HASHCONTENT=#{hashtag}) 
 		</if>
-		ORDER BY TIPDATE DESC
+		AND MAINIMG IS NOT NULL ORDER BY TIPDATE DESC
 		
 	</select>
 	<select id="tipMainList" resultType="map">
@@ -26,7 +26,7 @@
 		SELECT * FROM TIPIMG WHERE TIPNO = #{tipNo} ORDER BY TIPIMGNO
 	</select>
 	<select id="selectTipListOne" parameterType="string" resultType="map">
-		select * from member join tip using(memberNo) join tipImg using(tipNo) where memberNo=#{memberNo} and mainImg is not null
+		select * from member join tip using(memberNo) join tipImg using(tipNo) where memberNo=#{memberNo} AND MAINIMG IS NOT NULL
 	</select>
 	<select id="tipCnt" resultType="_int" parameterType="string">
 		select count(*) from member join tip using(memberNo) where memberNo = #{memberNo}

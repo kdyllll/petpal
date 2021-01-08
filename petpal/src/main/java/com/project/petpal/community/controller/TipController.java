@@ -70,12 +70,6 @@ public class TipController {
 		int totalCount=service.totalTipCount();
 		String pageBar=new PageBarFactory().getPageBar(totalCount, cPage, numPerPage, null, null, "tipList.do");
 		
-		System.out.println("totalCount : " + totalCount);
-		System.out.println("numPerPage : " + numPerPage);
-		
-		System.out.println("ss : " + (cPage-1)*numPerPage);
-		System.out.println("ssas : " + numPerPage);
-		
 		for(Map map:TipList) {
 			String postNo=(String) map.get("TIPNO");
 			List<String> hashList=cService.selectHashList(postNo);
@@ -83,7 +77,6 @@ public class TipController {
 		}
 
 		model.addAttribute("list", TipList);
-		
 		model.addAttribute("memberNo", memberNo);
 		model.addAttribute("pageBar", pageBar);
 		
