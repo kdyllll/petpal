@@ -65,7 +65,7 @@
 									</svg>
 								</button>
 								<!-- 좋아요버튼 -->
-								
+								<input type="hidden" id="like" value="${like }">
 								<c:if test="${not empty like }">				
 									<button type="button" class="btn d-none" >
 										<svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.5em" fill="currentColor" class="bi bi-suit-heart binHeart text-danger" viewBox="0 0 16 16">
@@ -424,23 +424,29 @@ ul li{
 	 		if(loginMember==""){//로그인 안되어있다면
 	 			loginModal();
 
-	 		}else {//댓글 내용이 없으면
-	 			$(e.target).parent().addClass("d-none");
-	 			$(e.target).parent().next().removeClass("d-none");
-	 			$.ajax({
-	 		        url:"${path}/place/insertLike.do",
-	 		        data:{placeNo : $("#placeNo").val()},
-	 		        success: (data) => {
-	 		       	 console.log(data); 
-	 		        }
-	 			})
+	 		}else {
+	 			let like = $("#like").val();
+	 			if(like == "") {
+	 				$(e.target).parent().addClass("d-none");
+		 			$(e.target).parent().next().removeClass("d-none");
+		 			$.ajax({
+		 		        url:"${path}/place/insertLike.do",
+		 		        data:{placeNo : $("#placeNo").val()},
+		 		        success: (data) => {
+		 		       	 console.log(data); 
+		 		        }
+		 			})
+	 			} else {
+	 				alert("이미 좋아요 한 글");
+	 			}
+	 			
 	 		} 		
 	 	})
 
 	 	$(".fillHeart").on("click" , e => {
 	 		if(loginMember==""){//로그인 안되어있다면
 	 			loginModal();
-	 		}else {//댓글 내용이 없으면
+	 		}else {
 	 			$(e.target).parent().parent().addClass("d-none");
 	 			$(e.target).parent().parent().prev().removeClass("d-none");
 	 			$.ajax({
