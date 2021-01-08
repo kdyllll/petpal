@@ -491,26 +491,31 @@ $(".fillHeart").on("click" , e => {
 	 		});
 	 	})
 	 	
+	 	
 	 	//팔로우
 	 	$(".followBtn").on('click',function() {
-	 		let writerNo = '${daily.MEMBERNO}';
-	 		$.ajax({
-	 			async: false,
-	 			url: "${path}/user/following.do",
-	 			data: {writerNo : writerNo},
-	 			success:(data) => {
-	 				if(data==10){
-	 					$(".following").show();
-	 					$(".follow").hide();
-	 				}else if(data==20){
-	 					$(".following").hide();
-	 					$(".follow").show();
-	 				}
-	 			},error:function(request, status, error){
-	 				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	 			}
-	 		});
-	 	})
+		if(loginMember!=""){
+			let writerNo = '${daily.MEMBERNO}';
+ 	 		$.ajax({
+ 	 			async: false,
+ 	 			url: "${path}/user/following.do",
+ 	 			data: {writerNo : writerNo},
+ 	 			success:(data) => {
+ 	 				if(data==10){
+ 	 					$(".following").show();
+ 	 					$(".follow").hide();
+ 	 				}else if(data==20){
+ 	 					$(".following").hide();
+ 	 					$(".follow").show();
+ 	 				}
+ 	 			},error:function(request, status, error){
+ 	 				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+ 	 			}
+ 	 		});
+		}else{ //로그인 안되어 있으면 로그인 모달 띄우기
+			loginModal();
+		};
+ 	});
 
 
 </script>
