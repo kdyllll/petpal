@@ -32,9 +32,10 @@ public class FindDaoImple implements FindDao {
 	}
 
 	@Override
-	public List<Map> selectFindList(SqlSession session,Map map) {
+	public List<Map> selectFindList(SqlSession session,Map map,int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return session.selectList("find.selectFindList", map);
+		RowBounds rb = new RowBounds((cPage -1)*numPerPage, numPerPage);
+		return session.selectList("find.selectFindList", map, rb);
 	}
 	
 	@Override
@@ -114,6 +115,12 @@ public class FindDaoImple implements FindDao {
 	public int deleteFind(SqlSession session, String findNo) {
 		// TODO Auto-generated method stub
 		return session.delete("find.deleteFind", findNo);
+	}
+
+	@Override
+	public int findTotalCount(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectOne("find.findTotalCount");
 	}
 
 	

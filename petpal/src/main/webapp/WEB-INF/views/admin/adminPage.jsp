@@ -86,19 +86,9 @@
 					</table>
 				</div>
 				<nav aria-label="Page navigation example"
-					style="margin-bottom: 120px;"
+					style="margin-bottom: 150px;"
 					class=" d-flex justify-content-center">
-					<ul class="pagination">
-						<li class="page-item"><a class="page-link text-dark" href="#"
-							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-						</a></li>
-						<li class="page-item"><a class="page-link text-dark" href="#">1</a></li>
-						<li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
-						<li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
-						<li class="page-item"><a class="page-link text-dark" href="#"
-							aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-						</a></li>
-					</ul>
+					<p class="text-center">${pageBar }</p> 
 				</nav>
 			</section>
 			<form class="modal fade pdtModal1" id="staticBackdrop" tabindex="-1"
@@ -231,6 +221,7 @@
 					</div>
 				</div>
 			</form>
+			
 			<div class="pdtModal"></div>
 		</div>
 	</div>

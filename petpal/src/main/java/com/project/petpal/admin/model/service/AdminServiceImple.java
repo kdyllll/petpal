@@ -48,9 +48,9 @@ public class AdminServiceImple implements AdminService {
 	}
 
 	@Override
-	public List<Map> selectProductAll() {
+	public List<Map> selectProductAll(int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return dao.selectProductAll(session);
+		return dao.selectProductAll(session, cPage, numPerPage);
 	}
 
 	@Override
@@ -113,9 +113,9 @@ public class AdminServiceImple implements AdminService {
 	}
 
 	@Override
-	public List<Map> productIOAll() {
+	public List<Map> productIOAll(int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return dao.productIOAll(session);
+		return dao.productIOAll(session,cPage,numPerPage);
 	}
 
 	@Override
@@ -130,9 +130,9 @@ public class AdminServiceImple implements AdminService {
 	}
 
 	@Override
-	public List<Map> selectOrderList() {
+	public List<Map> selectOrderList(int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return dao.selectOrderList(session);
+		return dao.selectOrderList(session, cPage, numPerPage);
 	}
 
 	@Override
@@ -172,9 +172,9 @@ public class AdminServiceImple implements AdminService {
 	}
 
 	@Override
-	public List<Map> selectClaimAll() {
+	public List<Map> selectClaimAll(int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return dao.selectClaimAll(session);
+		return dao.selectClaimAll(session , cPage,numPerPage);
 	}
 
 	@Override
@@ -196,9 +196,9 @@ public class AdminServiceImple implements AdminService {
 	}
 
 	@Override
-	public List<Map> selectPlaceList() {
+	public List<Map> selectPlaceList(int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return dao.selectPlaceList(session);
+		return dao.selectPlaceList(session, cPage, numPerPage);
 	}
 
 	@Override
@@ -235,6 +235,42 @@ public class AdminServiceImple implements AdminService {
 	public List<Map> searchCommunity(Map m) {
 		// TODO Auto-generated method stub
 		return dao.searchCommunity(session,m);
+	}
+
+	@Override
+	public int pTotalCount() {
+		// TODO Auto-generated method stub
+		return dao.pTotalCount(session);
+	}
+
+	@Override
+	public int ioTotalCount() {
+		// TODO Auto-generated method stub
+		return dao.ioTotalCount(session);
+	}
+
+	@Override
+	public int cumTotalCount() {
+		// TODO Auto-generated method stub
+		return dao.cumTotalCount(session);
+	}
+
+	@Override
+	public int claimTotalCount() {
+		// TODO Auto-generated method stub
+		return dao.claimTotalCount(session);
+	}
+
+	@Override
+	public int mTotalCount() {
+		// TODO Auto-generated method stub
+		return dao.mTotalCount(session);
+	}
+
+	@Override
+	public int orderTotalCount() {
+		// TODO Auto-generated method stub
+		return dao.orderTotalCount(session);
 	}
 
 	

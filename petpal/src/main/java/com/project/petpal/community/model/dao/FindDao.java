@@ -12,7 +12,7 @@ public interface FindDao {
 	int insertFindWrite(SqlSession session, Find f);
 	int insertMainPic(SqlSession session, FindImg fi);
 	int insertSubPic(SqlSession session, FindImg sfi);
-	List<Map> selectFindList(SqlSession session,Map map);
+	List<Map> selectFindList(SqlSession session,Map map,int cPage,int numPerPage);
 	List<Map> selectFindListOne(SqlSession session, String memberNo);
 	int findCnt(SqlSession session, String memberNo);
 	Map detailOne(SqlSession session, String findNo);
@@ -26,4 +26,5 @@ public interface FindDao {
 	int insertFindLike(SqlSession session, Map m);
 	List<Map> selectFindHeartWeek(SqlSession session,int cPage,int numPerPage);
 	int deleteFind(SqlSession session, String findNo);
+	int findTotalCount(SqlSession session);
 }

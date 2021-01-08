@@ -228,6 +228,7 @@
 
 					</c:if>
 				</div>
+				 <p class="text-center">${pageBar }</p> 
 			</div>
 		</div>
 		<div class="loginModal"></div>
