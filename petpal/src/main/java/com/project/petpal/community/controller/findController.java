@@ -232,7 +232,7 @@ public class findController {
 	@RequestMapping("/find/deleteLike.do")
 	public String deleteLike(String findNo, Model model) {
 		service.deleteFindLike(findNo);
-		return "redirect:/community/findList.do";
+		return "";
 	}
 //	좋아요 추가
 	@RequestMapping("/find/insertLike.do")
@@ -243,7 +243,7 @@ public class findController {
 		map.put("findNo", findNo);
 		
 		service.insertFindLike(map);
-		return "redirect:/community/findList.do";
+		return "";
 	}
 	
 	@RequestMapping("/find/findDelete.do")

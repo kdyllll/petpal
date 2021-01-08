@@ -109,6 +109,24 @@ public class PlaceDaoImpl implements PlaceDao{
 		// TODO Auto-generated method stub
 		return session.delete("place.deletePlace",placeNo);
 	}
+
+	@Override
+	public String selectLike(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.selectOne("place.selectLike", m);
+	}
+
+	@Override
+	public int insertLike(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.insert("place.insertLike", m);
+	}
+
+	@Override
+	public int deleteLike(SqlSession session, String placeNo) {
+		// TODO Auto-generated method stub
+		return session.delete("place.deleteLike", placeNo);
+	}
 	
 	
 

@@ -463,7 +463,8 @@ public class DailyController {
 		
 		return "community/communityAjax/dailyListAjax";
 	}
-
+	
+//	좋아요 추가
 	@RequestMapping("/daily/insertLike.do")
 	public String insertLike(HttpSession session, String dailyNo) {
 		Map map = new HashMap();
@@ -471,16 +472,15 @@ public class DailyController {
 		map.put("memberNo", m.getMemberNo());
 		map.put("dailyNo", dailyNo);		
 		service.insertDailyLike(map);
-		return "redirect:/community/findList.do";
+		return "";
 	}
 	
 //	좋아요 삭제
 	@RequestMapping("/daily/deleteLike.do")
 	public String deleteLike(String dailyNo, Model model) {
 		service.deleteDailyLike(dailyNo);
-		return "redirect:/community/findList.do";
+		return "";
 	}
-	
-	
+
 
 }

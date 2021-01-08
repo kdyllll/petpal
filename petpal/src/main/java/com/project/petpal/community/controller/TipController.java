@@ -358,21 +358,13 @@ public class TipController {
 		map.put("tipNo", tipNo);
 		
 		service.insertLike(map);
-		return "redirect:/community/tipList.do";
+		return "";
 	}
 //	좋아요삭제
 	@RequestMapping("/tip/deleteLike.do")
 	public String findDelete(String tipNo,Model model) {
-		String loc= "/community/findDetail.do?tipNo="+tipNo;
-		String msg="삭제되지않았습니다.";
-		int result = service.deleteLike(tipNo);
-		if(result> 0 ) {
-			loc= "/community/tipList.do";
-			msg = "삭제되었습니다.";
-		}
-		model.addAttribute("loc", loc);
-		model.addAttribute("msg", msg);
-		return "common/msg";
+		service.deleteLike(tipNo);
+		return "";
 	}
 	
 }

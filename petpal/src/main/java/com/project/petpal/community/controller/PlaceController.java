@@ -147,9 +147,9 @@ public class PlaceController {
 		if(mem != null) {
 			Map map = new HashMap();
 			map.put("placeNo", placeNo);
-			map.put("memberNo", mem.getMemberNo());
-			
+			map.put("memberNo", mem.getMemberNo());			
 			like = service.selectLike(map);
+			System.out.println(like);
 		}
 		
 		m.addAttribute("like", like);
@@ -233,4 +233,21 @@ public class PlaceController {
 		return "common/msg";
 	}
 	
+//	좋아요 추가
+	@RequestMapping("/place/insertLike.do")
+	public String insertLike(HttpSession session, String placeNo) {
+		Map map = new HashMap();
+		Member m = (Member)session.getAttribute("loginMember");
+		map.put("memberNo", m.getMemberNo());
+		map.put("placeNo", placeNo);
+		service.insertLike(map);
+		return "redirect:/place/movePlaceList.do";
+	}
+//	좋아요삭제
+	@RequestMapping("/place/deleteLike.do")
+	public String deleteLike(String placeNo, Model model) {
+		service.deleteLike(placeNo);
+		return "";
+	}
+
 }

@@ -32,4 +32,7 @@ public interface PlaceDao {
 	List<Map> selectPlaceHeartWeek(SqlSession session,int cPage,int numPerPage);
 	List<Map> selectPlaceHash(SqlSession session,int cPage,int numPerPage,String hashtag);
 	int deletePlace(SqlSession session,String placeNo);
+	String selectLike(SqlSession session, Map m);
+	int insertLike(SqlSession session, Map m);
+	int deleteLike(SqlSession session, String placeNo);
 }
