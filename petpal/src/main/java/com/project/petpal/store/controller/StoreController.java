@@ -88,6 +88,16 @@ public class StoreController {
 	}
 	@RequestMapping("/store/moveCategory.do")//카테고리별 상품리스트로 이동하는 서블릿
 	public String moveCategory(String cNo,Model m) {
+		String first="";
+		String second="";
+		switch(cNo.charAt(0)) {
+			case 'D':first="강아지";
+			break;
+			case 'C':first="고양이";
+			break;
+			case 'S':first="소동물";
+			break;
+		}
 		List<Product> starList=service.starList();//평균별점 리스트
 		
 		if(!cNo.contains("S")){//소동물 누른게 아니면
