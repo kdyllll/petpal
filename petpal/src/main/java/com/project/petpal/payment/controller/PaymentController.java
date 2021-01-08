@@ -61,8 +61,6 @@ public class PaymentController {
 		
 		//cnt는 바로구매에서 넘어오는 수량
 		if(productName==null) {
-			System.out.println(stockNo[0]);
-			System.out.println(cnt[0]);
 			List<Map> list = service.selectProduct(stockNo[0]);
 			pprice = Integer.parseInt(String.valueOf(list.get(0).get("PRICE")));
 			pcount = cnt[0];
