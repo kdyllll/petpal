@@ -37,10 +37,16 @@
               <div class="container" id="title">
                 <div class="form-inline container mt-5 mb-5">
                 	<h5><c:out value="${mainList[0].CATEGORY }"/></h5>
-                	<small class="ml-3">#해시태그</small>
-                	<small class="ml-3">#해시태그</small>
-                	<small class="ml-3">#해시태그</small>
-	                
+                	
+                	<c:forEach items="${mainList }" var="t">
+	                	<span class="text-muted ml-3 mr-2"> 
+							<c:forEach var="h" items="${t.hashList}">
+	                             		<c:if test="${not empty h}">
+	                                 		<a href="${path }/community/hashSearch.do?hashtag=${h}" class="text-secondary bg-point mr-2">#<c:out value="${h }"/></a>
+	                                 	</c:if>
+	                                 </c:forEach>					
+						</span>
+	                </c:forEach>
                 </div>
 
                 <div class="container">
@@ -176,26 +182,15 @@
 								
 		                    </c:if>
 		                 </div>
-		                 <%-- <div class="mt-3">
-		                   <pre class="my-1 "><c:out value="${daily.CONTENT }"/></pre>
-		                   <div>
-		                     <c:forEach var="h" items="${hashList}">
-                           		<a href="#">#<c:out value="${h.hashContent }"/></a>				                                    	
-                             </c:forEach>
-		                   </div>
-		                 </div> --%>
 		                 <div class="d-flex justify-content-end align-items-center">
 		                   <span class="text-secondary" style="font-size:14px;"><c:out value="${mainList[0].TIPDATE }"/></span>
 		                   <c:if test="${memberNo ne mainList[0].MEMBERNO }">
-		                   	<button type="button" class="btn btn-link text-secondary" style="font-size: 14px;" onclick="fn_claimModal('${mainList[0].TIPNO}');">신고</button>
+		                   		<button type="button" class="btn btn-link text-secondary" style="font-size: 14px;" onclick="fn_claimModal('${mainList[0].TIPNO}');">신고</button>
 		                   </c:if>
 		                 </div>
-		               </div>
 		               <c:if test="${memberNo eq mainList[0].MEMBERNO }">
 			               <div class="d-flex justify-content-end mr-1">
-			                  		<c:forEach items="${imgList }" var="t">
-								    <button type="button" class="btn btn-link btn-outline-secondary px-2 py-0 mr-2 text-black-50" onclick="location.replace('${path}/community/tipUpdate.do?tipNo=${t.TIPNO}')">수정</button>
-						  	</c:forEach>
+								    <button type="button" class="btn btn-link btn-outline-secondary px-2 py-0 mr-2 text-black-50" onclick="location.replace('${path}/community/tipUpdate.do?tipNo=${mainList[0].TIPNO}')">수정</button>
 			                  	<button type="button" class="btn btn-link btn-outline-secondary px-2 py-0 text-black-50" id="delete">삭제</button>
 			               </div>
 		               </c:if>

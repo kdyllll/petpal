@@ -47,9 +47,9 @@ public class MemberServiceImpl implements MemberService{
    }
 
    @Override
-   public List<Map> selectMemberAll() {
+   public List<Map> selectMemberAll(int cPage,int numPerPage) {
       // TODO Auto-generated method stub
-      return dao.selectMemberAll(session);
+      return dao.selectMemberAll(session, cPage, numPerPage);
    }
 
 

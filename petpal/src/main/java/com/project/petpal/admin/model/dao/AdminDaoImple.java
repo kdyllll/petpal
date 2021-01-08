@@ -3,6 +3,7 @@ package com.project.petpal.admin.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -32,9 +33,10 @@ public class AdminDaoImple implements AdminDao {
 	}
 
 	@Override
-	public List<Map> selectProductAll(SqlSession session) {
+	public List<Map> selectProductAll(SqlSession session, int cPage, int numPerPage) {
 		// TODO Auto-generated method stub
-		return session.selectList("product.selectProductAll");
+		RowBounds rb = new RowBounds((cPage -1)*numPerPage, numPerPage);
+		return session.selectList("product.selectProductAll",null, rb);
 	}
 
 	@Override
@@ -96,9 +98,10 @@ public class AdminDaoImple implements AdminDao {
 	}
 
 	@Override
-	public List<Map> productIOAll(SqlSession session) {
+	public List<Map> productIOAll(SqlSession session,int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return session.selectList("product.productIOAll");
+		RowBounds rb = new RowBounds((cPage -1)*numPerPage, numPerPage);
+		return session.selectList("product.productIOAll",null,rb);
 	}
 
 	@Override
@@ -113,9 +116,10 @@ public class AdminDaoImple implements AdminDao {
 	}
 
 	@Override
-	public List<Map> selectOrderList(SqlSession session) {
+	public List<Map> selectOrderList(SqlSession session,  int cPage, int numPerPage) {
 		// TODO Auto-generated method stub
-		return session.selectList("pay.selectOrderList");
+		RowBounds rb = new RowBounds((cPage -1)*numPerPage, numPerPage);
+		return session.selectList("pay.selectOrderList",null,rb);
 	}
 
 	@Override
@@ -155,9 +159,10 @@ public class AdminDaoImple implements AdminDao {
 	}
 
 	@Override
-	public List<Map> selectClaimAll(SqlSession session) {
+	public List<Map> selectClaimAll(SqlSession session,  int cPage, int numPerPage) {
 		// TODO Auto-generated method stub
-		return session.selectList("admin.selectClaimAll");
+		RowBounds rb = new RowBounds((cPage -1)*numPerPage, numPerPage);
+		return session.selectList("admin.selectClaimAll",null,rb);
 	}
 
 	@Override
@@ -179,9 +184,10 @@ public class AdminDaoImple implements AdminDao {
 	}
 
 	@Override
-	public List<Map> selectPlaceList(SqlSession session) {
+	public List<Map> selectPlaceList(SqlSession session,  int cPage, int numPerPage) {
 		// TODO Auto-generated method stub
-		return session.selectList("admin.selectPlaceList");
+		RowBounds rb = new RowBounds((cPage -1)*numPerPage, numPerPage);
+		return session.selectList("admin.selectPlaceList",null,rb);
 	}
 
 	@Override
@@ -218,6 +224,41 @@ public class AdminDaoImple implements AdminDao {
 	public List<Map> searchCommunity(SqlSession session, Map m) {
 		// TODO Auto-generated method stub
 		return session.selectList("admin.searchCommunity", m);
+	}
+
+	@Override
+	public int pTotalCount(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectOne("product.pTotalCount");
+	}
+	@Override
+	public int ioTotalCount(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectOne("product.ioTotalCount");
+	}
+
+	@Override
+	public int cumTotalCount(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.cumTotalCount");
+	}
+
+	@Override
+	public int claimTotalCount(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.claimTotalCount");
+	}
+
+	@Override
+	public int orderTotalCount(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectOne("pay.orderTotalCount");
+	}
+
+	@Override
+	public int mTotalCount(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.mTotalCount");
 	}
 
 }

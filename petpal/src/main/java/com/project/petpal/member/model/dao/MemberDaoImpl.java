@@ -40,9 +40,10 @@ public class MemberDaoImpl implements MemberDao {
    }
 
    @Override
-   public List<Map> selectMemberAll(SqlSession session) {
+   public List<Map> selectMemberAll(SqlSession session,  int cPage, int numPerPage) {
       // TODO Auto-generated method stub
-      return session.selectList("member.selectMemberAll");
+	   RowBounds rb = new RowBounds((cPage -1)*numPerPage, numPerPage);
+      return session.selectList("member.selectMemberAll", null, rb);
    }
 
 

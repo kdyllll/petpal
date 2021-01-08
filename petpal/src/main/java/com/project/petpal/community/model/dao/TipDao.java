@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.community.model.vo.Tip;
 import com.project.petpal.community.model.vo.TipImg;
 
@@ -28,4 +29,7 @@ public interface TipDao {
 	List<String> selectTipLike(SqlSession session, String memberNo);
 	int insertLike(SqlSession session, Map m);
 	int deleteLike(SqlSession session, Map m);
+	int insertHashtag(SqlSession session,Hashtag h);
+	List<Hashtag> selectHashList(SqlSession session,String tipNo);
+	int deleteAllHash(SqlSession session,String dailyNo);
 }

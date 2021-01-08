@@ -215,6 +215,15 @@ $(document).ready(function() {
 										</div>
 		                      	  	</div>
 									<p class="card-text"><c:out value="${t.TITLE }"/></p>
+									
+									<small class="text-muted pl-1"> 
+										<c:forEach var="h" items="${t.hashList}">
+	                                		<c:if test="${not empty h}">
+	                                    		<a href="${path }/community/hashSearch.do?hashtag=${h}" class="text-secondary bg-point mr-2">#<c:out value="${h }"/></a>
+	                                    	</c:if>
+	                                    </c:forEach>					
+									</small>
+
 									<div class="d-flex justify-content-between align-items-center">
 									</div>
 								</div>

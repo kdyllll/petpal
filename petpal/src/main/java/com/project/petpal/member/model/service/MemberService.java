@@ -14,7 +14,7 @@ public interface MemberService {
    Member selectMember(String email);
    int updatePassword(Member member);
    int updateMemberEnd(Member member);
-   List<Map> selectMemberAll();
+   List<Map> selectMemberAll(int cPage,int numPerPage);
    int followCnt(String memberNo);
    int favCnt(String memberNo);
    Map selectMemberOnee(String memberNo);

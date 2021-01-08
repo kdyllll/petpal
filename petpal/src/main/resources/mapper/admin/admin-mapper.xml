@@ -54,4 +54,14 @@
 			</if>
 		</where>
 	</select>
+	<select id="cumTotalCount" resultType="_int">
+		select count(*) from place join member using(MEMBERNO)
+	</select>
+	<select id="claimTotalCount" resultType="_int">
+		SELECT count(*) FROM CLAIM JOIN MEMBER USING(MEMBERNO)
+	</select>
+	<select id="mTotalCount" resultType="_int">
+		SELECT count(*) FROM MEMBER
+	</select>
+	
 </mapper>
