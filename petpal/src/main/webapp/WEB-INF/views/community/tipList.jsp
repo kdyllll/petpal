@@ -252,12 +252,12 @@ $(document).ready(function() {
 					}
 					</style>
 					
-					
 				</div>
 			</div>
 		</div>
-	<div class="loginModal"></div>
+					<div>${pageBar }</div>
 	</main>
+	<div class="loginModal"></div>
 
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 

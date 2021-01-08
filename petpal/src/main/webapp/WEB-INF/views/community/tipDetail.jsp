@@ -44,7 +44,7 @@
 	                             		<c:if test="${not empty h}">
 	                                 		<a href="${path }/community/hashSearch.do?hashtag=${h}" class="text-secondary bg-point mr-2">#<c:out value="${h }"/></a>
 	                                 	</c:if>
-	                                 </c:forEach>					
+	                                 </c:forEach>
 						</span>
 	                </c:forEach>
                 </div>

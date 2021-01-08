@@ -49,8 +49,8 @@ public class TipServiceImpl implements TipService {
 	}
 
 	@Override
-	public List<Map> tipList() {
-		return dao.tipList(session);
+	public List<Map> tipList(int cPage,int numPerPage, Map<String,String> keyword) {
+		return dao.tipList(session, cPage, numPerPage, keyword);
 	}
 	
 	@Override
@@ -161,5 +161,11 @@ public class TipServiceImpl implements TipService {
 	public List<Hashtag> selectHashList(String tipNo) {
 		// TODO Auto-generated method stub
 		return dao.selectHashList(session,tipNo);
+	}
+
+	@Override
+	public int totalTipCount() {
+		// TODO Auto-generated method stub
+		return dao.totalTipCount(session);
 	}
 }

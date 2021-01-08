@@ -9,7 +9,7 @@ import com.project.petpal.community.model.vo.TipImg;
 
 public interface TipService {
 	int insertTip(Tip t, List<TipImg> files, List<Hashtag> hashList);
-	List<Map> tipList();
+	List<Map> tipList(int cPage,int numPerPage, Map<String,String> keyword);
 	List<Map> tipMainList(String tipNo);
 	List<Map> tipDetail(String tipNo);
 	int updateTip(Tip t, List<Hashtag> hashList);
@@ -27,4 +27,5 @@ public interface TipService {
 	int insertLike(Map m);
 	int deleteLike(Map m);
 	List<Hashtag> selectHashList(String tipNo);
+	int totalTipCount();
 }

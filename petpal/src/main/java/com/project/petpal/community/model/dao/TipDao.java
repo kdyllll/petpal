@@ -12,7 +12,7 @@ import com.project.petpal.community.model.vo.TipImg;
 public interface TipDao {
 	int insertTip(SqlSession session, Tip t);
 	int insertTipImg(SqlSession session, TipImg ti);
-	List<Map> tipList(SqlSession session);
+	List<Map> tipList(SqlSession session, int cPage,int numPerPage, Map<String,String> keyword);
 	List<Map> tipMainList(SqlSession session, String tipNo);
 	List<Map> tipDetail(SqlSession sessio, String tipNo);
 	int updateTip(SqlSession session, Tip t);
@@ -32,4 +32,5 @@ public interface TipDao {
 	int insertHashtag(SqlSession session,Hashtag h);
 	List<Hashtag> selectHashList(SqlSession session,String tipNo);
 	int deleteAllHash(SqlSession session,String dailyNo);
+	int totalTipCount(SqlSession session);
 }

@@ -25,8 +25,9 @@ public class TipDaoImpl implements TipDao {
 	}
 
 	@Override
-	public List<Map> tipList(SqlSession session) {
-		return session.selectList("tip.tipList");
+	public List<Map> tipList(SqlSession session, int cPage,int numPerPage, Map<String,String> keyword) {
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("tip.tipList", keyword, rb);
 	}
 	
 	@Override
@@ -43,11 +44,6 @@ public class TipDaoImpl implements TipDao {
 	public int updateTip(SqlSession session, Tip t) {
 		return session.update("tip.updateTip", t);
 	}
-
-//	@Override
-//	public int updateTipImg(SqlSession session, TipImg ti) {
-//		return session.update("tip.updateTipImg", ti);
-//	}
 
 	@Override
 	public List<Map> selectTipListOne(SqlSession session, String memberNo) {
@@ -139,5 +135,11 @@ public class TipDaoImpl implements TipDao {
 	public int deleteAllHash(SqlSession session, String tipNo) {
 		// TODO Auto-generated method stub
 		return session.delete("tip.deleteAllHash",tipNo);
+	}
+
+	@Override
+	public int totalTipCount(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectOne("tip.totalTipCount");
 	}
 }

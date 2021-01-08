@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.petpal.common.PageBarFactory;
 import com.project.petpal.community.model.service.CommunityService;
 import com.project.petpal.community.model.service.TipService;
 import com.project.petpal.community.model.vo.Hashtag;
@@ -37,7 +38,20 @@ public class TipController {
 	private CommunityService cService;
 	
 	@RequestMapping("/community/tipList.do")
-	public ModelAndView TipList(ModelAndView mv, HttpSession session, Model model) {
+	public String TipList(ModelAndView mv, HttpSession session, Model model,
+								@RequestParam(value="hashtag", required=false) String hashtag,
+								@RequestParam(value="cPage",defaultValue="1") int cPage,
+								@RequestParam(value="numPerPage",defaultValue="12") int numPerPage) {
+		
+		//해시태그 검색어로 검색됐을 경우 구분
+		Map<String,String> keyword=new HashMap<String,String>();
+		keyword.put("hashtag", hashtag);
+		String search="";
+		//검색어를 통해 들어오는 거면 search도 보내서 정렬버튼 없앰
+		if(hashtag!=null) {
+			search="search";
+		}
+		
 		Member loginMember=(Member)session.getAttribute("loginMember");
 		String memberNo="";
 		if(loginMember == null) {
@@ -51,7 +65,16 @@ public class TipController {
 			model.addAttribute("like", like);
 		}
 		
-		List<Map> TipList = service.tipList();
+		List<Map> TipList = service.tipList(cPage,numPerPage, keyword);
+		
+		int totalCount=service.totalTipCount();
+		String pageBar=new PageBarFactory().getPageBar(totalCount, cPage, numPerPage, null, null, "tipList.do");
+		
+		System.out.println("totalCount : " + totalCount);
+		System.out.println("numPerPage : " + numPerPage);
+		
+		System.out.println("ss : " + (cPage-1)*numPerPage);
+		System.out.println("ssas : " + numPerPage);
 		
 		for(Map map:TipList) {
 			String postNo=(String) map.get("TIPNO");
@@ -59,13 +82,12 @@ public class TipController {
 			map.put("hashList", hashList);
 		}
 
-		mv.addObject("list", TipList);
+		model.addAttribute("list", TipList);
 		
-		mv.addObject("memberNo", memberNo);
+		model.addAttribute("memberNo", memberNo);
+		model.addAttribute("pageBar", pageBar);
 		
-		mv.setViewName("/community/tipList");
-		
-		return mv;
+		return "/community/tipList";
 	}
 	
 	@RequestMapping("/community/tipDetail.do")
