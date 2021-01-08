@@ -238,9 +238,9 @@ public class DailyDaoImpl implements DailyDao {
 	}
 
 	@Override
-	public int deleteDailyLike(SqlSession session, String dailyNo) {
+	public int deleteDailyLike(SqlSession session, Map m) {
 		// TODO Auto-generated method stub
-		return session.delete("daily.deleteDailyLike", dailyNo);
+		return session.delete("daily.deleteDailyLike", m);
 	}
 
 	@Override

@@ -42,7 +42,7 @@
 		select FINDNO from FINDLIKE WHERE HEARTMEMBERNO=#{memberNo}
 	</select>
 	<delete id="deleteFindLike" parameterType="string">
-		DELETE FROM FINDLIKE WHERE FINDNO=#{findNo}
+		DELETE FROM FINDLIKE WHERE FINDNO=#{no} AND HEARTMEMBERNO=#{memberNo}
 	</delete>
 	<insert id="insertFindLike" parameterType="map">
 		INSERT INTO FINDLIKE VALUES(#{findNo}, #{memberNo})

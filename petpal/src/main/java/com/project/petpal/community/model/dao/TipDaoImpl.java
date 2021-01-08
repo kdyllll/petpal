@@ -103,4 +103,22 @@ public class TipDaoImpl implements TipDao {
 	public List<Map> selectMember(SqlSession session, String writerNo) {
 		return session.selectList("tip.selectMember", writerNo);
 	}
+
+	@Override
+	public List<String> selectTipLike(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("tip.selectTipLike", memberNo);
+	}
+
+	@Override
+	public int insertLike(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.insert("tip.insertLike", m);
+	}
+
+	@Override
+	public int deleteLike(SqlSession session,Map m) {
+		// TODO Auto-generated method stub
+		return session.delete("tip.deleteLike", m);
+	}
 }

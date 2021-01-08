@@ -134,12 +134,26 @@ public class PlaceController {
 	@Autowired
 	private MemberService mService;
 	@RequestMapping("/place/movePlaceDetail.do")
-	public String selectPlace(String placeNo,Model m,@RequestParam(value="cPage",defaultValue="1") int cPage) {
+	public String selectPlace(String placeNo,Model m,@RequestParam(value="cPage",defaultValue="1") int cPage, HttpSession session) {
 		int numPerpage=5;
 		List<Place> list = service.selectPlace(placeNo);//장소후기리스트 (사진과내용이 여러개라서 리스트)
 		List<PlaceComment> cList=service.commentList(placeNo,cPage,numPerpage);//댓글리스트
 		int count=service.commentCount(placeNo);//댓글개수
 		List<Hashtag> hList=service.hashList(placeNo);//해쉬태그리스트
+		
+		Member mem = (Member)session.getAttribute("loginMember");
+		//로그인한 멤버 좋아요 가져오기
+		String like = "";
+		if(mem != null) {
+			Map map = new HashMap();
+			map.put("placeNo", placeNo);
+			map.put("memberNo", mem.getMemberNo());			
+			like = service.selectLike(map);
+			System.out.println(like);
+		}
+		
+		m.addAttribute("like", like);
+		
 		m.addAttribute("pageBar",PageBarFactory.getPageBar(count, cPage, numPerpage,null,placeNo, "movePlaceDetail.do"));
 		m.addAttribute("count", count);
 		m.addAttribute("hList",hList);
@@ -219,4 +233,25 @@ public class PlaceController {
 		return "common/msg";
 	}
 	
+//	좋아요 추가
+	@RequestMapping("/place/insertLike.do")
+	public String insertLike(HttpSession session, String placeNo) {
+		Map map = new HashMap();
+		Member m = (Member)session.getAttribute("loginMember");
+		map.put("memberNo", m.getMemberNo());
+		map.put("placeNo", placeNo);
+		service.insertLike(map);
+		return "redirect:/place/movePlaceList.do";
+	}
+//	좋아요삭제
+	@RequestMapping("/place/deleteLike.do")
+	public String deleteLike(String placeNo, Model model, HttpSession session) {
+		Member mem = (Member)session.getAttribute("loginMember");
+		Map map = new HashMap();
+		map.put("no", placeNo);
+		map.put("memberNo", mem.getMemberNo());
+		service.deleteLike(map);
+		return "";
+	}
+
 }
