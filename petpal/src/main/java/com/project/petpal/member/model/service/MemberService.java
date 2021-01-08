@@ -61,4 +61,5 @@ public interface MemberService {
    int insertFollow(String memberNo, String writerNo);
    List<Map> selectFollow(String memberNo, String writerNo);
    int deleteFollow(String memberNo, String writerNo);
+   String selectIdCheck(Map m);
 }

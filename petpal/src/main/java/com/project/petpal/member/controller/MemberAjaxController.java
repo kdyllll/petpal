@@ -422,4 +422,37 @@ public class MemberAjaxController {
 		return result;
 	}
 	
+	//아이디찾기 모달소환
+	@RequestMapping("/moveIdModal.do")
+	public String moveIdModal() {
+		return "member/memberAjax/findIdModal";
+	}
+	
+	//아이디 찾기
+	@RequestMapping("/findIdCheck.do")
+	@ResponseBody
+	public String findIdCheck(String name,String phone,HttpServletResponse response) {
+		Map<String,String> m=new HashMap<String, String>();
+		m.put("name", name);
+		m.put("phone", phone);
+		
+		String email=service.selectIdCheck(m);
+		
+		
+		String result="";
+		if(email!=null) {
+			//test@naver.com → te**@naver.com으로 만들어야 함
+			int index=email.indexOf("@");
+			String del=email.substring(2,index); //잘라낼 문자
+			int cnt=del.length();//잘라낼 문자의 개수
+			String star="";
+			for(int i=0;i<cnt;i++) {
+				star+="*";
+			}
+			result=email.replace(del,star);
+			
+		}
+		return result;		
+	}
+	
 }

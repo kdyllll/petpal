@@ -338,4 +338,12 @@ public class MemberDaoImpl implements MemberDao {
 		return session.delete("follow.deleteFollow", map);
 	}
 
+	@Override
+	public String selectIdCheck(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.selectIdCheck",m);
+	}
+	
+	
+
 }

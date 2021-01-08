@@ -256,4 +256,7 @@
 	<select id="selectMList" parameterType="string" resultType="string">
 		SELECT MEMBERNO FROM MEMBER WHERE MEMBERNO = #{memberNo}
 	</select>
+	<select id="selectIdCheck" parameterType="string" resultType="string">
+		SELECT EMAIL FROM MEMBER WHERE MEMBERNAME=#{name} AND PHONE=#{phone}
+	</select>
 </mapper>

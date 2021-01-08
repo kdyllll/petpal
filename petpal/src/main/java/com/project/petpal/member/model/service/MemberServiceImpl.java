@@ -328,4 +328,12 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return dao.deleteFollow(session, memberNo, writerNo);
 	}
+
+	@Override
+	public String selectIdCheck(Map m) {
+		// TODO Auto-generated method stub
+		return dao.selectIdCheck(session,m);
+	}
+	
+	
 }

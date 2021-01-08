@@ -45,7 +45,7 @@
                 <input type="checkbox" name="saveId" value="saveId" ${saveId!=null?"checked":"" }> 아이디 기억하기
               </label>
               <div class="mt-3">
-                <a class="mr-5 text-dark" href="#">아이디 찾기</a>
+                <a class="mr-5 text-dark" href="javascript:fn_idModal()">아이디 찾기</a>
                 <a class="mr-5 text-dark" href="#">비밀번호 재설정</a>
                 <a class="text-dark" href="${path }/member/moveJoin.do">회원가입</a>
               </div>
@@ -79,6 +79,7 @@
         </div>   
       </form>     
     </div>
+    <div class="pdtModal"></div>
   </main>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
@@ -107,5 +108,20 @@
 			alert("주문 번호를 입력해주세요.");
 		}
 	})
+	
+	
+	//아이디찾기 모달
+	function fn_idModal(){
+		$.ajax({
+			url:"${path}/moveIdModal.do",
+			dataType:"html",
+			success:(data)=>{
+				$(".pdtModal").html(data);
+				$('#idModal').modal();
+			}
+			
+			
+		})
+	}
 </script>
 </html>
