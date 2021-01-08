@@ -38,7 +38,7 @@
 						</div>
 						<h2 class="font-weight-bold mb-5"><c:out value="${place.title }"/></h2>
 						<div class="mb-4 d-sm-flex justify-content-sm-between">
-							<a href="${path }/user/moveUserInfo.do" class="d-inline-flex">
+							<a href="${path }/user/moveUserInfo.do?memberNo=${place.memberNo}" class="d-inline-flex">
 								<div>
 									<img src="${path }/resources/upload/member/profile/${place.img}" alt="" class="rounded-circle mr-3">
 								</div>
@@ -178,7 +178,7 @@
 							<c:forEach items="${cList }" var="c">
 								<c:if test="${c.commentLevel eq 1 }">
 							<div class="d-flex mb-3 comment level1">
-								<a href="#">
+								<a href="${path }/user/moveUserInfo.do?memberNo=${c.memberNo}">
 								<div>
 									<img src="${path }/resources/upload/member/profile/${c.img }" class="rounded-circle mr-3">
 								</div>
@@ -208,7 +208,7 @@
 							
 							<c:if test="${c.commentLevel eq 2 }">
 							<div class="d-flex mb-3 comment level2 ml-5 rounded">
-								<a href="#">
+								<a href="${path }/user/moveUserInfo.do?memberNo=${c.memberNo}">
 								<div>
 									<img src="${path }/resources/upload/member/profile/${c.img }" class="rounded-circle mr-3">
 								</div>

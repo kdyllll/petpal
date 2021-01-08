@@ -209,15 +209,9 @@ public class MemberAjaxController {
 		   return(member==null?true:false);
 	   }
 	 @RequestMapping("/sendEmail.do")//이메일 인증
-	 public void sendEmail(HttpServletRequest request,HttpServletResponse response) throws Exception{
-		 String email = request.getParameter("email");
+	 @ResponseBody
+	 public String sendEmail(String email) throws Exception{
 	      
-	      JSONObject emailConfirm= new JSONObject();
-	      
-	      int result=0;
-	      String mesg="";
-	      String loc="";
-
 	         String host="smtp.gmail.com";
 	         String user="cjfdn4646@gmail.com";
 	         String password="Qkrcjfdn123";
@@ -230,6 +224,29 @@ public class MemberAjaxController {
 	           props.put("mail.smtp.starttls.enable","true");
 	           props.put("mail.smtp.ssl.trust",host); 
 	           
+	           
+	           StringBuffer temp =new StringBuffer();
+	           Random rnd = new Random();
+	           for(int i=0;i<6;i++)
+	           {
+	               int rIndex = rnd.nextInt(3);
+	               switch (rIndex) {
+	               case 0:
+	                   // a-z
+	                   temp.append((char) ((int) (rnd.nextInt(26)) + 97));
+	                   break;
+	               case 1:
+	                   // A-Z
+	                   temp.append((char) ((int) (rnd.nextInt(26)) + 65));
+	                   break;
+	               case 2:
+	                   // 0-9
+	                   temp.append((rnd.nextInt(10)));
+	                   break;
+	               }
+	           }
+	           String key = temp.toString();
+
 	           Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 	               protected PasswordAuthentication getPasswordAuthentication() {
 	                   return new PasswordAuthentication(user,password);
@@ -244,35 +261,20 @@ public class MemberAjaxController {
 	               //메일 제목
 	               msg.setSubject("PETPAL 인증 메일입니다.");
 	               //메일 내용
-	               String content="<h1>[이메일 인증]</h1><br><p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>";
-	               content+="<a href='http://localhost:9090/petpal/authEmail?auth=1'>이메일 인증 확인</a>";
+	               String content="<h1>[이메일 인증번호]</h1><br><p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>";
+	               content+="<p>인증번호는 <strong>"+key+"</strong></p>";
 	               msg.setText(content,"utf-8","html");
 	               
 	               Transport.send(msg);
 	               
 	           }catch (Exception e) {
-	               e.printStackTrace();
+	        	   e.printStackTrace();
+	               key=null;
 	           }
 	           
-	           System.out.println("인증번호 발송");
-	         result=1;
 	         
-	        
-	      emailConfirm.put("msg",mesg);
-	      emailConfirm.put("result",result);
-	      response.getWriter().print(emailConfirm);
-//	      response.setContentType("application/json;charset=utf-8");
-//	      new Gson().toJson(emailConfirm,response.getWriter());
+	        return key;
 		 
-	 }
-	 @RequestMapping("/authEmail")
-	 @ResponseBody
-	 public int authEmail(String auth) {
-		 int result=0;
-		 if(auth!=null) {
-			 result=1;
-		 }
-		 return result;
 	 }
 	 
 	 @RequestMapping("/member/likeList.do")
