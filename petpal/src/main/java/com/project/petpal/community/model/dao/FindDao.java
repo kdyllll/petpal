@@ -27,4 +27,5 @@ public interface FindDao {
 	List<Map> selectFindHeartWeek(SqlSession session,int cPage,int numPerPage);
 	int deleteFind(SqlSession session, String findNo);
 	int findTotalCount(SqlSession session);
+	List<Map> selectFollowingList(SqlSession session, String memberNo);
 }

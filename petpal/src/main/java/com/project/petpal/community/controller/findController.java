@@ -47,6 +47,15 @@ public class findController {
 			List<String> like = service.selectFindLike(m.getMemberNo());
 			model.addAttribute("like", like);
 		}
+		
+		//팔로우 검사
+		if(m != null) {
+			String memberNo = m.getMemberNo();
+			List<Map> followingList = service.selectFollowingList(memberNo);
+			model.addAttribute("following", followingList);
+		}
+		
+		
 		model.addAttribute("totalData", totalData);
 		model.addAttribute("pageBar", new PageBarFactory().getPageBar(totalData, cPage, numPerPage,null,null, "findList.do"));
 		model.addAttribute("list", list);

@@ -137,5 +137,10 @@ public class FindServiceImple implements FindService {
 		return dao.findTotalCount(session);
 	}
 	
+	@Override
+	public List<Map> selectFollowingList(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectFollowingList(session, memberNo);
+	}
 	
 }

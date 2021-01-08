@@ -123,6 +123,10 @@ public class FindDaoImple implements FindDao {
 		return session.selectOne("find.findTotalCount");
 	}
 
-	
+	@Override
+	public List<Map> selectFollowingList(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("follow.selectFollowing", memberNo);
+	}
 	
 }

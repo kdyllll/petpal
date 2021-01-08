@@ -23,4 +23,5 @@ public interface FindService {
 	List<Map> selectFindHeartWeek(int cPage,int numPerPage);
 	int deleteFind(String findNo);
 	int findTotalCount();
+	List<Map> selectFollowingList(String memberNo);
 }
