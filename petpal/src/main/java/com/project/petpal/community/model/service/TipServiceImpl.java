@@ -168,4 +168,10 @@ public class TipServiceImpl implements TipService {
 		// TODO Auto-generated method stub
 		return dao.totalTipCount(session);
 	}
+	
+	@Override
+	public List<Map> selectFollowingList(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectFollowingList(session, memberNo);
+	}
 }

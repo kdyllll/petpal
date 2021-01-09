@@ -75,6 +75,13 @@ public class TipController {
 			List<String> hashList=cService.selectHashList(postNo);
 			map.put("hashList", hashList);
 		}
+		
+		//팔로우 검사
+		if(loginMember != null) {
+			String no = loginMember.getMemberNo();
+			List<Map> followingList = service.selectFollowingList(no);
+			model.addAttribute("following", followingList);
+		}
 
 		model.addAttribute("list", TipList);
 		model.addAttribute("memberNo", memberNo);

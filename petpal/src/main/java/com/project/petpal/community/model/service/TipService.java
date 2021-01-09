@@ -28,4 +28,5 @@ public interface TipService {
 	int deleteLike(Map m);
 	List<Hashtag> selectHashList(String tipNo);
 	int totalTipCount();
+	List<Map> selectFollowingList(String memberNo);
 }

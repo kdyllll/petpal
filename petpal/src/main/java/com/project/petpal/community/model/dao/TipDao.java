@@ -33,4 +33,5 @@ public interface TipDao {
 	List<Hashtag> selectHashList(SqlSession session,String tipNo);
 	int deleteAllHash(SqlSession session,String dailyNo);
 	int totalTipCount(SqlSession session);
+	List<Map> selectFollowingList(SqlSession session, String memberNo);
 }

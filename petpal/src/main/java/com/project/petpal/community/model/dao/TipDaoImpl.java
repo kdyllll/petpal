@@ -142,4 +142,10 @@ public class TipDaoImpl implements TipDao {
 		// TODO Auto-generated method stub
 		return session.selectOne("tip.totalTipCount");
 	}
+	
+	@Override
+	public List<Map> selectFollowingList(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("follow.selectFollowing", memberNo);
+	}
 }
