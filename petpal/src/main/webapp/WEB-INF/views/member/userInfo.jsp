@@ -149,6 +149,7 @@ a:hover{text-decoration:none;}
                 <div class="postCon col-12 ml-lg-5 col-lg-8"> 
                   <!-- 일상 -->
                 </div>
+                  <div class="loginModal"></div>
             </div>
         </div>
        
@@ -210,8 +211,9 @@ function loginModal(){
 	});
 };
 
-$(".followBtn").on('click',function() {
-		let writerNo = '${member.memberNo}';
+	$(".followBtn").on('click',function() {
+		if(loginMember!=""){	
+			let writerNo = '${member.memberNo}';
 	 		$.ajax({
 	 			async: false,
 	 			url: "${path}/user/following.do",
@@ -228,6 +230,9 @@ $(".followBtn").on('click',function() {
 	 				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	 			}
 	 		});
+		}else{ //로그인 안되어 있으면 로그인 모달 띄우기
+			loginModal();
+		};
 	});
 	
 	$(document).ready(function(){
