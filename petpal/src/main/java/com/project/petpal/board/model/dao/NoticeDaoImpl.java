@@ -3,6 +3,7 @@ package com.project.petpal.board.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -23,8 +24,9 @@ public class NoticeDaoImpl implements NoticeDao {
 	}
 
 	@Override
-	public List<Map> noticeList(SqlSession session) {
-		return session.selectList("notice.noticeList");
+	public List<Map> noticeList(SqlSession session, int cPage, int numPerPage) {
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("notice.noticeList", rb);
 	}
 
 	@Override
@@ -63,6 +65,12 @@ public class NoticeDaoImpl implements NoticeDao {
 	@Override
 	public int updateContent(SqlSession session, NoticeImg ni) {
 		return session.update("notice.updateContent", ni);
+	}
+
+	@Override
+	public int totalNoticeCount(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectOne("notice.totalNoticeCount");
 	}
 
 }
