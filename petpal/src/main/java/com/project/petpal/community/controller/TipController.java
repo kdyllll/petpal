@@ -18,14 +18,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.petpal.common.AjaxPageBarFactory;
 import com.project.petpal.common.PageBarFactory;
 import com.project.petpal.community.model.service.CommunityService;
 import com.project.petpal.community.model.service.TipService;
 import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.community.model.vo.Tip;
+import com.project.petpal.community.model.vo.TipComment;
 import com.project.petpal.community.model.vo.TipImg;
 import com.project.petpal.member.model.vo.Member;
 
@@ -419,4 +422,44 @@ public class TipController {
 		return "";
 	}
 	
+	//노하우 댓글 불러오기
+	@RequestMapping("/tip/tipComment.do")
+	public String selectComment(String tipNo,String writeMember,
+			@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerPage",defaultValue="5") int numPerPage,
+			Model m) {
+		List<TipComment> cList=service.selectComment(tipNo,cPage,numPerPage);
+		int count=service.countComment(tipNo);
+		int total=service.countCommentPage(tipNo);
+		String pageBar=new AjaxPageBarFactory().getPageBar(total, cPage, numPerPage, "tipComment.do", null, "#commentContainer", null, "commentAjax",tipNo,writeMember,null);
+		m.addAttribute("count",count);
+		m.addAttribute("pageBar",pageBar);
+		m.addAttribute("cList",cList);	
+		m.addAttribute("writeMember",writeMember);
+		return "community/communityAjax/tipComment";
+	}
+	
+	//노하우 댓글 작성
+	@RequestMapping("/tip/commentWrite.do")
+	@ResponseBody
+	public Boolean insertComment(TipComment tc) {
+		int result=service.insertComment(tc);
+		return result>0?true:false;
+	}
+	
+	//노하우 댓글 삭제 → 댓글 상태 D로 변경
+	@RequestMapping("/tip/commentDelete.do")
+	@ResponseBody
+	public Boolean commentDelete(String tipCommentNo) {
+		int result=service.commentDelete(tipCommentNo);
+		return result>0?true:false;
+	}
+	
+	//노하우 대댓글 삭제 
+	@RequestMapping("/tip/comment2Delete.do")
+	@ResponseBody
+	public Boolean comment2Delete(String tipCommentNo) {
+		int result=service.comment2Delete(tipCommentNo);
+		return result>0?true:false;
+	}
 }

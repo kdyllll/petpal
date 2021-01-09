@@ -3,8 +3,10 @@ package com.project.petpal.community.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.project.petpal.community.model.vo.DailyComment;
 import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.community.model.vo.Tip;
+import com.project.petpal.community.model.vo.TipComment;
 import com.project.petpal.community.model.vo.TipImg;
 
 public interface TipService {
@@ -29,4 +31,10 @@ public interface TipService {
 	List<Hashtag> selectHashList(String tipNo);
 	int totalTipCount();
 	List<Map> selectFollowingList(String memberNo);
+	List<TipComment> selectComment(String tipNo,int cPage,int numPerPage);
+	int countComment(String tipNo);
+	int countCommentPage(String tipNo);
+	int insertComment(TipComment tc);
+	int commentDelete(String tipCommentNo);
+	int comment2Delete(String tipCommentNo);
 }

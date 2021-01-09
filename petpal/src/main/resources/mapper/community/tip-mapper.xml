@@ -84,4 +84,23 @@
 	<select id="totalTipCount" resultType="_int">
 		SELECT COUNT(*) FROM TIP JOIN TIPIMG USING(TIPNO) JOIN MEMBER USING(MEMBERNO) WHERE MAINIMG IS NOT NULL
 	</select>
+	<select id="selectComment" parameterType="string" resultType="tComment">
+		SELECT TIPNO,TIPCOMMENTNO,COMMENTLEVEL,MEMBERNO,IMG,NICKNAME,TIPCOMMENT,WRITEDATE,STATUS FROM TIPCOMMENT LEFT JOIN MEMBER USING(MEMBERNO) WHERE TIPNO=#{tipNo}
+		START WITH COMMENTLEVEL=1 CONNECT BY PRIOR TIPCOMMENTNO=COMMENTREF ORDER SIBLINGS BY WRITEDATE DESC
+	</select>
+	<select id="countComment" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM TIPCOMMENT WHERE TIPNO=#{tipNo} AND STATUS='E'
+	</select>
+	<select id="countCommentPage" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM TIPCOMMENT WHERE TIPNO=#{tipNo}
+	</select>
+	<insert id="insertComment" parameterType="tComment">
+  		INSERT INTO TIPCOMMENT VALUES(SEQ_TIPCOMMENTNO.NEXTVAL,#{tipNo},#{memberNo},#{commentLevel},#{tipComment},#{commentRef},default,default)
+  	</insert>
+  	<update id="commentDelete" parameterType="string">
+  		UPDATE TIPCOMMENT SET STATUS='D' WHERE TIPCOMMENTNO=#{tipCommentNo} AND (SELECT COUNT(*) FROM TIPCOMMENT WHERE COMMENTREF=#{tipCommentNo})>0
+  	</update>
+  	<delete id="comment2Delete" parameterType="string">
+  		DELETE FROM TIPCOMMENT WHERE TIPCOMMENTNO=#{tipCommentNo}
+  	</delete>
 </mapper>

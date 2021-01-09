@@ -7,8 +7,10 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.project.petpal.community.model.vo.DailyComment;
 import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.community.model.vo.Tip;
+import com.project.petpal.community.model.vo.TipComment;
 import com.project.petpal.community.model.vo.TipImg;
 
 @Repository
@@ -147,5 +149,41 @@ public class TipDaoImpl implements TipDao {
 	public List<Map> selectFollowingList(SqlSession session, String memberNo) {
 		// TODO Auto-generated method stub
 		return session.selectList("follow.selectFollowing", memberNo);
+	}
+	
+	@Override
+	public List<TipComment> selectComment(SqlSession session, String tipNo, int cPage, int numPerPage) {
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("tip.selectComment",tipNo,rb);
+	}
+
+	@Override
+	public int countComment(SqlSession session, String tipNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("tip.countComment",tipNo);
+	}
+	
+	@Override
+	public int countCommentPage(SqlSession session, String tipNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("tip.countCommentPage",tipNo);
+	}
+
+	@Override
+	public int insertComment(SqlSession session, TipComment tc) {
+		// TODO Auto-generated method stub
+		return session.insert("tip.insertComment",tc);
+	}
+
+	@Override
+	public int commentDelete(SqlSession session, String tipCommentNo) {
+		// TODO Auto-generated method stub
+		return session.update("tip.commentDelete",tipCommentNo);
+	}
+
+	@Override
+	public int comment2Delete(SqlSession session, String tipCommentNo) {
+		// TODO Auto-generated method stub
+		return session.delete("tip.comment2Delete",tipCommentNo);
 	}
 }
