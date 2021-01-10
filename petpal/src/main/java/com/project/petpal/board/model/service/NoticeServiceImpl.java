@@ -37,8 +37,8 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public List<Map> noticeList() {
-		return dao.noticeList(session);
+	public List<Map> noticeList(int cPage, int numPerPage) {
+		return dao.noticeList(session, cPage, numPerPage);
 	}
 
 	@Override
@@ -78,5 +78,11 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public int updateContent(NoticeImg ni) {
 		return dao.updateContent(session, ni);
+	}
+
+	@Override
+	public int totalNoticeCount() {
+		// TODO Auto-generated method stub
+		return dao.totalNoticeCount(session);
 	}
 }

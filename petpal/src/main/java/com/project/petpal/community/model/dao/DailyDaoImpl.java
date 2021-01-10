@@ -249,6 +249,12 @@ public class DailyDaoImpl implements DailyDao {
 		return session.selectList("daily.selectDailyLike", memberNo);
 	}
 
+	@Override
+	public List<Map> selectFollowingList(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("follow.selectFollowing", memberNo);
+	}
+
 	
 	
 

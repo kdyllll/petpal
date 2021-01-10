@@ -120,7 +120,7 @@
 			<c:if test="${c.STOCK != 0}">
 				count = ${c.COUNT};
 			</c:if>
-     		price = ${c.PRICE};
+     		price = ${c.PRICESALE};
      		totalProduct += count * price;
      		$('.totalProduct').text(totalProduct);
      		$('.totalPrice').text(totalProduct);
@@ -432,12 +432,12 @@
 			                                <input type="hidden" id="stock" name="stock" value="${c.STOCK }">
 			                             </div>
 				                             <c:if test="${c.STOCK==0 }">
-												<input type="hidden" name="price" value="${c.PRICE}">
+												<input type="hidden" name="price" value="${c.PRICESALE}">
 			                             		<span class="price ml-auto">0원</span>
 											 </c:if>   
 				                             <c:if test="${c.STOCK!=0 }">
-				                                <input type="hidden" name="price" value="${c.PRICE}">
-			                             		<span class="price ml-auto"><c:out value="${c.COUNT * c.PRICE}"/>원</span>
+				                                <input type="hidden" name="price" value="${c.PRICESALE}">
+			                             		<span class="price ml-auto"><c:out value="${c.COUNT * c.PRICESALE}"/>원</span>
 											</c:if>
 				                             <div id="preview"></div>
 				                    </div>

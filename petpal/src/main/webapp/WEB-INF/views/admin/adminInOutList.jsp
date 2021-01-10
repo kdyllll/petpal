@@ -48,8 +48,8 @@
 					</div>
 					<div class="form-check form-check-inline">
 						<input class="form-check-input" name="status" type="radio"
-							id="productOut" value="" ${ioStatus==null  ? "checked":""}> <label
-							class="form-check-label" for="productOut">전체</label>
+							id="productAll" value="" ${ioStatus==null  ? "checked":""}> <label
+							class="form-check-label" for="productAll">전체</label>
 					</div>
 				</form>
 

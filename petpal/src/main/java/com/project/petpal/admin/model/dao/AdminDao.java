@@ -51,4 +51,6 @@ public interface AdminDao {
 	int claimTotalCount(SqlSession session);
 	int orderTotalCount(SqlSession session);
 	int mTotalCount(SqlSession session);
+	int orderAccept(SqlSession session, String paymentNo);
+	int orderDetailAccept(SqlSession session, String paymentNo);
 }

@@ -107,7 +107,45 @@
 																	value="${d.NICKNAME }" /></strong></span></a> <span><strong>
 															· </strong></span> <span><button
 															class="btn btn-link text-point p-0 align-top">
-															<strong> 팔로우</strong>
+															
+															<c:set var="flag" value="false" />
+															<c:if test="${not empty loginMember }">
+																<c:if test="${not empty following }">
+																	<c:forEach var = "f" items="${following }">
+																		<c:if test="${f.WRITERNO eq d.MEMBERNO }">
+																			<c:set var="flag" value="true" />
+																		</c:if>
+																	</c:forEach>
+																</c:if>
+															</c:if>
+															
+															<c:if test="${empty loginMember }">
+																<strong onclick="follow(event);"> 팔로우</strong>
+															</c:if>
+															
+															<c:choose>
+																<c:when test="${!empty loginMember }">
+																	<c:choose>
+																		<c:when test="${loginMember.memberNo eq d.MEMBERNO }">
+																			<strong> 작성자</strong>
+																		</c:when>
+																		<c:when test="${loginMember.memberNo ne d.MEMBERNO }">
+																			<c:choose>
+																				<c:when test="${flag eq false }">
+																					<strong onclick="follow(event);"> 팔로우</strong>
+																					<input type="hidden" value="${d.MEMBERNO }">
+																				</c:when>
+																				<c:when test="${flag eq true }">
+																					<strong class="text-muted" onclick="follow(event);"> 팔로잉</strong>
+																					<input type="hidden" value="${d.MEMBERNO }">
+																				</c:when>
+																			</c:choose>
+																		</c:when>
+																	</c:choose>
+																</c:when>
+															</c:choose>
+															
+															
 														</button></span>
 													<p class="ml-1" style="font-size: 12px;">
 														<c:out value="${d.INFO }" />
@@ -314,5 +352,41 @@
 			});
 		}
 	})
+	//로그인 모달
+		function fn_loginCheck(){
+			$.ajax({
+				url: "${path}/login/moveLogin.do",
+				dataType:"html",
+				success:(data) => {
+					$(".pdtModal").html(data);	
+	         		$('div.modal').modal(); 
+				}
+			});
+		}
+	//팔로우
+	 	function follow(event){
+		let loginMember=$(".loginMember").val();
+		if(loginMember!=""){
+			let writerNo = $(event.target).next().val();
+ 	 		$.ajax({
+ 	 			async: false,
+ 	 			url: "${path}/user/following.do",
+ 	 			data: {writerNo : writerNo},
+ 	 			success:(data) => {
+ 	 				if(data==10){
+ 	 					location.reload();
+ 	 				}else if(data==20){
+ 	 					location.reload();
+ 	 				}
+ 	 				location.reload();
+ 	 			},error:function(request, status, error){
+ 	 				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+ 	 			}
+ 	 		});
+		}else{ //로그인 안되어 있으면 로그인 모달 띄우기
+			fn_loginCheck();
+		};
+ 	};
+ 	
 </script>
 </html>

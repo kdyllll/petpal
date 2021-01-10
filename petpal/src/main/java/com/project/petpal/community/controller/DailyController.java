@@ -79,7 +79,19 @@ public class DailyController {
 			List<String> like = service.selectDailyLike(mem.getMemberNo());
 			System.out.println(like);
 			m.addAttribute("like", like);
-		}		
+		}
+		
+		
+		//팔로우 검사
+		Member loginMember=(Member)session.getAttribute("loginMember");
+		if(loginMember != null) {
+			String memberNo = loginMember.getMemberNo();
+			List<Map> followingList = service.selectFollowingList(memberNo);
+			m.addAttribute("following", followingList);
+		}
+		
+		
+		
 		//좋아요 수
 		//좋아요 리스트(하트켜기용)
 		//댓글 수 보내야 함

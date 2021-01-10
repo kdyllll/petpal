@@ -31,7 +31,9 @@
 		<typeAlias type="com.project.petpal.community.model.vo.Hashtag" alias="hashtag"/>
 		<typeAlias type="com.project.petpal.community.model.vo.PlaceComment" alias="placeComment"/>
 		<typeAlias type="com.project.petpal.community.model.vo.DailyComment" alias="dComment"/>
+		<typeAlias type="com.project.petpal.community.model.vo.TipComment" alias="tComment"/>
 		<typeAlias type="com.project.petpal.member.model.vo.Follow" alias="follow"/>
+		<typeAlias type="com.project.petpal.community.model.vo.FindComment" alias="findComment"/>
 	</typeAliases>
 </configuration>
 
