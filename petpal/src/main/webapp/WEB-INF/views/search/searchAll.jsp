@@ -15,15 +15,16 @@
 			<div class="container">
 
 				<h4 class="font-weight-bold mb-5">
-					검색어에 대한 통합검색 검색 결과<span class="text-info">&nbsp; 1,591개</span>
+					<c:out value="'${keyword }'"/>에 대한 통합검색 검색 결과<span class="text-info">&nbsp; <c:out value="${total }"/>개</span>
 				</h4>
 				<div class="row mb-5">
 					<div class="col-12 d-flex justify-content-between mt-5">
 						<h5 class="font-weight-bold ">
-							스토어<span class="text-info">&nbsp;100</span>
+							스토어<span class="text-info">&nbsp;<c:out value="${storeCount }"/></span>
 						</h5>
 						<a href="#" class="d-none d-md-block">더보기</a>
 					</div>
+					<c:if test="${not empty pList }">
 					<div class="col-lg-3 col-md-4 col-sm-6">
 						<a href="#"> <img class="card-img-top"
 							src="${path }/resources/images/common3.jpg" alt="">
@@ -37,6 +38,7 @@
 							</div>
 						</a>
 					</div>
+					</c:if>
 					<div class="col-lg-3 col-md-4 col-sm-6">
 						<a href="#"> <img class="card-img-top" src="sea)연어.png" alt="">
 							<h4 class="text-black" style="color: black;">상품명</h4>

@@ -13,20 +13,26 @@ import com.project.petpal.store.model.vo.Product;
 public class SearchDaoImpl implements SearchDao{
 
 	@Override
-	public List<Product> searchProduct(SqlSession session, Map<String,String[]> key) {
-		for(String a:key.get("keywords")) {
-			System.out.println(a);
-		}
-		//return session.selectList("store.searchProduct");
-		return new ArrayList<Product>();
+	public List<Product> searchProduct(SqlSession session,String[] keywords) {
+		return session.selectList("store.searchProduct",keywords);
 	}
 
 	@Override
-	public List<Product> aProduct(SqlSession session, String[] apple) {
-		// TODO Auto-generated method stub
-		List<Product> list=session.selectList("store.aProduct",apple);
-		System.out.println("list"+list);
-		return list;
+	public List<Product> searchSoldOutList(SqlSession session, String[] keywords) {
+		return session.selectList("store.searchSoldOutList",keywords);
 	}
+
+	@Override
+	public int searchProductCount(SqlSession session, String[] keywords) {
+		// TODO Auto-generated method stub
+		return session.selectOne("store.searchProductCount",keywords);
+	}
+
+	@Override
+	public int searchSoldOutProductCount(SqlSession session, String[] keywords) {
+		// TODO Auto-generated method stub
+		return session.selectOne("store.searchSoldOutProductCount",keywords);
+	}
+
 
 }

@@ -107,7 +107,7 @@ public class TipController {
 			for(String l : like) {
 				if(l.equals(tipNo)) {
 					String tLike = l;
-					model.addAttribute("like", tLike);					
+					model.addAttribute("like", tLike);	
 				}
 			}
 		}
@@ -120,6 +120,8 @@ public class TipController {
 			map.put("hashList", hashList);
 		}
 		
+		int likeCount = service.tipLikeCount(tipNo);
+		int commentCount = service.countCommentPage(tipNo);
 		
 		List<Map> tip = service.tipMainList(tipNo);
 		String writer = (String) tip.get(0).get("MEMBERNO");
@@ -128,6 +130,9 @@ public class TipController {
 		mv.addObject("imgList",service.tipDetail(tipNo));
 		mv.addObject("memberNo", memberNo);
 		mv.addObject("writer", writer);
+		mv.addObject("likeCount", likeCount);
+		mv.addObject("commentCount", commentCount);
+		
 		mv.addObject("loc", "/community/tipDetail.do");
 		
 		return mv;
@@ -460,5 +465,21 @@ public class TipController {
 	public Boolean comment2Delete(String tipCommentNo) {
 		int result=service.comment2Delete(tipCommentNo);
 		return result>0?true:false;
+	}
+	
+	@RequestMapping("/tip/likeCount.do")
+	@ResponseBody
+	public int likeCount(String tipNo) {
+		int likeCount = service.tipLikeCount(tipNo);
+		
+		return likeCount;
+	}
+	
+	@RequestMapping("/tip/commentCount.do")
+	@ResponseBody
+	public int commentCount(String tipNo) {
+		int commentCount = service.countCommentPage(tipNo);
+		
+		return commentCount;
 	}
 }
