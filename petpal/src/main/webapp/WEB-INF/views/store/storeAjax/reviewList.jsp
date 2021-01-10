@@ -21,7 +21,7 @@
            <article class="px-4 mb-3 pb-3 border-bottom">
              <div class="pl-2 d-flex justify-content-between">
               <div class="row">
-                <a href="" class="rounded-circle pr-3">
+                <a href="javascript:fn_rvPic(<%=r.getImg() %>)" class="rounded-circle pr-3">
                   <img src="${path }/resources/upload/member/profile/<%=r.getImg() %>" width="30px;">
                 </a>                  
                 <div style="font-size: 12px;">
@@ -178,4 +178,32 @@ $(".reviewEdit").on("click",e=>{
 		});       	
 });   
 
+//리뷰 이미지 클릭하면 크게
+function fn_rvPic(filename){
+	var pic=`
+		<div class="modal fade" id="picModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog  modal-dialog-centered">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title pl-3" id="exampleModalLabel">리뷰 사진</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      
+		      <div class="modal-body offset-1 col-10 pb-0 mt-2 mb-4">
+		       <div class="rounded">
+		       		<img src="${path }/resources/upload/member/profile/"`+filename+` width="100%"> 
+		        </div> 
+		         
+		       </div>
+
+		     </div>
+		   </div>
+		 </div>  
+		 `;
+	$(".pdtModal").html(pic);
+	$('#picModal').modal();
+	
+}
 </script>

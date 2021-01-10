@@ -13,21 +13,7 @@
       background: rgba(255, 255, 255, 0.8);
       z-index: 500;
     }
-/*     .bubble:after {
-      bottom: 100%;
-      left: 50%;
-      border: solid transparent;
-      content: "";
-      height: 0;
-      width: 0;
-      position: absolute;
-      pointer-events: none;
-      border-color: rgba(209, 209, 209, 0);
-      border-bottom-color:rgba(255, 255, 255, 0.8);
-      border-width: 5px;
-      margin-left: -5px;
-    }
-       */
+
     pre{
      font-family: 'NanumSquare', sans-serif !important;
      white-space: pre-wrap; 
@@ -150,7 +136,7 @@
 															</button>
 													</c:if>
 												
-													<span><c:out value="${likeCnt }"/></span>
+													<span class="likeCnt"><c:out value="${likeCnt }"/></span>
 							                        <span class="ml-3 mr-2"> 
 							                       		<a href="#commentContainer" >
 								                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chat" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -158,7 +144,7 @@
 					                                	</svg>
 							                            </a>
 							                        </span>
-							                        <span><c:out value="${commentCnt }"/></span>
+							                        <span class="commentCnt"><c:out value="${commentCnt }"/></span>
 				                      		   </div>
 				                    		 </div> <!-- row d-flex -->
 				                    		 <div class="ml-3 my-2">
@@ -202,9 +188,7 @@
 								</c:forEach>
 								</div><!-- imgCon -->
 				                 <!-- 댓글 -->
-				                 <div id="commentContainer">
-
-	               			</div>
+				                 <div id="commentContainer"></div>
 
 	        		</div><!-- container title -->
 	         	</div><!-- col-lg-9 sm-12 -->
@@ -238,7 +222,7 @@
 								</button>
 						</c:if>
 						
-							<span><c:out value="${likeCnt }"/></span>
+							<span class="likeCnt"><c:out value="${likeCnt }"/></span>
 						</div>
 						<div class="d-flex align-items-center ml-2">
 							<a href="#commentContainer" class="ml-3 mr-2">
@@ -250,7 +234,7 @@
 	                        	</svg>
 							
 							</a>
-							<span><c:out value="${commentCnt }"/></span>
+							<span class="commentCnt"><c:out value="${commentCnt }"/></span>
 						</div>
 					</div>
 		               <div>
@@ -459,15 +443,17 @@ $(document).on("click",".comment2Delete",e=>{
 $(".binHeart").on("click" , e => {
 	if(loginMember==""){//로그인 안되어있다면
 		loginModal();
-
-	}else {//댓글 내용이 없으면
+	}else {
 		$(e.target).parent().addClass("d-none");
 		$(e.target).parent().next().removeClass("d-none");
-		$.ajax({
+		$.ajax({ //좋아요 하기
 	        url:"${path}/daily/insertLike.do",
 	        data:{dailyNo : dailyNo},
 	        success: (data) => {
-	       	 console.log(data); 
+	       	 var likeCnt=parseInt($(".likeCnt").text());
+	       	 console.log(likeCnt);
+	       	 var newCnt=likeCnt+1;
+	       	 $(".likeCnt").text(newCnt);
 	        }
 		})
 	}
@@ -477,14 +463,17 @@ $(".binHeart").on("click" , e => {
 $(".fillHeart").on("click" , e => {
 	if(loginMember==""){//로그인 안되어있다면
 		loginModal();
-	}else {//댓글 내용이 없으면
+	}else {
 		$(e.target).parent().parent().addClass("d-none");
 		$(e.target).parent().parent().prev().removeClass("d-none");
-		$.ajax({
+		$.ajax({//좋아요 풀기
 	        url:"${path}/daily/deleteLike.do",
 	        data:{dailyNo : dailyNo},
 	        success: (data) => {
-	       	 console.log(data); 
+	        	var likeCnt=parseInt($(".likeCnt").text());
+		       	console.log(likeCnt);
+		       	var newCnt=likeCnt-1;
+		       	$(".likeCnt").text(newCnt);
 	        }
 	     })
 	}
