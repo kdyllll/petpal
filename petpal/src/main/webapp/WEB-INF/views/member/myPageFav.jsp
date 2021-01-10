@@ -13,7 +13,7 @@
 	<jsp:param name="mpNav" value="fav"/>
 </jsp:include>
 <input type="hidden" id="memberNo" value="${loginMember.memberNo }"/>
-<div class="row py-3" id="container">
+<div class="row py-3" style="min-height:100vh;" id="container">
 <c:if test="${empty list }">
 	<div class="col-12 text-center">
 		<p>관심상품이 없습니다.</p>
