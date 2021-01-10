@@ -170,9 +170,10 @@
 
 							</c:otherwise>
 						</c:choose>
-						<c:if test="${s.DELIVERYSTATUS eq '배송중비중' || s.PAYSTATUS eq '결제완료' }">
-							<button type="button" class="ml-2 btn btn-outline-danger btn-sm " style="font-size: 12px;">주문취소</button>
-							<input type="hidden" name="detailNo" value="${s.DETAILNO }">
+						<c:if test="${s.DELIVERYSTATUS eq '배송중비중' || s.DETAILSTATUS eq '결제' }">
+							<button type="button" class="ml-2 btn btn-outline-danger btn-sm orderCancelBtn" style="font-size: 12px;">주문취소</button>
+							<input type="hidden" name="detailNo" value="${s.DETAILNO }"/>
+							<input type="hidden" name="paymentNo" value="${s.PAYMENTNO }" />
 						</c:if>
 					</div>
 				</div>
@@ -360,6 +361,22 @@
 			 }
 		 });
 	 }
+	
+	//주문취소 ajax	
+	$(".orderCancelBtn").on("click", e => {
+		$.ajax({
+			url : "${path}/admin/orderCancelEnd.do",
+			data : {detailNo : $(e.target).next().val() , paymentNo : $(e.target).next().next().val() }, 
+			success : data => {
+				if(data == true) {
+					alert("주문취소완료");
+					location.reload();
+				} else {
+					alert("주문취소실패")
+				}
+			}
+		})
+	})
  })
  
  

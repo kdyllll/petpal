@@ -148,9 +148,13 @@ public class AdminServiceImple implements AdminService {
 	}
 
 	@Override
-	public int orderCancelOne(String detailNo) {
+	public int orderCancelOne(String detailNo,int detailCnt,String paymentNo) {
 		// TODO Auto-generated method stub
-		return dao.orderCancelOne(session, detailNo);
+		int result =  dao.orderCancelOne(session, detailNo);
+		if(detailCnt == 1) {
+			result = dao.updatePaymentStatus(session, paymentNo);
+		}
+		return result;
 	}
 
 	@Override
@@ -286,6 +290,12 @@ public class AdminServiceImple implements AdminService {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public int detailCnt(String paymentNo) {
+		// TODO Auto-generated method stub
+		return dao.detailCnt(session, paymentNo);
 	}
 
 	

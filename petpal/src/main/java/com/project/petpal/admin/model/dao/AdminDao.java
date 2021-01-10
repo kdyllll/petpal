@@ -54,4 +54,5 @@ public interface AdminDao {
 	int orderAccept(SqlSession session, String paymentNo);
 	int orderDetailAccept(SqlSession session, String paymentNo);
 	int updatePoint(SqlSession session, Map m);
+	int detailCnt(SqlSession session, String paymentNo);
 }

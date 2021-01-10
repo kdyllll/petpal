@@ -29,6 +29,7 @@ public class AdminPayAjaxController {
 		List<Map> pdList = service.selectPayDetail(paymentNo);
 		Map pList = service.selectPaymentOne(paymentNo);
 		List<Map> status = service.payDetailStatus(paymentNo);
+		
 		String path ="admin/adminAjax/payCancel";
 		if(status.isEmpty()) {
 			service.updatePaymentStatus(paymentNo);
@@ -46,9 +47,10 @@ public class AdminPayAjaxController {
 	
 	@RequestMapping("/admin/orderCancelEnd.do")
 	@ResponseBody
-	public Boolean orderCancelEnd(String detailNo, Model m) {
+	public Boolean orderCancelEnd(String detailNo, Model m,String paymentNo) {
 		System.out.println(detailNo);
-		int result = service.orderCancelOne(detailNo);
+		int detailCnt = service.detailCnt(paymentNo);
+		int result = service.orderCancelOne(detailNo,detailCnt,paymentNo);
 
 		return result>0 ? true : false;
 	}
