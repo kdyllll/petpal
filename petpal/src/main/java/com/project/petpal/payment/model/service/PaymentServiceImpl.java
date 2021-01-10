@@ -21,12 +21,12 @@ public class PaymentServiceImpl implements PaymentService {
 	private SqlSession session;
 
 	@Override
-	public int insertPayment(Payment p, int[] cnt, String[] stockNo) {
+	public int insertPayment(Payment p, int[] cnt, String[] stockNo, String payDetailStatus) {
 		int result = dao.insertPayment(session, p);
 
 		if (result > 0) {
 			for (int i = 0; i < cnt.length; i++) {
-				PayDetail pd = PayDetail.builder().paymentNo(p.getPaymentNo()).stockNo(stockNo[i]).cnt(cnt[i]).build();
+				PayDetail pd = PayDetail.builder().paymentNo(p.getPaymentNo()).stockNo(stockNo[i]).cnt(cnt[i]).detailStatus(payDetailStatus).build();
 				result = dao.insertPayDetail(session, pd);
 			}
 		}
