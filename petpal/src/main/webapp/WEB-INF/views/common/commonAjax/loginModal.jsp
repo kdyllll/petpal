@@ -17,7 +17,7 @@
         </div>
         <div class="modal-body offset-1 col-10">
           <div class="row d-flex justify-content-center">
-            <div class="form-signin">
+            <div class="col-12 px-5">
                 <div class="text-center mb-4">
                   <h1 class="h3 mb-3 font-weight-normal">로그인이 필요합니다</h1>                
                 </div>
