@@ -34,4 +34,7 @@
 	<select id="selectProduct" parameterType="string" resultType="map">
 		SELECT * FROM STOCK JOIN PRODUCT USING(PRODUCTNO) WHERE STOCKNO = #{stockNo}
 	</select>
+	<update id="updateMemberPoint" parameterType="hashMap">
+		UPDATE MEMBER SET POINT=#{point} WHERE MEMBERNO = #{memberNo}
+	</update>
 </mapper>

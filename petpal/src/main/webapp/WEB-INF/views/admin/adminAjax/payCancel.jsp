@@ -39,17 +39,30 @@
 									<c:when test="${pd.DETAILSTATUS eq '결제' }">
 										<input type="submit"
 											class="orderCancelBtn btn btn-outline-danger btn-sm mb-3 mt-2 " value="주문취소" />
+											<input type="hidden" name="paymentNo" value="${pd.PAYMENTNO }">
 									</c:when>
 									<c:otherwise>
 										<p class="text-muted">(취소완료)</p>
 									</c:otherwise>
+									
 								</c:choose>
 
 								<br />
 								<script>
 									$(function(){
-										$(".orderCancelBtn").on("click", function(){
-											$(".orderCancelFrm").attr("action","${path}/admin/orderCancelEnd.do").submit();
+										$(".orderCancelBtn").on("click", e => {
+											$.ajax({
+												url : "${path}/admin/orderCancelEnd.do",
+												data : {detailNo : $(e.target).prev().val(), paymentNo : $(e.target).next().val() }, 
+												success : data => {
+													if(data == true) {
+														alert("주문취소성공");
+														location.reload();
+													} else {
+														alert("주문취소실패")
+													}
+												}
+											})
 										})
 									})
 								

@@ -43,11 +43,19 @@
 					<c:out value="${claim.CONTENT }" />
 				</p>
 				<div class="mt-4">
-					<form id="detailFrm">
-					<button type="button" class="claimDeleteBtn btn btn-sm btn-outline-danger">삭제하기</button>
-					<input type="hidden" name="claimNo" value="${claim.CLAIMNO }">
-					<button type="button" class="claimAcceptBtn btn btn-sm btn-outline-secondary">신고처리하기</button>
-					</form>
+					<c:choose>
+						<c:when test="${claim.STATUS eq 'N' }">
+							<form id="detailFrm">
+							<button type="button" class="claimDeleteBtn btn btn-sm btn-outline-danger">삭제하기</button>
+							<input type="hidden" name="claimNo" value="${claim.CLAIMNO }">
+							<button type="button" class="claimAcceptBtn btn btn-sm btn-outline-secondary">신고처리하기</button>
+							</form>
+						</c:when>
+						<c:otherwise>
+							<p class="text-danger">신고처리완료</p>
+						</c:otherwise>
+					</c:choose>
+					
 				</div>
 			</div>
 			<div class="modal-footer ">

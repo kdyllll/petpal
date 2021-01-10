@@ -222,7 +222,7 @@ public class PaymentController {
 				payDetailStatus = "대기";
 			}
 			
-			Payment p = Payment.builder().memberNo(memberNo).receiverName(receiverName).loc(loc).receiverTel(receiverTel).pointPlus(pointPlus).pointMinus(pointMinus).name(name).email(email).tel(tel).totalPrice(totalPrice).payKind(payKind).payStatus(payStatus).orderNo(orderNo).refundName(refundName).refundBank(refundBank).refundAccount(refundAccount).build();
+			Payment p = Payment.builder().memberNo(memberNo).receiverName(receiverName).loc(loc).receiverTel(receiverTel).pointPlus(pointPlus).pointMinus(pointMinus).name(name).email(email).tel(tel).totalPrice(totalPrice).payKind(payKind).payStatus(payStatus).orderNo(orderNo).refundName(refundName).refundBank(refundBank).refundAccount(refundAccount).point(point).build();
 			
 			//payment테이블에 insert
 			int result = service.insertPayment(p, cnt, stockNo, payDetailStatus);

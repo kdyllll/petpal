@@ -20,13 +20,40 @@
 	<div class="container-fluid">
 		<div class="row">
 			<jsp:include page="/WEB-INF/views/common/adminNav.jsp" >
-			<jsp:param name="nav" value="adminOrder" />
+			<jsp:param name="nav" value="refundAndChange" />
 			</jsp:include>
 			<section role="main"
 				class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-5 "
 				style="height: 100vh; overflow-y: auto;">
-				<h2 class="my-3">주문내역</h2>
+				<h2 class="my-3">환불/교환</h2>
 				<form id="search-userEmail" method="post" class="row align-items-center orderFrm">
+					<div class="input-group mb-3  col-lg-5 ">
+							<div class="form-check form-check-inline ">
+								<input class="form-check-input" name="status" type="radio"
+									 value="결제완료" id="yes" ${status != null && status.equals("결제완료") ? "checked":""}> <label
+									class="form-check-label" for="yes">환불(대기)</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" name="status" type="radio"
+									id="ing" value="취소완료" ${status != null && status.equals("취소완료") ? "checked":""}> <label
+									class="form-check-label" for="ing">환불(완료)</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" name="status" type="radio"
+									value="결제대기" id="deny" ${status != null && status.equals("결제대기") ? "checked":""}> <label
+									class="form-check-label" for="deny">교환(대기)</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" name="status" type="radio"
+									 value="전체" id="com" ${status == null ? "checked":""}> <label
+									class="form-check-label" for="com">교환(완료)</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" name="status" type="radio"
+									 value="전체" id="com" ${status == null ? "checked":""}> <label
+									class="form-check-label" for="com">전체</label>
+							</div>
+						</div>
 					<div class="mb-3  col-lg-2">
 						<label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
 						<select class="custom-select mr-sm-2" name="searchType" id="searchType">
@@ -45,28 +72,7 @@
 								>Button</button>
 						</div>
 					</div>
-					<div class="input-group mb-3  col-lg-5 ">
-						<div class="form-check form-check-inline ">
-							<input class="form-check-input" name="status" type="radio"
-								 value="결제완료" id="yes" ${status != null && status.equals("결제완료") ? "checked":""}> <label
-								class="form-check-label" for="yes">결제완료</label>
-						</div>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" name="status" type="radio"
-								id="ing" value="취소완료" ${status != null && status.equals("취소완료") ? "checked":""}> <label
-								class="form-check-label" for="ing">취소완료</label>
-						</div>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" name="status" type="radio"
-								value="결제대기" id="deny" ${status != null && status.equals("결제대기") ? "checked":""}> <label
-								class="form-check-label" for="deny">결제대기</label>
-						</div>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" name="status" type="radio"
-								 value="전체" id="com" ${status == null ? "checked":""}> <label
-								class="form-check-label" for="com">전체</label>
-						</div>
-					</div>
+					
 				</form>
 
 				<div class="table-responsive" style="min-height: 80vh;">
@@ -86,7 +92,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:if test="${empty oList }">주문정보가 없습니다.</c:if>
+							<c:if test="${empty oList }">환불/교환 정보가 없습니다.</c:if>
 							<c:if test="${not empty oList }">
 							<c:forEach var="o" items="${oList }">
 							

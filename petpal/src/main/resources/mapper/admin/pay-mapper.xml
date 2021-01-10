@@ -31,4 +31,10 @@
 	<update id="orderDetailAccept" parameterType="string">
 		UPDATE PAYDETAIL SET DETAILSTATUS='결제' WHERE PAYMENTNO=#{paymentNo}
 	</update>
+	<update id="updatePoint" parameterType="map">
+		UPDATE MEMBER SET POINT = POINT + ${pp} - ${pm} WHERE MEMBERNO=#{memberNo}
+	</update>
+	<select id="detailCnt" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM PAYDETAIL WHERE PAYMENTNO=#{paymentNo} AND DETAILSTATUS ='결제'
+	</select>
 </mapper>

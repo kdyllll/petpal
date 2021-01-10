@@ -148,6 +148,7 @@ public class MemberController {
 	  System.out.println(payDelCnt+"."+deliveryEndCnt+"."+deliveryStartCnt+"."+pay);
 	  
 	  List<Map> point = service.selectPointList(mem.getMemberNo());
+	  
 	  m.addAttribute("riCnt",refundIngCnt);
 	  m.addAttribute("rCnt",refundCnt);
 	  m.addAttribute("ciCnt",changeIngCnt);
@@ -167,6 +168,7 @@ public class MemberController {
    public String myPageModify(HttpSession session, Model model) {
       Member m = (Member)session.getAttribute("loginMember");
       Member member = service.selectMember(m.getEmail());
+      System.out.println(member);
       model.addAttribute("member", member);
       return "member/myPageModify";
    }

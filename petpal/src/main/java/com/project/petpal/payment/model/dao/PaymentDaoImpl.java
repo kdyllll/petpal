@@ -67,4 +67,14 @@ public class PaymentDaoImpl implements PaymentDao {
 		return session.selectList("payment.selectProduct", stockNo);
 	}
 
+	@Override
+	public int updateMemberPoint(SqlSession session, int point, String memberNo) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		String memberPoint =  Integer.toString(point);
+		map.put("point", memberPoint);
+		map.put("memberNo", memberNo);
+		
+		return session.update("payment.updateMemberPoint", map);
+	}
+
 }

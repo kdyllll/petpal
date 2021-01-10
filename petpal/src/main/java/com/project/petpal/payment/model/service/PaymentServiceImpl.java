@@ -30,6 +30,13 @@ public class PaymentServiceImpl implements PaymentService {
 				result = dao.insertPayDetail(session, pd);
 			}
 		}
+		if(result > 0) {
+			if(p.getMemberNo()!=null) {
+				String memberNo = p.getMemberNo();
+				int point = p.getPoint();
+				result = dao.updateMemberPoint(session, point, memberNo);
+			}
+		}
 		return result;
 	}
 
