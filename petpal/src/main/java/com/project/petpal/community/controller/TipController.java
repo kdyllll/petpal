@@ -66,7 +66,6 @@ public class TipController {
 		}
 		
 		List<Map> TipList = service.tipList(cPage,numPerPage, keyword);
-		
 		int totalCount=service.totalTipCount();
 		String pageBar=new PageBarFactory().getPageBar(totalCount, cPage, numPerPage, null, null, "tipList.do");
 		
