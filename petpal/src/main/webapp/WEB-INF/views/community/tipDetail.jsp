@@ -156,7 +156,7 @@
 	                        	</svg>
 							</button>
 							<!-- 댓글 수 -->
-							<span class="commentCount"><c:out value="${countCount }"/></span>
+							<span class="commentCount"><c:out value="${commentCount }"/></span>
 						</div>
 						</div>
                      		   
@@ -434,6 +434,7 @@ function commentDelete(path,data){
 			if(data===true){
 				alert("댓글이 삭제되었습니다.");
 				commentAjax();
+				$(".commentCount").text(Number(Number($(".commentCount").html()) - 1));
 			}else{
 				alert("댓글 삭제에 실패하였습니다.");
 			}
@@ -502,6 +503,7 @@ $(document).on('click','.write',function(e) {//댓글 등록 버튼 눌렀을때
 			if(data===true){
 				alert("댓글이 등록되었습니다.");
 				commentAjax();
+				$(".commentCount").text(Number(Number($(".commentCount").html()) + 1));
 			}else{
 				alert("댓글 등록에 실패하였습니다.");
 			}
