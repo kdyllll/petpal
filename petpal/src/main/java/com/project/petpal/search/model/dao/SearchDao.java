@@ -8,6 +8,8 @@ import org.apache.ibatis.session.SqlSession;
 import com.project.petpal.store.model.vo.Product;
 
 public interface SearchDao {
-	List<Product> searchProduct(SqlSession session,Map<String,String[]> key);
-	List<Product> aProduct(SqlSession session,String[] a);
+	List<Product> searchProduct(SqlSession session,String[] keywords);
+	List<Product> searchSoldOutList(SqlSession session,String[] keywords);
+	int searchProductCount(SqlSession session,String[] keywords);
+	int searchSoldOutProductCount(SqlSession session,String[] keywords);
 }

@@ -21,13 +21,23 @@ public class SearchServiceImpl implements SearchService {
 	private SqlSession session;
 
 	@Override
-	public List<Product> searchProduct(Map<String,String[]> key) {
-		for(String a:key.get("keywords")) {
-			System.out.println(a);
-		}
-		String[] a= {"애견 안전문","강아지 댕냥쿠션"};
-		//return dao.searchProduct(session, key);
-		return dao.aProduct(session,a);
+	public List<Product> searchProduct(String[] keywords) {
+		return dao.searchProduct(session,keywords);
+	}
+
+	@Override
+	public List<Product> searchSoldOutList(String[] keywords) {
+		return dao.searchSoldOutList(session,keywords);
+	}
+
+	@Override
+	public int searchProductCount(String[] keywords) {
+		return dao.searchProductCount(session,keywords);
+	}
+
+	@Override
+	public int searchSoldOutProductCount(String[] keywords) {
+		return dao.searchSoldOutProductCount(session,keywords);
 	}
 
 

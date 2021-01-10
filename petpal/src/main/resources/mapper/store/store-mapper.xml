@@ -137,19 +137,13 @@ WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK 
 	</select>
 	<!-- 검색 상품리스트 -->
 	<select id="searchProduct" resultType="storeProduct" >
-		<!-- SELECT DISTINCT ENROLLDATE,PRODUCTNO,PRICE,SALE,PRODUCTNAME,IMGNAME,CATEGORYNO,SUBCATE FROM STOCK JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO)
+	    SELECT DISTINCT ENROLLDATE,PRODUCTNO,PRICE,SALE,PRODUCTNAME,IMGNAME,CATEGORYNO,SUBCATE FROM STOCK JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO)
 		WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO) WHERE PRICE>0 AND STOCK>0
-		AND (REGEXP_LIKE(PRODUCTNAME, -->
-		SELECT * FROM PRODUCT WHERE REGEXP_LIKE(PRODUCTNAME,'애') 
-		<!-- <foreach collection="keywords" item="word" open="'" close="'" separator="|">
-		 ${word}
-		</foreach> 
-		 )--><!-- OR REGEXP_LIKE(SUBCATE,
-		<foreach collection="keywords" item="word" open="'" close="'" separator="|">
-		 ${word}
-		</foreach>
-		) -->
-		<!-- )) GROUP BY PRODUCTNO) AND TYPE='M' -->
+		AND (REGEXP_LIKE(PRODUCTNAME,
+		<foreach collection="array" item="word" separator="||'|'||">#{word}</foreach>
+		 ) OR REGEXP_LIKE(SUBCATE,
+		<foreach collection="array" item="word" separator="||'|'||">#{word}</foreach>
+		 )) GROUP BY PRODUCTNO) AND TYPE='M' 
 	</select>
 	<insert id="insertFav" parameterType="map">
 		INSERT INTO FAV VALUES(#{productNo},#{memberNo})
@@ -187,6 +181,34 @@ WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK 
 	</select>
 	<select id="aProduct" resultType="storeProduct" >
 		SELECT * FROM PRODUCT WHERE REGEXP_LIKE(PRODUCTNAME,
-		<foreach collection="array" item="a" separator="||'|'||">${a}</foreach>) 
+		<foreach collection="array" item="a" separator="||'|'||">#{a}</foreach>
+		)
 	</select>
+	<select id="searchSoldOutList" resultType="storeProduct">
+		SELECT DISTINCT PRODUCTNO,CATEGORYNO,PRICE,SALE,PRODUCTNAME,IMGNAME FROM PRODUCT JOIN STOCK USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO)
+		WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK USING(PRODUCTNO) WHERE PRICE>0 
+		AND (REGEXP_LIKE(PRODUCTNAME,
+		<foreach collection="array" item="word" separator="||'|'||">#{word}</foreach>
+		 ) OR REGEXP_LIKE(SUBCATE,
+		<foreach collection="array" item="word" separator="||'|'||">#{word}</foreach>
+		 )) GROUP BY PRODUCTNO HAVING SUM(STOCK)=0) AND TYPE='M' 
+	</select>
+	<select id="searchProductCount" resultType="_int">
+		 SELECT COUNT(*) FROM STOCK JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO)
+		WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO) WHERE PRICE>0 AND STOCK>0
+		AND (REGEXP_LIKE(PRODUCTNAME,
+		<foreach collection="array" item="word" separator="||'|'||">#{word}</foreach>
+		 ) OR REGEXP_LIKE(SUBCATE,
+		<foreach collection="array" item="word" separator="||'|'||">#{word}</foreach>
+		 )) GROUP BY PRODUCTNO) AND TYPE='M' 
+	</select>
+	<select id="searchSoldOutProductCount" resultType="_int">
+		SELECT COUNT(*) FROM PRODUCT JOIN STOCK USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO)
+		WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK USING(PRODUCTNO) WHERE PRICE>0 
+		AND (REGEXP_LIKE(PRODUCTNAME,
+		<foreach collection="array" item="word" separator="||'|'||">#{word}</foreach>
+		 ) OR REGEXP_LIKE(SUBCATE,
+		<foreach collection="array" item="word" separator="||'|'||">#{word}</foreach>
+		 )) GROUP BY PRODUCTNO HAVING SUM(STOCK)=0) AND TYPE='M' 
+	</select> 
 </mapper>
