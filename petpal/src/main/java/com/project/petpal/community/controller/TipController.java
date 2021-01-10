@@ -84,6 +84,7 @@ public class TipController {
 			List<Map> followingList = service.selectFollowingList(no);
 			model.addAttribute("following", followingList);
 		}
+		
 		model.addAttribute("search",search);
 		model.addAttribute("list", TipList);
 		model.addAttribute("memberNo", memberNo);

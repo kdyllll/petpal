@@ -78,6 +78,8 @@
 	               	 
 	                }
 	             }) 
+	             var likeCntSpan=$(e.target).parents(".likeCon").find("span.likeCount");
+		            likeCntSpan.text(Number(Number(likeCntSpan.html()) + 1));
 			}else{ //로그인 안되어 있으면 로그인 모달 띄우기           
 				loginModal();
 			};
@@ -298,7 +300,7 @@
 
 																</c:if>
 															</c:if>
-															<span class="text-dark mx-1">0</span>
+															<span class="likeCount text-dark mx-1"><c:out value="${likeCount }"/></span>
 														</div>
 														<div class="d-flex align-items-center">
 															<button class="btn btn-link btn-sm">
