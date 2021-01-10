@@ -11,7 +11,7 @@
 	List<Review> reviewList=(List) request.getAttribute("reviewList");
 	Member loginMember=(Member)session.getAttribute("loginMember");
 %>
-
+<div class="col-12 mb-4 text-center mt-5"><p><c:out value="${totalReview eq 0?'작성된 리뷰가 없습니다.':''}"/></p></div>
   <%if(reviewList==null){ %>
           <p>작성된 리뷰가 없습니다</p>
           <!--리뷰창-->

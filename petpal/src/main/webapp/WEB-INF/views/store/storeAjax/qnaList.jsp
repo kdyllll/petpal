@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/> 
 
+<div class="col-12 mb-5 text-center mt-5"><p><c:out value="${totalQna eq 0?'작성된 문의가 없습니다.':''}"/></p></div>
 <c:forEach var="q" items="${qnaList }">
     <article class="qna border-bottom py-3">
       <div class="row d-flex justify-content-between pl-2"> 

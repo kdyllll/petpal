@@ -146,6 +146,7 @@ public class StoreAjaxController {
 		for(String s:detailNoList) {
 			stockList.add(service.selectStock(s));
 		}
+		
 		m.addAttribute("detailNoList",detailNoList);
 		m.addAttribute("stockList",stockList);
 	 
@@ -239,6 +240,7 @@ public class StoreAjaxController {
 		String pageBar=new AjaxPageBarFactory().getPageBar(totalReview, cPage, numPerPage, "reviewList.do",productNo,"#reviewCon",null,"reviewPaging",null, null,null);
 		
 		m.addAttribute("reviewList",reviews);
+		m.addAttribute("totalReview",totalReview);
 		m.addAttribute("reviewPageBar",pageBar);
 		return "store/storeAjax/reviewList";
 	}
@@ -256,6 +258,7 @@ public class StoreAjaxController {
 		//페이징
 		String pageBar=new AjaxPageBarFactory().getPageBar(totalQna, cPage, numPerPage, "qnaList.do",productNo,"#qnaCon",null,"qnaPaging",null, null,null);		
 		m.addAttribute("qnaList",qnas);
+		m.addAttribute("totalQna",totalQna);
 		m.addAttribute("qnaPageBar",pageBar);
 		return "store/storeAjax/qnaList";
 		
