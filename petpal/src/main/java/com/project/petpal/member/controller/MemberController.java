@@ -148,6 +148,7 @@ public class MemberController {
 	  System.out.println(payDelCnt+"."+deliveryEndCnt+"."+deliveryStartCnt+"."+pay);
 	  
 	  List<Map> point = service.selectPointList(mem.getMemberNo());
+	  
 	  m.addAttribute("riCnt",refundIngCnt);
 	  m.addAttribute("rCnt",refundCnt);
 	  m.addAttribute("ciCnt",changeIngCnt);
