@@ -142,10 +142,11 @@
 						<jsp:param value="tipList" name="comNav" />
 					</jsp:include>
 					<div class="form-inline container text-center mb-3">
-						<h3>테마별 노하우</h3>
+						<h3>테마별 노하우 <c:out value="${search eq 'search'?' 검색결과':'' }"/></h3>
 						<input type="hidden" class="loginMember" value="${memberNo }" />
 						<button type="button" class="btn btn-outline-secondary ml-auto writeBtn">글쓰기</button>
 					</div>
+					<c:if test="${search ne 'search' }">
 					<div class="form-inline container-xl mb-5">
 						<button type="button" class="btn btn-outline-secondary mr-2">전체</button>
 						<button type="button" class="btn btn-outline-secondary mr-2">훈련</button>
@@ -167,6 +168,7 @@
 							</div>
 						</div>
 					</div>
+					</c:if>
 					<div class="col-12">
 						<div class="row col-12">
 							<c:if test="${empty list }">

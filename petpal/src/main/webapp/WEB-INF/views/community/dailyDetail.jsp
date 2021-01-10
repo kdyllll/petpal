@@ -143,7 +143,7 @@
 				                      			<pre class="m-0"><c:out value="${daily.CONTENT }"/></pre>
 							                      <div>
 						                       		<c:forEach var="h" items="${hashList}">
-				                                    		<a href="#">#<c:out value="${h.hashContent }"/></a>				                                    	
+				                                    		<a href="${path }/community/hashSearch.do?hashtag=${h}">#<c:out value="${h.hashContent }"/></a>				                                    	
 				                                    </c:forEach>
 							                      </div>
 				                    		 </div>
@@ -265,7 +265,7 @@
 		                   <pre class="my-1 "><c:out value="${daily.CONTENT }"/></pre>
 		                   <div>
 		                     <c:forEach var="h" items="${hashList}">
-                           		<a href="#">#<c:out value="${h.hashContent }"/></a>				                                    	
+                           		<a href="${path }/community/hashSearch.do?hashtag=${h}">#<c:out value="${h.hashContent }"/></a>				                                    	
                              </c:forEach>
 		                   </div>
 		                 </div>
