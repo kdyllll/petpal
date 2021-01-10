@@ -259,4 +259,10 @@
 	<select id="selectIdCheck" parameterType="string" resultType="string">
 		SELECT EMAIL FROM MEMBER WHERE MEMBERNAME=#{name} AND PHONE=#{phone}
 	</select>
+	<select id="checkEmail" parameterType="string" resultType="_int">
+		SELECT COUNT(MEMBERNO) FROM MEMBER WHERE EMAIL=#{value} AND SNSNO IS NULL
+	</select>
+	<update id="updatePasswordMap" parameterType="map">
+		UPDATE MEMBER SET PASSWORD=#{password} WHERE SNSNO IS NULL AND EMAIL=#{email}
+	</update>
 </mapper>

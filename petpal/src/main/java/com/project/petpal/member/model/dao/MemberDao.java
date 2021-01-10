@@ -64,4 +64,6 @@ public interface MemberDao {
    List<Map> selectFollow(SqlSession session, String memberNo, String writerNo);
    int deleteFollow(SqlSession session, String memberNo, String writerNo);
    String selectIdCheck(SqlSession session, Map m);
+   int checkEmail(SqlSession session,String email);
+   int updatePasswordMap(SqlSession session,Map m);
 }

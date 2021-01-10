@@ -34,7 +34,7 @@
                   <div class="mt-3">
                     <a class="mr-5 text-dark" href="#">아이디 찾기</a>
                     <a class="mr-5 text-dark" href="#">비밀번호 재설정</a>
-                    <a class="text-dark" href="${path }/member/moveJoin.do">회원가입</a>
+                    <a class="text-dark" href="${path }/moveJoin.do">회원가입</a>
                   </div>
                 </div>
                 <button id="loginBtn" class="btn btn-lg bg-point btn-block" type="submit">로그인</button>       

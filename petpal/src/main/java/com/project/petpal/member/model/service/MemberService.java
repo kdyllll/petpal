@@ -62,4 +62,6 @@ public interface MemberService {
    List<Map> selectFollow(String memberNo, String writerNo);
    int deleteFollow(String memberNo, String writerNo);
    String selectIdCheck(Map m);
+   int checkEmail(String email);
+   int updatePasswordMap(Map m);
 }

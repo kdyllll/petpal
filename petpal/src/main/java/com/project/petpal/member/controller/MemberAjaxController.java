@@ -261,7 +261,7 @@ public class MemberAjaxController {
 	               //메일 제목
 	               msg.setSubject("PETPAL 인증 메일입니다.");
 	               //메일 내용
-	               String content="<h1>[이메일 인증번호]</h1><br><p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>";
+	               String content="<h1>[이메일 인증번호]</h1><br>";
 	               content+="<p>인증번호는 <strong>"+key+"</strong></p>";
 	               msg.setText(content,"utf-8","html");
 	               
@@ -272,7 +272,7 @@ public class MemberAjaxController {
 	               key=null;
 	           }
 	           
-	         
+	        System.out.println(key);
 	        return key;
 		 
 	 }
@@ -455,6 +455,21 @@ public class MemberAjaxController {
 			
 		}
 		return result;		
+	}
+	
+	//비밀번호찾기 모달소환
+	@RequestMapping("/movePwModal.do")
+	public String movePwModal() {
+		return "member/memberAjax/findPwModal";
+	}
+	//입력한 아이디가 존재하는 아이디인지 확인
+	@RequestMapping("/checkId.do")
+	@ResponseBody
+	public int checkId(String email) {
+		//아..... 이메일 하나로만 이제 찾아야하는데.. 계정을..
+		//sns로그인이랑 구별해서 해야겠지? //그러면 sns번호 없는 거 선택해서 그중에 이메일 있으면으로 처리하면 되나?//그래야겠다/
+		int result=service.checkEmail(email);
+		return result;
 	}
 	
 }

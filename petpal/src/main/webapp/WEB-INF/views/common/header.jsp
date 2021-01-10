@@ -47,10 +47,10 @@
                 </li>
     			<c:if test="${loginMember == null }">
                 <li class="nav-item">
-                  <a class="nav-link text-dark" href="${path }/member/moveLogin.do">로그인</a>
+                  <a class="nav-link text-dark" href="${path }/moveLogin.do">로그인</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link text-dark" href="${path }/member/moveJoin.do">회원가입</a>
+                  <a class="nav-link text-dark" href="${path }/moveJoin.do">회원가입</a>
                 </li>
                 </c:if>
                 <c:if test="${loginMember != null }">

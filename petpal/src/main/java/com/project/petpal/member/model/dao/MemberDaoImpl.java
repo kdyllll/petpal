@@ -344,6 +344,18 @@ public class MemberDaoImpl implements MemberDao {
 		// TODO Auto-generated method stub
 		return session.selectOne("member.selectIdCheck",m);
 	}
+
+	@Override
+	public int checkEmail(SqlSession session, String email) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.checkEmail",email);
+	}
+
+	@Override
+	public int updatePasswordMap(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.update("member.updatePasswordMap",m);
+	}
 	
 	
 
