@@ -71,6 +71,9 @@ WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK 
 			<if test="content != null">
 				CONTENT =#{content},
 			</if>
+			<if test="deleteStatus != null">
+				FILENAME=NULL,
+			</if>
 			STAR=#{star}
 		</set>
 		WHERE REVIEWNO=#{reviewNo}

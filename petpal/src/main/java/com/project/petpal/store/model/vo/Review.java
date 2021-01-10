@@ -24,5 +24,6 @@ public class Review {
 	private int star;
 	private String fileName;
 	private String reviewComment;
+	private String deleteStatus;
 
 }

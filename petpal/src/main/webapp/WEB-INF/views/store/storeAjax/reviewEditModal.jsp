@@ -78,6 +78,7 @@
 		        <div class="custom-file" id="thumnail">
 		          <input type="file" class="custom-file-input upload" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" accept="images/*">
 		          <label class="custom-file-label" id="fileName" for="inputGroupFile01">${review.fileName }</label>
+		          <input type="hidden" class="deleteStatus" name="deleteStatus" value="no"/>
 		        </div>
 		      </div>
 		      <c:if test="${not empty review.fileName }">
@@ -147,24 +148,36 @@
 	   };
 	   
 	 };
- 	
+	 
+	//사진 입력 취소했을 때 원래 사진 날아가는 것 대비하기
+    var clone;
+    $(document).on('click','.upload',e=>{//새사진 추가/파일 입력할때 미리 입력태그 클론만들기
+     clone=$(e.target).clone(true);
+    });
+ 
       //사진 업로드
     $(document).on('change','.upload',function(e){      
       //사진 미리보기
-      let reader = new FileReader();
-      reader.onload = (e) => {
-        $("#imgContainer").removeClass("d-none");
-        $("#previewImg").attr("src", e.target.result);
-        
-      };
-      reader.readAsDataURL($(e.target)[0].files[0]); //파일의 가상경로를 가져옴	
-
-      //사진 이름
-      let filename=$(e.target).prop('files')[0].name;
-       $("#fileName").html(filename);
-      
-      //사진 인풋태그에 네임 부여
-      $(e.target).attr("name","reviewImg");
+       if (e.target.value.length==0) {//파일 입력 취소 누르면 원래 사진 유지하도록
+			let label=$(e.target).parents(".thumnail");
+			$(e.target).remove();//값 없어진 인풋 지우고
+			label.prepend(clone);//미리 복사해놓은 인풋태그로 대체
+        }else{
+		      let reader = new FileReader();
+		      reader.onload = (e) => {
+		        $("#imgContainer").removeClass("d-none");
+		        $("#previewImg").attr("src", e.target.result);
+		        
+		      };
+		      reader.readAsDataURL($(e.target)[0].files[0]); //파일의 가상경로를 가져옴	
+		
+		      //사진 이름
+		      let filename=$(e.target).prop('files')[0].name;
+		       $("#fileName").html(filename);
+		      
+		      //사진 인풋태그에 네임 부여
+		      $(e.target).attr("name","reviewImg");
+        }
     });
 	
     //사진 삭제
@@ -173,6 +186,7 @@
       $("#previewImg").attr("src","");
       $("#fileName").html("Choose file");
       $(".upload").val("");
+      $(".deleteStatus").val("delete");
     };
  	
     

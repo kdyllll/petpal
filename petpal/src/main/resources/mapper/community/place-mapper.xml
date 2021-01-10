@@ -59,7 +59,7 @@
 	</select>
 	<select id="commentCount" resultType="_int"
 		parameterType="string">
-		SELECT COUNT(*) FROM PLACECOMMENT WHERE PLACENO=#{placeNo}
+		SELECT COUNT(*) FROM PLACECOMMENT WHERE PLACENO=#{placeNo} 
 	</select>
 	<insert id="insertComment" parameterType="placeComment">
 		INSERT INTO PLACECOMMENT
@@ -133,4 +133,8 @@
 		INSERT INTO PLACELIKE
 		VALUES(#{placeNo}, #{memberNo})
 	</insert>
+	<select id="placeCntYes" resultType="_int" parameterType="string">
+		select count(*) from member join place using(memberNo) where memberNo =
+		#{memberNo} AND STATUS='Y'
+	</select>
 </mapper>
