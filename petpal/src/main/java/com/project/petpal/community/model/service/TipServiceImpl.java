@@ -219,4 +219,11 @@ public class TipServiceImpl implements TipService {
 		// TODO Auto-generated method stub
 		return dao.comment2Delete(session,tipCommentNo);
 	}
+
+	@Override
+	public int tipLikeCount(String tipNo) {
+		// TODO Auto-generated method stub
+		return dao.tipLikeCount(session, tipNo);
+	}
+
 }

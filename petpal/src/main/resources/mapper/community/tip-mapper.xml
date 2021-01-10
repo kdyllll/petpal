@@ -106,4 +106,7 @@
   	<delete id="comment2Delete" parameterType="string">
   		DELETE FROM TIPCOMMENT WHERE TIPCOMMENTNO=#{tipCommentNo}
   	</delete>
+  	<select id="tipLikeCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM TIPLIKE WHERE TIPNO=#{tipNo}  	
+  	</select>
 </mapper>
