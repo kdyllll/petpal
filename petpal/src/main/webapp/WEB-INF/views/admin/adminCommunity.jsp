@@ -24,8 +24,7 @@
 				class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-5 "
 				style="height: 100vh; overflow-y: auto;">
 				<h2 class="my-3">게시글관리</h2>
-				<form class="row align-items-center" method="post" action="${path }/admin/searchCommunity.do">
-				
+				<form class="row d-flex align-items-center communityFrm" method="post" >				
 					<div class="mb-3  col-lg-2">
 						<label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
 						<select class="custom-select mr-sm-2" name="searchType" id="searchType">
@@ -37,10 +36,31 @@
 						<input type="text" class="form-control input-group-sm"
 							name="keyword" placeholder="검색어를 입력해주세요">
 						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" type="submit"
+							<button class="btn btn-outline-secondary communityBtn" type="submit"
 								>Button</button>
 						</div>
-
+					</div>
+					<div class="input-group mb-3  col-lg-5 ">
+						<div class="form-check form-check-inline ">
+							<input class="form-check-input" name="status" type="radio"
+								 value="Y" id="yes" ${status != null && status.equals("Y") ? "checked":""}> <label
+								class="form-check-label" for="yes">승인완료</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" name="status" type="radio"
+								id="ing" value="N" ${status != null && status.equals("N") ? "checked":""}> <label
+								class="form-check-label" for="ing">승인대기</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" name="status" type="radio"
+								value="M" id="deny" ${status != null && status.equals("M") ? "checked":""}> <label
+								class="form-check-label" for="deny">승인거절</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" name="status" type="radio"
+								 value="A" id="com" ${status == null ? "checked":""}> <label
+								class="form-check-label" for="com">전체</label>
+						</div>
 					</div>
 				</form>
 				<div class="table-responsive" style="min-height: 80vh;">
@@ -125,7 +145,19 @@
         	$(".placeFrm").attr("action", "${path}/admin/placeAccept.do?placeNum="+placeNo).submit();
         })
         
-        
+   
+		$(".communityBtn").on("click", function() {
+			$(".communityFrm").attr("action", "${path }/admin/searchCommunity.do").submit();
+		})
+		
+		$("input[type=radio]").on("change", e => {
+			if($(e.target).val()=="Y" || $(e.target).val( )== "N" || $(e.target).val()=="M") {
+				$(".communityFrm").attr("action", "${path }/admin/searchCommunity.do").submit();		
+			} else {
+				$(".communityFrm").attr("action", "${path}/admin/adminCommunity.do").submit();	
+			}
+		})
+    
     })
 
 </script>

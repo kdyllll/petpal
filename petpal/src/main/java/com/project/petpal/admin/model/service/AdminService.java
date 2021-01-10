@@ -45,4 +45,5 @@ public interface AdminService {
 	int claimTotalCount();
 	int mTotalCount();
 	int orderTotalCount();
+	int orderAccept(String paymentNo);
 }

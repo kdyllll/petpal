@@ -2,62 +2,112 @@
 <!DOCTYPE mapper PUBLIC "- //mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="find">
 	<insert id="insertFindWrite" parameterType="find">
-		INSERT INTO FIND VALUES('F'||SEQ_FINDNO.NEXTVAL,#{memberNo},'N',#{address},#{content},#{title},default,#{cate})
-		<selectKey keyProperty="findNo" resultType="string" order="AFTER">
-  		SELECT SEQ_FINDNO.CURRVAL from DUAL 
-  		</selectKey>
+		INSERT INTO FIND
+		VALUES('F'||SEQ_FINDNO.NEXTVAL,#{memberNo},'N',#{address},#{content},#{title},default,#{cate})
+		<selectKey keyProperty="findNo" resultType="string"
+			order="AFTER">
+			SELECT SEQ_FINDNO.CURRVAL from DUAL
+		</selectKey>
 	</insert>
 	<insert id="insertFindPic" parameterType="findImg">
-		INSERT INTO FINDIMG VALUES(SEQ_FINDIMGNO.NEXTVAL,#{findNo},#{fileName},#{imgStatus})
+		INSERT INTO FINDIMG
+		VALUES(SEQ_FINDIMGNO.NEXTVAL,#{findNo},#{fileName},#{imgStatus})
 	</insert>
 	<select id="selectFindList" resultType="map" parameterType="map">
-		SELECT * FROM FIND JOIN FINDIMG USING(FINDNO) JOIN MEMBER USING(MEMBERNO) WHERE IMGSTATUS = 'M' AND STATUS='N' 
+		SELECT * FROM FIND JOIN FINDIMG USING(FINDNO) JOIN MEMBER
+		USING(MEMBERNO) WHERE IMGSTATUS = 'M' AND STATUS='N'
 		<if test="cate != null">
 			AND CATE=#{cate}
 		</if>
 	</select>
-	
-	   <select id="selectFindListOne" parameterType="string" resultType="map" >
-   		select * from member join find using(memberNo) join findImg using(findNo) where memberNo = #{memberNo} and imgStatus='M'
-   </select>
+
+	<select id="selectFindListOne" parameterType="string"
+		resultType="map">
+		select * from member join find using(memberNo) join findImg using(findNo)
+		where memberNo = #{memberNo} and imgStatus='M'
+	</select>
 	<select id="findCnt" parameterType="string" resultType="int">
-		select count(*) from member join find using(memberNo) where memberNo = #{memberNo}		
+		select
+		count(*) from member join find using(memberNo) where memberNo =
+		#{memberNo}
 	</select>
 	<select id="detailOne" parameterType="string" resultType="map">
-		select * from find join member using(memberNo) join findImg using(findNo) where findNo = #{findNo} and imgStatus = 'M'
+		select
+		* from find join member using(memberNo) join findImg using(findNo)
+		where findNo = #{findNo} and imgStatus = 'M'
 	</select>
 	<select id="findSubPic" resultType="map" parameterType="string">
-		select * from find join findImg using(findNo) where findNo = #{findNo} and imgStatus='S'
+		select *
+		from find join findImg using(findNo) where findNo = #{findNo} and
+		imgStatus='S'
 	</select>
 	<update id="updateMainImg" parameterType="findImg">
-		UPDATE FINDIMG SET FILENAME=#{fileName} WHERE FINDNO=#{findNo} AND IMGSTATUS = 'M'
+		UPDATE FINDIMG SET
+		FILENAME=#{fileName} WHERE FINDNO=#{findNo} AND IMGSTATUS = 'M'
 	</update>
 	<delete id="deleteFindImg" parameterType="findImg">
-		DELETE FROM FINDIMG WHERE FINDIMGNO = #{findImgNo}
+		DELETE FROM FINDIMG
+		WHERE FINDIMGNO = #{findImgNo}
 	</delete>
 	<update id="updateOtherFind" parameterType="map">
-		UPDATE FIND SET CATE=#{cate}, TITLE=#{title}, CONTENT=#{content}, ADDRESS=#{address} WHERE FINDNO = #{findNo}
+		UPDATE FIND SET
+		CATE=#{cate}, TITLE=#{title}, CONTENT=#{content}, ADDRESS=#{address}
+		WHERE FINDNO = #{findNo}
 	</update>
-	<select id="selectFindLike" resultType="string" parameterType="string">
-		select FINDNO from FINDLIKE WHERE HEARTMEMBERNO=#{memberNo}
+	<select id="selectFindLike" resultType="string"
+		parameterType="string">
+		select FINDNO from FINDLIKE WHERE
+		HEARTMEMBERNO=#{memberNo}
 	</select>
 	<delete id="deleteFindLike" parameterType="string">
-		DELETE FROM FINDLIKE WHERE FINDNO=#{no} AND HEARTMEMBERNO=#{memberNo}
+		DELETE FROM FINDLIKE
+		WHERE FINDNO=#{no} AND HEARTMEMBERNO=#{memberNo}
 	</delete>
 	<insert id="insertFindLike" parameterType="map">
-		INSERT INTO FINDLIKE VALUES(#{findNo}, #{memberNo})
+		INSERT INTO FINDLIKE
+		VALUES(#{findNo}, #{memberNo})
 	</insert>
 	<select id="selectFindHeartWeek" resultType="map">
-		SELECT FINDNO,ADDRESS,TITLE,FILENAME,ENROLLDATE,IMGSTATUS, COUNT(HEARTMEMBERNO) AS HEARTCOUNT
-  		FROM FIND LEFT JOIN FINDLIKE USING(FINDNO) LEFT JOIN FINDIMG USING(FINDNO)
-        WHERE FLOOR(SYSDATE-ENROLLDATE)<![CDATA[<]]>14 AND IMGSTATUS='M'
-  		GROUP BY (FINDNO,ADDRESS,TITLE,FILENAME,ENROLLDATE,IMGSTATUS)
-  		ORDER BY HEARTCOUNT DESC, ENROLLDATE DESC
+		SELECT FINDNO,ADDRESS,TITLE,FILENAME,ENROLLDATE,IMGSTATUS,
+		COUNT(HEARTMEMBERNO) AS HEARTCOUNT
+		FROM FIND LEFT JOIN FINDLIKE USING(FINDNO) LEFT JOIN FINDIMG USING(FINDNO)
+		WHERE FLOOR(SYSDATE-ENROLLDATE)<![CDATA[<]]>14
+		AND IMGSTATUS='M'
+		GROUP BY (FINDNO,ADDRESS,TITLE,FILENAME,ENROLLDATE,IMGSTATUS)
+		ORDER BY HEARTCOUNT DESC, ENROLLDATE DESC
 	</select>
 	<delete id="deleteFind" parameterType="string">
-	 	DELETE FROM FIND WHERE FINDNO=#{findNo}
+		DELETE FROM FIND WHERE FINDNO=#{findNo}
 	</delete>
 	<select id="findTotalCount" resultType="_int">
-		SELECT count(*) FROM FIND JOIN FINDIMG USING(FINDNO) JOIN MEMBER USING(MEMBERNO) WHERE IMGSTATUS = 'M' AND STATUS='N' 
+		SELECT count(*) FROM FIND
+		JOIN FINDIMG USING(FINDNO) JOIN MEMBER USING(MEMBERNO) WHERE IMGSTATUS
+		= 'M' AND STATUS='N'
 	</select>
+	<select id="selectComment" parameterType="string"
+		resultType="map">
+		SELECT FINDNO,FINDCOMMENTNO,COMMENTLEVEL,MEMBERNO,IMG,NICKNAME,FINDCOMMENT,WRITEDATE,STATUS
+		FROM FINDCOMMENT LEFT JOIN MEMBER USING(MEMBERNO) WHERE
+		FINDNO=#{findNo}
+		START WITH COMMENTLEVEL=1 CONNECT BY PRIOR
+		FINDCOMMENTNO=COMMENTREF ORDER SIBLINGS BY WRITEDATE DESC
+	</select>
+	<select id="countComment" parameterType="string"
+		resultType="_int">
+		SELECT COUNT(*) FROM FINDCOMMENT WHERE FINDNO=#{findNo}
+		AND STATUS='E'
+	</select>
+	<select id="countCommentPage" parameterType="string"
+		resultType="_int">
+		SELECT COUNT(*) FROM FINDCOMMENT WHERE FINDNO=#{findNo}
+	</select>
+	<insert id="insertComment" parameterType="findComment">
+  		INSERT INTO FINDCOMMENT VALUES(SEQ_FINDCOMMENTNO.NEXTVAL,#{findNo},#{memberNo},#{commentLevel},#{findComment},#{commentRef},default,default)
+  	</insert>
+  	<update id="commentDelete" parameterType="string">
+  		UPDATE FINDCOMMENT SET STATUS='D' WHERE FINDCOMMENTNO=#{findCommentNo} AND (SELECT COUNT(*) FROM FINDCOMMENT WHERE COMMENTREF=#{findCommentNo})>0
+  	</update>
+  	<delete id="comment2Delete" parameterType="string">
+  		DELETE FROM FINDCOMMENT WHERE FINDCOMMENTNO=#{findCommentNo}
+  	</delete>
 </mapper>
