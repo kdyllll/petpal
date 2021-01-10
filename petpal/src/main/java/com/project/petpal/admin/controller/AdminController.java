@@ -168,4 +168,9 @@ public class AdminController {
 		return true;
 	}
 	
+	@RequestMapping("/admin/refundChange.do")
+	public String refundAndChange() {
+		return "admin/refundAndChange";
+	}
+	
 }
