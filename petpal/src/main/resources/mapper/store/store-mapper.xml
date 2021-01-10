@@ -136,9 +136,20 @@ WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK 
 		SELECT * FROM DAILYIMG LEFT JOIN COORD USING(DAILYIMGNO) WHERE PRODUCTNO=#{productNo}
 	</select>
 	<!-- 검색 상품리스트 -->
-	<select id="searchProduct" resultType="storeProduct" parameterType="string">
-		SELECT DISTINCT PRODUCTNO,CATEGORYNO,PRICE,SALE,PRODUCTNAME,IMGNAME FROM PRODUCT JOIN STOCK USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO)
-WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK USING(PRODUCTNO) GROUP BY PRODUCTNO) AND TYPE='M' AND PRICE>0 AND PRODUCTNAME LIKE '%'||#{keyword}||'%'
+	<select id="searchProduct" resultType="storeProduct" >
+		<!-- SELECT DISTINCT ENROLLDATE,PRODUCTNO,PRICE,SALE,PRODUCTNAME,IMGNAME,CATEGORYNO,SUBCATE FROM STOCK JOIN PRODUCT USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO)
+		WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK USING(PRODUCTNO) JOIN PRODUCTIMG USING(PRODUCTNO) WHERE PRICE>0 AND STOCK>0
+		AND (REGEXP_LIKE(PRODUCTNAME, -->
+		SELECT * FROM PRODUCT WHERE REGEXP_LIKE(PRODUCTNAME,'애') 
+		<!-- <foreach collection="keywords" item="word" open="'" close="'" separator="|">
+		 ${word}
+		</foreach> 
+		 )--><!-- OR REGEXP_LIKE(SUBCATE,
+		<foreach collection="keywords" item="word" open="'" close="'" separator="|">
+		 ${word}
+		</foreach>
+		) -->
+		<!-- )) GROUP BY PRODUCTNO) AND TYPE='M' -->
 	</select>
 	<insert id="insertFav" parameterType="map">
 		INSERT INTO FAV VALUES(#{productNo},#{memberNo})
@@ -173,5 +184,9 @@ WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK 
 	AND SUBCATE =#{subcate}
 	</if>
  GROUP BY PRODUCTNO HAVING SUM(STOCK)=0) AND TYPE='M' 
+	</select>
+	<select id="aProduct" resultType="storeProduct" >
+		SELECT * FROM PRODUCT WHERE REGEXP_LIKE(PRODUCTNAME,
+		<foreach collection="array" item="a" separator="||'|'||">${a}</foreach>) 
 	</select>
 </mapper>

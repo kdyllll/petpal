@@ -289,7 +289,13 @@
             <artifactId>httpclient</artifactId>
             <version>4.5.2</version>
         </dependency>
-
+		<!-- sql문 로그 출력하기 -->
+		<!-- https://mvnrepository.com/artifact/org.lazyluke/log4jdbc-remix -->
+		<dependency>
+		    <groupId>org.lazyluke</groupId>
+		    <artifactId>log4jdbc-remix</artifactId>
+		    <version>0.2.7</version>
+		</dependency>
 
 
 		
