@@ -7,7 +7,7 @@
 	<section>
           <div class="d-flex justify-content-between mb-1">
             <p class="h5">일상 <strong class="text-point"><c:out value="${fn:length(dailyList) }"/></strong></p>
-            <a href='javascript:void(0);' onclick="fn_Daily();">전체보기</a>
+            <a href='javascript:void(0);' onclick="fn_Daily();"><c:out value="${fn:length(dailyList)==0?'':'전체보기' }"/></a>
           </div>
           <div class="row">                    
            <c:forEach var="d" items="${dailyList }" varStatus="vs" begin="0" end="5">
@@ -22,7 +22,7 @@
         <section class="mt-5">
           <div class="d-flex justify-content-between mb-1">
             <p class="h5">노하우 <strong class="text-point"><c:out value="${fn:length(tipList) }"/></strong></p>
-            <a href='javascript:void(0);' onclick="fn_Tip();">전체보기</a>
+            <a href='javascript:void(0);' onclick="fn_Tip();"><c:out value="${fn:length(tipList)==0?'':'전체보기' }"/></a>
           </div>
           <div class="row">
            <c:forEach var="t" items="${tipList }" varStatus="vs" begin="0" end="5">
@@ -38,7 +38,7 @@
         <section class="mt-5">
           <div class="d-flex justify-content-between mb-1">
             <p class="h5">후기 <strong class="text-point"><c:out value="${fn:length(placeList) }"/></strong></p>
-            <a href='javascript:void(0);' onclick="fn_Place();">전체보기</a>
+            <a href='javascript:void(0);' onclick="fn_Place();"><c:out value="${fn:length(placeList)==0?'':'전체보기' }"/></a>
           </div>
           <div class="row">
            <c:forEach var="p" items="${placeList }" varStatus="vs" begin="0" end="5">
@@ -54,7 +54,7 @@
         <section class="my-5">
           <div class="d-flex justify-content-between">
             <p class="h5">찾아주세요 <strong class="text-point"><c:out value="${fn:length(findList) }"/></strong></p>
-            <a href='javascript:void(0);' onclick="fn_Find();">전체보기</a>
+            <a href='javascript:void(0);' onclick="fn_Find();"><c:out value="${fn:length(findList)==0?'':'전체보기' }"/></a>
           </div>
           <div class="row">
            <c:forEach var="f" items="${findList }" varStatus="vs" begin="0" end="5">
