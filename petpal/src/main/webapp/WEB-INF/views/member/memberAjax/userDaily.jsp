@@ -25,7 +25,7 @@
 			              </c:forEach>
 			
 			              <div class="card-body p-0 mt-2">
-			                  <p class="card-text mb-1">${d.content }</p>
+			                  <p class="card-text mb-1"><c:out value="${fn:substring(d.content, 0, 41) }"/>${fn:length(d.content) gt 42?'...':''}</p>
 			                  <div class="d-flex justify-content-between align-items-center">
 			                      <small class="text-muted pl-1">
 			                      	<c:forEach var="h" items="${hashList}">

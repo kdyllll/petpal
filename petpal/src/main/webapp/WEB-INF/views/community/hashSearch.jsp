@@ -22,7 +22,7 @@
             </div>
   		</form>
    		<div class="dailyCon row col-12 my-4 border-bottom pb-3">
-			<p class="h4 col-12 mb-3"><strong>사진 검색 결과</strong> 
+			<p class="h4 col-12 mb-3"><strong>일상 검색 결과</strong> 
 			<a href="${path }/daily/moveList.do?hashtag=${hashtag}" class="text-hgh ml-1 ${empty dailyList?'d-none':'' }" style="font-size:15px;">더보기</a></p>
 			<div class="mx-auto mb-2"><c:out value="${empty dailyList?'검색 결과가 없습니다.':'' }"/></div>
 			<c:forEach var="d" items="${dailyList}">

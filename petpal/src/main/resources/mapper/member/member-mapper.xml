@@ -257,7 +257,7 @@
 		SELECT MEMBERNO FROM MEMBER WHERE MEMBERNO = #{memberNo}
 	</select>
 	<select id="selectIdCheck" parameterType="string" resultType="string">
-		SELECT EMAIL FROM MEMBER WHERE MEMBERNAME=#{name} AND PHONE=#{phone}
+		SELECT EMAIL FROM MEMBER WHERE MEMBERNAME=#{name} AND PHONE=#{phone} AND SNSNO IS NULL
 	</select>
 	<select id="checkEmail" parameterType="string" resultType="_int">
 		SELECT COUNT(MEMBERNO) FROM MEMBER WHERE EMAIL=#{value} AND SNSNO IS NULL

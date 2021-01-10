@@ -246,9 +246,8 @@
 												</div>
 											</div>
 											<div class="card-body p-0 px-1">
-												<p class="card-text mb-1">${d.CONTENT }</p>
-												<div
-													class="d-flex justify-content-between align-items-center">
+												<p class="card-text mb-1"><c:out value="${fn:substring(d.CONTENT, 0, 41) }"/>${fn:length(d.CONTENT) gt 42?'...':''}</p>
+												<div class="d-flex justify-content-between align-items-center">
 													<small class="text-muted pl-1"> 
 															<c:forEach var="h" items="${d.hashList}">
 						                                		<c:if test="${not empty h}">
