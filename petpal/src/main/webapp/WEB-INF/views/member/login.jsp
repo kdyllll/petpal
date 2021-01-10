@@ -118,10 +118,10 @@
 			success:(data)=>{
 				$(".pdtModal").html(data);
 				$('#idModal').modal();
-			}
-			
-			
+			}			
 		})
 	}
+	
+	//비밀번호 찾기 모달
 </script>
 </html>
