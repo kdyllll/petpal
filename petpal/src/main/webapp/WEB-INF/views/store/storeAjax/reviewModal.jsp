@@ -19,7 +19,7 @@
 	        <div class="form-group pb-3 border-bottom ">
 	          
 	          <label for="exampleFormControlSelect1">내역 선택</label>
-              <select class="form-control col-12" >
+              <select class="form-control col-12" name="detailNo" >
                 <option disabled selected>구매 내역 선택</option>
                 <c:forEach var="s" items="${stockList }">
                 	<option value="${s.DETAILNO }">${s.COLOR } ${s.PRODUCTSIZE }  &nbsp;&nbsp;&nbsp; / &nbsp;&nbsp;&nbsp;  <fmt:formatDate value="${s.PAYDATE }" pattern="yy.MM.dd 구매"/></option>
