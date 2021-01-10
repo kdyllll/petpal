@@ -28,7 +28,11 @@
 			<if test="type != null and key != null">
 				AND ${type} like '%'|| #{key}||'%'
 			</if>
+			<if test="status != null">
+				AND PAYSTATUS = #{status}
+			</if>
 		</where>
+		ORDER BY PAYDATE DESC
 	</select>
 	<select id="memberSearch" parameterType="map" resultType="map">
 		SELECT * FROM MEMBER 
@@ -51,6 +55,9 @@
 		<where>
 			<if test="type != null and key != null">
 				AND ${type} like '%'|| #{key}||'%'
+			</if>
+			<if test="status != null">
+				AND STATUS = #{status}
 			</if>
 		</where>
 		ORDER BY PLACEDATE DESC

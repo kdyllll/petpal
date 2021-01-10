@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -100,13 +102,15 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/admin/orderSearch.do")
-	public String orderSearch(String searchType, String keyword, Model model) {
-
+	public String orderSearch(String searchType, String keyword, Model model, HttpServletRequest request) {
+		String status = request.getParameter("status");
 		Map m = new HashMap();
 		m.put("type",searchType);
 		m.put("key", keyword);
+		m.put("status", status);
 		List<Map> oList = service.orderSearch(m);
 		model.addAttribute("oList",oList);
+		model.addAttribute("status", status);
 		return "admin/adminOrder";
 	}
 	
@@ -130,12 +134,16 @@ public class AdminController {
 		return "admin/adminClaim";
 	}
 	@RequestMapping("/admin/searchCommunity.do")
-	public String searchCommunity(String searchType, String keyword, Model model) {
+	public String searchCommunity(String searchType, String keyword, Model model,HttpServletRequest request) {
+		String status = request.getParameter("status");
+		System.out.println(status);
 		Map m = new HashMap();
 		m.put("type",searchType);
 		m.put("key", keyword);
+		m.put("status",status);
 		List<Map> pList = service.searchCommunity(m);
 		model.addAttribute("pList",pList);
+		model.addAttribute("status",status);
 		return "admin/adminCommunity";
 	}
 	
