@@ -234,29 +234,37 @@ $(".updatePic").on("change",e=>{
 });
 
 $("#btn").on("click",e=>{ 
-  $("input[type=file]").each((i,item)=>{  
-		 console.log(item.value);
-		if($(item).parents(".imgBox").length!=0){ //기존 사진이라면(업데이트인풋태그라면)
-			//사진을 업데이트 하지 않은 상태라면 값이 비어있을 수도 있음, 그래도 +태그에 인덱스 부여해야하므로 비어있는지는 확인 X
-			var imgBox=$(item).parents(".imgBox");
-			imgBox.find("input[name=index]").each((j,item2)=>{        
-			       $(item2).val(i);           
-			});			
-		}else{ //새 사진이라면
-			if(item.value.length!=0){  //마지막 사진추가 라벨은 빈 라벨이므로 제외
-				var imgBox=$(item).parent("label").next(".imgBox");
-				imgBox.find("input[name=index]").each((j,item2)=>{        
-				       $(item2).val(i);           
-				});
-			}
-		}
-               
-    });
-    
-	 $(".hashtag").attr("name","");//아무것도 안적힌 해시태그는 안넘어가도록 name 뺏기
-
-	 //등록 누르면 form 전송
-	 $("#writeFrm").attr("action","${path }/daily/dailyUpdateEnd.do").submit();
+ 
+	 
+	 //유효성 검사
+	 if($(".imgBox").length==0){
+   	  	  alert("사진을 올려주세요.");
+	   }else if($(".content").val().trim()==""){
+		  alert("내용을 입력하세요.");
+	   }else{
+		   $("input[type=file]").each((i,item)=>{  
+				 console.log(item.value);
+				if($(item).parents(".imgBox").length!=0){ //기존 사진이라면(업데이트인풋태그라면)
+					//사진을 업데이트 하지 않은 상태라면 값이 비어있을 수도 있음, 그래도 +태그에 인덱스 부여해야하므로 비어있는지는 확인 X
+					var imgBox=$(item).parents(".imgBox");
+					imgBox.find("input[name=index]").each((j,item2)=>{        
+					       $(item2).val(i);           
+					});			
+				}else{ //새 사진이라면
+					if(item.value.length!=0){  //마지막 사진추가 라벨은 빈 라벨이므로 제외
+						var imgBox=$(item).parent("label").next(".imgBox");
+						imgBox.find("input[name=index]").each((j,item2)=>{        
+						       $(item2).val(i);           
+						});
+					}
+				}
+		               
+		    });
+		    
+			 $(".hashtag").attr("name","");//아무것도 안적힌 해시태그는 안넘어가도록 name 뺏기
+		   $("#writeFrm").attr("action","${path }/daily/dailyUpdateEnd.do").submit();
+	   }
+	
   
 });
 

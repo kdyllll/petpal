@@ -100,17 +100,25 @@ public class MemberAjaxController {
 	public String moveAll(String memberNo,Model m) {	 
       //일상 메인 사진
       List<DailyImg> dailyList=service.selectDailyMain(memberNo);
+      int dailyCnt=service.dailyCount(memberNo);
       //노하우 작성 글+메인 사진
       List<Map> tipList=service.selectTipMain(memberNo,1,6);
+      int tipCnt=service.tipCount(memberNo);
       //장소후기 작성 글+메인사진
       List<Map> placeList=service.selectPlaceMain(memberNo,1,6);
+      int placeCnt=service.placeCount(memberNo);
       //찾아주세요 작성 글+메인 사진
       List<Map> findList=service.selectFindMain(memberNo,1,6);
+      int findCnt=service.findCount(memberNo);
       
       m.addAttribute("dailyList",dailyList);
       m.addAttribute("tipList",tipList);
       m.addAttribute("placeList",placeList);
       m.addAttribute("findList",findList);
+      m.addAttribute("dailyCnt",dailyCnt);
+      m.addAttribute("tipCnt",tipCnt);
+      m.addAttribute("placeCnt",placeCnt);
+      m.addAttribute("findCnt",findCnt);
 	  return "member/memberAjax/userInfoAjax";
 	}
 	

@@ -263,9 +263,7 @@
 		                 src: e2.target.result,
 		                 width: 400,
 		                 height: 400,
-		               });
-
-		              
+		               });		              
 		               pic.next().append(img);
 		               
 				    };

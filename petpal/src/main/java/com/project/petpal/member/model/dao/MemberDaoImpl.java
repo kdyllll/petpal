@@ -138,7 +138,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public int placeCount(SqlSession session, String memberNo) {
 		// TODO Auto-generated method stub
-		return session.selectOne("place.placeCnt",memberNo);
+		return session.selectOne("place.placeCntYes",memberNo);
 	}
 
 	@Override

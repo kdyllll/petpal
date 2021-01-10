@@ -30,28 +30,28 @@
 					<div class="input-group mb-3  col-lg-5 ">
 							<div class="form-check form-check-inline ">
 								<input class="form-check-input" name="status" type="radio"
-									 value="결제완료" id="yes" ${status != null && status.equals("결제완료") ? "checked":""}> <label
-									class="form-check-label" for="yes">환불(대기)</label>
+									 value="환불중" id="refundIng" ${status != null && status.equals("결제완료") ? "checked":""}> <label
+									class="form-check-label" for="refundIng">환불(대기)</label>
 							</div>
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" name="status" type="radio"
-									id="ing" value="취소완료" ${status != null && status.equals("취소완료") ? "checked":""}> <label
-									class="form-check-label" for="ing">환불(완료)</label>
+									id="refund" value="취소" ${status != null && status.equals("취소완료") ? "checked":""}> <label
+									class="form-check-label" for=""refund"">환불(완료)</label>
 							</div>
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" name="status" type="radio"
-									value="결제대기" id="deny" ${status != null && status.equals("결제대기") ? "checked":""}> <label
-									class="form-check-label" for="deny">교환(대기)</label>
+									value="결제대기" id="changeIng" ${status != null && status.equals("결제대기") ? "checked":""}> <label
+									class="form-check-label" for=""changeIng"">교환(대기)</label>
 							</div>
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" name="status" type="radio"
-									 value="전체" id="com" ${status == null ? "checked":""}> <label
-									class="form-check-label" for="com">교환(완료)</label>
+									 value="전체" id="change" ${status == null ? "checked":""}> <label
+									class="form-check-label" for="change">교환(완료)</label>
 							</div>
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" name="status" type="radio"
-									 value="전체" id="com" ${status == null ? "checked":""}> <label
-									class="form-check-label" for="com">전체</label>
+									 value="전체" id="All" ${status == null ? "checked":""}> <label
+									class="form-check-label" for="All">전체</label>
 							</div>
 						</div>
 					<div class="mb-3  col-lg-2">
