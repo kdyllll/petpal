@@ -275,11 +275,15 @@ public class AdminServiceImple implements AdminService {
 
 	@Override
 	@Transactional
-	public int orderAccept(String paymentNo) {
+	public int orderAccept(Map m) {
 		// TODO Auto-generated method stub
+		String paymentNo = (String)m.get("paymentNo");
 		int result = dao.orderAccept(session, paymentNo);
 		if(result > 0) {
 			result = dao.orderDetailAccept(session,paymentNo);
+			if(result>0 && m.get("memberNo") != null) {
+				result = dao.updatePoint(session, m);
+			}
 		}
 		return result;
 	}

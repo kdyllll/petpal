@@ -150,9 +150,21 @@ public class AdminController {
 	
 	@RequestMapping("/admin/orderAccept.do")
 	@ResponseBody
-	public Boolean orderAccept(String paymentNo) {
+	public Boolean orderAccept(String paymentNo, HttpServletRequest request,
+			@RequestParam(value="pointPlus", defaultValue = "0") String pointPlus, 
+			@RequestParam(value="pointMinus", defaultValue = "0") String pointMinus) {
 		System.out.println(paymentNo);
-		int result = service.orderAccept(paymentNo);
+		String memberNo = request.getParameter("memberNo");
+		int pp = Integer.parseInt(pointPlus);
+		int pm = Integer.parseInt(pointMinus);
+		System.out.println(pp);
+		System.out.println(pm);
+		Map m = new HashMap();
+		m.put("paymentNo", paymentNo);
+		m.put("memberNo", memberNo);
+		m.put("pp",pp);
+		m.put("pm",pm);
+		int result = service.orderAccept(m);
 		return true;
 	}
 	

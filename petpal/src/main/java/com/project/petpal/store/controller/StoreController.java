@@ -98,6 +98,20 @@ public class StoreController {
 			case 'S':first="소동물";
 			break;
 		}
+		switch(cNo.charAt(1)) {
+			case '1':second=first.equals("소동물")?"햄스터":"홈/리빙";
+			break;
+			case '2':second=first.equals("소동물")?"토끼":"식품";
+			break;
+			case '3':second=first.equals("소동물")?"물고기":"옷";
+			break;
+			case '4':second=first.equals("소동물")?"새":"용품";
+			break;
+			case '5':second="목욕/미용";
+			break;
+		}
+		m.addAttribute("first",first);
+		m.addAttribute("second",second);
 		List<Product> starList=service.starList();//평균별점 리스트
 		
 		if(!cNo.contains("S")){//소동물 누른게 아니면
