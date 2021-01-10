@@ -255,6 +255,18 @@ public class DailyDaoImpl implements DailyDao {
 		return session.selectList("follow.selectFollowing", memberNo);
 	}
 
+	@Override
+	public int selectLikeCnt(SqlSession session, String dailyNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("daily.selectLikeCnt",dailyNo);
+	}
+
+	@Override
+	public int selectCommentCnt(SqlSession session, String dailyNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("daily.selectCommentCnt",dailyNo);
+	}
+
 	
 	
 

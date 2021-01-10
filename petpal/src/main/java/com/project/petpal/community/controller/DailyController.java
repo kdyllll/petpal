@@ -67,34 +67,39 @@ public class DailyController {
 		
 		List<Map> dailyList=service.selectDailyAll(cPage,numPerPage,keyword);
 		for(Map map:dailyList) {
+			//해시태그 리스트
 			String postNo=(String) map.get("DAILYNO");
 			List<String> hashList=cService.selectHashList(postNo);
 			map.put("hashList", hashList);
+			//좋아요 수
+			int likeCnt=service.selectLikeCnt(postNo);
+			//댓글 수 
+			int commentCnt=service.selectCommentCnt(postNo);
+			map.put("likeCnt",likeCnt);
+			map.put("commentCnt",commentCnt);
 		}
 		List<DailyImg> imgList=service.selectMainImg();
 		int totalCount=service.totalDailyCount(keyword);
 		String pageBar=new PageBarFactory().getPageBar(totalCount, cPage, numPerPage, null, null, "moveList.do");
-		Member mem = (Member)session.getAttribute("loginMember");
-		if(mem!=null) {		
-			List<String> like = service.selectDailyLike(mem.getMemberNo());
+		
+		//좋아요
+		Member loginMember=(Member)session.getAttribute("loginMember");
+		if(loginMember!=null) {		
+			List<String> like = service.selectDailyLike(loginMember.getMemberNo());
 			System.out.println(like);
 			m.addAttribute("like", like);
 		}
-		
-		
+			
 		//팔로우 검사
-		Member loginMember=(Member)session.getAttribute("loginMember");
 		if(loginMember != null) {
 			String memberNo = loginMember.getMemberNo();
 			List<Map> followingList = service.selectFollowingList(memberNo);
 			m.addAttribute("following", followingList);
-		}
+		}	
+		
+
 		
 		
-		
-		//좋아요 수
-		//좋아요 리스트(하트켜기용)
-		//댓글 수 보내야 함
 		m.addAttribute("search",search);
 		m.addAttribute("dailyList",dailyList);
 		m.addAttribute("imgList",imgList);
@@ -220,12 +225,18 @@ public class DailyController {
 				}
 			}
 		}
-		
+		//좋아요 수
+		int likeCnt=service.selectLikeCnt(dailyNo);
+		//댓글 수 
+		int commentCnt=service.selectCommentCnt(dailyNo);
+
 		m.addAttribute("daily",daily);
 		m.addAttribute("imgList",imgList);
 		m.addAttribute("coordList",coordList);
 		m.addAttribute("pImgList",pImgList);
 		m.addAttribute("hashList",hashList);
+		m.addAttribute("likeCnt",likeCnt);
+		m.addAttribute("commentCnt",commentCnt);
 		return "community/dailyDetail";
 	}
 	

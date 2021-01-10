@@ -142,4 +142,10 @@
 	<select id="selectDailyLike" resultType="string" parameterType="string">
 		select DAILYNO from DAILYLIKE WHERE HEARTMEMBERNO=#{memberNo}
 	</select>
+	<select id="selectLikeCnt" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM DAILYLIKE WHERE DAILYNO=#{value}
+	</select>
+	<select id="selectCommentCnt" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM DAILYCOMMENT WHERE DAILYNO=#{value}
+	</select>
 </mapper>
