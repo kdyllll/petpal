@@ -7,14 +7,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Random;
 import java.util.StringTokenizer;
 
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -420,5 +428,55 @@ public class PaymentController {
 	    
 		return user;
 	}
+	
+	@RequestMapping("payment/sendEmail.do")//이메일 인증
+	 public void sendEmail(HttpServletRequest request,HttpServletResponse response,
+						 @RequestParam(value="email", required=false) String email,
+						 @RequestParam(value="orderNo", required=false) String orderNo
+						 ) throws Exception{
+	      
+	      JSONObject emailConfirm= new JSONObject();
+	      
+	      int result=0;
+	      String mesg="";
+
+	         String host="smtp.gmail.com";
+	         String user="cjfdn4646@gmail.com";
+	         String password="Qkrcjfdn123";
+	         
+	         //smtp 서버 설정
+	         Properties props = new Properties();
+	           props.put("mail.smtp.host",host);
+	           props.put("mail.smtp.port",587);
+	           props.put("mail.smtp.auth","true");
+	           props.put("mail.smtp.starttls.enable","true");
+	           props.put("mail.smtp.ssl.trust",host); 
+	           
+	           Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+	               protected PasswordAuthentication getPasswordAuthentication() {
+	                   return new PasswordAuthentication(user,password);
+	               }
+	           });
+	           
+	           try {
+	               MimeMessage msg = new MimeMessage(session);
+	               msg.setFrom(new InternetAddress(user, "PETPAL"));
+	               msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+	               
+	               //메일 제목
+	               msg.setSubject("PETPAL");
+	               //메일 내용
+	               String content="<h1>주문해주셔서 감사합니다.</h1><br><br><br><p>주문 번호는 " + orderNo + " 입니다.</p>";
+	               msg.setText(content,"utf-8","html");
+	               
+	               Transport.send(msg);
+	               
+	           }catch (Exception e) {
+	               e.printStackTrace();
+	           }
+	           
+	      emailConfirm.put("msg",mesg);
+	      response.getWriter().print(emailConfirm);
+	 }
 	
 }
