@@ -53,6 +53,8 @@ public class PaymentController {
 		//배송비
 		int fee = 0;
 		int pprice = 0;
+		int psale = 0;
+		int ppriceSale = 0;
 		int pcount = 0;
 		String pproductName = "";
 		String psize = "";
@@ -63,12 +65,14 @@ public class PaymentController {
 		if(productName==null) {
 			List<Map> list = service.selectProduct(stockNo[0]);
 			pprice = Integer.parseInt(String.valueOf(list.get(0).get("PRICE")));
+			psale = Integer.parseInt(String.valueOf(list.get(0).get("SALE")));
+			ppriceSale = pprice - (pprice * psale) / 100;
 			pcount = cnt[0];
 			pcolor = String.valueOf(list.get(0).get("COLOR"));
 			pproductName = String.valueOf(list.get(0).get("PRODUCTNAME"));
 			psize = String.valueOf(list.get(0).get("PRODUCTSIZE"));
 			pstockno = stockNo[0];
-			totalProduct = totalProduct + (pcount * pprice);
+			totalProduct = totalProduct + (pcount * ppriceSale);
 		}else {
 			//상품이 체크되어있는지 확인. check상태면 click==1, 아니면 click==0. click이 1인 애를 찾아서 수량에 따라 상품 값 계산 후 총 상품 금액에 더해줌 
 			for(int i=0;i<price.length;i++) {
@@ -95,12 +99,14 @@ public class PaymentController {
 		//cnt는 바로구매에서 넘어오는 수량
 				if(productName==null) {
 					//각 조건에 따라 Cart 객체에 데이터 추가 후 list에 추가
-					if(psize==null) {
-						c = Cart.builder().productName(pproductName).color(pcolor).count(pcount).price(pcount * pprice).fee(fee).totalProduct(totalProduct).totalPrice(totalPrice).stockNo(pstockno).build();
-					}else if(pcolor==null) {
-						c = Cart.builder().productName(pproductName).productSize(psize).count(pcount).price(pcount * pprice).fee(fee).totalProduct(totalProduct).totalPrice(totalPrice).stockNo(pstockno).build();
+					if(psize==null && pcolor!=null) {
+						c = Cart.builder().productName(pproductName).color(pcolor).count(pcount).price(pcount * ppriceSale).fee(fee).totalProduct(totalProduct).totalPrice(totalPrice).stockNo(pstockno).build();
+					}else if(psize!=null && pcolor==null) {
+						c = Cart.builder().productName(pproductName).productSize(psize).count(pcount).price(pcount * ppriceSale).fee(fee).totalProduct(totalProduct).totalPrice(totalPrice).stockNo(pstockno).build();
+					}else if(psize!=null && pcolor==null){
+						c = Cart.builder().productName(pproductName).productSize(psize).color(pcolor).count(pcount).price(pcount * ppriceSale).fee(fee).totalProduct(totalProduct).totalPrice(totalPrice).stockNo(pstockno).build();
 					}else {
-						c = Cart.builder().productName(pproductName).productSize(psize).color(pcolor).count(pcount).price(pcount * pprice).fee(fee).totalProduct(totalProduct).totalPrice(totalPrice).stockNo(pstockno).build();
+						c = Cart.builder().productName(pproductName).count(pcount).price(pcount * ppriceSale).fee(fee).totalProduct(totalProduct).totalPrice(totalPrice).stockNo(pstockno).build();
 					}
 					list.add(c);
 				}else {
@@ -111,8 +117,10 @@ public class PaymentController {
 								c = Cart.builder().productName(productName[i]).color(color[i]).count(count[i]).price(count[i] * price[i]).fee(fee).totalProduct(totalProduct).totalPrice(totalPrice).stockNo(stockNo[i]).build();
 							}else if(size.length!=0 && color.length==0) {
 								c = Cart.builder().productName(productName[i]).productSize(size[i]).count(count[i]).price(count[i] * price[i]).fee(fee).totalProduct(totalProduct).totalPrice(totalPrice).stockNo(stockNo[i]).build();
-							}else {
+							}else if(size.length!=0 && color.length!=0){
 								c = Cart.builder().productName(productName[i]).productSize(size[i]).color(color[i]).count(count[i]).price(count[i] * price[i]).fee(fee).totalProduct(totalProduct).totalPrice(totalPrice).stockNo(stockNo[i]).build();
+							}else {
+								c = Cart.builder().productName(productName[i]).count(count[i]).price(count[i] * price[i]).fee(fee).totalProduct(totalProduct).totalPrice(totalPrice).stockNo(stockNo[i]).build();
 							}
 							list.add(c);
 						}
@@ -196,17 +204,20 @@ public class PaymentController {
 			point = point - pointMinus + pointPlus;
 			
 			String payStatus = "";
+			String payDetailStatus = "";
 			//카드면 결제완료 현금이면 결제대기
 			if(payKind.equals("신용카드")) {
 				payStatus = "결제완료";
+				payDetailStatus = "결제";
 			}else {
 				payStatus = "결제대기";
+				payDetailStatus = "대기";
 			}
 			
 			Payment p = Payment.builder().memberNo(memberNo).receiverName(receiverName).loc(loc).receiverTel(receiverTel).pointPlus(pointPlus).pointMinus(pointMinus).name(name).email(email).tel(tel).totalPrice(totalPrice).payKind(payKind).payStatus(payStatus).orderNo(orderNo).refundName(refundName).refundBank(refundBank).refundAccount(refundAccount).build();
 			
 			//payment테이블에 insert
-			int result = service.insertPayment(p, cnt, stockNo);
+			int result = service.insertPayment(p, cnt, stockNo, payDetailStatus);
 			
 			//insert에 성공하면 list와 point를 보내줌
 			if(result>0) {
@@ -243,16 +254,19 @@ public class PaymentController {
 			String refundAccount = account.replaceAll(",", "");
 			
 			String payStatus = "";
+			String payDetailStatus = "";
 			//카드면 결제완료 현금이면 결제대기
 			if(payKind.equals("신용카드")) {
 				payStatus = "결제완료";
+				payDetailStatus = "결제";
 			}else {
 				payStatus = "결제대기";
+				payDetailStatus = "대기";
 			}
 			
 			Payment p = Payment.builder().receiverName(receiverName).loc(loc).receiverTel(receiverTel).name(name).email(email).tel(tel).totalPrice(totalPrice).payKind(payKind).payStatus(payStatus).orderNo(orderNo).refundName(refundName).refundBank(refundBank).refundAccount(refundAccount).build();
 			
-			int result = service.insertPayment(p, cnt, stockNo);
+			int result = service.insertPayment(p, cnt, stockNo, payDetailStatus);
 			
 			if(result>0) {
 				mv.addObject("list", service.selectPaymentCompleteList(orderNo));
