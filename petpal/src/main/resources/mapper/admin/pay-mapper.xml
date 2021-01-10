@@ -25,4 +25,10 @@
 	<select id="orderTotalCount" resultType="_int">
 		SELECT count(*) FROM PAYMENT LEFT JOIN MEMBER USING(MEMBERNO)
 	</select>
+	<update id="orderAccept" parameterType="string">
+		UPDATE PAYMENT SET PAYSTATUS='결제완료' WHERE PAYMENTNO=#{paymentNo}
+	</update>
+	<update id="orderDetailAccept" parameterType="string">
+		UPDATE PAYDETAIL SET DETAILSTATUS='결제' WHERE PAYMENTNO=#{paymentNo}
+	</update>
 </mapper>

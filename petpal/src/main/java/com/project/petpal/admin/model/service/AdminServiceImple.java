@@ -273,5 +273,16 @@ public class AdminServiceImple implements AdminService {
 		return dao.orderTotalCount(session);
 	}
 
+	@Override
+	@Transactional
+	public int orderAccept(String paymentNo) {
+		// TODO Auto-generated method stub
+		int result = dao.orderAccept(session, paymentNo);
+		if(result > 0) {
+			result = dao.orderDetailAccept(session,paymentNo);
+		}
+		return result;
+	}
+
 	
 }

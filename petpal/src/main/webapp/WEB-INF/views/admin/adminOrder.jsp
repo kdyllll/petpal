@@ -107,7 +107,8 @@
 								<td class="align-middle text-center"><c:out value="${o.EMAIL }"/></td>
 								<td class="align-middle text-center"><c:out value="${o.ORDERNO }" /></td>
 								<td class="align-middle text-center"><c:out value="${o.PAYSTATUS }"/><c:if test="${o.PAYSTATUS eq '결제대기'}">
-									<button type="button" class="orderAccept btn  btn-outline-danger btn-sm">승인</button><input type="hidden" value="${o.PAYMENTNO }" name="paymentNo">
+									<button type="button" class="orderAccept btn  btn-outline-danger btn-sm">승인</button>
+									<input type="hidden" value="${o.PAYMENTNO }" name="paymentNo">
 								</c:if></td>
 								<td class="align-middle text-center "><form
 										class="d-flex flex-column" method="post" >
@@ -157,6 +158,22 @@
         $(".orderCancel").on("click", e=> {
         	let paymentNo = $(e.target).prev().val();
         	ajaxModal("${path}/admin/paymentCancel.do", paymentNo);
+        })
+        
+        $(".orderAccept").on("click", e => {
+        	let paymentNo = $(e.target).next().val();
+        	$.ajax({
+    			url: "${path}/admin/orderAccept.do",
+    			data:{paymentNo : paymentNo },
+    			success:(data) => {
+    				if(data  == true) {
+    					alert("승인 성공");
+    					location.reload();
+    				} else {
+    					alert("승인 실패");
+    				}
+    			}
+    		});
         })
     })
     

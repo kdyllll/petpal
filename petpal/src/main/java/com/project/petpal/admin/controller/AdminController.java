@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.petpal.admin.model.service.AdminService;
 import com.project.petpal.admin.model.vo.Product;
@@ -145,6 +146,14 @@ public class AdminController {
 		model.addAttribute("pList",pList);
 		model.addAttribute("status",status);
 		return "admin/adminCommunity";
+	}
+	
+	@RequestMapping("/admin/orderAccept.do")
+	@ResponseBody
+	public Boolean orderAccept(String paymentNo) {
+		System.out.println(paymentNo);
+		int result = service.orderAccept(paymentNo);
+		return true;
 	}
 	
 }
