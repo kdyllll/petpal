@@ -3,7 +3,9 @@ package com.project.petpal.community.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.project.petpal.community.model.vo.DailyComment;
 import com.project.petpal.community.model.vo.Find;
+import com.project.petpal.community.model.vo.FindComment;
 import com.project.petpal.community.model.vo.FindImg;
 
 public interface FindService {
@@ -23,4 +25,11 @@ public interface FindService {
 	List<Map> selectFindHeartWeek(int cPage,int numPerPage);
 	int deleteFind(String findNo);
 	int findTotalCount();
+	List<Map> selectFollowingList(String memberNo);
+	List<Map> selectComment(String findNo,int cPage,int numPerPage);
+	int countComment(String findNo);
+	int countCommentPage(String findNo);
+	int insertComment(FindComment fc);
+	int commentDelete(String findCommentNo);
+	int comment2Delete(String findCommentNo);
 }

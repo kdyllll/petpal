@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +31,10 @@ public class NoticeController {
 	private NoticeService service;
 	
 	@RequestMapping("board/noticeList.do")
-	public ModelAndView noticeList(ModelAndView mv, HttpSession session) {
+	public ModelAndView noticeList(ModelAndView mv, HttpSession session,
+									@RequestParam(value="hashtag", required=false) String hashtag,
+									@RequestParam(value="cPage",defaultValue="1") int cPage,
+									@RequestParam(value="numPerPage",defaultValue="1") int numPerPage) {
 		Member loginMember=(Member)session.getAttribute("loginMember");
 		
 		String email="";
@@ -45,7 +49,9 @@ public class NoticeController {
 			manager = "manager";
 		}
 		
-		mv.addObject("list", service.noticeList());
+		List<Map> list = service.noticeList(cPage,numPerPage);
+		
+		mv.addObject("list", list);
 		mv.addObject("manager", manager);
 		mv.setViewName("board/noticeList");
 		return mv;
@@ -123,8 +129,6 @@ public class NoticeController {
 			}
 		}
 
-		System.out.println("files : " + files);
-
 		int result = service.insertNotice(n, files);
 		mv.addObject("msg", result > 0 ? "입력 성공" : "입력 실패");
 		mv.addObject("loc", "/board/noticeList.do");
@@ -133,10 +137,7 @@ public class NoticeController {
 
 		return mv;
 	}
-	
-	////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////
+
 	@RequestMapping("/board/noticeUpdate.do")
 	public ModelAndView noticeUpdate(HttpServletRequest request, HttpServletResponse response, ModelAndView mv) {
 		String noticeNo = request.getParameter("noticeNo");
@@ -181,8 +182,6 @@ public class NoticeController {
 		//경로가 없으면 만들기
 		if(!dir.exists()) dir.mkdirs();
 		
-		System.out.println(mainImgNo[0]);
-
 		//이미지에 들어갈 내용 리스트
 		List<String> content = new ArrayList<String>();
 		List<String> newContent = new ArrayList<String>();
@@ -200,16 +199,11 @@ public class NoticeController {
 		
 		int dResult = 0;
 		
-		for(int i=0;i<deleteImgNo.length;i++) {
-			System.out.println("넘어온 번호 : " + deleteImgNo[i]);
-		}
-		
 //		기존 이미지 삭제
 		for(int i=0;i<deleteImgNo.length;i++) {
 			NoticeImg ni = NoticeImg.builder().noticeImgNo(deleteImgNo[i]).build();
 			dResult=service.deleteNoticeImg(ni);
 		}
-		System.out.println("기존사진 삭제(0이면 삭제안됨, 1이면 삭제됨)"+dResult);
 		
 		List<NoticeImg> subImgs=new ArrayList<NoticeImg>();
 		
@@ -238,26 +232,17 @@ public class NoticeController {
 		int sResult = service.insertSubImgs(subImgs);
 		
 		if(sResult>0) {
-			System.out.println(content);
-			for(int u=0;u<noticeImgNo.length;u++) {
-				System.out.println(noticeImgNo[u]);
-			}
-			
 			int cResult = 0;
 			for(int k=0;k<content.size();k++) {
-				System.out.println("content : " + content.get(k));
 				img = NoticeImg.builder().content(content.get(k)).noticeImgNo(noticeImgNo[k]).build();
 				cResult = service.updateContent(img);
 			}
 		}else {
-			System.out.println(content);
 			for(int u=0;u<noticeImgNo.length;u++) {
-				System.out.println(noticeImgNo[u]);
 			}
 			
 			int cResult = 0;
 			for(int k=0;k<content.size();k++) {
-				System.out.println("content : " + content.get(k));
 				img = NoticeImg.builder().content(content.get(k)).noticeImgNo(noticeImgNo[k]).build();
 				cResult = service.updateContent(img);
 			}

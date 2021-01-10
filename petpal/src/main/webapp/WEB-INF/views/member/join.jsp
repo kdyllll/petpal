@@ -35,8 +35,31 @@
 										<input type="text" class="form-control input-lg"
 											placeholder="이메일" name="email" id="email">
 										<div class="input-group-append">
-											<button type="button" class="btn btn-secondary" id="auth">이메일인증</button>
+											<button type="button" class="btn btn-secondary rounded-right" id="auth">이메일인증</button>
 										</div>
+										<!-- 모달 영역 -->
+										<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+											<div class="modal-dialog" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h4 class="modal-title" id="myModalLabel">이메일 인증</h4>
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+														<input type="hidden" id="checked2" value="0">
+													</div>
+													<div class="modal-body">
+														<p>이메일로 인증번호를 전송하였습니다.인증번호를 입력해주세요.</p>
+														<span>인증번호</span><input type="text" id="key">
+														<button type="button" class="btn btn-outline-secondary" id="check2">인증번호확인</button>
+														<input type="hidden" id="key2">
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+													</div>
+												</div>
+											</div>
+										</div>
+
+
 									</div>
 									<div class="mb-4">
 										<input type="password" name="password" id="password"
@@ -189,6 +212,14 @@ input[type="checkbox"]:checked+svg {
 			$("#allcheck").prop("checked",false);
 		}
 	});
+	$("#check2").click(e=>{
+		if($("#key").val()==$("#key2").val()){
+			alert('인증이 확인되었습니다.');
+			$("#checked2").val(1);
+		}else{
+			alert('인증번호가 맞지않습니다.다시 입력해주세요.');
+		}
+	});
 	//전체동의 눌렀을때
 	$("#allcheck").click(e=>{
 		if($(e.target).prop("checked")==true){
@@ -210,6 +241,10 @@ input[type="checkbox"]:checked+svg {
 
 		if($("#email").val()==""){//이메일이 공백일때
 			alert("이메일을 입력해주세요.");
+			return;
+		}
+		if($("#checked2").val()==0){
+			alert("이메일을 인증해주세요.");
 			return;
 		}
 		if(pw==""||pw2==""){//비밀번호,비밀번호확인 둘중 하나라도 입력안했을때
@@ -285,7 +320,7 @@ input[type="checkbox"]:checked+svg {
 	});
 	$("#email").keyup(e=>{//이메일입력할때
 		$("#email").val($("#email").val().trim());//이메일에 공백못들어가게함
-		
+		$("#checked2").val(0);
 	}); 
 	$("#nickName").keyup(e=>{//이메일입력할때
 		$(".checked").val(0);
@@ -330,7 +365,12 @@ input[type="checkbox"]:checked+svg {
     		url:"${path}/sendEmail.do",
     		data:{email:email},
     		success:data=>{
-    			console.log(data);
+    			if(data==""){
+    				alert("형식에 맞지 않는이메일입니다.");
+    				return;
+    			}
+    			$("#key2").val(data);
+    			$("div.modal").modal();
 			}
     	})
     });

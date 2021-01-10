@@ -6,11 +6,13 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.project.petpal.community.model.dao.TipDao;
-import com.project.petpal.community.model.vo.FindImg;
+import com.project.petpal.community.model.vo.DailyComment;
 import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.community.model.vo.Tip;
+import com.project.petpal.community.model.vo.TipComment;
 import com.project.petpal.community.model.vo.TipImg;
 
 @Service
@@ -49,8 +51,8 @@ public class TipServiceImpl implements TipService {
 	}
 
 	@Override
-	public List<Map> tipList() {
-		return dao.tipList(session);
+	public List<Map> tipList(int cPage,int numPerPage, Map<String,String> keyword) {
+		return dao.tipList(session, cPage, numPerPage, keyword);
 	}
 	
 	@Override
@@ -161,5 +163,60 @@ public class TipServiceImpl implements TipService {
 	public List<Hashtag> selectHashList(String tipNo) {
 		// TODO Auto-generated method stub
 		return dao.selectHashList(session,tipNo);
+	}
+
+	@Override
+	public int totalTipCount() {
+		// TODO Auto-generated method stub
+		return dao.totalTipCount(session);
+	}
+	
+	@Override
+	public List<Map> selectFollowingList(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectFollowingList(session, memberNo);
+	}
+	
+	@Override
+	public List<TipComment> selectComment(String tipNo,int cPage,int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectComment(session,tipNo,cPage,numPerPage);
+	}
+
+	@Override
+	public int countComment(String tipNo) {
+		// TODO Auto-generated method stub
+		return dao.countComment(session,tipNo);
+	}
+	
+	@Override
+	public int countCommentPage(String tipNo) {
+		// TODO Auto-generated method stub
+		return dao.countCommentPage(session,tipNo);
+	}
+
+	@Override
+	public int insertComment(TipComment tc) {
+		// TODO Auto-generated method stub
+		return dao.insertComment(session,tc);
+	}
+
+	@Override
+	@Transactional
+	public int commentDelete(String tipCommentNo) {
+		// TODO Auto-generated method stub
+		//자기 자신을 참조하는 댓글(=대댓글)이 있다면 상태만 D로 변경
+		int result=dao.commentDelete(session,tipCommentNo);
+		//대댓글이 없다면 댓글 삭제 처리
+		if(result<1) {
+			result=dao.comment2Delete(session,tipCommentNo);
+		}		
+		return result;
+	}
+
+	@Override
+	public int comment2Delete(String tipCommentNo) {
+		// TODO Auto-generated method stub
+		return dao.comment2Delete(session,tipCommentNo);
 	}
 }

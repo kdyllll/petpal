@@ -6,7 +6,7 @@ import java.util.Map;
 import com.project.petpal.payment.model.vo.Payment;
 
 public interface PaymentService {
-	int insertPayment(Payment p, int[] cnt, String[] stockNo);
+	int insertPayment(Payment p, int[] cnt, String[] stockNo, String payDetailStatus);
 	List<Map> selectPaymentCompleteList(String orderNo);
 	String selectPaymentNo(String orderNo);
 	List<String> selectStockNo(String paymentNo);

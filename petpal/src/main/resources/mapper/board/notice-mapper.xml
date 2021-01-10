@@ -11,7 +11,7 @@
 		INSERT INTO NOTICEIMG VALUES(SEQ_NOTICEIMGNO.NEXTVAL, #{noticeNo}, #{content, jdbcType=VARCHAR}, #{contentImg, jdbcType=VARCHAR})
 	</insert>
 	<select id="noticeList" resultType="map">
-		SELECT * FROM NOTICE ORDER BY NOTICENO
+		SELECT * FROM NOTICE ORDER BY NOTICENO DESC
 	</select>
 	<select id="noticeMainList" parameterType="string" resultType="map">
 		SELECT * FROM NOTICE WHERE NOTICENO = #{noticeNo} ORDER BY NOTICENO
@@ -36,4 +36,7 @@
 	<update id="updateContent" parameterType="noticeImg">
 		UPDATE NOTICEIMG SET CONTENT = #{content} WHERE NOTICEIMGNO=#{noticeImgNo}
 	</update>
+	<select id="totalNoticeCount" resultType="_int">
+		SELECT COUNT(*) FROM NOTICE
+	</select>
 </mapper>

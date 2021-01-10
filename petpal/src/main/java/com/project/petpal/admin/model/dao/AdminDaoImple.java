@@ -261,4 +261,16 @@ public class AdminDaoImple implements AdminDao {
 		return session.selectOne("admin.mTotalCount");
 	}
 
+	@Override
+	public int orderAccept(SqlSession session, String paymentNo) {
+		// TODO Auto-generated method stub
+		return session.update("pay.orderAccept",paymentNo);
+	}
+
+	@Override
+	public int orderDetailAccept(SqlSession session, String paymentNo) {
+		// TODO Auto-generated method stub
+		return session.update("pay.orderDetailAccept", paymentNo);
+	}
+
 }

@@ -58,9 +58,16 @@ div.modal-body>p {
 						<p class="pl-3">카드결제</p>
 					</c:when>
 					<c:otherwise>
-						<p class="pl-3">무통장입금</p>
+						<p class="pl-3">무통장입금 </p>
+						
 					</c:otherwise>
 				</c:choose>
+				<p>
+					<strong>결제상태</strong>
+				</p>
+				<p class="pl-3">
+					<c:out value="${shop.PAYSTATUS}" />
+				</p>
 				
 				<p>
 					<strong>결제날짜</strong>

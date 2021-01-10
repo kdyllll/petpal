@@ -11,7 +11,13 @@
 		INSERT INTO TIPIMG VALUES(SEQ_TIPIMGNO.NEXTVAL, #{tipNo}, #{mainImg, jdbcType=VARCHAR}, #{contentImg, jdbcType=VARCHAR}, #{content, jdbcType=VARCHAR})
 	</insert>
 	<select id="tipList" resultType="map">
-		SELECT * FROM TIP JOIN TIPIMG USING(TIPNO) JOIN MEMBER USING(MEMBERNO) ORDER BY TIPNO DESC
+		SELECT * FROM TIP JOIN TIPIMG USING(TIPNO) JOIN MEMBER USING(MEMBERNO)
+		WHERE 1=1 
+		<if test="hashtag != null">
+		   AND TIPNO IN (SELECT TIPNO FROM TIP LEFT JOIN HASHTAG ON POSTNO=TIPNO WHERE HASHCONTENT=#{hashtag}) 
+		</if>
+		AND MAINIMG IS NOT NULL ORDER BY TIPDATE DESC
+		
 	</select>
 	<select id="tipMainList" resultType="map">
 		SELECT * FROM TIP WHERE TIPNO = #{tipNo} ORDER BY TIPNO DESC
@@ -20,7 +26,7 @@
 		SELECT * FROM TIPIMG WHERE TIPNO = #{tipNo} ORDER BY TIPIMGNO
 	</select>
 	<select id="selectTipListOne" parameterType="string" resultType="map">
-		select * from member join tip using(memberNo) join tipImg using(tipNo) where memberNo=#{memberNo} and mainImg is not null
+		select * from member join tip using(memberNo) join tipImg using(tipNo) where memberNo=#{memberNo} AND MAINIMG IS NOT NULL
 	</select>
 	<select id="tipCnt" resultType="_int" parameterType="string">
 		select count(*) from member join tip using(memberNo) where memberNo = #{memberNo}
@@ -75,4 +81,26 @@
 	<delete id="deleteAllHash" parameterType="string">
 		DELETE FROM HASHTAG WHERE POSTNO=#{value}
 	</delete>
+	<select id="totalTipCount" resultType="_int">
+		SELECT COUNT(*) FROM TIP JOIN TIPIMG USING(TIPNO) JOIN MEMBER USING(MEMBERNO) WHERE MAINIMG IS NOT NULL
+	</select>
+	<select id="selectComment" parameterType="string" resultType="tComment">
+		SELECT TIPNO,TIPCOMMENTNO,COMMENTLEVEL,MEMBERNO,IMG,NICKNAME,TIPCOMMENT,WRITEDATE,STATUS FROM TIPCOMMENT LEFT JOIN MEMBER USING(MEMBERNO) WHERE TIPNO=#{tipNo}
+		START WITH COMMENTLEVEL=1 CONNECT BY PRIOR TIPCOMMENTNO=COMMENTREF ORDER SIBLINGS BY WRITEDATE DESC
+	</select>
+	<select id="countComment" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM TIPCOMMENT WHERE TIPNO=#{tipNo} AND STATUS='E'
+	</select>
+	<select id="countCommentPage" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM TIPCOMMENT WHERE TIPNO=#{tipNo}
+	</select>
+	<insert id="insertComment" parameterType="tComment">
+  		INSERT INTO TIPCOMMENT VALUES(SEQ_TIPCOMMENTNO.NEXTVAL,#{tipNo},#{memberNo},#{commentLevel},#{tipComment},#{commentRef},default,default)
+  	</insert>
+  	<update id="commentDelete" parameterType="string">
+  		UPDATE TIPCOMMENT SET STATUS='D' WHERE TIPCOMMENTNO=#{tipCommentNo} AND (SELECT COUNT(*) FROM TIPCOMMENT WHERE COMMENTREF=#{tipCommentNo})>0
+  	</update>
+  	<delete id="comment2Delete" parameterType="string">
+  		DELETE FROM TIPCOMMENT WHERE TIPCOMMENTNO=#{tipCommentNo}
+  	</delete>
 </mapper>

@@ -137,7 +137,7 @@ public class AdminProductController {
 	}
 	
 	@RequestMapping("/admin/inOutSearch.do")
-	public String inOutSearch(HttpServletRequest request, HttpServletResponse response,Model model ) {
+	public String inOutSearch(HttpServletRequest request,Model model ) {
 		String productName = request.getParameter("productName");
 		String ioStatus = request.getParameter("status");
 		System.out.println(ioStatus);

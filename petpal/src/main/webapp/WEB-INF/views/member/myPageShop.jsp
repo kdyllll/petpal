@@ -112,7 +112,7 @@
 						</p>
 						<!-- 배송전인 상태의 상품만 주문취소가능하게 -->
 						<c:choose>
-							<c:when test="${s.DETAILSTATUS eq '결제' }">
+							<c:when test="${s.DETAILSTATUS eq '결제'}">
 								<button type="button"
 									class="btn btn-outline-secondary btn-sm mr-2 shopDetail"
 									style="font-size: 12px;">상세보기</button>
@@ -125,6 +125,14 @@
 								<button type="button"
 									class="btn btn-outline-secondary btn-sm changeBtn"
 									style="font-size: 12px;">교환신청</button>
+							</c:when>
+							<c:when test="${s.DETAILSTATUS eq '대기' }">
+								<span style="font-size: 12px;">무통장입금(대기)</span>
+								<button type="button"
+									class=" ml-2 btn btn-outline-secondary btn-sm mr-2 shopDetail"
+									style="font-size: 12px;">상세보기</button>
+								<!-- 결제일, 결제정보 주소지 ... -->
+								<input type="hidden" value="${s.DETAILNO }" name="detailNo">
 							</c:when>
 							<c:when test="${s.DETAILSTATUS eq '반품중' }">
 								<span style="font-size: 12px;">반품신청(대기)</span>

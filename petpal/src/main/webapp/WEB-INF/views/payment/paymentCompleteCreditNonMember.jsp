@@ -25,7 +25,19 @@
 		background-color: #f7dad9;
 	}
 </style>
-
+<script>
+	$(document).ready(function(){
+		let email = '${list[0].EMAIL }';
+		let orderNo = '${list[0].ORDERNO }';
+		$.ajax({
+	        url:"${path}/payment/sendEmail.do",
+	        data:{email:email, orderNo:orderNo},
+	        success: (data) => {
+	       	 console.log(data); 
+	        }
+		})
+	})
+</script>
 </head>
 <body class="bg-white">
 <jsp:include page="/WEB-INF/views/common/header.jsp" />

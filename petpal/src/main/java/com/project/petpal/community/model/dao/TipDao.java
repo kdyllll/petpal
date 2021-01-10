@@ -7,12 +7,13 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.project.petpal.community.model.vo.Hashtag;
 import com.project.petpal.community.model.vo.Tip;
+import com.project.petpal.community.model.vo.TipComment;
 import com.project.petpal.community.model.vo.TipImg;
 
 public interface TipDao {
 	int insertTip(SqlSession session, Tip t);
 	int insertTipImg(SqlSession session, TipImg ti);
-	List<Map> tipList(SqlSession session);
+	List<Map> tipList(SqlSession session, int cPage,int numPerPage, Map<String,String> keyword);
 	List<Map> tipMainList(SqlSession session, String tipNo);
 	List<Map> tipDetail(SqlSession sessio, String tipNo);
 	int updateTip(SqlSession session, Tip t);
@@ -31,5 +32,13 @@ public interface TipDao {
 	int deleteLike(SqlSession session, Map m);
 	int insertHashtag(SqlSession session,Hashtag h);
 	List<Hashtag> selectHashList(SqlSession session,String tipNo);
-	int deleteAllHash(SqlSession session,String dailyNo);
+	int deleteAllHash(SqlSession session,String tipNo);
+	int totalTipCount(SqlSession session);
+	List<Map> selectFollowingList(SqlSession session, String memberNo);
+	List<TipComment> selectComment(SqlSession session,String tipNo,int cPage,int numPerPage);
+	int countComment(SqlSession session,String tipNo);
+	int countCommentPage(SqlSession session,String tipNo);
+	int insertComment(SqlSession session,TipComment tc);
+	int commentDelete(SqlSession session,String tipCommentNo);
+	int comment2Delete(SqlSession session,String tipCommentNo);
 }

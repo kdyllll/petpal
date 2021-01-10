@@ -19,7 +19,7 @@
 				<input type="text" class="form-control mt-5 mb-3 border-bottom" name="title" id="name" placeholder="제목을 입력하세요" value="" required style="border: none;">
 				<div class="invalid-feedback">제목을 입력해주세요.</div>
 
-				<textarea class="form-control border-0 mb-5" id="ta" name="content1" placeholder="내용을입력하세요" style="resize: none; overflow-y: hidden;" onkeyup="xSize(this)" required></textarea>
+				<textarea class="autosize form-control border-0 mb-5" id="ta" name="content1" placeholder="내용을입력하세요" style="resize: none; overflow-y: hidden;" onkeyup="xSize(this)" required></textarea>
 				<div class="invalid-feedback">내용을 입력해주세요.</div>
 				<textarea id="xt" style="width: 300px; height: 1px; overflow-y: hidden; position: absolute; top: -9px; opacity: 0" disabled></textarea>
 
@@ -37,7 +37,7 @@
 				</div>
 
 
-				<textarea class="form-control border-0 mt-5 mb-5" id="ta2" name="content2" placeholder="내용을입력하세요" style="resize: none; overflow-y: hidden;" onkeyup="xSize2(this)"></textarea>
+				<textarea class="autosize form-control border-0 mt-5 mb-5" id="ta2" name="content2" placeholder="내용을입력하세요" style="resize: none; overflow-y: hidden;"></textarea>
 				<textarea id="xt" style="width: 300px; height: 1px; overflow-y: hidden; position: absolute; top: -9px; opacity: 0" disabled></textarea>
 
 				<div class="text-center mt-5 mb-5">
@@ -77,7 +77,7 @@
 															+ "\" onclick=\"deletePreview(this)\">"
 															+ "x" + "</button>"
 															+ "<img id=\"image_container\" name=\"contentImg\" class=\"img\" src=\"" + img.target.result + "\" style=\"width:100%;\"\/>"
-															+ "<textarea class=\"form-control border-0 mt-2 mb-3\" name=\"content\" id=\"ta\" rows=\"3\" placeholder=\"사진에 대한 설명을 작성해주세요\" style=\"resize: none;\"></textarea>"
+															+ "<textarea class=\"autosize form-control border-0 mt-2 mb-3\" name=\"content\" id=\"ta\" rows=\"3\" placeholder=\"사진에 대한 설명을 작성해주세요\" style=\"resize: none;\"></textarea>"
 															+ "</div>");
 									files[imgNum] = file;
 									$("#ta2").show();
@@ -113,6 +113,10 @@
 							return false;
 						}
 					}
+					
+					$("textarea.autosize").on('keydown keyup', function () {
+				      	  $(this).height(1).height( $(this).prop('scrollHeight')+12 );	
+				     	 });
 
 					$(document).ready(function() {
 						//submit 등록. 실제로 submit type은 아니다.
@@ -132,33 +136,6 @@
 						});
 					});
 
-					function xSize(e) {
-						var xe = document.getElementById('xt'), t;
-						e.onfocus = function() {
-							t = setInterval(function() {
-								xe.value = e.value;
-								e.style.height = (xe.scrollHeight + 12) + 'px';
-							}, 100);
-						}
-						e.onblur = function() {
-							clearInterval(t);
-						}
-					}
-					xSize(document.getElementById('ta'));
-
-					function xSize2(e) {
-						var xe = document.getElementById('xt'), t;
-						e.onfocus = function() {
-							t = setInterval(function() {
-								xe.value = e.value;
-								e.style.height = (xe.scrollHeight + 12) + 'px';
-							}, 100);
-						}
-						e.onblur = function() {
-							clearInterval(t);
-						}
-					}
-					xSize2(document.getElementById('ta2'));
 				</script>
 			</form>
 		</div>

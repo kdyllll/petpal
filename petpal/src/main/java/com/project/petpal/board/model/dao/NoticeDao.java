@@ -11,7 +11,7 @@ import com.project.petpal.board.model.vo.NoticeImg;
 public interface NoticeDao {
 	int insertNotice(SqlSession session, Notice n);
 	int insertNoticeImg(SqlSession session, NoticeImg ni);
-	List<Map> noticeList(SqlSession session);
+	List<Map> noticeList(SqlSession session, int cPage, int numPerPage);
 	List<Map> noticeMainList(SqlSession session, String noticeNo);
 	List<Map> noticeImgList(SqlSession session, String noticeNo);
 	int updateNotice(SqlSession session, Notice n);
@@ -19,4 +19,5 @@ public interface NoticeDao {
 	int deleteNoticeImg(SqlSession session, NoticeImg ni);
 	int insertSubImgs(SqlSession session, NoticeImg ni);
 	int updateContent(SqlSession session, NoticeImg ni);
+	int totalNoticeCount(SqlSession session);
 }

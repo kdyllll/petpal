@@ -254,13 +254,16 @@ function check(){
 				$("#usePoint").text($(this).val()+"P");
 				$("#total").text((${list[0].totalPrice } - $(this).val() ) + "원");
 				document.getElementById("pointMinus").value=$(this).val();
-				$("#expectation").text((${list[0].totalPrice } - $(this).val()) * 0.1 + "P");
+				
+				let expoint = parseInt((${list[0].totalPrice } - $(this).val()) * 0.1);
+				
+				$("#expectation").text(expoint + "P");
 			}
 		});
 	});
 	
 	function getAddress(){
-		let memberNo = ${memberNo};
+		let memberNo = '${memberNo}';
 		//배송지 주소 가져오기
        	$.ajaxSettings.traditional = true;
        	$.ajax({
@@ -282,7 +285,8 @@ function check(){
 	}
 	
 	$(document).ready(function() {
-		$("#expectation").text(${list[0].totalPrice } * 0.1 + "P");
+		let expoint = parseInt((${list[0].totalPrice } - $(this).val()) * 0.1);
+		$("#expectation").text(expoint + "P");
 		$(".refund").hide();
 		$("#cre").show();
 	});

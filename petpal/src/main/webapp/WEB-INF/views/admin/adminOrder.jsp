@@ -26,7 +26,7 @@
 				class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-5 "
 				style="height: 100vh; overflow-y: auto;">
 				<h2 class="my-3">주문내역</h2>
-				<form id="search-userEmail" action="${path }/admin/orderSearch.do" method="post" class="row align-items-center">
+				<form id="search-userEmail" method="post" class="row align-items-center orderFrm">
 					<div class="mb-3  col-lg-2">
 						<label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
 						<select class="custom-select mr-sm-2" name="searchType" id="searchType">
@@ -43,6 +43,28 @@
 						<div class="input-group-append">
 							<button class="btn btn-outline-secondary searchBtn" type="submit"
 								>Button</button>
+						</div>
+					</div>
+					<div class="input-group mb-3  col-lg-5 ">
+						<div class="form-check form-check-inline ">
+							<input class="form-check-input" name="status" type="radio"
+								 value="결제완료" id="yes" ${status != null && status.equals("결제완료") ? "checked":""}> <label
+								class="form-check-label" for="yes">결제완료</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" name="status" type="radio"
+								id="ing" value="취소완료" ${status != null && status.equals("취소완료") ? "checked":""}> <label
+								class="form-check-label" for="ing">취소완료</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" name="status" type="radio"
+								value="결제대기" id="deny" ${status != null && status.equals("결제대기") ? "checked":""}> <label
+								class="form-check-label" for="deny">결제대기</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" name="status" type="radio"
+								 value="전체" id="com" ${status == null ? "checked":""}> <label
+								class="form-check-label" for="com">전체</label>
 						</div>
 					</div>
 				</form>
@@ -84,7 +106,10 @@
 								<td class="align-middle text-center"><fmt:formatDate value="${o.PAYDATE }" pattern="yyyy년MM월dd일" /></td>
 								<td class="align-middle text-center"><c:out value="${o.EMAIL }"/></td>
 								<td class="align-middle text-center"><c:out value="${o.ORDERNO }" /></td>
-								<td class="align-middle text-center"><c:out value="${o.PAYSTATUS }"/></td>
+								<td class="align-middle text-center"><c:out value="${o.PAYSTATUS }"/><c:if test="${o.PAYSTATUS eq '결제대기'}">
+									<button type="button" class="orderAccept btn  btn-outline-danger btn-sm">승인</button>
+									<input type="hidden" value="${o.PAYMENTNO }" name="paymentNo">
+								</c:if></td>
 								<td class="align-middle text-center "><form
 										class="d-flex flex-column" method="post" >
 										
@@ -113,8 +138,18 @@
 	</div>
 	<script>
     $(function(){
-        
-        
+    	$(".searchBtn").on("click", e => {
+    		$(".orderFrm").attr("action","${path }/admin/orderSearch.do").submit();
+    	})
+    	
+    	$("input[type='radio']").on("change", e => {
+    		if($(e.target).val()=="결제완료" || $(e.target).val()=="취소완료" || $(e.target).val()=="결제대기") {
+    			$(".orderFrm").attr("action","${path }/admin/orderSearch.do").submit();
+    		} else {
+    			$(".orderFrm").attr("action","${path }/admin/adminOrder.do").submit();
+    		}
+    	})
+    	
         $(".orderDetailBtn").on("click", e => {
         	let paymentNo = $(e.target).next().val();
         	ajaxModal("${path}/admin/paymentDetail.do", paymentNo);
@@ -123,6 +158,22 @@
         $(".orderCancel").on("click", e=> {
         	let paymentNo = $(e.target).prev().val();
         	ajaxModal("${path}/admin/paymentCancel.do", paymentNo);
+        })
+        
+        $(".orderAccept").on("click", e => {
+        	let paymentNo = $(e.target).next().val();
+        	$.ajax({
+    			url: "${path}/admin/orderAccept.do",
+    			data:{paymentNo : paymentNo },
+    			success:(data) => {
+    				if(data  == true) {
+    					alert("승인 성공");
+    					location.reload();
+    				} else {
+    					alert("승인 실패");
+    				}
+    			}
+    		});
         })
     })
     

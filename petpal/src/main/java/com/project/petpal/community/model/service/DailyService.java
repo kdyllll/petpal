@@ -44,4 +44,5 @@ public interface DailyService {
 	int insertDailyLike(Map m);
 	int deleteDailyLike(Map m);
 	List<String> selectDailyLike(String memberNo);
+	List<Map> selectFollowingList(String memberNo);
 }

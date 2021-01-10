@@ -12,6 +12,7 @@
 	<input type="hidden" class="loginMember"
 		value="${loginMember.memberNo }" />
 	<input type="hidden" class="findNo" name="findNo" value="${fDetail.FINDNO }" />
+	<input type="hidden" class="writeMember" value="${fDetail.MEMBERNO }"/>
 	<main role="main" style="min-height: 100vh;">
 		<div class="container my-4 mt-lg-0">
 			<div class="row ">
@@ -174,28 +175,10 @@
 				</div>
 			</div>
 			<!-- 댓글 -->
-			<hr class="my-5">
-
-			<div id="commentContainer">
-				<h4>
-					댓글<span class="su"><c:out value="${count }" /></span>
-				</h4>
-				<!-- 댓글등록 -->
-				<div class="d-flex mb-3 editor">
-					<div class="input-group mb-3">
-						<input type="hidden" name="commentLevel" value="1"> <input
-							type="hidden" name="commentRef" value=""> <input
-							type="text" class="form-control rounded" name="findComment"
-							placeholder="칭찬과 격려의 댓글은 작성자에게 큰 힘이 됩니다:)"
-							aria-label="Recipient's username"
-							aria-describedby="button-addon2">
-						<div class="input-group-append">
-							<button class="btn btn-outline-secondary write" type="button">등록</button>
-						</div>
-					</div>
-				</div>
+			<div id="commentContainer" class="mt-5">
+				
 			</div>
-			<hr class="my-5">
+
 			<!-- 작은사이즈 positon bottom에 fixed -->
 			<div class="col-lg-3 d-block d-lg-none fixed-bottom"
 				style="background-color: white; border-top: 1px solid #dfe6e9;">
@@ -307,6 +290,108 @@
 	<script>
 		let loginMember=$(".loginMember").val();
 		let findNo=$(".findNo").val();
+		commentAjax();
+		
+		//댓글
+		function commentAjax(){
+			let writeMember=$(".writeMember").val();
+			$.ajax({
+				url: "${path}/find/findComment.do",
+				dataType:"html",
+				data:{findNo:findNo,writeMember:writeMember},
+				success:(data) => {
+					$("#commentContainer").html(data);
+				}
+			});
+		};
+		
+		//댓글 삭제
+		function commentDelete(path,data){
+			$.ajax({
+				url:path,
+				data:{findCommentNo:data},
+				success:data=>{
+					if(data===true){
+						alert("댓글이 삭제되었습니다.");
+						commentAjax();
+					}else{
+						alert("댓글 삭제에 실패하였습니다.");
+					}
+				},
+				error:function(){
+					alert("댓글 삭제에 실패하였습니다.");
+				}
+			})
+		}
+		
+		//답글등록창 생성
+		$(document).on('click','.reply',function(e) {
+			if(loginMember==""){
+				loginModal();
+				return;
+			}
+			var comment=$(e.target).parents("div.comment");//답글달기의 댓글
+			
+			if($("div.editor").length==2&&!comment.next().hasClass("editor")){//댓글달기 창이 두개이고 
+				var flag=confirm("다른 댓글에서 작성하고 있던 내용이 유실됩니다. 정말 이 댓글로 전환하시겠습니까?")
+				if(flag==true){//확인 눌렀을때
+					$("#commentContainer").find("div.subComment").remove();
+				}else{
+					//취소 눌렀을때 변화없음
+				}
+			}
+			if($("div.editor").length==1){//댓글달기창이 하나일때
+				var editor=$("div.editor").clone();
+				editor.addClass("ml-5");
+				editor.addClass("subComment");
+				editor.find("[name=commentLevel]").val("2");
+				editor.find("[name=findComment]").val("");
+				editor.find("[name=commentRef]").val($(e.target).val());
+				comment.after(editor);//
+			}
+		});
+		
+		//댓글 등록
+		$(document).on('click','.findWrite',function(e) {//댓글 등록 버튼 눌렀을때
+			if(loginMember==""){//로그인 안되어있다면
+				loginModal();
+				return;
+			}else if($(e.target).parents("div.editor").find("[name=findComment]").val().trim()==""){//댓글 내용이 없으면
+				alert("내용을 입력해주세요.");
+				return;
+			}
+			var findComment=$(e.target).parents("div.editor").find("[name=findComment]").val();
+			var commentLevel=$(e.target).parents("div.editor").find("[name=commentLevel]").val();
+			var commentRef=$(e.target).parents("div.editor").find("[name=commentRef]").val();
+			$.ajax({
+				url:"${path}/find/commentWrite.do",
+				data:{findComment:findComment,commentLevel:commentLevel,memberNo:loginMember,findNo:findNo,commentRef:commentRef},
+				success:data=>{
+					if(data===true){
+						alert("댓글이 등록되었습니다.");
+						commentAjax();
+					}else{
+						alert("댓글 등록에 실패하였습니다.");
+					}
+				},
+				error:function(){
+					alert("댓글 등록에 실패하였습니다.");
+				}
+			})
+		});
+		
+		//댓글 삭제
+		$(document).on("click",".commentDelete",e=>{
+			//댓글 삭제 눌렀을 때 (댓글은 업뎃 대댓글은 삭제)
+			commentDelete("${path}/find/commentDelete.do",$(e.target).val());	
+		});
+		
+		//대댓글 삭제
+		$(document).on("click",".comment2Delete",e=>{
+			//대댓글 삭제 눌렀을 때 (대댓글은 삭제)
+			commentDelete("${path}/find/comment2Delete.do",$(e.target).val())	
+		});
+		
 
 		//팔로우 버튼 누르면
 		$(".followBtn").on("click",e=>{
@@ -386,6 +471,10 @@
 	 					$(".following").show();
 	 					$(".follow").hide();
 	 				}
+	 				if(data==100){
+	 					$(".following").hide();
+	 					$(".follow").show();
+	 				}
 	 			},error:function(request, status, error){
 	 				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	 			}
@@ -408,6 +497,10 @@
  	 					$(".following").hide();
  	 					$(".follow").show();
  	 				}
+ 	 				if(data==100){
+	 					$(".following").hide();
+	 					$(".follow").show();
+	 				}
  	 			},error:function(request, status, error){
  	 				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
  	 			}
@@ -415,6 +508,8 @@
 		}else{ //로그인 안되어 있으면 로그인 모달 띄우기
 			loginModal();
 		};
+		
+		
  	});
 
 </script>

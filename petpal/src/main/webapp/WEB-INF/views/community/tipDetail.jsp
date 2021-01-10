@@ -8,6 +8,7 @@
 </head>
 <body class="bg-white">
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
+<jsp:include page="/WEB-INF/views/community/claim.jsp"/>
   
   <main role="main" style="min-height:100vh;">
    	<div class="album  bg-light">
@@ -44,7 +45,7 @@
 	                             		<c:if test="${not empty h}">
 	                                 		<a href="${path }/community/hashSearch.do?hashtag=${h}" class="text-secondary bg-point mr-2">#<c:out value="${h }"/></a>
 	                                 	</c:if>
-	                                 </c:forEach>					
+	                                 </c:forEach>
 						</span>
 	                </c:forEach>
                 </div>
@@ -97,13 +98,11 @@
                               d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
                           </svg></button>
                     </div>
-
-
+                   
                    <!-- 댓글 -->
-				                 <div id="commentContainer">
-
-                  </div>
                 </div>
+					<div id="commentContainer"></div>
+					<input type="hidden" class="writeMember" value="${mainList[0].MEMBERNO }"/>
               </div>
             </div>
 
@@ -195,6 +194,9 @@
 			               </div>
 		               </c:if>
 		         </div><!-- 스티키 -->
+		         
+	               			</div>
+	               			
 		         <div class="loginModal"></div>
         </div>
         <input type="hidden" class="tipNo" value="${mainList[0].TIPNO }"> 
@@ -204,6 +206,7 @@
   <script>
   	let tipNo = $(".tipNo").val();
 	let loginMember=$(".loginMember").val();
+	commentAjax();
  	$(document).ready(function() {
  		$("#delete").on("click", e=>{
  			if(window.confirm("게시글을 삭제하시겠습니까?")){
@@ -306,6 +309,132 @@
  		});
  	})
  	
+ 	//댓글 스크립트
+function commentAjax(){
+	let writeMember=$(".writeMember").val();
+	$.ajax({
+		url: "${path}/tip/tipComment.do",
+		dataType:"html",
+		data:{tipNo:tipNo,writeMember:writeMember},
+		success:(data)=>{
+			$("#commentContainer").html(data);
+		}
+	});
+};
+
+function commentDelete(path,data){
+	$.ajax({
+		url:path,
+		data:{tipCommentNo:data},
+		success:data=>{
+			if(data===true){
+				alert("댓글이 삭제되었습니다.");
+				commentAjax();
+			}else{
+				alert("댓글 삭제에 실패하였습니다.");
+			}
+		},
+		error:function(){
+			alert("댓글 삭제에 실패하였습니다.");
+		}
+	})
+}
+
+ 
+$(function(){//로그인 안되어있을때 댓글창 누르면 손가락표시
+	if(loginMember==""){
+		$("[name=tipComment]").css({"cursor":"pointer"});
+	}
+});
+
+$(document).on('click','[name=tipComment]',function(e) { //댓글창 누르면 로그인 확인
+		if(loginMember==""){
+			loginModal();
+		}
+});
+
+$(document).on('click','.reply',function(e) {//답글달기 눌렀을때
+	if(loginMember==""){
+		loginModal();
+		return;
+	}
+	var comment=$(e.target).parents("div.comment");//답글달기의 댓글
+	
+	if($("div.editor").length==2&&!comment.next().hasClass("editor")){//댓글달기 창이 두개이고 
+		var flag=confirm("다른 댓글에서 작성하고 있던 내용이 유실됩니다. 정말 이 댓글로 전환하시겠습니까?")
+		if(flag==true){//확인 눌렀을때
+			$("#commentContainer").find("div.subComment").remove();
+		}else{//취소 눌렀을때 변화없음
+			
+		}
+	}
+	if($("div.editor").length==1){//댓글달기창이 하나일때
+	var editor=$("div.editor").clone();
+	editor.addClass("ml-5");
+	editor.addClass("subComment");
+	editor.find("[name=commentLevel]").val("2");
+	editor.find("[name=tipComment]").val("");
+	editor.find("[name=commentRef]").val($(e.target).val());
+	comment.after(editor);//
+	}
+});
+
+$(document).on('click','.write',function(e) {//댓글 등록 버튼 눌렀을때
+	if(loginMember==""){//로그인 안되어있다면
+		loginModal();
+		return;
+	}else if($(e.target).parents("div.editor").find("[name=tipComment]").val().trim()==""){//댓글 내용이 없으면
+		alert("내용을 입력해주세요.");
+		return;
+	}
+	var tipNo=$(".tipNo").val();
+	var tipComment=$(e.target).parents("div.editor").find("[name=tipComment]").val();
+	var commentLevel=$(e.target).parents("div.editor").find("[name=commentLevel]").val();
+	var commentRef=$(e.target).parents("div.editor").find("[name=commentRef]").val();
+	$.ajax({
+		url:"${path}/tip/commentWrite.do",
+		data:{tipComment:tipComment,commentLevel:commentLevel,memberNo:loginMember,tipNo:tipNo,commentRef:commentRef},
+		success:data=>{
+			if(data===true){
+				alert("댓글이 등록되었습니다.");
+				commentAjax();
+			}else{
+				alert("댓글 등록에 실패하였습니다.");
+			}
+		},
+		error:function(){
+			alert("댓글 등록에 실패하였습니다.");
+		}
+	})
+});
+
+$(document).on("click",".commentDelete",e=>{
+	//댓글 삭제 눌렀을 때 (댓글은 업뎃 대댓글은 삭제)
+	commentDelete("${path}/tip/commentDelete.do",$(e.target).val());	
+});
+
+$(document).on("click",".comment2Delete",e=>{
+	//대댓글 삭제 눌렀을 때 (대댓글은 삭제)
+	commentDelete("${path}/tip/comment2Delete.do",$(e.target).val())	
+});
+
+$(".binHeart").on("click" , e => {
+	if(loginMember==""){//로그인 안되어있다면
+		loginModal();
+
+	}else {//댓글 내용이 없으면
+		$(e.target).parent().addClass("d-none");
+		$(e.target).parent().next().removeClass("d-none");
+		$.ajax({
+	        url:"${path}/tip/insertLike.do",
+	        data:{tipNo : tipNo},
+	        success: (data) => {
+	       	 console.log(data); 
+	        }
+		})
+	}
+	
+})
  </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

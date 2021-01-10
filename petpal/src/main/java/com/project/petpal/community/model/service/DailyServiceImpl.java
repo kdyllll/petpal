@@ -322,6 +322,12 @@ public class DailyServiceImpl implements DailyService {
 		return dao.selectDailyLike(session, memberNo);
 	}
 
+	@Override
+	public List<Map> selectFollowingList(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.selectFollowingList(session, memberNo);
+	}
+
 	
 	
 
