@@ -48,8 +48,19 @@
 								<br />
 								<script>
 									$(function(){
-										$(".orderCancelBtn").on("click", function(){
-											$(".orderCancelFrm").attr("action","${path}/admin/orderCancelEnd.do").submit();
+										$(".orderCancelBtn").on("click", e => {
+											$.ajax({
+												url : "${path}/admin/orderCancelEnd.do",
+												data : {detailNo : $(e.target).prev().val() }, 
+												success : data => {
+													if(data == true) {
+														alert("주문취소성공");
+														location.reload();
+													} else {
+														alert("주문취소실패")
+													}
+												}
+											})
 										})
 									})
 								

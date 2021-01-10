@@ -36,7 +36,7 @@ div.modal-body>p {
 						<c:out value="${shop.COLOR }" />
 					</p>
 				</c:if>
-				<c:if test="${not empty shop.COLOR}">
+				<c:if test="${not empty shop.PRODUCTSIZE}">
 					<p>
 						<strong>사이즈</strong>
 					</p>
