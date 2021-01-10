@@ -177,7 +177,7 @@ public class StoreController {
 	};
 	
 	@RequestMapping("/store/reviewEditEnd.do")
-	public String updateReview(HttpSession session, String reviewNo,String star,
+	public String updateReview(HttpSession session, String reviewNo,String star,String deleteStatus,
 			@RequestParam(value="reviewImg", required=false) MultipartFile reviewImg,
 			@RequestParam(value="content", required=false) String content,
 			String productNo, Model m) {
@@ -206,6 +206,11 @@ public class StoreController {
 				  m.addAttribute("msg","오류가 발생하였습니다.다시 시도해주세요.");
 			  }
 			  r.setFileName(reName);
+		}else {//사진파일이 없으면
+			if(deleteStatus.equals("delete")) {//삭제된 상태라면
+				//리뷰의 사진 지우기
+				r.setDeleteStatus(deleteStatus);
+			}
 		}
 		
 		int result=service.updateReview(r);

@@ -286,6 +286,8 @@
 			</div>
 	</main>
 	<div class="loginModal"></div>
+	<div class="pdtModal"></div>
+	<jsp:include page="/WEB-INF/views/community/claim.jsp"/>
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 	<script>
 		let loginMember=$(".loginMember").val();

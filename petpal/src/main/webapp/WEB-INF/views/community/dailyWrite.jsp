@@ -29,7 +29,7 @@
             
             <!--설명-->
             <div class="col-12 mt-3 px-0">                        
-              <textarea class="form-control" name="content" rows="5" placeholder="설명을 입력해주세요" style="resize: none;" required></textarea>                   
+              <textarea class="content form-control" name="content" rows="5" placeholder="설명을 입력해주세요" style="resize: none;" required></textarea>                   
             </div>
                 
             <!--해시태그-->
@@ -90,20 +90,29 @@
    
    
      $("#btn").on("click",e=>{ 
-       $("input[type=file]").each((i,item)=>{        
-    	   console.log(item.value);
-         if(item.value.length!=0){         
-          //등록 누르면 사진 별 +버튼의 상품 이름 input태그에 몇번째 사진의 좌표인지 name 부여
-          var imgBox=$(item).parent("label").next(".imgBox");
-          imgBox.find("input[name=index]").each((j,item2)=>{        
-            $(item2).val(i);           
-          });          
-         };
-         
-       });
-    	 $(".hashtag").attr("name","");
+
     	 //등록 누르면 form 전송
-    	 $("#writeFrm").attr("action","${path }/daily/dailyWriteEnd.do").submit();
+    	 //유효성 검사
+    	 //사진 있는지, 글 있는지
+    	   if($(".imgBox").length==0){
+	    	  alert("사진을 올려주세요.");
+    	   }else if($(".content").val().trim()==""){
+    		  alert("내용을 입력하세요.");
+    	   }else{
+    	       $("input[type=file]").each((i,item)=>{        
+    	           if(item.value.length!=0){         
+    	            //등록 누르면 사진 별 +버튼의 상품 이름 input태그에 몇번째 사진의 좌표인지 name 부여
+    	            var imgBox=$(item).parent("label").next(".imgBox");
+    	            imgBox.find("input[name=index]").each((j,item2)=>{        
+    	              $(item2).val(i);           
+    	            });          
+    	           };
+    	           
+    	         });
+    	      	 $(".hashtag").attr("name","");
+    	      	 
+    		  $("#writeFrm").attr("action","${path }/daily/dailyWriteEnd.do").submit();
+    	   }
          
      });
 

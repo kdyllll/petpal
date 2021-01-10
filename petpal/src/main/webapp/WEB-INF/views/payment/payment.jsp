@@ -263,7 +263,7 @@ function check(){
 	});
 	
 	function getAddress(){
-		let memberNo = '${memberNo}';
+		let memberNo = $("#memberNo").val();
 		//배송지 주소 가져오기
        	$.ajaxSettings.traditional = true;
        	$.ajax({
@@ -481,7 +481,7 @@ function check(){
 			                    </li>
 			                </ul>
                         
-                        
+                        	<input type="hidden" id="memberNo" value="${memberNo }">
                         </div>
                     </div>
                     

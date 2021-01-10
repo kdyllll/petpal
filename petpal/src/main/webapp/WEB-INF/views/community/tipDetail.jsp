@@ -203,6 +203,8 @@
       </div>
     </div>
   </main>
+  	<div class="pdtModal"></div>
+	<jsp:include page="/WEB-INF/views/community/claim.jsp"/>
   <script>
   	let tipNo = $(".tipNo").val();
 	let loginMember=$(".loginMember").val();

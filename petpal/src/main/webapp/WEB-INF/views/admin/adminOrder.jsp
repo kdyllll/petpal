@@ -109,6 +109,9 @@
 								<td class="align-middle text-center"><c:out value="${o.PAYSTATUS }"/><c:if test="${o.PAYSTATUS eq '결제대기'}">
 									<button type="button" class="orderAccept btn  btn-outline-danger btn-sm">승인</button>
 									<input type="hidden" value="${o.PAYMENTNO }" name="paymentNo">
+									<input type="hidden" value="${o.MEMBERNO }" >
+									<input type="hidden" value="${o.POINTPLUS }">
+									<input type="hidden" value="${o.POINTMINUS }">
 								</c:if></td>
 								<td class="align-middle text-center "><form
 										class="d-flex flex-column" method="post" >
@@ -116,9 +119,13 @@
 										<button type="button"
 											class="orderDetailBtn btn btn-outline-secondary btn-sm mb-1">주문상세보기</button>
 											<input type="hidden" value="${o.PAYMENTNO }" name="paymentNo">
-										
-										<button type="button" class="orderCancel btn  btn-outline-danger btn-sm">주문취소</button>
-								
+										<c:if test="${o.PAYSTATUS ne '결제대기'}">
+											<button type="button" class="orderCancel btn  btn-outline-danger btn-sm">주문취소</button>
+										</c:if>
+										<c:if test="${o.PAYSTATUS eq '결제대기'}">
+											<a class="btn btn-secondary btn-sm disabled" tabindex="-1" role="button"  aria-disabled="true">주문취소</a>
+										</c:if>
+
 									</form></td>
 							</tr>
 							</c:forEach>
@@ -162,9 +169,12 @@
         
         $(".orderAccept").on("click", e => {
         	let paymentNo = $(e.target).next().val();
+        	let memberNo = $(e.target).next().next().val();
+        	let pointPlus =  $(e.target).next().next().next().val();
+        	let pointMinus =  $(e.target).next().next().next().next().val();
         	$.ajax({
     			url: "${path}/admin/orderAccept.do",
-    			data:{paymentNo : paymentNo },
+    			data:{paymentNo, memberNo , pointPlus, pointMinus},
     			success:(data) => {
     				if(data  == true) {
     					alert("승인 성공");

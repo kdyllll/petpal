@@ -17,7 +17,7 @@
         </div>
         <div class="modal-body offset-1 col-10">
           <div class="row d-flex justify-content-center">
-            <div class="form-signin">
+            <div class="col-12 px-5">
                 <div class="text-center mb-4">
                   <h1 class="h3 mb-3 font-weight-normal">로그인이 필요합니다</h1>                
                 </div>
@@ -32,9 +32,7 @@
               
                 <div class="checkbox mb-3 text-left">
                   <div class="mt-3">
-                    <a class="mr-5 text-dark" href="#">아이디 찾기</a>
-                    <a class="mr-5 text-dark" href="#">비밀번호 재설정</a>
-                    <a class="text-dark" href="${path }/member/moveJoin.do">회원가입</a>
+                    <a class="text-dark" href="${path }/moveJoin.do">회원가입</a>
                   </div>
                 </div>
                 <button id="loginBtn" class="btn btn-lg bg-point btn-block" type="submit">로그인</button>       

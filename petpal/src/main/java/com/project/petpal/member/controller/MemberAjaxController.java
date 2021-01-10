@@ -100,17 +100,25 @@ public class MemberAjaxController {
 	public String moveAll(String memberNo,Model m) {	 
       //일상 메인 사진
       List<DailyImg> dailyList=service.selectDailyMain(memberNo);
+      int dailyCnt=service.dailyCount(memberNo);
       //노하우 작성 글+메인 사진
       List<Map> tipList=service.selectTipMain(memberNo,1,6);
+      int tipCnt=service.tipCount(memberNo);
       //장소후기 작성 글+메인사진
       List<Map> placeList=service.selectPlaceMain(memberNo,1,6);
+      int placeCnt=service.placeCount(memberNo);
       //찾아주세요 작성 글+메인 사진
       List<Map> findList=service.selectFindMain(memberNo,1,6);
+      int findCnt=service.findCount(memberNo);
       
       m.addAttribute("dailyList",dailyList);
       m.addAttribute("tipList",tipList);
       m.addAttribute("placeList",placeList);
       m.addAttribute("findList",findList);
+      m.addAttribute("dailyCnt",dailyCnt);
+      m.addAttribute("tipCnt",tipCnt);
+      m.addAttribute("placeCnt",placeCnt);
+      m.addAttribute("findCnt",findCnt);
 	  return "member/memberAjax/userInfoAjax";
 	}
 	
@@ -261,7 +269,7 @@ public class MemberAjaxController {
 	               //메일 제목
 	               msg.setSubject("PETPAL 인증 메일입니다.");
 	               //메일 내용
-	               String content="<h1>[이메일 인증번호]</h1><br><p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>";
+	               String content="<h1>[이메일 인증번호]</h1><br>";
 	               content+="<p>인증번호는 <strong>"+key+"</strong></p>";
 	               msg.setText(content,"utf-8","html");
 	               
@@ -272,7 +280,7 @@ public class MemberAjaxController {
 	               key=null;
 	           }
 	           
-	         
+	        System.out.println(key);
 	        return key;
 		 
 	 }
@@ -421,6 +429,54 @@ public class MemberAjaxController {
 				result = 20;
 			}
 		}
+		return result;
+	}
+	
+	//아이디찾기 모달소환
+	@RequestMapping("/moveIdModal.do")
+	public String moveIdModal() {
+		return "member/memberAjax/findIdModal";
+	}
+	
+	//아이디 찾기
+	@RequestMapping("/findIdCheck.do")
+	@ResponseBody
+	public String findIdCheck(String name,String phone,HttpServletResponse response) {
+		Map<String,String> m=new HashMap<String, String>();
+		m.put("name", name);
+		m.put("phone", phone);
+		
+		String email=service.selectIdCheck(m);
+		
+		
+		String result="";
+		if(email!=null) {
+			//test@naver.com → te**@naver.com으로 만들어야 함
+			int index=email.indexOf("@");
+			String del=email.substring(2,index); //잘라낼 문자
+			int cnt=del.length();//잘라낼 문자의 개수
+			String star="";
+			for(int i=0;i<cnt;i++) {
+				star+="*";
+			}
+			result=email.replace(del,star);
+			
+		}
+		return result;		
+	}
+	
+	//비밀번호찾기 모달소환
+	@RequestMapping("/movePwModal.do")
+	public String movePwModal() {
+		return "member/memberAjax/findPwModal";
+	}
+	//입력한 아이디가 존재하는 아이디인지 확인
+	@RequestMapping("/checkId.do")
+	@ResponseBody
+	public int checkId(String email) {
+		//아..... 이메일 하나로만 이제 찾아야하는데.. 계정을..
+		//sns로그인이랑 구별해서 해야겠지? //그러면 sns번호 없는 거 선택해서 그중에 이메일 있으면으로 처리하면 되나?//그래야겠다/
+		int result=service.checkEmail(email);
 		return result;
 	}
 	

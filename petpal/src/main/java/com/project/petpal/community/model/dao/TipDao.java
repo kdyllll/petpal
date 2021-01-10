@@ -33,7 +33,7 @@ public interface TipDao {
 	int insertHashtag(SqlSession session,Hashtag h);
 	List<Hashtag> selectHashList(SqlSession session,String tipNo);
 	int deleteAllHash(SqlSession session,String tipNo);
-	int totalTipCount(SqlSession session);
+	int totalTipCount(SqlSession session,Map keyword);
 	List<Map> selectFollowingList(SqlSession session, String memberNo);
 	List<TipComment> selectComment(SqlSession session,String tipNo,int cPage,int numPerPage);
 	int countComment(SqlSession session,String tipNo);

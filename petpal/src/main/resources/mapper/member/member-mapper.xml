@@ -92,8 +92,7 @@
 	<select id="selectPlaceMain" resultType="map"
 		parameterType="string">
 		SELECT * FROM PLACEIMG LEFT JOIN PLACE USING(PLACENO)
-		WHERE
-		MEMBERNO=#{memberNo} AND TYPE='M'
+		WHERE MEMBERNO=#{memberNo} AND TYPE='M' AND STATUS='Y'
 	</select>
 	<select id="selectFindMain" resultType="map"
 		parameterType="string">
@@ -176,9 +175,9 @@
 	</select>
 	<select id="selectPointList" resultType="map"
 		parameterType="string">
-		select * from payment where memberno = #{memberNo} and
-		pointplus !=0 or
-		pointminus != 0 ORDER BY PAYDATE DESC
+		select * from payment where memberno=#{memberNo} and
+		(pointplus !=0 or
+		pointminus != 0) ORDER BY PAYDATE DESC
 	</select>
 	<select id="selectPaymentListNon" resultType="map"
 		parameterType="map">
@@ -256,4 +255,13 @@
 	<select id="selectMList" parameterType="string" resultType="string">
 		SELECT MEMBERNO FROM MEMBER WHERE MEMBERNO = #{memberNo}
 	</select>
+	<select id="selectIdCheck" parameterType="string" resultType="string">
+		SELECT EMAIL FROM MEMBER WHERE MEMBERNAME=#{name} AND PHONE=#{phone} AND SNSNO IS NULL
+	</select>
+	<select id="checkEmail" parameterType="string" resultType="_int">
+		SELECT COUNT(MEMBERNO) FROM MEMBER WHERE EMAIL=#{value} AND SNSNO IS NULL
+	</select>
+	<update id="updatePasswordMap" parameterType="map">
+		UPDATE MEMBER SET PASSWORD=#{password} WHERE SNSNO IS NULL AND EMAIL=#{email}
+	</update>
 </mapper>

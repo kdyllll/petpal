@@ -66,7 +66,7 @@
 <div class="row  py-3 mt-5  bg-white rounded ">
 	<a href="${path }/member/myPageShop.do"
 		class="pl-2 pb-3 mb-0 text-dark"> 주문내역( <c:out
-			value="${pay+riCnt+rCnt+ciCnt+cCnt }" /> 개)
+			value="${payCnt+riCnt+rCnt+ciCnt+cCnt }" /> 개)
 	</a>
 	<div class="py-2 d-flex justify-content-around align-items-center"
 		style="width: 100%;">
@@ -125,6 +125,7 @@
 								<button type="button"
 									class="btn btn-outline-secondary btn-sm changeBtn"
 									style="font-size: 12px;">교환신청</button>
+								<input type="hidden" value="${s.DELIVERYSTATUS }"> 
 							</c:when>
 							<c:when test="${s.DETAILSTATUS eq '대기' }">
 								<span style="font-size: 12px;">무통장입금(대기)</span>
@@ -140,6 +141,7 @@
 									class="ml-2 btn btn-outline-secondary btn-sm infoDetail"
 									style="font-size: 12px;">반품정보</button>
 								<input type="hidden" name="detailNo" value="${s.DETAILNO }" />
+								
 
 							</c:when>
 
@@ -168,6 +170,11 @@
 
 							</c:otherwise>
 						</c:choose>
+						<c:if test="${s.DELIVERYSTATUS eq '배송중비중' || s.DETAILSTATUS eq '결제' }">
+							<button type="button" class="ml-2 btn btn-outline-danger btn-sm orderCancelBtn" style="font-size: 12px;">주문취소</button>
+							<input type="hidden" name="detailNo" value="${s.DETAILNO }"/>
+							<input type="hidden" name="paymentNo" value="${s.PAYMENTNO }" />
+						</c:if>
 					</div>
 				</div>
 			</c:forEach>
@@ -281,17 +288,28 @@
 	 
 	 //환불 모달
 	 $(".refundBtn").on("click", e=> {
-		 let input = $(e.target).next().val();
-		 let newInput = $("<input>").attr({"name" : "detailNum" , "value":input, "type": "hidden"});
-		 $(".refundFrm").children(".refundNo").html("");
-		 $(".refundFrm").children(".refundNo").append(newInput);
-		 console.log(input);
-		 $(".refund").modal();
+		 let refund = $(e.target).next().next().next().val();
+		 if(refund  == '배송완료') {
+			 let input = $(e.target).next().val();
+			 let newInput = $("<input>").attr({"name" : "detailNum" , "value":input, "type": "hidden"});
+			 $(".refundFrm").children(".refundNo").html("");
+			 $(".refundFrm").children(".refundNo").append(newInput);
+			 console.log(input);
+			 $(".refund").modal();
+		 } else {
+			 alert("배송이 완료되지 않았습니다. 배송완료 후 이용해주세요.");
+		 }
+		 
 	 })
 	 //교환모달
 	 $(".changeBtn").on("click", e=> {
-		 let detailNo = $(e.target).prev().val();
-		 moveAjaxModal("${path}/member/moveProductChangePage.do",detailNo,".change");
+		 let change = $(e.target).next();
+		 if(change == '배송완료') {
+			 let detailNo = $(e.target).prev().val();
+			 moveAjaxModal("${path}/member/moveProductChangePage.do",detailNo,".change");	 
+		 } else {
+			 alert("배송이 완료되지 않았습니다. 배송완료 후 이용해주세요.");
+		 }
 	 })
 	 
 	 //환불에 other누르면 textarea나옴
@@ -343,6 +361,22 @@
 			 }
 		 });
 	 }
+	
+	//주문취소 ajax	
+	$(".orderCancelBtn").on("click", e => {
+		$.ajax({
+			url : "${path}/admin/orderCancelEnd.do",
+			data : {detailNo : $(e.target).next().val() , paymentNo : $(e.target).next().next().val() }, 
+			success : data => {
+				if(data == true) {
+					alert("주문취소완료");
+					location.reload();
+				} else {
+					alert("주문취소실패")
+				}
+			}
+		})
+	})
  })
  
  

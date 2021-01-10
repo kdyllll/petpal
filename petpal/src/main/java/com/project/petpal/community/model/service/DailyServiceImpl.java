@@ -328,6 +328,18 @@ public class DailyServiceImpl implements DailyService {
 		return dao.selectFollowingList(session, memberNo);
 	}
 
+	@Override
+	public int selectLikeCnt(String dailyNo) {
+		// TODO Auto-generated method stub
+		return dao.selectLikeCnt(session,dailyNo);
+	}
+
+	@Override
+	public int selectCommentCnt(String dailyNo) {
+		// TODO Auto-generated method stub
+		return dao.selectCommentCnt(session,dailyNo);
+	}
+
 	
 	
 

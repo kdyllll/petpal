@@ -148,6 +148,7 @@ public class MemberController {
 	  System.out.println(payDelCnt+"."+deliveryEndCnt+"."+deliveryStartCnt+"."+pay);
 	  
 	  List<Map> point = service.selectPointList(mem.getMemberNo());
+	  
 	  m.addAttribute("riCnt",refundIngCnt);
 	  m.addAttribute("rCnt",refundCnt);
 	  m.addAttribute("ciCnt",changeIngCnt);
@@ -167,11 +168,12 @@ public class MemberController {
    public String myPageModify(HttpSession session, Model model) {
       Member m = (Member)session.getAttribute("loginMember");
       Member member = service.selectMember(m.getEmail());
+      System.out.println(member);
       model.addAttribute("member", member);
       return "member/myPageModify";
    }
 
-   @RequestMapping("/member/moveJoin.do")//회원가입페이지로 가는 서블릿
+   @RequestMapping("/moveJoin.do")//회원가입페이지로 가는 서블릿
    public String moveJoin(Model m,HttpSession session) {
 	  String naverAuthUrl = naverEnrollBO.getAuthorizationUrl(session);
 	  m.addAttribute("naverUrl", naverAuthUrl);
@@ -229,13 +231,13 @@ public class MemberController {
          }
       }else {
          m.addAttribute("msg","가입에 실패하였습니다!");
-         m.addAttribute("loc","/member/moveJoin.do");
+         m.addAttribute("loc","/moveJoin.do");
          }
 
       return "common/msg";
    }
 
-   @RequestMapping("/member/moveLogin.do")
+   @RequestMapping("/moveLogin.do")
    public String moveLogin(@CookieValue(value="saveId", required = false) Cookie saveId,
 		   Model m, HttpSession session) {
 	   if(saveId!=null) {
@@ -505,4 +507,15 @@ public class MemberController {
 	   return "member/memberFollow";
    }
 
+   //비밀번호 잃어버려서 재설정
+   @RequestMapping("/changePw.do")
+   public String changePw(String email,String password,Model m) {
+	   Map map=new HashMap();
+	   map.put("email", email);
+	   map.put("password",pwEncoder.encode(password));
+	   int result=service.updatePasswordMap(map);
+	   m.addAttribute("loc","/moveLogin.do");
+	   m.addAttribute("msg",result>0?"비밀번호를 변경했습니다.":"비밀번호 변경에 실패했습니다.");
+	   return "common/msg";
+   }
 }
