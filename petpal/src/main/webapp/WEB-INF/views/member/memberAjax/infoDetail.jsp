@@ -42,7 +42,14 @@ div.modal-body>p {
 					<p class="pl-3">
 					<c:choose>
 						<c:when test="${detail.DETAILSTATUS eq '취소' || detail.DETAILSTATUS eq '반품중' }">
-							<c:out value="${detail.REFUNDINFO }" />
+							<c:choose>
+							<c:when test="${not empty detail.REFUNDINFO }">
+								<c:out value="${detail.REFUNDINFO }" />
+							</c:when>
+							<c:otherwise>
+								취소완료
+							</c:otherwise>
+							</c:choose>
 						</c:when>
 						<c:when test="${detail.DETAILSTATUS eq '교환' || detail.DETAILSTATUS eq '교환중' }">
 							<c:out value="${detail.CHANGEINFO }" />
