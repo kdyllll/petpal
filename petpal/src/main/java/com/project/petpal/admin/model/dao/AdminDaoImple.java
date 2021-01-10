@@ -273,4 +273,10 @@ public class AdminDaoImple implements AdminDao {
 		return session.update("pay.orderDetailAccept", paymentNo);
 	}
 
+	@Override
+	public int updatePoint(SqlSession session,Map m) {
+		// TODO Auto-generated method stub
+		return session.update("pay.updatePoint", m);
+	}
+
 }
