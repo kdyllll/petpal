@@ -23,7 +23,7 @@
 		UPDATE PLACE SET STATUS=#{status} WHERE PLACENO=#{placeNo}
 	</update>
 	<select id="orderSearch" resultType="map" parameterType="map">
-		SELECT * FROM MEMBER M JOIN PAYMENT P ON M.MEMBERNO=P.MEMBERNO
+		  SELECT * FROM payment p left JOIN member m ON M.MEMBERNO=P.MEMBERNO
 		<where>
 			<if test="type != null and key != null">
 				AND ${type} like '%'|| #{key}||'%'

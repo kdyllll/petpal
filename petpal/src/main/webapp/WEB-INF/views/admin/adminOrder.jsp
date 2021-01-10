@@ -106,7 +106,9 @@
 								<td class="align-middle text-center"><fmt:formatDate value="${o.PAYDATE }" pattern="yyyy년MM월dd일" /></td>
 								<td class="align-middle text-center"><c:out value="${o.EMAIL }"/></td>
 								<td class="align-middle text-center"><c:out value="${o.ORDERNO }" /></td>
-								<td class="align-middle text-center"><c:out value="${o.PAYSTATUS }"/></td>
+								<td class="align-middle text-center"><c:out value="${o.PAYSTATUS }"/><c:if test="${o.PAYSTATUS eq '결제대기'}">
+									<button type="button" class="orderAccept btn  btn-outline-danger btn-sm">승인</button><input type="hidden" value="${o.PAYMENTNO }" name="paymentNo">
+								</c:if></td>
 								<td class="align-middle text-center "><form
 										class="d-flex flex-column" method="post" >
 										
