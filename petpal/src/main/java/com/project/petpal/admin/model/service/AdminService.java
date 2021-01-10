@@ -24,7 +24,7 @@ public interface AdminService {
 	List<Map> selectOrderList(int cPage,int numPerPage);
 	List<Map> selectPayDetail(String paymentNo);
 	Map selectPaymentOne(String paymentNo);
-	int orderCancelOne(String detailNo);
+	int orderCancelOne(String detailNo,int detailCnt,String paymentNo);
 	List<Map> payDetailStatus(String paymentNo);
 	int updatePaymentStatus(String paymentNo);
 	int orderCancelAll(String paymentNo);
@@ -46,4 +46,5 @@ public interface AdminService {
 	int mTotalCount();
 	int orderTotalCount();
 	int orderAccept(Map m);
+	int detailCnt(String paymentNo);
 }

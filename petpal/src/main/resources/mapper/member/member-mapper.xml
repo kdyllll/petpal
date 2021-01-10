@@ -176,9 +176,9 @@
 	</select>
 	<select id="selectPointList" resultType="map"
 		parameterType="string">
-		select * from payment where memberno = #{memberNo} and
-		pointplus !=0 or
-		pointminus != 0 ORDER BY PAYDATE DESC
+		select * from payment where memberno=#{memberNo} and
+		(pointplus !=0 or
+		pointminus != 0) ORDER BY PAYDATE DESC
 	</select>
 	<select id="selectPaymentListNon" resultType="map"
 		parameterType="map">

@@ -279,4 +279,10 @@ public class AdminDaoImple implements AdminDao {
 		return session.update("pay.updatePoint", m);
 	}
 
+	@Override
+	public int detailCnt(SqlSession session, String paymentNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("pay.detailCnt", paymentNo);
+	}
+
 }
