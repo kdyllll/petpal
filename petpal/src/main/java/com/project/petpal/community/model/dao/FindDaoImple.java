@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.project.petpal.community.model.vo.Find;
+import com.project.petpal.community.model.vo.FindComment;
 import com.project.petpal.community.model.vo.FindImg;
 
 @Repository
@@ -127,6 +128,43 @@ public class FindDaoImple implements FindDao {
 	public List<Map> selectFollowingList(SqlSession session, String memberNo) {
 		// TODO Auto-generated method stub
 		return session.selectList("follow.selectFollowing", memberNo);
+	}
+
+	@Override
+	public List<Map> selectComment(SqlSession session, String findNo, int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("find.selectComment",findNo,rb);
+	}
+
+	@Override
+	public int countComment(SqlSession session, String findNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("find.countComment",findNo);
+	}
+
+	@Override
+	public int countCommentPage(SqlSession session, String findNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("find.countCommentPage",findNo);
+	}
+
+	@Override
+	public int insertComment(SqlSession session, FindComment fc) {
+		// TODO Auto-generated method stub
+		return session.insert("find.insertComment", fc);
+	}
+
+	@Override
+	public int commentDelete(SqlSession session, String findCommentNo) {
+		// TODO Auto-generated method stub
+		return session.update("find.commentDelete", findCommentNo);
+	}
+
+	@Override
+	public int comment2Delete(SqlSession session, String findCommentNo) {
+		// TODO Auto-generated method stub
+		return session.delete("find.comment2Delete", findCommentNo);
 	}
 	
 }

@@ -14,7 +14,7 @@
 		UPDATE CLAIM SET STATUS='Y' WHERE CLAIMNO=#{claimNo}
 	</update>
 	<select id="selectPlaceList" resultType="map">
-		select * from place join member using(MEMBERNO)
+		select * from place join member using(MEMBERNO)ORDER BY PLACEDATE DESC
 	</select>
 	<select id="selectPlaceOne" resultType="map" parameterType="string">
 		SELECT * FROM PLACE JOIN MEMBER USING(MEMBERNO) WHERE PLACENO=#{placeNo}
@@ -53,6 +53,7 @@
 				AND ${type} like '%'|| #{key}||'%'
 			</if>
 		</where>
+		ORDER BY PLACEDATE DESC
 	</select>
 	<select id="cumTotalCount" resultType="_int">
 		select count(*) from place join member using(MEMBERNO)

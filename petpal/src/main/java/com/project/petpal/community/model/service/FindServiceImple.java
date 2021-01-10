@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.petpal.community.model.dao.FindDao;
 import com.project.petpal.community.model.vo.Find;
+import com.project.petpal.community.model.vo.FindComment;
 import com.project.petpal.community.model.vo.FindImg;
 
 @Service
@@ -141,6 +142,42 @@ public class FindServiceImple implements FindService {
 	public List<Map> selectFollowingList(String memberNo) {
 		// TODO Auto-generated method stub
 		return dao.selectFollowingList(session, memberNo);
+	}
+
+	@Override
+	public List<Map> selectComment(String findNo, int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectComment(session,findNo,cPage,numPerPage);
+	}
+
+	@Override
+	public int countComment(String findNo) {
+		// TODO Auto-generated method stub
+		return dao.countComment(session,findNo);
+	}
+
+	@Override
+	public int countCommentPage(String findNo) {
+		// TODO Auto-generated method stub
+		return dao.countCommentPage(session,findNo);
+	}
+
+	@Override
+	public int insertComment(FindComment fc) {
+		// TODO Auto-generated method stub
+		return dao.insertComment(session, fc);
+	}
+
+	@Override
+	public int commentDelete(String findCommentNo) {
+		// TODO Auto-generated method stub
+		return dao.commentDelete(session, findCommentNo);
+	}
+
+	@Override
+	public int comment2Delete(String findCommentNo) {
+		// TODO Auto-generated method stub
+		return dao.comment2Delete(session, findCommentNo);
 	}
 	
 }

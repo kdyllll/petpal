@@ -5,7 +5,9 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.project.petpal.community.model.vo.DailyComment;
 import com.project.petpal.community.model.vo.Find;
+import com.project.petpal.community.model.vo.FindComment;
 import com.project.petpal.community.model.vo.FindImg;
 
 public interface FindDao {
@@ -28,4 +30,10 @@ public interface FindDao {
 	int deleteFind(SqlSession session, String findNo);
 	int findTotalCount(SqlSession session);
 	List<Map> selectFollowingList(SqlSession session, String memberNo);
+	List<Map> selectComment(SqlSession session,String findNo,int cPage,int numPerPage);
+	int countComment(SqlSession session,String findNo);
+	int countCommentPage(SqlSession session,String findNo);
+	int insertComment(SqlSession session, FindComment fc);
+	int commentDelete(SqlSession session,String findCommentNo);
+	int comment2Delete(SqlSession session,String findCommentNo);
 }
