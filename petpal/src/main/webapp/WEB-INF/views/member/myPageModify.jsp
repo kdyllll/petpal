@@ -58,18 +58,20 @@ request.setAttribute("addEtc2", addEtc2);
 					id="email" name="email" value="${member.getEmail() }">
 			</div>
 		</div>
-		<div class="form-group row ">
-			<label for="oriPassword" class="col-lg-2 col-form-label">비밀번호</label>
-			<div class="col-5 col-lg-3">
-				<input type="password" name="password" class="form-control"
-					placeholder="비밀번호 확인" id="oriPassword">
-
+		<c:if test="${empty member.getSnsNo() }">
+			<div class="form-group row ">
+				<label for="oriPassword" class="col-lg-2 col-form-label">비밀번호</label>
+				<div class="col-5 col-lg-3">
+					<input type="password" name="password" class="form-control"
+						placeholder="비밀번호 확인" id="oriPassword">
+	
+				</div>
+				<button type="button" class="btn btn-outline-secondary"
+					id="passwordUpdate">비밀번호 확인</button>
 			</div>
-			<button type="button" class="btn btn-outline-secondary"
-				id="passwordUpdate">비밀번호 확인</button>
-		</div>
+		</c:if>
 		<!-- 확인누르면 모달창 뜨고 비밀번호 변경하는 로직 -->
-
+	
 		<div class="form-group row">
 			<label for="userName" class="col-lg-2 col-form-label">이름</label>
 			<div class="col-lg-2">

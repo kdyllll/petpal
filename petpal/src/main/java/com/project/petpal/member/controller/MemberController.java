@@ -167,6 +167,7 @@ public class MemberController {
    public String myPageModify(HttpSession session, Model model) {
       Member m = (Member)session.getAttribute("loginMember");
       Member member = service.selectMember(m.getEmail());
+      System.out.println(member);
       model.addAttribute("member", member);
       return "member/myPageModify";
    }
