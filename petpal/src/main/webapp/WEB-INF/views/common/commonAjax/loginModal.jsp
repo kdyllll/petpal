@@ -32,8 +32,6 @@
               
                 <div class="checkbox mb-3 text-left">
                   <div class="mt-3">
-                    <a class="mr-5 text-dark" href="#">아이디 찾기</a>
-                    <a class="mr-5 text-dark" href="#">비밀번호 재설정</a>
                     <a class="text-dark" href="${path }/moveJoin.do">회원가입</a>
                   </div>
                 </div>
