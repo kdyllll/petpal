@@ -29,7 +29,7 @@ public interface TipService {
 	int insertLike(Map m);
 	int deleteLike(Map m);
 	List<Hashtag> selectHashList(String tipNo);
-	int totalTipCount();
+	int totalTipCount(Map keyword);
 	List<Map> selectFollowingList(String memberNo);
 	List<TipComment> selectComment(String tipNo,int cPage,int numPerPage);
 	int countComment(String tipNo);

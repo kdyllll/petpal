@@ -56,10 +56,10 @@
 		
 		<div class="tipCon row col-12 my-4 border-bottom pb-3">
 			<p class="h4 col-12 mb-3"><strong>노하우 검색 결과</strong>
-				<a href="${path }/place/movePlaceList.do?hashtag=${hashtag}" class="text-hgh ml-2 ${empty tipList?'d-none':'' }" style="font-size:15px;">더보기</a>
+				<a href="${path }/community/tipList.do?hashtag=${hashtag}" class="text-hgh ml-2 ${empty tipList?'d-none':'' }" style="font-size:15px;">더보기</a>
 			</p>
 			<div class="mx-auto mb-2"><c:out value="${empty tipList?'검색 결과가 없습니다.':'' }"/></div>
-			<c:forEach var="t" items="${tipList }" varStatus="vs" begin="1" end="3">						
+			<c:forEach var="t" items="${tipList }">						
 				<div class="col-lg-3 col-6" style="cursor: pointer" onclick="location.replace('${path}/community/tipDetail.do?tipNo=${t.TIPNO }')">							
 					<div class="card mb-4 bg-transparent border-0">
 						<div class="test">

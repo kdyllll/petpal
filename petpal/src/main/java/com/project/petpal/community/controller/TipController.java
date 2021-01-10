@@ -69,7 +69,7 @@ public class TipController {
 		}
 		
 		List<Map> TipList = service.tipList(cPage,numPerPage, keyword);
-		int totalCount=service.totalTipCount();
+		int totalCount=service.totalTipCount(keyword);
 		String pageBar=new PageBarFactory().getPageBar(totalCount, cPage, numPerPage, null, null, "tipList.do");
 		
 		for(Map map:TipList) {
@@ -84,7 +84,7 @@ public class TipController {
 			List<Map> followingList = service.selectFollowingList(no);
 			model.addAttribute("following", followingList);
 		}
-
+		model.addAttribute("search",search);
 		model.addAttribute("list", TipList);
 		model.addAttribute("memberNo", memberNo);
 		model.addAttribute("pageBar", pageBar);

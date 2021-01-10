@@ -140,9 +140,9 @@ public class TipDaoImpl implements TipDao {
 	}
 
 	@Override
-	public int totalTipCount(SqlSession session) {
+	public int totalTipCount(SqlSession session,Map keyword) {
 		// TODO Auto-generated method stub
-		return session.selectOne("tip.totalTipCount");
+		return session.selectOne("tip.totalTipCount",keyword);
 	}
 	
 	@Override

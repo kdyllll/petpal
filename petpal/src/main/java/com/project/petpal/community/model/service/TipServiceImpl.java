@@ -166,9 +166,9 @@ public class TipServiceImpl implements TipService {
 	}
 
 	@Override
-	public int totalTipCount() {
+	public int totalTipCount(Map keyword) {
 		// TODO Auto-generated method stub
-		return dao.totalTipCount(session);
+		return dao.totalTipCount(session,keyword);
 	}
 	
 	@Override
