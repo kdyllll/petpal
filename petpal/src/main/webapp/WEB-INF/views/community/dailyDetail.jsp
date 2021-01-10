@@ -136,7 +136,7 @@
 															</button>
 													</c:if>
 												
-													<span class="likeCnt"><c:out value="${likeCnt }"/></span>
+													<span class="likeCount"><c:out value="${likeCnt }"/></span>
 							                        <span class="ml-3 mr-2"> 
 							                       		<a href="#commentContainer" >
 								                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chat" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -222,7 +222,7 @@
 								</button>
 						</c:if>
 						
-							<span class="likeCnt"><c:out value="${likeCnt }"/></span>
+							<span class="likeCount"><c:out value="${likeCnt }"/></span>
 						</div>
 						<div class="d-flex align-items-center ml-2">
 							<a href="#commentContainer" class="ml-3 mr-2">
@@ -351,6 +351,7 @@ function commentDelete(path,data){
 		success:data=>{
 			if(data===true){
 				alert("댓글이 삭제되었습니다.");
+				$(".commentCnt").text(Number(Number($(".commentCnt").html()) - 1));
 				commentAjax();
 			}else{
 				alert("댓글 삭제에 실패하였습니다.");
@@ -419,6 +420,7 @@ $(document).on('click','.write',function(e) {//댓글 등록 버튼 눌렀을때
 		success:data=>{
 			if(data===true){
 				alert("댓글이 등록되었습니다.");
+				$(".commentCnt").text(Number(Number($(".commentCnt").html()) + 1));
 				commentAjax();
 			}else{
 				alert("댓글 등록에 실패하였습니다.");
@@ -450,12 +452,10 @@ $(".binHeart").on("click" , e => {
 	        url:"${path}/daily/insertLike.do",
 	        data:{dailyNo : dailyNo},
 	        success: (data) => {
-	       	 var likeCnt=parseInt($(".likeCnt").text());
-	       	 console.log(likeCnt);
-	       	 var newCnt=likeCnt+1;
-	       	 $(".likeCnt").text(newCnt);
 	        }
 		})
+		console.log($(".likeCount").text());
+		$(".likeCount").text(Number(Number($(".likeCount").html()) + 1));
 	}
 	
 })
@@ -470,12 +470,9 @@ $(".fillHeart").on("click" , e => {
 	        url:"${path}/daily/deleteLike.do",
 	        data:{dailyNo : dailyNo},
 	        success: (data) => {
-	        	var likeCnt=parseInt($(".likeCnt").text());
-		       	console.log(likeCnt);
-		       	var newCnt=likeCnt-1;
-		       	$(".likeCnt").text(newCnt);
 	        }
 	     })
+	     $(".likeCount").text(Number(Number($(".likeCount").html()) - 1));
 	}
 	
 })

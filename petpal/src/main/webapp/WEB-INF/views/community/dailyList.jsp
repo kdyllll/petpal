@@ -230,7 +230,7 @@
 
 														</c:if>
 													</c:if>
-													<span class="likeCnt text-dark mx-1"><c:out value="${d.likeCnt }"/></span>
+													<span class="likeCount text-dark mx-1"><c:out value="${d.likeCnt }"/></span>
 												</div>
 
 												<div class="d-flex align-items-center">
@@ -312,15 +312,11 @@
 	                 url:"${path}/daily/insertLike.do",
 	                 data:{dailyNo : dailyNo},
 	                 success: (data) => {
-	                	 console.log("좋아요");
-	                	 var likeCntSpan=$(e.target).parents(".likeCon").find("likeCnt");
-	                	 var likeCnt=parseInt(likeCntSpan.text());
-	                	 console.log(likeCnt);
-	                	 var newCnt=likeCnt+1;
-	                	 likeCntSpan.text(newCnt);
 	                	 
 	                 }
 				})
+				var likeCntSpan=$(e.target).parents(".likeCon").find("span.likeCount");
+				likeCntSpan.text(Number(Number(likeCntSpan.html()) + 1));
 			}else{ //로그인 안되어 있으면 로그인 모달 띄우기           
 				fn_loginCheck();
 			};
@@ -336,14 +332,10 @@
 	                url:"${path}/daily/deleteLike.do",
 	                data:{dailyNo : dailyNo},
 	                success: (data) => {
-	                	console.log("좋아요 삭제");
-	                	var likeCntSpan=$(e.target).parents(".likeCon").find("likeCnt");
-	                	 var likeCnt=parseInt(likeCntSpan.text());
-	                	 console.log(likeCnt);
-	                	 var newCnt=likeCnt-1;
-	                	 likeCntSpan.text(newCnt);
 	                }
 	             }) 
+				var likeCntSpan=$(e.target).parents(".likeCon").find("span.likeCount");
+				likeCntSpan.text(Number(Number(likeCntSpan.html()) - 1));
 			}else{ //로그인 안되어 있으면 로그인 모달 띄우기           
 				fn_loginCheck();
 			};
