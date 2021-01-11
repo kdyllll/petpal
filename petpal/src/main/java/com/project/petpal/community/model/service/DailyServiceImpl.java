@@ -359,6 +359,11 @@ public class DailyServiceImpl implements DailyService {
 		return dao.selectLikeCount(session);
 	}
 
+	@Override
+	public List<Map> selectDailyAll(Map keywordMap) {
+		return dao.selectDailyAll(session, keywordMap);
+	}
+
 	
 	
 

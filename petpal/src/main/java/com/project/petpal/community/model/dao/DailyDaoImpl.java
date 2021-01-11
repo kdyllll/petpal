@@ -285,6 +285,11 @@ public class DailyDaoImpl implements DailyDao {
 		return session.delete("daily.commentDeleteRef",dailyCommentNo);
 	}
 	
-	
+	@Override
+	public List<Map> selectDailyAll(SqlSession session, Map keywordMap) {
+		// TODO Auto-generated method stub
+		return session.selectList("daily.selectDailyAll",keywordMap);
+	}
+
 
 }

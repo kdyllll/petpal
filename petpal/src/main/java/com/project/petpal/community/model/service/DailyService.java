@@ -48,4 +48,5 @@ public interface DailyService {
 	int selectLikeCnt(String dailyNo);
 	int selectCommentCnt(String dailyNo);
 	List<Map> selectLikeCount();
+	List<Map> selectDailyAll(Map keywordMap);
 }

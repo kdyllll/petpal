@@ -41,19 +41,24 @@ public class TipController {
 	private CommunityService cService;
 	
 	@RequestMapping("/community/tipList.do")
-	public String TipList(ModelAndView mv, HttpSession session, Model model,
-								@RequestParam(value="hashtag", required=false) String hashtag,
-								@RequestParam(value="cPage",defaultValue="1") int cPage,
-								@RequestParam(value="numPerPage",defaultValue="12") int numPerPage) {
+	public String TipList(ModelAndView mv, HttpSession session, Model model, String category, String sort,
+							@RequestParam(value="hashtag", required=false) String hashtag,
+							@RequestParam(value="cPage",defaultValue="1") int cPage,
+							@RequestParam(value="numPerPage",defaultValue="12") int numPerPage) {
 		
 		//해시태그 검색어로 검색됐을 경우 구분
 		Map<String,String> keyword=new HashMap<String,String>();
 		keyword.put("hashtag", hashtag);
+		keyword.put("category", category);
+		
 		String search="";
 		//검색어를 통해 들어오는 거면 search도 보내서 정렬버튼 없앰
 		if(hashtag!=null) {
 			search="search";
 		}
+		
+		System.out.println("카테고리 : " + category);
+		System.out.println("정렬 : " + sort);
 		
 		Member loginMember=(Member)session.getAttribute("loginMember");
 		String memberNo="";
@@ -70,7 +75,43 @@ public class TipController {
 		
 		List<Map> TipList = service.tipList(cPage,numPerPage, keyword);
 		int totalCount=service.totalTipCount(keyword);
-		String pageBar=new PageBarFactory().getPageBar(totalCount, cPage, numPerPage, null, null, "tipList.do");
+		String pageBar=new PageBarFactory().getPageBar2(totalCount, cPage, numPerPage, category, null, "tipList.do");
+		
+		
+		//팔로우 검사
+		if(loginMember != null) {
+			String no = loginMember.getMemberNo();
+			List<Map> followingList = service.selectFollowingList(no);
+			model.addAttribute("following", followingList);
+		}
+		
+		if(sort!=null) {
+			if(sort.equals("최신순")) {
+				if(category!=null) {
+					TipList=service.selectTipDate(cPage,numPerPage, keyword);
+				}else {
+					TipList=service.selectTipDate(cPage,numPerPage, null);
+				}
+			}else if(sort.equals("인기순")) {
+				if(category!=null) {
+					TipList=service.selectTipHeart(cPage,numPerPage, keyword);
+				}else {
+					TipList=service.selectTipHeart(cPage,numPerPage, null);
+				}
+			}else if(sort.equals("댓글순")){
+				if(category!=null) {
+					TipList=service.selectTipComment(cPage,numPerPage, keyword);
+				}else {
+					TipList=service.selectTipComment(cPage,numPerPage, null);
+				}
+			}else {
+				if(category!=null) {
+					TipList=service.selectTipFollow(cPage,numPerPage, keyword);
+				}else {
+					TipList=service.selectTipFollow(cPage,numPerPage, null);
+				}
+			}
+		}
 		
 		for(Map map:TipList) {
 			//해시태그 리스트
@@ -86,17 +127,15 @@ public class TipController {
 			map.put("commentCnt",commentCnt);
 		}
 		
-		//팔로우 검사
-		if(loginMember != null) {
-			String no = loginMember.getMemberNo();
-			List<Map> followingList = service.selectFollowingList(no);
-			model.addAttribute("following", followingList);
-		}
 		
 		model.addAttribute("search",search);
 		model.addAttribute("list", TipList);
 		model.addAttribute("memberNo", memberNo);
 		model.addAttribute("pageBar", pageBar);
+		if(category==null) {
+			category = "전체";
+		}
+		model.addAttribute("category", category);
 		
 		return "/community/tipList";
 	}
@@ -491,4 +530,5 @@ public class TipController {
 		
 		return commentCount;
 	}
+	
 }
