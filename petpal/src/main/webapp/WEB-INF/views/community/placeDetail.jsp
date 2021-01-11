@@ -92,7 +92,13 @@
                                  </svg>
                               </button>
                         </c:if>
-                        
+                        <c:set var="cnt" value="0"/>
+                        <c:forEach var="cc" items="${likeCount }">
+                        	<c:if test="${cc.PLACENO eq place.placeNo}">
+                        		<c:set var="cnt" value="${cc.CNT }"/>
+                        	</c:if>
+                        </c:forEach>
+                        <span ><c:out value="${cnt }"/></span>
                         
                      </div>
                   </div>
@@ -438,7 +444,9 @@ ul li{
                      url:"${path}/place/insertLike.do",
                      data:{placeNo : $("#placeNo").val()},
                      success: (data) => {
-                        console.log(data); 
+                        if(data == true) {
+                        	location.reload();
+                        }
                      }
                 })
              } else {
@@ -458,7 +466,9 @@ ul li{
                   url:"${path}/place/deleteLike.do",
                   data:{placeNo :  $("#placeNo").val()},
                   success: (data) => {
-                     console.log(data); 
+                	  if(data == true) {
+                      	location.reload();
+                      }
                   }
                })
           }

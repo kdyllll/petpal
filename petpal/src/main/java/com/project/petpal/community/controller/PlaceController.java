@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.petpal.common.PageBarFactory;
@@ -140,6 +141,7 @@ public class PlaceController {
 		List<PlaceComment> cList=service.commentList(placeNo,cPage,numPerpage);//댓글리스트
 		int count=service.commentCount(placeNo);//댓글개수
 		List<Hashtag> hList=service.hashList(placeNo);//해쉬태그리스트
+		List<Map> likecount = service.selectLikeCount(); //좋아요개수
 		
 		Member mem = (Member)session.getAttribute("loginMember");
 		//로그인한 멤버 좋아요 가져오기
@@ -153,7 +155,7 @@ public class PlaceController {
 		}
 		
 		m.addAttribute("like", like);
-		
+		m.addAttribute("likeCount", likecount);
 		m.addAttribute("pageBar",PageBarFactory.getPageBar(count, cPage, numPerpage,null,placeNo, "movePlaceDetail.do"));
 		m.addAttribute("count", count);
 		m.addAttribute("hList",hList);
@@ -235,23 +237,25 @@ public class PlaceController {
 	
 //	좋아요 추가
 	@RequestMapping("/place/insertLike.do")
-	public String insertLike(HttpSession session, String placeNo) {
+	@ResponseBody
+	public Boolean insertLike(HttpSession session, String placeNo) {
 		Map map = new HashMap();
 		Member m = (Member)session.getAttribute("loginMember");
 		map.put("memberNo", m.getMemberNo());
 		map.put("placeNo", placeNo);
-		service.insertLike(map);
-		return "redirect:/place/movePlaceList.do";
+		int result = service.insertLike(map);
+		return result>0?true : false;
 	}
 //	좋아요삭제
 	@RequestMapping("/place/deleteLike.do")
-	public String deleteLike(String placeNo, Model model, HttpSession session) {
+	@ResponseBody
+	public Boolean deleteLike(String placeNo, Model model, HttpSession session) {
 		Member mem = (Member)session.getAttribute("loginMember");
 		Map map = new HashMap();
 		map.put("no", placeNo);
 		map.put("memberNo", mem.getMemberNo());
-		service.deleteLike(map);
-		return "";
+		int result = service.deleteLike(map);
+		return  result>0?true : false;
 	}
 
 }

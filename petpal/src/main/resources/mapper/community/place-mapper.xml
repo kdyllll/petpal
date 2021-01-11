@@ -137,4 +137,7 @@
 		select count(*) from member join place using(memberNo) where memberNo =
 		#{memberNo} AND STATUS='Y'
 	</select>
+	<select id="selectLikeCount" resultType="map" >
+		SELECT PLACENO,COUNT(*) AS CNT from PLACELIKE group by PLACENO
+	</select>
 </mapper>

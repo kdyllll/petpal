@@ -179,5 +179,11 @@ public class FindServiceImple implements FindService {
 		// TODO Auto-generated method stub
 		return dao.comment2Delete(session, findCommentNo);
 	}
+
+	@Override
+	public List<Map> selectLikeCount() {
+		// TODO Auto-generated method stub
+		return dao.selectLikeCount(session);
+	}
 	
 }

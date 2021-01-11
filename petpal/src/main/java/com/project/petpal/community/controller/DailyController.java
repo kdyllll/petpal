@@ -97,9 +97,9 @@ public class DailyController {
 			m.addAttribute("following", followingList);
 		}	
 		
-
-		
-		
+		//좋아요 수 연동
+		List<Map> count = service.selectLikeCount();
+		m.addAttribute("count", count);
 		m.addAttribute("search",search);
 		m.addAttribute("dailyList",dailyList);
 		m.addAttribute("imgList",imgList);
@@ -229,7 +229,9 @@ public class DailyController {
 		int likeCnt=service.selectLikeCnt(dailyNo);
 		//댓글 수 
 		int commentCnt=service.selectCommentCnt(dailyNo);
-
+		//좋아요 수 연동
+		List<Map> count = service.selectLikeCount();
+		m.addAttribute("count", count);
 		m.addAttribute("daily",daily);
 		m.addAttribute("imgList",imgList);
 		m.addAttribute("coordList",coordList);

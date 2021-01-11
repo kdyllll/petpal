@@ -29,4 +29,5 @@ public interface PlaceService {
 	String selectLike(Map m);
 	int insertLike(Map m);
 	int deleteLike(Map m);
+	List<Map> selectLikeCount();
 }

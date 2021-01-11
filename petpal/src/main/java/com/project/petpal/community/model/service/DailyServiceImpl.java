@@ -339,6 +339,12 @@ public class DailyServiceImpl implements DailyService {
 		// TODO Auto-generated method stub
 		return dao.selectCommentCnt(session,dailyNo);
 	}
+	
+	@Override
+	public List<Map> selectLikeCount() {
+		// TODO Auto-generated method stub
+		return dao.selectLikeCount(session);
+	}
 
 	
 	
