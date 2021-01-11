@@ -231,5 +231,28 @@ public class TipServiceImpl implements TipService {
 		// TODO Auto-generated method stub
 		return dao.tipList(session,keywordMap);
 	}
+	@Override
+	public List<Map> selectTipDate(int cPage, int numPerPage, Map<String,String> keyword) {
+		// TODO Auto-generated method stub
+		return dao.selectTipDate(session, cPage, numPerPage, keyword);
+	}
+
+	@Override
+	public List<Map> selectTipHeart(int cPage, int numPerPage, Map<String,String> keyword) {
+		// TODO Auto-generated method stub
+		return dao.selectTipHeart(session, cPage, numPerPage, keyword);
+	}
+
+	@Override
+	public List<Map> selectTipComment(int cPage, int numPerPage, Map<String,String> keyword) {
+		// TODO Auto-generated method stub
+		return dao.selectTipComment(session, cPage, numPerPage, keyword);
+	}
+	
+	@Override
+	public List<Map> selectTipFollow(int cPage, int numPerPage, Map<String,String> keyword) {
+		// TODO Auto-generated method stub
+		return dao.selectTipFollow(session, cPage, numPerPage, keyword);
+	}
 
 }

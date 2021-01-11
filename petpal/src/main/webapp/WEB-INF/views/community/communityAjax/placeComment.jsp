@@ -31,7 +31,18 @@
 				<div>
 					<div>
 						<strong><span><c:out value="${c.nickName }" /></span></strong>
-			</a> <span><c:out value="${c.placeComment }" /></span>
+			</a>
+								<c:if test="${c.status eq 'E' }">
+									<span class="ml-1"><c:out value="${c.placeComment }"/></span>
+								</c:if>
+								<c:if test="${c.status eq 'D' }">
+									<span class="ml-1 text-black-50" style="font-size:14px;">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle-fill" style="color:" viewBox="0 0 16 16">
+										  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+										</svg>
+										 &nbsp;삭제된 댓글입니다.
+									</span>
+								</c:if>
 		</div>
 		<div>
 			<span style="font-size: 14px; color: gray;"> <c:set
@@ -50,9 +61,12 @@
 					</c:otherwise>
 				</c:choose>
 			</span>
-			<button class="reply click text-black-50" style="font-weight: bold;"
-				value="${c.placeCommentNo }">답글 달기</button>
-			<button class="click" style="color: gray; font-size: 14px;">신고</button>
+			<c:if test="${c.status eq 'E' }">
+				<button class="reply click text-black-50" style="font-weight: bold;" value="${c.placeCommentNo }">답글 달기</button>
+				<c:if test="${(loginMember.memberNo eq c.memberNo) or (loginMember.memberNo eq '63') or (placeMemberNo eq loginMember.memberNo) }">
+					<button class="commentDelete click btn p-0 text-black-50" style="font-weight: bold; font-size:14px;" value="${c.placeCommentNo }">· 삭제</button>
+				</c:if>
+			</c:if>
 		</div>
 		</div>
 		</div>
@@ -86,7 +100,9 @@
 					</c:otherwise>
 				</c:choose>
 			</span>
-			<button class="click" style="color: gray; font-size: 14px;">신고</button>
+			<c:if test="${(loginMember.memberNo eq c.memberNo) or (loginMember.memberNo eq '63') or (placeMemberNo eq loginMember.memberNo) }">
+				<button class="commentDelete click btn p-0 text-black-50" style="font-weight: bold; font-size:14px;" value="${c.placeCommentNo }">· 삭제</button>
+			</c:if>
 		</div>
 		</div>
 		</div>

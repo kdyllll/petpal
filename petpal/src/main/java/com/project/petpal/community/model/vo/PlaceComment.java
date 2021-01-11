@@ -20,5 +20,6 @@ public class PlaceComment {
 	private Date writeDate;
 	private String img;
 	private String nickName;
+	private String status;
 	
 }

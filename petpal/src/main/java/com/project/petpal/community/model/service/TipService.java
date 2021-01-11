@@ -39,4 +39,8 @@ public interface TipService {
 	int comment2Delete(String tipCommentNo);
 	int tipLikeCount(String tipNo);
 	List<Map> tipList(Map keywordMap);
+	List<Map> selectTipDate(int cPage, int numPerPage, Map<String,String> keyword); 
+	List<Map> selectTipHeart(int cPage, int numPerPage, Map<String,String> keyword);
+	List<Map> selectTipComment(int cPage, int numPerPage, Map<String,String> keyword);
+	List<Map> selectTipFollow(int cPage, int numPerPage, Map<String,String> keyword);
 }

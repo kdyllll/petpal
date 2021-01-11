@@ -37,8 +37,8 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public List<Map> noticeList(int cPage, int numPerPage) {
-		return dao.noticeList(session, cPage, numPerPage);
+	public List<Map> noticeList(int cPage, int numPerPage, Map<String,String> keyword) {
+		return dao.noticeList(session, cPage, numPerPage, keyword);
 	}
 
 	@Override

@@ -285,4 +285,10 @@ public class AdminDaoImple implements AdminDao {
 		return session.selectOne("pay.detailCnt", paymentNo);
 	}
 
+	@Override
+	public List<Map> refundChangeList(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectList("admin.refundChangeList");
+	}
+
 }

@@ -24,9 +24,9 @@ public class NoticeDaoImpl implements NoticeDao {
 	}
 
 	@Override
-	public List<Map> noticeList(SqlSession session, int cPage, int numPerPage) {
+	public List<Map> noticeList(SqlSession session, int cPage, int numPerPage,  Map<String,String> keyword) {
 		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
-		return session.selectList("notice.noticeList", rb);
+		return session.selectList("notice.noticeList", keyword, rb);
 	}
 
 	@Override

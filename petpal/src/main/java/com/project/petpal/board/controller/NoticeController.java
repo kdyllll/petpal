@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.project.petpal.board.model.service.NoticeService;
 import com.project.petpal.board.model.vo.Notice;
 import com.project.petpal.board.model.vo.NoticeImg;
+import com.project.petpal.common.PageBarFactory;
 import com.project.petpal.member.model.vo.Member;
 
 @Controller
@@ -34,7 +36,7 @@ public class NoticeController {
 	public ModelAndView noticeList(ModelAndView mv, HttpSession session,
 									@RequestParam(value="hashtag", required=false) String hashtag,
 									@RequestParam(value="cPage",defaultValue="1") int cPage,
-									@RequestParam(value="numPerPage",defaultValue="1") int numPerPage) {
+									@RequestParam(value="numPerPage",defaultValue="10") int numPerPage) {
 		Member loginMember=(Member)session.getAttribute("loginMember");
 		
 		String email="";
@@ -49,11 +51,18 @@ public class NoticeController {
 			manager = "manager";
 		}
 		
-		List<Map> list = service.noticeList(cPage,numPerPage);
+		Map<String,String> keyword=new HashMap<String,String>();
+		keyword.put("hashtag", hashtag);
+		
+		List<Map> list = service.noticeList(cPage,numPerPage, null);
+		int totalCount = service.totalNoticeCount();
+		
+		String pageBar=new PageBarFactory().getPageBar2(totalCount, cPage, numPerPage, null, null, "noticeList.do");
 		
 		mv.addObject("list", list);
 		mv.addObject("manager", manager);
 		mv.setViewName("board/noticeList");
+		mv.addObject("pageBar", pageBar);
 		return mv;
 	}
 	
