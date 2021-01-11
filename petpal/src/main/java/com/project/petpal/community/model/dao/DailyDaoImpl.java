@@ -272,6 +272,19 @@ public class DailyDaoImpl implements DailyDao {
 		// TODO Auto-generated method stub
 		return session.selectList("find.selectLikeCount");
 	}
+
+	@Override
+	public int commentRefCheck(SqlSession session, String dailyCommentNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("daily.commentRefCheck",dailyCommentNo);
+	}
+	
+	@Override
+	public int commentDeleteRef(SqlSession session, String dailyCommentNo) {
+		// TODO Auto-generated method stub
+		return session.delete("daily.commentDeleteRef",dailyCommentNo);
+	}
+	
 	
 
 }

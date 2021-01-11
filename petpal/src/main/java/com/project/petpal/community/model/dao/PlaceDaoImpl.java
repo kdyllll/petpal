@@ -134,4 +134,20 @@ public class PlaceDaoImpl implements PlaceDao{
 		return session.selectList("place.selectLikeCount");
 	}
 
+	@Override
+	public int commentDelete(SqlSession session, String placeCommentNo) {
+		// TODO Auto-generated method stub
+		System.out.println(placeCommentNo);
+		return session.update("place.commentDelete",placeCommentNo);
+	}
+
+	@Override
+	public int comment2Delete(SqlSession session, String placeCommentNo) {
+		// TODO Auto-generated method stub
+		System.out.println(placeCommentNo);
+		return session.update("place.comment2Delete",placeCommentNo);
+	}
+	
+	
+
 }

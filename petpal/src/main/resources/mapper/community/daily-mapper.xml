@@ -152,4 +152,10 @@
 	<select id="selectLikeCount" resultType="map">
   		select DAILYNO,count(*) AS CNT from DAILYLIKE group by DAILYNO
   	</select>
+  	<select id="commentRefCheck" resultType="_int" parameterType="string">
+  		SELECT COUNT(DAILYCOMMENTNO) FROM DAILYCOMMENT WHERE COMMENTREF=(SELECT COMMENTREF FROM DAILYCOMMENT WHERE DAILYCOMMENTNO=#{value})
+  	</select>
+  	<delete id="commentDeleteRef" parameterType="string">
+  		DELETE FROM DAILYCOMMENT WHERE DAILYCOMMENTNO=(SELECT COMMENTREF FROM DAILYCOMMENT WHERE DAILYCOMMENTNO=#{value}) AND STATUS='D'
+  	</delete>
 </mapper>

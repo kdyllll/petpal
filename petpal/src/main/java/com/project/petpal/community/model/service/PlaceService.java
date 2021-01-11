@@ -30,4 +30,6 @@ public interface PlaceService {
 	int insertLike(Map m);
 	int deleteLike(Map m);
 	List<Map> selectLikeCount();
+	int commentDelete(String placeCommentNo);
+	int comment2Delete(String placeCommentNo);
 }

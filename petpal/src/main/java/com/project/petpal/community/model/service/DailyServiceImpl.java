@@ -275,9 +275,22 @@ public class DailyServiceImpl implements DailyService {
 	}
 
 	@Override
+	@Transactional
 	public int comment2Delete(String dailyCommentNo) {
 		// TODO Auto-generated method stub
-		return dao.comment2Delete(session,dailyCommentNo);
+		//지워지는 댓글이 마지막 대댓글인지 확인
+		int status=0;
+		int result=1;
+		int check=dao.commentRefCheck(session,dailyCommentNo); //0이면 원댓글, 1이면 마지막댓글인 상태, 2이상이면 더있는 것
+		if(check==1) {//마지막 대댓글이면 원댓글도 삭제			
+			status=dao.commentDeleteRef(session,dailyCommentNo);//상태가 D인 원댓글 삭제(현재댓도 같이 사라짐)
+			//상태가 d였다면 check 1, 상태가 e였다면 check 0
+			//상태가 d였다면 현재댓과 원댓글 사라진 상태, 상태가 e였다면 아무것도 아닌 상태(현재댓글 지워야함)
+		}
+		if(status==0) {
+			result=dao.comment2Delete(session,dailyCommentNo);
+		}
+		return result;
 	}
 
 	@Override
