@@ -32,4 +32,5 @@ public interface FindService {
 	int insertComment(FindComment fc);
 	int commentDelete(String findCommentNo);
 	int comment2Delete(String findCommentNo);
+	List<Map> selectCountList();
 }

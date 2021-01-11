@@ -36,4 +36,5 @@ public interface FindDao {
 	int insertComment(SqlSession session, FindComment fc);
 	int commentDelete(SqlSession session,String findCommentNo);
 	int comment2Delete(SqlSession session,String findCommentNo);
+	List<Map> selectCountList(SqlSession session);
 }

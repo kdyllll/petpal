@@ -166,5 +166,11 @@ public class FindDaoImple implements FindDao {
 		// TODO Auto-generated method stub
 		return session.delete("find.comment2Delete", findCommentNo);
 	}
+
+	@Override
+	public List<Map> selectCountList(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectList("find.selectCountList");
+	}
 	
 }
