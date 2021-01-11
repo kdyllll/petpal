@@ -51,18 +51,23 @@
 								<script>
 									$(function(){
 										$(".orderCancelBtn").on("click", e => {
-											$.ajax({
-												url : "${path}/admin/orderCancelEnd.do",
-												data : {detailNo : $(e.target).prev().val(), paymentNo : $(e.target).next().val() }, 
-												success : data => {
-													if(data == true) {
-														alert("주문취소성공");
-														location.reload();
-													} else {
-														alert("주문취소실패")
+											let status = confirm( '주문취소하시겠습니까?' );
+									    	if(status == true) {
+												$.ajax({
+													url : "${path}/admin/orderCancelEnd.do",
+													data : {detailNo : $(e.target).prev().val(), paymentNo : $(e.target).next().val() }, 
+													success : data => {
+														if(data == true) {
+															alert("주문취소성공");
+															location.reload();
+														} else {
+															alert("주문취소실패")
+														}
 													}
-												}
-											})
+												})
+									    	} else {
+									    		location.replace();
+									    	}
 										})
 									})
 								
@@ -85,7 +90,10 @@
 </div>
 <script>
 	$(".allCancelBtn").on("click", function() {
-		$("#allPayCancelFrm").submit();
+		let status = confirm( '정말 전체취소하시겠습니까?' );
+    	if(status == true) {
+			$("#allPayCancelFrm").submit();
+    	}
 	})
 </script>
 

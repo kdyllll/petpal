@@ -36,14 +36,10 @@
 							 세일률<input type="text" min="0"  value="${s.sale }"
 							class="form-control col-3 d-inline align-middle" name="sale">
 							<input type="hidden" name="stockNo" class="stockNo" value="${s.stockNo}">
-						<input type="submit" value="수정"
-							class=" d-inline btn btn-outline-secondary align-middle updatePriceBtn" />
+						<button type="button" 
+							class=" d-inline btn btn-outline-secondary align-middle updatePriceBtn" >수정</button>
 					</div>
-					<script>
-						$(".updatePriceBtn").on("click", function() {
-							$(".priceFrm").attr("action","${path}/admin/updatePriceEnd.do").submit();
-						})
-					</script>
+					
 				</form>
 				</c:forEach>
 				</c:if>
@@ -54,3 +50,24 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	$(function(){
+		$(".updatePriceBtn").on("click", e => {
+			let price = $(e.target).prev().prev().prev();
+			let sale = $(e.target).prev().prev();
+			let stockNo = $(e.target).prev();
+			$.ajax({
+				url : "${path}/admin/updatePriceEnd.do",
+				data:{price:price.val(),sale:sale.val(),stockNo:stockNo.val()},
+				success : data => {
+					if(data == true) {
+						alert("가격수정 성공");
+					} else {
+						alert("가격수정 실패");
+					}
+				}
+			})
+		})
+	})
+</script>

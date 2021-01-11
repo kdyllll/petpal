@@ -53,7 +53,6 @@
 								id="small" value="S" ${cate != null && cate.equals("S") ? "checked":""}> <label
 								class="form-check-label" for="small">소동물</label>
 						</div>
-	
 						<select name="categoryname" class="catename form-check form-check-inline" >
 						  <option selected disabled>분류</option>
 						  <option value="홈/리빙" ${categoryname != null && categoryname.equals("홈/리빙") ? "selected":""}>홈/리빙</option>

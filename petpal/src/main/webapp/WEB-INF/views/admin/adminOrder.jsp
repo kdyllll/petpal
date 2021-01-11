@@ -163,8 +163,9 @@
         })
         
         $(".orderCancel").on("click", e=> {
-        	let paymentNo = $(e.target).prev().val();
-        	ajaxModal("${path}/admin/paymentCancel.do", paymentNo);
+        	let paymentNo = $(e.target).prev().val();        	
+	        ajaxModal("${path}/admin/paymentCancel.do", paymentNo);
+
         })
         
         $(".orderAccept").on("click", e => {
@@ -172,6 +173,7 @@
         	let memberNo = $(e.target).next().next().val();
         	let pointPlus =  $(e.target).next().next().next().val();
         	let pointMinus =  $(e.target).next().next().next().next().val();
+        	
         	$.ajax({
     			url: "${path}/admin/orderAccept.do",
     			data:{paymentNo, memberNo , pointPlus, pointMinus},
