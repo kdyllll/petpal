@@ -12,31 +12,13 @@
 	transition: all 850ms ease;
 }
 
-<<<<<<< HEAD
-     .dropdown:hover .dropdown-menu {
-     display: block;
-     opacity: 1;
-     }
+.dropdown:hover .dropdown-menu {
+display: block;
+opacity: 1;
+}
      
  </style>
-=======
-.dropdown:hover .dropdown-menu {
-	display: block;
-	opacity: 1;
-}
 
-/*  .scale {
-		transition:all 0.5s;
-	}
-	.scale:hover {
-	  transform: scale(1.1);
-	  -webkit-transform: scale(1.1);
-	  -moz-transform: scale(1.1);
-	  -ms-transform: scale(1.1);
-	  -o-transform: scale(1.1);
-	} */
-</style>
->>>>>>> branch 'develop' of https://github.com/kdyllll/petpal.git
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />

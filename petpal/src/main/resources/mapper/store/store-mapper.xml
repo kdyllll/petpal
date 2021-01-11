@@ -209,4 +209,10 @@ WHERE (PRODUCTNO,PRICE) IN (SELECT PRODUCTNO,MIN(PRICE) FROM PRODUCT JOIN STOCK 
 		<foreach collection="array" item="word" separator="||'|'||">#{word}</foreach>
 		 )) GROUP BY PRODUCTNO HAVING SUM(STOCK)=0) AND TYPE='M' 
 	</select> 
+	<select id="selectMainProduct">
+	
+	</select>
+	<select id="selectMainReview">
+	
+	</select>
 </mapper>
