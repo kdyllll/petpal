@@ -135,11 +135,14 @@ public class AdminProductController {
 	}
 	
 	@RequestMapping("/admin/stockSearch.do")
-	public String stockSearch(String productName, Model model,String cate) {
+	public String stockSearch(String productName, Model model,String cate,String categoryname) {
 		Map m = new HashMap();
 		m.put("productName", productName);
 		m.put("cate",cate);
+		m.put("categoryName", categoryname);
 		List<Map> pList = service.searchProduct(m);
+		model.addAttribute("categoryname",categoryname);
+		model.addAttribute("cate",cate);
 		model.addAttribute("pdtName",productName);
 		model.addAttribute("pList", pList);
 		return "admin/adminStock";

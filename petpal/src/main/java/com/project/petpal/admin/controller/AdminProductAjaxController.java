@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.deser.impl.ExternalTypeHandler.Builder;
@@ -73,7 +74,8 @@ public class AdminProductAjaxController {
 	}
 
 	@RequestMapping("/admin/updateStockEnd.do")
-	public String insertProductIo(String iostatus, int stock, String stockNo, Model model) {
+	@ResponseBody
+	public Boolean insertProductIo(String iostatus, String stock, String stockNo, Model model) {
 		String loc = "/admin/adminStock.do";
 		String io = "출고";
 		if (iostatus.equals("in")) {
@@ -92,7 +94,7 @@ public class AdminProductAjaxController {
 
 		model.addAttribute("loc", loc);
 		model.addAttribute("msg", msg);
-		return "common/msg";
+		return ioresult>0?true:false;
 	}
 
 	@RequestMapping("/admin/deleteStock.do")
