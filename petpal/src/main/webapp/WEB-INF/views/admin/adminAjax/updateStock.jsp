@@ -56,34 +56,34 @@
 	</div>
 </div>
 <script>
-						$(function() {
-							$(".insertStockBtn").on("click", e => {
-								 let stock = $(e.target).next().val();
-								 let ioStatus = $(e.target).prev().prev().prev().val();
-								 let input = $(e.target).prev().prev().val();
-								let flag = true;
-								if(ioStatus == "out") {			
-									if(input > stock) {
-										alert("출고 개수가 재고보다 많습니다. " + stock + "보다 적게 입력해주세요.");
-										flag=false;
-									}
-									if(input < 0) {
-										alert("출고 개수는 - 를 입력할 수 없습니다.");
-										flag=false;
-									}
-								}
-								if(ioStatus == "in") {
-									if(input < 0) {
-										alert("입고 개수는  - 를 입력할 수 없습니다.");
-										flag=false;
-									}
-								}
-								if(flag == false) {
-									return;
-								} else {
-									$(".stockFrm").attr("action","${path}/admin/updateStockEnd.do").submit(); 									
-								}
+	$(function() {
+		$(".insertStockBtn").on("click", e => {
+			 let stock = $(e.target).next().val();
+			 let ioStatus = $(e.target).prev().prev().prev().val();
+			 let input = $(e.target).prev().prev().val();
+			let flag = true;
+			if(ioStatus == "out") {			
+				if(input > stock) {
+					alert("출고 개수가 재고보다 많습니다. " + stock + "보다 적게 입력해주세요.");
+					flag=false;
+				}
+				if(input < 0) {
+					alert("출고 개수는 - 를 입력할 수 없습니다.");
+					flag=false;
+				}
+			}
+			if(ioStatus == "in") {
+				if(input < 0) {
+					alert("입고 개수는  - 를 입력할 수 없습니다.");
+					flag=false;
+				}
+			}
+			if(flag == false) {
+				return;
+			} 
+			$(e.target).parent().parent().attr("action","${path}/admin/updateStockEnd.do").submit(); 									
+			
 
-							})
-						})
-					</script>
+		})
+	})
+</script>
