@@ -86,6 +86,9 @@
 		<if test="cate != null">
 			and SUBSTR(CATEGORYNO, 1, 1) = #{cate} 
 		</if>
+		<if test="categoryName!=null">
+			and categoryName=#{categoryName}
+		</if>
 		ORDER BY ENROLLDATE DESC
 	</select>
 	<select id="inOutSearch" parameterType="map" resultType="map">

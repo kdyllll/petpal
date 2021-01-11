@@ -137,7 +137,7 @@
 			$("#stockSearchFrm").attr("action","${path }/admin/stockSearch.do").submit();
 		})
 		$("input[name='cate']").on("change", e => {
-			$("#productSearchFrm").attr("action", "${path }/admin/stockSearch.do").submit();			
+			$("#stockSearchFrm").attr("action", "${path }/admin/stockSearch.do").submit();			
 		})
 		
 		</script>
