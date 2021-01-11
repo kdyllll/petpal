@@ -253,11 +253,11 @@
 												<div class="img test">
 													<img src="${path}/resources/upload/tip/${t.MAINIMG}" id="scale" width="100%" height="225">
 												</div>
-												<c:set var="flag" value="false" />
+												<c:set var="flag2" value="false" />
 												<c:if test="${not empty like }">
 													<c:forEach var="l" items="${like }">
 														<c:if test="${l eq t.TIPNO }">
-															<c:set var="flag" value="true" />
+															<c:set var="flag2" value="true" />
 														</c:if>
 													</c:forEach>
 												</c:if>
@@ -274,7 +274,7 @@
 
 															</c:if>
 															<c:if test="${not empty loginMember }">
-																<c:if test="${flag eq false }">
+																<c:if test="${flag2 eq false }">
 																	<input type="hidden" name="tipNum" value="${t.TIPNO }">
 																	<button type="button" class="btn btn-sm">
 																		<svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" class="bi heartBtnLine bi-suit-heart  text-dark" viewBox="0 0 16 16">
@@ -287,7 +287,7 @@
 																		</svg>
 																	</button>
 																</c:if>
-																<c:if test="${flag eq true }">
+																<c:if test="${flag2 eq true }">
 																	<input type="hidden" name="tipNum" value="${t.TIPNO }">
 																	<button type="button" class="btn btn-sm d-none">
 																		<svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" class="bi heartBtnLine bi-suit-heart  text-dark" viewBox="0 0 16 16">
