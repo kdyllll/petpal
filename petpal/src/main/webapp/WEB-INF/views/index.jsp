@@ -112,14 +112,16 @@
 								alt="..." class="card-img-top">
 							</a>
 							<div class="card-body">
-								<p class="card-text " style="font-size: 13px;">
+								<p class="card-text " style="font-size: 15px;">
 									<c:out value="${fn:substring(r.CONTENT, 0, 41) }"/>${fn:length(r.CONTENT) gt 42?'...':''}
 								</p>
-								<span style="font-size: 12px;"><c:out value="${r.NICKNAME }"/></span><span
-									style="font-size: 12px;"><c:out value="${r.REVIEWDATE }"/></span>
+								<span style="font-size: 13px;"><c:out value="${r.NICKNAME }"/></span> &nbsp;
+								<span style="font-size: 13px;">
+									<fmt:formatDate value="${r.REVIEWDATE }" type="date" dateStyle="default"/>
+								</span>
 								<div style="height: 1px; width: 100%;" class="bg-light my-3"></div>
 								<a href="${path }/store/moveDetail.do?productNo=${r.PRODUCTNO}" class="d-flex justify-content-between text-hgh">
-									<p style="font-size: 13px;" class=""><c:out value="${r.PRODUCTNAME }"/></p>
+									<p style="font-size: 14px;" class=""><c:out value="${r.PRODUCTNAME }"/>  ></p>
 
 								</a>
 							</div>
@@ -138,7 +140,7 @@
 											style="width: 100px; border-radius: 20%;">
 									</div>
 									<div class="col-8 col-md-8 ">
-										<p class="mb-0" style="font-size: 15px;">
+										<p class="mb-0" style="font-size: 16px;">
 											<c:out value="${fn:substring(r.CONTENT, 0, 41) }"/>${fn:length(r.CONTENT) gt 42?'...':''}
 										</p>
 										<a href="${path }/store/moveDetail.do?productNo=${r.PRODUCTNO}" class="text-hgh"><span class="pt-3" style="font-size: 14px;">
@@ -146,7 +148,7 @@
 										</span> <span>></span></a>
 									</div>
 									<div class="col-md-2 d-flex justify-content-end"
-										style="font-size: 14px;"><c:out value="${r.REVIEWDATE }"/></div>
+										style="font-size: 14px;"><fmt:formatDate value="${r.REVIEWDATE }" type="date" dateStyle="default"/></div>
 								</div>
 							</div>
 							<!-- 나누는 선 -->
@@ -175,10 +177,10 @@
 									style="width: 100%; " class="rounded">
 							</a>
 							<div class="ml-2 col-7">
-								<p class="mb-0" style="font-size: 16px;">
+								<p class="mb-0" style="font-size: 17px;">
 									<c:out value="${fn:substring(d.CONTENT, 0, 41) }"/>${fn:length(d.CONTENT) gt 42?'...':''}
 								</p>
-								<span class="pt-3 text-muted mr-3" style="font-size: 15px;"><c:out value="${d.DAILYDATE }"/></span> 
+								<span class="pt-3 text-muted mr-3" style="font-size: 15px;"><fmt:formatDate value="${d.DAILYDATE }" type="date" dateStyle="default"/></span> 
 								<span class="pt-3 text-muted" style="font-size: 15px;"><c:out value="${d.NICKNAME }"/></span>
 								<div class="row mt-3">
 									<%-- <div class="col-4 ">
