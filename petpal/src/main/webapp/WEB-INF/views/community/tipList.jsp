@@ -126,8 +126,6 @@
  	 					location.reload();
  	 				}
  	 				location.reload();
- 	 			},error:function(request, status, error){
- 	 				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
  	 			}
  	 		});
 		}else{ //로그인 안되어 있으면 로그인 모달 띄우기
