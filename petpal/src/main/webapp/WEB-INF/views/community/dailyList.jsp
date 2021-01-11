@@ -163,17 +163,17 @@
 													</a>
 												</c:if>
 											</c:forEach>
-											<c:set var="flag" value="false" />
+											<c:set var="flag2" value="false" />
 											<c:if test="${not empty like }">
 												<c:forEach var="l" items="${like }">
 													<c:if test="${l eq d.DAILYNO }">
-														<c:set var="flag" value="true" />
+														<c:set var="flag2" value="true" />
 													</c:if>
 												</c:forEach>
 
 											</c:if>
 											<div class="d-flex justify-content-between mx-1 my-1">
-												<div class="d-flex align-items-center">
+												<div class="likeCon d-flex align-items-center">
 
 													<c:if test="${empty loginMember }">
 														<button type="button" class="btn btn-sm">
@@ -187,7 +187,7 @@
 
 													</c:if>
 													<c:if test="${not empty loginMember }">
-														<c:if test="${flag eq false }">
+														<c:if test="${flag2 eq false }">
 															<input type="hidden" name="dailyNum"
 																value="${d.DAILYNO }">
 
@@ -208,7 +208,7 @@
 																</svg>
 															</button>
 														</c:if>
-														<c:if test="${flag eq true }">
+														<c:if test="${flag2 eq true }">
 															<input type="hidden" name="dailyNum"
 																value="${d.DAILYNO }">
 															<button type="button" class="btn btn-sm d-none">
@@ -230,7 +230,7 @@
 
 														</c:if>
 													</c:if>
-													<span class="text-dark mx-1"><c:out value="${d.likeCnt }"/></span>
+													<span class="likeCount text-dark mx-1"><c:out value="${d.likeCnt }"/></span>
 												</div>
 
 												<div class="d-flex align-items-center">
@@ -304,7 +304,7 @@
 		});
 		
 		$(".heartBtnLine").on("click", e => {
-			if(loginMember!=""){ //로그인 되어 있으면 팔로우
+			if(loginMember!=""){ //로그인 되어 있으면 좋아요 추가
 				let dailyNo = $(e.target).parent().prev().val();
 				$(e.target).parent().addClass("d-none");
 				$(e.target).parent().next().removeClass("d-none");
@@ -312,9 +312,11 @@
 	                 url:"${path}/daily/insertLike.do",
 	                 data:{dailyNo : dailyNo},
 	                 success: (data) => {
-	                	 console.log(data); 
+	                	 
 	                 }
 				})
+				var likeCntSpan=$(e.target).parents(".likeCon").find("span.likeCount");
+				likeCntSpan.text(Number(Number(likeCntSpan.html()) + 1));
 			}else{ //로그인 안되어 있으면 로그인 모달 띄우기           
 				fn_loginCheck();
 			};
@@ -322,7 +324,7 @@
 		})
 		
 		$(".heartBtnFill").on("click", e => {
-			if(loginMember!=""){ //로그인 되어 있으면 팔로우
+			if(loginMember!=""){ //로그인 되어 있으면 좋아요 삭제
 				let dailyNo = $(e.target).parent().parent().prev().prev().val();
 				$(e.target).parent().parent().addClass("d-none");
 				$(e.target).parent().parent().prev().removeClass("d-none");
@@ -330,9 +332,10 @@
 	                url:"${path}/daily/deleteLike.do",
 	                data:{dailyNo : dailyNo},
 	                success: (data) => {
-	               	 console.log(data); 
 	                }
 	             }) 
+				var likeCntSpan=$(e.target).parents(".likeCon").find("span.likeCount");
+				likeCntSpan.text(Number(Number(likeCntSpan.html()) - 1));
 			}else{ //로그인 안되어 있으면 로그인 모달 띄우기           
 				fn_loginCheck();
 			};

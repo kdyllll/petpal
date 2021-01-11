@@ -110,4 +110,7 @@
   	<delete id="comment2Delete" parameterType="string">
   		DELETE FROM FINDCOMMENT WHERE FINDCOMMENTNO=#{findCommentNo}
   	</delete>
+  	<select id="selectLikeCount" resultType="map">
+  		select FINDNO,count(*) AS CNT from findlike group by findno
+  	</select>
 </mapper>

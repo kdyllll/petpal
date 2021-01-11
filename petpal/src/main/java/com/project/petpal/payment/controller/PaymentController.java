@@ -410,10 +410,6 @@ public class PaymentController {
 	    //전화번호에 "-" 추가하기 위한 StringBuffer생성
 	    StringBuffer origin = new StringBuffer(phone);
 		
-	    //전화번호에 "-"추가
-		origin.insert(3, "-");
-		origin.insert(8, "-");
-		
 	    phone = origin.toString();
 	    
 	    //jsp에 보낼 user 생성

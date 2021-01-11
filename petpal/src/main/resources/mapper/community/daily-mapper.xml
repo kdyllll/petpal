@@ -146,6 +146,9 @@
 		SELECT COUNT(*) FROM DAILYLIKE WHERE DAILYNO=#{value}
 	</select>
 	<select id="selectCommentCnt" parameterType="string" resultType="_int">
-		SELECT COUNT(*) FROM DAILYCOMMENT WHERE DAILYNO=#{value}
+		SELECT COUNT(*) FROM DAILYCOMMENT WHERE DAILYNO=#{value} AND STATUS='E'
 	</select>
+	<select id="selectLikeCount" resultType="map">
+  		select DAILYNO,count(*) AS CNT from DAILYLIKE group by DAILYNO
+  	</select>
 </mapper>

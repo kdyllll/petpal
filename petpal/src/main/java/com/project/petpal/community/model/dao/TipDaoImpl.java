@@ -186,4 +186,11 @@ public class TipDaoImpl implements TipDao {
 		// TODO Auto-generated method stub
 		return session.delete("tip.comment2Delete",tipCommentNo);
 	}
+
+	@Override
+	public int tipLikeCount(SqlSession session, String tipNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("tip.tipLikeCount", tipNo);
+	}
+
 }

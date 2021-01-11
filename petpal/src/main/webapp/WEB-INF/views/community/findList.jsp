@@ -122,6 +122,8 @@
 																	</c:forEach>
 																</c:if>
 															</c:if>
+															
+														
 														
 														
 														
@@ -165,15 +167,16 @@
 										type="hidden" value="${t.FINDNO }" />
 									</a>
 
-									<c:set var="flag" value="false" />
+									<c:set var="flag2" value="false" />
 									<c:if test="${not empty like }">
 										<c:forEach var="l" items="${like }">
 											<c:if test="${l eq t.FINDNO }">
-												<c:set var="flag" value="true" />
+												<c:set var="flag2" value="true" />
 											</c:if>
 										</c:forEach>
 
 									</c:if>
+									
 									<div class="d-flex justify-content-between mx-1 my-1">
 										<div class="likeFrm" method="post">
 											<c:if test="${empty loginMember }">
@@ -189,7 +192,7 @@
 
 											</c:if>
 											<c:if test="${not empty loginMember }">
-												<c:if test="${flag eq false }">
+												<c:if test="${flag2 eq false }">
 													<input type="hidden" name="findNum" value="${t.FINDNO }">
 
 													<button type="button" class="btn btn-sm">
@@ -211,7 +214,7 @@
 											</svg>
 													</button>
 												</c:if>
-												<c:if test="${flag eq true }">
+												<c:if test="${flag2 eq true }">
 
 													<input type="hidden" name="findNum" value="${t.FINDNO }">
 													<button type="button" class="btn btn-sm d-none">
@@ -236,7 +239,13 @@
 												</c:if>
 
 											</c:if>
-											<span class="text-dark mx-1">0</span>
+											<c:set var="ct" value="0" />
+											<c:forEach var="cnt" items="${count }">
+												<c:if test="${cnt.FINDNO eq t.FINDNO }">
+													<c:set var="ct" value="${cnt.CNT }" />
+												</c:if>
+											</c:forEach>
+											<span class="text-dark mx-1"><c:out value="${ct }"/></span>
 
 										</div>
 
@@ -332,7 +341,11 @@
                      url:"${path}/find/insertLike.do",
                      data:{findNo : findNo},
                      success: (data) => {
-                    	 console.log(data); 
+                    	 if(data == true) {
+                       		 location.reload();
+                       	 } else {
+                       		 alert("좋아요 추가 실패");
+                       	 }
                      }
                   })
 			}else{ //로그인 안되어 있으면 로그인 모달 띄우기           
@@ -350,7 +363,11 @@
                     url:"${path}/find/deleteLike.do",
                     data:{findNo : findNo},
                     success: (data) => {
-                   	 console.log(data); 
+                   	 if(data == true) {
+                   		 location.reload();
+                   	 } else {
+                   		 alert("좋아요 삭제 실패");
+                   	 }
                     }
                  })
 			}else{ //로그인 안되어 있으면 로그인 모달 띄우기           

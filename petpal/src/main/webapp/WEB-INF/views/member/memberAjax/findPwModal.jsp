@@ -59,16 +59,13 @@
  			data:{email:email},
  			success:(data)=>{
  				//sns가입아이디가 아니면서 해당 이메일과 일치하는 멤버번호의 개수 리턴
- 				console.log(data);
  				if(data>0){//그런 계정이 있으면 
  					//이메일로 인증번호 보내고 인증번호 리턴받기
  			 		$.ajax({
  			 			url:"${path}/sendEmail.do",
  			 			data:{email:email},
  			 			success:(data)=>{
- 			 				console.log("인증번호"+data);
  			 				if(data!=null){//인증번호가 잘 전송됐다면
- 			 					console.log("인증번호 있음");
  			 					key=data; //인증번호를 변수에 저장하고
  			 					$(".afterSend").show(); //인증번호를 입력하는 란을 보여주고 
  			 					$(".sendNumBtn").val("인증번호 재전송"); //재전송으로 버튼 이름을 바꾸기

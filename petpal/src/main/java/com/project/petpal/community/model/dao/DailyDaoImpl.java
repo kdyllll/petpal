@@ -267,7 +267,11 @@ public class DailyDaoImpl implements DailyDao {
 		return session.selectOne("daily.selectCommentCnt",dailyNo);
 	}
 
-	
+	@Override
+	public List<Map> selectLikeCount(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectList("find.selectLikeCount");
+	}
 	
 
 }

@@ -37,4 +37,5 @@ public interface TipService {
 	int insertComment(TipComment tc);
 	int commentDelete(String tipCommentNo);
 	int comment2Delete(String tipCommentNo);
+	int tipLikeCount(String tipNo);
 }

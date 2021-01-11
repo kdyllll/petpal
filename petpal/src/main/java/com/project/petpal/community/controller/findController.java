@@ -47,6 +47,7 @@ public class findController {
 		map.put("cate",cate);
 		int totalData = service.findTotalCount();		
 		List<Map> list = service.selectFindList(map, cPage, numPerPage);
+		List<Map> count = service.selectLikeCount();
 		if(m!=null) {
 			List<String> like = service.selectFindLike(m.getMemberNo());
 			model.addAttribute("like", like);
@@ -59,7 +60,7 @@ public class findController {
 			model.addAttribute("following", followingList);
 		}
 		
-		
+		model.addAttribute("count", count);
 		model.addAttribute("totalData", totalData);
 		model.addAttribute("pageBar", new PageBarFactory().getPageBar(totalData, cPage, numPerPage,null,null, "findList.do"));
 		model.addAttribute("list", list);
@@ -130,6 +131,8 @@ public class findController {
 		Map fDetail = service.detailOne(findNo);
 		List<Map> findPics = service.findSubPic(findNo);
 		Member m = (Member)session.getAttribute("loginMember");
+		List<Map> count = service.selectLikeCount();
+		
 		if(m!=null) {
 			List<String> like = service.selectFindLike(m.getMemberNo());
 			for(String l : like) {
@@ -139,6 +142,7 @@ public class findController {
 				}
 			}
 		}
+		model.addAttribute("count",count);
 		model.addAttribute("fDetail", fDetail);
 		model.addAttribute("findPics", findPics);
 		return "community/findDetail";
@@ -248,24 +252,26 @@ public class findController {
 	
 //	좋아요 삭제
 	@RequestMapping("/find/deleteLike.do")
-	public String deleteLike(String findNo, Model model ,HttpSession session) {
+	@ResponseBody
+	public Boolean deleteLike(String findNo, Model model ,HttpSession session) {
 		Member mem = (Member)session.getAttribute("loginMember");
 		Map map = new HashMap();
 		map.put("no", findNo);
 		map.put("memberNo", mem.getMemberNo());
-		service.deleteFindLike(map);
-		return "";
+		int result = service.deleteFindLike(map);
+		return result>0?true:false;
 	}
 //	좋아요 추가
 	@RequestMapping("/find/insertLike.do")
-	public String insertLike(HttpSession session, String findNo) {
+	@ResponseBody
+	public Boolean insertLike(HttpSession session, String findNo) {
 		Map map = new HashMap();
 		Member m = (Member)session.getAttribute("loginMember");
 		map.put("memberNo", m.getMemberNo());
 		map.put("findNo", findNo);
 		
-		service.insertFindLike(map);
-		return "";
+		int result = service.insertFindLike(map);
+		return result>0?true:false;
 	}
 	
 	@RequestMapping("/find/findDelete.do")

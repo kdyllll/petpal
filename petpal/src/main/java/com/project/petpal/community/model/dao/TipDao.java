@@ -41,4 +41,5 @@ public interface TipDao {
 	int insertComment(SqlSession session,TipComment tc);
 	int commentDelete(SqlSession session,String tipCommentNo);
 	int comment2Delete(SqlSession session,String tipCommentNo);
+	int tipLikeCount(SqlSession session, String tipNo);
 }
