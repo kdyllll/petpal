@@ -52,6 +52,6 @@ public interface StoreService {
 	List<Product> saleList();
 	List<Product> categoryList(Map sort);
 	List<Product> soldOutList(Map sort);
-	List<Map> selectMainProduct();
-	List<Map> selectMainReview();
+	List<Map> selectMainProduct(int cPage,int numPerPage);
+	List<Map> selectMainReview(int cPage,int numPerPage);
 } 

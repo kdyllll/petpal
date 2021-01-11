@@ -432,7 +432,13 @@
 	         for(let s in stockList){
 	        	 if(stockList[s].stockNo==stockNo){
 	        		 price=stockList[s].price * (100-stockList[s].sale) / 100;
-	        		 option=stockList[s].color+" "+stockList[s].productSize;
+	        		 if(stockList[s].color!=null){
+	        			 option=stockList[s].color;
+	        		 }
+	        		 if(stockList[s].productSize!=null){
+	        			 option=option+" "+stockList[s].productSize;
+	        		 }
+	        		// option=stockList[s].color+" "+stockList[s].productSize;
 	        		 stock=stockList[s].stock;
 	        		 
 	        	 }
