@@ -264,4 +264,7 @@
 	<update id="updatePasswordMap" parameterType="map">
 		UPDATE MEMBER SET PASSWORD=#{password} WHERE SNSNO IS NULL AND EMAIL=#{email}
 	</update>
+	<delete id="deleteMember" parameterType="string">
+		DELETE FROM MEMBER WHERE MEMBERNO=#{memberNo}
+	</delete>
 </mapper>
