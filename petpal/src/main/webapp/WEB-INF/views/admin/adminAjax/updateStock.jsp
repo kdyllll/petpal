@@ -80,9 +80,9 @@
 			}
 			if(flag == false) {
 				return;
-			} 
-			$(e.target).parent().parent().attr("action","${path}/admin/updateStockEnd.do").submit(); 									
-			
+			} else {
+				$(e.target).parent().parent().attr("action","${path}/admin/updateStockEnd.do").submit(); 									
+			}
 
 		})
 	})
