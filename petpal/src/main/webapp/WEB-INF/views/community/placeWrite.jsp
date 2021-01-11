@@ -310,7 +310,7 @@ input:focus {
 	    //작성버튼 눌렀을때
 	    $("#btn").on("click",e=>{ 
 	       //등록 누르면 사진 인풋태그에 id 순서대로 부여
-	        /* if($("#title").val().trim()==""){
+	         if($("#title").val().trim()==""){
 	    	  alert("제목을 입력해주세요.");
 	    	  return;
 	      }
@@ -325,8 +325,8 @@ input:focus {
 	    	if($("#category").val()==""){
 	    	  alert("카테고리를 선택해주세요");
 	    	  return;
-	      } */
-	    /*   if($(".previewImg").length==0){
+	      } 
+	      if($(".previewImg").length==0){
 	    	  alert("사진을 올려주세요.");
 	    	  return;
 	      }else if($(".previewImg").length!=5&&$(".upload").last().val()==""){//인풋 파일태그 마지막 값 지움
@@ -334,13 +334,9 @@ input:focus {
 	      } 
 	     if($("input[name=hashtag]").last().val().trim()==""){//해쉬태그 마지막이 값이없으면 지워버림
 	    	 $("input[name=hashtag]").last().remove()
-	     } */
+	     } 
 	     
 	       
-	     	/*     $.each($("input[name=pic]"),(i,v)=>{
-	        	console.log(i);
-	        	console.log(v.value);
-	        });  */
 	      //등록 누르면 form 전송
 	      $("#writeFrm").submit();
 	      
