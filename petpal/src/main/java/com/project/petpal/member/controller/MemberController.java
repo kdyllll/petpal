@@ -518,4 +518,22 @@ public class MemberController {
 	   m.addAttribute("msg",result>0?"비밀번호를 변경했습니다.":"비밀번호 변경에 실패했습니다.");
 	   return "common/msg";
    }
+   
+   //회원탈퇴
+   @RequestMapping("/member/deleteMember.do")
+   public String deleteMember(Member member,Model model,SessionStatus ss) {
+	  int result = service.deleteMember(member.getMemberNo());
+	  String loc="/member/myPageModify.do";
+	  String msg = "탈퇴실패";
+	  if(result>0) {
+		  if(!ss.isComplete()) {
+		         ss.setComplete();
+		      }
+		  loc="/";
+		  msg="탈퇴성공";
+	  }
+	  model.addAttribute("loc", loc);
+	  model.addAttribute("msg", msg);
+	   return "common/msg"; 
+   }
 }

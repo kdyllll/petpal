@@ -356,6 +356,12 @@ public class MemberDaoImpl implements MemberDao {
 		// TODO Auto-generated method stub
 		return session.update("member.updatePasswordMap",m);
 	}
+
+	@Override
+	public int deleteMember(SqlSession session, String memberNo) {
+		// TODO Auto-generated method stub
+		return session.delete("member.deleteMember", memberNo);
+	}
 	
 	
 

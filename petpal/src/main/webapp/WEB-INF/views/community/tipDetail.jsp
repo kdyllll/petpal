@@ -178,7 +178,7 @@
 				                     		<c:if test="${loginMember.memberNo eq mainList[0].MEMBERNO }">
 							               <div class="d-flex justify-content-end">
 												    <button type="button" class="btn btn-link btn-outline-secondary px-2 py-0 mr-2 text-black-50" onclick="location.href='${path}/community/tipUpdate.do?tipNo=${mainList[0].TIPNO}'">수정</button>
-							                  	<button type="button" class="btn btn-link btn-outline-secondary px-2 py-0 text-black-50" id="delete">삭제</button>
+							                  	<button type="button" class="btn btn-link btn-outline-secondary px-2 py-0 text-black-50 delete">삭제</button>
 							               </div>
 						               </c:if>
 						          		</div>
@@ -289,7 +289,7 @@
 		               <c:if test="${loginMember.memberNo eq mainList[0].MEMBERNO }">
 			               <div class="d-flex justify-content-end mr-1">
 								    <button type="button" class="btn btn-link btn-outline-secondary px-2 py-0 mr-2 text-black-50" onclick="location.href='${path}/community/tipUpdate.do?tipNo=${mainList[0].TIPNO}'">수정</button>
-			                  	<button type="button" class="btn btn-link btn-outline-secondary px-2 py-0 text-black-50" id="delete">삭제</button>
+			                  	<button type="button" class="btn btn-link btn-outline-secondary px-2 py-0 text-black-50 delete">삭제</button>
 			               </div>
 		               </c:if>
 		         </div><!-- 스티키 -->
@@ -310,7 +310,7 @@
 	commentAjax();
 	
  	$(document).ready(function() {
- 		$("#delete").on("click", e=>{
+ 		$(".delete").on("click", e=>{
  			if(window.confirm("게시글을 삭제하시겠습니까?")){
 				 location.href="${path}/community/tipDelete.do?tipNo=${mainList[0].TIPNO}";
  			}

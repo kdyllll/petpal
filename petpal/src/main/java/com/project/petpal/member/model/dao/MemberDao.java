@@ -66,4 +66,5 @@ public interface MemberDao {
    String selectIdCheck(SqlSession session, Map m);
    int checkEmail(SqlSession session,String email);
    int updatePasswordMap(SqlSession session,Map m);
+   int deleteMember(SqlSession session,String memberNo);
 }

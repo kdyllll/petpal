@@ -142,7 +142,7 @@ public class CartController {
 		return mv;
 	}
 	
-	@RequestMapping("cart/deleteCart.do")
+	@RequestMapping("/cart/deleteCart.do")
 	@ResponseBody
 	public int deleteCart(ModelAndView mv, HttpServletRequest request, HttpSession session, HttpServletResponse response, String[] deleteCart) throws UnsupportedEncodingException {
 		

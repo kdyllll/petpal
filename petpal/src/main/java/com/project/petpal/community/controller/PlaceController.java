@@ -92,6 +92,8 @@ public class PlaceController {
 		Map<String,String> keyword=new HashMap<String,String>();
 		keyword.put("hashtag", hashtag);
 		keyword.put("category", category);
+		System.out.println(hashtag);
+		System.out.println(category);
 		String search="";
 		//검색어를 통해 들어오는 거면 search도 보내서 정렬버튼 없앰
 		if(hashtag!=null) {

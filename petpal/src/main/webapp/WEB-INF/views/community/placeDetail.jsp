@@ -140,7 +140,7 @@
                   <div id="hashtagContainer">
                      <ul >
                         <c:forEach items="${hList }" var="h">
-                        <li class="d-inline-flex mr-3 hashtag rounded">#<a href="${path }/community/hashSearch.do?hashtag=${h}"><c:out value="${h.hashContent }"/></a></li>
+                        <li class="d-inline-flex mr-3 hashtag rounded">#<a href="${path }/community/hashSearch.do?hashtag=${h.hashContent}"><c:out value="${h.hashContent }"/></a></li>
                         </c:forEach>
                      </ul>
                   </div>   

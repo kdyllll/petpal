@@ -33,7 +33,8 @@
 		resultMap="placeMap">
 		SELECT * FROM PLACE JOIN PLACEIMG USING(PLACENO) JOIN MEMBER
 		USING(MEMBERNO) WHERE TYPE='M' AND STATUS ='Y'
-		<if test="value !=null"> AND CATEGORY=#{value}
+		<if test="category !=null">
+			AND CATEGORY=#{category}
 		</if>
 		<if test="hashtag != null">
 			AND PLACENO IN (SELECT PLACENO FROM PLACE LEFT JOIN HASHTAG ON
@@ -50,7 +51,7 @@
 		parameterType="string">
 		SELECT COUNT(*) FROM PLACE WHERE 1=1
 		<if test="category !=null">
-			AND CATEGORY=#{value}
+			AND CATEGORY=#{category}
 		</if>
 		<if test="hashtag != null">
 			AND PLACENO IN (SELECT PLACENO FROM PLACE LEFT JOIN HASHTAG ON
