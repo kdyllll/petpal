@@ -71,5 +71,7 @@
 	<select id="mTotalCount" resultType="_int">
 		SELECT count(*) FROM MEMBER
 	</select>
-	
+	<select id="refundChangeList" resultType="map">
+		select * from paydetail where detailstatus in ('반품중','교환중','취소', '교환')
+	</select>
 </mapper>

@@ -298,5 +298,11 @@ public class AdminServiceImple implements AdminService {
 		return dao.detailCnt(session, paymentNo);
 	}
 
+	@Override
+	public List<Map> refundChangeList() {
+		// TODO Auto-generated method stub
+		return dao.refundChangeList(session);
+	}
+
 	
 }

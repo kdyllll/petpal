@@ -169,7 +169,9 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/admin/refundChange.do")
-	public String refundAndChange() {
+	public String refundAndChange(Model m) {
+		List<Map> oList = service.refundChangeList();
+		m.addAttribute("oList", oList);
 		return "admin/refundAndChange";
 	}
 	

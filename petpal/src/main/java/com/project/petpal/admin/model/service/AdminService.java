@@ -47,4 +47,5 @@ public interface AdminService {
 	int orderTotalCount();
 	int orderAccept(Map m);
 	int detailCnt(String paymentNo);
+	List<Map> refundChangeList();
 }
