@@ -44,5 +44,6 @@ public interface TipDao {
 	int tipLikeCount(SqlSession session, String tipNo);
 	List<Map> selectTipDate(SqlSession session, int cPage, int numPerPage, Map<String,String> keyword); 
 	List<Map> selectTipHeart(SqlSession session, int cPage, int numPerPage, Map<String,String> keyword);
+	List<Map> selectTipComment(SqlSession session, int cPage, int numPerPage, Map<String,String> keyword);
 	List<Map> selectTipFollow(SqlSession session, int cPage, int numPerPage, Map<String,String> keyword);
 }

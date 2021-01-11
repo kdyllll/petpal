@@ -207,6 +207,7 @@
 								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 									<button class="sort dropdown-item">최신순</button>
 									<button class="sort dropdown-item">인기순</button>
+									<button class="sort dropdown-item">댓글순</button>
 									<button class="sort dropdown-item">팔로워순</button>
 								</div>
 							</div>

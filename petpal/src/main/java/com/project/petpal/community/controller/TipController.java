@@ -98,6 +98,12 @@ public class TipController {
 				}else {
 					TipList=service.selectTipHeart(cPage,numPerPage, null);
 				}
+			}else if(sort.equals("댓글순")){
+				if(category!=null) {
+					TipList=service.selectTipComment(cPage,numPerPage, keyword);
+				}else {
+					TipList=service.selectTipComment(cPage,numPerPage, null);
+				}
 			}else {
 				if(category!=null) {
 					TipList=service.selectTipFollow(cPage,numPerPage, keyword);

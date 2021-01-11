@@ -208,6 +208,13 @@ public class TipDaoImpl implements TipDao {
 	}
 
 	@Override
+	public List<Map> selectTipComment(SqlSession session, int cPage, int numPerPage, Map<String,String> keyword) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("tip.selectTipComment", keyword, rb);
+	}
+	
+	@Override
 	public List<Map> selectTipFollow(SqlSession session, int cPage, int numPerPage, Map<String,String> keyword) {
 		// TODO Auto-generated method stub
 		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
