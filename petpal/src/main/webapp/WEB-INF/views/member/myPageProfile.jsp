@@ -34,7 +34,7 @@
     	 	 	<button type="button" class="text-dark likeBtn" style="background:none; border:none; outline:none;">좋아요</button><p><c:out value="${totalLike }" /></p>
     	 	 </div >
     	 	 <div class="d-flex flex-column align-items-center">
-	   		 	<a href="${path }/member/memberFollow.do" class="text-dark">팔로우<p><c:out value="${follow }" /></p></a>
+	   		 	<a href="${path }/member/memberFollow.do" class="text-dark">팔로우</a><p><c:out value="${follow }" /></p>
 	   		 </div>
 	   		 <div class="d-flex flex-column align-items-center">
 	   		 	<a href="${path }/member/myPageShop.do" class="text-dark">포인트</a><p><c:out value="${member.POINT }" /></p>

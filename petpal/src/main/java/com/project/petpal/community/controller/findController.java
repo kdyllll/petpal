@@ -318,6 +318,7 @@ public class findController {
 	@RequestMapping("/find/commentDelete.do")
 	@ResponseBody
 	public Boolean commentDelete(String findCommentNo) {
+		System.out.println(findCommentNo);
 		int result=service.commentDelete(findCommentNo);
 		return result>0?true:false;
 	}
