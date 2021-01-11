@@ -346,6 +346,12 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return dao.updatePasswordMap(session,m);
 	}
+
+	@Override
+	public int deleteMember(String memberNo) {
+		// TODO Auto-generated method stub
+		return dao.deleteMember(session,memberNo);
+	}
 	
 	
 	

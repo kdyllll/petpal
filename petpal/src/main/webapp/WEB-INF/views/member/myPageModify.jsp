@@ -131,7 +131,7 @@ request.setAttribute("addEtc2", addEtc2);
 		</div>
 		<div class="form-group row d-flex justify-content-center mt-5">
 			<input type="hidden" name="memberNo" value="${member.getMemberNo() }">
-			<button class="btn btn-outline-danger mx-2">회원탈퇴</button>
+			<button class="btn btn-outline-danger mx-2 deleteMem">회원탈퇴</button>
 			<button type="submit" class="btn btn-outline-secondary mx-2" id="updateMember">정보수정</button>
 		</div>
 	</form>
@@ -243,6 +243,13 @@ request.setAttribute("addEtc2", addEtc2);
     	    
     		$("#updateMemberFrm").attr("action","${path }/member/updateMemberEnd.do").submit();
     		
+      })
+      
+      $(".deleteMem").on("click", e =>{
+    	  let bool = confirm( '정말 탈퇴하시겠습니까?' );
+          if(bool == true) {
+    	      $("#updateMemberFrm").attr("action","${path }/member/deleteMember.do").submit();        	  
+          }
       })
 
         $("#passwordUpdate").on("click",function(){

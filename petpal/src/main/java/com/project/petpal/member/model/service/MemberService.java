@@ -64,4 +64,5 @@ public interface MemberService {
    String selectIdCheck(Map m);
    int checkEmail(String email);
    int updatePasswordMap(Map m);
+   int deleteMember(String memberNo);
 }
