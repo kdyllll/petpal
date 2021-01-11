@@ -352,6 +352,12 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return dao.deleteMember(session,memberNo);
 	}
+
+	@Override
+	public int likeCnt(Map m) {
+		// TODO Auto-generated method stub
+		return dao.likeCnt(session, m);
+	}
 	
 	
 	

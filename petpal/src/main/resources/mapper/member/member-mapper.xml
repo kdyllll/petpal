@@ -267,4 +267,7 @@
 	<delete id="deleteMember" parameterType="string">
 		DELETE FROM MEMBER WHERE MEMBERNO=#{memberNo}
 	</delete>
+	<select id="likeCnt" resultType="_int" parameterType="map">
+		 select count(*) from ${type} where heartmemberno =#{memberNo}
+	</select>
 </mapper>

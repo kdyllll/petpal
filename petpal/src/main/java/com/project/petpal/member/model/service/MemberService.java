@@ -65,4 +65,5 @@ public interface MemberService {
    int checkEmail(String email);
    int updatePasswordMap(Map m);
    int deleteMember(String memberNo);
+   int likeCnt(Map m);
 }
