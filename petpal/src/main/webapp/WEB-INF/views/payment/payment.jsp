@@ -232,7 +232,7 @@ function check(){
 	
 	//장바구니 버튼 누르면 장바구니 페이지로 이동
 	function cart(){
-		location.replace('/petpal/cart/cart.do');
+		location.replace('${path}/cart/cart.do');
 	}
 	
 	$(document).on("keyup", "#point", function() {
@@ -445,10 +445,11 @@ function check(){
                         </div>
                         <hr>
                         <div class="mt-4 d-flex align-items-center">
-                        	<input type="text" class="mr-2 form-control" id="point" name="point" value="0" style="width:20%" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">P
+                        	<input type="text" class="mr-2 form-control" id="point" value="0" style="width:20%" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">P
                         	<input type="hidden" name="pointMinus" id="pointMinus" value="0">
                         </div>
                         <small>사용 가능한 포인트 <c:out value="${point }"/>P</small>
+                        <input type="hidden"  name="point"  value="${point }">
                         
                         <div class="mt-5 d-flex align-items-center">
                         	<h5 class="mr-3">예상 적립 포인트</h5><small>결제금액의 10%가 포인트로 적립됩니다.</small>
