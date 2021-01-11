@@ -31,7 +31,7 @@
     	<div class="row d-flex justify-content-around mt-4">
     		<input type="hidden" name="memberNo" value="${member.MEMBERNO }" class="memberNo" />
     		<div class="d-flex flex-column align-items-center">
-    	 	 	<button type="button" class="text-dark likeBtn" style="background:none; border:none; outline:none;">좋아요</button><p><c:out value="${fav }" /></p>
+    	 	 	<button type="button" class="text-dark likeBtn" style="background:none; border:none; outline:none;">좋아요</button><p><c:out value="${totalLike }" /></p>
     	 	 </div >
     	 	 <div class="d-flex flex-column align-items-center">
 	   		 	<a href="${path }/member/memberFollow.do" class="text-dark">팔로우<p><c:out value="${follow }" /></p></a>

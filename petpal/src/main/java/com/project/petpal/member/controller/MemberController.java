@@ -77,6 +77,21 @@ public class MemberController {
 	 
       Member memNo = (Member)session.getAttribute("loginMember");
       String memberNo = memNo.getMemberNo();
+      //좋아요수
+      Map likeMap = new HashMap();
+      likeMap.put("memberNo", memberNo);
+      likeMap.put("type", "FINDLIKE");
+      int fLike = service.likeCnt(likeMap);
+      likeMap.put("type", "DAILYLIKE");
+      int dLike = service.likeCnt(likeMap);
+      likeMap.put("type", "PLACELIKE");
+      int pLike = service.likeCnt(likeMap);
+      likeMap.put("type", "TIPLIKE");
+      int tLike = service.likeCnt(likeMap);
+      
+      int myTotalLike = fLike+dLike+pLike+tLike;
+      System.out.println(myTotalLike);
+      
       Map member = service.selectMemberOnee(memberNo);
       int followCnt = service.followCnt(memberNo);
       int favCnt = service.favCnt(memberNo);
@@ -88,6 +103,7 @@ public class MemberController {
       int tipCnt = tService.tipCnt(memberNo);
       List<Map> pList = pService.selectPlaceListOne(memberNo);
       int placeCnt = pService.placeCnt(memberNo);
+      m.addAttribute("totalLike",myTotalLike);
       m.addAttribute("follow",followCnt);
       m.addAttribute("fav",favCnt);   
       m.addAttribute("member", member);
