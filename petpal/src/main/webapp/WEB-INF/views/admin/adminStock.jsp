@@ -29,6 +29,21 @@
 				<form id="stockSearchFrm" method="post">
 				<div class="row align-items-center mb-3">
 					<div class="input-group   col-lg-5">
+						<div class="form-check form-check-inline align-middle">
+							<input class="form-check-input" name="cate" type="radio"
+								id="dog" value="D" ${cate != null && cate.equals("D") ? "checked":""}> <label
+								class="form-check-label" for="dog">강아지</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" name="cate" type="radio"
+								id="cat" value="C" ${cate != null && cate.equals("C") ? "checked":""}> <label
+								class="form-check-label" for="cat">고양이</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" name="cate" type="radio"
+								id="small" value="S" ${cate != null && cate.equals("S") ? "checked":""}> <label
+								class="form-check-label" for="small">소동물</label>
+						</div>
 						<input type="text" class="form-control input-group-sm"
 							placeholder="상품이름을 입력해주세요." aria-label="Recipient's username"
 							aria-describedby="button-addon2" name="productName">
@@ -120,6 +135,9 @@
 		
 		$("#stockSearchBtn").on("click", function() {
 			$("#stockSearchFrm").attr("action","${path }/admin/stockSearch.do").submit();
+		})
+		$("input[name='cate']").on("change", e => {
+			$("#productSearchFrm").attr("action", "${path }/admin/stockSearch.do").submit();			
 		})
 		
 		</script>

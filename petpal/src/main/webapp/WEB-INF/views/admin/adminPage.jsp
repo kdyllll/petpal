@@ -28,7 +28,23 @@
 				style="height: 100vh; overflow-y: auto;">
 				<h2 class="my-3">상품관리</h2>
 				<form method="post" id="productSearchFrm" class="row align-items-center mb-3">
-					<button type="button" class="btn btn-outline-secondary col-lg-1 ml-3" id="searchAll">전체검색</button>
+					<button type="button" class="btn btn-outline-secondary col-lg-1 ml-3 mr-4" id="searchAll">전체검색</button>
+					<div class="form-check form-check-inline align-middle">
+						<input class="form-check-input" name="cate" type="radio"
+							id="dog" value="D" ${cate != null && cate.equals("D") ? "checked":""}> <label
+							class="form-check-label" for="dog">강아지</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" name="cate" type="radio"
+							id="cat" value="C" ${cate != null && cate.equals("C") ? "checked":""}> <label
+							class="form-check-label" for="cat">고양이</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" name="cate" type="radio"
+							id="small" value="S" ${cate != null && cate.equals("S") ? "checked":""}> <label
+							class="form-check-label" for="small">소동물</label>
+					</div>
+
 					<div class="input-group   col-lg-5">
 						<input type="text" class="form-control input-group-sm"
 							placeholder="상품이름을 입력해주세요." aria-label="Recipient's username"
@@ -311,6 +327,10 @@
 		
 		$("#searchAll").on("click", function() {
 			$("#productSearchFrm").attr("action", "${path}/admin/moveAdminPage.do").submit();
+		})
+		
+		$("input[name='cate']").on("change", e => {
+			$("#productSearchFrm").attr("action", "${path}/admin/productSearch.do").submit();			
 		})
   })
 </script>
