@@ -77,6 +77,10 @@ public class AdminProductAjaxController {
 	@ResponseBody
 	public Boolean insertProductIo(String iostatus, String stock, String stockNo, Model model) {
 
+		String io = "출고";
+		if (iostatus.equals("in")) {
+			io = "입고";
+		}
 		Map m = new HashMap();
 		m.put("iostatus", io);
 		m.put("stock", stock);
