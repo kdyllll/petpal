@@ -208,6 +208,10 @@ public class PaymentController {
 			//총 결제 금액의 10% 포인트 적립
 			int pointPlus = (int) (totalPrice * 0.1);
 			
+			System.out.println("포인트 : " + point);
+			System.out.println("쓴 포인트 : " + pointMinus);
+			System.out.println("적립 포인트 : " + pointPlus);
+			
 			//최종 포인트
 			point = point - pointMinus + pointPlus;
 			
