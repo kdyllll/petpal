@@ -241,7 +241,6 @@ public class MemberController {
    public String moveLogin(@CookieValue(value="saveId", required = false) Cookie saveId,
 		   Model m, HttpSession session) {
 	   if(saveId!=null) {
-		   System.out.println(saveId.getValue());
 		   m.addAttribute("saveId",saveId.getValue());
 	   }	   
 	   String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
