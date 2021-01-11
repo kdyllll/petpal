@@ -2,28 +2,37 @@
 <!DOCTYPE mapper PUBLIC "- //mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="admin">
 	<select id="selectClaimAll" resultType="map">
-		SELECT * FROM CLAIM JOIN MEMBER USING(MEMBERNO)
+		SELECT * FROM CLAIM JOIN
+		MEMBER USING(MEMBERNO)
 	</select>
-	<select id="selectClaimOne" parameterType="string" resultType="map">
-		SELECT * FROM CLAIM JOIN MEMBER USING(MEMBERNO) WHERE CLAIMNO=#{claimNo}
+	<select id="selectClaimOne" parameterType="string"
+		resultType="map">
+		SELECT * FROM CLAIM JOIN MEMBER USING(MEMBERNO) WHERE
+		CLAIMNO=#{claimNo}
 	</select>
 	<delete id="claimDelete" parameterType="string">
-		DELETE FROM CLAIM WHERE CLAIMNO=#{claimNo}
+		DELETE FROM CLAIM WHERE
+		CLAIMNO=#{claimNo}
 	</delete>
 	<update id="claimAccept" parameterType="string">
-		UPDATE CLAIM SET STATUS='Y' WHERE CLAIMNO=#{claimNo}
+		UPDATE CLAIM SET
+		STATUS='Y' WHERE CLAIMNO=#{claimNo}
 	</update>
 	<select id="selectPlaceList" resultType="map">
-		select * from place join member using(MEMBERNO)ORDER BY PLACEDATE DESC
+		select * from place join
+		member using(MEMBERNO)ORDER BY PLACEDATE DESC
 	</select>
-	<select id="selectPlaceOne" resultType="map" parameterType="string">
-		SELECT * FROM PLACE JOIN MEMBER USING(MEMBERNO) WHERE PLACENO=#{placeNo}
+	<select id="selectPlaceOne" resultType="map"
+		parameterType="string">
+		SELECT * FROM PLACE JOIN MEMBER USING(MEMBERNO) WHERE
+		PLACENO=#{placeNo}
 	</select>
 	<update id="updatePlace" parameterType="map">
-		UPDATE PLACE SET STATUS=#{status} WHERE PLACENO=#{placeNo}
+		UPDATE PLACE SET
+		STATUS=#{status} WHERE PLACENO=#{placeNo}
 	</update>
 	<select id="orderSearch" resultType="map" parameterType="map">
-		  SELECT * FROM payment p left JOIN member m ON M.MEMBERNO=P.MEMBERNO
+		SELECT * FROM payment p left JOIN member m ON M.MEMBERNO=P.MEMBERNO
 		<where>
 			<if test="type != null and key != null">
 				AND ${type} like '%'|| #{key}||'%'
@@ -35,7 +44,7 @@
 		ORDER BY PAYDATE DESC
 	</select>
 	<select id="memberSearch" parameterType="map" resultType="map">
-		SELECT * FROM MEMBER 
+		SELECT * FROM MEMBER
 		<where>
 			<if test="type != null and key != null">
 				AND ${type} like '%'|| #{key}||'%'
@@ -50,7 +59,8 @@
 			</if>
 		</where>
 	</select>
-	<select id="searchCommunity"  parameterType="map" resultType="map">
+	<select id="searchCommunity" parameterType="map"
+		resultType="map">
 		select * from place join member using(MEMBERNO)
 		<where>
 			<if test="type != null and key != null">
@@ -63,15 +73,23 @@
 		ORDER BY PLACEDATE DESC
 	</select>
 	<select id="cumTotalCount" resultType="_int">
-		select count(*) from place join member using(MEMBERNO)
+		select count(*) from place
+		join member using(MEMBERNO)
 	</select>
 	<select id="claimTotalCount" resultType="_int">
-		SELECT count(*) FROM CLAIM JOIN MEMBER USING(MEMBERNO)
+		SELECT count(*) FROM
+		CLAIM JOIN MEMBER USING(MEMBERNO)
 	</select>
 	<select id="mTotalCount" resultType="_int">
 		SELECT count(*) FROM MEMBER
 	</select>
 	<select id="refundChangeList" resultType="map">
-		select * from paydetail where detailstatus in ('반품중','교환중','취소', '교환')
+		select P.PAYMENTNO AS
+		PAYMENTNO,D.STOCKNO AS STOCKNO,M.MEMBERNO AS MEMBERNO,M.MEMBERNAME AS
+		MEMBERNAME, M.EMAIL AS EMAIL, M.PHONE AS PHONE,
+		P.PAYDATE AS PAYDATE, P.ORDERNO AS ORDERNO,D.DETAILSTATUS AS DETAILSTATUS
+		from PAYDETAIL D join payment P ON P.paymentno = D.PAYMENTNO join member M
+		ON M.MEMBERNO = P.MEMBERNO where D.detailstatus in ('반품중','교환중','취소',
+		'교환')
 	</select>
 </mapper>

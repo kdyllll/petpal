@@ -59,7 +59,7 @@
 						<select class="custom-select mr-sm-2" name="searchType" id="searchType">
 							<option selected value="P.EMAIL">이메일</option>
 							<option value="NAME">이름</option>
-							<option value="RECEIVERNAME">받는분 이름</option>
+							<option value="RECEIVERNAME">회원이메일</option>
 							<option value="PHONE">전화번호</option>
 							<option value="ORDERNO">주문번호</option>
 						</select>
@@ -79,15 +79,14 @@
 					<table class="table mb-5">
 						<thead>
 							<tr>
-								<th scope="col" class="text-center align-middle">주문번호</th>
+								<th scope="col" class="text-center align-middle">결제/재고번호</th>
 								<th scope="col" class="text-center align-middle">회원상태</th>
 								<th scope="col" class="text-center align-middle">회원이름</th>
-								<th scope="col" class="text-center align-middle">받는분이름</th>
+								<th scope="col" class="text-center align-middle">회원이메일</th>
 								<th scope="col" class="text-center align-middle">전화번호</th>
 								<th scope="col" class="text-center align-middle">주문날짜</th>
-								<th scope="col" class="text-center align-middle">주문자이메일</th>
 								<th scope="col" class="text-center align-middle">주문번호</th>
-								<th scope="col" class="text-center align-middle">결제상태</th>
+								<th scope="col" class="text-center align-middle">상태</th>
 								<th scope="col" class="text-center align-middle"></th>
 							</tr>
 						</thead>
@@ -97,7 +96,7 @@
 							<c:forEach var="o" items="${oList }">
 							
 							<tr>
-								<th scope="row" class="align-middle text-center"><c:out value="${o.PAYMENTNO }"/></th>
+								<th scope="row" class="align-middle text-center"><c:out value="${o.PAYMENTNO }"/>/<c:out value="${o.STOCKNO }"/></th>
 								<th scope="row" class="align-middle text-center"><c:choose>
 									<c:when test="${not empty o.MEMBERNO }">
 										회원
@@ -106,24 +105,17 @@
 										비회원
 									</c:otherwise>
 								</c:choose></th>
-								<td class="align-middle text-center"><c:out value="${o.NAME }"/></td>
-								<td class="align-middle text-center"><c:out value="${o.RECEIVERNAME }"/></td>
-								<td class="align-middle text-center"><c:out value="${o.TEL }"/></td>
-								<td class="align-middle text-center"><fmt:formatDate value="${o.PAYDATE }" pattern="yyyy년MM월dd일" /></td>
+								<td class="align-middle text-center"><c:out value="${o.MEMBERNAME }"/></td>
 								<td class="align-middle text-center"><c:out value="${o.EMAIL }"/></td>
+								<td class="align-middle text-center"><c:out value="${o.PHONE }"/></td>
+								<td class="align-middle text-center"><fmt:formatDate value="${o.PAYDATE }" pattern="yyyy년MM월dd일" /></td>
+
 								<td class="align-middle text-center"><c:out value="${o.ORDERNO }" /></td>
-								<td class="align-middle text-center"><c:out value="${o.PAYSTATUS }"/><c:if test="${o.PAYSTATUS eq '결제대기'}">
-									<button type="button" class="orderAccept btn  btn-outline-danger btn-sm">승인</button>
-									<input type="hidden" value="${o.PAYMENTNO }" name="paymentNo">
-									<input type="hidden" value="${o.MEMBERNO }" >
-									<input type="hidden" value="${o.POINTPLUS }">
-									<input type="hidden" value="${o.POINTMINUS }">
-								</c:if></td>
+								<td class="align-middle text-center"><c:out value="${o.DETAILSTATUS }"/></td>
 								<td class="align-middle text-center "><form
-										class="d-flex flex-column" method="post" >
-										
+										class="d-flex flex-column" method="post" >	
 										<button type="button"
-											class="orderDetailBtn btn btn-outline-secondary btn-sm mb-1">주문상세보기</button>
+											class="orderDetailBtn btn btn-outline-secondary btn-sm mb-1">상세보기</button>
 											<input type="hidden" value="${o.PAYMENTNO }" name="paymentNo">
 										<c:if test="${o.PAYSTATUS ne '결제대기'}">
 											<button type="button" class="orderCancel btn  btn-outline-danger btn-sm">주문취소</button>
