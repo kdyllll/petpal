@@ -39,7 +39,8 @@ public class AdminProductAjaxController {
 	}
 
 	@RequestMapping("/admin/updatePriceEnd.do")
-	public String updatePriceEnd(Stock s, Model m) {
+	@ResponseBody
+	public Boolean updatePriceEnd(Stock s, Model m) {
 		String loc = "/admin/adminStock.do";
 		String msg = "가격입력 실패";
 
@@ -58,7 +59,7 @@ public class AdminProductAjaxController {
 
 		m.addAttribute("loc", loc);
 		m.addAttribute("msg", msg);
-		return "common/msg";
+		return result>0 ? true:false;
 
 	}
 
