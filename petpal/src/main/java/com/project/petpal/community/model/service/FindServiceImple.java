@@ -171,7 +171,13 @@ public class FindServiceImple implements FindService {
 	@Override
 	public int commentDelete(String findCommentNo) {
 		// TODO Auto-generated method stub
-		return dao.commentDelete(session, findCommentNo);
+		//자기 자신을 참조하는 댓글(=대댓글)이 있다면 상태만 D로 변경
+		int result=dao.commentDelete(session,findCommentNo);
+		//대댓글이 없다면 댓글 삭제 처리
+		if(result<1) {
+			result=dao.comment2Delete(session,findCommentNo);
+		}		
+		return result;
 	}
 
 	@Override

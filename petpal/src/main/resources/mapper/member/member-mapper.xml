@@ -3,7 +3,7 @@
 <mapper namespace="member">
 	<select id="selectMember" parameterType="string"
 		resultMap="memberMap">
-		SELECT * FROM MEMBER WHERE EMAIL = #{email}
+		SELECT * FROM MEMBER WHERE EMAIL = #{email} AND SNSNO IS NULL
 	</select>
 	<resultMap type="member" id="memberMap">
 		<result column="address" property="address"
