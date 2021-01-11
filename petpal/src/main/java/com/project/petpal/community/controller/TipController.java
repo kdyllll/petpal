@@ -73,9 +73,17 @@ public class TipController {
 		String pageBar=new PageBarFactory().getPageBar(totalCount, cPage, numPerPage, null, null, "tipList.do");
 		
 		for(Map map:TipList) {
+			//해시태그 리스트
 			String postNo=(String) map.get("TIPNO");
 			List<String> hashList=cService.selectHashList(postNo);
 			map.put("hashList", hashList);
+			//좋아요 수
+			int likeCnt = service.tipLikeCount(postNo);
+			//댓글 수 
+			int commentCnt = service.countCommentPage(postNo);
+			
+			map.put("likeCnt",likeCnt);
+			map.put("commentCnt",commentCnt);
 		}
 		
 		//팔로우 검사
@@ -84,6 +92,7 @@ public class TipController {
 			List<Map> followingList = service.selectFollowingList(no);
 			model.addAttribute("following", followingList);
 		}
+		
 		model.addAttribute("search",search);
 		model.addAttribute("list", TipList);
 		model.addAttribute("memberNo", memberNo);

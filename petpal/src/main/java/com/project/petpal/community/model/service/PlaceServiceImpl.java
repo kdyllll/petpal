@@ -158,6 +158,12 @@ public class PlaceServiceImpl implements PlaceService{
 		// TODO Auto-generated method stub
 		return dao.deleteLike(session, m);
 	}
+
+	@Override
+	public List<Map> selectLikeCount() {
+		// TODO Auto-generated method stub
+		return dao.selectLikeCount(session);
+	}
 	
 	
 

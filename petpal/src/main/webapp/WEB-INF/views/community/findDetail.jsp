@@ -90,8 +90,13 @@
 									</svg>
 								</button>
 						</c:if>
-						
-							<span>00</span>
+							<c:set var="cnt" value="0" />
+							<c:forEach var="c" items="${count }">
+								<c:if test="${c.FINDNO eq fDetail.FINDNO  }">
+									<c:set var="cnt" value="${c.CNT }" />
+								</c:if>
+							</c:forEach>
+							<span><c:if test="${cnt < 10 }">0</c:if><c:out value="${cnt }"/></span>
 						</div>
 						<div class="d-flex align-items-center ml-2">
 							<button type="button" class="btn btn-link">
@@ -103,6 +108,7 @@
 	                        	</svg>
 							
 							</button>
+							
 							<span>00</span>
 						</div>
 					</div>
@@ -412,7 +418,9 @@
 	                url:"${path}/find/insertLike.do",
 	                data:{findNo : $(".findNo").val()},
 	                success: (data) => {
-	               	 console.log(data); 
+	               	 if(data == true) {
+	               		 location.reload();
+	               	 } 
 	                }
 	             })
 			}else{ //로그인 안되어 있으면 로그인 모달 띄우기           
@@ -429,7 +437,9 @@
 	                url:"${path}/find/deleteLike.do",
 	                data:{findNo :  $(".findNo").val()},
 	                success: (data) => {
-	               	 console.log(data); 
+	                	if(data == true) {
+		               		 location.reload();
+		               	 } 
 	                }
 	             })
 			}else{ //로그인 안되어 있으면 로그인 모달 띄우기           

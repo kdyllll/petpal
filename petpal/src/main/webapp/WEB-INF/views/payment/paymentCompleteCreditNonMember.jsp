@@ -67,7 +67,7 @@
 							<div class="proCon p-3 border border-dark rounded mt-3 mb-2 d-block" style="width:90%; margin:0px auto;">
 								<div class="d-flex mt-2">
 									<div style="margin:0px auto">
-										<a href="" class="d-flex">
+										<div class="d-flex">
 											<div>
 												<img src="${path }/resources/upload/product/detail/${c.IMGNAME}" class="rounded" style="width:100px;height:100px">
 											</div>
@@ -84,7 +84,7 @@
 													<span class="ml-auto"><c:out value="${c.PRICE}"/>원</span>
 												</div>
 											</div>
-										</a>
+										</div>
 											<div class="mt-3">
 												<c:if test="${!empty c.COLOR && !empty c.PRODUCTSIZE}">
 													<span class="mr-3"><c:out value="${c.COLOR }"/> / <c:out value="${c.PRODUCTSIZE }"/> / <c:out value="${c.CNT }"/>개</span>
@@ -129,7 +129,7 @@
 							<div class="proCon p-3 border border-dark rounded mt-3 mb-2 d-block" style="width:90%; margin:0px auto;">
 								<div class="d-flex mt-2">
 									<div style="margin:0px auto">
-										<a href="" class="d-flex">
+										<div class="d-flex">
 											<div>
 												<img src="${path }/resources/upload/product/detail/${c.IMGNAME}" class="rounded" style="width:100px;height:100px">
 											</div>
@@ -146,7 +146,7 @@
 													<span class="ml-auto"><c:out value="${c.PRICE}"/>원</span>
 												</div>
 											</div>
-										</a>
+										</div>
 											<div class="mt-3">
 												<c:if test="${!empty c.COLOR && !empty c.PRODUCTSIZE}">
 													<span class="mr-3"><c:out value="${c.COLOR }"/> / <c:out value="${c.PRODUCTSIZE }"/> / <c:out value="${c.CNT }"/>개</span>

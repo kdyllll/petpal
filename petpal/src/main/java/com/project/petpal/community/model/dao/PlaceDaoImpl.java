@@ -127,7 +127,11 @@ public class PlaceDaoImpl implements PlaceDao{
 		// TODO Auto-generated method stub
 		return session.delete("place.deleteLike", m);
 	}
-	
-	
+
+	@Override
+	public List<Map> selectLikeCount(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectList("place.selectLikeCount");
+	}
 
 }

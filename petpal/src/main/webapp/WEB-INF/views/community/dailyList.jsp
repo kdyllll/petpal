@@ -163,11 +163,11 @@
 													</a>
 												</c:if>
 											</c:forEach>
-											<c:set var="flag" value="false" />
+											<c:set var="flag2" value="false" />
 											<c:if test="${not empty like }">
 												<c:forEach var="l" items="${like }">
 													<c:if test="${l eq d.DAILYNO }">
-														<c:set var="flag" value="true" />
+														<c:set var="flag2" value="true" />
 													</c:if>
 												</c:forEach>
 
@@ -187,7 +187,7 @@
 
 													</c:if>
 													<c:if test="${not empty loginMember }">
-														<c:if test="${flag eq false }">
+														<c:if test="${flag2 eq false }">
 															<input type="hidden" name="dailyNum"
 																value="${d.DAILYNO }">
 
@@ -208,7 +208,7 @@
 																</svg>
 															</button>
 														</c:if>
-														<c:if test="${flag eq true }">
+														<c:if test="${flag2 eq true }">
 															<input type="hidden" name="dailyNum"
 																value="${d.DAILYNO }">
 															<button type="button" class="btn btn-sm d-none">
