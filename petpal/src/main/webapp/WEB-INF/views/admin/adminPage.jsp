@@ -92,9 +92,7 @@
 										<td class="align-middle text-center"><fmt:formatDate value="${pdt.ENROLLDATE }" pattern="yyyy년MM월dd일" /></td>
 										<td class="align-middle text-center"><form method="post"
 												class="pdtFrm mb-0">
-												<input type="submit"
-													value="삭제"
-													class="btn btn-outline-danger align-middle btn-sm deleteProductBtn" />
+												<button type="button" class="btn btn-outline-danger align-middle btn-sm deleteProductBtn" >삭제</button>
 												<button type="button"
 													class="btn btn-outline-secondary btn-sm updateProductBtn" >수정</button>
 													<input type="hidden" class="productNo" name="productNo"
@@ -310,8 +308,19 @@
             reader.readAsDataURL(v);
           });
         });
-      $(".deleteProductBtn").on("click", function() {
-			$(".pdtFrm").attr("action","${path}/admin/deleteProductEnd.do").submit();
+      $(".deleteProductBtn").on("click", e => {
+    	  $.ajax({
+				url : "${path}/admin/deleteProductEnd.do",
+				data : {productNo : $(e.target).next().next().val()},
+				success : data => {
+					if(data == true) {
+						alert("상품삭제 성공");
+						location.reload();
+					} else {
+						alert("상품삭제 실패");
+					}
+				}
+			})
 		})
 		
 		$(".updateProductBtn").on("click", e => {

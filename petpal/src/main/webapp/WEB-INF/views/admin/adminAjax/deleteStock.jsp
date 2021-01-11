@@ -34,24 +34,17 @@
 						<c:choose>
 						<c:when test="${size ne 1 }">
 						<input type="hidden" name="stockNo" class="stockNo" value="${s.stockNo}">
-						<input type="submit" value="재고삭제"
-							class=" d-inline btn btn-outline-danger align-middle deleteStockBtn"/>
+						<button type="button" 
+							class=" d-inline btn btn-outline-danger align-middle deleteStockBtn"> 재고삭제</button>
 							</c:when>
-							<c:when test="${size eq 1 }">
+							<c:when test="${size eq 1 || size eq 0 }">
 							<input type="hidden" name="productNo" class="productNo" value="${s.productNo}">
-							<input type="submit" value="상품삭제"
-							class=" d-inline btn btn-outline-danger align-middle deleteProductBtn"/>
+							<button type="button"
+							class=" d-inline btn btn-outline-danger align-middle deleteProductBtn">상품삭제</button>
 							</c:when>
 						</c:choose>
 					</div>
-					<script>
-						$(".deleteStockBtn").on("click", function() {
-							$(".priceFrm").attr("action","${path}/admin/deleteStockEnd.do").submit();
-						})
-						$(".deleteProductBtn").on("click", function() {
-							$(".priceFrm").attr("action","${path}/admin/deleteProductEnd.do").submit();
-						})
-					</script>
+					
 				</form>
 				</c:forEach>
 				</c:if>
@@ -62,3 +55,37 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	$(function(){
+		$(".deleteStockBtn").on("click", e => {			
+			$.ajax({
+				url : "${path}/admin/deleteStockEnd.do",
+				data : {stockNo : $(e.target).prev().val()},
+				success : data => {
+					if(data == true) {
+						alert("재고삭제 성공");
+						$(e.target).parent().parent().hide();
+					} else {
+						alert("재고삭제 실패");
+					}
+				}
+			})
+		})
+		$(".deleteProductBtn").on("click", function() {
+			$.ajax({
+				url : "${path}/admin/deleteProductEnd.do",
+				data : {productNo : $(e.target).next().val()},
+				success : data => {
+					if(data == true) {
+						alert("상품삭제 성공");
+						location.reload();
+					} else {
+						alert("상품삭제 실패");
+					}
+				}
+			})
+		})
+		
+	})
+</script>

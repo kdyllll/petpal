@@ -90,33 +90,21 @@ public class AdminProductAjaxController {
 	}
 
 	@RequestMapping("/admin/deleteStockEnd.do")
-	public String deleteStockEnd(Stock s, Model m) {
-		String loc = "/admin/adminStock.do";
-		String msg = "재고삭제 실패";
+	@ResponseBody
+	public Boolean deleteStockEnd(Stock s, Model m) {
+
 		int result = service.deleteStockOne(s);
 
-		if (result > 0) {
-			msg = "재고삭제 성공";
-		}
-
-		m.addAttribute("loc", loc);
-		m.addAttribute("msg", msg);
-		return "common/msg";
+		return result>0?true:false;
 	}
 
 	@RequestMapping("/admin/deleteProductEnd.do")
-	public String deleteProductEnd(Stock s, Model m, HttpSession session) {
-		String loc = "/admin/moveAdminPage.do";
-		String msg = "상품삭제 실패";
+	@ResponseBody
+	public Boolean deleteProductEnd(Stock s, Model m, HttpSession session) {
+
 		int result = service.deleteProductOne(s);
 
-		if (result > 0) {
-			msg = "상품삭제 성공";
-		}
-
-		m.addAttribute("loc", loc);
-		m.addAttribute("msg", msg);
-		return "common/msg";
+		return result>0?true:false;
 	}
 
 	@RequestMapping("/admin/updateProduct.do")
