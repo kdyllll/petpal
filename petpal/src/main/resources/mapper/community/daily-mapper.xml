@@ -37,6 +37,13 @@
 		<if test="hashtag != null">
 		   AND DAILYNO IN (SELECT DAILYNO FROM DAILY LEFT JOIN HASHTAG ON POSTNO=DAILYNO WHERE HASHCONTENT=#{hashtag}) 
 		</if>
+		<if test="keywords != null">
+		   AND DAILYNO IN (SELECT DAILYNO FROM DAILY LEFT JOIN HASHTAG ON POSTNO=DAILYNO WHERE REGEXP_LIKE(CONTENT,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   ) OR  REGEXP_LIKE(HASHCONTENT,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   ))
+		</if>
 		ORDER BY DAILYDATE DESC
 	</select>
 	<select id="selectMainImg" resultType="dailyImg">
@@ -71,6 +78,13 @@
 		WHERE 1=1 
 		<if test="hashtag != null">
 		   AND DAILYNO IN (SELECT DAILYNO FROM DAILY LEFT JOIN HASHTAG ON POSTNO=DAILYNO WHERE HASHCONTENT=#{hashtag}) 
+		</if>
+		<if test="keywords != null">
+		   AND DAILYNO IN (SELECT DAILYNO FROM DAILY LEFT JOIN HASHTAG ON POSTNO=DAILYNO WHERE REGEXP_LIKE(CONTENT,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   ) OR  REGEXP_LIKE(HASHCONTENT,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   ))
 		</if>
 	</select>
 	<delete id="deleteDailyImg" parameterType="string">
@@ -111,9 +125,10 @@
   		DELETE FROM DAILYCOMMENT WHERE DAILYCOMMENTNO=#{dailyCommentNo}
   	</delete>
   	<select id="selectDailyHeart" resultType="map">
-  		SELECT DAILYNO,MEMBERNO,CONTENT,NICKNAME,IMG,INFO,DAILYDATE,COUNT(HEARTMEMBERNO) AS HEARTCOUNT 
-  		FROM DAILY LEFT JOIN MEMBER USING(MEMBERNO) LEFT JOIN DAILYLIKE USING(DAILYNO) 
-  		GROUP BY (DAILYNO,MEMBERNO,CONTENT,NICKNAME,IMG,INFO,DAILYDATE) 
+  		SELECT DAILYNO,MEMBERNO,CONTENT,NICKNAME,IMG,INFO,DAILYDATE,DAILYIMGNAME,COUNT(HEARTMEMBERNO) AS HEARTCOUNT 
+  		FROM DAILY LEFT JOIN MEMBER USING(MEMBERNO) LEFT JOIN DAILYLIKE USING(DAILYNO) LEFT JOIN DAILYIMG USING(DAILYNO)
+        WHERE STATUS='M'
+  		GROUP BY (DAILYNO,MEMBERNO,CONTENT,NICKNAME,IMG,INFO,DAILYDATE,DAILYIMGNAME) 
   		ORDER BY HEARTCOUNT DESC, DAILYDATE DESC
   	</select>
   	<select id="selectDailyFollow" resultType="map">

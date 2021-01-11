@@ -42,15 +42,20 @@ public class HomeController {
 		 * model.addAttribute("serverTime", formattedDate );
 		 */
 		//판매량 많은 상품 4개(상품 사진/상품 이름/상품 가격/별점)
-//		List<Map> productList=sService.selectMainProduct();
-//				
-//		//별점 높은 리뷰 6개(리뷰사진/리뷰내용/작성일/작성자닉네임/상품명)
-//		List<Map> reviewList=sService.selectMainReview();		
-//		
-//		//좋아요 많은 일상 2개 + 상품태그(일상사진/내용/작성자/상품태그)
-//		List<Map> dailyList=sService.selectMainDaily();
+		List<Map> productList=sService.selectMainProduct(1,4);
+	    //PRODUCTNO,PRODUCTNAME,IMGNAME,SUM(CNT),PRICE,SALE
+		
+		//별점 높은 리뷰 6개(리뷰사진/리뷰내용/작성일/작성자닉네임/상품명)
+		List<Map> reviewList=sService.selectMainReview(1,6);		
+		//PRODUCTNO,CONTENT,REVIEWDATE,R.FILENAME,STAR,NICKNAME,PRODUCTNAME
+		
+		//좋아요 많은 일상 2개 + 상품태그(일상사진/내용/작성자/상품태그)
+		List<Map> dailyList=dService.selectDailyHeart(1,2);
+		//DAILYNO,MEMBERNO,CONTENT,NICKNAME,IMG,INFO,DAILYDATE,COUNT(HEARTMEMBERNO) AS HEARTCOUNT
 
-
+		model.addAttribute("productList",productList);
+		model.addAttribute("reviewList",reviewList);
+		model.addAttribute("dailyList",dailyList);
 		return "index";
 
 

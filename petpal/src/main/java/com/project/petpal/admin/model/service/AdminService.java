@@ -19,7 +19,7 @@ public interface AdminService {
 	int updateProductEnd(Map p, List<ProductImg> pimgList);
 	List<ProductImg> selectProductImgAll(Product p);
 	List<Map> productIOAll(int cPage,int numPerPage);
-	List<Map> searchProduct(String productName);
+	List<Map> searchProduct(Map m);
 	List<Map> inOutSearch(Map m);
 	List<Map> selectOrderList(int cPage,int numPerPage);
 	List<Map> selectPayDetail(String paymentNo);

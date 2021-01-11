@@ -272,6 +272,12 @@ public class DailyDaoImpl implements DailyDao {
 		// TODO Auto-generated method stub
 		return session.selectList("find.selectLikeCount");
 	}
+
+	@Override
+	public List<Map> selectDailyAll(SqlSession session, Map keywordMap) {
+		// TODO Auto-generated method stub
+		return session.selectList("daily.selectDailyAll",keywordMap);
+	}
 	
 
 }

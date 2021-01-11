@@ -260,15 +260,15 @@ public class StoreServiceImpl implements StoreService{
 	}
 
 	@Override
-	public List<Map> selectMainProduct() {
+	public List<Map> selectMainProduct(int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return dao.selectMainProduct(session);
+		return dao.selectMainProduct(session,cPage,numPerPage);
 	}
 
 	@Override
-	public List<Map> selectMainReview() {
+	public List<Map> selectMainReview(int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return dao.selectMainReview(session);
+		return dao.selectMainReview(session,cPage,numPerPage);
 	}
 
 	
