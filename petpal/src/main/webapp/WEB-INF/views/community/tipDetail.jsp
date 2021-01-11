@@ -20,8 +20,6 @@
 		</div>
 	</div>
       <div class="my-4 mt-lg-0">
-
-       
 	
 		<c:forEach items="${imgList }" var="t">
 			<c:if test="${not empty t.MAINIMG}">

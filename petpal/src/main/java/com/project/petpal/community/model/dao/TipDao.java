@@ -42,4 +42,7 @@ public interface TipDao {
 	int commentDelete(SqlSession session,String tipCommentNo);
 	int comment2Delete(SqlSession session,String tipCommentNo);
 	int tipLikeCount(SqlSession session, String tipNo);
+	List<Map> selectTipDate(SqlSession session, int cPage, int numPerPage, Map<String,String> keyword); 
+	List<Map> selectTipHeart(SqlSession session, int cPage, int numPerPage, Map<String,String> keyword);
+	List<Map> selectTipFollow(SqlSession session, int cPage, int numPerPage, Map<String,String> keyword);
 }
