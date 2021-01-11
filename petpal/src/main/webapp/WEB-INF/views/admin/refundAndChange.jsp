@@ -117,11 +117,11 @@
 										<button type="button"
 											class="orderDetailBtn btn btn-outline-secondary btn-sm mb-1">상세보기</button>
 											<input type="hidden" value="${o.PAYMENTNO }" name="paymentNo">
-										<c:if test="${o.PAYSTATUS ne '결제대기'}">
-											<button type="button" class="orderCancel btn  btn-outline-danger btn-sm">주문취소</button>
+										<c:if test="${o.DETAILSTATUS eq '반품중'}">
+											<button type="button" class="orderCancel btn  btn-outline-danger btn-sm">반품처리</button>
 										</c:if>
-										<c:if test="${o.PAYSTATUS eq '결제대기'}">
-											<a class="btn btn-secondary btn-sm disabled" tabindex="-1" role="button"  aria-disabled="true">주문취소</a>
+										<c:if test="${o.DETAILSTATUS eq '교환중'}">
+											<a class="btn btn-secondary btn-sm disabled" tabindex="-1" role="button"  aria-disabled="true">교환처리</a>
 										</c:if>
 
 									</form></td>
