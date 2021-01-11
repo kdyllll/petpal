@@ -40,7 +40,20 @@ public class SearchController {
 		return "search/searchAll";
 	}
 	@RequestMapping("/search/moveSearchStore.do")
-	public String searchProductList() {
-		return "";
+	public String searchProductList(String keyword,Model m) {
+		String keyword2=keyword.replace(" ", "");//공백제거
+		String[] keywords=keyword2.split("");//문자열을 문자배열로
+		List<Product> starList=storeService.starList();//평점 리스트
+		List<Product> pList =StarMapping.starMapping(service.searchProduct(keywords), starList);//재고있는 상품리스트
+		int pCount=service.searchProductCount(keywords);//재고있는 상품리스트 개수
+		List<Product> soList=service.searchSoldOutList(keywords);//품절리스트
+		int soCount=service.searchSoldOutProductCount(keywords);//품절리스트 개수
+		int storeCount=pCount+soCount;//스토어 검색결과
+		
+		m.addAttribute("pList",pList);
+		m.addAttribute("soList",soList);
+		m.addAttribute("storeCount",storeCount);
+		m.addAttribute("keyword",keyword);
+		return "search/searchStore";
 	}
 }

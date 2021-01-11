@@ -259,6 +259,18 @@ public class StoreServiceImpl implements StoreService{
 		return dao.soldOutList(session,sort);
 	}
 
+	@Override
+	public List<Map> selectMainProduct() {
+		// TODO Auto-generated method stub
+		return dao.selectMainProduct(session);
+	}
+
+	@Override
+	public List<Map> selectMainReview() {
+		// TODO Auto-generated method stub
+		return dao.selectMainReview(session);
+	}
+
 	
 	
 	
