@@ -49,7 +49,7 @@ public class StoreController {
 	}
 
 	@RequestMapping("/store/moveDetail.do")
-	public String moveDetail(String productNo,Model m) {
+	public String moveDetail(String productNo,Model m,HttpSession session) {
 		//상품번호로 상품 받기
 		Product p=service.selectProduct(productNo);
 		//상품 사진 받기
@@ -75,6 +75,17 @@ public class StoreController {
 		if(reviewCount!=0) {
 			reviewAvg=service.selectAvgReview(productNo);
 		}
+		//관심상품 여부
+		Member loginMember=(Member)session.getAttribute("loginMember");
+		String fav="";
+		if(loginMember!=null) {
+			List<Product> favList=service.favList(loginMember.getMemberNo());
+			for(Product pl:favList) {
+				if(p.getProductNo().equals(productNo)) {//상품이 등록되어있으면 삭제
+					fav="fav";
+				}
+			}
+		}
 		
 		m.addAttribute("product",p);
 		m.addAttribute("imgs",pImg);
@@ -84,6 +95,7 @@ public class StoreController {
 		m.addAttribute("reviewCount",reviewCount);
 		m.addAttribute("qnaCount",qnaCount);
 		m.addAttribute("reviewAvg",reviewAvg);
+		m.addAttribute("fav",fav);
 		return "store/productDetail";
 	}
 	@RequestMapping("/store/moveCategory.do")//카테고리별 상품리스트로 이동하는 서블릿
