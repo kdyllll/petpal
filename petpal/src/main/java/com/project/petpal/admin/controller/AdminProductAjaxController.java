@@ -41,24 +41,12 @@ public class AdminProductAjaxController {
 	@RequestMapping("/admin/updatePriceEnd.do")
 	@ResponseBody
 	public Boolean updatePriceEnd(Stock s, Model m) {
-		String loc = "/admin/adminStock.do";
-		String msg = "가격입력 실패";
 
 		int result = 0;
 		if (s.getPrice() != 0) {
 			result = service.updatePrice(s);
-		} else if (s.getPrice() == 0) {
-			msg = "가격을 입력해주세요.";
-		}
+		} 
 
-		System.out.println("결과 : " + result);
-
-		if (result > 0) {
-			msg = "가격입력 성공";
-		}
-
-		m.addAttribute("loc", loc);
-		m.addAttribute("msg", msg);
 		return result>0 ? true:false;
 
 	}
