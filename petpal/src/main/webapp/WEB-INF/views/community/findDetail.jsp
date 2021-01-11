@@ -109,7 +109,7 @@
 							
 							</button>
 							
-							<span>00</span>
+							<span class="commentCount"><c:if test="${commentCnt < 10 }">0</c:if><c:out value="${commentCnt }"/></span>
 						</div>
 					</div>
 					<div>
@@ -215,7 +215,7 @@
 								</button>
 						</c:if>
 						
-							<span>00</span>
+							<span><c:if test="${cnt < 10 }">0</c:if><c:out value="${cnt }"/></span>
 						</div>
 						<div class="d-flex align-items-center ml-2">
 							<div>
@@ -227,7 +227,7 @@
 	                        	</svg>
 							
 							</div>
-							<span class="commentCount"><c:out value="${commentCount }"/></span>
+							<span class="commentCount"><c:if test="${commentCnt < 10 }">0</c:if><c:out value="${commentCnt }"/></span>
 						</div>
 					</div>
 				<div class="px-3 pb-3">
