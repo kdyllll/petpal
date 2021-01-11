@@ -76,24 +76,13 @@ public class AdminProductAjaxController {
 	@RequestMapping("/admin/updateStockEnd.do")
 	@ResponseBody
 	public Boolean insertProductIo(String iostatus, String stock, String stockNo, Model model) {
-		String loc = "/admin/adminStock.do";
-		String io = "출고";
-		if (iostatus.equals("in")) {
-			io = "입고";
-		}
-		String msg = "재고" + io + "실패";
+
 		Map m = new HashMap();
 		m.put("iostatus", io);
 		m.put("stock", stock);
 		m.put("stockNo", stockNo);
 		int ioresult = service.updateIo(m);
 
-		if (ioresult > 0) {
-			msg = "재고" + io + " 성공";
-		}
-
-		model.addAttribute("loc", loc);
-		model.addAttribute("msg", msg);
 		return ioresult>0?true:false;
 	}
 
