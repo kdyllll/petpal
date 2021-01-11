@@ -168,9 +168,9 @@ public class FindDaoImple implements FindDao {
 	}
 
 	@Override
-	public List<Map> selectCountList(SqlSession session) {
+	public List<Map> selectLikeCount(SqlSession session) {
 		// TODO Auto-generated method stub
-		return session.selectList("find.selectCountList");
+		return session.selectList("find.selectLikeCount");
 	}
 	
 }

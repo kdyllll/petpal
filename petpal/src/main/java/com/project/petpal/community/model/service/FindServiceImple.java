@@ -181,9 +181,9 @@ public class FindServiceImple implements FindService {
 	}
 
 	@Override
-	public List<Map> selectCountList() {
+	public List<Map> selectLikeCount() {
 		// TODO Auto-generated method stub
-		return dao.selectCountList(session);
+		return dao.selectLikeCount(session);
 	}
 	
 }

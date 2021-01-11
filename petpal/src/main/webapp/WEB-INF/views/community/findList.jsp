@@ -176,12 +176,7 @@
 										</c:forEach>
 
 									</c:if>
-									<c:set var="ct" value="0" />
-									<c:forEach var="cnt" items="${count }">
-										<c:if test="${cnt.FINDNO eq t.FINDNO }">
-											<c:set var="ct" value="${cnt.CNT }" />
-										</c:if>
-									</c:forEach>
+									
 									<div class="d-flex justify-content-between mx-1 my-1">
 										<div class="likeFrm" method="post">
 											<c:if test="${empty loginMember }">
@@ -244,6 +239,12 @@
 												</c:if>
 
 											</c:if>
+											<c:set var="ct" value="0" />
+											<c:forEach var="cnt" items="${count }">
+												<c:if test="${cnt.FINDNO eq t.FINDNO }">
+													<c:set var="ct" value="${cnt.CNT }" />
+												</c:if>
+											</c:forEach>
 											<span class="text-dark mx-1"><c:out value="${ct }"/></span>
 
 										</div>

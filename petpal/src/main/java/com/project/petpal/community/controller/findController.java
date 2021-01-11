@@ -47,7 +47,7 @@ public class findController {
 		map.put("cate",cate);
 		int totalData = service.findTotalCount();		
 		List<Map> list = service.selectFindList(map, cPage, numPerPage);
-		List<Map> count = service.selectCountList();
+		List<Map> count = service.selectLikeCount();
 		if(m!=null) {
 			List<String> like = service.selectFindLike(m.getMemberNo());
 			model.addAttribute("like", like);
@@ -131,7 +131,7 @@ public class findController {
 		Map fDetail = service.detailOne(findNo);
 		List<Map> findPics = service.findSubPic(findNo);
 		Member m = (Member)session.getAttribute("loginMember");
-		List<Map> count = service.selectCountList();
+		List<Map> count = service.selectLikeCount();
 		
 		if(m!=null) {
 			List<String> like = service.selectFindLike(m.getMemberNo());
