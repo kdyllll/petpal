@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.Cookie;
@@ -30,7 +31,6 @@ public class CartController {
 	
 	@RequestMapping("/cart/cart.do")
 	public ModelAndView cart(ModelAndView mv, HttpServletRequest request, HttpSession session, HttpServletResponse response) throws UnsupportedEncodingException{
-		
 		
 		// 쿠키값 가져오기
 	    Cookie[] cookie = request.getCookies() ;
@@ -98,15 +98,15 @@ public class CartController {
 				}
 		}
 		
-		//쿠키 생성
-		Cookie c=new Cookie("cookieStock",URLEncoder.encode(stocks, "UTF-8"));
-		c.setMaxAge(60 * 60 * 24); //쿠키 하루 유지
-		c.setPath("/");//모든 곳에서 사용할 수 있게
-		response.addCookie(c); //쿠키 추가
-		Cookie c2=new Cookie("cookieCnt",URLEncoder.encode(amounts, "UTF-8"));
-		c2.setMaxAge(60 * 60 * 24);
-		c2.setPath("/");
-		response.addCookie(c2);
+			//쿠키 생성
+			Cookie c=new Cookie("cookieStock",URLEncoder.encode(stocks, "UTF-8"));
+			c.setMaxAge(60 * 60 * 24); //쿠키 하루 유지
+			c.setPath("/");//모든 곳에서 사용할 수 있게
+			response.addCookie(c); //쿠키 추가
+			Cookie c2=new Cookie("cookieCnt",URLEncoder.encode(amounts, "UTF-8"));
+			c2.setMaxAge(60 * 60 * 24);
+			c2.setPath("/");
+			response.addCookie(c2);
 		}
 		
 		
@@ -125,7 +125,7 @@ public class CartController {
 			//먼저 쿠키에 값이 있는지 없는지 검사하고 값이 있을 때 쿼리 실행
 			//값이 없으면 빈 리스트를 넘겨주어야하니 list만 넘김
 			
-			if(stockNo.size() > 0) {
+				List<Map> list = service.cartListNonMember(stockNo);
 				mv.addObject("list", service.cartListNonMember(stockNo));
 				
 				HashMap<String, String> map = new HashMap<String, String>();
@@ -134,10 +134,12 @@ public class CartController {
 				}
 				
 				mv.addObject("amount", map);
-				mv.setViewName("cart/cartNonMember");
-			}else {
-				mv.setViewName("cart/cartEmpty");
-			}
+				
+				if(list.isEmpty()) {
+					mv.setViewName("cart/cartEmpty");
+				}else {
+					mv.setViewName("cart/cartNonMember");
+				}
 		}
 		return mv;
 	}

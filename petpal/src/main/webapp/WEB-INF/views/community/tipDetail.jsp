@@ -512,7 +512,6 @@ $(document).on('click','.write',function(e) {//댓글 등록 버튼 눌렀을때
 			alert("댓글 등록에 실패하였습니다.");
 		}
 	})
-	commentCount();
 });
 
 $(document).on("click",".commentDelete",e=>{

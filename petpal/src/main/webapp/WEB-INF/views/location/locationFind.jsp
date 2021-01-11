@@ -49,31 +49,31 @@
 <body class="bg-white">
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
   
-  <main role="main" style="min-height:100vh;">
-  <div class="album ">
+	<main role="main" style="min-height:100vh;">
+		<div class="album ">
 			<div class="container my-4 mt-lg-0">
-				<div class="row ">
-  	<div class="map_wrap">
-	    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
-	
-	    <div id="menu_wrap" class="bg_white">
-	        <div class="option">
-	            <div>
-	                <form onsubmit="searchPlaces(); return false;">
-	                    키워드 : <input type="text" value="강남 동물병원" id="mapKeyword" size="15"> 
-	                    <button type="submit">검색하기</button> 
-	                </form>
-	            </div>
-	        </div>
-	        <hr>
-	        <ul id="placesList"></ul>
-	        <div id="pagination"></div>
-	    </div>
-	</div>
-	</div>
-	</div>
-	</div>
-  </main>
+				<div class="row" style="padding-top: 5em;">
+					<div class="map_wrap">
+						<div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+						
+						<div id="menu_wrap" class="bg_white">
+						    <div class="option">
+						        <div>
+						            <form onsubmit="searchPlaces(); return false;">
+						                키워드 : <input type="text" value="강남 동물병원" id="mapKeyword" size="15"> 
+						                <button type="submit">검색하기</button> 
+						            </form>
+						        </div>
+						    </div>
+						    <hr>
+						    <ul id="placesList"></ul>
+						    <div id="pagination"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
 
 
 <script>
