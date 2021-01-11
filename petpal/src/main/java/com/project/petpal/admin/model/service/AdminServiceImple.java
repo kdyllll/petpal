@@ -119,9 +119,9 @@ public class AdminServiceImple implements AdminService {
 	}
 
 	@Override
-	public List<Map> searchProduct(String productName) {
+	public List<Map> searchProduct(Map m) {
 		// TODO Auto-generated method stub
-		return dao.searchProduct(session, productName);
+		return dao.searchProduct(session, m);
 	}
 	
 	@Override
