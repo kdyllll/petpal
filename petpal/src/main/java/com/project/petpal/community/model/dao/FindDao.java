@@ -37,4 +37,6 @@ public interface FindDao {
 	int commentDelete(SqlSession session,String findCommentNo);
 	int comment2Delete(SqlSession session,String findCommentNo);
 	List<Map> selectLikeCount(SqlSession session);
+	List<Map> selectFindAll(SqlSession session,Map keywords);
+	int findTotalCount(SqlSession session,Map keywords);
 }

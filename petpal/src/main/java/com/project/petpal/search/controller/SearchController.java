@@ -54,8 +54,8 @@ public class SearchController {
 		
 		Map keywordMap=new HashMap();
 		keywordMap.put("keywords", keywords);
+		//일상
 		List<Map> dailyList=dailyService.selectDailyAll(keywordMap);
-		System.out.println(dailyList);
 		for(Map map:dailyList) {
 			//해시태그 리스트
 			String postNo=(String) map.get("DAILYNO");
@@ -68,30 +68,52 @@ public class SearchController {
 			map.put("likeCnt",likeCnt);
 			map.put("commentCnt",commentCnt);
 		}
+		//찾아주세요
+		List<Map> findList=findService.selectFindAll(keywordMap);
+		System.out.println(findList);
+		//좋아요 수
+		List<Map> findLikeCnt=findService.selectLikeCount();
+		m.addAttribute("fLikeCnt",findLikeCnt);
+		for(Map map:findList) {
+			String postNo=(String) map.get("FINDNO");
+			//댓글 수 
+			int commentCnt=findService.countComment(postNo);
+			map.put("commentCnt",commentCnt);
+		}
 		List<DailyImg> imgList=dailyService.selectMainImg();
 		//좋아요
 				Member loginMember=(Member)session.getAttribute("loginMember");
 				if(loginMember!=null) {		
-					List<String> like = dailyService.selectDailyLike(loginMember.getMemberNo());
-					System.out.println(like);
-					m.addAttribute("like", like);
+					List<String> dLike = dailyService.selectDailyLike(loginMember.getMemberNo());
+					List<String> fLike = findService.selectFindLike(loginMember.getMemberNo());
+					m.addAttribute("dLike", dLike);
+					m.addAttribute("fLike",fLike);
 				}
 					
 				//팔로우 검사
 				if(loginMember != null) {
 					String memberNo = loginMember.getMemberNo();
-					List<Map> followingList = dailyService.selectFollowingList(memberNo);
-					m.addAttribute("following", followingList);
+					List<Map> dFollowingList = dailyService.selectFollowingList(memberNo);
+					List<Map> fFollowingList = findService.selectFollowingList(memberNo);
+					m.addAttribute("dFollowing", dFollowingList);
+					m.addAttribute("fFollowing", fFollowingList);
 				}	
-				
+		//노하우
+		List<Map> tipList=tipService.tipList(keywordMap);
+		System.out.println("리스트"+tipList);
 				//좋아요 수 연동
 				List<Map> count = dailyService.selectLikeCount();
 		
 		
 		int dCount=dailyService.totalDailyCount(keywordMap);
-		System.out.println(dailyList);
-		System.out.println(dCount);
-		int total=pCount+soCount+dCount;//통합 검색결과
+		int fCount=findService.findTotalCount(keywordMap);
+		int tCount=tipService.totalTipCount(keywordMap);
+		int total=pCount+soCount+dCount+fCount+tCount;//통합 검색결과
+		System.out.println(tCount);
+		m.addAttribute("tCount",tCount);
+		m.addAttribute("tipList",tipList);
+		m.addAttribute("fCount",fCount);
+		m.addAttribute("findList",findList);
 		m.addAttribute("dCount", dCount);
 		m.addAttribute("count", count);
 		m.addAttribute("dailyList",dailyList);

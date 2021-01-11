@@ -226,4 +226,10 @@ public class TipServiceImpl implements TipService {
 		return dao.tipLikeCount(session, tipNo);
 	}
 
+	@Override
+	public List<Map> tipList(Map keywordMap) {
+		// TODO Auto-generated method stub
+		return dao.tipList(session,keywordMap);
+	}
+
 }

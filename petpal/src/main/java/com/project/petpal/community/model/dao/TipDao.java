@@ -42,4 +42,5 @@ public interface TipDao {
 	int commentDelete(SqlSession session,String tipCommentNo);
 	int comment2Delete(SqlSession session,String tipCommentNo);
 	int tipLikeCount(SqlSession session, String tipNo);
+	List<Map> tipList(SqlSession session,Map keywordMap);
 }

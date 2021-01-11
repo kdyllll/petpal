@@ -193,4 +193,10 @@ public class TipDaoImpl implements TipDao {
 		return session.selectOne("tip.tipLikeCount", tipNo);
 	}
 
+	@Override
+	public List<Map> tipList(SqlSession session, Map keywordMap) {
+		// TODO Auto-generated method stub
+		return session.selectList("tip.tipsearchList",keywordMap);
+	}
+
 }

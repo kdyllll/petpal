@@ -86,6 +86,15 @@
 		<if test="hashtag != null">
 		   AND TIPNO IN (SELECT TIPNO FROM TIP LEFT JOIN HASHTAG ON POSTNO=TIPNO WHERE HASHCONTENT=#{hashtag}) 
 		</if>
+		<if test="keywords != null">
+		   AND TIPNO IN (SELECT TIPNO FROM TIP LEFT JOIN HASHTAG ON POSTNO=TIPNO WHERE REGEXP_LIKE(CATEGORY,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+			)OR REGEXP_LIKE(CONTENT1,
+			<foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+			)OR REGEXP_LIKE(TITLE,
+			<foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+			))
+		</if>
 	</select>
 	<select id="selectComment" parameterType="string" resultType="tComment">
 		SELECT TIPNO,TIPCOMMENTNO,COMMENTLEVEL,MEMBERNO,IMG,NICKNAME,TIPCOMMENT,WRITEDATE,STATUS FROM TIPCOMMENT LEFT JOIN MEMBER USING(MEMBERNO) WHERE TIPNO=#{tipNo}
@@ -108,5 +117,16 @@
   	</delete>
   	<select id="tipLikeCount" parameterType="string" resultType="_int">
 		SELECT COUNT(*) FROM TIPLIKE WHERE TIPNO=#{tipNo}  	
+  	</select>
+  	<select id="tipsearchList" resultType="map" parameterType="map">
+  		SELECT * FROM TIP JOIN TIPIMG USING(TIPNO) JOIN MEMBER USING(MEMBERNO)
+		WHERE 1=1 AND TIPNO IN (SELECT TIPNO FROM TIP LEFT JOIN HASHTAG ON POSTNO=TIPNO WHERE REGEXP_LIKE(CATEGORY,
+		<foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		)OR REGEXP_LIKE(CONTENT1,
+		<foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		)OR REGEXP_LIKE(TITLE,
+		<foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		))
+		AND MAINIMG IS NOT NULL ORDER BY TIPDATE DESC
   	</select>
 </mapper>

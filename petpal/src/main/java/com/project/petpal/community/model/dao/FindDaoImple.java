@@ -172,5 +172,17 @@ public class FindDaoImple implements FindDao {
 		// TODO Auto-generated method stub
 		return session.selectList("find.selectLikeCount");
 	}
+
+	@Override
+	public List<Map> selectFindAll(SqlSession session, Map keywords) {
+		// TODO Auto-generated method stub
+		return session.selectList("find.selectFindAll",keywords);
+	}
+
+	@Override
+	public int findTotalCount(SqlSession session, Map keywords) {
+		// TODO Auto-generated method stub
+		return session.selectOne("find.findTotalCount",keywords);
+	}
 	
 }
