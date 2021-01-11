@@ -309,18 +309,22 @@
           });
         });
       $(".deleteProductBtn").on("click", e => {
-    	  $.ajax({
-				url : "${path}/admin/deleteProductEnd.do",
-				data : {productNo : $(e.target).next().next().val()},
-				success : data => {
-					if(data == true) {
-						alert("상품삭제 성공");
-						location.reload();
-					} else {
-						alert("상품삭제 실패");
-					}
-				}
-			})
+    	  let status = confirm( '정말 삭제하시겠습니까?' ); 
+    	  if(status == true) {
+    		  $.ajax({
+  				url : "${path}/admin/deleteProductEnd.do",
+  				data : {productNo : $(e.target).next().next().val()},
+  				success : data => {
+  					if(data == true) {
+  						alert("상품삭제 성공");
+  						location.reload();
+  					} else {
+  						alert("상품삭제 실패");
+  					}
+  				}
+  			})
+    	  }
+    	  
 		})
 		
 		$(".updateProductBtn").on("click", e => {
