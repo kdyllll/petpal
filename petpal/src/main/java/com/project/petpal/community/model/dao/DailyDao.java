@@ -57,4 +57,5 @@ public interface DailyDao {
 	int selectLikeCnt(SqlSession session,String dailyNo);
 	int selectCommentCnt(SqlSession session,String dailyNo);
 	List<Map> selectLikeCount(SqlSession session);
+	List<Map> selectDailyAll(SqlSession session,Map keywordMap);
 }
