@@ -21,6 +21,21 @@
    #adside.fixed {
      position: fixed;
    }
+   #style-2::-webkit-scrollbar-track {
+		-webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3);
+		border-radius: 10px;
+		background-color: #FFFFFF;
+	}
+	
+	#style-2::-webkit-scrollbar{
+		width: 12px;
+		background-color: #FFFFFF;
+	}
+	#style-2::-webkit-scrollbar-thumb {
+		border-radius: 10px;
+		-webkit-box-shadow: inset 0 0 2px rgba(0,0,0,.3);
+		background-color: #f7dad9;
+	}
 </style>
 
 <script>
@@ -55,8 +70,8 @@ function stock(){
       dataType:"json",         
       success:function(data){         
          $.each(data, function(idx, val) {
-            if(val < cnt[idx]){
-               alert(productName[idx] + " " + color[idx]  + " " + productSize[idx] + " "  +  "상품의 재고가 부족합니다.     장바구니를 확인해주세요!");
+            if(val < Number(cnt[idx])){
+               alert(productName[idx] + " " + color[idx]  + " " + productSize[idx] + " "  +  "상품의 재고가 부족합니다. 장바구니를 확인해주세요!");
                count++;
                $("#stock").show();
                $("#payment").hide();
@@ -326,7 +341,7 @@ function check(){
            
                <div class="order-md-2 d-none d-md-block ml-3">
                  <div id="adsideWrapper">
-                   <div id="adside">
+                   <div id="adside"  id="style-2" style="height:430px;overflow:auto;" >
                          <h4 class="d-flex justify-content-between align-items-center mb-3">
                              <span class="text-muted">장바구니</span>
                              <button type="button" class="btn btn-dark mr-auto" onclick="stock();">재고확인</button>

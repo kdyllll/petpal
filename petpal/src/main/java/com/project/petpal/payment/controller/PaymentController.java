@@ -375,7 +375,9 @@ public class PaymentController {
 		//재고번호를 통해 재고를 select해서 list에 담아줌
 		for(int i=0;i<stockNo.length;i++) {
 			stock.add(service.selectStock(stockNo[i]));
-		} 
+		}
+		
+		System.out.println(stock);
 
 		//재고 return
 		return stock;

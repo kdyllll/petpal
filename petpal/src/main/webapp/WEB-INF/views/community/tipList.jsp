@@ -37,6 +37,10 @@
 	}
 </style>
 <script>
+	$(document).ready(function(){
+		
+	})
+
 	$(document).ready(function() {
 		let loginMember=$(".loginMember").val();
 	
@@ -184,7 +188,7 @@
 				</div>
 			</div>
 		</div>
-		<div>${pageBar }</div>
+		
 	</main>
 	<div class="loginModal"></div>
 
