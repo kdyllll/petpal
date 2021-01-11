@@ -8,7 +8,7 @@ import com.project.petpal.board.model.vo.NoticeImg;
 
 public interface NoticeService {
 	int insertNotice(Notice n, List<NoticeImg> files);
-	List<Map> noticeList(int cPage, int numPerPage);
+	List<Map> noticeList(int cPage, int numPerPage, Map<String,String> keyword);
 	List<Map> noticeMainList(String noticeNo);
 	List<Map> noticeImgList(String noticeNo);
 	
