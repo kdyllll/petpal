@@ -67,4 +67,5 @@ public interface MemberDao {
    int checkEmail(SqlSession session,String email);
    int updatePasswordMap(SqlSession session,Map m);
    int deleteMember(SqlSession session,String memberNo);
+   int likeCnt(SqlSession session, Map m);
 }
