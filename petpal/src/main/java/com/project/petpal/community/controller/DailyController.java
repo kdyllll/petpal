@@ -460,7 +460,7 @@ public class DailyController {
 	@RequestMapping("/daily/dailySort.do")
 	public String dailySort(String sort,Model m,
 			@RequestParam(value="cPage",defaultValue="1") int cPage,
-			@RequestParam(value="numPerPage",defaultValue="12") int numPerPage) {
+			@RequestParam(value="numPerPage",defaultValue="12") int numPerPage, HttpSession session) {
 		//sort 는 enrollDate(최신순) / heart(좋아요순) / follow(팔로워많은순)
 		List<Map> dailyList=new ArrayList<Map>();
 		if(sort.equals("enrollDate")) {//최신순 정렬일때
@@ -471,20 +471,42 @@ public class DailyController {
 			dailyList=service.selectDailyFollow(cPage,numPerPage);
 		}
 		
+		for(Map map:dailyList) {
+			//해시태그 리스트
+			String postNo=(String) map.get("DAILYNO");
+			List<String> hashList=cService.selectHashList(postNo);
+			map.put("hashList", hashList);
+			//좋아요 수
+			int likeCnt=service.selectLikeCnt(postNo);
+			//댓글 수 
+			int commentCnt=service.selectCommentCnt(postNo);
+			map.put("likeCnt",likeCnt);
+			map.put("commentCnt",commentCnt);
+		}
 		List<DailyImg> imgList=service.selectMainImg();
-		List<Hashtag> hashList=service.selectHashAll();
+
 		int totalCount=service.totalDailyCount(null);
 		String pageBar=new AjaxPageBarFactory().getPageBar(totalCount, cPage, numPerPage, "dailySort.do", null, "#dailyCon", null, "dailyAjaxPage", null,null,sort);
-		//String pageBar=new PageBarFactory().getPageBar(totalCount, cPage, numPerPage, null, null, "moveList.do");
-		//에이작스 페이지바로 바꿔야함
+
 		
-		//좋아요 수
-		//좋아요 리스트(하트켜기용)
-		//댓글 수 보내야 함
+		//좋아요
+		Member loginMember=(Member)session.getAttribute("loginMember");
+		if(loginMember!=null) {		
+			List<String> like = service.selectDailyLike(loginMember.getMemberNo());
+			System.out.println(like);
+			m.addAttribute("like", like);
+		}
+			
+		//팔로우 검사
+		if(loginMember != null) {
+			String memberNo = loginMember.getMemberNo();
+			List<Map> followingList = service.selectFollowingList(memberNo);
+			m.addAttribute("following", followingList);
+		}	
+
 		
 		m.addAttribute("dailyList",dailyList);
 		m.addAttribute("imgList",imgList);
-		m.addAttribute("hashList",hashList);
 		m.addAttribute("pageBar",pageBar);
 		
 		return "community/communityAjax/dailyListAjax";

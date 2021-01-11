@@ -75,11 +75,21 @@
 		select * from productio
 		join stock using(stockNo) join product using(productNo)
 	</select>
-	<select id="searchProduct" parameterType="string"
+	<select id="searchProduct" parameterType="map"
 		resultType="map">
 		select * from product join productImg using(productNo) join
-		category using(categoryNo) where type = 'M' and PRODUCTNAME like '%'||
-		#{productName}||'%' ORDER BY ENROLLDATE DESC
+		category using(categoryNo) where type = 'M' 
+		<if test="productName != null">
+			and PRODUCTNAME like '%'||
+			#{productName}||'%' 
+		</if>
+		<if test="cate != null">
+			and SUBSTR(CATEGORYNO, 1, 1) = #{cate} 
+		</if>
+		<if test="categoryName!=null">
+			and categoryName=#{categoryName}
+		</if>
+		ORDER BY ENROLLDATE DESC
 	</select>
 	<select id="inOutSearch" parameterType="map" resultType="map">
 		select * from productio join stock using(stockNo) join product

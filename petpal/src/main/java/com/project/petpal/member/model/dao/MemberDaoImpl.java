@@ -362,6 +362,12 @@ public class MemberDaoImpl implements MemberDao {
 		// TODO Auto-generated method stub
 		return session.delete("member.deleteMember", memberNo);
 	}
+
+	@Override
+	public int likeCnt(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.likeCnt", m);
+	}
 	
 	
 

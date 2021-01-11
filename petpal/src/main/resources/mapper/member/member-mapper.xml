@@ -3,7 +3,7 @@
 <mapper namespace="member">
 	<select id="selectMember" parameterType="string"
 		resultMap="memberMap">
-		SELECT * FROM MEMBER WHERE EMAIL = #{email}
+		SELECT * FROM MEMBER WHERE EMAIL = #{email} AND SNSNO IS NULL
 	</select>
 	<resultMap type="member" id="memberMap">
 		<result column="address" property="address"
@@ -267,4 +267,7 @@
 	<delete id="deleteMember" parameterType="string">
 		DELETE FROM MEMBER WHERE MEMBERNO=#{memberNo}
 	</delete>
+	<select id="likeCnt" resultType="_int" parameterType="map">
+		 select count(*) from ${type} where heartmemberno =#{memberNo}
+	</select>
 </mapper>

@@ -53,6 +53,13 @@ public class findController {
 			model.addAttribute("like", like);
 		}
 		
+		for(Map mp : list) {
+			String findNo = (String)mp.get("FINDNO");
+			int commentCnt = service.countComment(findNo);
+			System.out.println(commentCnt);
+			mp.put("commentCnt", commentCnt);
+		}
+		
 		//팔로우 검사
 		if(m != null) {
 			String memberNo = m.getMemberNo();
@@ -142,6 +149,11 @@ public class findController {
 				}
 			}
 		}
+		
+		//댓글 개수
+		int commentCnt=service.countComment(findNo);
+		System.out.println(commentCnt);
+		model.addAttribute("commentCnt", commentCnt);
 		model.addAttribute("count",count);
 		model.addAttribute("fDetail", fDetail);
 		model.addAttribute("findPics", findPics);
@@ -318,6 +330,7 @@ public class findController {
 	@RequestMapping("/find/commentDelete.do")
 	@ResponseBody
 	public Boolean commentDelete(String findCommentNo) {
+		System.out.println(findCommentNo);
 		int result=service.commentDelete(findCommentNo);
 		return result>0?true:false;
 	}

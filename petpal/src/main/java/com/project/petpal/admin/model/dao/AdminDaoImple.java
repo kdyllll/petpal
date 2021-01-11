@@ -105,9 +105,9 @@ public class AdminDaoImple implements AdminDao {
 	}
 
 	@Override
-	public List<Map> searchProduct(SqlSession session, String productName) {
+	public List<Map> searchProduct(SqlSession session, Map m) {
 		// TODO Auto-generated method stub
-		return session.selectList("product.searchProduct", productName);
+		return session.selectList("product.searchProduct", m);
 	}
 
 	@Override

@@ -110,7 +110,7 @@
               
             <!--설명-->
             <div class="col-12 mt-3 px-0">                        
-              <textarea class="form-control" name="content" rows="5" placeholder="내용을 입력해주세요" style="resize: none;" required><c:out value="${daily.CONTENT }"/></textarea>                   
+              <textarea class="content form-control" name="content" rows="5" placeholder="내용을 입력해주세요" style="resize: none;" required><c:out value="${daily.CONTENT }"/></textarea>                   
             </div>
                 
             <!--해시태그-->
@@ -234,8 +234,7 @@ $(".updatePic").on("change",e=>{
 });
 
 $("#btn").on("click",e=>{ 
- 
-	 
+
 	 //유효성 검사
 	 if($(".imgBox").length==0){
    	  	  alert("사진을 올려주세요.");

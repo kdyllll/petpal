@@ -25,7 +25,7 @@ public interface AdminDao {
 	List<ProductImg> selectProductImgAll(SqlSession session, Product p); 
 	int updateProductImgEnd(SqlSession session, ProductImg p);
 	List<Map> productIOAll(SqlSession session, int cPage,int numPerPage);
-	List<Map> searchProduct(SqlSession session, String productName);
+	List<Map> searchProduct(SqlSession session, Map m);
 	List<Map> inOutSearch(SqlSession session, Map m);
 	List<Map> selectOrderList(SqlSession session,int cPage, int numPerPage);
 	List<Map> selectPayDetail(SqlSession session, String paymentNo);

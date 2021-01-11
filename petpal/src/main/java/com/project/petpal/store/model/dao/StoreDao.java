@@ -55,6 +55,6 @@ public interface StoreDao {
 	List<Product> saleList(SqlSession session);
 	List<Product> categoryList(SqlSession session,Map sort);
 	List<Product> soldOutList(SqlSession session,Map sort);
-	List<Map> selectMainProduct(SqlSession session);
-	List<Map> selectMainReview(SqlSession session);
+	List<Map> selectMainProduct(SqlSession session,int cPage,int numPerPage);
+	List<Map> selectMainReview(SqlSession session,int cPage,int numPerPage);
 }

@@ -26,7 +26,7 @@ opacity: 1;
 	<!-- Page Content -->
 	<main role="main" style="min-height: 100vh;" class="mt-0">
 		<div class="album ">
-			<div class="container my-4 mt-lg-0">
+			<div class="container my-4 mt-lg-0 pt-5">
 				<div class="row ">
 					<input type="hidden" class="loginMember"
 						value="${loginMember.memberNo }" />
@@ -57,7 +57,7 @@ opacity: 1;
 							
 						</div>
 					</div>
-					<div id="dailyCon" class="dailyCon mt-3 col-12">
+					<div id="dailyCon" class="dailyCon mt-1 col-12">
 						<div class="row col-12">
 							<c:if test="${empty dailyList }">
 								<div class="mx-auto">

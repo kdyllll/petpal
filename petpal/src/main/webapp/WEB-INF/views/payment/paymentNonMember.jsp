@@ -118,7 +118,7 @@
 				    pay_method : 'card',
 				    merchant_uid : 'merchant_' + new Date().getTime(),
 				    name : '주문명:결제테스트',
-				    amount : 100,
+				    amount : $("#total").html(),
 				}, function(rsp) {
 				    if ( rsp.success ) {
 				    	//결제에 성공하면 form 전송
@@ -261,6 +261,21 @@
 	   #adside.fixed {
 	     position: fixed;
 	   }
+	   #style-2::-webkit-scrollbar-track {
+		-webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3);
+		border-radius: 10px;
+		background-color: #FFFFFF;
+	}
+	
+	#style-2::-webkit-scrollbar{
+		width: 12px;
+		background-color: #FFFFFF;
+	}
+	#style-2::-webkit-scrollbar-thumb {
+		border-radius: 10px;
+		-webkit-box-shadow: inset 0 0 2px rgba(0,0,0,.3);
+		background-color: #f7dad9;
+	}
 	</style>
 </head>
 <body class="bg-white">
@@ -272,39 +287,39 @@
         	
             	<div class="order-md-2 d-none d-md-block ml-3">
         			<div id="adsideWrapper">
-    					<div id="adside">
+    					<div id="adside"  id="style-2" style="height:430px;overflow:auto;" >
 			                <h4 class="d-flex justify-content-between align-items-center mb-3">
 			                    <span class="text-muted mr-2">장바구니</span>
 			                    <button type="button" class="btn btn-dark mr-auto" onclick="stock();">재고확인</button>
 			                    <span class="badge badge-secondary badge-pill">${fn:length(list)}</span>
 			                </h4>
 			                <ul class="list-group mb-3"  style="width:350px;">
-			                	<c:forEach items="${list }" var="c">
-				                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-				                        <div>
-				                            <h6 class="my-0">${c.productName }</h6>
-				                            <c:if test="${!empty c.color && !empty c.productSize}">
-												<small class="text-muted">${c.color } / ${c.productSize } / ${c.count }</small>
-											</c:if>
-											<c:if test="${!empty c.color && empty c.productSize}">
-												<small class="text-muted">${c.color } / ${c.count }</small>
-											</c:if>
-											<c:if test="${empty c.color && !empty c.productSize}">
-												<small class="text-muted">${c.productSize } / ${c.count }</small>
-											</c:if>
-				                        </div>
-				                        <span class="">${c.price }원</span>
-				                    </li>
-			                    </c:forEach>
-			                    <li class="list-group-item d-flex justify-content-between">
-			                        <span>배송비</span>
-			                        <c:out value="${list[0].fee }"/>원
-			                    </li>
-			                    <li class="list-group-item d-flex justify-content-between">
-			                        <strong><span>총 가격</span></strong>
-			                        <strong><c:out value="${list[0].totalPrice }"/>원</strong>
-			                    </li>
-			                </ul>
+                            <c:forEach items="${list }" var="c">
+                                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                    <div>
+                                        <h6 class="my-0">${c.productName }</h6>
+                                        <c:if test="${!empty c.color && !empty c.productSize}">
+                                    <small class="text-muted">${c.color } / ${c.productSize } / ${c.count }</small>
+                                 </c:if>
+                                 <c:if test="${!empty c.color && empty c.productSize}">
+                                    <small class="text-muted">${c.color } / ${c.count }</small>
+                                 </c:if>
+                                 <c:if test="${empty c.color && !empty c.productSize}">
+                                    <small class="text-muted">${c.productSize } / ${c.count }</small>
+                                 </c:if>
+                                    </div>
+                                    <span class="">${c.price }원</span>
+                                </li>
+                             </c:forEach>
+                             <li class="list-group-item d-flex justify-content-between">
+                                 <span>배송비</span>
+                                 <c:out value="${list[0].fee }"/>원
+                             </li>
+                             <li class="list-group-item d-flex justify-content-between">
+                                 <span>상품 가격</span>
+                                 <c:out value="${list[0].totalPrice }"/>원
+                             </li>
+                         </ul>
 			                <div class="d-flex">
 			                	<button type="button" class="btn btn-dark ml-auto" onclick="cart();">장바구니로</button>
 			                </div>
@@ -389,22 +404,23 @@
                         <h5 class="mt-4">총 결제금액</h5>
                         <hr>
                         <div class="d-block my-3">
-                        	<ul class="mb-3"  style="width:100%; padding-left:0px;">
-			                    <li class="d-flex justify-content-between">
-			                        <span>총 상품금액</span>
-			                        <span><c:out value="${list[0].totalProduct }"/>원</span>
-			                    </li>
-			                    <li class="d-flex justify-content-between">
-			                        <span>배송비</span>
-			                        <span><c:out value="${list[0].fee }"/>원</span>
-			                    </li>
-			                    <li class="d-flex justify-content-between mt-4">
-		                        	<span></span>
-		                            <h4><c:out value="${list[0].totalPrice }"/>원</h4>
-			                    </li>
-			                </ul>
-                        
-                        
+                           <ul class="mb-3"  style="width:100%; padding-left:0px;">
+				<li class="d-flex justify-content-between">
+				    <span>총 상품금액</span>
+				    <span><c:out value="${list[0].totalProduct }"/>원</span>
+				</li>
+				<li class="d-flex justify-content-between">
+				    <span>배송비</span>
+				    <span><c:out value="${list[0].fee }"/>원</span>
+				</li>
+				<li class="d-flex justify-content-between mt-4">
+				    <span></span>
+				    <div class="d-flex">
+				     <h4 id="total"><c:out value="${list[0].totalPrice }"/></h4><h4>원</h4>
+				     <input type="hidden" id="totalP" value="">
+				     </div>
+				</li>
+                         	</ul>
                         </div>
                     </div>
 

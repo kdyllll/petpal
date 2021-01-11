@@ -19,7 +19,7 @@
 			<div class="modal-body">
 				<c:if test="${not empty sList }">
 					<c:forEach var="s" items="${sList }">
-						<form class="stockFrm" method="post">
+						<form class="stockFrm" >
 							<div class="form-group">
 								<label for="recipient-name" class="col-form-label d-block">
 									<c:choose>
@@ -58,22 +58,22 @@
 <script>
 	$(function() {
 		$(".insertStockBtn").on("click", e => {
-			 let stock = $(e.target).next().val();
+			 let stock = $(e.target).next();
 			 let ioStatus = $(e.target).prev().prev().prev().val();
-			 let input = $(e.target).prev().prev().val();
+			 let input = $(e.target).prev().prev();
 			let flag = true;
 			if(ioStatus == "out") {			
-				if(input > stock) {
-					alert("출고 개수가 재고보다 많습니다. " + stock + "보다 적게 입력해주세요.");
+				if(input.val() > stock.val()) {
+					alert("출고 개수가 재고보다 많습니다. " + stock.val() + "보다 적게 입력해주세요.");
 					flag=false;
 				}
-				if(input < 0) {
+				if(input.val() < 0) {
 					alert("출고 개수는 - 를 입력할 수 없습니다.");
 					flag=false;
 				}
 			}
 			if(ioStatus == "in") {
-				if(input < 0) {
+				if(input.val() < 0) {
 					alert("입고 개수는  - 를 입력할 수 없습니다.");
 					flag=false;
 				}
@@ -81,7 +81,37 @@
 			if(flag == false) {
 				return;
 			} else {
-				$(e.target).parent().parent().attr("action","${path}/admin/updateStockEnd.do").submit(); 									
+				
+				 $.ajax({
+					url:"${path}/admin/updateStockEnd.do",
+					data : {iostatus:ioStatus, stock : input.val(),stockNo : $(e.target).prev().val()},
+					success: data => {
+						let st = "";
+						if(ioStatus == "in") {
+							st = "입고";
+						} else{
+							st = "출고";
+						}
+						if(data == true) {		
+ 							alert("재고"+st+"성공");
+							if(ioStatus === "in") {
+								let total = (Number(stock.val())+Number(input.val()));
+								$(e.target).prev().prev().prev().prev().html("재고("+total+")개");
+								stock.val(total);
+								input.val(0);
+							} 
+							if(ioStatus === "out") {
+								let total2 = (Number(stock.val())-Number(input.val()));
+								$(e.target).prev().prev().prev().prev().html("재고("+Number(total2)+")개");
+								stock.val(total2);	
+								input.val(0);
+							}
+						} else {
+							alert("재고"+st+"실패");
+						}
+					}
+				}) 
+						
 			}
 
 		})

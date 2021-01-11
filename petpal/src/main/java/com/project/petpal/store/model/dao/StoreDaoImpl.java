@@ -258,15 +258,17 @@ public class StoreDaoImpl implements StoreDao{
 	}
 
 	@Override
-	public List<Map> selectMainProduct(SqlSession session) {
+	public List<Map> selectMainProduct(SqlSession session,int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return session.selectList("store.selectMainProduct");
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("store.selectMainProduct",null,rb);
 	}
 
 	@Override
-	public List<Map> selectMainReview(SqlSession session) {
+	public List<Map> selectMainReview(SqlSession session,int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return session.selectList("store.selectMainReview");
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("store.selectMainReview",null,rb);
 	}
 	
 	
