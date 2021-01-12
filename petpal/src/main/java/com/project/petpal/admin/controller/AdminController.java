@@ -175,4 +175,20 @@ public class AdminController {
 		return "admin/refundAndChange";
 	}
 	
+	@RequestMapping("/admin/refundChangeSearch.do")
+	public String refundChangeSearch(Model m,HttpServletRequest request ) {
+		String searchType = (String)request.getParameter("searchType");
+		String keyword = (String)request.getParameter("keyword");
+		String status = (String)request.getParameter("status");
+		System.out.println("상태"+status);
+		Map map = new HashMap();
+		map.put("searchType" ,searchType);
+		map.put("keyword" ,keyword);
+		map.put("status" ,status);
+		List<Map> oList = service.refundChangeSearch(map);
+		m.addAttribute("status",status);
+		m.addAttribute("oList", oList);
+		return "admin/refundAndChange";
+	}
+	
 }

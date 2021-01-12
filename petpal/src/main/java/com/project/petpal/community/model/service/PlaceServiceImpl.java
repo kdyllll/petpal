@@ -164,6 +164,32 @@ public class PlaceServiceImpl implements PlaceService{
 		// TODO Auto-generated method stub
 		return dao.selectLikeCount(session);
 	}
+
+	@Override
+	@Transactional
+	public int commentDelete(String placeCommentNo) {
+		// TODO Auto-generated method stub
+		//자기 자신을 참조하는 댓글(=대댓글)이 있다면 상태만 D로 변경
+		int result=dao.commentDelete(session,placeCommentNo);
+		//대댓글이 없다면 댓글 삭제 처리
+		if(result<1) {
+			result=dao.comment2Delete(session,placeCommentNo);
+		}		
+		return result;
+	}
+
+	@Override
+	public int comment2Delete(String placeCommentNo) {
+		// TODO Auto-generated method stub
+		return dao.comment2Delete(session,placeCommentNo);
+	}
+
+	@Override
+	public List<Place> placeList(Map keywordMap) {
+		// TODO Auto-generated method stub
+		return dao.placeList(session,keywordMap);
+	}
+	
 	
 	
 

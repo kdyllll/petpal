@@ -201,7 +201,7 @@
             </div>
             <div class="px-4 d-flex justify-content-between">
               <span class="h5"><strong>주문금액</strong></span>
-              <span id="totalPrice" class="h3"><strong>0원</strong></span>
+              <span class="h3"><strong id="totalPrice">0</strong>원</span>
             </div>
             <div class="row mx-1 py-3 d-flex justify-content-around">
               <div class="col-6"><button type="button" id="cartBtn" class="btn bg-light btn-lg btn-block " data-toggle="modal">장바구니</button></div>             
@@ -479,6 +479,7 @@
      		 display="d-none";
 		  }
 		  /*상품선택박스에 옵션 표시 */
+
 		    let orderBox=`<article class="orderBox rounded bg-light m-3 pl-3 pr-1 py-2">
 		              <div class="d-flex justify-content-between align-items-center mb-3">
 		                <p class="m-0">`+option+`</p>
@@ -499,7 +500,7 @@
 		                  <option value="5">5</option>
 		                  <option value="next">6+</option>
 		                </select>
-		                <p class="h5 price">`+price+`원</p>
+		                 <p class="h5 price">`+price+`원</p> 
 		                <p class="d-none eachPrice">`+price+`</p>
 		              </div>
 		            </article>`
@@ -577,9 +578,16 @@
             let priceCal=parseInt($(item).text().trim());
             totalPrice=totalPrice+priceCal;
           });
-          $("#totalPrice").text(totalPrice);
+          
+          $("#totalPrice").text(numberWithCommas(totalPrice));
         };
-         	
+        
+        //세자리수 마다 숫자에 콤마찍는 함수
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+
         
         //재고 개수 동적으로 처리하기
         function fn_stock(){
@@ -613,58 +621,34 @@
         }
         
         //관심상품 버튼
-   $(document).on("click",".heart",e=>{ 
-	if(loginMember==""){//로그인 안되어있다면
-		loginModal();
-	}else {
-		var memberNo=$("#memberNo").val();
-		$.ajax({
-			url:"${path}/store/insertFav.do",
-			data:{productNo:productNo,memberNo:memberNo},
-			success:(data) => {
-				if(data==1){
-					alert('관심상품을 담았습니다.');
-					$(e.target).parents(".heartCon").find("button.binHeart").addClass("d-none");
-					$(e.target).parents(".heartCon").find("button.fillHeart").removeClass("d-none");
-				}else{
-					$(e.target).parents(".heartCon").find("button.fillHeart").addClass("d-none");
-					$(e.target).parents(".heartCon").find("button.binHeart").removeClass("d-none");
-					alert("관심상품을 삭제하였습니다.");
-				}
-			},
-			error:(request,status,error)=>{
-                alert("관심상품을 담지 못하였습니다.다시 시도해주세요.");
-             }
-		})
-
-	}
-	
-})
-/* $(document).on("click","#heart",e=>{ 
-			if(loginMember==""){
-				alert("로그인 후 관싱상품을 담을 수 있습니다.");
-				return;
-			}else{
-				var memberNo=$("#memberNo").val();
+	   $(document).on("click",".heart",e=>{ 
+		if(loginMember==""){//로그인 안되어있다면
+			loginModal();
+		}else {
+			var memberNo=$("#memberNo").val();
 			$.ajax({
 				url:"${path}/store/insertFav.do",
 				data:{productNo:productNo,memberNo:memberNo},
 				success:(data) => {
 					if(data==1){
-						alert('관심상품을 담았습니다.')
+						alert('관심상품을 담았습니다.');
+						$(e.target).parents(".heartCon").find("button.binHeart").addClass("d-none");
+						$(e.target).parents(".heartCon").find("button.fillHeart").removeClass("d-none");
 					}else{
-						alert("관심상품을 삭제하였습니다.")
+						$(e.target).parents(".heartCon").find("button.fillHeart").addClass("d-none");
+						$(e.target).parents(".heartCon").find("button.binHeart").removeClass("d-none");
+						alert("관심상품을 삭제하였습니다.");
 					}
 				},
 				error:(request,status,error)=>{
-                    alert("관심상품을 담지 못하였습니다.다시 시도해주세요.");
-                 }
+	                alert("관심상품을 담지 못하였습니다.다시 시도해주세요.");
+	             }
 			})
-			}
-		}); */
-
-
-        
+	
+		}
+		
+	})
+    
         
         //모달즈
         
@@ -763,11 +747,7 @@
             	};
             
           });
-        
-             
-        
-        
-        
+   
         //문의 작성 모달
         $("#qnaBtn").on("click",e=>{
         	if(loginMember!=""){//로그인되어있으면 문의 모달 띄우기 

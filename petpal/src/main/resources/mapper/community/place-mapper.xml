@@ -40,6 +40,19 @@
 			AND PLACENO IN (SELECT PLACENO FROM PLACE LEFT JOIN HASHTAG ON
 			POSTNO=PLACENO WHERE HASHCONTENT=#{hashtag})
 		</if>
+		<if test="keywords != null">
+		   AND PLACENO IN (SELECT PLACENO FROM PLACE LEFT JOIN HASHTAG ON POSTNO=PLACENO JOIN PLACEIMG USING(PLACENO) WHERE REGEXP_LIKE(TITLE,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   ) OR  REGEXP_LIKE(HASHCONTENT,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   )OR  REGEXP_LIKE(EXPLANATION,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   )OR  REGEXP_LIKE(CATEGORY,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   )OR  REGEXP_LIKE(CONTENT,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   ))
+		</if>
 		ORDER BY PLACEDATE DESC
 	</select>
 	<select id="selectPlace" resultType="place"
@@ -57,19 +70,32 @@
 			AND PLACENO IN (SELECT PLACENO FROM PLACE LEFT JOIN HASHTAG ON
 			POSTNO=PLACENO WHERE HASHCONTENT=#{hashtag})
 		</if>
+		<if test="keywords != null">
+		   AND PLACENO IN (SELECT PLACENO FROM PLACE LEFT JOIN HASHTAG ON POSTNO=PLACENO JOIN PLACEIMG USING(PLACENO) WHERE REGEXP_LIKE(TITLE,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   ) OR  REGEXP_LIKE(HASHCONTENT,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   )OR  REGEXP_LIKE(EXPLANATION,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   )OR  REGEXP_LIKE(CATEGORY,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   )OR  REGEXP_LIKE(CONTENT,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   ))
+		</if>
 	</select>
 	<select id="commentCount" resultType="_int"
 		parameterType="string">
-		SELECT COUNT(*) FROM PLACECOMMENT WHERE PLACENO=#{placeNo} 
+		SELECT COUNT(*) FROM PLACECOMMENT WHERE PLACENO=#{placeNo} AND STATUS='E'
 	</select>
 	<insert id="insertComment" parameterType="placeComment">
 		INSERT INTO PLACECOMMENT
-		VALUES('PC'||SEQ_PLACECOMMENTNO.NEXTVAL,#{placeNo},#{memberNo},#{commentLevel},#{placeComment},#{commentRef},default)
+		VALUES('PC'||SEQ_PLACECOMMENTNO.NEXTVAL,#{placeNo},#{memberNo},#{commentLevel},#{placeComment},#{commentRef},default,default)
 	</insert>
 	<select id="commentList" resultType="placeComment"
 		parameterType="string">
 		SELECT
-		PLACECOMMENTNO,COMMENTLEVEL,IMG,NICKNAME,PLACECOMMENT,WRITEDATE,MEMBERNO
+		PLACECOMMENTNO,COMMENTLEVEL,IMG,NICKNAME,PLACECOMMENT,WRITEDATE,MEMBERNO,STATUS
 		FROM PLACECOMMENT JOIN MEMBER USING(MEMBERNO) WHERE PLACENO=#{placeNo}
 		START WITH COMMENTLEVEL=1
 		CONNECT BY PRIOR PLACECOMMENTNO=COMMENTREF ORDER SIBLINGS BY WRITEDATE DESC
@@ -141,4 +167,10 @@
 	<select id="selectLikeCount" resultType="map" >
 		SELECT PLACENO,COUNT(*) AS CNT from PLACELIKE group by PLACENO
 	</select>
+	<update id="commentDelete" parameterType="string">
+  		UPDATE PLACECOMMENT SET STATUS='D' WHERE PLACECOMMENTNO=#{placeCommentNo} AND (SELECT COUNT(*) FROM PLACECOMMENT WHERE COMMENTREF=#{placeCommentNo})>0
+  	</update>
+  	<delete id="comment2Delete" parameterType="string">
+  		DELETE FROM PLACECOMMENT WHERE PLACECOMMENTNO=#{placeCommentNo}
+  	</delete>
 </mapper>

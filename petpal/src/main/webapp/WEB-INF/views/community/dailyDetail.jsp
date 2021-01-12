@@ -151,7 +151,7 @@
 				                      			<pre class="m-0"><c:out value="${daily.CONTENT }"/></pre>
 							                      <div>
 						                       		<c:forEach var="h" items="${hashList}">
-				                                    		<a class="text-secondary bg-point" href="${path }/community/hashSearch.do?hashtag=${h}">#<c:out value="${h.hashContent }"/></a>				                                    	
+				                                    		<a class="text-secondary bg-point" href="${path }/community/hashSearch.do?hashtag=${h.hashContent}">#<c:out value="${h.hashContent }"/></a>				                                    	
 				                                    </c:forEach>
 							                      </div>
 				                    		 </div>

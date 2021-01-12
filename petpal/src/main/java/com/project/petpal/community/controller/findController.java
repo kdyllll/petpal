@@ -40,13 +40,23 @@ public class findController {
 	
 	@RequestMapping("/community/findList.do")
 	public String findList(Model model, HttpServletRequest request,HttpSession session,@RequestParam(value = "cPage", defaultValue = "1") int cPage,
-			@RequestParam(value = "numPerPage", defaultValue = "12") int numPerPage) {
+			@RequestParam(value = "numPerPage", defaultValue = "12") int numPerPage,@RequestParam(value="word", required=false) String word) {
 		Member m =(Member)session.getAttribute("loginMember");
 		String cate = request.getParameter("cate");
 		Map map = new HashMap();
 		map.put("cate",cate);
 		int totalData = service.findTotalCount();		
-		List<Map> list = service.selectFindList(map, cPage, numPerPage);
+		List<Map> list=null;
+		if(word!=null) {
+			Map keyword=new HashMap();
+			String keyword2=word.replace(" ", "");//공백제거
+			String[] keywords=keyword2.split("");
+			keyword.put("keywords", keywords);
+			list=service.selectFindAll(keyword);
+		}else {
+			 list = service.selectFindList(map, cPage, numPerPage);
+		}
+		
 		List<Map> count = service.selectLikeCount();
 		if(m!=null) {
 			List<String> like = service.selectFindLike(m.getMemberNo());

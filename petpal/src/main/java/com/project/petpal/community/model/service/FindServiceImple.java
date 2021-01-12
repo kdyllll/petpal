@@ -191,5 +191,16 @@ public class FindServiceImple implements FindService {
 		// TODO Auto-generated method stub
 		return dao.selectLikeCount(session);
 	}
+
+	@Override
+	public List<Map> selectFindAll(Map keywords) {
+		return dao.selectFindAll(session,keywords);
+	}
+
+	@Override
+	public int findTotalCount(Map keywords) {
+		// TODO Auto-generated method stub
+		return dao.findTotalCount(session, keywords);
+	}
 	
 }

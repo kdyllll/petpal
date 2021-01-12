@@ -304,5 +304,43 @@ public class AdminServiceImple implements AdminService {
 		return dao.refundChangeList(session);
 	}
 
+	@Override
+	public Map refundChangeOne(String detailNo) {
+		// TODO Auto-generated method stub
+		return dao.refundChangeOne(session, detailNo);
+	}
+
+	@Override
+	@Transactional
+	public int updateRefundStatus(Map map) {
+		// TODO Auto-generated method stub
+		int result = 0;
+		String paymentNo = (String)map.get("paymentNo");
+		List<Map> list = dao.selectPayDetail(session, paymentNo);
+		if(list.size() == 1) {
+			//payment의 배송, 결제상태 취소로 바꾸고 detail 상태 취소로 바꾸기
+			result = dao.updateRefundPayment(session, map);
+			if(result>0) {
+				result = dao.updateRefundDetail(session, map);
+			}
+		} else {
+			//detail상태만 취소로바꾸기
+			result = dao.updateRefundDetail(session, map);
+		}
+		return result;
+	}
+
+	@Override
+	public int updateChange(Map map) {
+		// TODO Auto-generated method stub
+		return dao.updateChange(session, map);
+	}
+
+	@Override
+	public List<Map> refundChangeSearch(Map map) {
+		// TODO Auto-generated method stub
+		return dao.refundChangeSearch(session, map);
+	}
+
 	
 }

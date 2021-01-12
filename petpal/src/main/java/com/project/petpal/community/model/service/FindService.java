@@ -33,4 +33,6 @@ public interface FindService {
 	int commentDelete(String findCommentNo);
 	int comment2Delete(String findCommentNo);
 	List<Map> selectLikeCount();
+	List<Map> selectFindAll(Map keywords);
+	int findTotalCount(Map keywords);
 }
