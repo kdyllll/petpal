@@ -33,7 +33,7 @@
 										<input type="hidden" class="checked" value="0">
 										<input type="text" name="nickName" id="nickName" style="width:75%;"
 											class="form-control input-lg d-inline" placeholder="닉네임" >
-											<button type="button" class="btn btn-outline-secondary" id="check">중복확인</button>
+											<button type="button" class="btn btn-outline-secondary" id="check3">중복확인</button>
 									</div>
 									<div class="mb-4">
 										<input type="text" id="sample6_postcode" name="address"
@@ -217,16 +217,17 @@ input[type="checkbox"]:checked+svg {
 		}
 	});
 	
-	$(document).on('click','#check',function(e){//닉네임 중복확인
+	$(document).on('click','#check3',function(e){//닉네임 중복확인
 		var nickName=$("#nickName").val().trim();
 		if(nickName==""){
 			alert("닉네임을 입력해주세요");
 			return;
 		}
 		$.ajax({
-			url:"${path}/member/checkNickName.do",
+			url:"${path}/checkNickName.do",
 			data:{nickName:nickName},
 			success:data=>{
+				console.log(data);
 				if(data==true){
 					alert("사용가능합니다.");
 					$(".checked").val(1);
