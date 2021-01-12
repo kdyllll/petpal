@@ -27,7 +27,8 @@
 							<button type="button" class="kind btn btn-secondary btn-sm mr-3">훈련소</button>
 							<button type="button" class="kind btn btn-secondary btn-sm mr-3">기타</button>
 						</div>
-						 <div class="mr-5 position-absolute " style="top:0; right:0;"><button id="write" class="btn">글쓰기</button></div> 
+						 <div class="mr-5 position-absolute " style="top:0; right:0;"><button type="button" id="write"
+								class="btn btn-outline-secondary ml-auto mr-3">글쓰기</button></div> 
 					</div>
 		
 					<c:if test="${empty list }">

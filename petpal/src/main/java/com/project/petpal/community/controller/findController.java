@@ -47,12 +47,14 @@ public class findController {
 		map.put("cate",cate);
 		int totalData = service.findTotalCount();		
 		List<Map> list=null;
+		String search="";
 		if(word!=null) {
 			Map keyword=new HashMap();
 			String keyword2=word.replace(" ", "");//공백제거
 			String[] keywords=keyword2.split("");
 			keyword.put("keywords", keywords);
 			list=service.selectFindAll(keyword);
+			search="search";
 		}else {
 			 list = service.selectFindList(map, cPage, numPerPage);
 		}
@@ -76,7 +78,7 @@ public class findController {
 			List<Map> followingList = service.selectFollowingList(memberNo);
 			model.addAttribute("following", followingList);
 		}
-		
+		model.addAttribute("search",search);
 		model.addAttribute("count", count);
 		model.addAttribute("totalData", totalData);
 		model.addAttribute("pageBar", new PageBarFactory().getPageBar(totalData, cPage, numPerPage,null,null, "findList.do"));

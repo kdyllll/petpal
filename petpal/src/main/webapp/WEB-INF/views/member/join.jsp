@@ -49,7 +49,7 @@
 													<div class="modal-body">
 														<p>이메일로 인증번호를 전송하였습니다.인증번호를 입력해주세요.</p>
 														<span>인증번호</span><input type="text" id="key">
-														<button type="button" class="btn btn-outline-secondary" id="check2">인증번호확인</button>
+														<button type="button" class="btn btn-outline-secondary" id="check3">인증번호확인</button>
 														<input type="hidden" id="key2">
 													</div>
 													<div class="modal-footer">
@@ -212,10 +212,11 @@ input[type="checkbox"]:checked+svg {
 			$("#allcheck").prop("checked",false);
 		}
 	});
-	$("#check2").click(e=>{
+	$("#check3").click(e=>{
 		if($("#key").val()==$("#key2").val()){
 			alert('인증이 확인되었습니다.');
 			$("#checked2").val(1);
+			$('.modal').modal('hide');
 		}else{
 			alert('인증번호가 맞지않습니다.다시 입력해주세요.');
 		}
@@ -421,6 +422,9 @@ input[type="checkbox"]:checked+svg {
              }
          }).open();
      } 
+     $('.modal').on('hidden.bs.modal', function (e) {
+    	    $(this).find('#key').val("");
+    	});
 </script>
 
 </html>

@@ -59,13 +59,13 @@
 						<jsp:param value="findList" name="comNav" />
 					</jsp:include>
 					<div class="form-inline container text-center mb-3">
-						<h3>찾습니다</h3>
+						<h3>찾습니다 <c:out value="${search eq 'search'?' 검색결과':'' }"/></h3>
 						<input type="hidden" class="loginMember"
 							value="${loginMember.memberNo }" />
 						<button type="button"
 							class="btn btn-outline-secondary ml-auto writeBtn">글쓰기</button>
-
 					</div>
+					<c:if test="${search ne 'search' }">
 					<form action="${path }/community/findList.do"
 						class="form-inline container-xl mb-5" method="get">
 						<button type="submit"
@@ -78,6 +78,7 @@
 							class="btn btn-outline-secondary mr-2 smallBtn">소동물</button>
 						<div class="cate"></div>
 					</form>
+					</c:if>
 				</div>
 				<div
 					class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">

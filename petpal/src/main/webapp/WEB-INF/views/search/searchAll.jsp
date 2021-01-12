@@ -96,7 +96,7 @@
 						<h5 class="font-weight-bold ">
 							일상<span class="text-info">&nbsp;<c:out value="${dCount }"/></span>
 						</h5>
-						<a href="${path }/daily/moveList.do?word=${keyword}" class="d-none ${storeCount==0?'':'d-md-block'}">더보기</a>
+						<a href="${path }/daily/moveList.do?word=${keyword}" class="d-none ${dCount==0?'':'d-md-block'}">더보기</a>
 					</div>
 					<c:if test="${not empty dailyList }">
 
@@ -295,7 +295,7 @@
 						<h5 class="font-weight-bold ">
 							찾아주세요<span class="text-info">&nbsp;<c:out value="${fCount }"/></span>
 						</h5>
-						<a href="${path }/community/findList.do?word=${keyword}" class="d-none ${storeCount==0?'':'d-md-block'}">더보기</a>
+						<a href="${path }/community/findList.do?word=${keyword}" class="d-none ${fCount==0?'':'d-md-block'}">더보기</a>
 					</div>
 					<c:if test="${not empty findList  }">
 						<c:forEach var="t" items="${findList}" varStatus="status">
@@ -504,7 +504,7 @@
 						<h5 class="font-weight-bold ">
 							노하우<span class="text-info">&nbsp;<c:out value="${tCount }"/></span>
 						</h5>
-						<a href="${path }/community/tipList.do?word=${keyword}" class="d-none ${storeCount==0?'':'d-md-block'}">더보기</a>
+						<a href="${path }/community/tipList.do?word=${keyword}" class="d-none ${tCount==0?'':'d-md-block'}">더보기</a>
 					</div>
 					<c:if test="${not empty tipList }">
 								<c:forEach items="${tipList }" var="t" varStatus="status">
@@ -683,7 +683,7 @@
 						<h5 class="font-weight-bold ">
 							장소후기<span class="text-info">&nbsp;<c:out value="${placeCount }"/></span>
 						</h5>
-						<a href="${path }/place/movePlaceList.do?word=${keyword}" class="d-none ${storeCount==0?'':'d-md-block'}">더보기</a>
+						<a href="${path }/place/movePlaceList.do?word=${keyword}" class="d-none ${placeCount==0?'':'d-md-block'}">더보기</a>
 					</div>
 					<c:if test="${not empty placeList }">
 						<c:forEach var="p" items="${placeList }" varStatus="status">
@@ -758,6 +758,14 @@ a:hover {
 }
 .review{
 	color:black;
+}
+.post-all {
+	color: black;
+}
+
+.post-all:hover {
+	color: black;
+	text-decoration: none;
 }
 </style>
 
@@ -853,4 +861,10 @@ $(function(){
 		fn_loginCheck();
 	};
 	};
+	$(document).ready(function(){
+		$(".img").click( function() {
+			let tipNo = $(this).prev().val();
+			location.href="${path}/community/tipDetail.do?tipNo=" + tipNo;
+		});
+	})
 </script>
