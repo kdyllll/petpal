@@ -85,7 +85,7 @@
 													<h6>택배</h6>
 												</div>
 												<div class="d-flex">
-													<span class="ml-auto"><c:out value="${c.PRICE}"/>원</span>
+													<span class="ml-auto"><c:out value="${c.PRICESALE}"/>원</span>
 												</div>
 											</div>
 										</div>
@@ -99,7 +99,7 @@
 												<c:if test="${empty c.COLOR && !empty c.PRODUCTSIZE}">
 													<span class="mr-3"><c:out value="${c.PRODUCTSIZE }"/> / <c:out value="${c.CNT }"/>개</span>
 												</c:if>
-					                            <span><c:out value="${c.PRICE * c.CNT}"/>원</span>
+					                            <span><c:out value="${c.PRICESALE * c.CNT}"/>원</span>
 					                            <c:set var="i" value="${i+1 }"/>
 											</div>
 									</div>
@@ -109,7 +109,7 @@
 				</div>
 	  		</div>
 	  		<div class="text-center">
-			  	<button class="mt-5 btn btn-outline-secondary">주문현황보기</button>
+			  	
 			</div>
 	  	</div>
 		<div class="d-md-none d-block">
@@ -174,7 +174,7 @@
 				</div>
 	  		</div>
 	  		<div class="text-center">
-			  	<button class="mt-5 mb-5 btn btn-outline-secondary">주문현황보기</button>
+			  	
 			</div>
 	  	</div>
   	</div>
