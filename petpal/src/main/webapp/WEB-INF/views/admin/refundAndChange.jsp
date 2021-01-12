@@ -26,31 +26,31 @@
 				class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-5 "
 				style="height: 100vh; overflow-y: auto;">
 				<h2 class="my-3">환불/교환</h2>
-				<form id="search-userEmail" method="post" class="row align-items-center orderFrm">
+				<form id="search-userEmail" method=""  class="row align-items-center refundChangeFrm">
 					<div class="input-group mb-3  col-lg-5 ">
 							<div class="form-check form-check-inline ">
 								<input class="form-check-input" name="status" type="radio"
-									 value="환불중" id="refundIng" ${status != null && status.equals("결제완료") ? "checked":""}> <label
-									class="form-check-label" for="refundIng">환불(대기)</label>
+									 value="반품중" id="refundIng" ${status != null && status.equals("반품중") ? "checked":""}> <label
+									class="form-check-label" for="refundIng">반품(대기)</label>
 							</div>
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" name="status" type="radio"
-									id="refund" value="취소" ${status != null && status.equals("취소완료") ? "checked":""}> <label
-									class="form-check-label" for=""refund"">환불(완료)</label>
+									id="refund" value="취소" ${status != null && status.equals("취소") ? "checked":""}> <label
+									class="form-check-label" for="refund">반품(완료)</label>
 							</div>
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" name="status" type="radio"
-									value="결제대기" id="changeIng" ${status != null && status.equals("결제대기") ? "checked":""}> <label
-									class="form-check-label" for=""changeIng"">교환(대기)</label>
+									value="교환중" id="changeIng" ${status != null && status.equals("교환중") ? "checked":""}> <label
+									class="form-check-label" for="changeIng">교환(대기)</label>
 							</div>
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" name="status" type="radio"
-									 value="전체" id="change" ${status == null ? "checked":""}> <label
+									 value="교환" id="change" ${status != null && status.equals("교환") ? "checked":""}> <label
 									class="form-check-label" for="change">교환(완료)</label>
 							</div>
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" name="status" type="radio"
-									 value="전체" id="All" ${status == null ? "checked":""}> <label
+									 value="전체" id="All" > <label
 									class="form-check-label" for="All">전체</label>
 							</div>
 						</div>
@@ -58,10 +58,10 @@
 						<label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
 						<select class="custom-select mr-sm-2" name="searchType" id="searchType">
 							<option selected value="P.EMAIL">이메일</option>
-							<option value="NAME">이름</option>
-							<option value="RECEIVERNAME">회원이메일</option>
-							<option value="PHONE">전화번호</option>
-							<option value="ORDERNO">주문번호</option>
+							<option value="M.MEMBERNAME">이름</option>
+							<option value="M.EMAIL">회원이메일</option>
+							<option value="M.PHONE">전화번호</option>
+							<option value="P.ORDERNO">주문번호</option>
 						</select>
 					</div>
 					<div class="input-group mb-3  col-lg-5">
@@ -119,16 +119,14 @@
 											<input type="hidden" value="${o.DETAILNO }" name="detailNo">
 											<c:choose>
 										<c:when test="${o.DETAILSTATUS eq '반품중'}">
-											<button type="button" class="acceptBtn btn  btn-outline-danger btn-sm">반품처리</button>
+											<button type="button" class="acceptBtn btn  btn-outline-danger btn-sm" value="${o.DETAILSTATUS }">반품처리</button>
 										</c:when>
 										<c:when test="${o.DETAILSTATUS eq '교환중'}">
-											<button type="button" class="acceptBtn btn  btn-outline-danger btn-sm">교환처리</button>
+											<button type="button" class="acceptBtn btn  btn-outline-danger btn-sm" value="${o.DETAILSTATUS }">교환처리</button>
 										</c:when>
-										<c:otherwise>
-											<a class="btn btn-secondary btn-sm disabled" tabindex="-1" role="button"  aria-disabled="true">주문취소</a>
-										</c:otherwise>
+										
 										</c:choose>
-
+										<input type="hidden" value="${o.PAYMENTNO }">
 									</form></td>
 							</tr>
 							</c:forEach>
@@ -149,35 +147,29 @@
 	<script>
     $(function(){
     	$(".searchBtn").on("click", e => {
-    		$(".orderFrm").attr("action","${path }/admin/orderSearch.do").submit();
+    		$(".refundChangeFrm").attr("action","${path }/admin/refundChangeSearch.do").submit();
     	})
     	
     	$("input[type='radio']").on("change", e => {
-    		if($(e.target).val()=="결제완료" || $(e.target).val()=="취소완료" || $(e.target).val()=="결제대기") {
-    			$(".orderFrm").attr("action","${path }/admin/orderSearch.do").submit();
+    		if($(e.target).val()=="교환중" || $(e.target).val()=="반품중" || $(e.target).val()=="교환" ||  $(e.target).val()=="취소") {
+    			$(".refundChangeFrm").attr("action","${path }/admin/refundChangeSearch.do").submit();
     		} else {
-    			$(".orderFrm").attr("action","${path }/admin/adminOrder.do").submit();
+    			$(".refundChangeFrm").attr("action","${path }/admin/refundChange.do").submit();
     		}
     	})
     	
         $(".detailBtn").on("click", e => {
         	let detailNo = $(e.target).next().val();
         	ajaxModal("${path}/admin/refundChangeDetail.do", detailNo);
-        })
+        })       
         
-        $(".orderCancel").on("click", e=> {
-        	let paymentNo = $(e.target).prev().val();
-        	ajaxModal("${path}/admin/paymentCancel.do", paymentNo);
-        })
-        
-        $(".orderAccept").on("click", e => {
+        $(".acceptBtn").on("click", e => {
         	let paymentNo = $(e.target).next().val();
-        	let memberNo = $(e.target).next().next().val();
-        	let pointPlus =  $(e.target).next().next().next().val();
-        	let pointMinus =  $(e.target).next().next().next().next().val();
+        	let detailNo = $(e.target).prev().val();
+        	let detailStatus = $(e.target).val();
         	$.ajax({
-    			url: "${path}/admin/orderAccept.do",
-    			data:{paymentNo, memberNo , pointPlus, pointMinus},
+    			url: "${path}/admin/refundChangeUpdate.do",
+    			data:{paymentNo, detailNo,detailStatus},
     			success:(data) => {
     				if(data  == true) {
     					alert("승인 성공");

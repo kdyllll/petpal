@@ -49,4 +49,7 @@ public interface AdminService {
 	int detailCnt(String paymentNo);
 	List<Map> refundChangeList();
 	Map refundChangeOne(String detailNo);
+	int updateRefundStatus(Map map);
+	int updateChange(Map map);
+	List<Map> refundChangeSearch(Map map);
 }
