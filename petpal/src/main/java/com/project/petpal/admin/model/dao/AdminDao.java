@@ -56,4 +56,5 @@ public interface AdminDao {
 	int updatePoint(SqlSession session, Map m);
 	int detailCnt(SqlSession session, String paymentNo);
 	List<Map> refundChangeList(SqlSession session);
+	Map refundChangeOne(SqlSession session, String detailNo);
 }

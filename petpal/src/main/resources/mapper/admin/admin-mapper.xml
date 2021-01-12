@@ -85,11 +85,23 @@
 	</select>
 	<select id="refundChangeList" resultType="map">
 		select P.PAYMENTNO AS
-		PAYMENTNO,D.STOCKNO AS STOCKNO,M.MEMBERNO AS MEMBERNO,M.MEMBERNAME AS
-		MEMBERNAME, M.EMAIL AS EMAIL, M.PHONE AS PHONE,
-		P.PAYDATE AS PAYDATE, P.ORDERNO AS ORDERNO,D.DETAILSTATUS AS DETAILSTATUS
-		from PAYDETAIL D join payment P ON P.paymentno = D.PAYMENTNO join member M
-		ON M.MEMBERNO = P.MEMBERNO where D.detailstatus in ('반품중','교환중','취소',
+		PAYMENTNO,D.STOCKNO AS STOCKNO,D.DETAILNO AS DETAILNO, M.MEMBERNO AS
+		MEMBERNO,M.MEMBERNAME AS
+		MEMBERNAME, M.EMAIL AS EMAIL, M.PHONE AS
+		PHONE,
+		P.PAYDATE AS PAYDATE, P.ORDERNO AS ORDERNO,D.DETAILSTATUS AS
+		DETAILSTATUS
+		from PAYDETAIL D join payment P ON P.paymentno =
+		D.PAYMENTNO join member M
+		ON M.MEMBERNO = P.MEMBERNO where
+		D.detailstatus in ('반품중','교환중','취소',
 		'교환')
+	</select>
+	<select id="refundChangeOne" parameterType="string"
+		resultType="map">
+		select color,
+		productsize,detailstatus,paykind,refundinfo,changeinfo,refunddate,changedate,productname
+		from paydetail join payment using(paymentno) join stock using(stockNo)
+		join product using(productNo) where detailno=#{detailNo}
 	</select>
 </mapper>

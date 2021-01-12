@@ -87,4 +87,12 @@ public class AdminAjaxController {
 		return "common/msg";
 
 	}
+	
+	@RequestMapping("/admin/refundChangeDetail.do")
+	public String refundChangeDetail(String detailNo, Model model) {
+		System.out.println(detailNo);
+		Map list = service.refundChangeOne(detailNo);
+		model.addAttribute("list",list);
+		return "admin/adminAjax/refundChangeDetail";
+	}
 }

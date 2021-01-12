@@ -291,4 +291,10 @@ public class AdminDaoImple implements AdminDao {
 		return session.selectList("admin.refundChangeList");
 	}
 
+	@Override
+	public Map refundChangeOne(SqlSession session, String detailNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.refundChangeOne", detailNo);
+	}
+
 }

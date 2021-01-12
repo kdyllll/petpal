@@ -48,4 +48,5 @@ public interface AdminService {
 	int orderAccept(Map m);
 	int detailCnt(String paymentNo);
 	List<Map> refundChangeList();
+	Map refundChangeOne(String detailNo);
 }

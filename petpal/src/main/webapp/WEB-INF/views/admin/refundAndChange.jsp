@@ -116,7 +116,7 @@
 										class="d-flex flex-column" method="post" >	
 										<button type="button"
 											class="detailBtn btn btn-outline-secondary btn-sm mb-1">상세보기</button>
-											<input type="hidden" value="${o.PAYMENTNO }" name="paymentNo">
+											<input type="hidden" value="${o.DETAILNO }" name="detailNo">
 											<c:choose>
 										<c:when test="${o.DETAILSTATUS eq '반품중'}">
 											<button type="button" class="acceptBtn btn  btn-outline-danger btn-sm">반품처리</button>
@@ -160,9 +160,9 @@
     		}
     	})
     	
-        $(".orderDetailBtn").on("click", e => {
-        	let paymentNo = $(e.target).next().val();
-        	ajaxModal("${path}/admin/paymentDetail.do", paymentNo);
+        $(".detailBtn").on("click", e => {
+        	let detailNo = $(e.target).next().val();
+        	ajaxModal("${path}/admin/refundChangeDetail.do", detailNo);
         })
         
         $(".orderCancel").on("click", e=> {
@@ -190,10 +190,10 @@
         })
     })
     
-    function ajaxModal(path, paymentNo) {
+    function ajaxModal(path, detailNo) {
     	$.ajax({
 			url: path,
-			data:{paymentNo : paymentNo },
+			data:{detailNo : detailNo },
 			dataType:"html",
 			success:(data) => {
 				$(".orderModal").html(data);

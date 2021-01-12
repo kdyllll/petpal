@@ -304,5 +304,11 @@ public class AdminServiceImple implements AdminService {
 		return dao.refundChangeList(session);
 	}
 
+	@Override
+	public Map refundChangeOne(String detailNo) {
+		// TODO Auto-generated method stub
+		return dao.refundChangeOne(session, detailNo);
+	}
+
 	
 }
