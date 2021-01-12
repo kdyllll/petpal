@@ -23,7 +23,7 @@
    <main  class="text-center mt-5 mt-lg-0 bg-white">  
     <div class="container pt-5 pt-lg-0">
       <div class="row pt-5">
-        <form class="form-signin" action="${path }/member/memberLogin.do" method="post">
+        <form class="form-signin" action="${path }/memberLogin.do" method="post">
             <div class="text-center mb-4">
               <!-- <img class="mb-4" src="../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
               <h1 class="h3 mb-3 font-weight-normal">PETPAL</h1>
