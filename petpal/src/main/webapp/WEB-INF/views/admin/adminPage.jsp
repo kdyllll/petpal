@@ -31,18 +31,18 @@
 					<button type="button" class="btn btn-outline-secondary col-lg-1 ml-3 mr-4" id="searchAll">전체검색</button>
 					<div class="form-check form-check-inline align-middle">
 						<input class="form-check-input" name="cate" type="radio"
-							id="dog" value="D" ${cate != null && cate.equals("D") ? "checked":""}> <label
-							class="form-check-label" for="dog">강아지</label>
+							id="dogg" value="D" ${cate != null && cate.equals("D") ? "checked":""}> <label
+							class="form-check-label" for="dogg">강아지</label>
 					</div>
 					<div class="form-check form-check-inline">
 						<input class="form-check-input" name="cate" type="radio"
-							id="cat" value="C" ${cate != null && cate.equals("C") ? "checked":""}> <label
-							class="form-check-label" for="cat">고양이</label>
+							id="catt" value="C" ${cate != null && cate.equals("C") ? "checked":""}> <label
+							class="form-check-label" for="catt">고양이</label>
 					</div>
 					<div class="form-check form-check-inline">
 						<input class="form-check-input" name="cate" type="radio"
-							id="small" value="S" ${cate != null && cate.equals("S") ? "checked":""}> <label
-							class="form-check-label" for="small">소동물</label>
+							id="smalll" value="S" ${cate != null && cate.equals("S") ? "checked":""}> <label
+							class="form-check-label" for="smalll">소동물</label>
 					</div>
 					<select name="categoryname" class="catename form-check form-check-inline" >
 					  <option selected disabled>분류</option>

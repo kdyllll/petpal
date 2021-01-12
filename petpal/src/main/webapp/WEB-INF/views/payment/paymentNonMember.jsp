@@ -107,8 +107,9 @@
 			}
 		}else{
 				swal("정보 입력 완료", "결제를 진행합니다.", "success");
+				frm.submit();
 			
-			if($("input:radio[id='credit']").is(":checked")){
+			/* if($("input:radio[id='credit']").is(":checked")){
 				 	var IMP = window.IMP;
 				IMP.init('imp77627307');
 
@@ -134,7 +135,7 @@
 			return false;
 			}else{
 				frm.submit();
-			}
+			} */
 		}
 	}
 	

@@ -103,10 +103,10 @@
 			
 			
 			<c:if test="${not empty mainList[0].CONTENT2 }">
-				<textarea class="autosize form-control border-0 mt-5 mb-5" name="content2" style="resize: none; overflow-y:hidden;"><c:out value="${mainList[0].CONTENT2 }"/></textarea>
+				<textarea class="autosize form-control border-0 mt-5 mb-5" name="content2" style="resize: none;"><c:out value="${mainList[0].CONTENT2 }"/></textarea>
 			</c:if>
 			<c:if test="${empty mainList[0].CONTENT2 }">
-				<textarea class="autosize form-control border-0 mt-5 mb-5" name="content2" placeholder="내용을입력하세요" style="resize: none; overflow-y:hidden;"></textarea>
+				<textarea class="autosize form-control border-0 mt-5 mb-5" name="content2" placeholder="내용을입력하세요" style="height:auto; resize: none; overflow-y:hidden;"></textarea>
 			</c:if>
 			
 			<div id="hide"></div>
@@ -320,9 +320,12 @@ $(".updatePic").on("change",e=>{
     }
     xSize(document.getElementsByClassName('ta'));
     
-    $("textarea.autosize").on('keydown keyup', function () {
-    	  $(this).height(1).height( $(this).prop('scrollHeight')+12 );	
-    });
+    $(document).ready(function(){
+    	
+	    $("textarea.autosize").on('keydown keyup click', function () {
+	    	  $(this).height(1).height( $(this).prop('scrollHeight')+12 );	
+	    });
+    })
     
     
     $("#write").click(function(){
