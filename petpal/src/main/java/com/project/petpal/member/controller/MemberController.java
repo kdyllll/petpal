@@ -207,7 +207,7 @@ public class MemberController {
       return "member/myPageFav";
    }
 
-   @RequestMapping("/member/insertMember.do")//회원가입창에서 가입버튼눌렀을때 회원가입 요청하는 서블릿
+   @RequestMapping("/insertMember.do")//회원가입창에서 가입버튼눌렀을때 회원가입 요청하는 서블릿
 
    public String insertMember(Model m,Member member,@RequestParam(value="f", required=false)MultipartFile f, HttpSession session) {
 	   String snsNo=member.getSnsNo();
@@ -268,7 +268,7 @@ public class MemberController {
       return "member/login";
    }
 
-   @RequestMapping("/member/memberLogin.do")
+   @RequestMapping("/memberLogin.do")
    public String memberLogin(String email, String password,  Model m, HttpServletResponse response,
 		   @RequestParam(value = "saveId", required = false) String saveId) {
       Member login = service.selectMember(email);
