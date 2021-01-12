@@ -115,14 +115,19 @@
 								<td class="align-middle text-center "><form
 										class="d-flex flex-column" method="post" >	
 										<button type="button"
-											class="orderDetailBtn btn btn-outline-secondary btn-sm mb-1">상세보기</button>
+											class="detailBtn btn btn-outline-secondary btn-sm mb-1">상세보기</button>
 											<input type="hidden" value="${o.PAYMENTNO }" name="paymentNo">
-										<c:if test="${o.DETAILSTATUS eq '반품중'}">
-											<button type="button" class="orderCancel btn  btn-outline-danger btn-sm">반품처리</button>
-										</c:if>
-										<c:if test="${o.DETAILSTATUS eq '교환중'}">
-											<a class="btn btn-secondary btn-sm disabled" tabindex="-1" role="button"  aria-disabled="true">교환처리</a>
-										</c:if>
+											<c:choose>
+										<c:when test="${o.DETAILSTATUS eq '반품중'}">
+											<button type="button" class="acceptBtn btn  btn-outline-danger btn-sm">반품처리</button>
+										</c:when>
+										<c:when test="${o.DETAILSTATUS eq '교환중'}">
+											<button type="button" class="acceptBtn btn  btn-outline-danger btn-sm">교환처리</button>
+										</c:when>
+										<c:otherwise>
+											<a class="btn btn-secondary btn-sm disabled" tabindex="-1" role="button"  aria-disabled="true">주문취소</a>
+										</c:otherwise>
+										</c:choose>
 
 									</form></td>
 							</tr>
