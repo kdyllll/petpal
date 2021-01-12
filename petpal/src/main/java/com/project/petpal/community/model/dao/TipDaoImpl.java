@@ -194,6 +194,12 @@ public class TipDaoImpl implements TipDao {
 	}
 
 	@Override
+	public List<Map> tipList(SqlSession session, Map keywordMap) {
+		// TODO Auto-generated method stub
+		return session.selectList("tip.tipsearchList",keywordMap);
+	}
+		
+	@Override
 	public List<Map> selectTipDate(SqlSession session, int cPage, int numPerPage, Map<String,String> keyword) {
 		// TODO Auto-generated method stub
 		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);

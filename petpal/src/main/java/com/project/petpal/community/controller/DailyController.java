@@ -54,18 +54,35 @@ public class DailyController {
 	@RequestMapping("/daily/moveList.do")
 	public String moveDailyList(Model m,
 			@RequestParam(value="hashtag", required=false) String hashtag,
+			@RequestParam(value="word", required=false) String word,
 			@RequestParam(value="cPage",defaultValue="1") int cPage,
 			@RequestParam(value="numPerPage",defaultValue="12") int numPerPage, HttpSession session) {
 		//해시태그 검색어로 검색됐을 경우 구분
-		Map<String,String> keyword=new HashMap<String,String>();
-		keyword.put("hashtag", hashtag);
+		
+		
+		Map keyword;
+		List<Map> dailyList=null;
+		if(word!=null) {
+			keyword=new HashMap();
+			String keyword2=word.replace(" ", "");//공백제거
+			String[] keywords=keyword2.split("");
+			keyword.put("keywords", keywords);
+			dailyList=service.selectDailyAll(keyword);
+		}else {
+			keyword=new HashMap<String,String>();
+			keyword.put("hashtag", hashtag);
+			dailyList=service.selectDailyAll(cPage,numPerPage,keyword);
+		}
 		String search="";
 		//검색어를 통해 들어오는 거면 search도 보내서 정렬버튼 없앰
 		if(hashtag!=null) {
 			search="search";
 		}
+		if(word!=null) {
+			search="search";
+		}
 		
-		List<Map> dailyList=service.selectDailyAll(cPage,numPerPage,keyword);
+		
 		for(Map map:dailyList) {
 			//해시태그 리스트
 			String postNo=(String) map.get("DAILYNO");

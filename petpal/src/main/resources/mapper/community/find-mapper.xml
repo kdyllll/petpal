@@ -79,10 +79,18 @@
 	<delete id="deleteFind" parameterType="string">
 		DELETE FROM FIND WHERE FINDNO=#{findNo}
 	</delete>
-	<select id="findTotalCount" resultType="_int">
+	<select id="findTotalCount" resultType="_int" parameterType="map">
 		SELECT count(*) FROM FIND
-		JOIN FINDIMG USING(FINDNO) JOIN MEMBER USING(MEMBERNO) WHERE IMGSTATUS
-		= 'M' AND STATUS='N'
+		JOIN FINDIMG USING(FINDNO) JOIN MEMBER USING(MEMBERNO) WHERE IMGSTATUS= 'M' AND STATUS='N'
+		<if test="keywords != null">
+		AND FINDNO IN(SELECT FINDNO FROM FIND WHERE REGEXP_LIKE(ADDRESS,
+  			<foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+  		) OR REGEXP_LIKE(CONTENT,
+  			<foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+  		) OR REGEXP_LIKE(TITLE,
+  			<foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+  		))
+  		</if>
 	</select>
 	<select id="selectComment" parameterType="string"
 		resultType="map">
@@ -113,4 +121,14 @@
   	<select id="selectLikeCount" resultType="map">
   		select FINDNO,count(*) AS CNT from findlike group by findno
   	</select>
+  	<select id="selectFindAll" resultType="map" parameterType="map">
+  		SELECT * FROM FIND JOIN FINDIMG USING(FINDNO) JOIN MEMBER USING(MEMBERNO) WHERE IMGSTATUS = 'M' AND STATUS='N' AND
+  		FINDNO IN(SELECT FINDNO FROM FIND WHERE REGEXP_LIKE(ADDRESS,
+  			<foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+  		) OR REGEXP_LIKE(CONTENT,
+  			<foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+  		) OR REGEXP_LIKE(TITLE,
+  			<foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+  		))
+  	</select> 
 </mapper>

@@ -227,6 +227,11 @@ public class TipServiceImpl implements TipService {
 	}
 
 	@Override
+	public List<Map> tipList(Map keywordMap) {
+		// TODO Auto-generated method stub
+		return dao.tipList(session,keywordMap);
+	}
+	@Override
 	public List<Map> selectTipDate(int cPage, int numPerPage, Map<String,String> keyword) {
 		// TODO Auto-generated method stub
 		return dao.selectTipDate(session, cPage, numPerPage, keyword);

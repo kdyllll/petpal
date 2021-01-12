@@ -87,11 +87,27 @@ public class PlaceController {
 	@RequestMapping("/place/movePlaceList.do")//장소후기 리스트 이동 서블릿
 	public String placeList(Model m,String category,
 			@RequestParam(value="hashtag", required=false) String hashtag,
+			@RequestParam(value="word", required=false) String word,
 			@RequestParam(value="cPage",defaultValue="1") int cPage) {
 		//해시태그 검색어로 검색됐을 경우 구분
-		Map<String,String> keyword=new HashMap<String,String>();
-		keyword.put("hashtag", hashtag);
-		keyword.put("category", category);
+		int numPerpage=7;//한페이지의 출력할 개수
+		List<Place> list=null;
+		Map keyword;
+		if(word!=null) {
+			keyword=new HashMap();
+			String keyword2=word.replace(" ", "");//공백제거
+			String[] keywords=keyword2.split("");
+			keyword.put("keywords", keywords);
+			 list=service.placeList(keyword);
+		}else {
+			keyword=new HashMap<String,String>();
+			keyword.put("hashtag", hashtag);
+			keyword.put("category", category);
+			list=service.placeList(cPage,numPerpage,keyword);//페이징된 리스트
+		}
+		
+		
+		
 		System.out.println(hashtag);
 		System.out.println(category);
 		String search="";
@@ -99,10 +115,13 @@ public class PlaceController {
 		if(hashtag!=null) {
 			search="search";
 		}
+		if(word!=null) {
+			search="search";
+		}
 				
 				
-		int numPerpage=7;//한페이지의 출력할 개수
-		List<Place> list=service.placeList(cPage,numPerpage,keyword);//페이징된 리스트
+		
+		
 		int totalData=service.selectCount(keyword);//장소후기 총개수
 		long curTime=System.currentTimeMillis();//현재날짜
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

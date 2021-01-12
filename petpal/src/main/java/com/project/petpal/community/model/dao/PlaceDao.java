@@ -38,4 +38,5 @@ public interface PlaceDao {
 	List<Map> selectLikeCount(SqlSession session);
 	int commentDelete(SqlSession session,String placeCommentNo);
 	int comment2Delete(SqlSession session,String placeCommentNo);
+	List<Place> placeList(SqlSession session,Map keywordMap);
 }
