@@ -210,11 +210,11 @@ public class MemberAjaxController {
 		return "member/memberAjax/infoDetail";
 	}
 	//닉네임 중복확인
-	 @RequestMapping("/member/checkNickName.do")
+	 @RequestMapping("/checkNickName.do")
 	 @ResponseBody
 	   public boolean checkNickName(String nickName,Model m) {
 		   	Member member=service.checkNickName(nickName);
-		   return(member==null?true:false);
+		   return (member==null?true:false);
 	   }
 	 @RequestMapping("/sendEmail.do")//이메일 인증
 	 @ResponseBody

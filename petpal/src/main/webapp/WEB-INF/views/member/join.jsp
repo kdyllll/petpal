@@ -28,7 +28,7 @@
 
 						<div class="col-md-6 offset-md-3 col-sm-10 offset-sm-1">
 							<form role="form" method="post" enctype="multipart/form-data"
-								action="${path }/insertMember.do" id="frm">
+								 id="frm">
 								<fieldset>
 									<p class="text-uppercase pull-center font-weight-bold">기본정보</p>
 									<div class="input-group mb-4">
@@ -282,7 +282,7 @@ input[type="checkbox"]:checked+svg {
 		}
 		
 		$("#nickName").val($("#nickName").val().trim());//닉네임 양쪽 공백제거하여 보냄 
-		$("#frm").submit();
+		$("#frm").attr("action","${path }/insertMember.do").submit();
 	}
 	 $("#password").keyup(e=>{//비밀번호 입력할때
 		var pw= $("#password").val();
