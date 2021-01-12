@@ -88,18 +88,21 @@
 			<textarea class="autosize form-control border-0 mb-5" name="content1" placeholder="내용을입력하세요" style="resize: none; overflow-y:hidden;" required></textarea>
 			<div class="invalid-feedback">내용을 입력해주세요.</div>
 			
-			<div id="preview" class="content"></div>
-			
 			<!-- 첨부 버튼 -->
-			<div id="attach">
-				<label class="ml-3" for="uploadInputBox">
-					사진 추가하기<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  						<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-  						<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-					</svg>
-				</label>
-				<input id="uploadInputBox" name="contentImg" style="display: none" type="file" name="filedata" multiple />
-			</div>
+							<div class="attach d-flex justify-content-center">
+								<label class="ml-3 fileTarget"> 사진 추가하기 <svg width="1em"
+										height="1em" viewBox="0 0 16 16"
+										class="bi bi-plus-circle ml-2" fill="currentColor"
+										xmlns="http://www.w3.org/2000/svg">
+		  								<path fill-rule="evenodd"
+											d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+		  								<path fill-rule="evenodd"
+											d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+									</svg>
+								</label> <input class="uploadInputBox" style="display: none" type="file"
+									name="contentImg" />
+								<div class="preview d-flex flex-column content"></div>
+							</div>
 			
 			<textarea class="autosize form-control border-0 mt-5 mb-5"  id="ta2" name="content2" placeholder="내용을입력하세요" style="resize: none; overflow-y:hidden;"></textarea>
 
@@ -167,56 +170,65 @@
 			$("#d").hide();
 			$("#ta2").hide();
 			
-			//임의의 file object영역
-		    var files = {};
-		    var previewIndex = 0;
-		
-		    // image preview 기능 구현
-		    // input = file object[]
-		    function addPreview(input) {
-		        if (input[0].files) {
-		            //파일 선택이 여러개였을 시의 대응
-		            for (var fileIndex = 0; fileIndex < input[0].files.length; fileIndex++) {
-		                var file = input[0].files[fileIndex];
-		
-		                if (validation(file.name))
-		                    continue;
-		
-		                var reader = new FileReader();
-		                reader.onload = function(img) {
-		                    //div id="preview" 내에 동적코드추가.
-		                    //이 부분을 수정해서 이미지 링크 외 파일명, 사이즈 등의 부가설명을 할 수 있을 것이다.
-		                    var imgNum = previewIndex++;
-		                    $("#preview")
-		                            .append(
-		                                    "<div class=\"preview-box\" value=\"" + imgNum +"\">"
-		                                            + "<button type=\"button\" class=\"btn btn-light  float-right\" value=\""
-		                                            + imgNum
-		                                            + "\" onclick=\"deletePreview(this)\">"
-		                                            + "x" + "</button>"
-		                                     		+ "<img id=\"image_container\" name=\"contentImg\" class=\"img\" src=\"" + img.target.result + "\" style=\"width:100%;\"\/>"
-		                                     		+ "<textarea class=\"autosize form-control border-0 mt-2 mb-2\" name=\"content\" id=\"ta\" rows=\"5\" placeholder=\"사진에 대한 설명을 작성해주세요\" style=\"resize: none;\"></textarea>"
-		                                     		+ "</div>"
-		                                            );
-		                    files[imgNum] = file;
-		                    $("#ta2").show();
-		                };
-		                reader.readAsDataURL(file);
-		            }
-		        } else
-		            alert('invalid file input'); // 첨부클릭 후 취소시의 대응책은 세우지 않았다.
-		        }
+			let ht = ` <div class="attach d-flex justify-content-center">
+				<label class="ml-3 fileTarget" > 사진 추가하기
+					<svg width="1em" height="1em" viewBox="0 0 16 16"
+							class="bi bi-plus-circle ml-2" fill="currentColor"
+							xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+								<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+					</svg>
+				</label> 
+				<input class="uploadInputBox" style="display: none" type="file" name="contentImg" />
+					<div class="preview d-flex flex-column content"></div>
+			</div>`;
+				let i = 0;
+				$(function() {
+					$(document).on("click",".fileTarget",e=>{
+						i++;
+						let pic = $(e.target).next();
+						pic.click();
+						pic.on("change", e1 => {
+							let reader = new FileReader();
+							reader.onload = (e2) => {
+				               let img = $("<img>").attr({
+				                 src: e2.target.result,
+				                 width: "100%",
+				                 height: 400,
+				               });
+				              
+				               pic.next().append(img);
+				               
+				               
+				               pic.next()
+	                            .append("<textarea class=\"autosize form-control border-0 mt-2 mb-2\" name=\"content\" id=\"ta\" rows=\"5\" placeholder=\"사진에 대한 설명을 작성해주세요\" style=\"resize: none;\"></textarea>");
+				               
+				               
+						    };
+						    reader.readAsDataURL($(e1.target)[0].files[0]); //파일의 가상경로를 가져옴
+						    pic.next().append(
+				            		   `<div class="mb-2 d-flex justify-content-end"><button type="button" class=" btn btn-outline-secondary col-auto delBtn">
+											삭제
+										</button>
+										</div>`);
+						    $(e.target).addClass("d-none");
+				               pic.parent().after(ht);
+						})
+					})
+					
+					$(document).on("click",".delBtn", e => {
+						i--;
+						$(e.target).parents(".attach").remove();
+					})
+				})
+		/* $(document).on("click",".delBtn", e => {
+			if(window.confirm("사진을 지우면 사진에 대한 설명도 같이 지워집니다.")){
+				i--;
+				$(e.target).parents(".attach").remove();
+	            resizeHeight();
+        	}
+			}) */
 		    
-		        //preview 영역에서 삭제 버튼 클릭시 해당 미리보기이미지 영역 삭제
-		        function deletePreview(obj) {
-		        	if(window.confirm("사진을 지우면 사진에 대한 설명도 같이 지워집니다.")){
-			            var imgNum = obj.attributes['value'].value;
-			            delete files[imgNum];
-			            $("#preview .preview-box[value=" + imgNum + "]").remove();
-			            resizeHeight();
-		        	}
-		        }
-		 
 		        //client-side validation
 		        //always server-side validation required
 		        function validation(fileName) {
@@ -232,24 +244,6 @@
 		                return false;
 		            }
 		        }
-		 
-		        $(document).ready(function() {
-		            //submit 등록. 실제로 submit type은 아니다.
-		            $('.submit a').on('click',function() {                        
-		                var form = $('#uploadForm')[0];
-		                var formData = new FormData(form);
-		    
-		                for (var index = 0; index < Object.keys(files).length; index++) {
-		                    //formData 공간에 files라는 이름으로 파일을 추가한다.
-		                    //동일명으로 계속 추가할 수 있다.
-		                    formData.append('files',files[index]);
-		                }
-		            });
-		            // <input type=file> 태그 기능 구현
-		            $('#attach input[type=file]').change(function() {
-		                addPreview($(this)); //preview form 추가하기
-		            });
-		        });
 		     
 		        $("textarea.autosize").on('keydown keyup', function () {
 		      	  $(this).height(1).height( $(this).prop('scrollHeight')+12 );	
