@@ -107,10 +107,11 @@
 					<c:forEach var="r" items="${reviewList }" begin="0" end="3">
 					<div class="col mb-4">
 						<div class="card h-100 border-0 " style="overflow: hidden;">
-							<a href="${path }/store/moveDetail.do?productNo=${r.PRODUCTNO}" class="rounded"> 
+							<a style="height:350px; overflow:hidden;" href="${path }/store/moveDetail.do?productNo=${r.PRODUCTNO}" class="rounded" > 
 							<img src="${path }/resources/upload/store/review/${r.FILENAME}"
-								alt="..." class="card-img-top">
+								alt="..." style="width: 125%; max-width: 125%; vertical-align: middle" class="card-img-top">
 							</a>
+
 							<div class="card-body">
 								<p class="card-text " style="font-size: 15px;">
 									<c:out value="${fn:substring(r.CONTENT, 0, 41) }"/>${fn:length(r.CONTENT) gt 42?'...':''}

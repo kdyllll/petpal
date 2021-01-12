@@ -43,6 +43,19 @@
 	<!-- 네이버 로그인 -->
     <beans:bean id="naverLoginBO" class="com.project.petpal.member.model.vo.NaverLoginBO" />
     <beans:bean id="naverEnrollBO" class="com.project.petpal.member.model.vo.NaverEnrollBo" />
+    
+    <!-- 로그인 인터셉터 설정 -->
+    <!-- 인터셉터 설정하기 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/member/*"/>
+			<beans:bean id="loginCheck" class="com.project.petpal.common.LoginCheckInterceptor"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/admin/*"/>
+			<beans:bean id="adminCheck" class="com.project.petpal.common.AdminCheckInterceptor"/>
+		</interceptor>
+	</interceptors>
 
 </beans:beans>
 

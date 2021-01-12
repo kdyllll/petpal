@@ -28,7 +28,7 @@
 
 						<div class="col-md-6 offset-md-3 col-sm-10 offset-sm-1">
 							<form role="form" method="post" enctype="multipart/form-data"
-								action="${path }/member/insertMember.do" id="frm">
+								action="${path }/insertMember.do" id="frm">
 								<fieldset>
 									<p class="text-uppercase pull-center font-weight-bold">기본정보</p>
 									<div class="input-group mb-4">

@@ -14,16 +14,16 @@
             </a>
             <ul class="nav justify-content-center d-none d-lg-flex">
               <li class="nav-item">
-                <a class="nav-link" href="${path }/community/communityList.do">커뮤니티</a>
+                <a class="nav-link text-dark" href="${path }/community/communityList.do">커뮤니티</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="${path }/store/moveStoreHome.do">스토어</a>
+                <a class="nav-link text-dark" href="${path }/store/moveStoreHome.do">스토어</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="${path }/board/noticeList.do">공지사항</a>
+                <a class="nav-link text-dark" href="${path }/board/noticeList.do">공지사항</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="${path }/location/locationFind.do">위치찾기</a>
+                <a class="nav-link text-dark" href="${path }/location/locationFind.do">위치찾기</a>
               </li>
             </ul>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">

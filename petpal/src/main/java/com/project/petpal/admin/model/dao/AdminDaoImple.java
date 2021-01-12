@@ -291,4 +291,34 @@ public class AdminDaoImple implements AdminDao {
 		return session.selectList("admin.refundChangeList");
 	}
 
+	@Override
+	public Map refundChangeOne(SqlSession session, String detailNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.refundChangeOne", detailNo);
+	}
+
+	@Override
+	public int updateRefundPayment(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.update("admin.updateRefundPayment", m);
+	}
+
+	@Override
+	public int updateRefundDetail(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.update("admin.updateRefundDetail",m);
+	}
+
+	@Override
+	public int updateChange(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.update("admin.updateChange", m);
+	}
+
+	@Override
+	public List<Map> refundChangeSearch(SqlSession session, Map m) {
+		// TODO Auto-generated method stub
+		return session.selectList("admin.refundChangeSearch", m);
+	}
+
 }

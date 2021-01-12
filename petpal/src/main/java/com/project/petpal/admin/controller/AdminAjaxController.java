@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.petpal.admin.model.service.AdminService;
 
@@ -86,5 +87,30 @@ public class AdminAjaxController {
 		m.addAttribute("msg",msg);
 		return "common/msg";
 
+	}
+	
+	@RequestMapping("/admin/refundChangeDetail.do")
+	public String refundChangeDetail(String detailNo, Model model) {
+		System.out.println(detailNo);
+		Map list = service.refundChangeOne(detailNo);
+		model.addAttribute("list",list);
+		return "admin/adminAjax/refundChangeDetail";
+	}
+	
+	@RequestMapping("/admin/refundChangeUpdate.do")
+	@ResponseBody
+	public Boolean refundChangeUpdate(String paymentNo,String detailNo,String detailStatus ) {
+		System.out.println(paymentNo+"/ "+detailNo+" /" +detailStatus);
+		Map map = new HashMap();
+		map.put("paymentNo", paymentNo);
+		map.put("detailNo", detailNo);
+		map.put("detailStatus", detailStatus);		
+		int result = 0;
+		if(detailStatus.equals("반품중")) {
+			result = service.updateRefundStatus(map);
+		} else if(detailStatus.equals("교환중")) {
+			result = service.updateChange(map); 
+		}
+		return result>0?true:false;
 	}
 }

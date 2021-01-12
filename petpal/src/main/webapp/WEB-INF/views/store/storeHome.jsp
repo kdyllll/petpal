@@ -28,7 +28,7 @@
 							<div class="card border-0">
 								<div class="card-header bg-transparent" id="headingOne">
 									<h2 class="mb-0">
-										<button class="btn btn-link btn-block text-left text"
+										<button class="btn btn-link btn-block text-left text text-dark"
 											style="font-weight: bold;" type="button"
 											data-toggle="collapse" data-target="#collapseOne"
 											aria-expanded="true" aria-controls="collapseOne">
@@ -39,15 +39,15 @@
 									aria-labelledby="headingOne" data-parent="#accordionExample">
 									<div class="card-body">
 										<ul class="nav flex-column">
-											<li class="nav-item"><a class="nav-link active" href="${path }/store/moveCategory.do?cNo=D1">홈/리빙</a>
+											<li class="nav-item"><a class="nav-link active text-dark" href="${path }/store/moveCategory.do?cNo=D1">홈/리빙</a>
 											</li>
-											<li class="nav-item"><a class="nav-link" href="${path }/store/moveCategory.do?cNo=D2">식품</a>
+											<li class="nav-item"><a class="nav-link text-dark" href="${path }/store/moveCategory.do?cNo=D2">식품</a>
 											</li>
-											<li class="nav-item"><a class="nav-link" href="${path }/store/moveCategory.do?cNo=D3">옷</a>
+											<li class="nav-item"><a class="nav-link text-dark" href="${path }/store/moveCategory.do?cNo=D3">옷</a>
 											</li>
-											<li class="nav-item"><a class="nav-link" href="${path }/store/moveCategory.do?cNo=D4">용품</a>
+											<li class="nav-item"><a class="nav-link text-dark" href="${path }/store/moveCategory.do?cNo=D4">용품</a>
 											</li>
-											<li class="nav-item"><a class="nav-link" href="${path }/store/moveCategory.do?cNo=D5">목욕/미용</a>
+											<li class="nav-item"><a class="nav-link text-dark" href="${path }/store/moveCategory.do?cNo=D5">목욕/미용</a>
 											</li>
 										</ul>
 									</div>
@@ -57,7 +57,7 @@
 							<div class="card border-0">
 								<div class="card-header bg-transparent" id="headingTwo">
 									<h2 class="mb-0">
-										<button class="btn btn-link btn-block text-left collapsed"
+										<button class="btn btn-link btn-block text-left collapsed text-dark"
 											style="font-weight: bold;" type="button"
 											data-toggle="collapse" data-target="#collapseTwo"
 											aria-expanded="false" aria-controls="collapseTwo">
@@ -68,15 +68,15 @@
 									aria-labelledby="headingTwo" data-parent="#accordionExample">
 									<div class="card-body">
 										<ul class="nav flex-column">
-											<li class="nav-item"><a class="nav-link active" href="${path }/store/moveCategory.do?cNo=C1">홈/리빙</a>
+											<li class="nav-item"><a class="nav-link active text-dark" href="${path }/store/moveCategory.do?cNo=C1">홈/리빙</a>
 											</li>
-											<li class="nav-item"><a class="nav-link" href="${path }/store/moveCategory.do?cNo=C2">식품</a>
+											<li class="nav-item"><a class="nav-link text-dark" href="${path }/store/moveCategory.do?cNo=C2">식품</a>
 											</li>
-											<li class="nav-item"><a class="nav-link" href="${path }/store/moveCategory.do?cNo=C3">옷</a>
+											<li class="nav-item"><a class="nav-link text-dark" href="${path }/store/moveCategory.do?cNo=C3">옷</a>
 											</li>
-											<li class="nav-item"><a class="nav-link" href="${path }/store/moveCategory.do?cNo=C4">용품</a>
+											<li class="nav-item"><a class="nav-link text-dark" href="${path }/store/moveCategory.do?cNo=C4">용품</a>
 											</li>
-											<li class="nav-item"><a class="nav-link" href="${path }/store/moveCategory.do?cNo=C5">목욕/미용</a>
+											<li class="nav-item"><a class="nav-link text-dark" href="${path }/store/moveCategory.do?cNo=C5">목욕/미용</a>
 											</li>
 										</ul>
 									</div>
@@ -86,7 +86,7 @@
 							<div class="card border-0">
 								<div class="card-header bg-transparent" id="headingThree">
 									<h2 class="mb-0">
-										<button class="btn btn-link btn-block text-left collapsed"
+										<button class="btn btn-link btn-block text-left collapsed text-dark"
 											style="font-weight: bold;" type="button"
 											data-toggle="collapse" data-target="#collapseThree"
 											aria-expanded="false" aria-controls="collapseThree">
@@ -97,13 +97,13 @@
 									aria-labelledby="headingThree" data-parent="#accordionExample">
 									<div class="card-body">
 										<ul class="nav flex-column">
-											<li class="nav-item"><a class="nav-link active" href="${path }/store/moveCategory.do?cNo=S1">햄스터</a>
+											<li class="nav-item"><a class="nav-link active text-dark" href="${path }/store/moveCategory.do?cNo=S1">햄스터</a>
 											</li>
-											<li class="nav-item"><a class="nav-link" href="${path }/store/moveCategory.do?cNo=S2">토끼</a>
+											<li class="nav-item"><a class="nav-link text-dark" href="${path }/store/moveCategory.do?cNo=S2">토끼</a>
 											</li>
-											<li class="nav-item"><a class="nav-link" href="${path }/store/moveCategory.do?cNo=S3">물고기</a>
+											<li class="nav-item"><a class="nav-link text-dark" href="${path }/store/moveCategory.do?cNo=S3">물고기</a>
 											</li>
-											<li class="nav-item"><a class="nav-link" href="${path }/store/moveCategory.do?cNo=S4">새</a>
+											<li class="nav-item"><a class="nav-link text-dark" href="${path }/store/moveCategory.do?cNo=S4">새</a>
 											</li>
 										</ul>
 									</div>
