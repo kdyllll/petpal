@@ -18,6 +18,7 @@ import com.project.petpal.community.model.service.FindService;
 import com.project.petpal.community.model.service.PlaceService;
 import com.project.petpal.community.model.service.TipService;
 import com.project.petpal.community.model.vo.DailyImg;
+import com.project.petpal.community.model.vo.Place;
 import com.project.petpal.member.model.vo.Member;
 import com.project.petpal.search.model.service.SearchService;
 import com.project.petpal.store.model.service.StoreService;
@@ -100,16 +101,17 @@ public class SearchController {
 				}	
 		//노하우
 		List<Map> tipList=tipService.tipList(keywordMap);
-		System.out.println("리스트"+tipList);
 				//좋아요 수 연동
 				List<Map> count = dailyService.selectLikeCount();
+		List<Place> placeList=placeService.placeList(keywordMap);
 		
-		
+		int placeCount=placeService.selectCount(keywordMap);
 		int dCount=dailyService.totalDailyCount(keywordMap);
 		int fCount=findService.findTotalCount(keywordMap);
 		int tCount=tipService.totalTipCount(keywordMap);
-		int total=pCount+soCount+dCount+fCount+tCount;//통합 검색결과
-		System.out.println(tCount);
+		int total=pCount+soCount+dCount+fCount+tCount+placeCount;//통합 검색결과
+		m.addAttribute("placeCount",placeCount);
+		m.addAttribute("placeList",placeList);
 		m.addAttribute("tCount",tCount);
 		m.addAttribute("tipList",tipList);
 		m.addAttribute("fCount",fCount);

@@ -40,6 +40,19 @@
 			AND PLACENO IN (SELECT PLACENO FROM PLACE LEFT JOIN HASHTAG ON
 			POSTNO=PLACENO WHERE HASHCONTENT=#{hashtag})
 		</if>
+		<if test="keywords != null">
+		   AND PLACENO IN (SELECT PLACENO FROM PLACE LEFT JOIN HASHTAG ON POSTNO=PLACENO JOIN PLACEIMG USING(PLACENO) WHERE REGEXP_LIKE(TITLE,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   ) OR  REGEXP_LIKE(HASHCONTENT,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   )OR  REGEXP_LIKE(EXPLANATION,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   )OR  REGEXP_LIKE(CATEGORY,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   )OR  REGEXP_LIKE(CONTENT,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   ))
+		</if>
 		ORDER BY PLACEDATE DESC
 	</select>
 	<select id="selectPlace" resultType="place"
@@ -56,6 +69,19 @@
 		<if test="hashtag != null">
 			AND PLACENO IN (SELECT PLACENO FROM PLACE LEFT JOIN HASHTAG ON
 			POSTNO=PLACENO WHERE HASHCONTENT=#{hashtag})
+		</if>
+		<if test="keywords != null">
+		   AND PLACENO IN (SELECT PLACENO FROM PLACE LEFT JOIN HASHTAG ON POSTNO=PLACENO JOIN PLACEIMG USING(PLACENO) WHERE REGEXP_LIKE(TITLE,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   ) OR  REGEXP_LIKE(HASHCONTENT,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   )OR  REGEXP_LIKE(EXPLANATION,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   )OR  REGEXP_LIKE(CATEGORY,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   )OR  REGEXP_LIKE(CONTENT,
+		   <foreach collection="keywords" item="word" separator="||'|'||">#{word}</foreach>
+		   ))
 		</if>
 	</select>
 	<select id="commentCount" resultType="_int"

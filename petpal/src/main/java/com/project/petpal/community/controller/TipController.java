@@ -43,17 +43,32 @@ public class TipController {
 	@RequestMapping("/community/tipList.do")
 	public String TipList(ModelAndView mv, HttpSession session, Model model, String category, String sort,
 							@RequestParam(value="hashtag", required=false) String hashtag,
+							@RequestParam(value="word", required=false) String word,
 							@RequestParam(value="cPage",defaultValue="1") int cPage,
 							@RequestParam(value="numPerPage",defaultValue="12") int numPerPage) {
+		Map keyword;
+		List<Map> TipList=null;
+		if(word!=null) {
+			keyword=new HashMap();
+			String keyword2=word.replace(" ", "");//공백제거
+			String[] keywords=keyword2.split("");
+			keyword.put("keywords", keywords);
+			TipList=service.tipList(keyword);
+		}else {
+			//해시태그 검색어로 검색됐을 경우 구분
+			keyword=new HashMap<String,String>();
+			keyword.put("hashtag", hashtag);
+			keyword.put("category", category);
+			TipList = service.tipList(cPage,numPerPage, keyword);
+		}
 		
-		//해시태그 검색어로 검색됐을 경우 구분
-		Map<String,String> keyword=new HashMap<String,String>();
-		keyword.put("hashtag", hashtag);
-		keyword.put("category", category);
 		
 		String search="";
 		//검색어를 통해 들어오는 거면 search도 보내서 정렬버튼 없앰
 		if(hashtag!=null) {
+			search="search";
+		}
+		if(word!=null) {
 			search="search";
 		}
 		
@@ -73,7 +88,7 @@ public class TipController {
 			model.addAttribute("like", like);
 		}
 		
-		List<Map> TipList = service.tipList(cPage,numPerPage, keyword);
+		
 		int totalCount=service.totalTipCount(keyword);
 		String pageBar=new PageBarFactory().getPageBar2(totalCount, cPage, numPerPage, category, null, "tipList.do");
 		

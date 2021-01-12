@@ -183,6 +183,12 @@ public class PlaceServiceImpl implements PlaceService{
 		// TODO Auto-generated method stub
 		return dao.comment2Delete(session,placeCommentNo);
 	}
+
+	@Override
+	public List<Place> placeList(Map keywordMap) {
+		// TODO Auto-generated method stub
+		return dao.placeList(session,keywordMap);
+	}
 	
 	
 	

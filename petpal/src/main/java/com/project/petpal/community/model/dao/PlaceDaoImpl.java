@@ -147,6 +147,12 @@ public class PlaceDaoImpl implements PlaceDao{
 		System.out.println(placeCommentNo);
 		return session.update("place.comment2Delete",placeCommentNo);
 	}
+
+	@Override
+	public List<Place> placeList(SqlSession session, Map keywordMap) {
+		// TODO Auto-generated method stub
+		return session.selectList("place.placeList",keywordMap);
+	}
 	
 	
 
