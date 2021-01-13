@@ -21,8 +21,8 @@
 			<foreach item="item" index="index" collection="list" separator="," open="(" close=")">
 				#{item}
 			</foreach>
-			 AND TYPE='M'
 		</if>
+			 AND TYPE='M'
 	</select>
 	<delete id="deleteCart" parameterType="hashMap">
 		DELETE FROM CART WHERE STOCKNO = #{stockNo} AND MEMBERNO = #{memberNo}

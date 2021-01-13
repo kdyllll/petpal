@@ -42,6 +42,11 @@ public class CartController {
 		List<String> stockNo = new ArrayList<String>();
 		List<String> amount = new ArrayList<String>();
 		
+		System.out.println("여기!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ : " + cookie.length);
+		
+		//쿠키에 담을 String 변수
+		String stocks = "";
+		String amounts = "";
 		//쿠키가 있을 때 실행
 		if(cookie.length>1) {
 			//쿠키에서 값을 가져와 cart배열에 넣어줌
@@ -80,9 +85,6 @@ public class CartController {
 				cookie[i].setMaxAge(0);
 			}
 			
-			//쿠키에 담을 String 변수
-			String stocks = "";
-			String amounts = "";
 			
 			//쿠키용 String 변수에 값을 넣어줌
 			for(int i=0;i<stockNo.size();i++) {
@@ -98,6 +100,9 @@ public class CartController {
 				}
 		}
 		
+			System.out.println("여기ㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣ : " + stocks);
+			System.out.println("여기ㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣ : " + amounts);
+			
 			//쿠키 생성
 			Cookie c=new Cookie("cookieStock",URLEncoder.encode(stocks, "UTF-8"));
 			c.setMaxAge(60 * 60 * 24); //쿠키 하루 유지
@@ -121,9 +126,14 @@ public class CartController {
 			}else {
 				mv.setViewName("cart/cart");
 			}
-		}else {
+		}else if(cookie.length>1){
 			//먼저 쿠키에 값이 있는지 없는지 검사하고 값이 있을 때 쿼리 실행
 			//값이 없으면 빈 리스트를 넘겨주어야하니 list만 넘김
+			
+			//쿠키에 담을 String 변수
+			if(stocks.equals("") || amounts.equals("")) {
+				mv.setViewName("cart/cartEmpty");
+			}else {
 			
 				List<Map> list = service.cartListNonMember(stockNo);
 				mv.addObject("list", service.cartListNonMember(stockNo));
@@ -140,6 +150,9 @@ public class CartController {
 				}else {
 					mv.setViewName("cart/cartNonMember");
 				}
+			}
+		}else {
+			mv.setViewName("cart/cartEmpty");
 		}
 		return mv;
 	}
