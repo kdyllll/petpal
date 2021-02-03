@@ -62,7 +62,7 @@
 	</select>
 	<select id="selectCount" resultType="_int"
 		parameterType="string">
-		SELECT COUNT(*) FROM PLACE WHERE 1=1
+		SELECT COUNT(*) FROM PLACE WHERE STATUS ='Y'
 		<if test="category !=null">
 			AND CATEGORY=#{category}
 		</if>
