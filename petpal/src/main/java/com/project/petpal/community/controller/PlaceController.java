@@ -38,7 +38,7 @@ public class PlaceController {
 	public String movePlacePostWrite(HttpSession session,Model m) {
 		if(session.getAttribute("loginMember")==null){
 			m.addAttribute("msg","로그인 후 사용 가능합니다.");
-			m.addAttribute("loc","/member/moveLogin.do");
+			m.addAttribute("loc","/moveLogin.do");
 			return "common/msg";
 		}
 		return "community/placeWrite";

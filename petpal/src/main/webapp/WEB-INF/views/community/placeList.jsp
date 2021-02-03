@@ -59,7 +59,7 @@
 												${p.placeDate }
 													
 												 </span>
-											<span class="mr-2">댓글수</span> <span class="mr-2"><c:out
+											 <span class="mr-2"><c:out
 													value="${p.category }" /></span>
 											<p>
 												<c:out value="${p.position[0] }" />
